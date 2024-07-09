@@ -1,0 +1,22 @@
+{
+  "extends": ["react-app", "eslint:recommended"],
+  "plugins": ["unused-imports"],
+  "rules": {
+    "no-var": "error",
+    "no-multiple-empty-lines": "error",
+    "no-console": ["warn", { "allow": ["warn", "error", "info"] }],
+    "eqeqeq": "error",
+    "dot-notation": "warn",
+    "no-unused-vars": "warn",
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ]
+  }
+}

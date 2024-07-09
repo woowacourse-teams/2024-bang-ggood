@@ -1,23 +1,13 @@
 {
-  "extends": [
-    "react-app",
-    "eslint:recommended",
-    "plugin:storybook/recommended"
-  ],
-  "plugins": [
-    "unused-imports"
-  ],
+  "extends": ["react-app", "eslint:recommended", "plugin:storybook/recommended"],
+  "plugins": ["unused-imports"],
   "rules": {
     "no-var": "error",
     "no-multiple-empty-lines": "error",
     "no-console": [
       "warn",
       {
-        "allow": [
-          "warn",
-          "error",
-          "info"
-        ]
+        "allow": ["warn", "error", "info"]
       }
     ],
     "eqeqeq": "error",
@@ -33,5 +23,6 @@
         "argsIgnorePattern": "^_"
       }
     ]
-  }
+  },
+  "ignorePatterns": ["dist", "eslint.config.mjs", "webpack.config.js"]
 }

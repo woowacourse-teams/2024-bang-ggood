@@ -1,10 +1,25 @@
 {
-  "extends": ["react-app", "eslint:recommended"],
-  "plugins": ["unused-imports"],
+  "extends": [
+    "react-app",
+    "eslint:recommended",
+    "plugin:storybook/recommended"
+  ],
+  "plugins": [
+    "unused-imports"
+  ],
   "rules": {
     "no-var": "error",
     "no-multiple-empty-lines": "error",
-    "no-console": ["warn", { "allow": ["warn", "error", "info"] }],
+    "no-console": [
+      "warn",
+      {
+        "allow": [
+          "warn",
+          "error",
+          "info"
+        ]
+      }
+    ],
     "eqeqeq": "error",
     "dot-notation": "warn",
     "no-unused-vars": "warn",

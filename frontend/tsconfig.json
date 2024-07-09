@@ -8,5 +8,5 @@
     "target": "es5",
     "allowJs": true
   },
-  "files": ["src/index.tsx"]
+  "include": ["src"]
 }

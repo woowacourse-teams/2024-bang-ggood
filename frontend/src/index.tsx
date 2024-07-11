@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 
 export const Index = () => {
   console.log('checking how husky works');
+  console.log('checking how husky works again');
   return (
     <div>
       index

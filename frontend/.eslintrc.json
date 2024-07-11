@@ -9,7 +9,7 @@
   "globals": {
     "browser": true
   },
-  "plugins": ["react", "@typescript-eslint", "unused-imports"],
+  "plugins": ["react", "@typescript-eslint", "unused-imports", "simple-import-sort", "import"],
   "rules": {
     "no-var": "error",
     "no-multiple-empty-lines": "error",
@@ -32,7 +32,12 @@
         "argsIgnorePattern": "^_"
       }
     ],
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error"
   },
   "settings": {
     "react": {

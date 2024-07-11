@@ -1,5 +1,6 @@
-import Box from '@/components/Box';
 import ReactDOM from 'react-dom/client';
+
+import Box from '@/components/Box';
 
 export const Index = () => {
   console.log('checking how husky works');

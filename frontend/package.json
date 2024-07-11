@@ -12,9 +12,10 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "jest",
-    "postinstall": "cd .. && husky frontend/.husky",
+    "postinstall": "cd frontend && husky frontend/.husky",
     "format": "prettier --cache --write .",
-    "lint": "eslint --cache ."
+    "lint": "eslint --cache .",
+    "lint:styled": "stylelint --cache --fix ."
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -25,6 +26,7 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "stylelint-config-standard-scss": "^13.1.0",
     "webpack": "^5.92.1",
     "webpack-cli": "^5.1.4"
   },
@@ -58,9 +60,13 @@
     "mini-css-extract-plugin": "^2.9.0",
     "msw": "^2.3.1",
     "msw-storybook-addon": "^2.0.2",
+    "postcss-styled-syntax": "^0.6.4",
     "prettier": "^3.3.2",
     "storybook": "^8.1.11",
     "style-loader": "^4.0.0",
+    "stylelint": "^16.6.1",
+    "stylelint-config-standard": "^36.0.1",
+    "stylelint-order": "^6.0.4",
     "ts-jest": "^29.2.0",
     "ts-loader": "^9.5.1",
     "typescript": "^5.5.3",

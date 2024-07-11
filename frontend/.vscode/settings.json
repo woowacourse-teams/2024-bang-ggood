@@ -5,6 +5,7 @@
   "javascript.preferences.importModuleSpecifierEnding": "auto",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
-    "source.organizeImports": "explicit"
+    "source.organizeImports": "explicit",
+    "source.fixAll.stylelint": "explicit"
   }
 }

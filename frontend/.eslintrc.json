@@ -5,7 +5,7 @@
     "no-var": "error",
     "no-multiple-empty-lines": "error",
     "no-console": [
-      "warn",
+      "error",
       {
         "allow": ["warn", "error", "info"]
       }

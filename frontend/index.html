@@ -14,14 +14,11 @@
       window.addEventListener('load', () => {
         navigator.serviceWorker
           .register('service-worker.js')
-          .then((registration) => {
+          .then(registration => {
             console.log('Service Worker registered: ', registration);
           })
-          .catch((registrationError) => {
-            console.error(
-              'Service Worker registration failed: ',
-              registrationError
-            );
+          .catch(registrationError => {
+            console.error('Service Worker registration failed: ', registrationError);
           });
       });
     }

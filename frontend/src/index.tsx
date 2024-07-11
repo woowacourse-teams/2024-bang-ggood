@@ -1,8 +1,15 @@
+import Box from '@/components/Box';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 export const Index = () => {
-  return <div>index</div>;
+  console.log('checking how husky works');
+  return (
+    <div>
+      index
+      <Box />
+    </div>
+  );
 };
 
 const rootElement = document.getElementById('root');

@@ -1,7 +1,11 @@
-import React from 'react';
+import Basic from '@/components/Basic';
 
 const Box = () => {
-  return <div>Box</div>;
+  return (
+    <div>
+      <Basic />
+    </div>
+  );
 };
 
 export default Box;

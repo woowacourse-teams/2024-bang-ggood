@@ -1,6 +1,15 @@
 {
-  "extends": ["react-app", "eslint:recommended", "plugin:storybook/recommended"],
-  "plugins": ["unused-imports"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "project": "./tsconfig.json"
+  },
+  "globals": {
+    "browser": true
+  },
+  "plugins": ["react", "@typescript-eslint", "unused-imports"],
   "rules": {
     "no-var": "error",
     "no-multiple-empty-lines": "error",
@@ -22,7 +31,20 @@
         "args": "after-used",
         "argsIgnorePattern": "^_"
       }
-    ]
+    ],
+    "react/react-in-jsx-scope": "off"
   },
-  "ignorePatterns": ["dist", "eslint.config.mjs", "webpack.config.js"]
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:storybook/recommended"
+  ],
+  "ignorePatterns": ["dist", "webpack.config.js", "tsconfig.json", "public"]
 }

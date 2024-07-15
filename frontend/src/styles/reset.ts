@@ -130,4 +130,12 @@ export const normalize = css`
     border-collapse: collapse;
     border-spacing: 0;
   }
+  button {
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
+  }
 `;

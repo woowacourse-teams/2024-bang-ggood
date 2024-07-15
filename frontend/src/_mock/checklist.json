@@ -30,5 +30,37 @@
         "questionSubtitle": "asf"
       }
     ]
+  },
+  {
+    "categoryId": 3,
+    "category": "외부 시설",
+    "questions": [
+      {
+        "questionId": 21,
+        "questionTitle": "수압 및 배수가 괜찮은가요?",
+        "questionSubtitle": "싱크대와 화장실에서 동시에 물을 틀어보세요. "
+      },
+      {
+        "questionId": 22,
+        "questionTitle": "asfda",
+        "questionSubtitle": "asf"
+      }
+    ]
+  },
+  {
+    "categoryId": 4,
+    "category": "보안",
+    "questions": [
+      {
+        "questionId": 21,
+        "questionTitle": "수압 및 배수가 괜찮은가요?",
+        "questionSubtitle": "싱크대와 화장실에서 동시에 물을 틀어보세요. "
+      },
+      {
+        "questionId": 22,
+        "questionTitle": "asfda",
+        "questionSubtitle": "asf"
+      }
+    ]
   }
 ]

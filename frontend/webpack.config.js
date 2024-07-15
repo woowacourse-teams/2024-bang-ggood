@@ -56,6 +56,7 @@ const config = {
   },
   devServer: {
     allowedHosts: 'all',
+    historyApiFallback: true,
   },
 };
 

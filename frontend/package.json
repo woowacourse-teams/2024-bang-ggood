@@ -26,6 +26,7 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^6.24.1",
     "stylelint-config-standard-scss": "^13.1.0",
     "webpack": "^5.92.1",
     "webpack-cli": "^5.1.4"
@@ -42,6 +43,7 @@
     "@storybook/react": "^8.1.11",
     "@storybook/react-webpack5": "^8.1.11",
     "@storybook/test": "^8.1.11",
+    "@svgr/webpack": "^8.1.0",
     "@testing-library/dom": "^10.3.1",
     "@testing-library/react": "^16.0.0",
     "@types/jest": "^29.5.12",

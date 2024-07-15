@@ -1,28 +1,23 @@
+import { useState } from 'react';
+
 import mockCategories from '@/_mock/checklist.json';
 import ChecklistCategory from '@/components/checklist/ChecklistCategory';
-import FaceIcon from '@/components/FaceMark/FaceIcon';
-import FaceIconButton from '@/components/FaceMark/FaceIconButton';
 import Header from '@/components/Header';
-import Tab from '@/components/Tab';
+
+const makeAnswerSheets = (categories: ChecklistCategory[]) => categories.map(category => makeAnswer(category));
+const makeAnswer = (category: ChecklistCategory) => category.questions.map(q => ({ q_id: q.questionId, answer: null }));
 
 const ChecklistPage = () => {
   const categories: ChecklistCategory[] = mockCategories;
+
+  const [answers, setAnswer] = useState(makeAnswerSheets(categories));
+
   return (
     <>
       <Header />
-      <Tab />
       {categories.map(category => (
         <ChecklistCategory key={category.categoryId} category={category} />
       ))}
-
-      <FaceIcon fill={true} emotion="bad" />
-      <FaceIconButton emotion="bad" />
-      {/* <FaceMark>
-/      <FaceMark.Header >
-      <FaceMark.Icon>
-      <FaceMark.Footer>
-      </FaceMark> 
-      */}
     </>
   );
 };

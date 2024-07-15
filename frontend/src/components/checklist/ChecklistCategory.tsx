@@ -27,6 +27,6 @@ const S = {
     background-color: ${({ theme }) => theme.palette.grey100};
 
     font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: ${({ theme }) => theme.text.size.medium};
+    font-size: ${({ theme }) => theme.text.size.large};
   `,
 };

@@ -28,6 +28,9 @@ const config = {
   devServer: {
     open: true,
     host: 'localhost',
+    port: 3000,
+    allowedHosts: 'all',
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -65,10 +68,6 @@ const config = {
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
-  },
-  devServer: {
-    allowedHosts: 'all',
-    historyApiFallback: true,
   },
 };
 

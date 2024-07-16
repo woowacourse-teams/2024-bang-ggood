@@ -53,6 +53,12 @@ const FaceIcon = ({ emotion, fill = false, ...rest }: FaceIconProps) => {
           <S.Label>별로예요</S.Label>
         </S.Wrapper>
       )}
+      {emotion === null && (
+        <S.Wrapper {...rest}>
+          <FaceIconSosoGray />
+          <S.Label>알수없어요</S.Label>
+        </S.Wrapper>
+      )}
     </>
   );
 };

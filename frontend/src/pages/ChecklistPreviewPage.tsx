@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { getChecklistAnswer } from '@/apis/checklist';
 import ChecklistCategory from '@/components/checklist/ChecklistCategory';
-import Header from '@/components/Header';
+import HeaderWithLogo from '@/components/HeaderWithLogo';
 
 interface AccordianOpen {
   categoryId: number;
@@ -32,12 +32,18 @@ const ChecklistPreviewPage = () => {
 
   const [answers, setAnswers] = useState<Answer[]>([]);
 
-  const [accordianOpen, setAccordianOpen] = useState<AccordianOpen[]>(
-    checklistQuestions.map(category => ({
-      categoryId: category.categoryId,
-      isOpen: true,
-    })),
-  );
+  const [accordianOpen, setAccordianOpen] = useState<AccordianOpen[]>([]);
+
+  useEffect(() => {
+    if (checklistQuestions.length > 0) {
+      setAccordianOpen(
+        checklistQuestions.map(category => ({
+          categoryId: category.categoryId,
+          isOpen: true,
+        })),
+      );
+    }
+  }, [checklistQuestions]);
 
   const onToggleCategoryOpen = (id: number) => {
     const newAccordianOpen = accordianOpen.map(category => {
@@ -75,7 +81,7 @@ const ChecklistPreviewPage = () => {
 
   return (
     <>
-      <Header />
+      <HeaderWithLogo />
       {checklistQuestions.map(category => (
         <ChecklistCategory
           key={category.categoryId}

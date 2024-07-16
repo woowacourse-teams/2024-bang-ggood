@@ -77,7 +77,7 @@ const ChecklistPage = () => {
     });
   };
 
-  const submitAnswer = () => postChecklist(answers);
+  const submitAnswer = async () => await postChecklist(answers);
 
   return (
     <>

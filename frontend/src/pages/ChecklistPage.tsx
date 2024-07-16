@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { getChecklistQuestions, postChecklist } from '@/apis/checklist';
 import ChecklistCategory from '@/components/checklist/ChecklistCategory';
@@ -31,19 +32,30 @@ const ChecklistPage = () => {
     fetchChecklist();
   }, []);
 
-  const categories: ChecklistCategory[] = checklistQuestions;
+  const [accordianOpen, setAccordianOpen] = useState<AccordianOpen[]>([]);
+
+  useEffect(() => {
+    if (checklistQuestions.length > 0) {
+      setAccordianOpen(
+        checklistQuestions.map(category => ({
+          categoryId: category.categoryId,
+          isOpen: true,
+        })),
+      );
+    }
+  }, [checklistQuestions]);
 
   const [answers, setAnswers] = useState<Answer[]>([]);
 
-  const [accordianOpen, setAccordianOpen] = useState<AccordianOpen[]>(
-    categories.map(category => ({
-      categoryId: category.categoryId,
-      isOpen: true,
-    })),
-  );
+  // const [accordianOpen, setAccordianOpen] = useState<AccordianOpen[]>(
+  //   checklistQuestions?.map(category => ({
+  //     categoryId: category.categoryId,
+  //     isOpen: true,
+  //   })),
+  // );
 
   const onToggleCategoryOpen = (id: number) => {
-    const newAccordianOpen = accordianOpen.map(category => {
+    const newAccordianOpen = accordianOpen?.map(category => {
       return category.categoryId === id ? { ...category, isOpen: !category.isOpen } : category;
     });
 
@@ -52,7 +64,7 @@ const ChecklistPage = () => {
 
   const isAccordianOpen = (id: number) => {
     const target = accordianOpen.filter(category => category.categoryId === id);
-    return target[0].isOpen;
+    return target[0]?.isOpen;
   };
 
   const addAnswer = useCallback(
@@ -75,8 +87,11 @@ const ChecklistPage = () => {
       return prevAnswers.filter(answer => answer.questionId !== questionId);
     });
   };
-
-  const submitAnswer = async () => await postChecklist(answers);
+  const useNavigator = useNavigate();
+  const submitAnswer = async () => {
+    await postChecklist(answers);
+    useNavigator('/saved');
+  };
 
   return (
     <>

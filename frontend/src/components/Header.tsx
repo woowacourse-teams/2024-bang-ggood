@@ -9,17 +9,14 @@ import ArrowBack from '@/assets/arrow-back.svg';
 //   navigatePath: string;
 // }
 
-const Header = ({ Button }: { Button: React.ReactNode }) =>
-  //{ type = 'Logo', navigatePath }: Props
-
-  {
-    return (
-      <S.Wrapper>
-        <ArrowBack />
-        {Button}
-      </S.Wrapper>
-    );
-  };
+const Header = ({ Button }: { Button?: React.ReactNode }) => {
+  return (
+    <S.Wrapper>
+      <ArrowBack />
+      {Button}
+    </S.Wrapper>
+  );
+};
 export default Header;
 
 const S = {

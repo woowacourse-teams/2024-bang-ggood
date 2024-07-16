@@ -31,20 +31,20 @@ const ChecklistCategory = ({
         {isAccordianOpen ? <ArrowUpSmall /> : <ArrowDownSmall />}
       </S.Category>
 
-      <S.Container isShow={isAccordianOpen}>
-        {category.questions.map(question =>
-          isAnswer ? (
-            <ChecklistAnswer key={question.questionId} QandA={question} />
-          ) : (
-            <ChecklistQuestion
-              key={question.questionId}
-              question={question}
-              addAnswer={addAnswer}
-              deleteAnswer={deleteAnswer}
-            />
-          ),
-        )}
-      </S.Container>
+      {/* <S.Container isShow={isAccordianOpen}> */}
+      {category.questions.map(question =>
+        isAnswer ? (
+          <ChecklistAnswer key={question.questionId} QandA={question} />
+        ) : (
+          <ChecklistQuestion
+            key={question.questionId}
+            question={question}
+            addAnswer={addAnswer}
+            deleteAnswer={deleteAnswer}
+          />
+        ),
+      )}
+      {/* </S.Container> */}
     </>
   );
 };

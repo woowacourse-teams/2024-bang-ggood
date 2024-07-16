@@ -42,13 +42,13 @@ const ChecklistQuestion = ({ question, addAnswer, deleteAnswer }: Props) => {
     <S.Container>
       <S.Title>
         <QuestionDot />
-        {question.questionTitle}
+        {question?.questionTitle}
       </S.Title>
-      {question.questionSubtitle && <S.Subtitle>•{question.questionSubtitle}</S.Subtitle>}
+      {question?.questionSubTitle && <S.Subtitle>•{question?.questionSubTitle}</S.Subtitle>}
       <S.Options>
         {emotions.map(emotion => {
           const { name, id } = emotion;
-          return <FaceIcon fill={answer === emotion.id} key={id} emotion={name} onClick={() => handleClick(id)} />;
+          return <FaceIcon fill={answer === id} key={id} emotion={name} onClick={() => handleClick(id)} />;
         })}
       </S.Options>
     </S.Container>
@@ -85,5 +85,6 @@ const S = {
     width: 80%;
     display: flex;
     justify-content: space-between;
+    margin-top: 10px;
   `,
 };

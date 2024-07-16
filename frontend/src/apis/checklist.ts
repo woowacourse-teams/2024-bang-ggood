@@ -9,7 +9,7 @@ export const getChecklistQuestions = async () => {
   return data;
 };
 
-export const getChecklistById = async (id: number) => {
+export const getChecklistAnswer = async (id: number) => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_ID(id) });
   const data = await response.json();
   return data;
@@ -21,5 +21,6 @@ export const getChecklists = async () => {
   return data;
 };
 
-export const postChecklist = async (answers: Answer[]) =>
+export const postChecklist = async (answers: Answer[]) => {
   await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLIST, body: answers });
+};

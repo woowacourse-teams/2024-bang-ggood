@@ -72,7 +72,7 @@ const S = {
     margin: 5px 0;
   `,
   Subtitle: styled.div`
-    width: 80%;
+    width: 80vw;
     color: ${({ theme }) => theme.palette.grey500};
     font-size: ${({ theme }) => theme.text.size.small};
     margin-bottom: 10px;

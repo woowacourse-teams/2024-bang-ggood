@@ -1,6 +1,8 @@
-import { useCallback, useState } from 'react';
+import styled from '@emotion/styled';
+import { useCallback, useEffect, useState } from 'react';
 
-import mockCategories from '@/_mock/checklist.json';
+import mockQuestions from '@/_mock/checklist.json';
+import { getChecklistQuestions, postChecklist } from '@/apis/checklist';
 import ChecklistCategory from '@/components/checklist/ChecklistCategory';
 import Header from '@/components/Header';
 
@@ -20,8 +22,17 @@ export interface addAnswerProps {
 }
 
 const ChecklistPage = () => {
-  const questionsInfo = getChecklistQuestions();
-  const categories: ChecklistCategory[] = mockCategories;
+  const [checklistQuestions, setChecklistQuestions] = useState(mockQuestions);
+
+  useEffect(() => {
+    const fetchChecklist = async () => {
+      const checklist = await getChecklistQuestions();
+      setChecklistQuestions(checklist);
+    };
+    fetchChecklist();
+  }, []);
+
+  const categories: ChecklistCategory[] = checklistQuestions;
 
   const [answers, setAnswers] = useState<Answer[]>([]);
 
@@ -66,10 +77,12 @@ const ChecklistPage = () => {
     });
   };
 
+  const submitAnswer = () => postChecklist(answers);
+
   return (
     <>
-      <Header />
-      {categories.map(category => (
+      <Header Button={<S.TextButton onClick={submitAnswer}>저장</S.TextButton>} />
+      {mockQuestions.map(category => (
         <ChecklistCategory
           key={category.categoryId}
           category={category}
@@ -83,6 +96,18 @@ const ChecklistPage = () => {
       ))}
     </>
   );
+};
+
+const S = {
+  TextButton: styled.button`
+    color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.palette.green500};
+    border-radius: 5px;
+    font-size: ${({ theme }) => theme.text.size.medium};
+    font-weight: ${({ theme }) => theme.text.weight.bold};
+    width: 60px;
+    height: 40px;
+  `,
 };
 
 export default ChecklistPage;

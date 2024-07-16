@@ -1,13 +1,24 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 
+// env
+const dotenv = require('dotenv');
+const env = dotenv.config().parsed;
 const isProduction = process.env.NODE_ENV == 'production';
 
 const stylesHandler = isProduction ? MiniCssExtractPlugin.loader : 'style-loader';
+
+const envKeys = env
+  ? Object.keys(env).reduce((prev, next) => {
+      prev[`process.env.${next}`] = JSON.stringify(env[next]);
+      return prev;
+    }, {})
+  : {};
 
 const config = {
   entry: './src/index.tsx',
@@ -17,11 +28,15 @@ const config = {
   devServer: {
     open: true,
     host: 'localhost',
+    port: 3000,
+    allowedHosts: 'all',
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: 'index.html',
     }),
+    new webpack.DefinePlugin(envKeys),
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/
   ],
@@ -53,10 +68,6 @@ const config = {
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
-  },
-  devServer: {
-    allowedHosts: 'all',
-    historyApiFallback: true,
   },
 };
 

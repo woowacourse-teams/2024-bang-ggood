@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
 
 import ArrowBack from '@/assets/arrow-back.svg';
 
@@ -10,16 +9,14 @@ import ArrowBack from '@/assets/arrow-back.svg';
 //   navigatePath: string;
 // }
 
-const Header = () =>
+const Header = ({ Button }: { Button: React.ReactNode }) =>
   //{ type = 'Logo', navigatePath }: Props
 
   {
     return (
       <S.Wrapper>
         <ArrowBack />
-        <Link to="/saved">
-          <S.TextButton>저장</S.TextButton>
-        </Link>
+        {Button}
       </S.Wrapper>
     );
   };

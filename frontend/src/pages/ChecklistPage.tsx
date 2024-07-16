@@ -1,6 +1,7 @@
+import styled from '@emotion/styled';
 import { useCallback, useEffect, useState } from 'react';
 
-import mockCategories from '@/_mock/checklist.json';
+import { getChecklistQuestions, postChecklist } from '@/apis/checklist';
 import ChecklistCategory from '@/components/checklist/ChecklistCategory';
 import Header from '@/components/Header';
 
@@ -9,7 +10,7 @@ interface AccordianOpen {
   isOpen: boolean;
 }
 
-interface Answer {
+export interface Answer {
   questionId: number;
   answer: number;
 }
@@ -20,14 +21,19 @@ export interface addAnswerProps {
 }
 
 const ChecklistPage = () => {
-  const categories: ChecklistCategory[] = mockCategories;
-
-  // const [checklistData, setChecklistData] = useState(categories);
-  const [answers, setAnswers] = useState<Answer[]>([]);
+  const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategory[]>([]);
 
   useEffect(() => {
-    console.log(answers);
-  }, [answers]);
+    const fetchChecklist = async () => {
+      const checklist = await getChecklistQuestions();
+      setChecklistQuestions(checklist);
+    };
+    fetchChecklist();
+  }, []);
+
+  const categories: ChecklistCategory[] = checklistQuestions;
+
+  const [answers, setAnswers] = useState<Answer[]>([]);
 
   const [accordianOpen, setAccordianOpen] = useState<AccordianOpen[]>(
     categories.map(category => ({
@@ -70,14 +76,12 @@ const ChecklistPage = () => {
     });
   };
 
-  useEffect(() => {
-    console.log('fullAnswers', answers);
-  }, [answers]);
+  const submitAnswer = async () => await postChecklist(answers);
 
   return (
     <>
-      <Header />
-      {categories.map(category => (
+      <Header Button={<S.TextButton onClick={submitAnswer}>저장</S.TextButton>} />
+      {checklistQuestions.map(category => (
         <ChecklistCategory
           key={category.categoryId}
           category={category}
@@ -91,6 +95,18 @@ const ChecklistPage = () => {
       ))}
     </>
   );
+};
+
+const S = {
+  TextButton: styled.button`
+    color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.palette.green500};
+    border-radius: 5px;
+    font-size: ${({ theme }) => theme.text.size.medium};
+    font-weight: ${({ theme }) => theme.text.weight.bold};
+    width: 60px;
+    height: 40px;
+  `,
 };
 
 export default ChecklistPage;

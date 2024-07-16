@@ -62,6 +62,7 @@ const S = {
   Container: styled.div`
     padding: 16px;
     border-bottom: 1px solid ${({ theme }) => theme.palette.grey200};
+    background-color: ${({ theme }) => theme.palette.white};
   `,
   Title: styled.div`
     display: flex;

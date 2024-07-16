@@ -65,6 +65,7 @@ const S = {
     flex-direction: column;
     align-items: center;
     gap: 5px;
+    cursor: pointer;
   `,
   Label: styled.p`
     color: ${({ theme }) => theme.palette.grey500};

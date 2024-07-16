@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 import { ArrowDownSmall, ArrowUpSmall } from '@/assets/assets';
 import ChecklistQuestion from '@/components/checklist/ChecklistQuestion';
+import { addAnswerProps } from '@/pages/ChecklistPage';
 import { ChecklistCategory } from '@/types/checklist';
 
 interface Props {
@@ -9,9 +10,10 @@ interface Props {
   // eslint-disable-next-line no-unused-vars
   toggleOpen?: (id: number) => void;
   isAccordianOpen?: boolean;
+  addAnswer: ({ questionId, newAnswer }: addAnswerProps) => void;
 }
 
-const ChecklistCategory = ({ category, toggleOpen, isAccordianOpen }: Props) => {
+const ChecklistCategory = ({ category, toggleOpen, isAccordianOpen, addAnswer }: Props) => {
   return (
     <>
       <S.Category onClick={() => toggleOpen(category.categoryId)}>
@@ -21,7 +23,7 @@ const ChecklistCategory = ({ category, toggleOpen, isAccordianOpen }: Props) => 
 
       <S.Container isShow={isAccordianOpen}>
         {category.questions.map(question => (
-          <ChecklistQuestion key={question.questionId} question={question} />
+          <ChecklistQuestion key={question.questionId} question={question} addAnswer={addAnswer} />
         ))}
       </S.Container>
     </>

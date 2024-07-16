@@ -3,20 +3,37 @@ import { useState } from 'react';
 
 import { QuestionDot } from '@/assets/assets';
 import FaceIcon from '@/components/FaceMark/FaceIcon';
+import { addAnswerProps } from '@/pages/ChecklistPage';
 import { ChecklistQuestion } from '@/types/checklist';
 
 interface Props {
   question: ChecklistQuestion;
+  addAnswer: ({ questionId, newAnswer }: addAnswerProps) => void;
 }
 
-const ChecklistQuestion = ({ question }: Props) => {
+const ChecklistQuestion = ({ question, addAnswer }: Props) => {
   const [answer, setAnswer] = useState<null | number>(null);
 
-  const handleClick = (newAnswer: number) => {
-    setAnswer(answer === newAnswer ? null : newAnswer);
+  const handleClick = (newAnswer: null | number) => {
+    setAnswer(newAnswer);
+    if (newAnswer) {
+      addAnswer({ questionId: question.questionId, newAnswer });
+    }
   };
+
   type Emotion = 'good' | 'bad' | 'soso';
-  const emotions: Emotion[] = ['bad', 'soso', 'good'];
+
+  interface Emotions {
+    name: Emotion;
+    id: number;
+  }
+
+  const emotions: Emotions[] = [
+    { name: 'bad', id: 1 },
+    { name: 'soso', id: 2 },
+    { name: 'good', id: 3 },
+  ];
+
   return (
     <S.Container>
       <S.Title>
@@ -25,9 +42,10 @@ const ChecklistQuestion = ({ question }: Props) => {
       </S.Title>
       <S.Subtitle>•{question.questionSubtitle}</S.Subtitle>
       <S.Options>
-        {emotions.map((emotion, i) => (
-          <FaceIcon fill={answer === i + 1} key={emotion} emotion={emotion} onClick={() => handleClick(i + 1)} />
-        ))}
+        {emotions.map((emotion, i) => {
+          const { name, id } = emotion;
+          return <FaceIcon fill={answer === i + 1} key={id} emotion={name} onClick={() => handleClick(id)} />;
+        })}
       </S.Options>
     </S.Container>
   );

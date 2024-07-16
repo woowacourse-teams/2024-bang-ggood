@@ -7,7 +7,7 @@ import SaveCheckListPage from '@/pages/SaveCheckListPage';
 const router = createBrowserRouter([
   {
     element: <ChecklistPage />,
-    path: '/a',
+    path: '/',
   },
   {
     element: <SaveCheckListPage />,
@@ -15,8 +15,8 @@ const router = createBrowserRouter([
   },
   {
     element: <ChecklistPreviewPage />,
-    // path: '/checklist/:id',
-    path: '/',
+    path: '/checklist/:id',
+    // path: '/',
   },
 ]);
 

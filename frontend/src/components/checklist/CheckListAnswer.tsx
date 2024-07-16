@@ -27,16 +27,16 @@ interface Props {
 }
 
 const ChecklistAnswer = ({ QandA }: Props) => {
-  const emotionName = getEmotionNameById(QandA.answer);
+  const emotionName = getEmotionNameById(QandA?.answer);
 
   return (
     <S.Container>
       <div>
         <S.Title>
           <QuestionDot />
-          {QandA.questionTitle}
+          {QandA?.questionTitle}
         </S.Title>
-        <S.Subtitle>•{QandA.questionSubtitle}</S.Subtitle>
+        {QandA?.questionSubtitle && <S.Subtitle>•{QandA?.questionSubtitle}</S.Subtitle>}
       </div>
       <S.Answer>
         <FaceIcon emotion={emotionName} fill={true} />

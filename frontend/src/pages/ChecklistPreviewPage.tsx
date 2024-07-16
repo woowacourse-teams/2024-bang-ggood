@@ -1,6 +1,6 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import mockCategories from '@/_mock/checklist.json';
+import { getChecklistAnswer } from '@/apis/checklist';
 import ChecklistCategory from '@/components/checklist/ChecklistCategory';
 import Header from '@/components/Header';
 
@@ -20,13 +20,20 @@ export interface addAnswerProps {
 }
 
 const ChecklistPreviewPage = () => {
-  const categories: ChecklistCategory[] = mockCategories;
+  const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategory[]>([]);
 
-  // const [checklistData, setChecklistData] = useState(categories);
+  useEffect(() => {
+    const fetchChecklist = async () => {
+      const checklist = await getChecklistAnswer(1);
+      setChecklistQuestions(checklist);
+    };
+    fetchChecklist();
+  }, []);
+
   const [answers, setAnswers] = useState<Answer[]>([]);
 
   const [accordianOpen, setAccordianOpen] = useState<AccordianOpen[]>(
-    categories.map(category => ({
+    checklistQuestions.map(category => ({
       categoryId: category.categoryId,
       isOpen: true,
     })),
@@ -42,7 +49,7 @@ const ChecklistPreviewPage = () => {
 
   const isAccordianOpen = (id: number) => {
     const target = accordianOpen.filter(category => category.categoryId === id);
-    return target[0].isOpen;
+    return target[0]?.isOpen;
   };
 
   const addAnswer = useCallback(
@@ -69,7 +76,7 @@ const ChecklistPreviewPage = () => {
   return (
     <>
       <Header />
-      {categories.map(category => (
+      {checklistQuestions.map(category => (
         <ChecklistCategory
           key={category.categoryId}
           category={category}

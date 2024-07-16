@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 import { ArrowDownSmall, ArrowUpSmall } from '@/assets/assets';
+import ChecklistAnswer from '@/components/checklist/CheckListAnswer';
 import ChecklistQuestion from '@/components/checklist/ChecklistQuestion';
 import { addAnswerProps } from '@/pages/ChecklistPage';
 import { ChecklistCategory } from '@/types/checklist';
@@ -12,9 +13,17 @@ interface Props {
   isAccordianOpen?: boolean;
   addAnswer: ({ questionId, newAnswer }: addAnswerProps) => void;
   deleteAnswer: (questionId: number) => void;
+  isAnswer?: boolean;
 }
 
-const ChecklistCategory = ({ category, toggleOpen, isAccordianOpen, addAnswer, deleteAnswer }: Props) => {
+const ChecklistCategory = ({
+  category,
+  toggleOpen,
+  isAccordianOpen,
+  addAnswer,
+  deleteAnswer,
+  isAnswer = false,
+}: Props) => {
   return (
     <>
       <S.Category onClick={() => toggleOpen(category.categoryId)}>
@@ -23,14 +32,18 @@ const ChecklistCategory = ({ category, toggleOpen, isAccordianOpen, addAnswer, d
       </S.Category>
 
       <S.Container isShow={isAccordianOpen}>
-        {category.questions.map(question => (
-          <ChecklistQuestion
-            key={question.questionId}
-            question={question}
-            addAnswer={addAnswer}
-            deleteAnswer={deleteAnswer}
-          />
-        ))}
+        {category.questions.map(question =>
+          isAnswer ? (
+            <ChecklistAnswer key={question.questionId} QandA={question} />
+          ) : (
+            <ChecklistQuestion
+              key={question.questionId}
+              question={question}
+              addAnswer={addAnswer}
+              deleteAnswer={deleteAnswer}
+            />
+          ),
+        )}
       </S.Container>
     </>
   );

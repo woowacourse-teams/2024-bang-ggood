@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import mockCategories from '@/_mock/checklist.json';
 import ChecklistCategory from '@/components/checklist/ChecklistCategory';
@@ -9,7 +9,7 @@ interface AccordianOpen {
   isOpen: boolean;
 }
 
-interface Answer {
+export interface Answer {
   questionId: number;
   answer: number;
 }
@@ -20,14 +20,10 @@ export interface addAnswerProps {
 }
 
 const ChecklistPage = () => {
+  const questionsInfo = getChecklistQuestions();
   const categories: ChecklistCategory[] = mockCategories;
 
-  // const [checklistData, setChecklistData] = useState(categories);
   const [answers, setAnswers] = useState<Answer[]>([]);
-
-  useEffect(() => {
-    console.log(answers);
-  }, [answers]);
 
   const [accordianOpen, setAccordianOpen] = useState<AccordianOpen[]>(
     categories.map(category => ({
@@ -69,10 +65,6 @@ const ChecklistPage = () => {
       return prevAnswers.filter(answer => answer.questionId !== questionId);
     });
   };
-
-  useEffect(() => {
-    console.log('fullAnswers', answers);
-  }, [answers]);
 
   return (
     <>

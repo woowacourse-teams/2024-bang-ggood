@@ -7,6 +7,7 @@ const S = {
     display: flex;
     flex-direction: column;
     row-gap: 6px;
+    pointer: cursor;
   `,
   Header: styled.div`
     font-size: ${({ theme }) => theme.text.size.small};

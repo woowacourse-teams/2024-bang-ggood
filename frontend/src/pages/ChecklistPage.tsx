@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { useCallback, useEffect, useState } from 'react';
 
-import mockQuestions from '@/_mock/checklist.json';
 import { getChecklistQuestions, postChecklist } from '@/apis/checklist';
 import ChecklistCategory from '@/components/checklist/ChecklistCategory';
 import Header from '@/components/Header';
@@ -22,7 +21,7 @@ export interface addAnswerProps {
 }
 
 const ChecklistPage = () => {
-  const [checklistQuestions, setChecklistQuestions] = useState(mockQuestions);
+  const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategory[]>([]);
 
   useEffect(() => {
     const fetchChecklist = async () => {
@@ -82,7 +81,7 @@ const ChecklistPage = () => {
   return (
     <>
       <Header Button={<S.TextButton onClick={submitAnswer}>저장</S.TextButton>} />
-      {mockQuestions.map(category => (
+      {checklistQuestions.map(category => (
         <ChecklistCategory
           key={category.categoryId}
           category={category}

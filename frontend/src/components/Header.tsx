@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
-import ArrowBack from '@/assets/arrow-back.svg';
+// import ArrowBack from '@/assets/arrow-back.svg';
+import Logo from '@/assets/logo.svg';
 
 // type HeaderStyle = 'Logo' | 'ArrowBack' | 'nothing';
 
@@ -12,7 +13,7 @@ import ArrowBack from '@/assets/arrow-back.svg';
 const Header = ({ Button }: { Button?: React.ReactNode }) => {
   return (
     <S.Wrapper>
-      <ArrowBack />
+      <Logo />
       {Button}
     </S.Wrapper>
   );

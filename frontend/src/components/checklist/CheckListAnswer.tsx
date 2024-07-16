@@ -36,7 +36,7 @@ const ChecklistAnswer = ({ QandA }: Props) => {
           <QuestionDot />
           {QandA?.questionTitle}
         </S.Title>
-        {QandA?.questionSubtitle && <S.Subtitle>•{QandA?.questionSubtitle}</S.Subtitle>}
+        {QandA?.questionSubTitle && <S.Subtitle>•{QandA?.questionSubTitle}</S.Subtitle>}
       </div>
       <S.Answer>
         <FaceIcon emotion={emotionName} fill={true} />

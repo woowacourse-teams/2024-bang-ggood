@@ -1,11 +1,14 @@
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 
 import Logo from '@/assets/logo.svg';
 
 const HeaderWithLogo = () => {
   return (
     <S.Wrapper>
-      <Logo />
+      <Link to="/">
+        <Logo />
+      </Link>
     </S.Wrapper>
   );
 };

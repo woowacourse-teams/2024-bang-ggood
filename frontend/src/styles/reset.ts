@@ -145,4 +145,7 @@ export const normalize = css`
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  a {
+    text-decoration: none;
+  }
 `;

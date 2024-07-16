@@ -7,7 +7,7 @@ export interface ChecklistCategory {
 export interface ChecklistQuestion {
   questionId: number;
   questionTitle: string;
-  questionSubtitle: string | null;
+  questionSubTitle: string | null;
 }
 
 export interface ChecklistAnswer extends ChecklistQuestion {

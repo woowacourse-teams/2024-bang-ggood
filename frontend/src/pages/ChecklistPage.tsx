@@ -64,6 +64,16 @@ const ChecklistPage = () => {
     [answers],
   );
 
+  const deleteAnswer = (questionId: number) => {
+    setAnswers(prevAnswers => {
+      return prevAnswers.filter(answer => answer.questionId !== questionId);
+    });
+  };
+
+  useEffect(() => {
+    console.log('fullAnswers', answers);
+  }, [answers]);
+
   return (
     <>
       <Header />
@@ -76,6 +86,7 @@ const ChecklistPage = () => {
           }}
           isAccordianOpen={isAccordianOpen(category.categoryId)}
           addAnswer={addAnswer}
+          deleteAnswer={deleteAnswer}
         />
       ))}
     </>

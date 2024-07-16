@@ -11,9 +11,10 @@ interface Props {
   toggleOpen?: (id: number) => void;
   isAccordianOpen?: boolean;
   addAnswer: ({ questionId, newAnswer }: addAnswerProps) => void;
+  deleteAnswer: (questionId: number) => void;
 }
 
-const ChecklistCategory = ({ category, toggleOpen, isAccordianOpen, addAnswer }: Props) => {
+const ChecklistCategory = ({ category, toggleOpen, isAccordianOpen, addAnswer, deleteAnswer }: Props) => {
   return (
     <>
       <S.Category onClick={() => toggleOpen(category.categoryId)}>
@@ -23,7 +24,12 @@ const ChecklistCategory = ({ category, toggleOpen, isAccordianOpen, addAnswer }:
 
       <S.Container isShow={isAccordianOpen}>
         {category.questions.map(question => (
-          <ChecklistQuestion key={question.questionId} question={question} addAnswer={addAnswer} />
+          <ChecklistQuestion
+            key={question.questionId}
+            question={question}
+            addAnswer={addAnswer}
+            deleteAnswer={deleteAnswer}
+          />
         ))}
       </S.Container>
     </>

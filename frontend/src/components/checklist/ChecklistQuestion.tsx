@@ -9,14 +9,18 @@ import { ChecklistQuestion } from '@/types/checklist';
 interface Props {
   question: ChecklistQuestion;
   addAnswer: ({ questionId, newAnswer }: addAnswerProps) => void;
+  deleteAnswer: (questionId: number) => void;
 }
 
-const ChecklistQuestion = ({ question, addAnswer }: Props) => {
+const ChecklistQuestion = ({ question, addAnswer, deleteAnswer }: Props) => {
   const [answer, setAnswer] = useState<null | number>(null);
 
-  const handleClick = (newAnswer: null | number) => {
-    setAnswer(newAnswer);
-    if (newAnswer) {
+  const handleClick = (newAnswer: number) => {
+    if (answer === newAnswer) {
+      setAnswer(null);
+      deleteAnswer(question.questionId);
+    } else {
+      setAnswer(newAnswer);
       addAnswer({ questionId: question.questionId, newAnswer });
     }
   };
@@ -42,9 +46,9 @@ const ChecklistQuestion = ({ question, addAnswer }: Props) => {
       </S.Title>
       <S.Subtitle>•{question.questionSubtitle}</S.Subtitle>
       <S.Options>
-        {emotions.map((emotion, i) => {
+        {emotions.map(emotion => {
           const { name, id } = emotion;
-          return <FaceIcon fill={answer === i + 1} key={id} emotion={name} onClick={() => handleClick(id)} />;
+          return <FaceIcon fill={answer === emotion.id} key={id} emotion={name} onClick={() => handleClick(id)} />;
         })}
       </S.Options>
     </S.Container>
@@ -72,7 +76,7 @@ const S = {
     font-size: ${({ theme }) => theme.text.size.small};
     margin-bottom: 10px;
     word-break: keep-all;
-    line-height: 16px;
+    line-height: 1.5;
     margin-left: 20px;
   `,
   Options: styled.div`

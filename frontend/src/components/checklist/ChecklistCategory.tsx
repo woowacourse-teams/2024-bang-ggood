@@ -39,19 +39,19 @@ const ChecklistCategory = ({ category, toggleOpen, isAccordianOpen, addAnswer, d
 export default ChecklistCategory;
 
 const S = {
-  Category: styled.div<{ onClick: () => void }>`
+  Category: styled.div`
     padding: 16px;
-
     display: flex;
     justify-content: space-between;
     background-color: ${({ theme }) => theme.palette.grey100};
-
     font-weight: ${({ theme }) => theme.text.weight.bold};
-
     font-size: ${({ theme }) => theme.text.size.large};
     border-bottom: ${({ theme }) => `1px solid ${theme.palette.grey200}`};
+    cursor: pointer;
   `,
   Container: styled.div<{ isShow: boolean }>`
-    display: ${({ isShow }) => (isShow ? 'block' : 'none')};
+    max-height: ${({ isShow }) => (isShow ? '1000px' : '0')};
+    overflow: hidden;
+    transition: max-height 0.6s ease;
   `,
 };

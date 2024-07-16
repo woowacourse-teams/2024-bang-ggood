@@ -138,4 +138,11 @@ export const normalize = css`
     background-color: transparent;
     cursor: pointer;
   }
+  .scroll::-webkit-scrollbar {
+    display: none;
+  }
+  .scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 `;

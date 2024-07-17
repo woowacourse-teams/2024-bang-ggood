@@ -67,6 +67,7 @@ const S = {
   Title: styled.div`
     display: flex;
     gap: 10px;
+    /* line-height: 1.5rem; */
 
     font-size: ${({ theme }) => theme.text.size.medium};
     margin: 5px 0;

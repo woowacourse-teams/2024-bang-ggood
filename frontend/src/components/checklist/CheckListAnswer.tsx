@@ -61,10 +61,12 @@ const S = {
   `,
   Title: styled.div`
     display: flex;
+    align-items: center;
     gap: 10px;
-
+    /* width: 80%; */
     font-size: ${({ theme }) => theme.text.size.medium};
     margin: 5px 0;
+    line-height: 1.5rem;
   `,
   Subtitle: styled.div`
     width: 80%;

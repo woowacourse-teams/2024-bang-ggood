@@ -16,7 +16,6 @@ const router = createBrowserRouter([
   {
     element: <ChecklistPreviewPage />,
     path: '/checklist/:id',
-    // path: '/',
   },
 ]);
 

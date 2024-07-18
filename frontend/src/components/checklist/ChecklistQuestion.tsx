@@ -62,30 +62,33 @@ const S = {
   Container: styled.div`
     padding: 16px;
     border-bottom: 1px solid ${({ theme }) => theme.palette.grey200};
+
     background-color: ${({ theme }) => theme.palette.white};
   `,
   Title: styled.div`
     display: flex;
-    gap: 10px;
+    margin: 5px 0;
+
     /* line-height: 1.5rem; */
 
     font-size: ${({ theme }) => theme.text.size.medium};
-    margin: 5px 0;
+    gap: 10px;
   `,
   Subtitle: styled.div`
     width: 80vw;
+    margin-bottom: 10px;
+    margin-left: 20px;
+
     color: ${({ theme }) => theme.palette.grey500};
     font-size: ${({ theme }) => theme.text.size.small};
-    margin-bottom: 10px;
-    word-break: keep-all;
     line-height: 1.5;
-    margin-left: 20px;
+    word-break: keep-all;
   `,
   Options: styled.div`
-    margin: 0 auto;
-    width: 80%;
     display: flex;
-    justify-content: space-between;
+    width: 80%;
+    margin: 0 auto;
     margin-top: 10px;
+    justify-content: space-between;
   `,
 };

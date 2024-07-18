@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
 
 const Button = styled.button`
-  border: 1px solid red; 
+   width: 100px; 
    height: 10px;
-   width: 100px;
+  border: 1px solid red;
+
    color: hotpink;
 `;
 

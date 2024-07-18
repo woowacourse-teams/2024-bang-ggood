@@ -16,17 +16,17 @@ export default HeaderWithLogo;
 
 const S = {
   Wrapper: styled.header`
-    width: 100%;
-    height: 64px;
-    box-sizing: border-box;
-    padding: 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
+    height: 64px;
+    padding: 24px;
+    box-sizing: border-box;
   `,
   TextButton: styled.button`
     color: ${({ theme }) => theme.palette.black};
-    font-size: ${({ theme }) => theme.text.size.medium};
     font-weight: ${({ theme }) => theme.text.weight.bold};
+    font-size: ${({ theme }) => theme.text.size.medium};
   `,
 };

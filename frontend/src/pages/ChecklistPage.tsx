@@ -114,13 +114,15 @@ const ChecklistPage = () => {
 
 const S = {
   TextButton: styled.button`
-    color: ${({ theme }) => theme.palette.white};
-    background-color: ${({ theme }) => theme.palette.green500};
-    border-radius: 5px;
-    font-size: ${({ theme }) => theme.text.size.medium};
-    font-weight: ${({ theme }) => theme.text.weight.bold};
     width: 60px;
     height: 40px;
+
+    background-color: ${({ theme }) => theme.palette.green500};
+
+    color: ${({ theme }) => theme.palette.white};
+    font-weight: ${({ theme }) => theme.text.weight.bold};
+    font-size: ${({ theme }) => theme.text.size.medium};
+    border-radius: 5px;
   `,
 };
 

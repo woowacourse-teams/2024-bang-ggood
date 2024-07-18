@@ -37,6 +37,7 @@ const text = {
   weight: {
     thin: 200,
     medium: 400,
+    semiBold: 600,
     bold: 700,
   },
 };

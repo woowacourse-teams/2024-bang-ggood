@@ -1,24 +1,29 @@
 const palette = {
   /*yellow*/
-  yellow500: '#F7CA58',
-  yellow400: '#FFDB5D',
-  yellow300: '#FFE27D',
-  yellow200: '#FFDB5D',
-  yellow100: '#FCF6E2',
+  yellow600: '#FFC107',
+  yellow500: '#FFDB5D',
+  yellow400: '#FFE27D',
+  yellow300: '#FFEA9E',
+  yellow200: '#FFF1BE',
+  yellow100: '#FFF8DF',
   /*green*/
+  green600: "#22BD6A",
   green500: '#49CE7F',
   green200: '#B6EBCC',
+  /*subGreen*/
+  subGreen600: "#8BB26B",
   subGreen500: '#A6CF85',
   subGreen200: '#D3ECAD',
   /* grey */
-  grey600: '#FC6A4B',
-  grey500: '#7C7C7C',
-  grey400: '#A6A6A6',
-  grey300: '#C7C7C7',
-  grey200: '#DFDFDF',
-  grey100: '#F3F3F3',
+  grey700: '#484947',
+  grey600: '#7C7C7C',
+  grey500: '#A6A6A6',
+  grey400: '#C7C7C7',
+  grey300: '#DFDFDF',
+  grey200: '#F3F3F3',
+  grey100: "#F1F1F1",
   /* original */
-  black: '#1B1C19',
+  black: '#363636',
   white: '#FFFFFF',
 };
 

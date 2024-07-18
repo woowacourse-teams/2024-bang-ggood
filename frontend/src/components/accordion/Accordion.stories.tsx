@@ -1,8 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import AccordionHeader from "./AccodionHeader";
+import type { Meta, StoryObj } from '@storybook/react';
+
+import AccordionHeader from './AccodionHeader';
 
 const meta = {
-  title: "Accordion",
+  title: 'Accordion',
   component: AccordionHeader,
 } satisfies Meta<typeof AccordionHeader>;
 

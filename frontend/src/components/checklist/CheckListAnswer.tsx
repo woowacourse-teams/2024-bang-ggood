@@ -49,33 +49,36 @@ export default ChecklistAnswer;
 
 const S = {
   Container: styled.div`
-    width: 100%;
     display: flex;
+    width: 100%;
+    padding: 16px 24px;
+
+    background-color: ${({ theme }) => theme.palette.white};
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 24px;
     box-sizing: border-box;
     border-bottom: 1px solid ${({ theme }) => theme.palette.grey200};
-    background-color: ${({ theme }) => theme.palette.white};
   `,
   Title: styled.div`
     display: flex;
-    align-items: center;
-    gap: 10px;
+    margin: 5px 0;
+
     /* width: 80%; */
     font-size: ${({ theme }) => theme.text.size.medium};
-    margin: 5px 0;
     line-height: 1.5rem;
+    align-items: center;
+    gap: 10px;
   `,
   Subtitle: styled.div`
     width: 80%;
+    margin-bottom: 10px;
+    margin-left: 20px;
+
     color: ${({ theme }) => theme.palette.grey500};
     font-size: ${({ theme }) => theme.text.size.small};
-    margin-bottom: 10px;
-    word-break: keep-all;
     line-height: 1.5;
-    margin-left: 20px;
+    word-break: keep-all;
   `,
   Answer: styled.div`
     width: 80px;

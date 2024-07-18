@@ -90,10 +90,13 @@ export const normalize = css`
     margin: 0;
     padding: 0;
     border: 0;
+
     font-size: 100%;
     font: inherit;
+
     vertical-align: baseline;
   }
+
   /* HTML5 display-role reset for older browsers */
   article,
   aside,
@@ -108,43 +111,54 @@ export const normalize = css`
   section {
     display: block;
   }
+
   body {
     line-height: 1;
   }
+
   ol,
   ul {
     list-style: none;
   }
+
   blockquote,
   q {
     quotes: none;
   }
-  blockquote:before,
-  blockquote:after,
-  q:before,
-  q:after {
+
+  blockquote::before,
+  blockquote::after,
+  q::before,
+  q::after {
     content: '';
     content: none;
   }
+
   table {
     border-collapse: collapse;
     border-spacing: 0;
   }
+
   button {
     padding: 0;
     border: none;
-    font: inherit;
-    color: inherit;
+
     background-color: transparent;
+
+    color: inherit;
+    font: inherit;
     cursor: pointer;
   }
+
   .scroll::-webkit-scrollbar {
     display: none;
   }
+
   .scroll {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
   a {
     text-decoration: none;
   }

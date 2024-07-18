@@ -53,15 +53,18 @@ export default ChecklistCategory;
 
 const S = {
   Category: styled.div`
-    padding: 16px;
     display: flex;
-    justify-content: space-between;
+    padding: 16px;
+
     background-color: #f3f3f3;
+
     /* background-color: ${({ theme }) => theme.palette.yellow100}; */
     font-weight: ${({ theme }) => theme.text.weight.bold};
     font-size: ${({ theme }) => theme.text.size.large};
+    justify-content: space-between;
     border-bottom: ${({ theme }) => `2px solid ${theme.palette.grey200}`};
     cursor: pointer;
+
     /* box-shadow:; */
   `,
   Container: styled.div<{ isShow: boolean }>`

@@ -26,17 +26,17 @@ export default SaveCheckListPage;
 
 const S = {
   Wrapper: styled.div`
+    display: flex;
     width: 100%;
     height: 80vh;
     gap: 10px;
-    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   `,
   Text: styled.div`
-    font-size: ${({ theme }) => theme.text.size.large};
     font-weight: ${({ theme }) => theme.text.weight.bold};
+    font-size: ${({ theme }) => theme.text.size.large};
   `,
   TextWrapper: styled.div`
     display: flex;
@@ -46,16 +46,18 @@ const S = {
     margin-top: 20px;
   `,
   Button: styled.div`
-    margin-top: 30px;
     display: flex;
+    margin-top: 30px;
+    padding: 16px 24px;
+
+    background-color: ${({ theme }) => theme.palette.green500};
+
+    color: ${({ theme }) => theme.palette.white};
+    font-weight: ${({ theme }) => theme.text.weight.bold};
+    font-size: ${({ theme }) => theme.text.size.large};
     justify-content: center;
     align-items: center;
-    padding: 16px 24px;
     border-radius: 8px;
-    font-size: ${({ theme }) => theme.text.size.large};
-    font-weight: ${({ theme }) => theme.text.weight.bold};
-    color: ${({ theme }) => theme.palette.white};
-    background-color: ${({ theme }) => theme.palette.green500};
 
     &:hover,
     &:active {

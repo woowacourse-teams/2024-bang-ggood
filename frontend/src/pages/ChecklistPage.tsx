@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 import mockCategories from '@/_mock/checklist.json';
 import { postChecklist } from '@/apis/checklist';
-import Header from '@/components/Header';
 import ChecklistCategory from '@/components/checklist/ChecklistCategory';
+import Header from '@/components/Header';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
+
 interface AccordianOpen {
   categoryId: number;
   isOpen: boolean;
@@ -25,12 +26,9 @@ export interface addAnswerProps {
 const ChecklistPage = () => {
   const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategoryQuestions[]>([]);
 
-  console.log('cc');
-
   useEffect(() => {
     const fetchChecklist = () => {
       const checklist = mockCategories;
-      console.log('checklist', checklist);
       // const checklist = await getChecklistQuestions();
       setChecklistQuestions(checklist);
     };
@@ -119,13 +117,15 @@ const ChecklistPage = () => {
 
 const S = {
   TextButton: styled.button`
-    color: ${({ theme }) => theme.palette.white};
-    background-color: ${({ theme }) => theme.palette.green500};
-    border-radius: 5px;
-    font-size: ${({ theme }) => theme.text.size.medium};
-    font-weight: ${({ theme }) => theme.text.weight.bold};
     width: 60px;
     height: 40px;
+
+    background-color: ${({ theme }) => theme.palette.green500};
+
+    color: ${({ theme }) => theme.palette.white};
+    font-weight: ${({ theme }) => theme.text.weight.bold};
+    font-size: ${({ theme }) => theme.text.size.medium};
+    border-radius: 5px;
   `,
 };
 

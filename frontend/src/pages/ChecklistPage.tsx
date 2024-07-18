@@ -2,10 +2,11 @@ import styled from '@emotion/styled';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getChecklistQuestions, postChecklist } from '@/apis/checklist';
-import ChecklistCategory from '@/components/checklist/ChecklistCategory';
+import mockCategories from '@/_mock/checklist.json';
+import { postChecklist } from '@/apis/checklist';
 import Header from '@/components/Header';
-
+import ChecklistCategory from '@/components/checklist/ChecklistCategory';
+import { ChecklistCategoryQuestions } from '@/types/checklist';
 interface AccordianOpen {
   categoryId: number;
   isOpen: boolean;
@@ -22,11 +23,15 @@ export interface addAnswerProps {
 }
 
 const ChecklistPage = () => {
-  const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategory[]>([]);
+  const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategoryQuestions[]>([]);
+
+  console.log('cc');
 
   useEffect(() => {
-    const fetchChecklist = async () => {
-      const checklist = await getChecklistQuestions();
+    const fetchChecklist = () => {
+      const checklist = mockCategories;
+      console.log('checklist', checklist);
+      // const checklist = await getChecklistQuestions();
       setChecklistQuestions(checklist);
     };
     fetchChecklist();
@@ -96,7 +101,7 @@ const ChecklistPage = () => {
   return (
     <>
       <Header Button={<S.TextButton onClick={submitAnswer}>저장</S.TextButton>} />
-      {checklistQuestions.map(category => (
+      {checklistQuestions?.map(category => (
         <ChecklistCategory
           key={category.categoryId}
           category={category}

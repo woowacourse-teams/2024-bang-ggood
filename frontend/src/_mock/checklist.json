@@ -1,65 +1,43 @@
 [
   {
     "categoryId": 1,
-    "category": "청결",
+    "categoryName": "청결도",
     "questions": [
       {
-        "questionId": 11,
-        "questionTitle": "방 안에 물이 새거나 곰팡이가 핀 곳은 없나요?",
-        "questionSubtitle": "천장, 벽면, 가구 뒤, 장판을 확인하세요."
+        "questionId": 1,
+        "questionTitle": "수압/배수를 확인해주세요.",
+        "questionSubtitle": "화장실과 주방을 확인해주세요"
       },
       {
-        "questionId": 12,
-        "questionTitle": "벌레가 나온 흔적은 없나요?",
-        "questionSubtitle": "벌레 퇴치약이 부착되어있는지, 싱크대 하부장 경첩에 배설물이 있는지 확인하세요."
+        "questionId": 2,
+        "questionTitle": "수압/배수를 확인해주세요.",
+        "questionSubtitle": null
+      },
+      {
+        "questionId": 3,
+        "questionTitle": "수압/배수를 확인해주세요.",
+        "questionSubtitle": "화장실과 주방을 확인해주세요"
       }
     ]
   },
   {
     "categoryId": 2,
-    "category": "내부 시설",
+    "categoryName": "내부시설",
     "questions": [
       {
-        "questionId": 21,
-        "questionTitle": "수압 및 배수가 괜찮은가요?",
-        "questionSubtitle": "싱크대와 화장실에서 동시에 물을 틀어보세요. "
+        "questionId": 1,
+        "questionTitle": "수압/배수를 확인해주세요.",
+        "questionSubtitle": "화장실과 주방을 확인해주세요"
       },
       {
-        "questionId": 22,
-        "questionTitle": "asfda",
-        "questionSubtitle": "asf"
-      }
-    ]
-  },
-  {
-    "categoryId": 3,
-    "category": "외부 시설",
-    "questions": [
-      {
-        "questionId": 21,
-        "questionTitle": "수압 및 배수가 괜찮은가요?",
-        "questionSubtitle": "싱크대와 화장실에서 동시에 물을 틀어보세요. "
+        "questionId": 2,
+        "questionTitle": "수압/배수를 확인해주세요.",
+        "questionSubtitle": null
       },
       {
-        "questionId": 22,
-        "questionTitle": "asfda",
-        "questionSubtitle": "asf"
-      }
-    ]
-  },
-  {
-    "categoryId": 4,
-    "category": "보안",
-    "questions": [
-      {
-        "questionId": 21,
-        "questionTitle": "수압 및 배수가 괜찮은가요?",
-        "questionSubtitle": "싱크대와 화장실에서 동시에 물을 틀어보세요. "
-      },
-      {
-        "questionId": 22,
-        "questionTitle": "asfda",
-        "questionSubtitle": "asf"
+        "questionId": 3,
+        "questionTitle": "수압/배수를 확인해주세요.",
+        "questionSubtitle": "화장실과 주방을 확인해주세요"
       }
     ]
   }

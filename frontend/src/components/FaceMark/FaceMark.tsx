@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import FaceIcon from '@/components/FaceMark/FaceIcon';
+import FaceIcon from '@/components/faceMark/FaceIcon';
 
 const S = {
   Container: styled.div`

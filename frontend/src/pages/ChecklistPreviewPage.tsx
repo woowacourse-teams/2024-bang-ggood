@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { getChecklistAnswer } from '@/apis/checklist';
-import ChecklistCategory from '@/components/checklist/ChecklistCategory';
+import ChecklistCategory from '@/components/Checklist/ChecklistCategory';
 import HeaderWithLogo from '@/components/HeaderWithLogo';
 
 interface AccordianOpen {

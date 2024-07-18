@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import { QuestionDot } from '@/assets/assets';
-import FaceIcon from '@/components/FaceMark/FaceIcon';
+import FaceIcon from '@/components/faceMark/FaceIcon';
 import { addAnswerProps } from '@/pages/ChecklistPage';
 import { ChecklistQuestion } from '@/types/checklist';
 
@@ -44,7 +44,7 @@ const ChecklistQuestion = ({ question, addAnswer, deleteAnswer }: Props) => {
         <QuestionDot />
         {question?.questionTitle}
       </S.Title>
-      {question?.questionSubTitle && <S.Subtitle>•{question?.questionSubTitle}</S.Subtitle>}
+      {question?.questionSubtitle && <S.Subtitle>•{question?.questionSubtitle}</S.Subtitle>}
       <S.Options>
         {emotions.map(emotion => {
           const { name, id } = emotion;

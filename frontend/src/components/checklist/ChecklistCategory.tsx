@@ -4,10 +4,10 @@ import { ArrowDownSmall, ArrowUpSmall } from '@/assets/assets';
 import ChecklistAnswer from '@/components/checklist/CheckListAnswer';
 import ChecklistQuestion from '@/components/checklist/ChecklistQuestion';
 import { addAnswerProps } from '@/pages/ChecklistPage';
-import { ChecklistCategory } from '@/types/checklist';
+import { ChecklistCategoryQuestions } from '@/types/checklist';
 
 interface Props {
-  category: ChecklistCategory;
+  category: ChecklistCategoryQuestions;
   // eslint-disable-next-line no-unused-vars
   toggleOpen?: (id: number) => void;
   isAccordianOpen?: boolean;
@@ -27,7 +27,7 @@ const ChecklistCategory = ({
   return (
     <>
       <S.Category onClick={() => toggleOpen(category.categoryId)}>
-        <span>{category.category}</span>
+        <span>{category.categoryName}</span>
         {isAccordianOpen ? <ArrowUpSmall /> : <ArrowDownSmall />}
       </S.Category>
 

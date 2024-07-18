@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import { title2, title3, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
 
 type ButtonSize = 'small' | 'medium' | 'full';
@@ -58,18 +59,15 @@ const ColorStyles = {
 const sizeStyles = {
   small: `
     padding: 10px 24px;
-    font-size: ${theme.text.size.small};
-    font-weight: ${theme.text.weight.bold};
+    ${title4}
   `,
   medium: `
     padding: 12px 48px;
-    font-size:  ${theme.text.size.medium};
-    font-weight: ${theme.text.weight.bold};
+    ${title3}
   `,
   full: `
-    padding: 14px 48px;
-    font-size: ${theme.text.size.large};
-    font-weight: ${theme.text.weight.bold};
     width: 100%;
+    padding: 14px 48px;
+    ${title2}
   `,
 };

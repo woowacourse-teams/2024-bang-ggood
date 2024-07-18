@@ -1,5 +1,6 @@
 ### react ###
 .DS_*
+../.DS_*
 *.log
 logs
 **/*.backup.*

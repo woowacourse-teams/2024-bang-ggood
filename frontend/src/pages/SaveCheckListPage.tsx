@@ -8,10 +8,11 @@ const SaveCheckListPage = () => {
   return (
     <>
       <HeaderWithLogo />
+
       <S.Wrapper>
+        <BangGgoodIcon />
         <S.TextWrapper>
           <S.Text> 체크리스트가 저장되었습니다</S.Text>
-          <BangGgoodIcon />
         </S.TextWrapper>
         <Link to="/checklist/1">
           <S.Button>저장된 체크리스트 보러가기</S.Button>
@@ -42,20 +43,23 @@ const S = {
     flex-direction: row;
     align-items: center;
     gap: 10px;
+    margin-top: 20px;
   `,
   Button: styled.div`
-    margin-top: 50px;
+    margin-top: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
-    text-decoration: none;
-    text-decoration-line: none;
-    width: 100%;
     padding: 16px 24px;
-    border-radius: 4px;
+    border-radius: 8px;
     font-size: ${({ theme }) => theme.text.size.large};
     font-weight: ${({ theme }) => theme.text.weight.bold};
     color: ${({ theme }) => theme.palette.white};
     background-color: ${({ theme }) => theme.palette.green500};
+
+    &:hover,
+    &:active {
+      background-color: ${({ theme }) => theme.palette.green200};
+    }
   `,
 };

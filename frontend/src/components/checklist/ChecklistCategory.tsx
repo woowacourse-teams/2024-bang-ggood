@@ -56,11 +56,13 @@ const S = {
     padding: 16px;
     display: flex;
     justify-content: space-between;
-    background-color: ${({ theme }) => theme.palette.grey100};
+    background-color: #f3f3f3;
+    /* background-color: ${({ theme }) => theme.palette.yellow100}; */
     font-weight: ${({ theme }) => theme.text.weight.bold};
     font-size: ${({ theme }) => theme.text.size.large};
-    border-bottom: ${({ theme }) => `1px solid ${theme.palette.grey200}`};
+    border-bottom: ${({ theme }) => `2px solid ${theme.palette.grey200}`};
     cursor: pointer;
+    /* box-shadow:; */
   `,
   Container: styled.div<{ isShow: boolean }>`
     max-height: ${({ isShow }) => (isShow ? '1000px' : '0')};

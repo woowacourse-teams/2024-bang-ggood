@@ -15,12 +15,11 @@ const palette = {
   subGreen500: '#A6CF85',
   subGreen200: '#D3ECAD',
   /* grey */
-  grey700: '#484947',
-  grey600: '#7C7C7C',
-  grey500: '#A6A6A6',
-  grey400: '#C7C7C7',
-  grey300: '#DFDFDF',
-  grey200: '#F3F3F3',
+  grey600: '#484947',
+  grey500: '#7C7C7C',
+  grey400: '#A6A6A6',
+  grey300: '#C7C7C7',
+  grey200: '#E5E5E5',
   grey100: '#F1F1F1',
   /* original */
   black: '#363636',

@@ -4,7 +4,7 @@ interface Props {
   isMarked: boolean;
 }
 const AccordionHeader = ({ isMarked }: Props) => {
-  return <S.HeaderContainer>aa{isMarked && <S.HeaderMark />}</S.HeaderContainer>;
+  return <S.HeaderContainer>{isMarked && <S.HeaderMark />}</S.HeaderContainer>;
 };
 
 export default AccordionHeader;
@@ -19,6 +19,7 @@ const HeaderContainer = styled.div`
 const HeaderMark = styled.div`
   width: 12px;
   height: 100%;
+  border-radius: 8px 0px 0px 8px;
   background-color: ${({ theme }) => theme.palette.yellow500};
 `;
 
@@ -26,4 +27,3 @@ const S = {
   HeaderContainer,
   HeaderMark,
 };
-

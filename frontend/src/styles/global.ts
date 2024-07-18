@@ -1,7 +1,7 @@
-import { css } from "@emotion/react";
+import { css } from '@emotion/react';
 
-import { normalize } from "../styles/reset";
-import theme from "../styles/theme";
+import { normalize } from '../styles/reset';
+import theme from '../styles/theme';
 
 export const baseStyle = css`
   ${normalize}

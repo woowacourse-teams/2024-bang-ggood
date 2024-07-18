@@ -7,11 +7,11 @@ const palette = {
   yellow200: '#FFF1BE',
   yellow100: '#FFF8DF',
   /*green*/
-  green600: "#22BD6A",
+  green600: '#22BD6A',
   green500: '#49CE7F',
   green200: '#B6EBCC',
   /*subGreen*/
-  subGreen600: "#8BB26B",
+  subGreen600: '#8BB26B',
   subGreen500: '#A6CF85',
   subGreen200: '#D3ECAD',
   /* grey */
@@ -21,7 +21,7 @@ const palette = {
   grey400: '#C7C7C7',
   grey300: '#DFDFDF',
   grey200: '#F3F3F3',
-  grey100: "#F1F1F1",
+  grey100: '#F1F1F1',
   /* original */
   black: '#363636',
   white: '#FFFFFF',

@@ -1,25 +1,29 @@
 import styled from '@emotion/styled';
+import { useRef } from 'react';
 
 import { useAccordionContext } from '@/components/accordion/AccordionContext';
 
-const AccordionBody = ({ id, children }: { id: number; children: React.ReactNode }) => {
+const AccordionBody = ({ children, id }: { children: React.ReactNode; id: number }) => {
+  const bodyRef = useRef(null);
   const { isAccordionOpen } = useAccordionContext();
 
   const isCurrentAccordionOpen = isAccordionOpen(id);
 
-  return <S.Container isShow={isCurrentAccordionOpen}>{children}</S.Container>;
+  return (
+    <S.Container ref={bodyRef} isOpen={isCurrentAccordionOpen}>
+      {children}
+    </S.Container>
+  );
 };
 
 export default AccordionBody;
 
-const Container = styled.div<{ isShow: boolean }>`
-  display: ${({ isShow }) => (isShow ? 'block' : 'none')};
-  width: 100%;
-  min-height: 100px;
-
-  background-color: ${({ theme }) => theme.palette.white};
+const Container = styled.div<{ isOpen: boolean }>`
+  max-height: ${({ isOpen }) => (isOpen ? '1000px' : '0')};
+  visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
+  transition: max-height 0.3s cubic-bezier(0.15, 0.1, 0.25, 1);
+  overflow: hidden;
   border-radius: 12px;
-  align-items: center;
 `;
 
 const S = {

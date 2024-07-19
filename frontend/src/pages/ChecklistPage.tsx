@@ -4,14 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 import mockCategories from '@/_mock/checklist.json';
 import { postChecklist } from '@/apis/checklist';
+import Accordion from '@/components/accordion/Accordion';
 import ChecklistCategory from '@/components/checklist/ChecklistCategory';
 import Header from '@/components/Header';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
-
-interface AccordianOpen {
-  categoryId: number;
-  isOpen: boolean;
-}
 
 export interface Answer {
   questionId: number;
@@ -35,40 +31,7 @@ const ChecklistPage = () => {
     fetchChecklist();
   }, []);
 
-  const [accordianOpen, setAccordianOpen] = useState<AccordianOpen[]>([]);
-
-  useEffect(() => {
-    if (checklistQuestions.length > 0) {
-      setAccordianOpen(
-        checklistQuestions.map(category => ({
-          categoryId: category.categoryId,
-          isOpen: true,
-        })),
-      );
-    }
-  }, [checklistQuestions]);
-
   const [answers, setAnswers] = useState<Answer[]>([]);
-
-  // const [accordianOpen, setAccordianOpen] = useState<AccordianOpen[]>(
-  //   checklistQuestions?.map(category => ({
-  //     categoryId: category.categoryId,
-  //     isOpen: true,
-  //   })),
-  // );
-
-  const onToggleCategoryOpen = (id: number) => {
-    const newAccordianOpen = accordianOpen?.map(category => {
-      return category.categoryId === id ? { ...category, isOpen: !category.isOpen } : category;
-    });
-
-    setAccordianOpen(newAccordianOpen);
-  };
-
-  const isAccordianOpen = (id: number) => {
-    const target = accordianOpen.filter(category => category.categoryId === id);
-    return target[0]?.isOpen;
-  };
 
   const addAnswer = useCallback(
     ({ questionId, newAnswer }: addAnswerProps) => {
@@ -99,18 +62,21 @@ const ChecklistPage = () => {
   return (
     <>
       <Header Button={<S.TextButton onClick={submitAnswer}>저장</S.TextButton>} />
-      {checklistQuestions?.map(category => (
-        <ChecklistCategory
-          key={category.categoryId}
-          category={category}
-          toggleOpen={() => {
-            onToggleCategoryOpen(category.categoryId);
-          }}
-          isAccordianOpen={isAccordianOpen(category.categoryId)}
-          addAnswer={addAnswer}
-          deleteAnswer={deleteAnswer}
-        />
-      ))}
+      <Accordion>
+        {checklistQuestions?.map(category => (
+          <>
+            <Accordion.header text={'청결도'} id={category.categoryId} />
+            <Accordion.body id={category.categoryId}>
+              <ChecklistCategory
+                key={category.categoryId}
+                category={category}
+                addAnswer={addAnswer}
+                deleteAnswer={deleteAnswer}
+              />
+            </Accordion.body>
+          </>
+        ))}
+      </Accordion>
     </>
   );
 };

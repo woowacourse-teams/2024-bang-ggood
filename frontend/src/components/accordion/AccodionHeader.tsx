@@ -5,17 +5,16 @@ import { useAccordionContext } from '@/components/accordion/AccordionContext';
 import { flexCenter, title2 } from '@/styles/common';
 
 interface Props {
-  isMarked: boolean;
   text: string;
   id: number;
 }
-const AccordionHeader = ({ isMarked, text, id }: Props) => {
+const AccordionHeader = ({ text, id }: Props) => {
   const { isAccordionOpen, handleAccordionOpenChange } = useAccordionContext();
 
   return (
     <S.HeaderContainer onClick={() => handleAccordionOpenChange(id)}>
       <S.FlexBox>
-        <S.HeaderMark isMarked={isMarked} />
+        <S.HeaderMark isMarked={isAccordionOpen(id)} />
         <S.HeaderTitle>{text}</S.HeaderTitle>
       </S.FlexBox>
       <S.ArrowBox>{isAccordionOpen(id) ? <ArrowUpSmall /> : <ArrowDownSmall />}</S.ArrowBox>
@@ -46,12 +45,13 @@ const HeaderTitle = styled.div`
 `;
 
 const HeaderMark = styled.div<{ isMarked: boolean }>`
-  visibility: ${({ isMarked }) => (isMarked ? 'visible' : 'hidden')};
+  opacity: ${({ isMarked }) => (isMarked ? 1 : 0)};
   width: 12px;
   height: 100%;
 
   background-color: ${({ theme }) => theme.palette.yellow500};
   border-radius: 8px 0 0 8px;
+  transition: opacity 0.6s ease;
 `;
 
 const ArrowBox = styled.div`

@@ -3,28 +3,39 @@ import ChecklistQuestion from '@/components/checklist/ChecklistQuestion';
 import { addAnswerProps } from '@/pages/ChecklistPage';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 
-interface Props {
+interface QuestionProps {
   category: ChecklistCategoryQuestions;
-  // eslint-disable-next-line no-unused-vars
   toggleOpen?: (id: number) => void;
   isAccordianOpen?: boolean;
   addAnswer: ({ questionId, newAnswer }: addAnswerProps) => void;
   deleteAnswer: (questionId: number) => void;
-  isAnswer?: boolean;
+  type: 'question';
 }
 
-const ChecklistCategory = ({ category, addAnswer, deleteAnswer, isAnswer = false }: Props) => {
+interface AnswerProps {
+  category: ChecklistCategoryQuestions;
+  toggleOpen?: (id: number) => void;
+  isAccordianOpen?: boolean;
+  type: 'preview';
+}
+
+type ChecklistType = QuestionProps | AnswerProps;
+
+const ChecklistCategory = (props: ChecklistType) => {
+  const { category, type } = props;
+  const isPreview = type === 'preview';
+
   return (
     <>
       {category.questions.map(question =>
-        isAnswer ? (
+        isPreview ? (
           <ChecklistAnswer key={question.questionId} QandA={question} />
         ) : (
           <ChecklistQuestion
             key={question.questionId}
             question={question}
-            addAnswer={addAnswer}
-            deleteAnswer={deleteAnswer}
+            addAnswer={props.addAnswer}
+            deleteAnswer={props.deleteAnswer}
           />
         ),
       )}

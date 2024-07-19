@@ -51,7 +51,7 @@ const HeaderMark = styled.div<{ isMarked: boolean }>`
 
   background-color: ${({ theme }) => theme.palette.yellow500};
   border-radius: 8px 0 0 8px;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.3s ease;
 `;
 
 const ArrowBox = styled.div`

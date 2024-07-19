@@ -1,22 +1,24 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import { title2, title3, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
 
 type ButtonSize = 'small' | 'medium' | 'full';
 type ColorOption = 'light' | 'dark' | 'disabled';
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
-  type?: ButtonSize;
+  size?: ButtonSize;
   color?: ColorOption;
-  text: string;
-  square?: boolean;
+  label: string;
+  isSquare?: boolean;
   onClick?: () => void;
 }
 
-const RoundButton = ({ type = 'medium', color = 'light', text, square = false, onClick = () => {} }: Props) => {
+const RoundButton = ({ size = 'medium', color = 'light', label, isSquare = false, onClick = () => {} }: Props) => {
   return (
-    <S.Button size={type} color={color} square={square} onClick={color !== 'disabled' ? onClick : () => {}}>
-      {text}
+    <S.Button size={size} color={color} isSquare={isSquare} onClick={color !== 'disabled' ? onClick : () => {}}>
+      {label}
     </S.Button>
   );
 };
@@ -24,8 +26,8 @@ const RoundButton = ({ type = 'medium', color = 'light', text, square = false, o
 export default RoundButton;
 
 const S = {
-  Button: styled.button<{ size: ButtonSize; color: ColorOption; square: boolean }>`
-    ${({ square }) => (square ? 'border-radius: 8px' : 'border-radius: 100px')};
+  Button: styled.button<{ size: ButtonSize; color: ColorOption; isSquare: boolean }>`
+    ${({ isSquare }) => (isSquare ? 'border-radius: 8px' : 'border-radius: 100px')};
     ${({ size }) => sizeStyles[size]};
     ${({ color }) => ColorStyles[color]};
     cursor: pointer;
@@ -33,43 +35,45 @@ const S = {
 };
 
 const ColorStyles = {
-  light: `
+  light: css`
     background-color: ${theme.palette.grey100};
+
     color: ${theme.palette.black};
 
-    &:hover, &:active {
+    &:hover,
+    &:active {
       background-color: ${theme.palette.grey200};
     }
   `,
-  dark: `
+  dark: css`
     background-color: ${theme.palette.black};
+
     color: ${theme.palette.white};
 
-    &:hover, &:active {
+    &:hover,
+    &:active {
       background-color: ${theme.palette.grey600};
     }
   `,
-  disabled: `
+  disabled: css`
     background-color: ${theme.palette.grey200};
+
     color: ${theme.palette.grey400};
   `,
 };
 
 const sizeStyles = {
-  small: `
+  small: css`
     padding: 10px 24px;
-    font-size: ${theme.text.size.small};
-    font-weight: ${theme.text.weight.bold};
+    ${title4}
   `,
-  medium: `
+  medium: css`
     padding: 12px 48px;
-    font-size:  ${theme.text.size.medium};
-    font-weight: ${theme.text.weight.bold};
+    ${title3}
   `,
-  full: `
-    padding: 14px 48px;
-    font-size: ${theme.text.size.large};
-    font-weight: ${theme.text.weight.bold};
+  full: css`
     width: 100%;
+    padding: 14px 48px;
+    ${title2}
   `,
 };

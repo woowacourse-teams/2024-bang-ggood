@@ -18,11 +18,12 @@ const preview: Preview = {
 export default preview;
 
 export const decorators = [
-  (Story) =>(
+  Story => (
     <>
-    <Global styles={baseStyle}/>
-    <ThemeProvider theme={theme}>
-    <Story/></ThemeProvider>
+      <Global styles={baseStyle} />
+      <ThemeProvider theme={theme}>
+        <Story />
+      </ThemeProvider>
     </>
-  )
-]
+  ),
+];

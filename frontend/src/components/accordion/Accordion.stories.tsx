@@ -23,11 +23,15 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     isMarked: false,
+    text: '청결도',
+    id: 1,
   },
 };
 
 export const AccodionWithMark: Story = {
   args: {
     isMarked: true,
+    text: '청결도',
+    id: 1,
   },
 };

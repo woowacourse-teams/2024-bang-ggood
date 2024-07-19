@@ -26,9 +26,7 @@ export const Default: Story = {
       <Accordion>
         <Accordion.header isMarked={true} text={'청결도'} id={1}></Accordion.header>
         <Accordion.body id={1}>
-          <div>
-            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          </div>
+          <div></div>
         </Accordion.body>
       </Accordion>
     );

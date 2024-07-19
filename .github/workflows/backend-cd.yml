@@ -2,7 +2,7 @@ name: Java CD with Gradle
 
 on:
   pull_request:
-    branches: [ "main", "develop" ]
+    branches: [ "main", "dev" ]
     types: [closed]
     
 jobs:

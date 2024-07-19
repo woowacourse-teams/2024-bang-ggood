@@ -1,0 +1,81 @@
+name: Java CD with Gradle
+
+on:
+  pull_request:
+    branches: [ "main", "develop" ]
+    types: [closed]
+    
+jobs:
+  build:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v3
+      with:
+        gradle-version: 8.8
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x backend/banggood/gradlew
+
+    - name: Build with Gradle
+      run: ./gradlew clean build
+      working-directory: backend/banggood
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v3
+      with:
+        working-directory: backend/banggood
+        name: bang-ggood-be-develop-jar
+        path: ./**/*.jar
+
+  deploy:
+    needs: build
+    runs-on: bang-ggood
+    steps:
+      - name: change permission
+        run: |
+          sudo chown -R ubuntu:ubuntu /home/ubuntu/actions-runner/_work/2024-bang-ggood
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: bang-ggood-be-develop-jar
+
+      - name: Check if room-esc server is running on port 8080
+        id: check-server-on-port
+        run: |
+          echo "Checking if port 8080 is in use..."
+          PID=$(lsof -t -i:8080 || true)
+          echo "PID=$PID"
+          if [ -n "$PID" ]; then
+            echo "server_running=true" >> $GITHUB_ENV
+            echo "PID=$PID" >> $GITHUB_ENV
+          else
+            echo "server_running=false" >> $GITHUB_ENV
+          fi
+
+      - name: Stop server if running
+        if: env.server_running == 'true'
+        run: |
+          echo "Stopping server running on port 8080..."
+          kill -9 $PID
+          echo "Preivous running Server stopped."
+
+      - name: Start server
+        run: |
+          sudo nohup java -jar ./backend/banggood/build/libs/*SNAPSHOT.jar &
+          echo "Lastest Backend API Server started."    
+    

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import mockCategories from '@/_mock/checklist.json';
 import { getChecklistAnswer } from '@/apis/checklist';
 import ChecklistCategory from '@/components/checklist/ChecklistCategory';
-import HeaderWithLogo from '@/components/HeaderWithLogo';
+import HeaderWithLogo from '@/components/Header/HeaderWithLogo';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 
 interface AccordianOpen {

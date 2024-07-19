@@ -2,7 +2,7 @@ name: backend-ci
 
 on:
   pull_request:
-    branches: [ "main", "dev" ]
+    branches: [ "main", "dev", "dev-fe", "dev-be" ]
     paths: 'backend/**'
 
 defaults:

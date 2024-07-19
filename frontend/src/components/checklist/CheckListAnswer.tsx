@@ -31,13 +31,13 @@ const ChecklistAnswer = ({ QandA }: Props) => {
 
   return (
     <S.Container>
-      <div>
+      <S.TitleContainer>
         <S.Title>
           <QuestionDot />
           {QandA?.questionTitle}
         </S.Title>
         {QandA?.questionSubtitle && <S.Subtitle>•{QandA?.questionSubtitle}</S.Subtitle>}
-      </div>
+      </S.TitleContainer>
       <S.Answer>
         <FaceIcon emotion={emotionName} fill={true} />
       </S.Answer>
@@ -82,5 +82,10 @@ const S = {
   `,
   Answer: styled.div`
     width: 80px;
+  `,
+  TitleContainer: styled.div`
+    display: flex;
+    width: 400px;
+    flex-direction: column;
   `,
 };

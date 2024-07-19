@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { QuestionDot } from '@/assets/assets';
-import FaceIcon from '@/components/FaceMark/FaceIcon';
+import FaceIcon from '@/components/FaceIcon/FaceIcon';
 import { ChecklistAnswer } from '@/types/checklist';
 
 type Emotion = 'good' | 'bad' | 'soso';

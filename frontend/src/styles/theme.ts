@@ -42,6 +42,24 @@ const text = {
   },
 };
 
+// export const RESPONSIVE = {
+//   LAPTOP: {
+//     DEVICE: 'laptop',
+//     FONT_SIZE: 4,
+//     MIN_WIDTH: 1024,
+//   },
+//   TABLET: {
+//     DEVICE: 'tablet',
+//     FONT_SIZE: 4,
+//     MAX_WIDTH: 1023,
+//   },
+//   MOBILE: {
+//     DEVICE: 'mobile',
+//     FONT_SIZE: 3.5,
+//     MAX_WIDTH: 767,
+//   },
+// };
+
 const theme = {
   palette,
   text,

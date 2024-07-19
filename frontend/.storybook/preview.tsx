@@ -1,8 +1,8 @@
 import { Global, ThemeProvider } from '@emotion/react';
 import type { Preview } from '@storybook/react';
 import React from 'react';
-import { baseStyle } from '../src/styles/global';
 import theme from '../src/styles/theme';
+import { baseStyle } from './global';
 
 const preview: Preview = {
   parameters: {

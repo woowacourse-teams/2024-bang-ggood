@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 import mockCategories from '@/_mock/checklist.json';
 import { postChecklist } from '@/apis/checklist';
-import AccordionHeader from '@/components/accordion/AccodionHeader';
-import Accordion from '@/components/accordion/Accordion';
 import ChecklistCategory from '@/components/checklist/ChecklistCategory';
 import Header from '@/components/Header';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
@@ -100,9 +98,6 @@ const ChecklistPage = () => {
 
   return (
     <>
-      <Accordion>
-        <AccordionHeader isMarked={true} text={'청결도'} id={1} />
-      </Accordion>
       <Header Button={<S.TextButton onClick={submitAnswer}>저장</S.TextButton>} />
       {checklistQuestions?.map(category => (
         <ChecklistCategory

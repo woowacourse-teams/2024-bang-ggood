@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 interface AccordionProps {
   id: number;
@@ -12,9 +12,15 @@ interface AccordionContextProps {
 
 export const AccordionContext = createContext({} as AccordionContextProps);
 
-export const AccordionProvider = (props: PropsWithChildren) => {
-  const { children } = props;
-  const [accordionOpens, setAccordionOpens] = useState<AccordionProps[]>([]);
+export const AccordionProvider = ({ count, children }: { count: number; children: React.ReactNode }) => {
+  const [accordionOpens, setAccordionOpens] = useState<AccordionProps[]>(
+    new Array(count).fill(0).map((e, i) => {
+      return {
+        id: i + 1,
+        isOpen: true,
+      };
+    }),
+  );
 
   const handleAccordionOpenChange = (id: number) => {
     const target = accordionOpens.find(accordion => accordion.id === id);

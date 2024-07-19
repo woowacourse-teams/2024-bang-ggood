@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 
-import { ArrowDownSmall, ArrowUpSmall } from '@/assets/assets';
 import { useAccordionContext } from '@/components/accordion/AccordionContext';
 import { title2 } from '@/styles/common';
 
@@ -16,7 +15,9 @@ const AccordionHeader = ({ isMarked, text, id }: Props) => {
     <S.HeaderContainer onClick={() => handleAccordionOpenChange(id)}>
       <S.HeaderMark isMarked={isMarked} />
       <S.HeaderTitle>{text}</S.HeaderTitle>
-      {isAccordionOpen ? <ArrowUpSmall /> : <ArrowDownSmall />}
+
+      {/* {isAccordionOpen ? <ArrowUpSmall /> : <ArrowDownSmall />} */}
+      {isAccordionOpen(id) ? 3 : 6}
     </S.HeaderContainer>
   );
 };

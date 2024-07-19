@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import AccordionHeader from './AccodionHeader';
+import Accordion from '@/components/accordion/Accordion';
 
 const meta = {
   title: 'Accordion',
-  component: AccordionHeader,
+  component: Accordion,
   parameters: {
     backgrounds: {
       default: 'grey',
@@ -14,24 +14,24 @@ const meta = {
       ],
     },
   },
-} satisfies Meta<typeof AccordionHeader>;
+} satisfies Meta<typeof Accordion>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {
-    isMarked: false,
-    text: '청결도',
-    id: 1,
+  render: () => {
+    return (
+      <Accordion>
+        <Accordion.header isMarked={true} text={'청결도'} id={1}></Accordion.header>
+        <Accordion.body id={1}>
+          <div>
+            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+          </div>
+        </Accordion.body>
+      </Accordion>
+    );
   },
-};
-
-export const AccodionWithMark: Story = {
-  args: {
-    isMarked: true,
-    text: '청결도',
-    id: 1,
-  },
+  args: {},
 };

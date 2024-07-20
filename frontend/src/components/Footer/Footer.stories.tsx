@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Router } from 'react-router-dom';
 
 import Footer from '@/components/Footer/Footer';
-
-const meta = {
+import { reactRouterParameters } from 'storybook-addon-remix-react-router';
+const meta: Meta<typeof Footer> = {
   component: Footer,
   parameters: {
     backgrounds: {
@@ -13,17 +12,28 @@ const meta = {
         { name: 'white', value: '#ffffff' },
       ],
     },
+    reactRouter: reactRouterParameters({
+      location: {
+        pathParams: { page: 'location' },
+      },
+      routing: { path: '/:page' },
+    }),
   },
-} satisfies Meta<typeof Footer>;
+};
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const AA: Story = {
+export const inLocationPage: Story = {
   render: () => (
-    <Router>
-      <Footer>a</Footer>
-    </Router>
+    <Footer>
+      {[
+        { node: <Footer.HomeLogo />, nodeActive: <Footer.HomeLogoActive />, path: 'home' },
+        { node: <Footer.LocationLogo />, nodeActive: <Footer.LocationLogoActive />, path: 'location' },
+        { node: <Footer.ChecklistLogo />, nodeActive: <Footer.ChecklistLogoActive />, path: 'checklist' },
+        { node: <Footer.MyPageLogo />, nodeActive: <Footer.MyPageLogoActive />, path: 'my-page' },
+      ]}
+    </Footer>
   ),
 };

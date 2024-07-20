@@ -2,21 +2,28 @@ import styled from '@emotion/styled';
 import { ReactNode } from 'react';
 import { useMatch } from 'react-router-dom';
 
-import ArrowBack from '@/assets/arrow-back.svg';
-import Logo from '@/assets/logo.svg';
+import {
+  ChecklistLogo,
+  ChecklistLogoActive,
+  HomeLogo,
+  HomeLogoActive,
+  LocationLogo,
+  LocationLogoActive,
+  MyPageLogo,
+  MyPageLogoActive,
+} from '@/assets/assets';
 
-type HeaderStyle = 'Logo' | 'ArrowBack' | 'nothing';
-
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  children: ReactNode | ReactNode[];
+interface Props {
+  children: { node: ReactNode; nodeActive: ReactNode; path: string }[];
 }
 
-const HeaderWrapper = ({ children, ...rest }: Props) => {
+// By detecting url param, active corresponding button with path
+const FooterWrapper = ({ children, ...rest }: Props) => {
   const match = useMatch('/:page');
-  console.log(match);
+
   return (
     <S.Wrapper {...rest}>
-      <S.FlexBox>{children}</S.FlexBox>
+      <S.FlexBox>{children.map(child => (child.path === match.params.page ? child.nodeActive : child.node))}</S.FlexBox>
     </S.Wrapper>
   );
 };
@@ -46,21 +53,14 @@ const S = {
   `,
 };
 
-const Header = Object.assign(HeaderWrapper, {
-  Logo: () => (
-    <Logo
-      style={{
-        cursor: 'pointer',
-      }}
-    />
-  ),
-  Backward: () => (
-    <ArrowBack
-      style={{
-        cursor: 'pointer',
-      }}
-    />
-  ),
-  TextButton: S.TextButton,
+const Header = Object.assign(FooterWrapper, {
+  HomeLogo,
+  LocationLogo,
+  ChecklistLogo,
+  MyPageLogo,
+  HomeLogoActive,
+  LocationLogoActive,
+  ChecklistLogoActive,
+  MyPageLogoActive,
 });
 export default Header;

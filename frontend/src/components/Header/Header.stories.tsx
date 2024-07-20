@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import Header from '@/components/Header/Header';
 
-const meta = {
+const meta: Meta<typeof Header> = {
   component: Header,
   parameters: {
     backgrounds: {
@@ -13,18 +13,19 @@ const meta = {
       ],
     },
   },
-} satisfies Meta<typeof Header>;
+};
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
 export const BangGgoodLogo: Story = {
-  args: { left: <Header.Logo /> },
+  render: () => <Header left={<Header.Logo />} />,
 };
 export const Backward: Story = {
-  args: { left: <Header.Backward /> },
+  render: () => <Header left={<Header.Backward />} />,
 };
+
 export const BackwardAndConfirm: Story = {
-  args: { left: <Header.Backward />, right: <Header.TextButton>확인</Header.TextButton> },
+  render: () => <Header left={<Header.Backward />} right={<Header.TextButton>확인</Header.TextButton>} />,
 };

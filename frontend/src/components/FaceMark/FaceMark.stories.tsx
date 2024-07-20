@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import FaceMark from '@/components/FaceMark/FaceMark';
 
 const meta = {
+  title: 'components/FaceMark/FaceMark',
   component: FaceMark,
 } satisfies Meta<typeof FaceMark>;
 
@@ -10,7 +11,6 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-/** Round Button */
 export const Good: Story = {
   render: () => (
     <FaceMark>

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { useAccordionContext } from '@/components/accordion/AccordionContext';
+import { useAccordionContext } from '@/components/Accordion/AccordionContext';
 
 const AccordionBody = ({ id, children }: { id: number; children: React.ReactNode }) => {
   const { isAccordionOpen } = useAccordionContext();

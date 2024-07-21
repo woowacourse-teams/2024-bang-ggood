@@ -15,7 +15,7 @@ export const Good: Story = {
   render: () => (
     <FaceMark>
       <FaceMark.Header>청결도</FaceMark.Header>
-      <FaceMark.FaceIcon emotion={'good'} fill={true} />
+      <FaceMark.FaceIcon emotion={'good'} isFilled={true} />
       <FaceMark.Footer>좋아요</FaceMark.Footer>
     </FaceMark>
   ),
@@ -24,7 +24,7 @@ export const Soso: Story = {
   render: () => (
     <FaceMark>
       <FaceMark.Header>청결도</FaceMark.Header>
-      <FaceMark.FaceIcon emotion={'soso'} fill={true} />
+      <FaceMark.FaceIcon emotion={'soso'} isFilled={true} />
       <FaceMark.Footer>평범해요</FaceMark.Footer>
     </FaceMark>
   ),

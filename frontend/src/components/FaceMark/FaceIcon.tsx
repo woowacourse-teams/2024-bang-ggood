@@ -1,3 +1,5 @@
+import { SVGProps } from 'react';
+
 import {
   FaceIconBad,
   FaceIconBadGray,
@@ -7,23 +9,21 @@ import {
   FaceIconSosoGray,
 } from '@/assets/assets';
 
-interface FaceIconProps extends React.HTMLAttributes<HTMLDivElement> {
+interface FaceIconProps extends SVGProps<SVGSVGElement> {
   emotion: 'good' | 'bad' | 'soso';
-  fill?: boolean;
+  isFilled?: boolean;
 }
-
-const FaceIcon = ({ emotion, fill = false, ...rest }: FaceIconProps) => {
+const FaceIcon = ({ emotion, isFilled = false, ...rest }: FaceIconProps) => {
   return (
     <>
-      {emotion === 'good' && fill && <FaceIconGood {...rest} />}
-      {emotion === 'good' && !fill && <FaceIconGoodGray {...rest} />}
-      {emotion === 'soso' && fill && <FaceIconSoso {...rest} />}
-      {emotion === 'soso' && !fill && <FaceIconSosoGray {...rest} />}
-      {emotion === 'bad' && fill && <FaceIconBad {...rest} />}
-      {emotion === 'bad' && !fill && <FaceIconBadGray {...rest} />}
+      {emotion === 'good' && isFilled && <FaceIconGood {...rest} />}
+      {emotion === 'good' && !isFilled && <FaceIconGoodGray {...rest} />}
+      {emotion === 'soso' && isFilled && <FaceIconSoso {...rest} />}
+      {emotion === 'soso' && !isFilled && <FaceIconSosoGray {...rest} />}
+      {emotion === 'bad' && isFilled && <FaceIconBad {...rest} />}
+      {emotion === 'bad' && !isFilled && <FaceIconBadGray {...rest} />}
       {emotion === null && <FaceIconSosoGray {...rest} />}
     </>
   );
 };
-
 export default FaceIcon;

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { ArrowDownSmall, ArrowUpSmall } from '@/assets/assets';
-import { useAccordionContext } from '@/components/accordion/AccordionContext';
+import { useAccordionContext } from '@/components/Accordion/AccordionContext';
 import { flexCenter, title2 } from '@/styles/common';
 
 interface Props {

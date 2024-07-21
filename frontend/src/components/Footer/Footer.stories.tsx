@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { reactRouterParameters } from 'storybook-addon-remix-react-router';
 
 import Footer from '@/components/Footer/Footer';
-import { reactRouterParameters } from 'storybook-addon-remix-react-router';
+
 const meta: Meta<typeof Footer> = {
   component: Footer,
   parameters: {

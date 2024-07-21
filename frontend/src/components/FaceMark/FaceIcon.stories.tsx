@@ -21,11 +21,11 @@ export const Bad: Story = {
   args: { emotion: 'bad' },
 };
 export const GoodFill: Story = {
-  args: { emotion: 'good', fill: true },
+  args: { emotion: 'good', isFilled: true },
 };
 export const SosoFill: Story = {
-  args: { emotion: 'soso', fill: true },
+  args: { emotion: 'soso', isFilled: true },
 };
 export const BadFill: Story = {
-  args: { emotion: 'bad', fill: true },
+  args: { emotion: 'bad', isFilled: true },
 };

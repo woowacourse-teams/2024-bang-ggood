@@ -1,8 +1,8 @@
 import { Global, ThemeProvider } from '@emotion/react';
 import type { Preview } from '@storybook/react';
 import React from 'react';
+import { normalize } from '../src/styles/reset';
 import theme from '../src/styles/theme';
-import { baseStyle } from './global';
 
 const preview: Preview = {
   parameters: {
@@ -20,7 +20,7 @@ export default preview;
 export const decorators = [
   Story => (
     <>
-      <Global styles={baseStyle} />
+      <Global styles={normalize} />
       <ThemeProvider theme={theme}>
         <Story />
       </ThemeProvider>

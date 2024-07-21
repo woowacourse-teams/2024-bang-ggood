@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import mockCategories from '@/_mock/checklist.json';
 import { postChecklist } from '@/apis/checklist';
-import ChecklistCategory from '@/components/checklist/ChecklistCategory';
+import ChecklistCategory from '@/components/Checklist/ChecklistCategory';
 import Header from '@/components/Header/Header';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 
@@ -98,7 +98,7 @@ const ChecklistPage = () => {
 
   return (
     <>
-      <Header Button={<S.TextButton onClick={submitAnswer}>저장</S.TextButton>} />
+      <Header left={<S.TextButton onClick={submitAnswer}>저장</S.TextButton>} />
       {checklistQuestions?.map(category => (
         <ChecklistCategory
           key={category.categoryId}

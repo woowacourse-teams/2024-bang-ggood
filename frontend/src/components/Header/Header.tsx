@@ -4,8 +4,6 @@ import { ReactNode } from 'react';
 import ArrowBack from '@/assets/arrow-back.svg';
 import Logo from '@/assets/logo.svg';
 
-type HeaderStyle = 'Logo' | 'ArrowBack' | 'nothing';
-
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   left?: ReactNode;
   right?: ReactNode;

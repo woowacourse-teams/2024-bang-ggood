@@ -48,7 +48,7 @@ const ChecklistQuestion = ({ question, addAnswer, deleteAnswer }: Props) => {
       <S.Options>
         {emotions.map(emotion => {
           const { name, id } = emotion;
-          return <FaceIcon fill={answer === id} key={id} emotion={name} onClick={() => handleClick(id)} />;
+          return <FaceIcon isFilled={answer === id} key={id} emotion={name} onClick={() => handleClick(id)} />;
         })}
       </S.Options>
     </S.Container>

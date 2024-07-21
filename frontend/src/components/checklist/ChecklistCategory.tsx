@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
 import { ArrowDownSmall, ArrowUpSmall } from '@/assets/assets';
-import ChecklistAnswer from '@/components/checklist/CheckListAnswer';
-import ChecklistQuestion from '@/components/checklist/ChecklistQuestion';
+import ChecklistAnswer from '@/components/Checklist/CheckListAnswer';
+import ChecklistQuestion from '@/components/Checklist/ChecklistQuestion';
 import { addAnswerProps } from '@/pages/ChecklistPage';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 

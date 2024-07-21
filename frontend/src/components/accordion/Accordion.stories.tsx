@@ -9,7 +9,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Accordion 컴포넌트는 아이템을 확장하여 보여줄 수 있는 컴포넌트입니다.',
+        component: 'Accordion 컴포넌트는 아이템을 확장하$여 보여줄 수 있는 컴포넌트입니다.',
       },
     },
     backgrounds: {

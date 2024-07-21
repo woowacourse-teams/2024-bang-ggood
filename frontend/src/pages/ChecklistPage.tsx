@@ -1,12 +1,8 @@
-import styled from '@emotion/styled';
 import { useCallback, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import mockCategories from '@/_mock/checklist.json';
-import { postChecklist } from '@/apis/checklist';
 import Accordion from '@/components/Accordion/Accordion';
 import ChecklistCategory from '@/components/checklist/ChecklistCategory';
-import Header from '@/components/Header';
 import Tabs from '@/components/Tabs/Tabs';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 
@@ -69,15 +65,9 @@ const ChecklistPage = () => {
       return prevAnswers.filter(answer => answer.questionId !== questionId);
     });
   };
-  const useNavigator = useNavigate();
-  const submitAnswer = async () => {
-    await postChecklist(answers);
-    useNavigator('/saved');
-  };
 
   return (
     <>
-      <Header Button={<S.TextButton onClick={submitAnswer}>저장</S.TextButton>} />
       <Tabs menuList={menuList} />
       <Accordion>
         {checklistQuestions?.map(category => (
@@ -97,20 +87,6 @@ const ChecklistPage = () => {
       </Accordion>
     </>
   );
-};
-
-const S = {
-  TextButton: styled.button`
-    width: 60px;
-    height: 40px;
-
-    background-color: ${({ theme }) => theme.palette.green500};
-
-    color: ${({ theme }) => theme.palette.white};
-    font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: ${({ theme }) => theme.text.size.medium};
-    border-radius: 5px;
-  `,
 };
 
 export default ChecklistPage;

@@ -6,6 +6,7 @@ import mockCategories from '@/_mock/checklist.json';
 import { postChecklist } from '@/apis/checklist';
 import Accordion from '@/components/accordion/Accordion';
 import ChecklistCategory from '@/components/checklist/ChecklistCategory';
+import Divider from '@/components/divider/Divider';
 import Header from '@/components/Header';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 
@@ -65,6 +66,7 @@ const ChecklistPage = () => {
       <Accordion>
         {checklistQuestions?.map(category => (
           <>
+            <Divider />
             <Accordion.header text={'청결도'} id={category.categoryId} />
             <Accordion.body id={category.categoryId}>
               <ChecklistCategory

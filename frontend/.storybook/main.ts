@@ -10,6 +10,7 @@ const config: StorybookConfig = {
     '@storybook/addon-essentials',
     '@chromatic-com/storybook',
     '@storybook/addon-interactions',
+    '@storybook/addon-docs',
   ],
   framework: {
     name: '@storybook/react-webpack5',
@@ -29,7 +30,7 @@ const config: StorybookConfig = {
     },
   }),
   docs: {
-    autodocs: 'tag',
+    autodocs: true,
   },
   webpackFinal: async config => {
     if (!config.resolve) {

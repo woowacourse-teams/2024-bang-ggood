@@ -61,12 +61,12 @@ export default ChecklistQuestion;
 const S = {
   Container: styled.div`
     padding: 16px;
-    border-bottom: 1px solid ${({ theme }) => theme.palette.grey200};
 
-    background-color: ${({ theme }) => theme.palette.white};
+    border-bottom: 1px solid ${({ theme }) => theme.palette.grey200};
   `,
   Title: styled.div`
     display: flex;
+
     margin: 5px 0;
 
     /* line-height: 1.5rem; */

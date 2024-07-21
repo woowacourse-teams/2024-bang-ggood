@@ -46,4 +46,10 @@ export const AccordionProvider = ({ count, children }: { count: number; children
   return <AccordionContext.Provider value={value}>{children}</AccordionContext.Provider>;
 };
 
-export const useAccordionContext = () => useContext(AccordionContext);
+export const useAccordionContext = () => {
+  const context = useContext(AccordionContext);
+  if (!context) {
+    throw new Error('useAccordionContext는 AccordionProvider에서 사용해야 합니다.');
+  }
+  return context;
+};

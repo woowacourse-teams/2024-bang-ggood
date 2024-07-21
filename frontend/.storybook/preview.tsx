@@ -20,8 +20,8 @@ export default preview;
 export const decorators = [
   Story => (
     <>
-      <Global styles={baseStyle} />
       <ThemeProvider theme={theme}>
+        <Global styles={baseStyle} />
         <Story />
       </ThemeProvider>
     </>

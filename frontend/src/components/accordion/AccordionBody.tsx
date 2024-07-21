@@ -24,6 +24,9 @@ const Container = styled.div<{ isOpen: boolean }>`
   transition: max-height 0.3s cubic-bezier(0.15, 0.1, 0.25, 1);
   overflow: hidden;
   border-radius: 12px;
+  padding: 10px;
+
+  background-color: ${({ theme }) => theme.palette.white};
 `;
 
 const S = {

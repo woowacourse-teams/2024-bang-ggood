@@ -1,0 +1,9 @@
+spring:
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:database
+    username: bang-ggood
+    password: 608bang-ggood-dev
+    driverClassName: org.h2.Driver

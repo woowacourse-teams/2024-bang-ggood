@@ -15,7 +15,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   onClick?: () => void;
 }
 
-const RoundButton = ({ size = 'medium', color = 'light', label, isSquare = false, onClick = () => {} }: Props) => {
+const Button = ({ size = 'medium', color = 'light', label, isSquare = false, onClick = () => {} }: Props) => {
   return (
     <S.Button size={size} color={color} isSquare={isSquare} onClick={color !== 'disabled' ? onClick : () => {}}>
       {label}
@@ -23,7 +23,7 @@ const RoundButton = ({ size = 'medium', color = 'light', label, isSquare = false
   );
 };
 
-export default RoundButton;
+export default Button;
 
 const S = {
   Button: styled.button<{ size: ButtonSize; color: ColorOption; isSquare: boolean }>`

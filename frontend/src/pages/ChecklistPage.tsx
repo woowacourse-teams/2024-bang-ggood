@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import mockCategories from '@/_mock/checklist.json';
 import { postChecklist } from '@/apis/checklist';
 import ChecklistCategory from '@/components/checklist/ChecklistCategory';
-import Header from '@/components/Header';
+import Header from '@/components/Header/Header';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 
 interface AccordianOpen {

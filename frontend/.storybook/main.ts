@@ -1,6 +1,5 @@
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import path from 'path';
-
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
@@ -10,6 +9,7 @@ const config: StorybookConfig = {
     '@storybook/addon-essentials',
     '@chromatic-com/storybook',
     '@storybook/addon-interactions',
+    'storybook-addon-remix-react-router',
   ],
   framework: {
     name: '@storybook/react-webpack5',
@@ -29,7 +29,7 @@ const config: StorybookConfig = {
     },
   }),
   docs: {
-    autodocs: 'tag',
+    autodocs: true,
   },
   webpackFinal: async config => {
     if (!config.resolve) {
@@ -44,27 +44,21 @@ const config: StorybookConfig = {
     if (!config.module || !config.module.rules) {
       return config;
     }
-
     config.module.rules = [
       ...config.module.rules.map(rule => {
         if (!rule || rule === '...') {
           return rule;
         }
-
         if (rule.test && /svg/.test(String(rule.test))) {
           return { ...rule, exclude: /\.svg$/i };
         }
-
         return rule;
       }),
-
       {
         test: /\.svg$/,
-
         use: ['@svgr/webpack'],
       },
     ];
-
     return config;
   },
 };

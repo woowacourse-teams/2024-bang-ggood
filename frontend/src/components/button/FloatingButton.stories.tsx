@@ -17,6 +17,14 @@ const meta: Meta<typeof FloatingButton> = {
     },
     'aria-label': { control: 'text' },
   },
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Floating 버튼은 하단에 새 체크리스트 추가 기능을 위한 컴포넌트입니다.',
+      },
+    },
+  },
 };
 
 export default meta;

@@ -27,5 +27,4 @@ const FaceIcon = ({ emotion, isFilled = false, ...rest }: FaceIconProps) => {
     </>
   );
 };
-
 export default FaceIcon;

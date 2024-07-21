@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 
 import mockCategories from '@/_mock/checklist.json';
 import Accordion from '@/components/Accordion/Accordion';
-import ChecklistCategory from '@/components/checklist/ChecklistCategory';
+import ChecklistCategory from '@/components/Checklist/ChecklistCategory';
+import Header from '@/components/Header/Header';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 
 export interface addAnswerProps {
@@ -23,7 +24,9 @@ const ChecklistPreviewPage = () => {
   }, []);
 
   return (
-    <> <Accordion>
+    <>
+      <Header left={<Header.Backward />} />
+      <Accordion>
         {checklistQuestions?.map(category => (
           <>
             <Accordion.header text={'청결도'} id={category.categoryId} />

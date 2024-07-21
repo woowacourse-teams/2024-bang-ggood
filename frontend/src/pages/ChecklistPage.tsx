@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import mockCategories from '@/_mock/checklist.json';
 import Accordion from '@/components/Accordion/Accordion';
-import ChecklistCategory from '@/components/checklist/ChecklistCategory';
+import ChecklistCategory from '@/components/Checklist/ChecklistCategory';
 import Tabs from '@/components/Tabs/Tabs';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 

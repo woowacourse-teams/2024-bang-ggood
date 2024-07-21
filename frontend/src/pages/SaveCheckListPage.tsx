@@ -2,10 +2,13 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
 import BangGgoodIcon from '@/assets/bang-ggood-icon.svg';
+import Header from '@/components/Header/Header';
 
 const SaveCheckListPage = () => {
   return (
     <>
+      <Header />
+
       <S.Wrapper>
         <BangGgoodIcon />
         <S.TextWrapper>

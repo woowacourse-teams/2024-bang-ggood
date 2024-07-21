@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 import mockCategories from '@/_mock/checklist.json';
 import { postChecklist } from '@/apis/checklist';
-import Accordion from '@/components/accordion/Accordion';
+import Accordion from '@/components/Accordion/Accordion';
 import ChecklistCategory from '@/components/checklist/ChecklistCategory';
 import Header from '@/components/Header';
-import Tabs from '@/components/tabs/Tabs';
+import Tabs from '@/components/Tabs/Tabs';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 
 export interface Answer {

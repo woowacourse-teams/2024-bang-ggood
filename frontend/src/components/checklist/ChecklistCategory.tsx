@@ -1,5 +1,6 @@
 import ChecklistAnswer from '@/components/checklist/CheckListAnswer';
 import ChecklistQuestion from '@/components/checklist/ChecklistQuestion';
+import Divider from '@/components/divider/Divider';
 import { addAnswerProps } from '@/pages/ChecklistPage';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 
@@ -27,16 +28,22 @@ const ChecklistCategory = (props: ChecklistType) => {
 
   return (
     <>
-      {category.questions.map(question =>
+      {category.questions.map((question, index) =>
         isPreview ? (
-          <ChecklistAnswer key={question.questionId} QandA={question} />
+          <>
+            <ChecklistAnswer key={question.questionId} QandA={question} />
+            {index !== category.questions.length - 1 && <Divider />}
+          </>
         ) : (
-          <ChecklistQuestion
-            key={question.questionId}
-            question={question}
-            addAnswer={props.addAnswer}
-            deleteAnswer={props.deleteAnswer}
-          />
+          <>
+            <ChecklistQuestion
+              key={question.questionId}
+              question={question}
+              addAnswer={props.addAnswer}
+              deleteAnswer={props.deleteAnswer}
+            />
+            {index !== category.questions.length - 1 && <Divider />}
+          </>
         ),
       )}
     </>

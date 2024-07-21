@@ -57,12 +57,9 @@ const ChecklistQuestion = ({ question, addAnswer, deleteAnswer }: Props) => {
 
 export default ChecklistQuestion;
 
-// •
 const S = {
   Container: styled.div`
     padding: 16px;
-
-    border-bottom: 1px solid ${({ theme }) => theme.palette.grey200};
   `,
   Title: styled.div`
     display: flex;

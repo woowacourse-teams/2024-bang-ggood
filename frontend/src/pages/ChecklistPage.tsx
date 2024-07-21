@@ -6,8 +6,8 @@ import mockCategories from '@/_mock/checklist.json';
 import { postChecklist } from '@/apis/checklist';
 import Accordion from '@/components/accordion/Accordion';
 import ChecklistCategory from '@/components/checklist/ChecklistCategory';
-import Divider from '@/components/divider/Divider';
 import Header from '@/components/Header';
+import Tabs from '@/components/tabs/Tabs';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 
 export interface Answer {
@@ -22,6 +22,21 @@ export interface addAnswerProps {
 
 const ChecklistPage = () => {
   const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategoryQuestions[]>([]);
+
+  const menuList = [
+    {
+      name: '기본 정보',
+      path: 'basic-info',
+    },
+    {
+      name: '체크리스트',
+      path: 'checklist',
+    },
+    {
+      name: '메모 및 사진',
+      path: 'extra-info',
+    },
+  ];
 
   useEffect(() => {
     const fetchChecklist = () => {
@@ -63,10 +78,10 @@ const ChecklistPage = () => {
   return (
     <>
       <Header Button={<S.TextButton onClick={submitAnswer}>저장</S.TextButton>} />
+      <Tabs menuList={menuList} />
       <Accordion>
         {checklistQuestions?.map(category => (
           <>
-            <Divider />
             <Accordion.header text={'청결도'} id={category.categoryId} />
             <Accordion.body id={category.categoryId}>
               <ChecklistCategory

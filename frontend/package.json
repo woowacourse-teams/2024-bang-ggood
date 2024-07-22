@@ -15,7 +15,8 @@
     "postinstall": "cd .. && husky frontend/.husky",
     "format": "prettier --cache --write .",
     "lint": "eslint --cache .",
-    "lint:styled": "stylelint --cache --fix ."
+    "lint:styled": "stylelint --cache --fix .",
+    "msw": "msw init public/ --save"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",

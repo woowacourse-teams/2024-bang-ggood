@@ -7,21 +7,21 @@ on:
       - 'frontend/**'
 
 jobs:
-  chromatic:
+  test:
+    # Operating System
     runs-on: ubuntu-latest
+    # Job steps
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v1
+      - run: yarn
+        working-directory: frontend
+        #👇 Adds Chromatic as a step in the workflow
+      - uses: chromaui/action@v1
+        # Options required for Chromatic's GitHub Action
         with:
-          fetch-depth: 0
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Publish to Chromatic
-        uses: chromaui/action@latest
-        with:
+          #👇 Chromatic projectToken, see https://storybook.js.org/tutorials/intro-to-storybook/react/ko/deploy/ to obtain it
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Comment on PR
         uses: thollander/actions-comment-pull-request@v1

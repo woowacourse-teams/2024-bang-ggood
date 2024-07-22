@@ -1,5 +1,6 @@
 package com.bang_ggood.checklist.domain;
 
+import com.bang_ggood.BaseEntity;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.user.domain.User;
 import jakarta.persistence.Entity;
@@ -13,7 +14,7 @@ import jakarta.persistence.OneToOne;
 import java.util.Objects;
 
 @Entity
-public class Checklist {
+public class Checklist extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

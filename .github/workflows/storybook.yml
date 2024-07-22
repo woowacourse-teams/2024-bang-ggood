@@ -2,17 +2,11 @@ name: 'Chromatic Deployment'
 
 on:
   pull_request:
-    branches: [dev-fe]
+    branches:
+      - dev-fe
     paths:
       - frontend/**
-  push:
-    branches: [dev-fe]
-    paths:
-      - frontend/**
-
-defaults:
-  run:
-    working-directory: ./frontend
+      - .github/**
 
 jobs:
   chromatic-deployment:
@@ -26,15 +20,19 @@ jobs:
 
       - name: Set node linker to node-modules
         run: yarn config set nodeLinker "node-modules"
+        working-directory: frontend
 
       - name: Install dependencies
         run: yarn install --immutable --check-cache
+        working-directory: frontend
 
       - name: Build Storybook
         run: yarn run build-storybook
+        working-directory: frontend
 
       - name: List files in frontend
         run: ls -la
+        working-directory: frontend
 
       - name: Publish to Chromatic
         id: publish_chromatic

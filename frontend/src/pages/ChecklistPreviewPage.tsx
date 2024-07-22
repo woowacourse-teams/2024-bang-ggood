@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 
 import mockCategories from '@/_mock/checklist.json';
 import { getChecklistAnswer } from '@/apis/checklist';
-import ChecklistCategory from '@/components/checklist/ChecklistCategory';
-import HeaderWithLogo from '@/components/HeaderWithLogo';
+import ChecklistCategory from '@/components/Checklist/ChecklistCategory';
+import Header from '@/components/Header/Header';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 
 interface AccordianOpen {
@@ -83,7 +83,7 @@ const ChecklistPreviewPage = () => {
 
   return (
     <>
-      <HeaderWithLogo />
+      <Header left={<Header.Backward />} />
       {mockCategories?.map(category => (
         <ChecklistCategory
           key={category.categoryId}

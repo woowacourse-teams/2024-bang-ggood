@@ -13,6 +13,7 @@ const preview: Preview = {
       },
     },
   },
+  decorators: [withRouter, decorator],
 };
 
 export default preview;

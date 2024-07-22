@@ -1,4 +1,4 @@
-name: 'Chromatic'
+name: "Chromatic"
 
 on: push
 
@@ -19,6 +19,7 @@ jobs:
           cd frontend
           yarn install --frozen-lockfile
       - name: Run Chromatic
+        id: publish_chromatic
         run: |
           cd frontend
           npx chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
@@ -29,4 +30,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          message: '🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}'
+          message: "🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}"

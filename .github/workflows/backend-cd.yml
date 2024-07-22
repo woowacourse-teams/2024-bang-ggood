@@ -1,8 +1,8 @@
-name: Java CD with Gradle
+name: backend-cd
 
 on:
   pull_request:
-    branches: [ "main", "dev", "dev-fe", "dev-be" ]
+    branches: [ "dev" ]
     types: [closed]
     
 jobs:
@@ -46,8 +46,7 @@ jobs:
     runs-on: bang-ggood
     steps:
       - name: change permission
-        run: |
-          sudo chown -R ubuntu:ubuntu /home/ubuntu/actions-runner/_work/2024-bang-ggood
+        run: sudo chown -R ubuntu:ubuntu /home/ubuntu/actions-runner/_work/2024-bang-ggood
 
       - name: Download build artifact
         uses: actions/download-artifact@v3

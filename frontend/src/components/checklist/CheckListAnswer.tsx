@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { QuestionDot } from '@/assets/assets';
-import FaceIcon from '@/components/faceMark/FaceIcon';
+import FaceIcon from '@/components/FaceMark/FaceIcon';
 import { ChecklistAnswer } from '@/types/checklist';
 
 type Emotion = 'good' | 'bad' | 'soso';
@@ -39,7 +39,7 @@ const ChecklistAnswer = ({ QandA }: Props) => {
         {QandA?.questionSubtitle && <S.Subtitle>•{QandA?.questionSubtitle}</S.Subtitle>}
       </div>
       <S.Answer>
-        <FaceIcon emotion={emotionName} fill={true} />
+        <FaceIcon emotion={emotionName} isFilled={true} />
       </S.Answer>
     </S.Container>
   );

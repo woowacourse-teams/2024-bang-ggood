@@ -11,6 +11,7 @@ const config: StorybookConfig = {
     '@storybook/addon-interactions',
     '@storybook/addon-docs',
     'storybook-addon-remix-react-router',
+    'storybook-addon-pseudo-states',
   ],
   framework: {
     name: '@storybook/react-webpack5',

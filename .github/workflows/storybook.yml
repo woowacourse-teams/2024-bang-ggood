@@ -26,7 +26,7 @@ jobs:
         run: yarn install --immutable --check-cache
 
       - name: Build Storybook
-        run: yarn run build-storybook
+        run: cd frontend && yarn run build-storybook
 
       - name: Publish to Chromatic
         id: publish_chromatic

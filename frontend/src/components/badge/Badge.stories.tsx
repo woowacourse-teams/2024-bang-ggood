@@ -5,6 +5,7 @@ import Badge from '@/components/badge/Badge';
 const meta = {
   title: 'components/Badge',
   component: Badge,
+<<<<<<< HEAD
   tags: ['autodocs'],
   parameters: {
     docs: {
@@ -13,6 +14,8 @@ const meta = {
       },
     },
   },
+=======
+>>>>>>> 0765f45684f662a43acc9447ae08c9fe9d1d32f6
 } satisfies Meta<typeof Badge>;
 
 export default meta;

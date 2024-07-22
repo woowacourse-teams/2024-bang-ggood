@@ -28,16 +28,16 @@ jobs:
         gradle-version: 8.8
 
     - name: Grant execute permission for gradlew
-      run: chmod +x backend/banggood/gradlew
+      run: chmod +x backend/bang-ggood/gradlew
 
     - name: Build with Gradle
       run: ./gradlew clean build
-      working-directory: backend/banggood
+      working-directory: backend/bang-ggood
 
     - name: Upload build artifact
       uses: actions/upload-artifact@v3
       with:
-        working-directory: backend/banggood
+        working-directory: backend/bang-ggood
         name: bang-ggood-be-develop-jar
         path: ./**/*.jar
 

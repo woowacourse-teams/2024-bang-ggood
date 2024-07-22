@@ -29,15 +29,10 @@ const FloatingButton = ({
 
 export default FloatingButton;
 
-const sizeStyle = (size: Size) => {
-  switch (size) {
-    case 'small':
-      return { width: '40px', height: '40px', fontSize: '12px' };
-    case 'medium':
-      return { width: '60px', height: '60px', fontSize: '16px' };
-    case 'extends':
-      return { width: '100px', height: '40px', fontSize: '16px' };
-  }
+const sizeStyle ={
+   small: { width: '40px', height: '40px', fontSize: '12px' },
+   medium: { width: '60px', height: '60px', fontSize: '16px' },
+   extends: { width: '100px', height: '40px', fontSize: '16px' },
 };
 
 const colorStyle = (color: Color) => {

@@ -10,6 +10,7 @@ const config: StorybookConfig = {
     '@chromatic-com/storybook',
     '@storybook/addon-interactions',
     'storybook-addon-remix-react-router',
+    'storybook-addon-pseudo-states',
   ],
   framework: {
     name: '@storybook/react-webpack5',

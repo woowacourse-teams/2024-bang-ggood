@@ -28,6 +28,7 @@ jobs:
 
       - name: Comment on PR
         uses: thollander/actions-comment-pull-request@v2
+        if: ${{ github.event_name == 'pull_request' }}
         with:
           message: "🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}"
         env:

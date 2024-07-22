@@ -1,32 +1,24 @@
-name: 'Chromatic Deployment'
+name: "Chromatic"
 
-on:
-  push:
-    branches: ['dev-fe']
-    paths:
-      - 'frontend/**'
+on: push
 
 jobs:
-  test:
-    # Operating System
+  chromatic:
+    name: Run Chromatic
     runs-on: ubuntu-latest
-    # Job steps
     steps:
-      - uses: actions/checkout@v1
-      - run: yarn
-        working-directory: frontend
-        #👇 Adds Chromatic as a step in the workflow
-      - uses: chromaui/action@v1
-        # Options required for Chromatic's GitHub Action
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
-          #👇 Chromatic projectToken, see https://storybook.js.org/tutorials/intro-to-storybook/react/ko/deploy/ to obtain it
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Comment on PR
-        uses: thollander/actions-comment-pull-request@v1
-        if: ${{ github.event_name == 'pull_request' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
         with:
-          message: '🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}'
+          node-version: 20
+      - name: Install dependencies
+        run: |
+          cd frontend
+          yarn install --frozen-lockfile
+      - name: Run Chromatic
+        run: |
+          cd frontend
+          npx chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes

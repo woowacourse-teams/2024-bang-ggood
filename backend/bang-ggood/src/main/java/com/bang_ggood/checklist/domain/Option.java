@@ -1,5 +1,7 @@
 package com.bang_ggood.checklist.domain;
 
+import java.util.Arrays;
+
 public enum Option {
     AIR_CONDITIONER(1, "에어컨"),
     SINK(2, "싱크대"),
@@ -22,5 +24,10 @@ public enum Option {
     Option(Integer id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public static boolean contains(Integer id) {
+        return Arrays.stream(Option.values())
+                .anyMatch(option -> option.id.equals(id));
     }
 }

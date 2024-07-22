@@ -1,0 +1,48 @@
+# Workflow name
+name: 'Chromatic Deployment'
+
+# Controls when the workflow will run
+on:
+  pull_request:
+    branches: [dev-fe]
+    paths:
+      - '**.stories.tsx'
+  push:
+    branches: [dev-fe]
+    paths:
+      - '**.stories.tsx'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  chromatic-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: actions/checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set node linker to nodeModules
+        run: yarn config set nodeLinker "node-modules"
+
+      - name: Install dependencies
+        run: yarn install --immutable --check-cache
+
+      - name: Publish to Chromatic
+        id: publish_chromatic
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN  }}
+          buildScriptName: build-storybook
+          onlyChanged: true
+
+      - name: comment PR
+        uses: thollander/actions-comment-pull-request@v1
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          message: '🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}'

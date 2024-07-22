@@ -13,6 +13,7 @@ interface FaceIconProps extends SVGProps<SVGSVGElement> {
   emotion: 'good' | 'bad' | 'soso';
   isFilled?: boolean;
 }
+
 const FaceIcon = ({ emotion, isFilled = false, ...rest }: FaceIconProps) => {
   return (
     <>

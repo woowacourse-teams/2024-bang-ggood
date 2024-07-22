@@ -1,75 +1,53 @@
-import styled from '@emotion/styled';
-
-import { ArrowDownSmall, ArrowUpSmall } from '@/assets/assets';
-import ChecklistAnswer from '@/components/checklist/CheckListAnswer';
-import ChecklistQuestion from '@/components/checklist/ChecklistQuestion';
+import ChecklistAnswer from '@/components/Checklist/CheckListAnswer';
+import ChecklistQuestion from '@/components/Checklist/ChecklistQuestion';
+import Divider from '@/components/Divider/Divider';
 import { addAnswerProps } from '@/pages/ChecklistPage';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 
-interface Props {
+interface QuestionProps {
   category: ChecklistCategoryQuestions;
-  // eslint-disable-next-line no-unused-vars
   toggleOpen?: (id: number) => void;
   isAccordianOpen?: boolean;
   addAnswer: ({ questionId, newAnswer }: addAnswerProps) => void;
   deleteAnswer: (questionId: number) => void;
-  isAnswer?: boolean;
+  type: 'question';
 }
 
-const ChecklistCategory = ({
-  category,
-  toggleOpen,
-  isAccordianOpen,
-  addAnswer,
-  deleteAnswer,
-  isAnswer = false,
-}: Props) => {
+interface AnswerProps {
+  category: ChecklistCategoryQuestions;
+  toggleOpen?: (id: number) => void;
+  isAccordianOpen?: boolean;
+  type: 'preview';
+}
+
+type ChecklistType = QuestionProps | AnswerProps;
+
+const ChecklistCategory = (props: ChecklistType) => {
+  const { category, type } = props;
+  const isPreview = type === 'preview';
+
   return (
     <>
-      <S.Category onClick={() => toggleOpen(category.categoryId)}>
-        <span>{category.categoryName}</span>
-        {isAccordianOpen ? <ArrowUpSmall /> : <ArrowDownSmall />}
-      </S.Category>
-
-      <S.Container isShow={isAccordianOpen}>
-        {category.questions.map(question =>
-          isAnswer ? (
+      {category.questions.map((question, index) =>
+        isPreview ? (
+          <>
             <ChecklistAnswer key={question.questionId} QandA={question} />
-          ) : (
+            {index !== category.questions.length - 1 && <Divider />}
+          </>
+        ) : (
+          <>
             <ChecklistQuestion
               key={question.questionId}
               question={question}
-              addAnswer={addAnswer}
-              deleteAnswer={deleteAnswer}
+              addAnswer={props.addAnswer}
+              deleteAnswer={props.deleteAnswer}
             />
-          ),
-        )}
-      </S.Container>
+            {index !== category.questions.length - 1 && <Divider />}
+          </>
+        ),
+      )}
     </>
   );
 };
 
 export default ChecklistCategory;
-
-const S = {
-  Category: styled.div`
-    display: flex;
-    padding: 16px;
-
-    background-color: #f3f3f3;
-
-    /* background-color: ${({ theme }) => theme.palette.yellow100}; */
-    font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: ${({ theme }) => theme.text.size.large};
-    justify-content: space-between;
-    border-bottom: ${({ theme }) => `2px solid ${theme.palette.grey200}`};
-    cursor: pointer;
-
-    /* box-shadow:; */
-  `,
-  Container: styled.div<{ isShow: boolean }>`
-    max-height: ${({ isShow }) => (isShow ? '1000px' : '0')};
-    overflow: hidden;
-    transition: max-height 0.6s ease;
-  `,
-};

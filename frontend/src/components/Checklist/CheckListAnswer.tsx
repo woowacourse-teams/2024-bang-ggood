@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { QuestionDot } from '@/assets/assets';
-import FaceIcon from '@/components/faceMark/FaceIcon';
+import FaceIcon from '@/components/FaceMark/FaceIcon';
 import { ChecklistAnswer } from '@/types/checklist';
 
 type Emotion = 'good' | 'bad' | 'soso';
@@ -31,15 +31,15 @@ const ChecklistAnswer = ({ QandA }: Props) => {
 
   return (
     <S.Container>
-      <div>
+      <S.TitleContainer>
         <S.Title>
           <QuestionDot />
           {QandA?.questionTitle}
         </S.Title>
         {QandA?.questionSubtitle && <S.Subtitle>•{QandA?.questionSubtitle}</S.Subtitle>}
-      </div>
+      </S.TitleContainer>
       <S.Answer>
-        <FaceIcon emotion={emotionName} fill={true} />
+        <FaceIcon emotion={emotionName} isFilled={true} />
       </S.Answer>
     </S.Container>
   );
@@ -82,5 +82,10 @@ const S = {
   `,
   Answer: styled.div`
     width: 80px;
+  `,
+  TitleContainer: styled.div`
+    display: flex;
+    width: 400px;
+    flex-direction: column;
   `,
 };

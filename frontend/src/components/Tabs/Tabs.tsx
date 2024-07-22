@@ -3,50 +3,26 @@ import { useState } from 'react';
 
 import { flexCenter } from '@/styles/common';
 
-// interface Menu {
-//   name: string;
-//   path: string;
-//   id: number;
-// }
+interface Menu {
+  name: string;
+  path: string;
+}
 
-// type Props = {
-//   menuList: Menu[];
-// };
-
-const mockMenuList = [
-  {
-    name: '기본 정보',
-    path: 'basic-info',
-    menu_id: 1,
-  },
-  {
-    name: '체크리스트',
-    path: 'checklist',
-    menu_id: 2,
-  },
-  {
-    name: '메모 및 사진',
-    path: 'extra-info',
-    menu_id: 3,
-  },
-];
-const Tab = () => {
-  const [selectedId, setSelectedId] = useState(1);
+const Tabs = ({ menuList }: { menuList: Menu[] }) => {
+  const [selectedId, setSelectedId] = useState(0);
 
   const onClickMenu = (id: number) => {
     setSelectedId(id);
+    // searchParams.set('folderId', String(folderId));
+    // setSearchParams(searchParams);
   };
 
   return (
     <S.Container>
       <S.FlexContainer>
-        {mockMenuList.map(menu => {
+        {menuList?.map((menu, index) => {
           return (
-            <S.OneMenu
-              key={menu.menu_id}
-              onClick={() => onClickMenu(menu.menu_id)}
-              selected={menu.menu_id === selectedId}
-            >
+            <S.OneMenu key={index} onClick={() => onClickMenu(index)} selected={index === selectedId}>
               <div>{menu.name}</div>
             </S.OneMenu>
           );
@@ -56,7 +32,7 @@ const Tab = () => {
   );
 };
 
-export default Tab;
+export default Tabs;
 
 export const S = {
   Container: styled.div`

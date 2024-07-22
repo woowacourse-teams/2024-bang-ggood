@@ -2177,9 +2177,9 @@
     lodash "^4.17.21"
     ts-dedent "^2.0.0"
 
-"@storybook/addon-docs@8.2.4":
+"@storybook/addon-docs@8.2.4", "@storybook/addon-docs@^8.2.4":
   version "8.2.4"
-  resolved "https://registry.npmjs.org/@storybook/addon-docs/-/addon-docs-8.2.4.tgz"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-docs/-/addon-docs-8.2.4.tgz#16b30faa76d0a3d888538f37178dce5f60ab0b2f"
   integrity sha512-oyrDw4nGfntu5Hkhr2Qt1wUOyLaVVERQekYyejyir92QhM10UeA7ZarPXNLfCTj7rbTrWmM1Waka9Tsf8TGMrw==
   dependencies:
     "@babel/core" "^7.24.4"

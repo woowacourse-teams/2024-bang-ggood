@@ -5,7 +5,10 @@ import theme from '../styles/theme';
 
 export const baseStyle = css`
   ${normalize}
+
   body {
+    background-color: ${theme.palette.grey100};
+    padding: 16px;
     max-width: 600px;
     height: 100vh;
     margin: 0px auto;

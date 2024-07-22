@@ -159,6 +159,9 @@ export const normalize = css`
     scrollbar-width: none;
   }
 
+  ::-webkit-scrollbar {
+    display: none;
+  }
   a {
     text-decoration: none;
   }

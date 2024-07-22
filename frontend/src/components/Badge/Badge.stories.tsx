@@ -1,10 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Badge from '@/components/badge/Badge';
+import Badge from '@/components/Badge/Badge';
 
 const meta = {
   title: 'components/Badge',
   component: Badge,
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Badge는 방의 상태를 나타내는 작은 뱃지입니다.',
+      },
+    },
+  },
 } satisfies Meta<typeof Badge>;
 
 export default meta;

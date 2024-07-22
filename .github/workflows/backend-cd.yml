@@ -57,4 +57,4 @@ jobs:
         run: sudo fuser -k -n tcp 8080 || true
 
       - name: Start server
-        run: sudo nohup java -jar ./backend/banggood/build/libs/*SNAPSHOT.jar &
+        run: sudo nohup java -jar ./backend/bang-ggood/build/libs/*SNAPSHOT.jar &

@@ -1,13 +1,15 @@
 import styled from '@emotion/styled';
 
-import FaceIcon from '@/components/faceMark/FaceIcon';
+import FaceIcon from '@/components/FaceMark/FaceIcon';
 
 const S = {
   Container: styled.div`
     display: flex;
     flex-direction: column;
+    align-items: center;
+    width: 50px;
     row-gap: 6px;
-    pointer: cursor;
+    cursor: pointer;
   `,
   Header: styled.div`
     font-size: ${({ theme }) => theme.text.size.small};

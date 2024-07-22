@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { PropsWithChildren } from 'react';
 
-import AccordionHeader from '@/components/accordion/AccodionHeader';
-import AccordionBody from '@/components/accordion/AccordionBody';
-import { AccordionProvider } from '@/components/accordion/AccordionContext';
+import AccordionHeader from '@/components/Accordion/AccodionHeader';
+import AccordionBody from '@/components/Accordion/AccordionBody';
+import { AccordionProvider } from '@/components/Accordion/AccordionContext';
 import { flexColumn } from '@/styles/common';
 
 const Accordion = (props: PropsWithChildren) => {

@@ -35,8 +35,6 @@ const Tab = () => {
 
   const onClickMenu = (id: number) => {
     setSelectedId(id);
-    // searchParams.set('folderId', String(folderId));
-    // setSearchParams(searchParams);
   };
 
   return (

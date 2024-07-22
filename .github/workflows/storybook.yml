@@ -44,6 +44,7 @@ jobs:
           buildScriptName: build-storybook
           onlyChanged: true
           storybookBaseDir: frontend
+        working-directory: frontend
 
       - name: Comment on PR
         uses: thollander/actions-comment-pull-request@v1

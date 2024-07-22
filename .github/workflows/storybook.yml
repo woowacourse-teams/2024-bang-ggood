@@ -6,11 +6,11 @@ on:
   pull_request:
     branches: [dev-fe]
     paths:
-      - '**.stories.tsx'
+      - '**/*.stories.tsx'
   push:
     branches: [dev-fe]
     paths:
-      - '**.stories.tsx'
+      - '**/*.stories.tsx'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -27,9 +27,11 @@ jobs:
 
       - name: Set node linker to nodeModules
         run: yarn config set nodeLinker "node-modules"
+        working-directory: frontend
 
       - name: Install dependencies
         run: yarn install --immutable --check-cache
+        working-directory: frontend
 
       - name: Publish to Chromatic
         id: publish_chromatic
@@ -38,6 +40,7 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN  }}
           buildScriptName: build-storybook
           onlyChanged: true
+          working-directory: frontend
 
       - name: comment PR
         uses: thollander/actions-comment-pull-request@v1

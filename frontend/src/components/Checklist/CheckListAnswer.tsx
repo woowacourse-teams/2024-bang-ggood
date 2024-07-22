@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { QuestionDot } from '@/assets/assets';
-import FaceIcon from '@/components/FaceMark/FaceIcon';
+import FaceIcon from '@/components/common/FaceMark/FaceIcon';
 import { ChecklistAnswer } from '@/types/checklist';
 
 type Emotion = 'good' | 'bad' | 'soso';
@@ -64,7 +64,6 @@ const S = {
     display: flex;
     margin: 5px 0;
 
-    /* width: 80%; */
     font-size: ${({ theme }) => theme.text.size.medium};
     line-height: 1.5rem;
     align-items: center;

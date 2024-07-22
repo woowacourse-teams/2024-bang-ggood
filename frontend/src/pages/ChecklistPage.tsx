@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import { useCallback, useEffect, useState } from 'react';
 
 import { getChecklistQuestions } from '@/apis/checklist';
-import Accordion from '@/components/Accordion/Accordion';
 import ChecklistCategory from '@/components/Checklist/ChecklistCategory';
-import Tabs from '@/components/Tabs/Tabs';
+import Accordion from '@/components/common/Accordion/Accordion';
+import Tabs from '@/components/common/Tabs/Tabs';
 import { flexColumn } from '@/styles/common';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 

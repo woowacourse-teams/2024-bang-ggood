@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import { QuestionDot } from '@/assets/assets';
-import FaceIcon from '@/components/FaceMark/FaceIcon';
+import FaceIcon from '@/components/common/FaceMark/FaceIcon';
 import { addAnswerProps } from '@/pages/ChecklistPage';
 import { ChecklistQuestion } from '@/types/checklist';
 
@@ -65,8 +65,6 @@ const S = {
     display: flex;
 
     margin: 5px 0;
-
-    /* line-height: 1.5rem; */
 
     font-size: ${({ theme }) => theme.text.size.medium};
     gap: 10px;

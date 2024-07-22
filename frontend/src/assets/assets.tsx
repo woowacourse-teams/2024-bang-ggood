@@ -9,6 +9,7 @@ import FaceIconGoodGray from '@/assets/face-icon/face-icon-good-gray.svg';
 import FaceIconGood from '@/assets/face-icon/face-icon-good.svg';
 import FaceIconSosoGray from '@/assets/face-icon/face-icon-soso-gray.svg';
 import FaceIconSoso from '@/assets/face-icon/face-icon-soso.svg';
+import Plus from '@/assets/plus.svg';
 
 /* logos */
 import ChecklistLogoActive from '@/assets/logos/checklist-logo-active.svg';
@@ -31,6 +32,7 @@ export {
   FaceIconGoodGray,
   FaceIconSoso,
   FaceIconSosoGray,
+  Plus,
   HomeLogo,
   HomeLogoActive,
   LocationLogo,

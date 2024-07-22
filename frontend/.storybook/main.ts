@@ -41,6 +41,7 @@ const config: StorybookConfig = {
       ...config.resolve.alias,
       '@': path.resolve(__dirname, '../src'),
     };
+
     if (!config.module || !config.module.rules) {
       return config;
     }
@@ -59,6 +60,7 @@ const config: StorybookConfig = {
         use: ['@svgr/webpack'],
       },
     ];
+    
     return config;
   },
 };

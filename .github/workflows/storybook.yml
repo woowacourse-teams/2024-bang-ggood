@@ -1,15 +1,16 @@
 name: 'Chromatic Deployment'
 
 on:
-  pull_request:
-    branches:
-      - dev-fe
+  push:
+    branches: ['dev-fe']
     paths:
-      - frontend/**
-      - .github/**
+      - 'frontend/**'
 
 jobs:
   chromatic-deployment:
+    defaults:
+      run:
+        working-directory: frontend
     runs-on: ubuntu-latest
 
     steps:
@@ -18,23 +19,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: List files at root
-        run: ls -la
-
-      - name: List files in frontend
-        run: ls -la frontend
-
       - name: Set node linker to node-modules
         run: yarn config set nodeLinker "node-modules"
-        working-directory: frontend
 
       - name: Install dependencies
         run: yarn install --immutable --check-cache
-        working-directory: frontend
 
       - name: Build Storybook
         run: yarn run build-storybook
-        working-directory: frontend
 
       - name: Publish to Chromatic
         id: publish_chromatic
@@ -44,7 +36,6 @@ jobs:
           buildScriptName: build-storybook
           onlyChanged: true
           storybookBaseDir: frontend
-        working-directory: frontend
 
       - name: Comment on PR
         uses: thollander/actions-comment-pull-request@v1

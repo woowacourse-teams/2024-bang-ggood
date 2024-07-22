@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Accordion from '@/components/Accordion/Accordion';
+import Accordion from '@/components/common/Accordion/Accordion';
 import theme from '@/styles/theme';
 
 const meta = {

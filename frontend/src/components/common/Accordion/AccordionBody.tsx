@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRef } from 'react';
 
-import { useAccordionContext } from '@/components/Accordion/AccordionContext';
+import { useAccordionContext } from '@/components/common/Accordion/AccordionContext';
 
 const AccordionBody = ({ children, id }: { children: React.ReactNode; id: number }) => {
   const bodyRef = useRef(null);

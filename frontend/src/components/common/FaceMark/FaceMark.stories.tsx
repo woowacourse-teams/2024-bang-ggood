@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import FaceMark from '@/components/FaceMark/FaceMark';
+import FaceMark from '@/components/common/FaceMark/FaceMark';
 
 const meta = {
-  title: 'components/FaceMark/FaceMark',
+  title: 'components/FaceMark',
   component: FaceMark,
 } satisfies Meta<typeof FaceMark>;
 

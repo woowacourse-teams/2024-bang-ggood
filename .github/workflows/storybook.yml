@@ -1,55 +1,24 @@
-name: 'Chromatic Deployment'
+name: "Chromatic"
 
-on:
-  pull_request:
-    branches:
-      - dev-fe
-    paths:
-      - frontend/**
-      - .github/**
+on: push
 
 jobs:
-  chromatic-deployment:
+  chromatic:
+    name: Run Chromatic
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: List files at root
-        run: ls -la
-
-      - name: List files in frontend
-        run: ls -la frontend
-
-      - name: Set node linker to node-modules
-        run: yarn config set nodeLinker "node-modules"
-        working-directory: frontend
-
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
       - name: Install dependencies
-        run: yarn install --immutable --check-cache
-        working-directory: frontend
-
-      - name: Build Storybook
-        run: yarn run build-storybook
-        working-directory: frontend
-
-      - name: Publish to Chromatic
-        id: publish_chromatic
-        uses: chromaui/action@v1
-        with:
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          buildScriptName: build-storybook
-          onlyChanged: true
-          storybookBaseDir: frontend
-        working-directory: frontend
-
-      - name: Comment on PR
-        uses: thollander/actions-comment-pull-request@v1
-        if: ${{ github.event_name == 'pull_request' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          message: '🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}'
+        run: |
+          cd frontend
+          yarn install --frozen-lockfile
+      - name: Run Chromatic
+        run: |
+          cd frontend
+          npx chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes

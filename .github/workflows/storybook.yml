@@ -1,4 +1,4 @@
-name: "Chromatic"
+name: 'Chromatic'
 
 on: push
 
@@ -22,3 +22,11 @@ jobs:
         run: |
           cd frontend
           npx chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
+
+      - name: Comment on PR
+        uses: thollander/actions-comment-pull-request@v1
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          message: '🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}'

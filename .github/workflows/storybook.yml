@@ -6,11 +6,11 @@ on:
   pull_request:
     branches: [dev-fe]
     paths:
-      - '**/**.stories.tsx'
+      - '**/*.stories.tsx'
   push:
     branches: [dev-fe]
     paths:
-      - '**/**.stories.tsx'
+      - '**/*.stories.tsx'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:

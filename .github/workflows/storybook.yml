@@ -1,7 +1,5 @@
-# Workflow name
 name: 'Chromatic Deployment'
 
-# Controls when the workflow will run
 on:
   pull_request:
     branches: [dev-fe]
@@ -12,34 +10,37 @@ on:
     paths:
       - '**/*.stories.tsx'
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   chromatic-deployment:
     runs-on: ubuntu-latest
+
     steps:
-      - name: actions/checkout
+      - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Set node linker to node-modules
-        run: yarn config set nodeLinker "node-modules"
-        working-directory: frontend
+        run: |
+          cd frontend
+          yarn config set nodeLinker "node-modules"
 
       - name: Install dependencies
-        run: yarn install --immutable --check-cache
-        working-directory: frontend
+        run: |
+          cd frontend
+          yarn install --immutable --check-cache
 
       - name: Build Storybook
-        run: yarn run build-storybook
-        working-directory: frontend
+        run: |
+          cd frontend
+          yarn run build-storybook
 
       - name: List files in frontend
-        run: ls -la
-        working-directory: frontend
+        run: |
+          cd frontend
+          ls -la
 
       - name: Publish to Chromatic
         id: publish_chromatic
@@ -50,7 +51,7 @@ jobs:
           onlyChanged: true
           storybookBaseDir: frontend
 
-      - name: comment PR
+      - name: Comment on PR
         uses: thollander/actions-comment-pull-request@v1
         if: ${{ github.event_name == 'pull_request' }}
         env:

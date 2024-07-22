@@ -8,7 +8,7 @@ interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 const widthSize = { small: '45px', medium: '110px', large: '140px', full: '100%' };
 const S = {
-  TagBadge: styled.input<StyledProps>`
+  Input: styled.input<StyledProps>`
     width: ${({ $width }) => widthSize[$width]};
     display: flex;
     justify-content: center;
@@ -34,7 +34,7 @@ const Input = ({ value, $width, ...rest }: StyledProps) => {
     setValueState(event.target.value);
   }, []);
 
-  return <S.TagBadge value={valueState} $width={$width} {...rest} onChange={handleChange} />;
+  return <S.Input value={valueState} $width={$width} {...rest} onChange={handleChange} />;
 };
 
 export default Input;

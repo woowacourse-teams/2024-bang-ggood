@@ -4,13 +4,15 @@ on:
   pull_request:
     branches: [dev-fe]
     paths:
-      - '**/*.stories.tsx'
+      - frontend/**
   push:
     branches: [dev-fe]
     paths:
-      - '**/*.stories.tsx'
+      - frontend/**
 
-  workflow_dispatch:
+defaults:
+  run:
+    working-directory: ./frontend
 
 jobs:
   chromatic-deployment:
@@ -23,24 +25,16 @@ jobs:
           fetch-depth: 0
 
       - name: Set node linker to node-modules
-        run: |
-          cd frontend
-          yarn config set nodeLinker "node-modules"
+        run: yarn config set nodeLinker "node-modules"
 
       - name: Install dependencies
-        run: |
-          cd frontend
-          yarn install --immutable --check-cache
+        run: yarn install --immutable --check-cache
 
       - name: Build Storybook
-        run: |
-          cd frontend
-          yarn run build-storybook
+        run: yarn run build-storybook
 
       - name: List files in frontend
-        run: |
-          cd frontend
-          ls -la
+        run: ls -la
 
       - name: Publish to Chromatic
         id: publish_chromatic

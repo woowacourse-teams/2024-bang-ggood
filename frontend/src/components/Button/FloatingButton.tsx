@@ -1,3 +1,4 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import theme from '@/styles/theme';
@@ -29,36 +30,52 @@ const FloatingButton = ({
 
 export default FloatingButton;
 
-const sizeStyle ={
-   small: { width: '40px', height: '40px', fontSize: '12px' },
-   medium: { width: '60px', height: '60px', fontSize: '16px' },
-   extends: { width: '100px', height: '40px', fontSize: '16px' },
+const sizeStyle = {
+  small: css`
+    width: 40px;
+    height: 40px;
+
+    font-size: 12px;
+  `,
+  medium: css`
+    width: 60px;
+    height: 60px;
+
+    font-size: 16px;
+  `,
+  extends: css`
+    width: 100px;
+    height: 40px;
+
+    font-size: 16px;
+  `,
 };
 
-const colorStyle = (color: Color) => {
-  switch (color) {
-    case 'yellow':
-      return {
-        backgroundColor: theme.palette.yellow500,
-        '&:hover, &:active': {
-          backgroundColor: theme.palette.yellow600,
-        },
-      };
-    case 'green':
-      return {
-        backgroundColor: theme.palette.green500,
-        '&:hover, &:active': {
-          backgroundColor: theme.palette.green600,
-        },
-      };
-    case 'subGreen':
-      return {
-        backgroundColor: theme.palette.subGreen500,
-        '&:hover, &:active': {
-          backgroundColor: theme.palette.subGreen600,
-        },
-      };
-  }
+const colorStyle = {
+  yellow: css`
+    background-color: ${theme.palette.yellow500};
+
+    &:hover,
+    &:active {
+      background-color: ${theme.palette.yellow600};
+    }
+  `,
+  green: css`
+    background-color: ${theme.palette.green500};
+
+    &:hover,
+    &:active {
+      background-color: ${theme.palette.green600};
+    }
+  `,
+  subGreen: css`
+    background-color: ${theme.palette.subGreen500};
+
+    &:hover,
+    &:active {
+      background-color: ${theme.palette.subGreen600};
+    }
+  `,
 };
 
 const S = {
@@ -69,8 +86,8 @@ const S = {
     border: none;
     border-radius: 50px;
 
-    ${({ size }) => sizeStyle(size)}
-    ${({ color }) => colorStyle(color)}
+    ${({ size }) => sizeStyle[size]}
+    ${({ color }) => colorStyle[color]}
 
     color: ${({ theme }) => theme.palette.white};
     box-shadow: 0 4px 8px rgb(0 0 0 / 10%);

@@ -7,7 +7,7 @@ on:
 
 defaults:
   run:
-    working-directory: backend/banggood
+    working-directory: backend/bang-ggood
 jobs:
   build:
     runs-on: ubuntu-latest

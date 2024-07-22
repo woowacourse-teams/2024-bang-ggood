@@ -20,7 +20,7 @@ Accordion.body = AccordionBody;
 
 const Container = styled.div`
   ${flexColumn};
-  gap: 8px;
+  gap: 15px;
 `;
 
 const S = {

@@ -42,9 +42,9 @@ const ChecklistQuestion = ({ question, addAnswer, deleteAnswer }: Props) => {
     <S.Container>
       <S.Title>
         <QuestionDot />
-        {question?.questionTitle}
+        {question?.title}
       </S.Title>
-      {question?.questionSubtitle && <S.Subtitle>•{question?.questionSubtitle}</S.Subtitle>}
+      {question?.subtitle && <S.Subtitle>•{question?.subtitle}</S.Subtitle>}
       <S.Options>
         {emotions.map(emotion => {
           const { name, id } = emotion;

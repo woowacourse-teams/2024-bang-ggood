@@ -1,9 +1,11 @@
+import styled from '@emotion/styled';
 import { useCallback, useEffect, useState } from 'react';
 
 import { getChecklistQuestions } from '@/apis/checklist';
 import Accordion from '@/components/Accordion/Accordion';
 import ChecklistCategory from '@/components/Checklist/ChecklistCategory';
 import Tabs from '@/components/Tabs/Tabs';
+import { flexColumn } from '@/styles/common';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 
 export interface Answer {
@@ -70,7 +72,7 @@ const ChecklistPage = () => {
       <Tabs menuList={menuList} />
       <Accordion>
         {checklistQuestions?.map(category => (
-          <>
+          <S.Container key={category.categoryId}>
             <Accordion.header text={'청결도'} id={category.categoryId} />
             <Accordion.body id={category.categoryId}>
               <ChecklistCategory
@@ -81,7 +83,7 @@ const ChecklistPage = () => {
                 deleteAnswer={deleteAnswer}
               />
             </Accordion.body>
-          </>
+          </S.Container>
         ))}
       </Accordion>
     </>
@@ -89,3 +91,11 @@ const ChecklistPage = () => {
 };
 
 export default ChecklistPage;
+
+const Container = styled.div`
+  ${flexColumn}
+`;
+
+const S = {
+  Container,
+};

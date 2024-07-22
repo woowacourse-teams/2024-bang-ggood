@@ -5,7 +5,7 @@ import { Answer } from '@/pages/ChecklistPage';
 export const getChecklistQuestions = async () => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_QUESTION });
   const data = await response.json();
-  return data.categories;
+  return data;
 };
 
 export const getChecklistAnswer = async (id: number) => {

@@ -25,6 +25,11 @@ public class ChecklistOption extends BaseEntity {
     @Column(nullable = false)
     private Integer optionId;
 
+    public ChecklistOption(Checklist checklist, Integer optionId) {
+        this.checklist = checklist;
+        this.optionId = optionId;
+    }
+
     protected ChecklistOption() {
     }
 

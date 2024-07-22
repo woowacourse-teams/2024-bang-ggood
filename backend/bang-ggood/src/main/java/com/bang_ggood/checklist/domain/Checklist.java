@@ -36,6 +36,24 @@ public class Checklist extends BaseEntity {
 
     private String realEstate;
 
+    public Checklist(Integer deposit, Integer rent, Integer contractTerm, String realEstate) {
+        this.user = null;
+        this.room = null;
+        this.deposit = deposit;
+        this.rent = rent;
+        this.contractTerm = contractTerm;
+        this.realEstate = realEstate;
+    }
+
+    public Checklist(User user, Room room, Integer deposit, Integer rent, Integer contractTerm, String realEstate) {
+        this.user = user;
+        this.room = room;
+        this.deposit = deposit;
+        this.rent = rent;
+        this.contractTerm = contractTerm;
+        this.realEstate = realEstate;
+    }
+
     protected Checklist() {
     }
 

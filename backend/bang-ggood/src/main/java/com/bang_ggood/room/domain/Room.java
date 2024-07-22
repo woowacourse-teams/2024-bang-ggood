@@ -25,6 +25,13 @@ public class Room extends BaseEntity {
     protected Room() {
     }
 
+    public Room(String name, Integer floor, String station, Integer walkingTime) {
+        this.name = name;
+        this.floor = floor;
+        this.station = station;
+        this.walkingTime = walkingTime;
+    }
+
     public Long getId() {
         return id;
     }

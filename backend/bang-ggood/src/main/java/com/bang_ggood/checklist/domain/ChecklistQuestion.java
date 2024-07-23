@@ -8,8 +8,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.util.Objects;
 
+@Table(name = "checklist_question")
 @Entity
 public class ChecklistQuestion extends BaseEntity {
 
@@ -21,22 +23,32 @@ public class ChecklistQuestion extends BaseEntity {
     @JoinColumn(nullable = false)
     private Checklist checklist;
 
-    private Long questionId;
+    private int questionId;
 
-    private Integer answer;
+    private String answer;
+
+    public ChecklistQuestion(Checklist checklist, int questionId, String answer) {
+        this.checklist = checklist;
+        this.questionId = questionId;
+        this.answer = answer;
+    }
 
     protected ChecklistQuestion() {
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Checklist getChecklist() {
         return checklist;
     }
 
-    public Long getQuestionId() {
+    public int getQuestionId() {
         return questionId;
     }
 
-    public Integer getAnswer() {
+    public String getAnswer() {
         return answer;
     }
 

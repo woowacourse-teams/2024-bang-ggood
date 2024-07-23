@@ -4,7 +4,8 @@ import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.RoomCreateRequest;
 import java.util.List;
 
-public record ChecklistCreateRequest(RoomCreateRequest room, List<Integer> options, QuestionsCreateRequest questions) {
+public record ChecklistCreateRequest(RoomCreateRequest room, List<Integer> options,
+                                     List<QuestionCreateRequest> questions) {
 
     public Room toRoomEntity() {
         return room.toRoomEntity();

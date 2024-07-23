@@ -3,6 +3,7 @@ import QuestionDot from '@/assets/question-dot.svg';
 /* face icon */
 import ArrowDownSmall from '@/assets/arrow-down-small.svg';
 import ArrowUpSmall from '@/assets/arrow-up-small.svg';
+import XIcon from '@/assets/delete.svg';
 import FaceIconBadGray from '@/assets/face-icon/face-icon-bad-gray.svg';
 import FaceIconBad from '@/assets/face-icon/face-icon-bad.svg';
 import FaceIconGoodGray from '@/assets/face-icon/face-icon-good-gray.svg';
@@ -10,7 +11,6 @@ import FaceIconGood from '@/assets/face-icon/face-icon-good.svg';
 import FaceIconSosoGray from '@/assets/face-icon/face-icon-soso-gray.svg';
 import FaceIconSoso from '@/assets/face-icon/face-icon-soso.svg';
 import Plus from '@/assets/plus.svg';
-
 /* logos */
 import ChecklistLogoActive from '@/assets/logos/checklist-logo-active.svg';
 import ChecklistLogo from '@/assets/logos/checklist-logo.svg';
@@ -20,6 +20,7 @@ import LocationLogoActive from '@/assets/logos/location-logo-active.svg';
 import LocationLogo from '@/assets/logos/location-logo.svg';
 import MyPageLogoActive from '@/assets/logos/my-page-logo-active.svg';
 import MyPageLogo from '@/assets/logos/my-page-logo.svg';
+
 export {
   ArrowBack,
   ArrowDownSmall,
@@ -32,12 +33,13 @@ export {
   FaceIconGoodGray,
   FaceIconSoso,
   FaceIconSosoGray,
-  Plus,
   HomeLogo,
   HomeLogoActive,
   LocationLogo,
   LocationLogoActive,
   MyPageLogo,
   MyPageLogoActive,
+  Plus,
   QuestionDot,
+  XIcon,
 };

@@ -17,6 +17,7 @@ const Container = styled.div<{ contentPosition: ModalContentPosition }>`
   display: flex;
   margin-bottom: 10px;
 
+  line-height: 1.5;
   text-align: left;
   align-items: center;
   justify-content: ${({ contentPosition }) => (contentPosition === 'center' ? 'center' : 'flex-start')};

@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
-const ModalFooter = () => {
-  return <S.Container>ModalFooter</S.Container>;
+const ModalFooter = ({ children }: { children: React.ReactNode }) => {
+  return <S.Container>{children}</S.Container>;
 };
 
 export default ModalFooter;
@@ -9,6 +9,8 @@ export default ModalFooter;
 const Container = styled.div`
   display: flex;
   justify-content: end;
+  width: 100%;
+
   gap: 10px;
 `;
 

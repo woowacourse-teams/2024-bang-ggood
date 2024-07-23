@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import ChecklistPage from '@/pages/ChecklistPage';
 import ChecklistPreviewPage from '@/pages/ChecklistPreviewPage';
+import { ModalPage } from '@/pages/modalPage';
 import SaveCheckListPage from '@/pages/SaveCheckListPage';
 
 const router = createBrowserRouter([
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
   {
     element: <ChecklistPreviewPage />,
     path: '/preview',
+  },
+  {
+    element: <ModalPage />,
+    path: '/modal',
   },
 ]);
 

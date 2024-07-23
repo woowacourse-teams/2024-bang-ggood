@@ -1,27 +1,78 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
+import { useState } from 'react';
 
-import Modal from '@/components/common/Modal/Modal';
+import Button from '@/components/common/Button/Button';
 
-/**
- * Modal은 페이지에서 새로운 ui를 따로 보여줄때 사용할 수 있는 컴포넌트입니다.
- */
-const meta = {
-  title: 'components/Modal',
+import Modal, { ModalProps } from './Modal';
+
+export default {
+  title: 'Components/Modal',
   component: Modal,
-} satisfies Meta<typeof Modal>;
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {
-  render: () => {
-    return (
-      <Modal isOpen={true} onClose={() => {}}>
-        <Modal.header title={'하하'} />
-        <Modal.Body>
-          <div>aa</div>
-        </Modal.Body>
-      </Modal>
-    );
+  argTypes: {
+    isOpen: { control: 'boolean' },
+    onClose: { action: 'closed' },
+    size: {
+      control: {
+        type: 'select',
+        options: ['small', 'medium', 'large', 'full'],
+      },
+    },
+    position: {
+      control: {
+        type: 'select',
+        options: ['center', 'bottom', 'top'],
+      },
+    },
+    hasCloseButton: { control: 'boolean' },
   },
+} as Meta;
+
+const Template: StoryFn<ModalProps> = (args: ModalProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleClose = () => {
+    setIsModalOpen(false);
+    if (args.onClose) args.onClose();
+  };
+
+  const handleOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  return (
+    <>
+      <Button label="모달 열기" onClick={handleOpen} />
+      <Modal {...args} isOpen={isModalOpen} onClose={handleClose}>
+        <Modal.header title="모달 제목" />
+        <Modal.body>
+          <div>
+            저희 조는 우주, 제이드, 제제, 시소, 헤일리, 리안, 카피로 이루어져 있습니다. 모두 방끗이라는 이름에 걸맞게
+            귀여운 친구들이죠. 저희들과 친구를 하고 싶으신가요?
+          </div>
+        </Modal.body>
+        {args.hasCloseButton && (
+          <Modal.footer>
+            <Button label="너무, 좋죠!" onClick={handleClose} size="small" />
+            <Button label="앗, 그건  좀...!" onClick={handleClose} color="dark" size="small" />
+          </Modal.footer>
+        )}
+      </Modal>
+    </>
+  );
+};
+
+export const Default = Template.bind({});
+Default.args = {
+  isOpen: false,
+  size: 'medium',
+  position: 'center',
+  hasCloseButton: true,
+};
+
+export const BottomModal = Template.bind({});
+BottomModal.args = {
+  isOpen: false,
+  size: 'medium',
+  position: 'bottom',
+  hasCloseButton: true,
 };

@@ -1,4 +1,6 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
+
+import { title2 } from '@/styles/common';
 
 interface TitleProps {
   title?: string;
@@ -12,13 +14,13 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  width: 100%;
 `;
 
 const Title = styled.span`
   margin-bottom: 16px;
 
-  font-weight: bold;
-  font-size: 24px;
+  ${title2}
   text-align: left;
 `;
 

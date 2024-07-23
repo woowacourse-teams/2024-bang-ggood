@@ -22,9 +22,9 @@ jobs:
         uses: chromaui/action@latest
         id: publish_chromatic
         with:
+          workingDir: frontend
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
       - name: Comment on PR
         uses: thollander/actions-comment-pull-request@v2
         with:
-          workingDir: frontend
           message: "🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}"

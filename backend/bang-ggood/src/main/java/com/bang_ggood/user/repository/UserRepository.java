@@ -4,9 +4,7 @@ import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
     default User getUserById(Long id) {

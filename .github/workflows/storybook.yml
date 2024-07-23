@@ -19,11 +19,10 @@ jobs:
           cd frontend
           yarn install --frozen-lockfile
       - name: Run Chromatic
+        uses: chromaui/action@latest
         id: publish_chromatic
-        run: |
-          cd frontend
-          npx chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
-
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
       - name: Comment on PR
         uses: thollander/actions-comment-pull-request@v2
         with:

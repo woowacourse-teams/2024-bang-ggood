@@ -2,10 +2,11 @@ package com.bang_ggood.checklist.dto;
 
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.RoomCreateRequest;
+import jakarta.validation.Valid;
 import java.util.List;
 
-public record ChecklistCreateRequest(RoomCreateRequest room, List<Integer> options,
-                                     List<QuestionCreateRequest> questions) {
+public record ChecklistCreateRequest(@Valid RoomCreateRequest room, List<Integer> options,
+                                     @Valid List<QuestionCreateRequest> questions) {
 
     public Room toRoomEntity() {
         return room.toRoomEntity();

@@ -51,6 +51,7 @@ const S = {
     border: 1px solid ${({ theme }) => theme.palette.grey200};
 
     letter-spacing: 0.05rem;
+    ${boxShadow}
   `,
   Row: styled.div`
     align-items: baseline;

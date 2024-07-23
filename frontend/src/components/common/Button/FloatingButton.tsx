@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import { boxShadow } from '@/styles/common';
 import theme from '@/styles/theme';
 
 type Size = 'small' | 'medium' | 'extends';
@@ -90,7 +91,7 @@ const S = {
     ${({ color }) => colorStyle[color]}
 
     color: ${({ theme }) => theme.palette.white};
-    box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
+    ${boxShadow};
     outline: none;
     cursor: pointer;
   `,

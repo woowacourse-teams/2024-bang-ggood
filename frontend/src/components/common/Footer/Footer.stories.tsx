@@ -27,7 +27,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const inLocationPage: Story = {
+export const InLocationPage: Story = {
   render: () => (
     <Footer>
       {[

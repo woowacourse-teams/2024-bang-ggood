@@ -53,7 +53,7 @@ const S = {
   `,
 };
 
-const Header = Object.assign(FooterWrapper, {
+const Footer = Object.assign(FooterWrapper, {
   HomeLogo,
   LocationLogo,
   ChecklistLogo,
@@ -63,4 +63,4 @@ const Header = Object.assign(FooterWrapper, {
   ChecklistLogoActive,
   MyPageLogoActive,
 });
-export default Header;
+export default Footer;

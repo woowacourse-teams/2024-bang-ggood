@@ -20,6 +20,7 @@ public class CategoryController {
 
     @PostMapping("/categories/priority")
     public ResponseEntity<Void> createCategoriesPriority(@RequestBody CategoryPriorityCreateRequest request) {
+        // TODO: List 요소 null check 필요
         categoryService.createCategoriesPriority(request);
         return ResponseEntity.noContent().build();
     }

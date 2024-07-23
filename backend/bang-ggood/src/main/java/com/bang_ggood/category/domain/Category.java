@@ -20,7 +20,7 @@ public enum Category {
         this.description = description;
     }
 
-    public static boolean contains(Integer id) {
+    public static boolean contains(int id) {
         return Arrays.stream(values())
                 .anyMatch(category -> category.id == id);
     }

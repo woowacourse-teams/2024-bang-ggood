@@ -2,8 +2,10 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
 import mockChecklistList from '@/_mock/checklistList.json';
+import { Plus } from '@/assets/assets';
 import ChecklistPreviewCard from '@/components/ChecklistList/ChecklistPreviewCard';
 import CompareBanner from '@/components/ChecklistList/CompareBanner';
+import FloatingButton from '@/components/common/Button/FloatingButton';
 import Footer from '@/components/common/Footer/Footer';
 import Header from '@/components/common/Header/Header';
 import Layout from '@/components/common/layout/Layout';
@@ -27,6 +29,11 @@ const ChecklistListPage = () => {
           ))}
         </S.ListBox>
       </Layout>
+      <Link to="/new-checklist">
+        <FloatingButton>
+          <Plus />
+        </FloatingButton>
+      </Link>
       <Footer>
         {[
           { node: <Footer.HomeLogo />, nodeActive: <Footer.HomeLogoActive />, path: 'home' },

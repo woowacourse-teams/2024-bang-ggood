@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import java.util.Objects;
 
 @Entity
 public class CategoryPriority extends BaseEntity {
@@ -17,7 +18,7 @@ public class CategoryPriority extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "category_id")
+    @Column(nullable = false)
     private Integer categoryId;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,5 +30,31 @@ public class CategoryPriority extends BaseEntity {
     public CategoryPriority(Integer categoryId, User user) {
         this.categoryId = categoryId;
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CategoryPriority that = (CategoryPriority) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "CategoryPriority{" +
+                "id=" + id +
+                ", categoryId=" + categoryId +
+                ", user=" + user +
+                '}';
     }
 }

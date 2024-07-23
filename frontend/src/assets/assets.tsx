@@ -25,6 +25,7 @@ import MyPageLogo from '@/assets/logos/my-page-logo.svg';
 
 /* etc */
 import BangGgoodIcon from '@/assets/bang-ggood-icon.svg';
+import LocationLineIcon from '@/assets/Icon/location-lined.svg';
 import QuestionDot from '@/assets/question-dot.svg';
 
 export {
@@ -43,6 +44,7 @@ export {
   FaceIconSosoGray,
   HomeLogo,
   HomeLogoActive,
+  LocationLineIcon,
   LocationLogo,
   LocationLogoActive,
   MyPageLogo,

@@ -1,11 +1,10 @@
 import fetcher from '@/apis/fetcher';
 import { BASE_URL, ENDPOINT } from '@/apis/url';
 import { Answer } from '@/pages/ChecklistPage';
-import { ChecklistCategoryQuestions } from '@/types/checklist';
 
 export const getChecklistQuestions = async () => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_QUESTION });
-  const data: ChecklistCategoryQuestions[] = await response.json();
+  const data = await response.json();
   return data;
 };
 

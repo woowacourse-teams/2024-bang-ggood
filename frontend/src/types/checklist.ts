@@ -8,8 +8,8 @@ export type ChecklistCateogoryName = '청결' | '방 컨디션' | '편의시설'
 
 export interface ChecklistQuestion {
   questionId: number;
-  questionTitle: string;
-  questionSubtitle: string | null;
+  title: string;
+  subtitle: string | null;
 }
 
 export interface ChecklistAnswer extends ChecklistQuestion {

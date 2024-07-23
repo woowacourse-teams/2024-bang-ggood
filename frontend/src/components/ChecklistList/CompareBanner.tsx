@@ -29,11 +29,13 @@ const S = {
     width: 100%;
     height: 75px;
 
-    background-color: ${({ theme }) => theme.palette.green200};
+    background-color: ${({ theme }) => theme.palette.yellow200};
+
+    color: ${({ theme }) => theme.palette.black};
 
     &:hover,
     &:active {
-      background-color: ${({ theme }) => theme.palette.green500};
+      background-color: ${({ theme }) => theme.palette.yellow500};
     }
   `,
   Box: styled.div`

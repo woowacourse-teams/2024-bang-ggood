@@ -18,6 +18,8 @@ public class Room extends BaseEntity {
 
     private Integer floor;
 
+    private String address;
+
     private String station;
 
     private Integer walkingTime;
@@ -25,9 +27,10 @@ public class Room extends BaseEntity {
     protected Room() {
     }
 
-    public Room(String name, Integer floor, String station, Integer walkingTime) {
+    public Room(String name, Integer floor, String address, String station, Integer walkingTime) {
         this.name = name;
         this.floor = floor;
+        this.address = address;
         this.station = station;
         this.walkingTime = walkingTime;
     }
@@ -42,6 +45,10 @@ public class Room extends BaseEntity {
 
     public Integer getFloor() {
         return floor;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     public String getStation() {
@@ -75,6 +82,7 @@ public class Room extends BaseEntity {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", floor=" + floor +
+                ", address='" + address + '\'' +
                 ", station='" + station + '\'' +
                 ", walkingTime=" + walkingTime +
                 '}';

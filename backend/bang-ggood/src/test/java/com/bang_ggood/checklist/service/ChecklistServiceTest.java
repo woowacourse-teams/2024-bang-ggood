@@ -3,7 +3,6 @@ package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
-import com.bang_ggood.checklist.dto.ChecklistCreateRequest;
 import com.bang_ggood.exception.BangggoodException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +30,8 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void createChecklistNotValidQuestionId() {
         //given & when & then
-        Assertions.assertThatThrownBy(() -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_QUESTION_ID))
+        Assertions.assertThatThrownBy(
+                        () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_QUESTION_ID))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage("잘못된 질문 ID입니다.");
     }

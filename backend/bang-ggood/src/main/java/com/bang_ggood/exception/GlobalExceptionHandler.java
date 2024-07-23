@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(BangggoodException.class)
-    public ResponseEntity<ExceptionResponse> handleBangggoodException(BangggoodException exception, HttpServletRequest request) {
+    public ResponseEntity<ExceptionResponse> handleBangggoodException(BangggoodException exception,
+                                                                      HttpServletRequest request) {
         ExceptionResponse response = new ExceptionResponse(
                 request.getMethod(),
                 request.getRequestURI(),

@@ -1,9 +1,11 @@
+import styled from '@emotion/styled';
 import { useCallback, useEffect, useState } from 'react';
 
-import mockCategories from '@/_mock/checklist.json';
+import { getChecklistQuestions } from '@/apis/checklist';
 import Accordion from '@/components/common/Accordion/Accordion';
 import Tabs from '@/components/common/Tabs/Tabs';
 import ChecklistCategory from '@/components/NewChecklist/ChecklistCategory';
+import { flexColumn } from '@/styles/common';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 
 export interface Answer {
@@ -35,9 +37,8 @@ const ChecklistPage = () => {
   ];
 
   useEffect(() => {
-    const fetchChecklist = () => {
-      const checklist = mockCategories;
-      // const checklist = await getChecklistQuestions();
+    const fetchChecklist = async () => {
+      const checklist = await getChecklistQuestions();
       setChecklistQuestions(checklist);
     };
     fetchChecklist();
@@ -71,7 +72,7 @@ const ChecklistPage = () => {
       <Tabs menuList={menuList} />
       <Accordion>
         {checklistQuestions?.map(category => (
-          <>
+          <S.Container key={category.categoryId}>
             <Accordion.header text={'청결도'} id={category.categoryId} />
             <Accordion.body id={category.categoryId}>
               <ChecklistCategory
@@ -82,7 +83,7 @@ const ChecklistPage = () => {
                 deleteAnswer={deleteAnswer}
               />
             </Accordion.body>
-          </>
+          </S.Container>
         ))}
       </Accordion>
     </>
@@ -90,3 +91,11 @@ const ChecklistPage = () => {
 };
 
 export default ChecklistPage;
+
+const Container = styled.div`
+  ${flexColumn}
+`;
+
+const S = {
+  Container,
+};

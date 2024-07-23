@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import mockCategories from '@/_mock/checklist.json';
-import ChecklistCategory from '@/components/Checklist/ChecklistCategory';
 import Accordion from '@/components/common/Accordion/Accordion';
 import Tabs from '@/components/common/Tabs/Tabs';
+import ChecklistCategory from '@/components/NewChecklist/ChecklistCategory';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 
 export interface Answer {

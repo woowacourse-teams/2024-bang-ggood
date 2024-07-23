@@ -23,9 +23,11 @@ const FloatingButton = ({
   ...rest
 }: Props) => {
   return (
-    <S.Button size={size} color={color} aria-label={ariaLabel} {...rest}>
-      {children}
-    </S.Button>
+    <S.Wrapper>
+      <S.Button size={size} color={color} aria-label={ariaLabel} {...rest}>
+        {children}
+      </S.Button>
+    </S.Wrapper>
   );
 };
 
@@ -39,8 +41,8 @@ const sizeStyle = {
     font-size: 12px;
   `,
   medium: css`
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
 
     font-size: 16px;
   `,
@@ -80,6 +82,11 @@ const colorStyle = {
 };
 
 const S = {
+  Wrapper: styled.div`
+    position: absolute;
+    right: 7%;
+    bottom: 10%;
+  `,
   Button: styled.button<{ size: Size; color: Color }>`
     display: flex;
     align-items: center;

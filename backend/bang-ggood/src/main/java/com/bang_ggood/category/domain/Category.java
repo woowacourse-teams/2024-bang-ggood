@@ -1,5 +1,7 @@
 package com.bang_ggood.category.domain;
 
+import java.util.Arrays;
+
 public enum Category {
 
     CLEAN(1, "청결"),
@@ -16,6 +18,11 @@ public enum Category {
     Category(int id, String description) {
         this.id = id;
         this.description = description;
+    }
+
+    public static boolean contains(int id) {
+        return Arrays.stream(values())
+                .anyMatch(category -> category.id == id);
     }
 
     public int getId() {

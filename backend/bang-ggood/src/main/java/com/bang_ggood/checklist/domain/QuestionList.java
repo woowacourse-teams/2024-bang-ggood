@@ -2,7 +2,9 @@ package com.bang_ggood.checklist.domain;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.stereotype.Component;
 
+@Component
 public class QuestionList {
 
     public Map<Integer, Question> questions;
@@ -16,6 +18,10 @@ public class QuestionList {
         initEnvironment();
         initSecurity();
         initEconomic();
+    }
+
+    public boolean contains(int questionId) {
+        return questions.containsKey(questionId);
     }
 
     private void initClean() {

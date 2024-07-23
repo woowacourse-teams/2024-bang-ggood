@@ -22,7 +22,7 @@ public enum Category {
 
     public static boolean contains(Integer id) {
         return Arrays.stream(values())
-                .anyMatch(category -> category.id.equals(id));
+                .anyMatch(category -> category.id == id);
     }
 
     public int getId() {

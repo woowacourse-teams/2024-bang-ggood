@@ -12,10 +12,10 @@ public enum Category {
     SECURITY(6, "보안"),
     ECONOMIC(7, "경제적");
 
-    private final Integer id;
+    private final int id;
     private final String description;
 
-    Category(Integer id, String description) {
+    Category(int id, String description) {
         this.id = id;
         this.description = description;
     }
@@ -25,7 +25,7 @@ public enum Category {
                 .anyMatch(category -> category.id.equals(id));
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 

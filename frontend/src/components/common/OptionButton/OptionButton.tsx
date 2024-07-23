@@ -1,17 +1,26 @@
-import { useState } from 'react';
+import { options } from '@/assets/options/option';
 
-import { filledOptions, unfilledOptions } from '@/assets/options/option';
+// const OPTION_COUNT = 14;
 
-const OptionButton = (optionId: number) => {
-  const [isSelected, setIsSelected] = useState(false);
-  const filledOption = filledOptions[optionId];
-  const unfilledOption = unfilledOptions[optionId];
+// const optionSelected = [];
 
-  const onClickSelect = () => {
-    setIsSelected(prev => !prev);
-  };
+interface Props {
+  optionId: number;
+  isSelected: boolean;
+  onClickSelect: () => void;
+}
 
-  return <div>{isSelected ? filledOption : unfilledOption}</div>;
+const OptionButton = ({ optionId, isSelected, onClickSelect }: Props) => {
+  const option = Object.values(options).find(opt => opt.id === optionId);
+
+  if (!option) {
+    return null;
+  }
+
+  const FilledIcon = option.filled;
+  const UnfilledIcon = option.unfilled;
+
+  return <div onClick={onClickSelect}>{isSelected ? <FilledIcon /> : <UnfilledIcon />}</div>;
 };
 
 export default OptionButton;

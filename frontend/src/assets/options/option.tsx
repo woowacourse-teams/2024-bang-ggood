@@ -17,7 +17,7 @@ import InternetUnfilled from '@/assets/options/internet-unfilled.svg';
 import MicrowaveFilled from '@/assets/options/microwave-filled.svg';
 import MicrowaveUnfilled from '@/assets/options/microwave-unfilled.svg';
 import RefrigeratorFilled from '@/assets/options/refrigerator-filled.svg';
-import RefrigeratorUnfilled from '@/assets/options/refrigerator-unfilled.svg';
+import RefrigeratorUnfilled from '@/assets/options/refrigerator-unfillled.svg';
 import ShoesClosetFilled from '@/assets/options/shoescloset-filled.svg';
 import ShoesClosetUnfilled from '@/assets/options/shoescloset-unfilled.svg';
 import SinkFilled from '@/assets/options/sink-filled.svg';

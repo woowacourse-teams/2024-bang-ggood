@@ -1,35 +1,35 @@
-package com.bang_ggood.user.domain;
+package com.bang_ggood.category.domain;
 
 import com.bang_ggood.BaseEntity;
+import com.bang_ggood.user.domain.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.ManyToOne;
 import java.util.Objects;
 
-@Table(name = "users")
 @Entity
-public class User extends BaseEntity {
+public class CategoryPriority extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private Integer categoryId;
 
-    public User(Long id, String name) {
-        this.id = id;
-        this.name = name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    protected CategoryPriority() {
     }
 
-    public User(String name) {
-        this.name = name;
-    }
-  
-    protected User() {
+    public CategoryPriority(Integer categoryId, User user) {
+        this.categoryId = categoryId;
+        this.user = user;
     }
 
     @Override
@@ -40,20 +40,21 @@ public class User extends BaseEntity {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        User user = (User) o;
-        return Objects.equals(id, user.id);
+        CategoryPriority that = (CategoryPriority) o;
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "CategoryPriority{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", categoryId=" + categoryId +
+                ", user=" + user +
                 '}';
     }
 }

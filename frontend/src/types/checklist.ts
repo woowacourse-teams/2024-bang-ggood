@@ -1,3 +1,5 @@
+import { Badge } from '@/types/Badge';
+
 export interface ChecklistCategoryQuestions {
   categoryId: number;
   categoryName: string;
@@ -14,4 +16,14 @@ export interface ChecklistQuestion {
 
 export interface ChecklistAnswer extends ChecklistQuestion {
   answer?: number | null;
+}
+
+export interface ChecklistPreview {
+  checklistId: number;
+  roomName: string;
+  address: string;
+  deposit: number;
+  rent: number;
+  createAt: string;
+  badge: Badge[];
 }

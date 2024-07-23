@@ -13,7 +13,7 @@ const ChecklistListPage = () => {
 
   return (
     <>
-      <Header />
+      <Header center={<Header.Text>체크리스트</Header.Text>} />
       <CompareBanner />
       <Layout>
         <S.ListBox>

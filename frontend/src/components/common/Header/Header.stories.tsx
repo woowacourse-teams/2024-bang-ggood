@@ -30,3 +30,13 @@ export const Backward: Story = {
 export const BackwardAndConfirm: Story = {
   render: () => <Header left={<Header.Backward />} right={<Header.TextButton>확인</Header.TextButton>} />,
 };
+
+export const Triple: Story = {
+  render: () => (
+    <Header
+      left={<Header.Backward />}
+      center={<div style={{ display: 'flex', alignItems: 'center' }}> 체크리스트 </div>}
+      right={<Header.TextButton>확인</Header.TextButton>}
+    />
+  ),
+};

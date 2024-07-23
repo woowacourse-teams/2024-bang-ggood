@@ -6,14 +6,16 @@ import Logo from '@/assets/logo.svg';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   left?: ReactNode;
+  center?: ReactNode;
   right?: ReactNode;
 }
 
-const HeaderWrapper = ({ left, right, ...rest }: Props) => {
+const HeaderWrapper = ({ left, right, center, ...rest }: Props) => {
   return (
     <S.Wrapper {...rest}>
       <S.FlexBox>
         {left ? left : <div />}
+        {center ? center : <div />}
         {right ? right : <div />}
       </S.FlexBox>
     </S.Wrapper>

@@ -53,17 +53,17 @@ public class ChecklistService {
     }
 
     private void createChecklistOptions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
-        List<Integer> options = checklistCreateRequest.options();
-        validateOptions(options);
-        List<ChecklistOption> checklistOptions = options.stream()
+        List<Integer> optionIds = checklistCreateRequest.options();
+        validateOptions(optionIds);
+        List<ChecklistOption> checklistOptions = optionIds.stream()
                 .map(option -> new ChecklistOption(checklist, option))
                 .toList();
         checklistOptionRepository.saveAll(checklistOptions);
     }
 
-    private void validateOptions(List<Integer> options) {
-        for (Integer option : options) {
-            if (!Option.contains(option)) {
+    private void validateOptions(List<Integer> optionIds) {
+        for (Integer optionId : optionIds) {
+            if (!Option.contains(optionId)) {
                 throw new BangggoodException(ExceptionCode.INVALID_OPTION_ID);
             }
         }

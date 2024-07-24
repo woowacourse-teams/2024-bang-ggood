@@ -18,15 +18,19 @@ const ModalHeader = ({ title, children }: TitleProps) => {
 
 const Container = styled.div`
   display: flex;
+  ${flexCenter}
   justify-content: space-between;
   align-items: flex-start;
-  width: 100%;
+  width: calc(100% - 32px);
+  height: 60px;
+  padding: 0 16px;
 `;
 
 const Title = styled.span`
   height: 30px;
   ${flexCenter}
   margin-bottom: 16px;
+  padding-top: 20px;
 
   ${title2}
   text-align: left;

@@ -8,8 +8,9 @@ export default ModalFooter;
 
 const Container = styled.div`
   display: flex;
+  width: calc(100% - 32px);
+  padding: 16px;
   justify-content: end;
-  width: 100%;
 
   gap: 10px;
 `;

@@ -119,10 +119,10 @@ const ModalOuter = styled.div<{
 
 const ModalInner = styled.div`
   display: flex;
-  padding: 16px;
+  width: 100%;
 
   flex-direction: column;
-  justify-content: 'flex-left';
+
   border-radius: 5px;
 `;
 

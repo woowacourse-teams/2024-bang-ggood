@@ -76,6 +76,27 @@ export const checklistList = [
           long: '쾌적한 주거 환경',
         },
       },
+      {
+        badgeId: 1,
+        badgeName: {
+          short: '✨ 편의시설',
+          long: '다양한 편의시설 완비',
+        },
+      },
+      {
+        badgeId: 2,
+        badgeName: {
+          short: '🏠 경제적',
+          long: '특별 할인 적용',
+        },
+      },
+      {
+        badgeId: 7,
+        badgeName: {
+          short: '📸 보안',
+          long: '안전해요',
+        },
+      },
     ],
   },
 ];

@@ -1,13 +1,17 @@
 package com.bang_ggood.checklist.service;
 
+import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.Option;
 import com.bang_ggood.checklist.domain.Questionlist;
+import com.bang_ggood.checklist.dto.BadgeResponse;
 import com.bang_ggood.checklist.dto.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.ChecklistInfo;
 import com.bang_ggood.checklist.dto.QuestionCreateRequest;
+import com.bang_ggood.checklist.dto.UserChecklistPreviewResponse;
+import com.bang_ggood.checklist.dto.UserChecklistsPreviewResponse;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
@@ -16,11 +20,11 @@ import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ChecklistService {
@@ -118,5 +122,28 @@ public class ChecklistService {
                 throw new BangggoodException(ExceptionCode.INVALID_QUESTION);
             }
         }
+    }
+
+    public UserChecklistsPreviewResponse readUserChecklistsPreview() {
+        User user = new User(1L, "방방이");
+        List<Checklist> checklists = checklistRepository.findByUser(user);
+
+        List<UserChecklistPreviewResponse> responses = checklists.stream()
+                .map(checklist -> new UserChecklistPreviewResponse(
+                        checklist.getId(),
+                        checklist.getRoom().getName(),
+                        checklist.getRoom().getAddress(),
+                        checklist.getDeposit(),
+                        checklist.getRent(),
+                        checklist.getCreatedAt(),
+                        Category.getBadges(checklist.getQuestions()).stream()
+                                .map(badge -> new BadgeResponse(badge.getShortDescriptionWithEmoji(),
+                                        badge.getLongDescriptionWithEmoji()))
+                                .toList()
+
+                ))
+                .toList();
+
+        return new UserChecklistsPreviewResponse(responses);
     }
 }

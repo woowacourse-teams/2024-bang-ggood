@@ -34,6 +34,8 @@ const CategoryChoosePage = () => {
       } else if (prev.length < MAX_SELECT_CATEGORY_COUNT) {
         return [...prev, id];
       }
+      // TODO: MAX 넘었다고 알려주는 노티 토스트 추가
+      alert('카테고리는 최대 3개까지만 선택 가능합니다.');
       return prev;
     });
   };
@@ -121,7 +123,6 @@ const S = {
   `,
   ButtonWrapper: styled.div`
     display: flex;
-
     width: 90%;
     height: auto;
     flex-wrap: wrap;

@@ -4,20 +4,22 @@ import java.util.Arrays;
 
 public enum Category {
 
-    CLEAN(1, "청결"),
-    ROOM_CONDITION(2, "방 컨디션"),
-    AMENITY(3, "편의시설"),
-    OPTION(4, "옵션"),
-    ENVIRONMENT(5, "주거환경"),
-    SECURITY(6, "보안"),
-    ECONOMIC(7, "경제적");
+    CLEAN(1, "청결", Badge.CLEAN),
+    ROOM_CONDITION(2, "방 컨디션", Badge.ROOM_CONDITION),
+    AMENITY(3, "편의시설", Badge.AMENITY),
+    OPTION(4, "옵션", Badge.OPTION),
+    ENVIRONMENT(5, "주거환경", Badge.ENVIRONMENT),
+    SECURITY(6, "보안", Badge.SECURITY),
+    ECONOMIC(7, "경제적", Badge.ECONOMIC);
 
     private final int id;
     private final String description;
+    private final Badge badge;
 
-    Category(int id, String description) {
+    Category(int id, String description, Badge badge) {
         this.id = id;
         this.description = description;
+        this.badge = badge;
     }
 
     public static boolean contains(int id) {

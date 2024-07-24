@@ -4,20 +4,26 @@ import styled from '@emotion/styled';
 import { title2, title3, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
 
-type ButtonSize = 'small' | 'medium' | 'full';
+type ButtonType = 'small' | 'medium' | 'full';
 type ColorOption = 'light' | 'dark' | 'disabled';
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
-  size?: ButtonSize;
+  type?: ButtonType;
   color?: ColorOption;
   label: string;
   isSquare?: boolean;
   onClick?: () => void;
 }
 
-const Button = ({ size = 'medium', color = 'light', label, isSquare = false, onClick = () => {} }: Props) => {
+const Button = ({ type = 'medium', color = 'light', label, isSquare = false, onClick = () => {}, ...rest }: Props) => {
   return (
-    <S.Button size={size} color={color} isSquare={isSquare} onClick={color !== 'disabled' ? onClick : () => {}}>
+    <S.Button
+      size={type}
+      color={color}
+      isSquare={isSquare}
+      onClick={color !== 'disabled' ? onClick : () => {}}
+      {...rest}
+    >
       {label}
     </S.Button>
   );
@@ -26,7 +32,7 @@ const Button = ({ size = 'medium', color = 'light', label, isSquare = false, onC
 export default Button;
 
 const S = {
-  Button: styled.button<{ size: ButtonSize; color: ColorOption; isSquare: boolean }>`
+  Button: styled.button<{ size: ButtonType; color: ColorOption; isSquare: boolean }>`
     ${({ isSquare }) => (isSquare ? 'border-radius: 8px' : 'border-radius: 100px')};
     ${({ size }) => sizeStyles[size]};
     ${({ color }) => ColorStyles[color]};

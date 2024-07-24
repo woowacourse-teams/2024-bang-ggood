@@ -11,6 +11,8 @@ public enum Badge {
     ECONOMIC("경제적", "경제적이에요", "💰")
     ;
 
+    private static final String DESCRIPTION_FORMAT = "%s %s";
+
     private final String shortDescription;
     private final String longDescription;
     private final String emoji;
@@ -22,10 +24,10 @@ public enum Badge {
     }
 
     public String getShortDescriptionWithEmoji() {
-        return this.emoji + this.shortDescription;
+        return String.format(DESCRIPTION_FORMAT, this.emoji, this.shortDescription);
     }
 
     public String getLongDescriptionWithEmoji() {
-        return this.emoji + this.longDescription;
+        return String.format(DESCRIPTION_FORMAT, this.emoji, this.longDescription);
     }
 }

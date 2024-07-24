@@ -28,7 +28,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 
     @DisplayName("체크리스트 방 정보 작성 실패: 질문 id가 유효하지 않을 경우")
     @Test
-    void createChecklistNotValidQuestionId() {
+    void createChecklist_invalidQuestionId_exception() {
         //given & when & then
         Assertions.assertThatThrownBy(
                         () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_QUESTION_ID))

@@ -24,6 +24,6 @@ class QuestionListTest {
     @DisplayName("질문 리스트 포함 성공 : 포함하지 않는 경우")
     @Test
     void contains_false() {
-        assertThat(questionList.contains(100)).isFalse();
+        assertThat(questionList.contains(9999)).isFalse();
     }
 }

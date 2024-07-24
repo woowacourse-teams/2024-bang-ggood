@@ -30,7 +30,7 @@ const S = {
 
     background-color: ${({ theme }) => theme.palette.grey100};
 
-    color: ${({ $color, theme }) => ($color ? $color : theme.palette.grey300)};
+    color: ${({ $color, theme }) => ($color ? $color : theme.palette.grey600)};
     font-weight: ${({ theme }) => theme.text.weight.medium};
     font-size: ${({ theme }) => theme.text.size.small};
     outline-color: ${({ theme }) => theme.palette.grey300};

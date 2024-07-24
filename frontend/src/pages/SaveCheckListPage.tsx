@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
-import BangGgoodIcon from '@/assets/bang-ggood-icon.svg';
+import { BangBangIcon } from '@/assets/assets';
 import Header from '@/components/common/Header/Header';
 
 const SaveCheckListPage = () => {
@@ -10,7 +10,7 @@ const SaveCheckListPage = () => {
       <Header />
 
       <S.Wrapper>
-        <BangGgoodIcon />
+        <BangBangIcon />
         <S.TextWrapper>
           <S.Text> 체크리스트가 저장되었습니다</S.Text>
         </S.TextWrapper>

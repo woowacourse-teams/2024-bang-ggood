@@ -1,26 +1,26 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
 
+import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
 
 type BadgeType = 'short' | 'long' | 'button';
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
-  type: BadgeType;
+  type?: BadgeType;
   label: string;
+  isSelected?: boolean;
   onClick?: () => void;
 }
 
-const Badge = ({ type, label, onClick }: Props) => {
-  const [isSelected, setSelected] = useState(false);
-
+const Badge = ({ type = 'short', label, isSelected = false, onClick }: Props) => {
   const handleClick = () => {
-    onClick();
-    setSelected(prev => !prev);
+    if (onClick) {
+      onClick();
+    }
   };
 
   return (
-    <S.Button size={type} onClick={handleClick} isSelected={isSelected} hasOnClick={!!onClick}>
+    <S.Button size={type} onClick={handleClick} isSelected={isSelected}>
       {label}
     </S.Button>
   );
@@ -29,41 +29,38 @@ const Badge = ({ type, label, onClick }: Props) => {
 export default Badge;
 
 const S = {
-  Button: styled.button<{ size: BadgeType; isSelected: boolean; hasOnClick: boolean }>`
-    border-radius: 100px;
-    border: 1px solid ${({ theme }) => theme.palette.grey300};
+  Button: styled.button<{ size: BadgeType; isSelected: boolean }>`
+    ${flexCenter}
+    border-radius: 20px;
+    box-sizing: border-box;
 
     color: ${({ theme }) => theme.palette.grey600};
     ${({ size }) => typeStyles[size]}
+    line-height: 1;
     cursor: pointer;
 
     ${({ isSelected }) =>
-      isSelected &&
-      `
+      isSelected
+        ? `
         background-color: ${theme.palette.yellow200};
         border: 1px solid ${theme.palette.yellow600};
+    `
+        : `
+        background-color: ${theme.palette.white};
+        border: 1px solid ${theme.palette.grey300};
     `}
-
-    ${({ hasOnClick }) =>
-      hasOnClick &&
-      `
-        &:hover, &:active {
-            background-color: ${theme.palette.yellow200};
-            border: 1px solid ${theme.palette.yellow600};
-      }
-    `};
   `,
 };
 
 const typeStyles = {
   short: `
-    padding: 6px 8px;
-
+    height: 26px;
+    padding: 4px 10px; 
     font-size: ${theme.text.size.xSmall};
   `,
   long: `
-    padding: 8px 15px;
-
+    height: 32px;
+    padding: 4px 16px;
     font-size: ${theme.text.size.small};
   `,
   button: `

@@ -166,6 +166,7 @@ export const normalize = css`
 
   a {
     text-decoration: none;
+    color: inherit;
   }
 
   /* input */

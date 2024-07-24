@@ -3,6 +3,7 @@ import { HTMLAttributes, useState } from 'react';
 import { InputRequiredDot } from '@/assets/assets';
 import Input from '@/components/common/Input/Input';
 import theme from '@/styles/theme';
+import styled from '@emotion/styled';
 
 export interface MakeFormArgs {
   label: string;
@@ -14,7 +15,16 @@ export interface MakeFormArgs {
 const FormFieldWrapper = ({ ...rest }) => (
   <div {...rest} style={{ width: '100%', flex: 'auto', display: 'flex', flexDirection: 'column', rowGap: '6px' }}></div>
 );
+const S = {
+  MovedRequiredDot: styled(InputRequiredDot)`
+    transform: translateY(-140%);
+  `,
+  P: styled.p<{ value: string }>`
+    height: 10px;
 
+    color: black;
+  `,
+};
 const FormField = Object.assign(FormFieldWrapper, {
   Label: ({
     label,
@@ -23,7 +33,7 @@ const FormField = Object.assign(FormFieldWrapper, {
   }: { label: string; required?: boolean } & HTMLAttributes<HTMLLabelElement>) => (
     <label {...rest} style={{ fontSize: theme.text.size.medium, fontWeight: theme.text.weight.bold }}>
       {label}
-      {required && <InputRequiredDot />}
+      {required && <S.MovedRequiredDot />}
     </label>
   ),
   /* 추후 입력검증 에러미시지 표출을 위해 만들어 둠 */
@@ -40,8 +50,7 @@ const FormField = Object.assign(FormFieldWrapper, {
       {...rest}
     />
   ),
-  P: ({ value }: { value: string } & HTMLAttributes<HTMLParagraphElement>) => (
-    <p style={{ height: '10px', color: 'black' }}>{value}</p>
-  ),
+  P: S.P,
 });
+
 export default FormField;

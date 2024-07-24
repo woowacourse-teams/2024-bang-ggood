@@ -1,5 +1,7 @@
 import ArrowBack from '@/assets/arrow-back.svg';
+import InputRequiredDot from '@/assets/input-required-dot.svg';
 import QuestionDot from '@/assets/question-dot.svg';
+
 /* face icon */
 import ArrowDownSmall from '@/assets/arrow-down-small.svg';
 import ArrowUpSmall from '@/assets/arrow-up-small.svg';
@@ -32,12 +34,13 @@ export {
   FaceIconGoodGray,
   FaceIconSoso,
   FaceIconSosoGray,
-  Plus,
   HomeLogo,
   HomeLogoActive,
+  InputRequiredDot,
   LocationLogo,
   LocationLogoActive,
   MyPageLogo,
   MyPageLogoActive,
+  Plus,
   QuestionDot,
 };

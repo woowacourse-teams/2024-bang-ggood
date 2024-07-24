@@ -8,7 +8,6 @@ import mobileDecorator from '../../../.storybook/common';
 const meta: Meta<typeof ChecklistPreviewCard> = {
   title: 'components/ChecklistPreviewCard',
   component: ChecklistPreviewCard,
-  tags: ['autodocs'],
   parameters: {
     docs: {
       description: {

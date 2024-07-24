@@ -1,4 +1,4 @@
-import FormField from '@/components/FormField';
+import FormField from '@/components/common/FormField/FormField';
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 

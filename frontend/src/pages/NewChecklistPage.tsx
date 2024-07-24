@@ -3,9 +3,9 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import Button from '@/components/common/Button/Button';
+import FormField, { MakeFormArgs } from '@/components/common/FormField/FormField';
 import Header from '@/components/common/Header/Header';
 import Tabs from '@/components/common/Tabs/Tabs';
-import FormField, { MakeFormArgs } from '@/components/FormField';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 
 const menuList = [

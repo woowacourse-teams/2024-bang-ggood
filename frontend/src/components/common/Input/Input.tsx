@@ -5,6 +5,22 @@ interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
   $color?: 'string';
 }
 const widthSize = { small: '45px', medium: '110px', large: '140px', full: '100%' };
+
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+  width: keyof typeof widthSize;
+}
+
+const Input = ({ width, onChange, ...rest }: Props) => {
+  const handleChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      if (!onChange) return;
+      onChange(event);
+    },
+    [onChange],
+  );
+
+  return <S.Input width={widthSize[width]} {...rest} onChange={handleChange} />;
+};
 const S = {
   Input: styled.input<StyledProps>`
     display: flex;
@@ -23,21 +39,4 @@ const S = {
     box-sizing: border-box;
   `,
 };
-
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
-  width: keyof typeof widthSize;
-}
-
-const Input = ({ width, onChange, ...rest }: Props) => {
-  const handleChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      if (!onChange) return;
-      onChange(event);
-    },
-    [onChange],
-  );
-
-  return <S.Input width={widthSize[width]} {...rest} onChange={handleChange} />;
-};
-
 export default Input;

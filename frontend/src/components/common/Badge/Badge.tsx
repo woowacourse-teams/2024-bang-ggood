@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
 
 import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
@@ -9,21 +8,19 @@ type BadgeType = 'short' | 'long' | 'button';
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   type?: BadgeType;
   label: string;
+  isSelected?: boolean;
   onClick?: () => void;
 }
 
-const Badge = ({ type = 'short', label, onClick }: Props) => {
-  const [isSelected, setSelected] = useState(false);
-
+const Badge = ({ type = 'short', label, isSelected = false, onClick }: Props) => {
   const handleClick = () => {
     if (onClick) {
       onClick();
-      setSelected(prev => !prev);
     }
   };
 
   return (
-    <S.Button size={type} onClick={handleClick} isSelected={isSelected} hasOnClick={!!onClick}>
+    <S.Button size={type} onClick={handleClick} isSelected={isSelected}>
       {label}
     </S.Button>
   );
@@ -32,10 +29,9 @@ const Badge = ({ type = 'short', label, onClick }: Props) => {
 export default Badge;
 
 const S = {
-  Button: styled.button<{ size: BadgeType; isSelected: boolean; hasOnClick: boolean }>`
+  Button: styled.button<{ size: BadgeType; isSelected: boolean }>`
     ${flexCenter}
     border-radius: 20px;
-    border: 1px solid ${({ theme }) => theme.palette.grey300};
     box-sizing: border-box;
 
     color: ${({ theme }) => theme.palette.grey600};
@@ -44,20 +40,15 @@ const S = {
     cursor: pointer;
 
     ${({ isSelected }) =>
-      isSelected &&
-      `
+      isSelected
+        ? `
         background-color: ${theme.palette.yellow200};
         border: 1px solid ${theme.palette.yellow600};
+    `
+        : `
+        background-color: ${theme.palette.white};
+        border: 1px solid ${theme.palette.grey300};
     `}
-
-    ${({ hasOnClick }) =>
-      hasOnClick &&
-      `
-        &:hover, &:active {
-            background-color: ${theme.palette.yellow200};
-            border: 1px solid ${theme.palette.yellow600};
-      }
-    `};
   `,
 };
 

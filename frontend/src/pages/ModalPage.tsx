@@ -1,9 +1,5 @@
-import Modal from '@/components/common/Modal/Modal';
+import OptionModal from '@/components/NewChecklist/OptionModal';
 
 export const ModalPage = () => {
-  return (
-    <Modal isOpen={true} onClose={() => {}}>
-      <Modal.header title={'aaa'} />
-    </Modal>
-  );
+  return <OptionModal />;
 };

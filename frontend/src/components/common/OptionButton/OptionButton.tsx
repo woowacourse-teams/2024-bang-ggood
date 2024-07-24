@@ -1,5 +1,4 @@
-import { options } from '@/assets/options/option';
-
+import { options } from '@/components/common/OptionButton/OptionIcon';
 // const OPTION_COUNT = 14;
 
 // const optionSelected = [];
@@ -7,7 +6,7 @@ import { options } from '@/assets/options/option';
 interface Props {
   optionId: number;
   isSelected: boolean;
-  onClickSelect: () => void;
+  onClickSelect: (optionId: number) => void;
 }
 
 const OptionButton = ({ optionId, isSelected, onClickSelect }: Props) => {
@@ -20,7 +19,23 @@ const OptionButton = ({ optionId, isSelected, onClickSelect }: Props) => {
   const FilledIcon = option.filled;
   const UnfilledIcon = option.unfilled;
 
-  return <div onClick={onClickSelect}>{isSelected ? <FilledIcon /> : <UnfilledIcon />}</div>;
+  return (
+    <div>
+      {isSelected ? (
+        <FilledIcon
+          onClick={() => {
+            onClickSelect(optionId);
+          }}
+        />
+      ) : (
+        <UnfilledIcon
+          onClick={() => {
+            onClickSelect(optionId);
+          }}
+        />
+      )}
+    </div>
+  );
 };
 
 export default OptionButton;

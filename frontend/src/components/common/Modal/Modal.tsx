@@ -7,6 +7,7 @@ import { XIcon } from '@/assets/assets';
 import ModalBody, { ModalContentPosition } from '@/components/common/Modal/ModalBody';
 import ModalFooter from '@/components/common/Modal/ModalFooter';
 import ModalHeader from '@/components/common/Modal/ModalHeader';
+import { flexCenter } from '@/styles/common';
 
 type ModalPosition = 'center' | 'bottom';
 
@@ -17,7 +18,7 @@ export interface ModalProps extends ComponentPropsWithRef<'dialog'> {
   onClose: () => void;
   size?: ModalSize;
   contentPosition?: ModalContentPosition;
-  hasCloseButton?: boolean;
+  hasCloseButton: boolean;
   position?: ModalPosition;
 }
 
@@ -29,7 +30,7 @@ const Modal = ({
   position = 'center',
   onClose,
   hasCloseButton = true,
-  size = 'medium',
+  size = 'large',
 }: ModalProps) => {
   if (!modalRoot) return null;
 
@@ -70,12 +71,11 @@ const ModalCenterStyle = css`
   top: 50%;
 `;
 
-const MODAL_WIDTH_MAP: Record<ModalSize, string> = {
-  small: '320px',
-  medium: '480px',
-  large: '600px',
-  full: '100vw',
-};
+// const MODAL_WIDTH_MAP: Record<ModalSize, string> = {
+//   small: '320px',
+//   medium: '480px',
+//   large: '600px',
+// };
 
 const ModalWrapper = styled.div<{ open: boolean }>`
   display: ${({ open }) => (open ? 'flex' : 'none')};
@@ -103,25 +103,27 @@ const ModalOuter = styled.div<{
   top: 50%;
   left: 50%;
 
-  width: ${({ $size: size }) => MODAL_WIDTH_MAP[size]};
-
   transform: translate(-50%, -50%);
   border-radius: 8px;
   ${({ $position }) => {
     if ($position === 'bottom') return ModalBottomStyle;
     return ModalCenterStyle;
   }};
+  width: 100vw;
 
   background-color: white;
+  ${flexCenter}
+
+  max-width: 390px;
 `;
 
 const ModalInner = styled.div`
   display: flex;
+  padding: 16px;
 
   flex-direction: column;
   justify-content: 'flex-left';
   border-radius: 5px;
-  padding: 16px;
 `;
 
 const CloseIcon = styled.button`

@@ -24,12 +24,16 @@ import SinkFilled from '@/assets/options/sink-filled.svg';
 import SinkUnfilled from '@/assets/options/sink-unfilled.svg';
 import TvFilled from '@/assets/options/tv-filled.svg';
 import TvUnfilled from '@/assets/options/tv-unfilled.svg';
+import {
+  default as WashingMachineFilled,
+  default as WashingMachineUnfilled,
+} from '@/assets/options/washingmachine-filled.svg';
 
 const options = {
   airConditioner: { id: 1, filled: AirconditionerFilled, unfilled: AirconditionerUnfilled, name: '에어컨' },
   refrigerator: { id: 2, filled: RefrigeratorFilled, unfilled: RefrigeratorUnfilled, name: '냉장고' },
   microwaveOven: { id: 3, filled: MicrowaveFilled, unfilled: MicrowaveUnfilled, name: '전자레인지' },
-  washingMachine: { id: 4, filled: DryerFilled, unfilled: DryerUnfilled, name: '세탁기' }, // Assuming Dryer represents Washing Machine
+  washingMachine: { id: 4, filled: WashingMachineFilled, unfilled: WashingMachineUnfilled, name: '세탁기' }, // Assuming Dryer represents Washing Machine
   sink: { id: 5, filled: SinkFilled, unfilled: SinkUnfilled, name: '싱크대' },
   gasStove: { id: 6, filled: GasRangeFilled, unfilled: GasRangeUnfilled, name: '가스레인지/인덕션' },
   internet: { id: 7, filled: InternetFilled, unfilled: InternetUnfilled, name: '인터넷' },

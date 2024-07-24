@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { title2 } from '@/styles/common';
+import { flexCenter, title2 } from '@/styles/common';
 
 interface TitleProps {
   title?: string;
@@ -18,6 +18,8 @@ const Container = styled.div`
 `;
 
 const Title = styled.span`
+  height: 30px;
+  ${flexCenter}
   margin-bottom: 16px;
 
   ${title2}

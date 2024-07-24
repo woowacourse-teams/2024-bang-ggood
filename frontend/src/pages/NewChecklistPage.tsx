@@ -40,10 +40,14 @@ const NewChecklistPage = () => {
         <FormField>
           <FormField.Label label="보증금 / 월세" />
           <S.FlexVertical>
-            <S.FlexHorizontal>
-              <FormField.Input placeholder="" state={[securityDeposit, setSecurityDeposit]} />
-              <S.CustomLabel label=" 까지   " />
-              <FormField.Input placeholder="" state={[monthlyRent, setMonthlyRent]} />
+            <S.FlexHorizontal
+              css={css`
+                gap: 0;
+              `}
+            >
+              <S.CustomInput placeholder="" state={[securityDeposit, setSecurityDeposit]} />
+              <S.CustomLabel label=" 만원   " />
+              <S.CustomInput placeholder="" state={[monthlyRent, setMonthlyRent]} />
             </S.FlexHorizontal>
             <FormField.P value="" />
           </S.FlexVertical>

@@ -43,10 +43,12 @@ public class ChecklistService {
     @Transactional
     public long createChecklist(ChecklistCreateRequest checklistCreateRequest) {
         Room room = roomRepository.save(checklistCreateRequest.toRoomEntity());
+
         ChecklistInfo checklistInfo = checklistCreateRequest.toChecklistInfo();
         Checklist checklist = new Checklist(new User(1L, "방방이"), room, checklistInfo.deposit(), checklistInfo.rent(),
                 checklistInfo.contractTerm(), checklistInfo.realEstate());
         checklistRepository.save(checklist);
+
         createChecklistOptions(checklistCreateRequest, checklist);
         createChecklistQuestions(checklistCreateRequest, checklist);
         return checklist.getId();

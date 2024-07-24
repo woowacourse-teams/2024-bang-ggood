@@ -6,3 +6,7 @@ export const getCategory = async () => {
   const data = await response.json();
   return data;
 };
+
+export const postCategory = async (categoryIds: number[]) => {
+  await fetcher.post({ url: BASE_URL + ENDPOINT.CATEGORY_ADD, body: categoryIds });
+};

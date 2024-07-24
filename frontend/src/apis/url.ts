@@ -10,4 +10,5 @@ export const ENDPOINT = {
   CHECKLIST_ID: (id: number) => `/checklist/${id}`,
   /* category */
   CATEGORY: '/categories',
+  CATEGORY_ADD: '/categories/priority',
 };

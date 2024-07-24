@@ -26,58 +26,48 @@ const NewChecklistPage = () => {
   const [officeOfRealEstate, setOfficeOfRealEstate] = useState('');
 
   return (
-    <div>
+    <S.ContentWrapper>
       <Header
         left={<Header.Backward />}
         center={<S.Center>새 체크리스트</S.Center>}
         right={<S.SaveTextButton>저장</S.SaveTextButton>}
       />
       <Tabs menuList={menuList}></Tabs>
-      <div style={{ backgroundColor: 'white', padding: '28px 22px' }}>
-        <div
-          css={css`
-            display: flex;
-            width: 100%;
-            flex-direction: column;
-            align-items: center;
-            row-gap: 24px;
-            justify-content: 'center';
-          `}
-        >
-          {makeCustomForm({ label: '방 이름', state: [roomName, setRoomName], required: true })}
-          <FormField>
-            <FormField.Label label="보증금 / 월세" />
-            <S.FlexVertical>
-              <S.FlexHorizontal>
-                <FormField.Input placeholder="" state={[securityDeposit, setSecurityDeposit]} />
-                <S.CustomLabel label=" 까지   " />
-                <FormField.Input placeholder="" state={[monthlyRent, setMonthlyRent]} />
-              </S.FlexHorizontal>
-              <FormField.P value="" />
-            </S.FlexVertical>
-          </FormField>
-          <S.FlexHorizontal>
-            {makeCustomForm({ label: '계약 기간(년)', state: [durationOfContract, setDurationOfContract] })}
-            {makeCustomForm({ label: '층수', state: [numberOfStories, setNumberOfStories] })}
-          </S.FlexHorizontal>
-          <FormField>
-            <FormField.Label label="가까운 교통편" />
-            <S.FlexHorizontal
-              css={css`
-                gap: 0;
-              `}
-            >
-              <S.CustomInput placeholder="지하철역" state={[nearTransportation, setNearTransportation]} />
+
+      <S.Container>
+        {makeCustomForm({ label: '방 이름', state: [roomName, setRoomName], required: true })}
+        <FormField>
+          <FormField.Label label="보증금 / 월세" />
+          <S.FlexVertical>
+            <S.FlexHorizontal>
+              <FormField.Input placeholder="" state={[securityDeposit, setSecurityDeposit]} />
               <S.CustomLabel label=" 까지   " />
-              <S.CustomInput placeholder="분" state={[nearTransportationDistance, setNearTransportationDistance]} />
+              <FormField.Input placeholder="" state={[monthlyRent, setMonthlyRent]} />
             </S.FlexHorizontal>
             <FormField.P value="" />
-          </FormField>
-          {makeCustomForm({ label: '부동산 이름', state: [officeOfRealEstate, setOfficeOfRealEstate] })}
-          <S.SubmitButton label="가구 옵션 추가하기" size="full" />
-        </div>
-      </div>
-    </div>
+          </S.FlexVertical>
+        </FormField>
+        <S.FlexHorizontal>
+          {makeCustomForm({ label: '계약 기간(년)', state: [durationOfContract, setDurationOfContract] })}
+          {makeCustomForm({ label: '층수', state: [numberOfStories, setNumberOfStories] })}
+        </S.FlexHorizontal>
+        <FormField>
+          <FormField.Label label="가까운 교통편" />
+          <S.FlexHorizontal
+            css={css`
+              gap: 0;
+            `}
+          >
+            <S.CustomInput placeholder="지하철역" state={[nearTransportation, setNearTransportation]} />
+            <S.CustomLabel label=" 까지   " />
+            <S.CustomInput placeholder="분" state={[nearTransportationDistance, setNearTransportationDistance]} />
+          </S.FlexHorizontal>
+          <FormField.P value="" />
+        </FormField>
+        {makeCustomForm({ label: '부동산 이름', state: [officeOfRealEstate, setOfficeOfRealEstate] })}
+        <S.SubmitButton label="가구 옵션 추가하기" size="full" />
+      </S.Container>
+    </S.ContentWrapper>
   );
 };
 const makeCustomForm = (res: MakeFormArgs) => (
@@ -89,6 +79,17 @@ const makeCustomForm = (res: MakeFormArgs) => (
 );
 
 const S = {
+  ContentWrapper: styled.div`
+    background-color: white;
+  `,
+  Container: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 24px;
+    justify-content: 'center';
+    padding: 28px 22px;
+  `,
   Center: styled.div`
     ${flexCenter}
     font-weight: ${({ theme }) => theme.text.weight.bold};

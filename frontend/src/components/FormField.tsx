@@ -12,12 +12,16 @@ export interface MakeFormArgs {
 }
 
 const FormFieldWrapper = ({ ...rest }) => (
-  <div {...rest} style={{ width: '100%', display: 'flex', flexDirection: 'column', rowGap: '6px' }}></div>
+  <div {...rest} style={{ width: '100%', flex: 'auto', display: 'flex', flexDirection: 'column', rowGap: '6px' }}></div>
 );
 
 const FormField = Object.assign(FormFieldWrapper, {
-  Label: ({ label, required = false }: { label: string; required?: boolean } & HTMLAttributes<HTMLLabelElement>) => (
-    <label style={{ fontSize: theme.text.size.medium, fontWeight: theme.text.weight.bold }}>
+  Label: ({
+    label,
+    required = false,
+    ...rest
+  }: { label: string; required?: boolean } & HTMLAttributes<HTMLLabelElement>) => (
+    <label {...rest} style={{ fontSize: theme.text.size.medium, fontWeight: theme.text.weight.bold }}>
       {label}
       {required && <InputRequiredDot />}
     </label>

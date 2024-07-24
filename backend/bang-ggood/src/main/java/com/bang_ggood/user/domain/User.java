@@ -20,11 +20,16 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    protected User() {
+    public User(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public User(String name) {
         this.name = name;
+    }
+  
+    protected User() {
     }
 
     @Override
@@ -41,7 +46,7 @@ public class User extends BaseEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hashCode(id);
     }
 
     @Override

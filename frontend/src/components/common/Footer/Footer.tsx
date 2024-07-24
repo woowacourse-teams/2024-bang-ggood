@@ -17,7 +17,6 @@ interface Props {
   children: { node: ReactNode; nodeActive: ReactNode; path: string }[];
 }
 
-// By detecting url param, active corresponding button with path
 const FooterWrapper = ({ children, ...rest }: Props) => {
   const match = useMatch('/:page');
 
@@ -29,22 +28,24 @@ const FooterWrapper = ({ children, ...rest }: Props) => {
 };
 
 const S = {
-  Wrapper: styled.header`
+  Wrapper: styled.footer`
     display: flex;
+    position: absolute;
+    bottom: 0;
     width: 100%;
+    max-width: 600px;
     height: 64px;
-    padding: 16px;
-    align-items: center;
-    box-sizing: border-box;
-    justify-content: space-between;
+    padding: 16px 32px;
 
     background-color: ${({ theme }) => theme.palette.white};
+    align-items: flex-start;
+    box-sizing: border-box;
   `,
   FlexBox: styled.div`
     display: flex;
     flex-direction: row;
     width: 100%;
-    justify-content: space-between;
+    justify-content: space-around;
   `,
   TextButton: styled.button`
     color: ${({ theme }) => theme.palette.black};

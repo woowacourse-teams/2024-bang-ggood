@@ -16,12 +16,13 @@ const menuList = [
 
 const NewChecklistPage = () => {
   const [roomName, setRoomName] = useState('');
-  const [address, setAddress] = useState('');
+  // const [address, setAddress] = useState(''); 주소가 피그마에 빠짐.
   const [securityDeposit, setSecurityDeposit] = useState('');
   const [monthlyRent, setMonthlyRent] = useState('');
   const [durationOfContract, setDurationOfContract] = useState('');
   const [numberOfStories, setNumberOfStories] = useState('');
   const [nearTransportation, setNearTransportation] = useState('');
+  const [nearTransportationDistance, setNearTransportationDistance] = useState('');
   const [officeOfRealEstate, setOfficeOfRealEstate] = useState('');
 
   return (
@@ -43,7 +44,7 @@ const NewChecklistPage = () => {
             justify-content: 'center';
           `}
         >
-          {makeCustomForm({ label: '방 이름', state: useState(''), required: true })}
+          {makeCustomForm({ label: '방 이름', state: [roomName, setRoomName], required: true })}
           <FormField>
             <FormField.Label label="보증금 / 월세" />
             <S.FlexVertical>
@@ -56,8 +57,8 @@ const NewChecklistPage = () => {
             </S.FlexVertical>
           </FormField>
           <S.FlexHorizontal>
-            {makeCustomForm({ label: '계약 기간(년)', state: useState('') })}
-            {makeCustomForm({ label: '층수', state: useState('') })}
+            {makeCustomForm({ label: '계약 기간(년)', state: [durationOfContract, setDurationOfContract] })}
+            {makeCustomForm({ label: '층수', state: [numberOfStories, setNumberOfStories] })}
           </S.FlexHorizontal>
           <FormField>
             <FormField.Label label="가까운 교통편" />
@@ -66,13 +67,13 @@ const NewChecklistPage = () => {
                 gap: 0;
               `}
             >
-              <S.CustomInput placeholder="지하철역" state={[securityDeposit, setSecurityDeposit]} />
+              <S.CustomInput placeholder="지하철역" state={[nearTransportation, setNearTransportation]} />
               <S.CustomLabel label=" 까지   " />
-              <S.CustomInput placeholder="분" state={[monthlyRent, setMonthlyRent]} />
+              <S.CustomInput placeholder="분" state={[nearTransportationDistance, setNearTransportationDistance]} />
             </S.FlexHorizontal>
             <FormField.P value="" />
           </FormField>
-          {makeCustomForm({ label: '부동산 이름', state: useState('') })}
+          {makeCustomForm({ label: '부동산 이름', state: [officeOfRealEstate, setOfficeOfRealEstate] })}
           <S.SubmitButton label="가구 옵션 추가하기" size="full" />
         </div>
       </div>

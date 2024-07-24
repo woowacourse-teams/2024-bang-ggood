@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { MouseEvent, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
   $width: keyof typeof widthSize;
@@ -7,6 +7,20 @@ interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
   $color?: 'string';
 }
 const widthSize = { small: '45px', medium: '110px', large: '140px', full: '100%' };
+
+const Checkbox = ({ isChecked = false }: StyledProps) => {
+  const [isCheckedState, setIsCheckedState] = useState<boolean>(isChecked);
+
+  const handleClick = useCallback(() => {
+    setIsCheckedState(!isCheckedState);
+  }, [isCheckedState]);
+  return (
+    <S.Checkbox isChecked={isCheckedState}>
+      <S.CheckboxInput onClick={handleClick} />
+      <S.CheckMark isChecked={isCheckedState} />
+    </S.Checkbox>
+  );
+};
 
 const S = {
   Checkbox: styled.label<{ isChecked: boolean }>`
@@ -45,22 +59,4 @@ const S = {
         : ''}
   `,
 };
-
-const Checkbox = ({ isChecked = false, $width, ...rest }: StyledProps) => {
-  const [isCheckedState, setIsCheckedState] = useState<boolean>(isChecked);
-
-  const handleClick = useCallback(
-    (event: MouseEvent<HTMLInputElement>) => {
-      setIsCheckedState(!isCheckedState);
-    },
-    [isCheckedState],
-  );
-  return (
-    <S.Checkbox isChecked={isCheckedState}>
-      <S.CheckboxInput onClick={handleClick} />
-      <S.CheckMark isChecked={isCheckedState} />
-    </S.Checkbox>
-  );
-};
-
 export default Checkbox;

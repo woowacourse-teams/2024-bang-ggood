@@ -28,6 +28,8 @@ import CheckIcon from '@/assets/check.svg';
 
 /* etc */
 import BangBangIcon from '@/assets/icons/bang-bang-icon.svg';
+import CloseIcon from '@/assets/icons/close.svg';
+import LampIcon from '@/assets/icons/lamp-icon.svg';
 import LocationLineIcon from '@/assets/icons/location-lined.svg';
 import QuestionDot from '@/assets/question-dot.svg';
 
@@ -41,6 +43,7 @@ export {
   CheckIcon,
   ChecklistLogo,
   ChecklistLogoActive,
+  CloseIcon,
   FaceIconBad,
   FaceIconBadGray,
   FaceIconGood,
@@ -49,6 +52,7 @@ export {
   FaceIconSosoGray,
   HomeLogo,
   HomeLogoActive,
+  LampIcon,
   LocationLineIcon,
   LocationLogo,
   LocationLogoActive,

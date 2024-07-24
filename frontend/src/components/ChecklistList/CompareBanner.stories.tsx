@@ -7,7 +7,6 @@ import mobileDecorator from '../../../.storybook/common';
 const meta = {
   title: 'components/CompareBanner',
   component: CompareBanner,
-  tags: ['autodocs'],
   parameters: {
     docs: {
       description: {

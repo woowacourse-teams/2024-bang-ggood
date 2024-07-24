@@ -23,11 +23,9 @@ public class Checklist extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
     private User user;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
     private Room room;
 
     private Integer deposit;

@@ -20,7 +20,6 @@ public class ChecklistQuestion extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
     private Checklist checklist;
 
     private int questionId;

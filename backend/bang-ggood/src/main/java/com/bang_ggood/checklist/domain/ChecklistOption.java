@@ -21,7 +21,6 @@ public class ChecklistOption extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
     private Checklist checklist;
 
     @Column(nullable = false)

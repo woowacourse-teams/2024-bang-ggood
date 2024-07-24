@@ -21,6 +21,6 @@ public class ChecklistController {
     @PostMapping("/checklists")
     public ResponseEntity<Void> createChecklist(@Valid @RequestBody ChecklistCreateRequest checklistCreateRequest) {
         long checklistId = checklistService.createChecklist(checklistCreateRequest);
-        return ResponseEntity.created(URI.create("checklists/" + checklistId)).build();
+        return ResponseEntity.created(URI.create("/checklists/" + checklistId)).build();
     }
 }

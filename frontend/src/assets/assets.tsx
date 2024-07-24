@@ -3,6 +3,7 @@ import ArrowBack from '@/assets/arrow-back.svg';
 import ArrowDownSmall from '@/assets/arrow-down-small.svg';
 import ArrowRightGreen from '@/assets/arrow-right-green.svg';
 import ArrowUpSmall from '@/assets/arrow-up-small.svg';
+import ArrowRightYellow from '@/assets/icons/arrow-right-yellow.svg';
 
 /* face icon */
 import FaceIconBadGray from '@/assets/face-icon/face-icon-bad-gray.svg';
@@ -24,16 +25,17 @@ import MyPageLogoActive from '@/assets/logos/my-page-logo-active.svg';
 import MyPageLogo from '@/assets/logos/my-page-logo.svg';
 
 /* etc */
-import BangGgoodIcon from '@/assets/bang-ggood-icon.svg';
-import LocationLineIcon from '@/assets/Icon/location-lined.svg';
+import BangBangIcon from '@/assets/icons/bang-bang-icon.svg';
+import LocationLineIcon from '@/assets/icons/location-lined.svg';
 import QuestionDot from '@/assets/question-dot.svg';
 
 export {
   ArrowBack,
   ArrowDownSmall,
   ArrowRightGreen,
+  ArrowRightYellow,
   ArrowUpSmall,
-  BangGgoodIcon,
+  BangBangIcon,
   ChecklistLogo,
   ChecklistLogoActive,
   FaceIconBad,

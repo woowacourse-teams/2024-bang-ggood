@@ -24,10 +24,8 @@ import SinkFilled from '@/assets/options/sink-filled.svg';
 import SinkUnfilled from '@/assets/options/sink-unfilled.svg';
 import TvFilled from '@/assets/options/tv-filled.svg';
 import TvUnfilled from '@/assets/options/tv-unfilled.svg';
-import {
-  default as WashingMachineFilled,
-  default as WashingMachineUnfilled,
-} from '@/assets/options/washingmachine-filled.svg';
+import WashingMachineFilled from '@/assets/options/washingmachine-filled.svg';
+import WashingMachineUnfilled from '@/assets/options/washingmachine-unfilled.svg';
 
 const options = {
   airConditioner: { id: 1, filled: AirconditionerFilled, unfilled: AirconditionerUnfilled, name: '에어컨' },

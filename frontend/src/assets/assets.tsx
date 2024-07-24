@@ -20,11 +20,13 @@ import LocationLogoActive from '@/assets/logos/location-logo-active.svg';
 import LocationLogo from '@/assets/logos/location-logo.svg';
 import MyPageLogoActive from '@/assets/logos/my-page-logo-active.svg';
 import MyPageLogo from '@/assets/logos/my-page-logo.svg';
-
+/*common-icons */
+import CheckIcon from '@/assets/check.svg';
 export {
   ArrowBack,
   ArrowDownSmall,
   ArrowUpSmall,
+  CheckIcon,
   ChecklistLogo,
   ChecklistLogoActive,
   FaceIconBad,

@@ -3,6 +3,7 @@ package com.bang_ggood.checklist.domain;
 import java.util.Arrays;
 
 public enum Option {
+
     AIR_CONDITIONER(1, "에어컨"),
     REFRIGERATOR(2, "냉장고"),
     MICROWAVE_OVEN(3, "전자레인지"),
@@ -18,16 +19,16 @@ public enum Option {
     DRYER(13, "건조기"),
     TV(14, "TV");
 
-    private Integer id;
-    private String name;
+    private final int id;
+    private final String name;
 
-    Option(Integer id, String name) {
+    Option(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public static boolean contains(Integer id) {
+    public static boolean contains(int id) {
         return Arrays.stream(Option.values())
-                .anyMatch(option -> option.id.equals(id));
+                .anyMatch(option -> option.id == id);
     }
 }

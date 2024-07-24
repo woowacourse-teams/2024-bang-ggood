@@ -1,22 +1,25 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
+import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
 
 type BadgeType = 'short' | 'long' | 'button';
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
-  type: BadgeType;
+  type?: BadgeType;
   label: string;
   onClick?: () => void;
 }
 
-const Badge = ({ type, label, onClick }: Props) => {
+const Badge = ({ type = 'short', label, onClick }: Props) => {
   const [isSelected, setSelected] = useState(false);
 
   const handleClick = () => {
-    onClick();
-    setSelected(prev => !prev);
+    if (onClick) {
+      onClick();
+      setSelected(prev => !prev);
+    }
   };
 
   return (
@@ -30,11 +33,14 @@ export default Badge;
 
 const S = {
   Button: styled.button<{ size: BadgeType; isSelected: boolean; hasOnClick: boolean }>`
-    border-radius: 100px;
+    ${flexCenter}
+    border-radius: 20px;
     border: 1px solid ${({ theme }) => theme.palette.grey300};
+    box-sizing: border-box;
 
     color: ${({ theme }) => theme.palette.grey600};
     ${({ size }) => typeStyles[size]}
+    line-height: 1;
     cursor: pointer;
 
     ${({ isSelected }) =>
@@ -57,13 +63,13 @@ const S = {
 
 const typeStyles = {
   short: `
-    padding: 6px 8px;
-
+    height: 26px;
+    padding: 4px 10px; 
     font-size: ${theme.text.size.xSmall};
   `,
   long: `
-    padding: 8px 15px;
-
+    height: 32px;
+    padding: 4px 16px;
     font-size: ${theme.text.size.small};
   `,
   button: `

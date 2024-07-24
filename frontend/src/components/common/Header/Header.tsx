@@ -3,17 +3,20 @@ import { ReactNode } from 'react';
 
 import ArrowBack from '@/assets/arrow-back.svg';
 import Logo from '@/assets/logo.svg';
+import { title3 } from '@/styles/common';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   left?: ReactNode;
+  center?: ReactNode;
   right?: ReactNode;
 }
 
-const HeaderWrapper = ({ left, right, ...rest }: Props) => {
+const HeaderWrapper = ({ left, right, center, ...rest }: Props) => {
   return (
     <S.Wrapper {...rest}>
       <S.FlexBox>
         {left ? left : <div />}
+        {center ? center : <div />}
         {right ? right : <div />}
       </S.FlexBox>
     </S.Wrapper>
@@ -40,8 +43,11 @@ const S = {
   `,
   TextButton: styled.button`
     color: ${({ theme }) => theme.palette.black};
-    font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: ${({ theme }) => theme.text.size.medium};
+    ${title3}
+  `,
+  Text: styled.div`
+    color: ${({ theme }) => theme.palette.black};
+    ${title3}
   `,
 };
 
@@ -61,5 +67,6 @@ const Header = Object.assign(HeaderWrapper, {
     />
   ),
   TextButton: S.TextButton,
+  Text: S.Text,
 });
 export default Header;

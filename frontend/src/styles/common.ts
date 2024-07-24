@@ -43,3 +43,8 @@ export const title4 = css`
   font-size: ${theme.text.size.small};
   font-weight: ${theme.text.weight.semiBold};
 `;
+
+/* style */
+export const boxShadow = css`
+  box-shadow: 0 4px 8px rgb(0 0 0 / 5%);
+`;

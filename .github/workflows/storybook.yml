@@ -1,6 +1,6 @@
 name: "Chromatic"
 
-on: push
+on: pull_request
 
 jobs:
   chromatic:
@@ -19,15 +19,12 @@ jobs:
           cd frontend
           yarn install --frozen-lockfile
       - name: Run Chromatic
+        uses: chromaui/action@latest
         id: publish_chromatic
-        run: |
-          cd frontend
-          npx chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
-
+        with:
+          workingDir: frontend
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
       - name: Comment on PR
-        uses: thollander/actions-comment-pull-request@v1
-        if: ${{ github.event_name == 'pull_request' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: thollander/actions-comment-pull-request@v2
         with:
           message: "🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}"

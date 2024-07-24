@@ -93,10 +93,12 @@ const S = {
   ExtraBadgeBox: styled.div`
     ${flexCenter}
     height: 26px;
-    padding: 0 4px;
+    padding: 0 6px;
     box-sizing: border-box;
-    border-radius: 4px;
+    border-radius: 16px;
     border: 1px solid ${({ theme }) => theme.palette.grey300};
+
+    background-color: ${({ theme }) => theme.palette.grey100};
 
     font-size: ${({ theme }) => theme.text.size.xSmall};
   `,

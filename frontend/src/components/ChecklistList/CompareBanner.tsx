@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
-import { ArrowRightGreen, BangGgoodIcon } from '@/assets/assets';
+import { ArrowRightYellow, BangBangIcon } from '@/assets/assets';
 import { title3 } from '@/styles/common';
 
 const CompareBanner = () => {
@@ -9,9 +9,9 @@ const CompareBanner = () => {
     // TODO: 비교 페이지로 링크 변경
     <Link to="/">
       <S.Banner>
-        <BangGgoodIcon />
+        <BangBangIcon />
         <S.Title> 가장 최적인 방 비교하러 가기 </S.Title>
-        <ArrowRightGreen />
+        <ArrowRightYellow />
       </S.Banner>
     </Link>
   );
@@ -22,16 +22,18 @@ export default CompareBanner;
 const S = {
   Banner: styled.div`
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    gap: 20px;
 
     width: 100%;
     height: 75px;
+    padding: 16px;
+    box-sizing: border-box;
 
     background-color: ${({ theme }) => theme.palette.yellow200};
 
     color: ${({ theme }) => theme.palette.black};
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
 
     &:hover,
     &:active {

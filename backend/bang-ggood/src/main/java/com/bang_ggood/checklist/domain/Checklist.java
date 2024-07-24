@@ -8,7 +8,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -36,15 +35,6 @@ public class Checklist extends BaseEntity {
 
     private String realEstate;
 
-    public Checklist(Integer deposit, Integer rent, Integer contractTerm, String realEstate) {
-        this.user = null;
-        this.room = null;
-        this.deposit = deposit;
-        this.rent = rent;
-        this.contractTerm = contractTerm;
-        this.realEstate = realEstate;
-    }
-
     public Checklist(User user, Room room, Integer deposit, Integer rent, Integer contractTerm, String realEstate) {
         this.user = user;
         this.room = room;
@@ -52,6 +42,10 @@ public class Checklist extends BaseEntity {
         this.rent = rent;
         this.contractTerm = contractTerm;
         this.realEstate = realEstate;
+    }
+
+    public Checklist(Integer deposit, Integer rent, Integer contractTerm, String realEstate) {
+        this(null, null, deposit, rent, contractTerm, realEstate);
     }
 
     protected Checklist() {

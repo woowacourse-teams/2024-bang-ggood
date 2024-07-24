@@ -15,9 +15,15 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   onClick?: () => void;
 }
 
-const Button = ({ size = 'medium', color = 'light', label, isSquare = false, onClick = () => {} }: Props) => {
+const Button = ({ size = 'medium', color = 'light', label, isSquare = false, onClick = () => {}, ...rest }: Props) => {
   return (
-    <S.Button size={size} color={color} isSquare={isSquare} onClick={color !== 'disabled' ? onClick : () => {}}>
+    <S.Button
+      size={size}
+      color={color}
+      isSquare={isSquare}
+      onClick={color !== 'disabled' ? onClick : () => {}}
+      {...rest}
+    >
       {label}
     </S.Button>
   );
@@ -31,6 +37,7 @@ const S = {
     ${({ size }) => sizeStyles[size]};
     ${({ color }) => ColorStyles[color]};
     cursor: pointer;
+    box-sizing: border-box;
   `,
 };
 

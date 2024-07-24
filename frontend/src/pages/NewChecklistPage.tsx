@@ -6,6 +6,7 @@ import Header from '@/components/common/Header/Header';
 import Tabs from '@/components/common/Tabs/Tabs';
 import FormField, { MakeFormArgs } from '@/components/FormField';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
+import { css } from '@emotion/react';
 
 const menuList = [
   { name: '기본 정보', path: './' },
@@ -31,31 +32,28 @@ const NewChecklistPage = () => {
         right={<S.SaveTextButton>저장</S.SaveTextButton>}
       />
       <Tabs menuList={menuList}></Tabs>
-      <div style={{ backgroundColor: 'white', padding: '28px 16px' }}>
+      <div style={{ backgroundColor: 'white', padding: '28px 22px' }}>
         <div
-          style={{
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            rowGap: '24px',
-            justifyContent: 'center',
-          }}
+          css={css`
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            row-gap: 24px;
+            justify-content: 'center';
+          `}
         >
           {makeCustomForm({ label: '방 이름', state: useState(''), required: true })}
           <FormField>
             <FormField.Label label="보증금 / 월세" />
-            <S.FlexHorizontal>
-              <S.FlexVertical>
+            <S.FlexVertical>
+              <S.FlexHorizontal>
                 <FormField.Input placeholder="" state={[securityDeposit, setSecurityDeposit]} />
-                <FormField.P value="" />
-              </S.FlexVertical>
-
-              <S.FlexVertical>
+                <S.CustomLabel label=" 까지   " />
                 <FormField.Input placeholder="" state={[monthlyRent, setMonthlyRent]} />
-                <FormField.P value="" />
-              </S.FlexVertical>
-            </S.FlexHorizontal>
+              </S.FlexHorizontal>
+              <FormField.P value="" />
+            </S.FlexVertical>
           </FormField>
           <S.FlexHorizontal>
             {makeCustomForm({ label: '계약 기간(년)', state: useState('') })}
@@ -63,9 +61,13 @@ const NewChecklistPage = () => {
           </S.FlexHorizontal>
           <FormField>
             <FormField.Label label="가까운 교통편" />
-            <S.FlexHorizontal>
+            <S.FlexHorizontal
+              css={css`
+                gap: 0;
+              `}
+            >
               <S.CustomInput placeholder="지하철역" state={[securityDeposit, setSecurityDeposit]} />
-              <FormField.Label label="까지" style={{ color: 'blue' }} />
+              <S.CustomLabel label=" 까지   " />
               <S.CustomInput placeholder="분" state={[monthlyRent, setMonthlyRent]} />
             </S.FlexHorizontal>
             <FormField.P value="" />
@@ -78,11 +80,11 @@ const NewChecklistPage = () => {
   );
 };
 const makeCustomForm = (res: MakeFormArgs) => (
-  <FormField key={res.label}>
+  <S.CustomFormField key={res.label}>
     <FormField.Label label={res.label} required={res.required} />
     <FormField.Input placeholder="" state={res.state} />
     <FormField.P value={res.state[0]} />
-  </FormField>
+  </S.CustomFormField>
 );
 
 const S = {
@@ -96,7 +98,7 @@ const S = {
     font-size: ${({ theme }) => theme.text.size.large};
   `,
   SubmitButton: styled(Button)`
-    width: calc(96%);
+    width: 96%;
     border-radius: 4px;
 
     background-color: ${({ theme }) => theme.palette.yellow500};
@@ -109,18 +111,30 @@ const S = {
   `,
   FlexHorizontal: styled.div`
     ${flexRow}
-    ${flexCenter}
-    width: 100%;
+    justify-content: space-between;
     column-gap: 6%;
+    width: 100%;
   `,
   FlexVertical: styled.div`
     ${flexColumn}
-
-    width: 100%;
     row-gap: 2%;
+
+    flex: auto;
   `,
   CustomInput: styled(FormField.Input)`
-    width: 38%;
+    flex: auto;
+  `,
+  CustomLabel: styled(FormField.Label)`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1 0 auto;
+
+    font-weight: ${({ theme }) => theme.text.weight.bold};
+    white-space: pre;
+  `,
+  CustomFormField: styled(FormField)`
+    flex: auto;
   `,
 };
 

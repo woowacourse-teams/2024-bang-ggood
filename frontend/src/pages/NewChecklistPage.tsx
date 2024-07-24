@@ -79,7 +79,7 @@ const makeCustomForm = (res: MakeFormArgs) => (
   <S.CustomFormField key={res.label}>
     <FormField.Label label={res.label} required={res.required} />
     <FormField.Input placeholder="" state={res.state} />
-    <FormField.P value={res.state[0]} />
+    <FormField.P value={''} />
   </S.CustomFormField>
 );
 

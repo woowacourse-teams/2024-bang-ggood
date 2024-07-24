@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import mockChecklistList from '@/_mock/checklistList.json';
+import { getChecklists } from '@/apis/checklist';
 import { Plus } from '@/assets/assets';
 import ChecklistPreviewCard from '@/components/ChecklistList/ChecklistPreviewCard';
 import CompareBanner from '@/components/ChecklistList/CompareBanner';
@@ -10,9 +11,18 @@ import Footer from '@/components/common/Footer/Footer';
 import Header from '@/components/common/Header/Header';
 import Layout from '@/components/common/layout/Layout';
 import { flexColumn } from '@/styles/common';
+import { ChecklistPreview } from '@/types/checklist';
 
 const ChecklistListPage = () => {
-  const checklistList = mockChecklistList;
+  const [checklistList, setChecklistList] = useState<ChecklistPreview[]>([]);
+
+  useEffect(() => {
+    const fetchChecklist = async () => {
+      const checklistList = await getChecklists();
+      setChecklistList(checklistList);
+    };
+    fetchChecklist();
+  }, []);
 
   return (
     <>

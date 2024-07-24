@@ -4,7 +4,7 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.Option;
-import com.bang_ggood.checklist.domain.QuestionList;
+import com.bang_ggood.checklist.domain.Questionlist;
 import com.bang_ggood.checklist.dto.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.ChecklistInfo;
 import com.bang_ggood.checklist.dto.QuestionCreateRequest;
@@ -29,11 +29,11 @@ public class ChecklistService {
     private final RoomRepository roomRepository;
     private final ChecklistOptionRepository checklistOptionRepository;
     private final ChecklistQuestionRepository checklistQuestionRepository;
-    private final QuestionList questionList;
+    private final Questionlist questionList;
 
     public ChecklistService(ChecklistRepository checklistRepository, RoomRepository roomRepository,
                             ChecklistOptionRepository checklistOptionRepository,
-                            ChecklistQuestionRepository checklistQuestionRepository, QuestionList questionList) {
+                            ChecklistQuestionRepository checklistQuestionRepository, Questionlist questionList) {
         this.checklistRepository = checklistRepository;
         this.roomRepository = roomRepository;
         this.checklistOptionRepository = checklistOptionRepository;

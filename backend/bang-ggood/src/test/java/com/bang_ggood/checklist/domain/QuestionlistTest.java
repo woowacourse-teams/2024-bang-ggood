@@ -6,13 +6,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class QuestionListTest {
+class QuestionlistTest {
 
-    private QuestionList questionList;
+    private Questionlist questionList;
 
     @BeforeEach
     void init() {
-        questionList = new QuestionList();
+        questionList = new Questionlist();
     }
 
     @DisplayName("질문 리스트 포함 성공: 포함하는 경우")

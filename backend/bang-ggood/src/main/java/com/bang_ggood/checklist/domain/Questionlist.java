@@ -5,11 +5,11 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 @Component
-public class QuestionList {
+public class Questionlist {
 
     public Map<Integer, Question> questions;
 
-    public QuestionList() {
+    public Questionlist() {
         questions = new HashMap<>();
         initClean();
         initRoomCondition();

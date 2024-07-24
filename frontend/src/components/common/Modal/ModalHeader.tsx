@@ -2,12 +2,18 @@ import styled from '@emotion/styled';
 
 import { flexCenter, title2 } from '@/styles/common';
 
-interface TitleProps {
-  title?: string;
-}
+interface TitleProps
+  extends React.PropsWithChildren<{
+    title?: string;
+  }> {}
 
-const ModalHeader = ({ title }: TitleProps) => {
-  return <S.Container>{title && <S.Title>{title}</S.Title>}</S.Container>;
+const ModalHeader = ({ title, children }: TitleProps) => {
+  return (
+    <S.Container>
+      {title && <S.Title>{title}</S.Title>}
+      {children}
+    </S.Container>
+  );
 };
 
 const Container = styled.div`

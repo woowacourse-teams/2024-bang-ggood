@@ -1,23 +1,35 @@
 import styled from '@emotion/styled';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { CheckIcon } from '@/assets/assets';
 import { flexCenter } from '@/styles/common';
+import theme from '@/styles/theme';
 
 interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
   isChecked?: boolean;
   color?: string;
+  hoverBorderColor?: string;
+  onClick: () => void;
 }
 
-const Checkbox = ({ isChecked = false, color = '#49CE7F' }: StyledProps) => {
+const Checkbox = ({
+  isChecked = false,
+  color = theme.palette.green500,
+  hoverBorderColor = theme.palette.green600,
+  onClick,
+}: StyledProps) => {
   const [isCheckedState, setIsCheckedState] = useState<boolean>(isChecked);
 
   const handleClick = useCallback(() => {
     setIsCheckedState(!isCheckedState);
   }, [isCheckedState]);
 
+  useEffect(() => {
+    setIsCheckedState(isChecked);
+  }, [isChecked]);
+
   return (
-    <S.Checkbox $color={color} $isChecked={isCheckedState}>
+    <S.Checkbox $color={color} $isChecked={isChecked} $hoverBorderColor={hoverBorderColor} onClick={onClick}>
       {isCheckedState && (
         <S.FlexBox>
           <CheckIcon />
@@ -29,7 +41,7 @@ const Checkbox = ({ isChecked = false, color = '#49CE7F' }: StyledProps) => {
 };
 
 const S = {
-  Checkbox: styled.label<{ $color: string; $isChecked: boolean }>`
+  Checkbox: styled.label<{ $color: string; $isChecked: boolean; $hoverBorderColor: string }>`
     display: inline-block;
     position: relative;
     cursor: pointer;
@@ -41,7 +53,7 @@ const S = {
     background-color: ${({ $color, $isChecked }) => ($isChecked ? $color : 'transparent')};
 
     &:hover {
-      border-color: ${({ theme }) => theme.palette.grey500};
+      border-color: ${({ $hoverBorderColor }) => $hoverBorderColor};
     }
   `,
   CheckboxInput: styled.input`

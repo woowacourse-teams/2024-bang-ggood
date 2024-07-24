@@ -26,5 +26,5 @@ export const Checked: Story = {
 };
 
 export const GreyChecked: Story = {
-  args: { isChecked: true, color: theme.palette.grey300 },
+  args: { isChecked: true, color: theme.palette.grey300, hoverBorderColor: theme.palette.grey400 },
 };

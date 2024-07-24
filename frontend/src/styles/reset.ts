@@ -95,6 +95,7 @@ export const normalize = css`
     font: inherit;
 
     vertical-align: baseline;
+    min-width: 0;
   }
 
   /* HTML5 display-role reset for older browsers */
@@ -173,6 +174,7 @@ export const normalize = css`
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    min-width: 0;
   }
 
   /* IE10 이상에서 input box 에 추가된 지우기 버튼 제거 */

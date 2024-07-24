@@ -35,6 +35,7 @@ const NewChecklistPage = () => {
       <Tabs menuList={menuList}></Tabs>
 
       <S.Container>
+        {/* 스타일링이 매우 가변적이어서, 불가피하게 유틸함수를 부분적으로 사용 */}
         {makeCustomForm({ label: '방 이름', state: [roomName, setRoomName], required: true })}
         <FormField>
           <FormField.Label label="보증금 / 월세" />

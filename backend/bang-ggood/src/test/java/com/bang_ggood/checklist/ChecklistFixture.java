@@ -55,4 +55,22 @@ public class ChecklistFixture {
             List.of(QUESTION_1_CREATE_REQUEST, QUESTION_2_CREATE_REQUEST,
                     QUESTION_3_CREATE_REQUEST, QUESTION_CREATE_REQUEST_INVALID_ID)
     );
+
+    public static final ChecklistCreateRequest CHECKLIST_CREATE_REQUEST_INVALID_OPTION_ID = new ChecklistCreateRequest(
+            RoomFixture.ROOM_CREATE_REQUEST, List.of(1, 2, 3, 9999),
+            List.of(QUESTION_1_CREATE_REQUEST, QUESTION_2_CREATE_REQUEST,
+                    QUESTION_3_CREATE_REQUEST, QUESTION_5_CREATE_REQUEST)
+    );
+
+    public static final ChecklistCreateRequest CHECKLIST_CREATE_REQUEST_DUPLICATED_QUESTION_ID = new ChecklistCreateRequest(
+            RoomFixture.ROOM_CREATE_REQUEST, List.of(1, 2, 3, 5),
+            List.of(QUESTION_1_CREATE_REQUEST, QUESTION_2_CREATE_REQUEST,
+                    QUESTION_3_CREATE_REQUEST, QUESTION_3_CREATE_REQUEST)
+    );
+
+    public static final ChecklistCreateRequest CHECKLIST_CREATE_REQUEST_DUPLICATED_OPTION_ID = new ChecklistCreateRequest(
+            RoomFixture.ROOM_CREATE_REQUEST, List.of(1, 2, 3, 3),
+            List.of(QUESTION_1_CREATE_REQUEST, QUESTION_2_CREATE_REQUEST,
+                    QUESTION_3_CREATE_REQUEST, QUESTION_5_CREATE_REQUEST)
+    );
 }

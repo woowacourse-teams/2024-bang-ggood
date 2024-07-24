@@ -16,7 +16,9 @@ import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,27 +66,57 @@ public class ChecklistService {
     }
 
     private void validateOptions(List<Integer> optionIds) {
+        validateOptionDuplicate(optionIds);
+        validateOptionInvalid(optionIds);
+    }
+
+    private void validateOptionDuplicate(List<Integer> optionIds) {
+        Set<Integer> set = new HashSet<>();
+        optionIds.forEach(id -> {
+            if (!set.add(id)) {
+                throw new BangggoodException(ExceptionCode.OPTION_DUPLICATED);
+            }
+        });
+    }
+
+    private void validateOptionInvalid(List<Integer> optionIds) {
         for (Integer optionId : optionIds) {
             if (!Option.contains(optionId)) {
-                throw new BangggoodException(ExceptionCode.INVALID_OPTION_ID);
+                throw new BangggoodException(ExceptionCode.INVALID_OPTION);
             }
         }
     }
 
     private void createChecklistQuestions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
         List<QuestionCreateRequest> questions = checklistCreateRequest.questions();
+        validateQuestion(questions);
         for (QuestionCreateRequest questionCreateRequest : questions) {
             Integer questionId = questionCreateRequest.questionId();
-            validateQuestion(questionId);
             ChecklistQuestion checklistQuestion = new ChecklistQuestion(checklist, questionId,
                     questionCreateRequest.answer());
             checklistQuestionRepository.save(checklistQuestion);
         }
     }
 
-    private void validateQuestion(Integer questionId) {
-        if (!questionList.contains(questionId)) {
-            throw new BangggoodException(ExceptionCode.INVALID_QUESTION_ID);
+    private void validateQuestion(List<QuestionCreateRequest> questions) {
+        validateQuestionDuplicate(questions);
+        validateQuestionInvalid(questions);
+    }
+
+    private void validateQuestionDuplicate(List<QuestionCreateRequest> questions) {
+        Set<Integer> set = new HashSet<>();
+        questions.forEach(question -> {
+            if (!set.add(question.questionId())) {
+                throw new BangggoodException(ExceptionCode.QUESTION_DUPLICATED);
+            }
+        });
+    }
+
+    private void validateQuestionInvalid(List<QuestionCreateRequest> questions) {
+        for (QuestionCreateRequest questionCreateRequest : questions) {
+            if (!questionList.contains(questionCreateRequest.questionId())) {
+                throw new BangggoodException(ExceptionCode.INVALID_QUESTION);
+            }
         }
     }
 }

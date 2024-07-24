@@ -130,7 +130,7 @@ public class ChecklistService {
         for (Category category : Category.values()) {
             List<QuestionResponse> questionResponses = new ArrayList<>();
             readChecklistQuestion(category, questionResponses);
-            
+
             CategoryQuestionsResponse categoryQuestionsResponse =
                     new CategoryQuestionsResponse(category.getId(), category.getDescription(), questionResponses);
             categoryQuestionsResponses.add(categoryQuestionsResponse);

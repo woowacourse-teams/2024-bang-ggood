@@ -19,10 +19,11 @@ const S = {
   MovedRequiredDot: styled(InputRequiredDot)`
     transform: translateY(-140%);
   `,
-  P: styled.p<{ value: string }>`
+  P: styled.p`
     height: 10px;
 
     color: black;
+    font-size: ${({ theme }) => theme.text.size.small};
   `,
 };
 const FormField = Object.assign(FormFieldWrapper, {
@@ -50,7 +51,7 @@ const FormField = Object.assign(FormFieldWrapper, {
       {...rest}
     />
   ),
-  P: S.P,
+  P: ({ value, ...rest }: { value: string } & HTMLAttributes<HTMLParagraphElement>) => <S.P {...rest}>{value}</S.P>,
 });
 
 export default FormField;

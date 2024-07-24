@@ -11,7 +11,7 @@ class ChecklistE2ETest extends AcceptanceTest {
 
     @DisplayName("체크리스트 방 정보 작성 성공")
     @Test
-    void crateChecklist() {
+    void createChecklist() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST)
@@ -22,7 +22,7 @@ class ChecklistE2ETest extends AcceptanceTest {
 
     @DisplayName("체크리스트 방 정보 작성 실패: 방 이름을 넣지 않은 경우")
     @Test
-    void crateChecklistNoRoomName() {
+    void createChecklistNoRoomName() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_ROOM_NAME)
@@ -33,7 +33,7 @@ class ChecklistE2ETest extends AcceptanceTest {
 
     @DisplayName("체크리스트 방 정보 작성 실패: 질문 ID를 넣지 않은 경우")
     @Test
-    void crateChecklistNoQuestionId() {
+    void createChecklistNoQuestionId() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_QUESTION_ID)

@@ -83,9 +83,9 @@ const CategoryChoosePage = () => {
             <LampIcon />
           </S.IconWrapper>
           {selectedCategory.length === 0 ? (
-            <Button type="full" label="넘어가기" color="light" onClick={() => navigate('/')} />
+            <Button size="full" label="넘어가기" color="light" onClick={() => navigate('/')} />
           ) : (
-            <Button type="full" label="완료" color="dark" onClick={handleSubmit} />
+            <Button size="full" label="완료" color="dark" onClick={handleSubmit} />
           )}
         </S.Wrapper>
       </Layout>

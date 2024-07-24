@@ -30,8 +30,9 @@ import MyPageLogo from '@/assets/logos/my-page-logo.svg';
 /* etc */
 import BangBangIcon from '@/assets/icons/bang-bang-icon.svg';
 import CloseIcon from '@/assets/icons/close.svg';
+import LampIcon from '@/assets/icons/lamp-icon.svg';
+import LocationLineIcon from '@/assets/icons/location-lined.svg';
 import QuestionDot from '@/assets/question-dot.svg';
-
 export {
   ArrowBack,
   ArrowDownSmall,
@@ -51,6 +52,8 @@ export {
   HomeLogo,
   HomeLogoActive,
   InputRequiredDot,
+  LampIcon,
+  LocationLineIcon,
   LocationLogo,
   LocationLogoActive,
   MyPageLogo,

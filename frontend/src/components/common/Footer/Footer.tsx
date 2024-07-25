@@ -22,7 +22,11 @@ const FooterWrapper = ({ children, ...rest }: Props) => {
 
   return (
     <S.Wrapper {...rest}>
-      <S.FlexBox>{children.map(child => (child.path === match.params.page ? child.nodeActive : child.node))}</S.FlexBox>
+      <S.FlexBox>
+        {children.map(child => (
+          <div key={child.path}>{child.path === match.params.page ? child.nodeActive : child.node}</div>
+        ))}
+      </S.FlexBox>
     </S.Wrapper>
   );
 };

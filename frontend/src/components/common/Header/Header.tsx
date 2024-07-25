@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 
 import ArrowBack from '@/assets/arrow-back.svg';
 import Logo from '@/assets/logo.svg';
-import { title3 } from '@/styles/common';
+import { flexCenter, title2 } from '@/styles/common';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   left?: ReactNode;
@@ -46,8 +46,7 @@ const S = {
     flex: 1;
   `,
   Center: styled.div`
-    display: flex;
-    justify-content: center;
+    ${flexCenter}
     flex: 1;
   `,
   Right: styled.div`
@@ -57,11 +56,11 @@ const S = {
   `,
   TextButton: styled.button`
     color: ${({ theme }) => theme.palette.black};
-    ${title3}
+    ${title2}
   `,
   Text: styled.div`
     color: ${({ theme }) => theme.palette.black};
-    ${title3}
+    ${title2}
   `,
 };
 

@@ -20,7 +20,12 @@ const Tabs = ({ menuList }: { menuList: Menu[] }) => {
       <S.FlexContainer>
         {menuList?.map((menu, index) => {
           return (
-            <S.OneMenu key={index} onClick={() => onClickMenu(index)} selected={index === selectedId}>
+            <S.OneMenu
+              menuCount={menuList.length}
+              key={index}
+              onClick={() => onClickMenu(index)}
+              selected={index === selectedId}
+            >
               <div>{menu.name}</div>
             </S.OneMenu>
           );
@@ -44,8 +49,8 @@ export const S = {
   FlexContainer: styled.div`
     display: flex;
   `,
-  OneMenu: styled.div<{ selected?: boolean }>`
-    width: 33%;
+  OneMenu: styled.div<{ selected?: boolean; menuCount: number }>`
+    width: ${({ menuCount }) => `calc(100% / ${menuCount})`};
     height: 60px;
 
     ${flexCenter}

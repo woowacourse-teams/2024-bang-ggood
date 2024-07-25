@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { getChecklistQuestions } from '@/apis/checklist';
 import Accordion from '@/components/common/Accordion/Accordion';
+import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import BasicTabs from '@/components/common/Tabs/BasicTabs';
 import ChecklistCategory from '@/components/NewChecklist/ChecklistCategory';
@@ -54,26 +55,32 @@ const NewChecklistPage = () => {
   };
 
   return (
-    <>
-      <Header left={<Header.Backward />} center={<S.Title>{'새 체크리스트'}</S.Title>} />
+    <S.Container>
+      <Header
+        left={<Header.Backward />}
+        center={<S.Title>{'새 체크리스트'}</S.Title>}
+        right={<Button label={'저장'} size="small" />}
+      />
       <BasicTabs />
-      <Accordion>
-        {checklistQuestions?.map(category => (
-          <S.Container key={category.categoryId}>
-            <Accordion.header text={'청결도'} id={category.categoryId} />
-            <Accordion.body id={category.categoryId}>
-              <ChecklistCategory
-                type="question"
-                key={category.categoryId}
-                category={category}
-                addAnswer={addAnswer}
-                deleteAnswer={deleteAnswer}
-              />
-            </Accordion.body>
-          </S.Container>
-        ))}
-      </Accordion>
-    </>
+      <S.ContentBox>
+        <Accordion>
+          {checklistQuestions?.map(category => (
+            <S.Container key={category.categoryId}>
+              <Accordion.header text={'청결도'} id={category.categoryId} />
+              <Accordion.body id={category.categoryId}>
+                <ChecklistCategory
+                  type="question"
+                  key={category.categoryId}
+                  category={category}
+                  addAnswer={addAnswer}
+                  deleteAnswer={deleteAnswer}
+                />
+              </Accordion.body>
+            </S.Container>
+          ))}
+        </Accordion>
+      </S.ContentBox>
+    </S.Container>
   );
 };
 
@@ -88,7 +95,15 @@ const Title = styled.div`
   ${flexCenter}
 `;
 
+const ContentBox = styled.div`
+  padding: 16px;
+  min-height: 100vh;
+
+  background-color: ${({ theme }) => theme.palette.backgroud};
+`;
+
 const S = {
   Container,
   Title,
+  ContentBox,
 };

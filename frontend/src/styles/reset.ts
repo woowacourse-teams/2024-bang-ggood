@@ -95,6 +95,7 @@ export const normalize = css`
     font: inherit;
 
     vertical-align: baseline;
+    border: none;
   }
 
   /* HTML5 display-role reset for older browsers */

@@ -10,10 +10,6 @@ const BasicTabs = () => {
       name: '체크리스트',
       path: 'checklist',
     },
-    {
-      name: '메모 및 사진',
-      path: 'extra-info',
-    },
   ];
 
   return <Tabs menuList={menuList} />;

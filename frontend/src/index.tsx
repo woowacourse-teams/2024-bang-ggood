@@ -2,10 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import App from '@/App';
-import { worker } from '@/mocks/browser';
 
 async function enableMocking() {
-  if (process.env.DEV_MODE === "off") return;
+  if (process.env.DEV_MODE === 'off') return;
 
   if (process.env.NODE_ENV !== 'development') {
     return;
@@ -18,17 +17,17 @@ async function enableMocking() {
   // const { worker } = await import('./mocks/browser');
   // return worker.start();
 
-  await worker.start({
-    serviceWorker: {
-      url: '/mockServiceWorker.js',
-    },
-  });
+  //   await worker.start({
+  //     serviceWorker: {
+  //       url: '/mockServiceWorker.js',
+  //     },
+  //   });
+  // }
 }
-
-enableMocking().then(() => {
-  ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>,
-  );
-});
+// enableMocking().then(() => {
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+);
+// });

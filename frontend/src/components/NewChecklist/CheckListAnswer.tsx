@@ -3,8 +3,7 @@ import styled from '@emotion/styled';
 import { QuestionDot } from '@/assets/assets';
 import FaceIcon from '@/components/common/FaceMark/FaceIcon';
 import { ChecklistAnswer } from '@/types/checklist';
-
-type Emotion = 'good' | 'bad' | 'soso';
+import { Emotion } from '@/types/emotionAnswer';
 
 interface Emotions {
   name: Emotion;
@@ -13,9 +12,9 @@ interface Emotions {
 
 function getEmotionNameById(id: number): Emotion | null {
   const emotions: Emotions[] = [
-    { name: 'bad', id: 1 },
-    { name: 'soso', id: 2 },
-    { name: 'good', id: 3 },
+    { name: 'BAD', id: 1 },
+    { name: 'SOSO', id: 2 },
+    { name: 'GOOD', id: 3 },
   ];
 
   const emotion = emotions.find(e => e.id === id);

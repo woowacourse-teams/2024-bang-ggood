@@ -53,7 +53,7 @@ const NewChecklistTemplate = ({ answers, setAnswers }: Props) => {
       <Accordion>
         {checklistQuestions?.map(category => (
           <div key={category.categoryId}>
-            <Accordion.header text={'청결도'} id={category.categoryId} />
+            <Accordion.header text={category.categoryName} id={category.categoryId} />
             <Accordion.body id={category.categoryId}>
               <ChecklistCategory
                 type="question"

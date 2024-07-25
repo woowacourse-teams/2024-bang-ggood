@@ -8,21 +8,22 @@ import {
   FaceIconSoso,
   FaceIconSosoGray,
 } from '@/assets/assets';
+import { Emotion } from '@/types/emotionAnswer';
 
 interface FaceIconProps extends SVGProps<SVGSVGElement> {
-  emotion: 'good' | 'bad' | 'soso';
+  emotion: Emotion;
   isFilled?: boolean;
 }
 
 const FaceIcon = ({ emotion, isFilled = false, ...rest }: FaceIconProps) => {
   return (
     <>
-      {emotion === 'good' && isFilled && <FaceIconGood {...rest} />}
-      {emotion === 'good' && !isFilled && <FaceIconGoodGray {...rest} />}
-      {emotion === 'soso' && isFilled && <FaceIconSoso {...rest} />}
-      {emotion === 'soso' && !isFilled && <FaceIconSosoGray {...rest} />}
-      {emotion === 'bad' && isFilled && <FaceIconBad {...rest} />}
-      {emotion === 'bad' && !isFilled && <FaceIconBadGray {...rest} />}
+      {emotion === 'GOOD' && isFilled && <FaceIconGood {...rest} />}
+      {emotion === 'GOOD' && !isFilled && <FaceIconGoodGray {...rest} />}
+      {emotion === 'SOSO' && isFilled && <FaceIconSoso {...rest} />}
+      {emotion === 'SOSO' && !isFilled && <FaceIconSosoGray {...rest} />}
+      {emotion === 'BAD' && isFilled && <FaceIconBad {...rest} />}
+      {emotion === 'BAD' && !isFilled && <FaceIconBadGray {...rest} />}
       {emotion === null && <FaceIconSosoGray {...rest} />}
     </>
   );

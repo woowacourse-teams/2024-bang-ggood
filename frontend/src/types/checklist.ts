@@ -1,5 +1,6 @@
 import { Badge } from '@/types/badge';
 import { CategoryScore } from '@/types/category';
+import { Emotion } from '@/types/emotionAnswer';
 import { RoomInfo } from '@/types/room';
 
 export interface ChecklistCategoryQuestions {
@@ -16,6 +17,11 @@ export interface ChecklistQuestion {
 
 export interface ChecklistAnswer extends ChecklistQuestion {
   answer?: number | null;
+}
+
+export interface ChecklistFormAfterAnswer {
+  questionId: number;
+  answer: Emotion;
 }
 
 export interface ChecklistFormAnswer {

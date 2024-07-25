@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import ArrowBack from '@/assets/arrow-back.svg';
 import Logo from '@/assets/logo.svg';
 import { linkDecorator } from '@/components/common/Footer/Footer';
-import { title2 } from '@/styles/common';
+import { flexCenter, title2 } from '@/styles/common';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   left?: ReactNode;

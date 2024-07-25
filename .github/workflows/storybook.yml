@@ -43,41 +43,41 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: "🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}"
-  test:
-    name: Run Test
-    runs-on: ubuntu-latest
-    outputs: ${{ steps.test1.outputs.result}}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
+test:
+  name: Run Test
+  runs-on: ubuntu-latest
+  outputs: ${{ steps.test.outputs.result}}
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
 
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: "**/node_modules"
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+    - name: Cache dependencies
+      id: cache
+      uses: actions/cache@v3
+      with:
+        path: "**/node_modules"
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
 
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          cd frontend
-          yarn install --frozen-lockfile
-      - name: Run Test
-        id: test1
-        run: |
-          cd frontend
-          yarn test
-          echo "result=테스트실행!" >> "$GITHUB_OUTPUT"
+    - name: Install dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: |
+        cd frontend
+        yarn install --frozen-lockfile
+    - name: Run Test
+      id: test
+      run: |
+        cd frontend
+        yarn test
+        echo "테스트 실행 ! " >> "$GITHUB_OUTPUT"
 
-      - name: Comment on PR
-        uses: thollander/actions-comment-pull-request@v2
-        with:
-          message: "✅ **jest**: ${{ steps.test1.outputs.result }}"
+    - name: Comment on PR
+      uses: thollander/actions-comment-pull-request@v2
+      with:
+        message: "✅ **jest**: ${{ steps.test.outputs.result }}"

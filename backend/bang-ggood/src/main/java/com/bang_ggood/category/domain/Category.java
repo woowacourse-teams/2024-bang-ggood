@@ -1,5 +1,7 @@
 package com.bang_ggood.category.domain;
 
+import com.bang_ggood.exception.BangggoodException;
+import com.bang_ggood.exception.ExceptionCode;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -31,12 +33,29 @@ public enum Category {
                 .anyMatch(category -> category.id == id);
     }
 
+    //TODO 테스트해야 함
+    public boolean isQuestionIn(int questionId) {
+        return this.id == findIdByQuestionId(questionId);
+    }
+
+    private int findIdByQuestionId(int questionId) {
+        return Arrays.stream(Category.values())
+                .filter(category -> category.questionIds.contains(questionId))
+                .mapToInt(category -> category.id)
+                .findFirst()
+                .orElseThrow(() -> new BangggoodException(ExceptionCode.INVALID_QUESTION));
+    }
+
     public int getId() {
         return id;
     }
 
     public String getDescription() {
         return description;
+    }
+
+    public Badge getBadge() {
+        return badge;
     }
 
     public Set<Integer> getQuestionIds() {

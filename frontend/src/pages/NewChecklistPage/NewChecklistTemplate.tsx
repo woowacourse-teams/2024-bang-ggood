@@ -3,23 +3,20 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { getChecklistQuestions } from '@/apis/checklist';
 import Accordion from '@/components/common/Accordion/Accordion';
-import Header from '@/components/common/Header/Header';
-import BasicTabs from '@/components/common/Tabs/BasicTabs';
 import ChecklistCategory from '@/components/NewChecklist/ChecklistCategory';
-import { flexCenter, flexColumn, title2 } from '@/styles/common';
-import { ChecklistCategoryQuestions } from '@/types/checklist';
-
-export interface Answer {
-  questionId: number;
-  answer: number;
-}
+import { ChecklistCategoryQuestions, ChecklistFormAnswer } from '@/types/checklist';
 
 export interface addAnswerProps {
   questionId: number;
   newAnswer: number;
 }
 
-const NewChecklistPage = () => {
+interface Props {
+  answers: ChecklistFormAnswer[];
+  setAnswers: React.Dispatch<React.SetStateAction<ChecklistFormAnswer[]>>;
+}
+
+const NewChecklistTemplate = ({ answers, setAnswers }: Props) => {
   const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategoryQuestions[]>([]);
 
   useEffect(() => {
@@ -29,8 +26,6 @@ const NewChecklistPage = () => {
     };
     fetchChecklist();
   }, []);
-
-  const [answers, setAnswers] = useState<Answer[]>([]);
 
   const addAnswer = useCallback(
     ({ questionId, newAnswer }: addAnswerProps) => {
@@ -54,12 +49,10 @@ const NewChecklistPage = () => {
   };
 
   return (
-    <>
-      <Header left={<Header.Backward />} center={<S.Title>{'새 체크리스트'}</S.Title>} />
-      <BasicTabs />
+    <S.ContentBox>
       <Accordion>
         {checklistQuestions?.map(category => (
-          <S.Container key={category.categoryId}>
+          <div key={category.categoryId}>
             <Accordion.header text={'청결도'} id={category.categoryId} />
             <Accordion.body id={category.categoryId}>
               <ChecklistCategory
@@ -70,25 +63,21 @@ const NewChecklistPage = () => {
                 deleteAnswer={deleteAnswer}
               />
             </Accordion.body>
-          </S.Container>
+          </div>
         ))}
       </Accordion>
-    </>
+    </S.ContentBox>
   );
 };
 
-export default NewChecklistPage;
+export default NewChecklistTemplate;
 
-const Container = styled.div`
-  ${flexColumn}
+const ContentBox = styled.div`
+  padding: 16px;
+  min-height: 100vh;
+
+  background-color: ${({ theme }) => theme.palette.backgroud};
 `;
-
-const Title = styled.div`
-  ${title2}
-  ${flexCenter}
-`;
-
 const S = {
-  Container,
-  Title,
+  ContentBox,
 };

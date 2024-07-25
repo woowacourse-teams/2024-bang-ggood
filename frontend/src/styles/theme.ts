@@ -24,6 +24,7 @@ const palette = {
   /* original */
   black: '#363636',
   white: '#FFFFFF',
+  backgroud: '#F5F4F2',
 };
 
 const text = {

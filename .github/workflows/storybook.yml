@@ -3,6 +3,8 @@ name: "Chromatic"
 on:
   pull_request:
     branches: [dev-fe, dev]
+    paths:
+      - "frontend/**"
 
 jobs:
   chromatic:

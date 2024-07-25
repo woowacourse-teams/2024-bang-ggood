@@ -15,11 +15,11 @@ jobs:
         with:
           node-version: 20
 
-       - name: Cache dependencies
+      - name: Cache dependencies
         id: cache
         uses: actions/cache@v3
         with:
-          path: '**/node_modules'
+          path: "**/node_modules"
           # cache를 무효화하를 결정하는 기준은 의존성이 변경되면 함께 변경되는 파일인 yarn.lock 기준으로 합니다.
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           # key가 유효하지 않은 경우 runner의 운영체제 값과 node라는 suffix를 key로 복구합니다.

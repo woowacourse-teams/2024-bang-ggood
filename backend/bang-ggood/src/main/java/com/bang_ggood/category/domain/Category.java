@@ -14,7 +14,7 @@ public enum Category {
     ENVIRONMENT(5, "주거환경", Badge.ENVIRONMENT, List.of(17, 18, 19, 20, 21, 22)),
     SECURITY(6, "보안", Badge.SECURITY, List.of(22, 23, 24, 25, 26, 27, 28, 29, 30)),
     ECONOMIC(7, "경제적", Badge.ECONOMIC, List.of(31, 32));
-
+  
     private final int id;
     private final String description;
     private final Badge badge;

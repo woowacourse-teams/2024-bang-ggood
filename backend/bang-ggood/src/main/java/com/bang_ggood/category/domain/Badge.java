@@ -10,9 +10,8 @@ public enum Badge {
     SECURITY("보안", "안전해요", "🔒"),
     ECONOMIC("경제적", "경제적이에요", "💰")
     ;
-
+  
     private static final String DESCRIPTION_FORMAT = "%s %s";
-
     private final String shortDescription;
     private final String longDescription;
     private final String emoji;

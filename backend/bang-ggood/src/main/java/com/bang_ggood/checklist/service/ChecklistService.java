@@ -213,10 +213,7 @@ public class ChecklistService {
         //TODO 리팩토링 필요 / Question과 Grade를 함께 가지는 객체가 있으면 굉장히 편할듯?
         List<WrittenQuestionResponse> writtenQuestionResponses = checklistQuestions.stream()
                 .filter(checklistQuestion -> checklistQuestion.getQuestion().isCategory(category))
-                .map(checklistQuestion -> {
-                    Question question = checklistQuestion.getQuestion();
-                    return WrittenQuestionResponse.of(question, checklistQuestion.getGrade().name());
-                })
+                .map(WrittenQuestionResponse::of)
                 .toList();
 
         return WrittenCategoryQuestionsResponse.of(category, writtenQuestionResponses);

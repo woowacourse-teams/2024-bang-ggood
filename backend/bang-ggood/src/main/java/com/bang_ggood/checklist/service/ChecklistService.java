@@ -42,7 +42,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class ChecklistService {
@@ -190,46 +189,37 @@ public class ChecklistService {
     public WrittenChecklistResponse readChecklistById(long id) {
         Checklist checklist = checklistRepository.getById(id);
 
-        WrittenRoomResponse writtenRoomResponse = WrittenRoomResponse.of(checklist.getRoom(), checklist.getDeposit(),
-                checklist.getRent(), checklist.getContractTerm(), checklist.getRealEstate());
-        List<Integer> optionIds = readOptionsByChecklistId(id);
+        WrittenRoomResponse writtenRoomResponse = WrittenRoomResponse.of(checklist);
+        List<ChecklistOption> checklistOptions = readOptionsByChecklistId(checklist);
         List<WrittenCategoryQuestionsResponse> writtenCategoryQuestionsResponses =
                 readCategoryQuestionsByChecklistId(id);
 
-        return new WrittenChecklistResponse(writtenRoomResponse, optionIds, writtenCategoryQuestionsResponses);
+        return WrittenChecklistResponse.of(writtenRoomResponse, checklistOptions, writtenCategoryQuestionsResponses);
     }
 
-    private List<Integer> readOptionsByChecklistId(long checklistId) {
-        return checklistOptionRepository.findByChecklistId(checklistId)
-                .stream()
-                .map(ChecklistOption::getOptionId)
-                .toList();
+    private List<ChecklistOption> readOptionsByChecklistId(Checklist checklist) {
+        return checklistOptionRepository.findByChecklist(checklist);
     }
 
     private List<WrittenCategoryQuestionsResponse> readCategoryQuestionsByChecklistId(long checklistId) {
         List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findByChecklistId(checklistId);
         return Arrays.stream(Category.values())
                 .map(category -> readQuestionsByCategory(category, checklistQuestions))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private WrittenCategoryQuestionsResponse readQuestionsByCategory(Category category,
                                                                      List<ChecklistQuestion> checklistQuestions) {
         //TODO 리팩토링 필요 / Question과 Grade를 함께 가지는 객체가 있으면 굉장히 편할듯?
         List<WrittenQuestionResponse> writtenQuestionResponses = checklistQuestions.stream()
-                .filter(checklistQuestion -> Question.findById(checklistQuestion.getQuestionId()).isCategory(category))
+                .filter(checklistQuestion -> checklistQuestion.getQuestion().isCategory(category))
                 .map(checklistQuestion -> {
                     Question question = checklistQuestion.getQuestion();
-                    return new WrittenQuestionResponse(
-                            question.getId(),
-                            question.getTitle(),
-                            question.getSubtitle(),
-                            checklistQuestion.getGrade().name());
+                    return WrittenQuestionResponse.of(question, checklistQuestion.getGrade().name());
                 })
                 .toList();
 
-        return new WrittenCategoryQuestionsResponse(category.getId(), category.getDescription(),
-                writtenQuestionResponses);
+        return WrittenCategoryQuestionsResponse.of(category, writtenQuestionResponses);
     }
 
     @Transactional

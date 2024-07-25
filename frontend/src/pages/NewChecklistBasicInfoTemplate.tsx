@@ -8,22 +8,22 @@ import { InputChangeEvent } from '@/components/common/Input/Input';
 import BasicTabs from '@/components/common/Tabs/BasicTabs';
 import useInputs from '@/hooks/useInput';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
+import { RoomBasicInfo, RoomBasicInfoName } from '@/types/room';
 
-const basicInfos = {
-  roomName: '',
-  address: '',
-  securityDeposit: '',
-  monthlyRent: '',
-  durationOfContract: 0,
-  numberOfStories: 1,
-  nearTransportation: '',
-  nearTransportationDistance: 0,
-  officeOfRealEstate: '',
+const roomBasicInfo: RoomBasicInfo = {
+  name: '살기 좋은 방',
+  address: '인천광역시 부평구',
+  deposit: 2000,
+  rent: 50,
+  contractTerm: 12,
+  floor: 3,
+  station: '잠실',
+  walkingTime: 10,
+  realEstate: '방끗공인중개사',
 };
-type InputName = keyof typeof basicInfos;
 
 const NewChecklistBasicInfoTemplate = () => {
-  const { values, onChange } = useInputs(basicInfos);
+  const { values, onChange } = useInputs(roomBasicInfo);
 
   return (
     <S.ContentWrapper>
@@ -36,7 +36,7 @@ const NewChecklistBasicInfoTemplate = () => {
 
       <S.Container>
         {/* 스타일링이 매우 가변적이어서, 불가피하게 유틸함수를 부분적으로 사용 */}
-        {makeCustomForm({ label: '방 이름', onChange, name: 'roomName', values, required: true })}
+        {makeCustomForm({ label: '방 이름', onChange, name: 'name', values, required: true })}
         <FormField>
           <FormField.Label label="보증금 / 월세" />
           <S.FlexVertical>
@@ -45,16 +45,16 @@ const NewChecklistBasicInfoTemplate = () => {
                 gap: 0;
               `}
             >
-              <S.CustomInput placeholder="" onChange={onChange} name="securityDeposit" value={values.securityDeposit} />
+              <S.CustomInput placeholder="" onChange={onChange} name="deposit" value={values.deposit} />
               <S.CustomLabel label=" 만원   " />
-              <S.CustomInput placeholder="" onChange={onChange} name="monthlyRent" value={values.monthlyRent} />
+              <S.CustomInput placeholder="" onChange={onChange} name="rent" value={values.rent} />
             </S.FlexHorizontal>
             <FormField.P value="" />
           </S.FlexVertical>
         </FormField>
         <S.FlexHorizontal>
-          {makeCustomForm({ label: '계약 기간(년)', values, name: 'durationOfContract', onChange })}
-          {makeCustomForm({ label: '층수', values, name: 'numberOfStories', onChange })}
+          {makeCustomForm({ label: '계약 기간(년)', values, name: 'contractTerm', onChange })}
+          {makeCustomForm({ label: '층수', values, name: 'floor', onChange })}
         </S.FlexHorizontal>
         <FormField>
           <FormField.Label label="가까운 교통편" />
@@ -63,23 +63,13 @@ const NewChecklistBasicInfoTemplate = () => {
               gap: 0;
             `}
           >
-            <S.CustomInput
-              placeholder="지하철역"
-              onChange={onChange}
-              name="nearTransportation"
-              value={values.nearTransportation}
-            />
+            <S.CustomInput placeholder="지하철역" onChange={onChange} name="station" value={values.station} />
             <S.CustomLabel label=" 까지   " />
-            <S.CustomInput
-              placeholder="분"
-              onChange={onChange}
-              name="nearTransportationDistance"
-              value={values.nearTransportationDistance}
-            />
+            <S.CustomInput placeholder="분" onChange={onChange} name="walkingTime" value={values.walkingTime} />
           </S.FlexHorizontal>
           <FormField.P value="" />
         </FormField>
-        {makeCustomForm({ label: '부동산 이름', onChange, values, name: 'officeOfRealEstate' })}
+        {makeCustomForm({ label: '부동산 이름', onChange, values, name: 'realEstate' })}
         <S.SubmitButton label="가구 옵션 추가하기" size="full" />
       </S.Container>
     </S.ContentWrapper>
@@ -93,8 +83,8 @@ const makeCustomForm = (res: MakeFormArgs) => (
   </S.CustomFormField>
 );
 export interface MakeFormArgs {
-  name: InputName;
-  values: Record<InputName, string | number>;
+  name: RoomBasicInfoName;
+  values: Record<RoomBasicInfoName, string | number>;
   label: string;
   placeholder?: string;
   required?: boolean;

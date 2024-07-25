@@ -3,8 +3,9 @@ import { createBrowserRouter } from 'react-router-dom';
 import CategoryChoosePage from '@/pages/CategoryChoosePage';
 import ChecklistListPage from '@/pages/ChecklistListPage';
 import ChecklistPreviewPage from '@/pages/ChecklistPreviewPage';
-import NewChecklistBasicInfoTemplate from '@/pages/NewChecklistBasicInfoTemplate';
+import NewChecklistInfoTemplate from '@/pages/NewChecklistInfoTemplate';
 import NewChecklistPage from '@/pages/NewChecklistPage';
+import RoomComparePage from '@/pages/RoomComparePage';
 import SaveCheckListPage from '@/pages/SaveCheckListPage';
 
 const router = createBrowserRouter([
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
     path: '/preview',
   },
   {
-    element: <NewChecklistBasicInfoTemplate />,
+    element: <NewChecklistInfoTemplate />,
     path: '/checklist-new',
   },
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     element: <CategoryChoosePage />,
     path: '/category-choose',
+  },
+  {
+    element: <RoomComparePage />,
+    path: '/room-compare',
   },
 ]);
 

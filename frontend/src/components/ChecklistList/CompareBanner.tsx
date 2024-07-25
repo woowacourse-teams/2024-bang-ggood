@@ -1,19 +1,19 @@
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
 
 import { ArrowRightYellow, BangBangIcon } from '@/assets/assets';
 import { title3 } from '@/styles/common';
 
-const CompareBanner = () => {
+interface Props {
+  onClick?: () => void;
+}
+
+const CompareBanner = ({ onClick }: Props) => {
   return (
-    // TODO: 비교 페이지로 링크 변경
-    <Link to="/">
-      <S.Banner>
-        <BangBangIcon />
-        <S.Title> 가장 최적인 방 비교하러 가기 </S.Title>
-        <ArrowRightYellow />
-      </S.Banner>
-    </Link>
+    <S.Banner onClick={onClick}>
+      <BangBangIcon />
+      <S.Title> 가장 최적인 방 비교하러 가기 </S.Title>
+      <ArrowRightYellow />
+    </S.Banner>
   );
 };
 

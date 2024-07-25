@@ -23,3 +23,9 @@ export const getChecklists = async () => {
 export const postChecklist = async (answers: Answer[]) => {
   await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLIST, body: answers });
 };
+
+export const getCompareRooms = async ({ id1, id2, id3 }: { id1: number; id2: number; id3: number }) => {
+  const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_COMPARE({ id1, id2, id3 }) });
+  const data = await response.json();
+  return data;
+};

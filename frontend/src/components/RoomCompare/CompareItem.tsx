@@ -31,6 +31,6 @@ const S = {
     margin-bottom: 5px;
 
     color: ${({ theme }) => theme.palette.grey400};
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    font-size: ${({ theme }) => theme.text.size.small};
   `,
 };

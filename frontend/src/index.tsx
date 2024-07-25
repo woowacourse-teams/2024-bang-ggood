@@ -5,10 +5,11 @@ import App from '@/App';
 import { worker } from '@/mocks/browser';
 
 async function enableMocking() {
+  if (process.env.DEV_MODE === "off") return;
+
   if (process.env.NODE_ENV !== 'development') {
     return;
   }
-
   /**
    * 주석 여부
    * 브라우저 환경에서 MSW (Mock Service Worker)를 사용하여 API 요청을 모킹할지 여부를 설정합니다.

@@ -1,1 +1,1 @@
-export const API_URL = process.env.API_URL_LOCAL;
+export const API_URL = process.env.API_URL;

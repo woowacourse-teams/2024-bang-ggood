@@ -7,17 +7,24 @@ import { ChecklistCompare } from '@/types/checklist';
 import calcEmotions from '@/utils/calcEmotions';
 
 interface Props {
+  count?: number;
   room: ChecklistCompare;
 }
 
-const CompareCard = ({ room }: Props) => {
-  const isHightestRoom = room.rank === 1 ? true : false;
+const CompareCard = ({ count, room }: Props) => {
+  // TODO: 백엔드 rank 전달 못함으로 인해 주석
+  // const isHightestRoom = room.rank === 1 ? true : false;
+
+  const isHightestRoom = count === 1 ? true : false;
 
   return (
     <S.Container isHightLight={isHightestRoom}>
       <S.Title>{room.roomName}</S.Title>
       <S.RankWrapper>
-        <S.Rank>{room.rank}등</S.Rank>
+        {/* <S.Rank>{room.rank}등</S.Rank> */}
+        {count === 0 && <S.Rank>2등</S.Rank>}
+        {count === 1 && <S.Rank>1등</S.Rank>}
+        {count === 2 && <S.Rank>3등</S.Rank>}
         <S.Score>({room.score}점)</S.Score>
       </S.RankWrapper>
       <CompareItem
@@ -53,7 +60,7 @@ const CompareCard = ({ room }: Props) => {
       <CompareItem
         label={'옵션'}
         isLabeled={isHightestRoom}
-        item={<S.OptionButton>{room.options.length}개</S.OptionButton>}
+        item={<S.OptionButton>{room.optionCount}개</S.OptionButton>}
       />
       {/* TODO: 모든 카테고리를 다 보여주고 없으면 - 표시로 변경 */}
       {room.categories.map(category => (

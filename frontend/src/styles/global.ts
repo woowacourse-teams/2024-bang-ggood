@@ -8,7 +8,7 @@ export const baseStyle = css`
 
   body {
     max-width: 600px;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0px auto;
     box-sizing: border-box;
     border-left: 1px solid ${theme.palette.grey200};

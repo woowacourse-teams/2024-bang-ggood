@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { ReactNode } from 'react';
-import { useMatch } from 'react-router-dom';
+import { Link, LinkProps, useMatch } from 'react-router-dom';
 
 import {
   ChecklistLogo,
@@ -53,15 +53,24 @@ const S = {
     font-size: ${({ theme }) => theme.text.size.medium};
   `,
 };
+type MakeOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+const linkDecorator = (Logo: React.FC, path: string) => {
+  const LogoLinked = (props: MakeOptional<LinkProps, 'to'>) => (
+    <Link to={path} {...props}>
+      <Logo />
+    </Link>
+  );
+  return LogoLinked;
+};
 
 const Footer = Object.assign(FooterWrapper, {
-  HomeLogo,
-  LocationLogo,
-  ChecklistLogo,
-  MyPageLogo,
-  HomeLogoActive,
-  LocationLogoActive,
-  ChecklistLogoActive,
-  MyPageLogoActive,
+  HomeLogo: linkDecorator(HomeLogo, '/'),
+  LocationLogo: linkDecorator(LocationLogo, '/location'),
+  ChecklistLogo: linkDecorator(ChecklistLogo, '/checklist-list'),
+  MyPageLogo: linkDecorator(MyPageLogo, '/mypage'),
+  HomeLogoActive: linkDecorator(HomeLogoActive, '/'),
+  LocationLogoActive: linkDecorator(LocationLogoActive, '/location'),
+  ChecklistLogoActive: linkDecorator(ChecklistLogoActive, '/checklist-list'),
+  MyPageLogoActive: linkDecorator(MyPageLogoActive, '/mypage'),
 });
 export default Footer;

@@ -15,6 +15,7 @@ public class Score {
     }
 
     public static Score from(Grade grade) {
+        if (grade == Grade.NONE) return getInstance();
         return new Score(1, grade.getScore());
     }
 

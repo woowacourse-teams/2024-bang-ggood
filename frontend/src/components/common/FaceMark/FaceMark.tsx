@@ -15,6 +15,7 @@ const S = {
     font-size: ${({ theme }) => theme.text.size.small};
   `,
   Footer: styled.div`
+    color: ${({ theme }) => theme.palette.grey500};
     font-size: ${({ theme }) => theme.text.size.xSmall};
   `,
 };

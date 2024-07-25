@@ -1,29 +1,29 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useState } from 'react';
 
 import Button from '@/components/common/Button/Button';
-import FormField, { MakeFormArgs } from '@/components/common/FormField/FormField';
+import FormField from '@/components/common/FormField/FormField';
 import Header from '@/components/common/Header/Header';
-import Tabs from '@/components/common/Tabs/Tabs';
+import { InputChangeEvent } from '@/components/common/Input/Input';
+import BasicTabs from '@/components/common/Tabs/BasicTabs';
+import useInputs from '@/hooks/useInput';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 
-const menuList = [
-  { name: '기본 정보', path: './' },
-  { name: '체크 리스트', path: './' },
-  { name: '메모 및 사진', path: './' },
-];
+const basicInfos = {
+  roomName: '',
+  address: '',
+  securityDeposit: '',
+  monthlyRent: '',
+  durationOfContract: 0,
+  numberOfStories: 1,
+  nearTransportation: '',
+  nearTransportationDistance: 0,
+  officeOfRealEstate: '',
+};
+type InputName = keyof typeof basicInfos;
 
-const NewChecklistBasicInfoPage = () => {
-  const [roomName, setRoomName] = useState('');
-  // const [address, setAddress] = useState(''); 주소가 피그마에 빠짐.
-  const [securityDeposit, setSecurityDeposit] = useState('');
-  const [monthlyRent, setMonthlyRent] = useState('');
-  const [durationOfContract, setDurationOfContract] = useState('');
-  const [numberOfStories, setNumberOfStories] = useState('');
-  const [nearTransportation, setNearTransportation] = useState('');
-  const [nearTransportationDistance, setNearTransportationDistance] = useState('');
-  const [officeOfRealEstate, setOfficeOfRealEstate] = useState('');
+const NewChecklistBasicInfoTemplate = () => {
+  const { values, onChange } = useInputs(basicInfos);
 
   return (
     <S.ContentWrapper>
@@ -32,11 +32,11 @@ const NewChecklistBasicInfoPage = () => {
         center={<S.Center>새 체크리스트</S.Center>}
         right={<S.SaveTextButton>저장</S.SaveTextButton>}
       />
-      <Tabs menuList={menuList}></Tabs>
+      <BasicTabs />
 
       <S.Container>
         {/* 스타일링이 매우 가변적이어서, 불가피하게 유틸함수를 부분적으로 사용 */}
-        {makeCustomForm({ label: '방 이름', state: [roomName, setRoomName], required: true })}
+        {makeCustomForm({ label: '방 이름', onChange, name: 'roomName', values, required: true })}
         <FormField>
           <FormField.Label label="보증금 / 월세" />
           <S.FlexVertical>
@@ -45,16 +45,16 @@ const NewChecklistBasicInfoPage = () => {
                 gap: 0;
               `}
             >
-              <S.CustomInput placeholder="" state={[securityDeposit, setSecurityDeposit]} />
+              <S.CustomInput placeholder="" onChange={onChange} name="securityDeposit" value={values.securityDeposit} />
               <S.CustomLabel label=" 만원   " />
-              <S.CustomInput placeholder="" state={[monthlyRent, setMonthlyRent]} />
+              <S.CustomInput placeholder="" onChange={onChange} name="monthlyRent" value={values.monthlyRent} />
             </S.FlexHorizontal>
             <FormField.P value="" />
           </S.FlexVertical>
         </FormField>
         <S.FlexHorizontal>
-          {makeCustomForm({ label: '계약 기간(년)', state: [durationOfContract, setDurationOfContract] })}
-          {makeCustomForm({ label: '층수', state: [numberOfStories, setNumberOfStories] })}
+          {makeCustomForm({ label: '계약 기간(년)', values, name: 'durationOfContract', onChange })}
+          {makeCustomForm({ label: '층수', values, name: 'numberOfStories', onChange })}
         </S.FlexHorizontal>
         <FormField>
           <FormField.Label label="가까운 교통편" />
@@ -63,13 +63,23 @@ const NewChecklistBasicInfoPage = () => {
               gap: 0;
             `}
           >
-            <S.CustomInput placeholder="지하철역" state={[nearTransportation, setNearTransportation]} />
+            <S.CustomInput
+              placeholder="지하철역"
+              onChange={onChange}
+              name="nearTransportation"
+              value={values.nearTransportation}
+            />
             <S.CustomLabel label=" 까지   " />
-            <S.CustomInput placeholder="분" state={[nearTransportationDistance, setNearTransportationDistance]} />
+            <S.CustomInput
+              placeholder="분"
+              onChange={onChange}
+              name="nearTransportationDistance"
+              value={values.nearTransportationDistance}
+            />
           </S.FlexHorizontal>
           <FormField.P value="" />
         </FormField>
-        {makeCustomForm({ label: '부동산 이름', state: [officeOfRealEstate, setOfficeOfRealEstate] })}
+        {makeCustomForm({ label: '부동산 이름', onChange, values, name: 'officeOfRealEstate' })}
         <S.SubmitButton label="가구 옵션 추가하기" size="full" />
       </S.Container>
     </S.ContentWrapper>
@@ -78,11 +88,18 @@ const NewChecklistBasicInfoPage = () => {
 const makeCustomForm = (res: MakeFormArgs) => (
   <S.CustomFormField key={res.label}>
     <FormField.Label label={res.label} required={res.required} />
-    <FormField.Input placeholder="" state={res.state} />
+    <FormField.Input placeholder="" width="full" onChange={res.onChange} name={res.name} value={res.values[res.name]} />
     <FormField.P value={''} />
   </S.CustomFormField>
 );
-
+export interface MakeFormArgs {
+  name: InputName;
+  values: Record<InputName, string | number>;
+  label: string;
+  placeholder?: string;
+  required?: boolean;
+  onChange: (event: InputChangeEvent) => void;
+}
 const S = {
   ContentWrapper: styled.div`
     background-color: white;
@@ -145,4 +162,4 @@ const S = {
   `,
 };
 
-export default NewChecklistBasicInfoPage;
+export default NewChecklistBasicInfoTemplate;

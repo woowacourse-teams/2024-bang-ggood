@@ -1,7 +1,7 @@
 package com.bang_ggood.category.domain;
 
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
-import com.bang_ggood.checklist.domain.Grade;
+import com.bang_ggood.checklist.domain.Score;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +15,9 @@ public enum Category {
     ENVIRONMENT(5, "주거환경", Badge.ENVIRONMENT),
     SECURITY(6, "보안", Badge.SECURITY),
     ECONOMIC(7, "경제적", Badge.ECONOMIC);
+
+    private static final int BADGE_THRESHOLD = 80;
+    private static final int MAX_SCORE = 100;
 
     private final int id;
     private final String description;
@@ -31,28 +34,21 @@ public enum Category {
                 .anyMatch(category -> category.id == id);
     }
 
-    // 2. 뱃지 부여
     public static List<Badge> getBadges(List<ChecklistQuestion> questions) {
         return Arrays.stream(values())
-                .filter(category -> category.calculateTotalScore(questions) >= 80)
+                .filter(category -> category.calculateTotalScore(questions) >= BADGE_THRESHOLD)
                 .map(Category::getBadge)
                 .toList();
     }
 
-    // 1. 총점 : score * 100 / maxScore
     public int calculateTotalScore(List<ChecklistQuestion> questions) {
         List<ChecklistQuestion> filteredQuestions = filterQuestion(questions);
 
-        if (filteredQuestions.isEmpty()) {
-            return 0;
-        }
-
-        int maxScore = Grade.calculateMaxScore(filteredQuestions.size());
-        int score = filteredQuestions.stream()
-                .mapToInt(question -> question.getGrade().getScore())
-                .sum();
-
-        return score * 100 / maxScore;
+        return filteredQuestions.stream()
+                .map(checklistQuestion -> Score.from(checklistQuestion.getGrade()))
+                .reduce(Score::sum)
+                .orElse(Score.getInstance())
+                .intValue(MAX_SCORE);
     }
 
     private List<ChecklistQuestion> filterQuestion(List<ChecklistQuestion> checklistQuestions) {

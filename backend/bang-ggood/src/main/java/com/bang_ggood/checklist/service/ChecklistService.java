@@ -9,6 +9,7 @@ import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.Grade;
 import com.bang_ggood.checklist.domain.Option;
 import com.bang_ggood.checklist.domain.Question;
+import com.bang_ggood.checklist.domain.Score;
 import com.bang_ggood.checklist.dto.BadgeResponse;
 import com.bang_ggood.checklist.dto.CategoryScoreReadResponse;
 import com.bang_ggood.checklist.dto.ChecklistComparisonReadResponse;
@@ -36,8 +37,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -237,10 +240,21 @@ public class ChecklistService {
                 .stream()
                 .map(checklist -> {
                     // 카테고리별 총점
-                    List<CategoryScoreReadResponse> categoryScores = calculateCategoryScores(checklist);
+                    Map<Category, Score> categoryScoreMap = calculateCategoryScores(checklist);
+
+                    List<CategoryScoreReadResponse> categoryScores = categoryScoreMap.entrySet().stream()
+                            .map(entry -> {
+                                Category category = entry.getKey();
+                                Score score = entry.getValue();
+
+                                return new CategoryScoreReadResponse(category.getId(),
+                                        category.name(),
+                                        score.intValue(10));
+                            })
+                            .toList();
 
                     // 체크리스트 총점
-                    int checklistScore = calculateChecklistScore(categoryScores);
+                    int checklistScore = calculateChecklistScore(categoryScoreMap);
 
                     // 옵션 개수
                     int checklistOptionCount = checklistOptionRepository.countByChecklist(checklist);
@@ -253,26 +267,25 @@ public class ChecklistService {
         return new ChecklistsComparisonReadResponse(responses);
     }
 
-    private List<CategoryScoreReadResponse> calculateCategoryScores(Checklist checklist) {
-        List<CategoryScoreReadResponse> categoryScores = new ArrayList<>();
+    private Map<Category, Score> calculateCategoryScores(Checklist checklist) {
+        Map<Category, Score> categoryScores = new HashMap<>();
 
         for (Category category : Category.values()) {
-            int categoryScore = category.calculateTotalScore(checklist.getQuestions());
-            if (categoryScore != 0) {
-                categoryScores.add(new CategoryScoreReadResponse(
-                        category.getId(),
-                        category.getDescription(),
-                        categoryScore
-                ));
-            }
+            Score score = checklist.getQuestions().stream()
+                    .filter(checklistQuestion -> checklistQuestion.getQuestion().isCategory(category))
+                    .map(checklistQuestion -> Score.from(checklistQuestion.getGrade()))
+                    .reduce(Score::sum)
+                    .orElse(Score.getInstance());
+
+            categoryScores.put(category, score);
         }
 
         return categoryScores;
     }
 
-    private int calculateChecklistScore(List<CategoryScoreReadResponse> categoryScores) {
-        return categoryScores.stream()
-                .mapToInt(CategoryScoreReadResponse::score)
+    private int calculateChecklistScore(Map<Category, Score> categoryScores) {
+        return categoryScores.values().stream()
+                .mapToInt(score -> score.intValue(100))
                 .sum() / categoryScores.size();
     }
 }

@@ -8,6 +8,7 @@ import Badge from '@/components/common/Badge/Badge';
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import Layout from '@/components/common/layout/Layout';
+import { ROUTE_PATH } from '@/constants/routePath';
 import { flexColumn, flexRow, title2 } from '@/styles/common';
 import { Category } from '@/types/category';
 
@@ -43,7 +44,7 @@ const CategoryChoosePage = () => {
   const handleSubmit = () => {
     const addCategory = async () => {
       await postCategory(selectedCategory);
-      navigate('/');
+      navigate(ROUTE_PATH.checklistList);
     };
     addCategory();
   };
@@ -52,7 +53,7 @@ const CategoryChoosePage = () => {
     <>
       <Header
         left={
-          <Link to="/">
+          <Link to={ROUTE_PATH.checklistList}>
             <CloseIcon />
           </Link>
         }

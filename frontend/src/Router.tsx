@@ -1,37 +1,27 @@
 import { createBrowserRouter } from 'react-router-dom';
 
+import { ROUTE_PATH } from '@/constants/routePath';
 import CategoryChoosePage from '@/pages/CategoryChoosePage';
 import ChecklistListPage from '@/pages/ChecklistListPage';
-import ChecklistPreviewPage from '@/pages/ChecklistPreviewPage';
 import NewChecklistPage from '@/pages/NewChecklistPage/NewChecklistPage';
 import RoomComparePage from '@/pages/RoomComparePage';
-import SaveCheckListPage from '@/pages/SaveCheckListPage';
 
 const router = createBrowserRouter([
   {
     element: <NewChecklistPage />,
-    path: '/',
+    path: ROUTE_PATH.checklistNew,
   },
-  {
-    element: <SaveCheckListPage />,
-    path: '/saved',
-  },
-  {
-    element: <ChecklistPreviewPage />,
-    path: '/preview',
-  },
-
   {
     element: <ChecklistListPage />,
-    path: '/checklist',
+    path: ROUTE_PATH.checklistList,
   },
   {
     element: <CategoryChoosePage />,
-    path: '/category-choose',
+    path: '/',
   },
   {
     element: <RoomComparePage />,
-    path: '/room-compare',
+    path: ROUTE_PATH.roomCompare,
   },
 ]);
 

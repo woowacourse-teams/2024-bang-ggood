@@ -7,11 +7,11 @@ interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const widthSize = { small: '45px', medium: '110px', large: '140px', full: '100%' };
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
-  width: keyof typeof widthSize;
+  width?: keyof typeof widthSize;
 }
 export type InputChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 
-const Input = ({ width, onChange, ...rest }: Props) => {
+const Input = ({ width = 'full', onChange, ...rest }: Props) => {
   const handleChange = useCallback(
     (event: InputChangeEvent) => {
       if (!onChange) return;

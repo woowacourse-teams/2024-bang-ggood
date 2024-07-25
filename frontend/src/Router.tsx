@@ -4,7 +4,6 @@ import CategoryChoosePage from '@/pages/CategoryChoosePage';
 import ChecklistListPage from '@/pages/ChecklistListPage';
 import ChecklistPreviewPage from '@/pages/ChecklistPreviewPage';
 import NewChecklistBasicInfoPage from '@/pages/NewChecklistBasicInfoPage';
-
 import NewChecklistPage from '@/pages/NewChecklistPage';
 import SaveCheckListPage from '@/pages/SaveCheckListPage';
 

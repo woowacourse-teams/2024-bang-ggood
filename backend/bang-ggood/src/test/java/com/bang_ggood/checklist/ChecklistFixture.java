@@ -1,33 +1,33 @@
 package com.bang_ggood.checklist;
 
 import com.bang_ggood.checklist.dto.ChecklistCreateRequest;
-import com.bang_ggood.checklist.dto.QuestionCreateRequest;
+import com.bang_ggood.checklist.dto.ChecklistQuestionCreateRequest;
 import com.bang_ggood.room.RoomFixture;
 import java.util.List;
 
 public class ChecklistFixture {
 
-    public static final QuestionCreateRequest QUESTION_1_CREATE_REQUEST = new QuestionCreateRequest(
+    public static final ChecklistQuestionCreateRequest QUESTION_1_CREATE_REQUEST = new ChecklistQuestionCreateRequest(
             1, "GOOD"
     );
 
-    public static final QuestionCreateRequest QUESTION_2_CREATE_REQUEST = new QuestionCreateRequest(
+    public static final ChecklistQuestionCreateRequest QUESTION_2_CREATE_REQUEST = new ChecklistQuestionCreateRequest(
             2, "SOSO"
     );
 
-    public static final QuestionCreateRequest QUESTION_3_CREATE_REQUEST = new QuestionCreateRequest(
+    public static final ChecklistQuestionCreateRequest QUESTION_3_CREATE_REQUEST = new ChecklistQuestionCreateRequest(
             3, "BAD"
     );
 
-    public static final QuestionCreateRequest QUESTION_5_CREATE_REQUEST = new QuestionCreateRequest(
+    public static final ChecklistQuestionCreateRequest QUESTION_5_CREATE_REQUEST = new ChecklistQuestionCreateRequest(
             5, null
     );
 
-    public static final QuestionCreateRequest QUESTION_CREATE_REQUEST_NO_ID = new QuestionCreateRequest(
+    public static final ChecklistQuestionCreateRequest QUESTION_CREATE_REQUEST_NO_ID = new ChecklistQuestionCreateRequest(
             null, null
     );
 
-    public static final QuestionCreateRequest QUESTION_CREATE_REQUEST_INVALID_ID = new QuestionCreateRequest(
+    public static final ChecklistQuestionCreateRequest QUESTION_CREATE_REQUEST_INVALID_ID = new ChecklistQuestionCreateRequest(
             9999, "SOSO"
     );
 

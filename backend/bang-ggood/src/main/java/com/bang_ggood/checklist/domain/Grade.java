@@ -6,7 +6,8 @@ public enum Grade {
 
     GOOD(3),
     SOSO(2),
-    BAD(1);
+    BAD(1),
+    NONE(0);
 
     private final int score;
 
@@ -18,11 +19,14 @@ public enum Grade {
         return GOOD.score * size;
     }
 
-    public static int getScore(String answer) { //TODO null 예외처리
+    public int getScore() {
+        return score;
+    }
+
+    public static Grade getInstance(String name) {
         return Arrays.stream(values())
-                .filter(grade -> grade.name().equals(answer))
-                .map(grade -> grade.score)
+                .filter(grade -> grade.name().equals(name))
                 .findAny()
-                .orElse(0);
+                .orElse(NONE);
     }
 }

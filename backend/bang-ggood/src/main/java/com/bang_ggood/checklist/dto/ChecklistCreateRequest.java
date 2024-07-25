@@ -6,7 +6,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 public record ChecklistCreateRequest(@Valid RoomCreateRequest room, List<Integer> options,
-                                     @Valid List<QuestionCreateRequest> questions) {
+                                     @Valid List<ChecklistQuestionCreateRequest> questions) {
 
     public Room toRoomEntity() {
         return room.toRoomEntity();

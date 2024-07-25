@@ -6,8 +6,9 @@ import com.bang_ggood.category.dto.WrittenCategoryQuestionsResponse;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
+import com.bang_ggood.checklist.domain.Grade;
 import com.bang_ggood.checklist.domain.Option;
-import com.bang_ggood.checklist.domain.Questionlist;
+import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.BadgeResponse;
 import com.bang_ggood.checklist.dto.CategoryScoreReadResponse;
 import com.bang_ggood.checklist.dto.ChecklistComparisonReadResponse;
@@ -15,7 +16,7 @@ import com.bang_ggood.checklist.dto.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.ChecklistInfo;
 import com.bang_ggood.checklist.dto.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.ChecklistsComparisonReadResponse;
-import com.bang_ggood.checklist.dto.QuestionCreateRequest;
+import com.bang_ggood.checklist.dto.ChecklistQuestionCreateRequest;
 import com.bang_ggood.checklist.dto.QuestionResponse;
 import com.bang_ggood.checklist.dto.UserChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.UserChecklistsPreviewResponse;
@@ -47,16 +48,14 @@ public class ChecklistService {
     private final RoomRepository roomRepository;
     private final ChecklistOptionRepository checklistOptionRepository;
     private final ChecklistQuestionRepository checklistQuestionRepository;
-    private final Questionlist questionList;
 
     public ChecklistService(ChecklistRepository checklistRepository, RoomRepository roomRepository,
                             ChecklistOptionRepository checklistOptionRepository,
-                            ChecklistQuestionRepository checklistQuestionRepository, Questionlist questionList) {
+                            ChecklistQuestionRepository checklistQuestionRepository) {
         this.checklistRepository = checklistRepository;
         this.roomRepository = roomRepository;
         this.checklistOptionRepository = checklistOptionRepository;
         this.checklistQuestionRepository = checklistQuestionRepository;
-        this.questionList = questionList;
     }
 
 
@@ -106,22 +105,25 @@ public class ChecklistService {
     }
 
     private void createChecklistQuestions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
-        List<QuestionCreateRequest> questions = checklistCreateRequest.questions();
-        validateQuestion(questions);
-        for (QuestionCreateRequest questionCreateRequest : questions) {
-            Integer questionId = questionCreateRequest.questionId();
-            ChecklistQuestion checklistQuestion = new ChecklistQuestion(checklist, questionId,
-                    questionCreateRequest.answer());
-            checklistQuestionRepository.save(checklistQuestion);
-        }
+        List<ChecklistQuestionCreateRequest> questionCreateRequests = checklistCreateRequest.questions();
+        validateChecklistQuestion(questionCreateRequests);
+
+        List<ChecklistQuestion> checklistQuestions = questionCreateRequests.stream()
+                .map(checklistQuestion -> new ChecklistQuestion(
+                        checklist,
+                        checklistQuestion.questionId(),
+                        Grade.getInstance(checklistQuestion.answer())))
+                .toList();
+
+        checklistQuestionRepository.saveAll(checklistQuestions);
     }
 
-    private void validateQuestion(List<QuestionCreateRequest> questions) {
+    private void validateChecklistQuestion(List<ChecklistQuestionCreateRequest> questions) {
         validateQuestionDuplicate(questions);
         validateQuestionInvalid(questions);
     }
 
-    private void validateQuestionDuplicate(List<QuestionCreateRequest> questions) {
+    private void validateQuestionDuplicate(List<ChecklistQuestionCreateRequest> questions) {
         Set<Integer> set = new HashSet<>();
         questions.forEach(question -> {
             if (!set.add(question.questionId())) {
@@ -130,9 +132,9 @@ public class ChecklistService {
         });
     }
 
-    private void validateQuestionInvalid(List<QuestionCreateRequest> questions) {
-        for (QuestionCreateRequest questionCreateRequest : questions) {
-            if (!questionList.contains(questionCreateRequest.questionId())) {
+    private void validateQuestionInvalid(List<ChecklistQuestionCreateRequest> questions) {
+        for (ChecklistQuestionCreateRequest checklistQuestionCreateRequest : questions) {
+            if (!Question.contains(checklistQuestionCreateRequest.questionId())) {
                 throw new BangggoodException(ExceptionCode.INVALID_QUESTION);
             }
         }
@@ -172,10 +174,10 @@ public class ChecklistService {
 
     private List<QuestionResponse> readChecklistQuestion(Category category) {
         List<QuestionResponse> questionResponses = new ArrayList<>();
-        category.getQuestionIds().stream()
-                .map(questionId -> new QuestionResponse(questionId,
-                        questionList.getTitleByQuestionId(questionId),
-                        questionList.getSubtitleByQuestionId(questionId)))
+        Question.findByCategory(category).stream()
+                .map(question -> new QuestionResponse(question.getId(),
+                                question.getTitle(),
+                                question.getSubtitle()))
                 .forEach(questionResponses::add);
         return questionResponses;
     }
@@ -210,16 +212,19 @@ public class ChecklistService {
 
     private WrittenCategoryQuestionsResponse readQuestionsByCategory(Category category,
                                                                      List<ChecklistQuestion> checklistQuestions) {
-        //TODO 리팩토링 필요
-        List<WrittenQuestionResponse> writtenQuestionResponses = new ArrayList<>();
-        for (ChecklistQuestion checklistQuestion : checklistQuestions) {
-            int questionId = checklistQuestion.getQuestionId();
-            if (category.isQuestionIn(questionId)) {
-                writtenQuestionResponses.add(
-                        new WrittenQuestionResponse(questionId, questionList.getTitleByQuestionId(questionId),
-                                questionList.getSubtitleByQuestionId(questionId), checklistQuestion.getAnswer()));
-            }
-        }
+        //TODO 리팩토링 필요 / Question과 Grade를 함께 가지는 객체가 있으면 굉장히 편할듯?
+        List<WrittenQuestionResponse> writtenQuestionResponses = checklistQuestions.stream()
+                .filter(checklistQuestion -> Question.findById(checklistQuestion.getQuestionId()).isCategory(category))
+                .map(checklistQuestion -> {
+                    Question question = checklistQuestion.getQuestion();
+                    return new WrittenQuestionResponse(
+                            question.getId(),
+                            question.getTitle(),
+                            question.getSubtitle(),
+                            checklistQuestion.getGrade().name());
+                })
+                .toList();
+
         return new WrittenCategoryQuestionsResponse(category.getId(), category.getDescription(),
                 writtenQuestionResponses);
     }

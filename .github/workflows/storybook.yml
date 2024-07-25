@@ -43,6 +43,3 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: "🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}"
-  test:
-    name: run jest test
-    runs-on: 

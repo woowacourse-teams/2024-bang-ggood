@@ -6,11 +6,11 @@ import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
 
 interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  isChecked?: boolean;
+  isChecked: boolean;
+  setIsChecked: React.Dispatch<boolean>;
   color?: string;
   hoverBorderColor?: string;
   onClick: () => void;
-  setIsChecked: React.Dispatch<boolean>;
 }
 
 const Checkbox = ({

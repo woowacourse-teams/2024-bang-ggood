@@ -18,6 +18,11 @@ export interface ChecklistAnswer extends ChecklistQuestion {
   answer?: number | null;
 }
 
+export interface ChecklistFormAnswer {
+  questionId: number;
+  answer: number;
+}
+
 export interface Option {
   id: number;
   filled: string;

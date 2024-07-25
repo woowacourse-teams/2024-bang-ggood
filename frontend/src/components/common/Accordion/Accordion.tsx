@@ -6,11 +6,14 @@ import AccordionBody from '@/components/common/Accordion/AccordionBody';
 import { AccordionProvider } from '@/components/common/Accordion/AccordionContext';
 import { flexColumn } from '@/styles/common';
 
-const Accordion = (props: PropsWithChildren) => {
-  const { children } = props;
+interface Props extends PropsWithChildren {
+  width?: string;
+}
+
+const Accordion = ({ width = '100%', children }: Props) => {
   return (
     <AccordionProvider count={7}>
-      <S.Container>{children}</S.Container>
+      <S.Container width={width}>{children}</S.Container>
     </AccordionProvider>
   );
 };
@@ -18,8 +21,9 @@ const Accordion = (props: PropsWithChildren) => {
 Accordion.header = AccordionHeader;
 Accordion.body = AccordionBody;
 
-const Container = styled.div`
+const Container = styled.div<{ width: string }>`
   ${flexColumn};
+  width: ${({ width }) => width};
   gap: 15px;
 `;
 

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Tabs from '@/components/common/Tabs/Tabs';
+import Tabs, { Menu } from '@/components/common/Tabs/Tabs';
 
 const meta = {
   title: 'components/Tabs',
@@ -17,23 +17,25 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const mockMenuList = [
+const mockMenuList: Menu[] = [
   {
     name: '기본 정보',
-    path: 'basic-info',
+    id: 'basic-info',
   },
   {
     name: '체크리스트',
-    path: 'checklist',
+    id: 'checklist',
   },
   {
     name: '메모 및 사진',
-    path: 'extra-info',
+    id: 'extra-info',
   },
 ];
 
 export const Default: Story = {
   args: {
     menuList: mockMenuList,
+    onMoveMenu: () => {},
+    currentMenuId: 'basic-info',
   },
 };

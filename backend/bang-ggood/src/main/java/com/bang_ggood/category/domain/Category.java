@@ -34,6 +34,36 @@ public enum Category {
                 .anyMatch(category -> category.id == id);
     }
 
+    // 2. 뱃지 부여
+    public static List<Badge> getBadges(List<ChecklistQuestion> questions) {
+        return Arrays.stream(values())
+                .filter(category -> category.calculateTotalScore(questions) >= 80)
+                .map(Category::getBadge)
+                .toList();
+    }
+
+    // 1. 총점 : score * 100 / maxScore
+    public int calculateTotalScore(List<ChecklistQuestion> questions) {
+        List<ChecklistQuestion> filteredQuestions = filterQuestion(questions);
+
+        if (filteredQuestions.isEmpty()) {
+            return 0;
+        }
+
+        int maxScore = Grade.calculateMaxScore(filteredQuestions.size());
+        int score = filteredQuestions.stream()
+                .mapToInt(question -> Grade.getScore(question.getAnswer()))
+                .sum();
+
+        return score * 100 / maxScore;
+    }
+
+    private List<ChecklistQuestion> filterQuestion(List<ChecklistQuestion> questions) {
+        return questions.stream()
+                .filter(checklistQuestion -> questionIds.contains(checklistQuestion.getQuestionId()))
+                .toList();
+    }
+
     public int getId() {
         return id;
     }
@@ -46,26 +76,5 @@ public enum Category {
 
     public Set<Integer> getQuestionIds() {
         return questionIds;
-    }
-
-    public static List<Badge> getBadges(List<ChecklistQuestion> questions) {
-        return Arrays.stream(values())
-                .filter(category -> {
-                    Set<Integer> questionIds = category.questionIds;
-                    List<ChecklistQuestion> categoryQuestions = questions.stream()
-                            .filter(checklistQuestion -> questionIds.contains(checklistQuestion.getQuestionId()))
-                            .toList();
-                    if (categoryQuestions.isEmpty()) {
-                        return false;
-                    }
-                    int maxScore = Grade.calculateMaxScore(categoryQuestions.size());
-                    int score = categoryQuestions.stream()
-                            .mapToInt(question -> Grade.getScore(question.getAnswer()))
-                            .sum();
-
-                    return (score * 100 / maxScore) >= 80;
-                })
-                .map(Category::getBadge)
-                .toList();
     }
 }

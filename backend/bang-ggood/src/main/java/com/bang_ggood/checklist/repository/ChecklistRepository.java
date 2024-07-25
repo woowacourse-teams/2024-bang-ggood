@@ -8,4 +8,5 @@ import java.util.List;
 public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
 
     List<Checklist> findByUser(User user);
+    List<Checklist> findByUserAndIdIn(User user, List<Long> checklistIds);
 }

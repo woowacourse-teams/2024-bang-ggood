@@ -18,11 +18,11 @@ public enum Grade {
         return GOOD.score * size;
     }
 
-    public static int getScore(String answer) {
+    public static int getScore(String answer) { //TODO null 예외처리
         return Arrays.stream(values())
                 .filter(grade -> grade.name().equals(answer))
+                .map(grade -> grade.score)
                 .findAny()
-                .get()
-                .score;
+                .orElse(0);
     }
 }

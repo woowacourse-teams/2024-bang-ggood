@@ -17,10 +17,10 @@ import com.bang_ggood.checklist.dto.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.ChecklistsComparisonReadResponse;
 import com.bang_ggood.checklist.dto.QuestionCreateRequest;
 import com.bang_ggood.checklist.dto.QuestionResponse;
-import com.bang_ggood.checklist.dto.WrittenChecklistResponse;
-import com.bang_ggood.checklist.dto.WrittenQuestionResponse;
 import com.bang_ggood.checklist.dto.UserChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.UserChecklistsPreviewResponse;
+import com.bang_ggood.checklist.dto.WrittenChecklistResponse;
+import com.bang_ggood.checklist.dto.WrittenQuestionResponse;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
@@ -34,13 +34,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import java.util.Comparator;
 
 @Service
 public class ChecklistService {
@@ -140,6 +138,7 @@ public class ChecklistService {
         }
     }
 
+    @Transactional
     public UserChecklistsPreviewResponse readUserChecklistsPreview() {
         User user = new User(1L, "방방이");
         List<Checklist> checklists = checklistRepository.findByUser(user);
@@ -159,6 +158,7 @@ public class ChecklistService {
                 .toList();
     }
 
+    @Transactional
     public ChecklistQuestionsResponse readChecklistQuestions() {
         List<CategoryQuestionsResponse> categoryQuestionsResponses = new ArrayList<>();
         for (Category category : Category.values()) {

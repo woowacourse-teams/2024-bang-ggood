@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { getChecklists } from '@/apis/checklist';
 import { Plus } from '@/assets/assets';
@@ -24,18 +24,29 @@ const ChecklistListPage = () => {
     fetchChecklist();
   }, []);
 
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    // TODO: 비교 방 선택 페이지 작업으로 이후 변경 필요 (3차 스프린트)
+    navigate('/room-compare', {
+      state: {
+        id1: checklistList[0].checklistId,
+        id2: checklistList[1].checklistId,
+        id3: checklistList[2]?.checklistId,
+      },
+    });
+  };
+
   return (
     <>
       <Header center={<Header.Text>체크리스트</Header.Text>} />
-      <CompareBanner />
+      <CompareBanner onClick={handleClick} />
       <Layout>
         <S.ListBox>
           {checklistList.map(checklist => (
-            <>
-              <Link to={`checklist/${checklist.checklistId}`}>
-                <ChecklistPreviewCard key={checklist.checklistId} checklist={checklist} />
-              </Link>
-            </>
+            <Link to={`checklist/${checklist.checklistId}`} key={checklist.checklistId}>
+              <ChecklistPreviewCard key={checklist.checklistId} checklist={checklist} />
+            </Link>
           ))}
         </S.ListBox>
       </Layout>

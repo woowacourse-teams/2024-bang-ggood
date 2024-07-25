@@ -57,7 +57,8 @@ const config = {
       },
       {
         test: /\.svg$/i,
-        use: ['@svgr/webpack'],
+        issuer: /\.[jt]sx?$/,
+        use: [{ loader: '@svgr/webpack', options: {} }],
       },
       // Add your rules for custom modules here
       // Learn more about loaders from https://webpack.js.org/loaders/

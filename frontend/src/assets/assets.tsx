@@ -1,5 +1,8 @@
 /* Arrow */
 import ArrowBack from '@/assets/arrow-back.svg';
+import InputRequiredDot from '@/assets/input-required-dot.svg';
+
+/* face icon */
 import ArrowDownSmall from '@/assets/arrow-down-small.svg';
 import ArrowRightGreen from '@/assets/arrow-right-green.svg';
 import ArrowUpSmall from '@/assets/arrow-up-small.svg';
@@ -32,7 +35,6 @@ import CloseIcon from '@/assets/icons/close.svg';
 import LampIcon from '@/assets/icons/lamp-icon.svg';
 import LocationLineIcon from '@/assets/icons/location-lined.svg';
 import QuestionDot from '@/assets/question-dot.svg';
-
 export {
   ArrowBack,
   ArrowDownSmall,
@@ -52,6 +54,7 @@ export {
   FaceIconSosoGray,
   HomeLogo,
   HomeLogoActive,
+  InputRequiredDot,
   LampIcon,
   LocationLineIcon,
   LocationLogo,

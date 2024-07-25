@@ -1,6 +1,6 @@
 import Divider from '@/components/common/Divider/Divider';
 import ChecklistAnswer from '@/components/NewChecklist/CheckListAnswer';
-import ChecklistQuestion from '@/components/NewChecklist/ChecklistQuestion';
+import ChecklistQuestion from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
 import { addAnswerProps } from '@/pages/NewChecklistPage';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 
@@ -42,7 +42,6 @@ const ChecklistCategory = (props: ChecklistType) => {
               addAnswer={props.addAnswer}
               deleteAnswer={props.deleteAnswer}
             />
-
             {index !== category.questions.length - 1 && <Divider />}
           </>
         ),

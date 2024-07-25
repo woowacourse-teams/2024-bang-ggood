@@ -4,11 +4,11 @@ import styled from '@emotion/styled';
 import { title2, title3, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
 
-type Size = 'small' | 'medium' | 'full';
+type ButtonSize = 'small' | 'medium' | 'full';
 type ColorOption = 'light' | 'dark' | 'disabled';
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
-  size?: Size;
+  size?: ButtonSize;
   color?: ColorOption;
   label: string;
   isSquare?: boolean;
@@ -32,11 +32,12 @@ const Button = ({ size = 'medium', color = 'light', label, isSquare = false, onC
 export default Button;
 
 const S = {
-  Button: styled.button<{ size: Size; color: ColorOption; isSquare: boolean }>`
+  Button: styled.button<{ size: ButtonSize; color: ColorOption; isSquare: boolean }>`
     ${({ isSquare }) => (isSquare ? 'border-radius: 8px' : 'border-radius: 100px')};
     ${({ size }) => sizeStyles[size]};
     ${({ color }) => ColorStyles[color]};
     cursor: pointer;
+    box-sizing: border-box;
   `,
 };
 

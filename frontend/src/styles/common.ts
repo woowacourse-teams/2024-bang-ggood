@@ -25,23 +25,23 @@ export const flexSpaceBetween = css`
 
 /** text */
 export const title1 = css`
-  font-size: ${theme.text.size.xLarge};
   font-weight: ${theme.text.weight.bold};
+  font-size: ${theme.text.size.xLarge};
 `;
 
 export const title2 = css`
-  font-size: ${theme.text.size.large};
   font-weight: ${theme.text.weight.bold};
+  font-size: ${theme.text.size.large};
 `;
 
 export const title3 = css`
-  font-size: ${theme.text.size.medium};
   font-weight: ${theme.text.weight.bold};
+  font-size: ${theme.text.size.medium};
 `;
 
 export const title4 = css`
-  font-size: ${theme.text.size.small};
   font-weight: ${theme.text.weight.semiBold};
+  font-size: ${theme.text.size.small};
 `;
 
 /* style */

@@ -33,7 +33,7 @@ const RoomComparePage = () => {
 
   return (
     <>
-      <Header left={<Header.Backward />} />
+      <Header left={<Header.Backward />} center={<Header.Text>방 비교하기</Header.Text>} />
       <Layout>
         <S.RoomGrid>{roomList?.map(room => <CompareCard key={room.checklistId} room={room} />)}</S.RoomGrid>
       </Layout>

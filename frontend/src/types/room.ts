@@ -10,4 +10,4 @@ export interface RoomInfo {
   realEstate?: string;
 }
 
-export type RoomBasicInfoName = keyof RoomInfo;
+export type RoomInfoName = keyof RoomInfo;

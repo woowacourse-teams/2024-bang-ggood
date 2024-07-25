@@ -8,10 +8,10 @@ import { InputChangeEvent } from '@/components/common/Input/Input';
 import BasicTabs from '@/components/common/Tabs/BasicTabs';
 import useInputs from '@/hooks/useInput';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
-import { RoomBasicInfo, RoomBasicInfoName } from '@/types/room';
+import { RoomInfo, RoomInfoName } from '@/types/room';
 
-const roomBasicInfo: RoomBasicInfo = {
-  name: '살기 좋은 방',
+const roomInfo: RoomInfo = {
+  roomName: '살기 좋은 방',
   address: '인천광역시 부평구',
   deposit: 2000,
   rent: 50,
@@ -22,8 +22,8 @@ const roomBasicInfo: RoomBasicInfo = {
   realEstate: '방끗공인중개사',
 };
 
-const NewChecklistBasicInfoTemplate = () => {
-  const { values, onChange } = useInputs(roomBasicInfo);
+const NewChecklistInfoTemplate = () => {
+  const { values, onChange } = useInputs(roomInfo);
 
   return (
     <S.ContentWrapper>
@@ -36,7 +36,7 @@ const NewChecklistBasicInfoTemplate = () => {
 
       <S.Container>
         {/* 스타일링이 매우 가변적이어서, 불가피하게 유틸함수를 부분적으로 사용 */}
-        {makeCustomForm({ label: '방 이름', onChange, name: 'name', values, required: true })}
+        {makeCustomForm({ label: '방 이름', onChange, name: 'roomName', values, required: true })}
         <FormField>
           <FormField.Label label="보증금 / 월세" />
           <S.FlexVertical>
@@ -82,9 +82,10 @@ const makeCustomForm = (res: MakeFormArgs) => (
     <FormField.P value={''} />
   </S.CustomFormField>
 );
+
 export interface MakeFormArgs {
-  name: RoomBasicInfoName;
-  values: Record<RoomBasicInfoName, string | number>;
+  name: RoomInfoName;
+  values: RoomInfo;
   label: string;
   placeholder?: string;
   required?: boolean;
@@ -152,4 +153,4 @@ const S = {
   `,
 };
 
-export default NewChecklistBasicInfoTemplate;
+export default NewChecklistInfoTemplate;

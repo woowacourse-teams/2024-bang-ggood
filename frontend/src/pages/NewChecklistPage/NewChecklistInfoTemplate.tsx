@@ -5,7 +5,6 @@ import Button from '@/components/common/Button/Button';
 import FormField from '@/components/common/FormField/FormField';
 import Header from '@/components/common/Header/Header';
 import { InputChangeEvent } from '@/components/common/Input/Input';
-import BasicTabs from '@/components/common/Tabs/BasicTabs';
 import useInputs from '@/hooks/useInput';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 import { RoomInfo, RoomInfoName } from '@/types/room';
@@ -27,13 +26,6 @@ const NewChecklistInfoTemplate = () => {
 
   return (
     <S.ContentWrapper>
-      <Header
-        left={<Header.Backward />}
-        center={<S.Center>새 체크리스트</S.Center>}
-        right={<S.SaveTextButton>저장</S.SaveTextButton>}
-      />
-      <BasicTabs />
-
       <S.Container>
         {/* 스타일링이 매우 가변적이어서, 불가피하게 유틸함수를 부분적으로 사용 */}
         {makeCustomForm({ label: '방 이름', onChange, name: 'roomName', values, required: true })}

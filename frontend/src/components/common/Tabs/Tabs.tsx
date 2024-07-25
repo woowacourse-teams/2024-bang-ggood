@@ -1,20 +1,19 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
 
 import { flexCenter } from '@/styles/common';
 
-interface Menu {
-  name: string;
-  path: string;
+interface Props {
+  menuList: Menu[];
+  onMoveMenu: (menu: string) => void;
+  currentMenuId: string;
 }
 
-const Tabs = ({ menuList }: { menuList: Menu[] }) => {
-  const [selectedId, setSelectedId] = useState(0);
+export type Menu = {
+  name: string;
+  id: string;
+};
 
-  const onClickMenu = (id: number) => {
-    setSelectedId(id);
-  };
-
+const Tabs = ({ menuList, onMoveMenu, currentMenuId }: Props) => {
   return (
     <S.Container>
       <S.FlexContainer>
@@ -23,8 +22,8 @@ const Tabs = ({ menuList }: { menuList: Menu[] }) => {
             <S.OneMenu
               menuCount={menuList.length}
               key={index}
-              onClick={() => onClickMenu(index)}
-              selected={index === selectedId}
+              onClick={() => onMoveMenu(menu.id)}
+              selected={menu.id === currentMenuId}
             >
               <div>{menu.name}</div>
             </S.OneMenu>

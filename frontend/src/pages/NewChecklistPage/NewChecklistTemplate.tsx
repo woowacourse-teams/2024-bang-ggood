@@ -3,24 +3,15 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { getChecklistQuestions } from '@/apis/checklist';
 import Accordion from '@/components/common/Accordion/Accordion';
-import Button from '@/components/common/Button/Button';
-import Header from '@/components/common/Header/Header';
-import BasicTabs from '@/components/common/Tabs/BasicTabs';
 import ChecklistCategory from '@/components/NewChecklist/ChecklistCategory';
-import { flexCenter, flexColumn, title2 } from '@/styles/common';
-import { ChecklistCategoryQuestions } from '@/types/checklist';
-
-export interface Answer {
-  questionId: number;
-  answer: number;
-}
+import { ChecklistCategoryQuestions, ChecklistFormAnswer } from '@/types/checklist';
 
 export interface addAnswerProps {
   questionId: number;
   newAnswer: number;
 }
 
-const NewChecklistPage = () => {
+const NewChecklistTemplate = () => {
   const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategoryQuestions[]>([]);
 
   useEffect(() => {
@@ -31,7 +22,7 @@ const NewChecklistPage = () => {
     fetchChecklist();
   }, []);
 
-  const [answers, setAnswers] = useState<Answer[]>([]);
+  const [answers, setAnswers] = useState<ChecklistFormAnswer[]>([]);
 
   const addAnswer = useCallback(
     ({ questionId, newAnswer }: addAnswerProps) => {
@@ -55,45 +46,28 @@ const NewChecklistPage = () => {
   };
 
   return (
-    <S.Container>
-      <Header
-        left={<Header.Backward />}
-        center={<S.Title>{'새 체크리스트'}</S.Title>}
-        right={<Button label={'저장'} size="small" />}
-      />
-      <BasicTabs />
-      <S.ContentBox>
-        <Accordion>
-          {checklistQuestions?.map(category => (
-            <S.Container key={category.categoryId}>
-              <Accordion.header text={'청결도'} id={category.categoryId} />
-              <Accordion.body id={category.categoryId}>
-                <ChecklistCategory
-                  type="question"
-                  key={category.categoryId}
-                  category={category}
-                  addAnswer={addAnswer}
-                  deleteAnswer={deleteAnswer}
-                />
-              </Accordion.body>
-            </S.Container>
-          ))}
-        </Accordion>
-      </S.ContentBox>
-    </S.Container>
+    <S.ContentBox>
+      <Accordion>
+        {checklistQuestions?.map(category => (
+          <div key={category.categoryId}>
+            <Accordion.header text={'청결도'} id={category.categoryId} />
+            <Accordion.body id={category.categoryId}>
+              <ChecklistCategory
+                type="question"
+                key={category.categoryId}
+                category={category}
+                addAnswer={addAnswer}
+                deleteAnswer={deleteAnswer}
+              />
+            </Accordion.body>
+          </div>
+        ))}
+      </Accordion>
+    </S.ContentBox>
   );
 };
 
-export default NewChecklistPage;
-
-const Container = styled.div`
-  ${flexColumn}
-`;
-
-const Title = styled.div`
-  ${title2}
-  ${flexCenter}
-`;
+export default NewChecklistTemplate;
 
 const ContentBox = styled.div`
   padding: 16px;
@@ -101,9 +75,6 @@ const ContentBox = styled.div`
 
   background-color: ${({ theme }) => theme.palette.backgroud};
 `;
-
 const S = {
-  Container,
-  Title,
   ContentBox,
 };

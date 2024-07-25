@@ -1,7 +1,7 @@
 import Divider from '@/components/common/Divider/Divider';
 import ChecklistAnswer from '@/components/NewChecklist/CheckListAnswer';
 import ChecklistQuestion from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
-import { addAnswerProps } from '@/pages/NewChecklistPage';
+import { addAnswerProps } from '@/pages/ChecklistPreviewPage';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 
 interface QuestionProps {

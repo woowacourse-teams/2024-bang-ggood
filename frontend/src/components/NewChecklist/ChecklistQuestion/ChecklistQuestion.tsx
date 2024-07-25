@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { QuestionDot } from '@/assets/assets';
 import FaceMark from '@/components/common/FaceMark/FaceMark';
-import { addAnswerProps } from '@/pages/NewChecklistPage';
+import { addAnswerProps } from '@/pages/ChecklistPreviewPage';
 import { ChecklistQuestion } from '@/types/checklist';
 
 interface Props {

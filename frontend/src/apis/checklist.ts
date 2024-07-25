@@ -1,6 +1,6 @@
 import fetcher from '@/apis/fetcher';
 import { BASE_URL, ENDPOINT } from '@/apis/url';
-import { Answer } from '@/pages/NewChecklistPage';
+import { ChecklistFormAnswer } from '@/types/checklist';
 
 export const getChecklistQuestions = async () => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_QUESTION });
@@ -20,7 +20,7 @@ export const getChecklists = async () => {
   return data;
 };
 
-export const postChecklist = async (answers: Answer[]) => {
+export const postChecklist = async (answers: ChecklistFormAnswer[]) => {
   await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLIST, body: answers });
 };
 

@@ -24,11 +24,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: "**/node_modules"
-          # cache를 무효화하를 결정하는 기준은 의존성이 변경되면 함께 변경되는 파일인 yarn.lock 기준으로 합니다.
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          # key가 유효하지 않은 경우 runner의 운영체제 값과 node라는 suffix를 key로 복구합니다.
-          # 결과적으로 package-lock.json이 변경되지 않았다면 캐싱된 node_modules를 사용합니다.
-          # 만약 복구될 캐시가 없다면 아래에서 사용할 cache-hit는 false가 됩니다.
           restore-keys: |
             ${{ runner.os }}-yarn-
 
@@ -47,3 +43,41 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: "🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}"
+  test:
+    name: Run Test
+    runs-on: ubuntu-latest
+    outputs: ${{ steps.test1.outputs.result}}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          cd frontend
+          yarn install --frozen-lockfile
+      - name: Run Test
+        id: test1
+        run: |
+          cd frontend
+          yarn test
+          echo "result=테스트실행!" >> "$GITHUB_OUTPUT"
+
+      - name: Comment on PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: "✅ **jest**: ${{ steps.test1.outputs.result }}"

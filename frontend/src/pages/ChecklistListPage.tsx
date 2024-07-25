@@ -43,7 +43,7 @@ const ChecklistListPage = () => {
       <CompareBanner onClick={handleClick} />
       <Layout>
         <S.ListBox>
-          {checklistList.map(checklist => (
+          {checklistList?.map(checklist => (
             <Link to={`checklist/${checklist.checklistId}`} key={checklist.checklistId}>
               <ChecklistPreviewCard key={checklist.checklistId} checklist={checklist} />
             </Link>

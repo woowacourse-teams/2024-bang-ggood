@@ -19,7 +19,7 @@ const renderWithTheme = (children: React.ReactNode) => {
   return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
 };
 
-describe('ChecklistQuestion', () => {
+describe('ChecklistQuestion 테스트', () => {
   beforeEach(() => {
     renderWithTheme(
       <ChecklistQuestion question={mockQuestion} addAnswer={mockAddAnswer} deleteAnswer={mockDeleteAnswer} />,

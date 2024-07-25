@@ -18,6 +18,11 @@ export interface ChecklistAnswer extends ChecklistQuestion {
   answer?: number | null;
 }
 
+export interface Option {
+  id: number;
+  filled: string;
+  unfilled: string;
+}
 export interface ChecklistPreview {
   checklistId: number;
   roomName: string;

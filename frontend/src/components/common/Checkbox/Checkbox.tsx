@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 
 import { CheckIcon } from '@/assets/assets';
 import { flexCenter } from '@/styles/common';
@@ -10,32 +10,28 @@ interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
   color?: string;
   hoverBorderColor?: string;
   onClick: () => void;
+  setIsChecked: React.Dispatch<boolean>;
 }
 
 const Checkbox = ({
   isChecked = false,
   color = theme.palette.green500,
   hoverBorderColor = theme.palette.green600,
+  setIsChecked,
   onClick,
 }: StyledProps) => {
-  const [isCheckedState, setIsCheckedState] = useState<boolean>(isChecked);
-
   const handleClick = useCallback(() => {
-    setIsCheckedState(!isCheckedState);
-  }, [isCheckedState]);
-
-  useEffect(() => {
-    setIsCheckedState(isChecked);
+    setIsChecked(!isChecked);
   }, [isChecked]);
 
   return (
     <S.Checkbox $color={color} $isChecked={isChecked} $hoverBorderColor={hoverBorderColor} onClick={onClick}>
-      {isCheckedState && (
+      {isChecked && (
         <S.FlexBox>
           <CheckIcon />
         </S.FlexBox>
       )}
-      <S.CheckboxInput type="checkbox" onChange={handleClick} checked={isCheckedState} />
+      <S.CheckboxInput type="checkbox" onChange={handleClick} checked={isChecked} />
     </S.Checkbox>
   );
 };

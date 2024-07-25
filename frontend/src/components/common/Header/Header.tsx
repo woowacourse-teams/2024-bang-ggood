@@ -15,9 +15,9 @@ const HeaderWrapper = ({ left, right, center, ...rest }: Props) => {
   return (
     <S.Wrapper {...rest}>
       <S.FlexBox>
-        {left ? left : <div />}
-        {center ? center : <div />}
-        {right ? right : <div />}
+        <S.Left>{left ? left : <div />}</S.Left>
+        <S.Center>{center ? center : <div />}</S.Center>
+        <S.Right>{right ? right : <div />}</S.Right>
       </S.FlexBox>
     </S.Wrapper>
   );
@@ -39,7 +39,21 @@ const S = {
     display: flex;
     flex-direction: row;
     width: 100%;
-    justify-content: space-between;
+  `,
+  Left: styled.div`
+    display: flex;
+    justify-content: flex-start;
+    flex: 1;
+  `,
+  Center: styled.div`
+    display: flex;
+    justify-content: center;
+    flex: 1;
+  `,
+  Right: styled.div`
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
   `,
   TextButton: styled.button`
     color: ${({ theme }) => theme.palette.black};
@@ -59,11 +73,12 @@ const Header = Object.assign(HeaderWrapper, {
       }}
     />
   ),
-  Backward: () => (
+  Backward: (props: React.SVGProps<SVGSVGElement>) => (
     <ArrowBack
       style={{
         cursor: 'pointer',
       }}
+      {...props}
     />
   ),
   TextButton: S.TextButton,

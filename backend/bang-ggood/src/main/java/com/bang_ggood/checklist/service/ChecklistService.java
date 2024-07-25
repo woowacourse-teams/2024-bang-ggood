@@ -128,21 +128,20 @@ public class ChecklistService {
     public ChecklistQuestionsResponse readChecklistQuestions() {
         List<CategoryQuestionsResponse> categoryQuestionsResponses = new ArrayList<>();
         for (Category category : Category.values()) {
-            List<QuestionResponse> questionResponses = new ArrayList<>();
-            readChecklistQuestion(category, questionResponses);
-
             CategoryQuestionsResponse categoryQuestionsResponse =
-                    new CategoryQuestionsResponse(category.getId(), category.getDescription(), questionResponses);
+                    new CategoryQuestionsResponse(category.getId(), category.getDescription(),  readChecklistQuestion(category));
             categoryQuestionsResponses.add(categoryQuestionsResponse);
         }
         return new ChecklistQuestionsResponse(categoryQuestionsResponses);
     }
 
-    private void readChecklistQuestion(Category category, List<QuestionResponse> questionResponses) {
+    private List<QuestionResponse> readChecklistQuestion(Category category) {
+        List<QuestionResponse> questionResponses = new ArrayList<>();
         category.getQuestionIds().stream()
                 .map(questionId -> new QuestionResponse(questionId,
                         questionList.getTitleByQuestionId(questionId),
                         questionList.getSubtitleByQuestionId(questionId)))
                 .forEach(questionResponses::add);
+        return questionResponses;
     }
 }

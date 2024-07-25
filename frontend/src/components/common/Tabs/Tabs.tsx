@@ -37,17 +37,17 @@ export const S = {
     display: flex;
     position: relative;
     width: 100%;
-    height: 50px;
+    height: 60px;
 
     flex-direction: column;
   `,
   FlexContainer: styled.div`
-    ${flexCenter}
+    display: flex;
   `,
   OneMenu: styled.div<{ selected?: boolean }>`
     width: 33%;
-    padding-top: 10px;
-    padding-bottom: 15px;
+    height: 60px;
+
     ${flexCenter}
 
     font-weight: ${({ selected, theme }) => (selected ? theme.text.weight.bold : theme.text.weight.medium)};

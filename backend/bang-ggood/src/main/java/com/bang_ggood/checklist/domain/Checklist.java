@@ -63,6 +63,10 @@ public class Checklist extends BaseEntity {
         return user;
     }
 
+    public Room getRoom() {
+        return room;
+    }
+
     public String getRoomName() {
         return room.getName();
     }

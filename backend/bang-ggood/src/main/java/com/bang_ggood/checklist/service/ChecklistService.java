@@ -129,21 +129,17 @@ public class ChecklistService {
         List<Checklist> checklists = checklistRepository.findByUser(user);
 
         List<UserChecklistPreviewResponse> responses = checklists.stream()
-                .map(checklist -> new UserChecklistPreviewResponse(
-                        checklist.getId(),
-                        checklist.getRoom().getName(),
-                        checklist.getRoom().getAddress(),
-                        checklist.getDeposit(),
-                        checklist.getRent(),
-                        checklist.getCreatedAt(),
-                        Category.getBadges(checklist.getQuestions()).stream()
-                                .map(badge -> new BadgeResponse(badge.getShortDescriptionWithEmoji(),
-                                        badge.getLongDescriptionWithEmoji()))
-                                .toList()
-
-                ))
+                .map(checklist -> UserChecklistPreviewResponse.of(
+                        checklist,
+                        createBadges(checklist.getQuestions())))
                 .toList();
 
         return new UserChecklistsPreviewResponse(responses);
+    }
+
+    private List<BadgeResponse> createBadges(List<ChecklistQuestion> questions) {
+        return Category.getBadges(questions).stream()
+                .map(BadgeResponse::from)
+                .toList();
     }
 }

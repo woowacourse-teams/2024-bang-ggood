@@ -49,13 +49,15 @@ public enum Category {
                     List<ChecklistQuestion> categoryQuestions = questions.stream()
                             .filter(checklistQuestion -> questionIds.contains(checklistQuestion.getQuestionId()))
                             .toList();
-
+                    if (categoryQuestions.isEmpty()) {
+                        return false;
+                    }
                     int maxScore = Grade.calculateMaxScore(categoryQuestions.size());
                     int score = categoryQuestions.stream()
                             .mapToInt(question -> Grade.getScore(question.getAnswer()))
                             .sum();
 
-                    return (score / maxScore) * 100 >= 80;
+                    return (score * 100 / maxScore) >= 80;
                 })
                 .map(Category::getBadge)
                 .toList();

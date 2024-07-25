@@ -222,6 +222,7 @@ public class ChecklistService {
         }
         return new WrittenCategoryQuestionsResponse(category.getId(), category.getDescription(),
                 writtenQuestionResponses);
+    }
 
     @Transactional
     public ChecklistsComparisonReadResponse readChecklistsComparison(List<Long> checklistIds) {

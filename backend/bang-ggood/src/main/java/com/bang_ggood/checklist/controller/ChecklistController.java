@@ -38,6 +38,7 @@ public class ChecklistController {
     @GetMapping("/checklists/{id}")
     public ResponseEntity<WrittenChecklistResponse> readChecklistById(@PathVariable long id) {
         return ResponseEntity.ok(checklistService.readChecklistById(id));
+    }
       
     @GetMapping("/checklists")
     public ResponseEntity<UserChecklistsPreviewResponse> readUserChecklistsPreview() {

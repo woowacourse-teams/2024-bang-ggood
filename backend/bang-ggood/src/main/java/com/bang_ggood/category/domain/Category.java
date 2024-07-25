@@ -48,6 +48,7 @@ public enum Category {
                 .mapToInt(category -> category.id)
                 .findFirst()
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.INVALID_QUESTION));
+    }
 
     // 2. 뱃지 부여
     public static List<Badge> getBadges(List<ChecklistQuestion> questions) {
@@ -86,9 +87,7 @@ public enum Category {
     public String getDescription() {
         return description;
     }
-  
-    public Badge getBadge() { return badge; }
-
+    
     public Badge getBadge() {
         return badge;
     }

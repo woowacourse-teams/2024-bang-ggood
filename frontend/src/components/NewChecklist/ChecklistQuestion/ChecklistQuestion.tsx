@@ -54,7 +54,7 @@ const ChecklistQuestion = ({ question, addAnswer, deleteAnswer }: Props) => {
         {emotions.map(emotion => {
           const { name: emotionName, id } = emotion;
           return (
-            <FaceMark onClick={() => handleClick(id)} key={id}>
+            <FaceMark onClick={() => handleClick(id)} key={id} data-filled={answer === id}>
               <FaceMark.FaceIcon emotion={emotionName} isFilled={answer === id} />
               <FaceMark.Footer>{emotionPhrase[emotionName]}</FaceMark.Footer>
             </FaceMark>

@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
 
 import Button from '@/components/common/Button/Button';
 import Modal from '@/components/common/Modal/Modal';
@@ -10,10 +9,14 @@ import { flexColumn } from '@/styles/common';
 
 export const totalOptionCount = 14;
 
-const OptionModal = () => {
-  const [isOpen, setIsOpen] = useState(true);
-  const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
+interface Props {
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<boolean>;
+  selectedOptions: number[];
+  setSelectedOptions: React.Dispatch<number[]>;
+}
 
+const OptionModal = ({ isOpen, setIsOpen, selectedOptions, setSelectedOptions }: Props) => {
   const onCloseModal = () => {
     setIsOpen(false);
   };

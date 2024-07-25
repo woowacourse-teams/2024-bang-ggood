@@ -1,10 +1,12 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { useState } from 'react';
 
 import Button from '@/components/common/Button/Button';
 import FormField from '@/components/common/FormField/FormField';
 import Header from '@/components/common/Header/Header';
 import { InputChangeEvent } from '@/components/common/Input/Input';
+import OptionModal from '@/components/NewChecklist/OptionModal/OptionModal';
 import useInputs from '@/hooks/useInput';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 import { RoomInfo, RoomInfoName } from '@/types/room';
@@ -21,8 +23,17 @@ const roomInfo: RoomInfo = {
   realEstate: '방끗공인중개사',
 };
 
-const NewChecklistInfoTemplate = () => {
+interface Props {
+  selectedOptions: number[];
+  setSelectedOptions: React.Dispatch<number[]>;
+}
+
+//TODO: 옵션 모달 등 복잡해서 추후 리팩토링 필요
+const NewChecklistInfoTemplate = ({ selectedOptions, setSelectedOptions }: Props) => {
   const { values, onChange } = useInputs(roomInfo);
+  const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
+
+  const onClickOptionModalOpen = () => setIsOptionModalOpen(true);
 
   return (
     <S.ContentWrapper>
@@ -62,7 +73,17 @@ const NewChecklistInfoTemplate = () => {
           <FormField.P value="" />
         </FormField>
         {makeCustomForm({ label: '부동산 이름', onChange, values, name: 'realEstate' })}
-        <S.SubmitButton label="가구 옵션 추가하기" size="full" />
+        <S.SubmitButton label="가구 옵션 추가하기" size="full" onClick={onClickOptionModalOpen} />
+
+        {/*옵션 선택 모달*/}
+        {isOptionModalOpen && (
+          <OptionModal
+            isOpen={isOptionModalOpen}
+            setIsOpen={setIsOptionModalOpen}
+            selectedOptions={selectedOptions}
+            setSelectedOptions={setSelectedOptions}
+          />
+        )}
       </S.Container>
     </S.ContentWrapper>
   );

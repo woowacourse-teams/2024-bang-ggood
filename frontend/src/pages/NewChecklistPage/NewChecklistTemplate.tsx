@@ -11,7 +11,12 @@ export interface addAnswerProps {
   newAnswer: number;
 }
 
-const NewChecklistTemplate = () => {
+interface Props {
+  answers: ChecklistFormAnswer[];
+  setAnswers: React.Dispatch<React.SetStateAction<ChecklistFormAnswer[]>>;
+}
+
+const NewChecklistTemplate = ({ answers, setAnswers }: Props) => {
   const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategoryQuestions[]>([]);
 
   useEffect(() => {
@@ -21,8 +26,6 @@ const NewChecklistTemplate = () => {
     };
     fetchChecklist();
   }, []);
-
-  const [answers, setAnswers] = useState<ChecklistFormAnswer[]>([]);
 
   const addAnswer = useCallback(
     ({ questionId, newAnswer }: addAnswerProps) => {

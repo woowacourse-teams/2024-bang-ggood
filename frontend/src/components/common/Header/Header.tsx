@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
 import { ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import ArrowBack from '@/assets/arrow-back.svg';
 import Logo from '@/assets/logo.svg';
+import { linkDecorator } from '@/components/common/Footer/Footer';
 import { title3 } from '@/styles/common';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
@@ -66,21 +68,20 @@ const S = {
 };
 
 const Header = Object.assign(HeaderWrapper, {
-  Logo: () => (
-    <Logo
-      style={{
-        cursor: 'pointer',
-      }}
-    />
-  ),
-  Backward: (props: React.SVGProps<SVGSVGElement>) => (
-    <ArrowBack
-      style={{
-        cursor: 'pointer',
-      }}
-      {...props}
-    />
-  ),
+  Logo: linkDecorator(Logo, '/'),
+  Backward: (props: React.SVGProps<SVGSVGElement>) => {
+    const navigate = useNavigate();
+    const handleClick = () => navigate(-1);
+    return (
+      <ArrowBack
+        style={{
+          cursor: 'pointer',
+        }}
+        onClick={handleClick}
+        {...props}
+      />
+    );
+  },
   TextButton: S.TextButton,
   Text: S.Text,
 });

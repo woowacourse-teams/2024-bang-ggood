@@ -73,11 +73,12 @@ const Header = Object.assign(HeaderWrapper, {
       }}
     />
   ),
-  Backward: () => (
+  Backward: (props: React.SVGProps<SVGSVGElement>) => (
     <ArrowBack
       style={{
         cursor: 'pointer',
       }}
+      {...props}
     />
   ),
   TextButton: S.TextButton,

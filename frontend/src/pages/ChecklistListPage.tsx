@@ -20,7 +20,6 @@ const ChecklistListPage = () => {
   useEffect(() => {
     const fetchChecklist = async () => {
       const checklistList = await getChecklists();
-      console.log(checklistList);
       setChecklistList(checklistList);
     };
 

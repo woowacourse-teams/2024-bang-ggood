@@ -1,4 +1,4 @@
-import { Badge } from '@/types/Badge';
+import { Badge } from '@/types/badge';
 
 export interface ChecklistCategoryQuestions {
   categoryId: number;

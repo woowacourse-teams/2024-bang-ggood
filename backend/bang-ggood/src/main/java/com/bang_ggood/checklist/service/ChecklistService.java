@@ -2,6 +2,7 @@ package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.category.dto.CategoryQuestionsResponse;
+import com.bang_ggood.category.dto.WrittenCategoryQuestionsResponse;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
@@ -12,18 +13,23 @@ import com.bang_ggood.checklist.dto.ChecklistInfo;
 import com.bang_ggood.checklist.dto.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.QuestionCreateRequest;
 import com.bang_ggood.checklist.dto.QuestionResponse;
+import com.bang_ggood.checklist.dto.WrittenChecklistResponse;
+import com.bang_ggood.checklist.dto.WrittenQuestionResponse;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.domain.Room;
+import com.bang_ggood.room.dto.WrittenRoomResponse;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -143,5 +149,49 @@ public class ChecklistService {
                         questionList.getSubtitleByQuestionId(questionId)))
                 .forEach(questionResponses::add);
         return questionResponses;
+    }
+
+    //TODO 테스트해야 함
+    @Transactional
+    public WrittenChecklistResponse readChecklistById(long id) {
+        Checklist checklist = checklistRepository.getById(id);
+
+        WrittenRoomResponse writtenRoomResponse = WrittenRoomResponse.of(checklist.getRoom(), checklist.getDeposit(),
+                checklist.getRent(), checklist.getContractTerm(), checklist.getRealEstate());
+        List<Integer> optionIds = readOptionsByChecklistId(id);
+        List<WrittenCategoryQuestionsResponse> writtenCategoryQuestionsResponses =
+                readCategoryQuestionsByChecklistId(id);
+
+        return new WrittenChecklistResponse(writtenRoomResponse, optionIds, writtenCategoryQuestionsResponses);
+    }
+
+    private List<Integer> readOptionsByChecklistId(long checklistId) {
+        return checklistOptionRepository.findByChecklistId(checklistId)
+                .stream()
+                .map(ChecklistOption::getOptionId)
+                .toList();
+    }
+
+    private List<WrittenCategoryQuestionsResponse> readCategoryQuestionsByChecklistId(long checklistId) {
+        List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findByChecklistId(checklistId);
+        return Arrays.stream(Category.values())
+                .map(category -> readQuestionsByCategory(category, checklistQuestions))
+                .collect(Collectors.toList());
+    }
+
+    private WrittenCategoryQuestionsResponse readQuestionsByCategory(Category category,
+                                                                     List<ChecklistQuestion> checklistQuestions) {
+        //TODO 리팩토링 필요
+        List<WrittenQuestionResponse> writtenQuestionResponses = new ArrayList<>();
+        for (ChecklistQuestion checklistQuestion : checklistQuestions) {
+            int questionId = checklistQuestion.getQuestionId();
+            if (category.isQuestionIn(questionId)) {
+                writtenQuestionResponses.add(
+                        new WrittenQuestionResponse(questionId, questionList.getTitleByQuestionId(questionId),
+                                questionList.getSubtitleByQuestionId(questionId), checklistQuestion.getAnswer()));
+            }
+        }
+        return new WrittenCategoryQuestionsResponse(category.getId(), category.getDescription(),
+                writtenQuestionResponses);
     }
 }

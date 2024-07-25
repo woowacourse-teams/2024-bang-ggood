@@ -7,30 +7,18 @@ import FormField from '@/components/common/FormField/FormField';
 import Header from '@/components/common/Header/Header';
 import { InputChangeEvent } from '@/components/common/Input/Input';
 import OptionModal from '@/components/NewChecklist/OptionModal/OptionModal';
-import useInputs from '@/hooks/useInput';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 import { RoomInfo, RoomInfoName } from '@/types/room';
-
-const roomInfo: RoomInfo = {
-  roomName: '살기 좋은 방',
-  address: '인천광역시 부평구',
-  deposit: 2000,
-  rent: 50,
-  contractTerm: 12,
-  floor: 3,
-  station: '잠실',
-  walkingTime: 10,
-  realEstate: '방끗공인중개사',
-};
 
 interface Props {
   selectedOptions: number[];
   setSelectedOptions: React.Dispatch<number[]>;
+  roomInfo: RoomInfo;
+  onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
 //TODO: 옵션 모달 등 복잡해서 추후 리팩토링 필요
-const NewChecklistInfoTemplate = ({ selectedOptions, setSelectedOptions }: Props) => {
-  const { values, onChange } = useInputs(roomInfo);
+const NewChecklistInfoTemplate = ({ selectedOptions, setSelectedOptions, roomInfo, onChange }: Props) => {
   const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
 
   const onClickOptionModalOpen = () => setIsOptionModalOpen(true);
@@ -39,7 +27,7 @@ const NewChecklistInfoTemplate = ({ selectedOptions, setSelectedOptions }: Props
     <S.ContentWrapper>
       <S.Container>
         {/* 스타일링이 매우 가변적이어서, 불가피하게 유틸함수를 부분적으로 사용 */}
-        {makeCustomForm({ label: '방 이름', onChange, name: 'roomName', values, required: true })}
+        {makeCustomForm({ label: '방 이름', onChange, name: 'roomName', values: roomInfo, required: true })}
         <FormField>
           <FormField.Label label="보증금 / 월세" />
           <S.FlexVertical>
@@ -48,16 +36,16 @@ const NewChecklistInfoTemplate = ({ selectedOptions, setSelectedOptions }: Props
                 gap: 0;
               `}
             >
-              <S.CustomInput placeholder="" onChange={onChange} name="deposit" value={values.deposit} />
+              <S.CustomInput placeholder="" onChange={onChange} name="deposit" value={roomInfo.deposit} />
               <S.CustomLabel label=" 만원   " />
-              <S.CustomInput placeholder="" onChange={onChange} name="rent" value={values.rent} />
+              <S.CustomInput placeholder="" onChange={onChange} name="rent" value={roomInfo.rent} />
             </S.FlexHorizontal>
             <FormField.P value="" />
           </S.FlexVertical>
         </FormField>
         <S.FlexHorizontal>
-          {makeCustomForm({ label: '계약 기간(년)', values, name: 'contractTerm', onChange })}
-          {makeCustomForm({ label: '층수', values, name: 'floor', onChange })}
+          {makeCustomForm({ label: '계약 기간(년)', values: roomInfo, name: 'contractTerm', onChange })}
+          {makeCustomForm({ label: '층수', values: roomInfo, name: 'floor', onChange })}
         </S.FlexHorizontal>
         <FormField>
           <FormField.Label label="가까운 교통편" />
@@ -66,13 +54,13 @@ const NewChecklistInfoTemplate = ({ selectedOptions, setSelectedOptions }: Props
               gap: 0;
             `}
           >
-            <S.CustomInput placeholder="지하철역" onChange={onChange} name="station" value={values.station} />
+            <S.CustomInput placeholder="지하철역" onChange={onChange} name="station" value={roomInfo.station} />
             <S.CustomLabel label=" 까지   " />
-            <S.CustomInput placeholder="분" onChange={onChange} name="walkingTime" value={values.walkingTime} />
+            <S.CustomInput placeholder="분" onChange={onChange} name="walkingTime" value={roomInfo.walkingTime} />
           </S.FlexHorizontal>
           <FormField.P value="" />
         </FormField>
-        {makeCustomForm({ label: '부동산 이름', onChange, values, name: 'realEstate' })}
+        {makeCustomForm({ label: '부동산 이름', onChange, values: roomInfo, name: 'realEstate' })}
         <S.SubmitButton label="가구 옵션 추가하기" size="full" onClick={onClickOptionModalOpen} />
 
         {/*옵션 선택 모달*/}

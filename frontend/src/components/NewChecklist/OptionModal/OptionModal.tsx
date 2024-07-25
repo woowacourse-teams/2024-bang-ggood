@@ -56,7 +56,7 @@ const OptionModal = ({ isOpen, setIsOpen, selectedOptions, setSelectedOptions }:
           </S.FlexBoxColumn>
         </Modal.body>
         <ModalFooter>
-          <Button size={'full'} label={'옵션 선택하기'} color="dark" />
+          <Button size={'full'} label={'옵션 선택하기'} color="dark" onClick={onCloseModal} />
         </ModalFooter>
       </Modal>
     </div>

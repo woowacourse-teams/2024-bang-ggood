@@ -1,6 +1,6 @@
 import fetcher from '@/apis/fetcher';
 import { BASE_URL, ENDPOINT } from '@/apis/url';
-import { ChecklistFormAnswer } from '@/types/checklist';
+import { ChecklistForm } from '@/types/room';
 
 export const getChecklistQuestions = async () => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_QUESTION });
@@ -20,8 +20,9 @@ export const getChecklists = async () => {
   return data;
 };
 
-export const postChecklist = async (answers: ChecklistFormAnswer[]) => {
-  await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLIST, body: answers });
+export const postChecklist = async (answers: ChecklistForm) => {
+  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLIST, body: answers });
+  return response;
 };
 
 export const getCompareRooms = async ({ id1, id2, id3 }: { id1: number; id2: number; id3: number }) => {

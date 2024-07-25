@@ -22,7 +22,7 @@ const ChecklistPreviewCard = ({ checklist }: Props) => {
           <LocationLineIcon />
           {checklist.address}
         </S.LocationWrapper>
-        <S.Date>{formattedDate(checklist.createAt)}</S.Date>
+        <S.Date>{formattedDate(checklist.createdAt)}</S.Date>
       </S.Row>
       <S.Row>
         <S.Column>
@@ -32,8 +32,8 @@ const ChecklistPreviewCard = ({ checklist }: Props) => {
           </S.Deposit>
         </S.Column>
         <S.BadgeWrapper>
-          {checklist.badge.slice(0, MAX_BADGE_DISPLAY_COUNT).map(badge => (
-            <Badge key={badge.badgeId} label={badge.badgeName.short} />
+          {checklist.badge.slice(0, MAX_BADGE_DISPLAY_COUNT).map((bd, count) => (
+            <Badge key={count} label={bd.shortName} />
           ))}
           {extraBadgeCount && <S.ExtraBadgeBox>+{extraBadgeCount}</S.ExtraBadgeBox>}
         </S.BadgeWrapper>

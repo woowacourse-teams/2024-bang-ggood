@@ -68,7 +68,7 @@ const CategoryChoosePage = () => {
               <S.SubTitle>선택하신 기준을 통해 최적의 방을 추천해드려요.</S.SubTitle>
             </S.TitleSection>
             <S.ButtonWrapper>
-              {categories.map(category => (
+              {categories?.map(category => (
                 <Badge
                   key={category.categoryId}
                   label={category.categoryName}

@@ -35,7 +35,10 @@ const RoomComparePage = () => {
     <>
       <Header left={<Header.Backward />} center={<Header.Text>방 비교하기</Header.Text>} />
       <Layout>
-        <S.RoomGrid>{roomList?.map(room => <CompareCard key={room.checklistId} room={room} />)}</S.RoomGrid>
+        <S.RoomGrid>
+          {/* TODO: Rank 없음으로 인해 count 전달 */}
+          {roomList?.map((room, count) => <CompareCard key={room.checklistId} count={count} room={room} />)}
+        </S.RoomGrid>
       </Layout>
     </>
   );

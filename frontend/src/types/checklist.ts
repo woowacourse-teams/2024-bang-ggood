@@ -37,14 +37,16 @@ export interface Option {
 
 export interface ChecklistPreview extends RoomInfo {
   checklistId: number;
-  badge: Badge[];
-  createAt: string;
+  badge?: Badge[];
+  createdAt: string;
 }
 
 export interface ChecklistCompare extends RoomInfo {
   checklistId: number;
   rank?: number;
   score: number;
-  options: number[];
+  // TODO: 백엔드 api 변경으로 인한 수정
+  // options: number[];
+  optionCount: number;
   categories: CategoryScore[];
 }

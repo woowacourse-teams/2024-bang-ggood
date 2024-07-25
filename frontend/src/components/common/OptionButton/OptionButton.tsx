@@ -1,7 +1,4 @@
 import { options } from '@/components/common/OptionButton/OptionIcon';
-// const OPTION_COUNT = 14;
-
-// const optionSelected = [];
 
 interface Props {
   optionId: number;

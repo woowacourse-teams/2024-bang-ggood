@@ -30,27 +30,4 @@ describe('ChecklistQuestion', () => {
     expect(screen.getByText('평범해요')).toBeInTheDocument();
     expect(screen.getByText('좋아요')).toBeInTheDocument();
   });
-
-  // test('', () => {
-  //   const badOption = screen.getByText('별로에요');
-  //   fireEvent.click(badOption);
-
-  //   expect(mockAddAnswer).toHaveBeenCalledWith({ questionId: 1, newAnswer: 1 });
-  //   expect(mockDeleteAnswer).not.toHaveBeenCalled();
-
-  //   fireEvent.click(badOption);
-
-  //   expect(mockDeleteAnswer).toHaveBeenCalledWith(1);
-  // });
-
-  // test('only one emotion can be selected at a time', () => {
-  //   const badOption = screen.getByText('별로에요');
-  //   const goodOption = screen.getByText('좋아요');
-
-  //   fireEvent.click(badOption);
-  //   expect(mockAddAnswer).toHaveBeenCalledWith({ questionId: 1, newAnswer: 1 });
-
-  //   fireEvent.click(goodOption);
-  //   expect(mockAddAnswer).toHaveBeenCalledWith({ questionId: 1, newAnswer: 3 });
-  // });
 });

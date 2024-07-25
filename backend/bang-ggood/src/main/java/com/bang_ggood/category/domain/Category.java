@@ -1,7 +1,10 @@
 package com.bang_ggood.category.domain;
 
+import com.bang_ggood.checklist.domain.ChecklistQuestion;
+import com.bang_ggood.checklist.domain.Grade;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public enum Category {
@@ -31,6 +34,36 @@ public enum Category {
                 .anyMatch(category -> category.id == id);
     }
 
+    // 2. 뱃지 부여
+    public static List<Badge> getBadges(List<ChecklistQuestion> questions) {
+        return Arrays.stream(values())
+                .filter(category -> category.calculateTotalScore(questions) >= 80)
+                .map(Category::getBadge)
+                .toList();
+    }
+
+    // 1. 총점 : score * 100 / maxScore
+    public int calculateTotalScore(List<ChecklistQuestion> questions) {
+        List<ChecklistQuestion> filteredQuestions = filterQuestion(questions);
+
+        if (filteredQuestions.isEmpty()) {
+            return 0;
+        }
+
+        int maxScore = Grade.calculateMaxScore(filteredQuestions.size());
+        int score = filteredQuestions.stream()
+                .mapToInt(question -> Grade.getScore(question.getAnswer()))
+                .sum();
+
+        return score * 100 / maxScore;
+    }
+
+    private List<ChecklistQuestion> filterQuestion(List<ChecklistQuestion> questions) {
+        return questions.stream()
+                .filter(checklistQuestion -> questionIds.contains(checklistQuestion.getQuestionId()))
+                .toList();
+    }
+
     public int getId() {
         return id;
     }
@@ -38,6 +71,8 @@ public enum Category {
     public String getDescription() {
         return description;
     }
+  
+    public Badge getBadge() { return badge; }
 
     public Set<Integer> getQuestionIds() {
         return questionIds;

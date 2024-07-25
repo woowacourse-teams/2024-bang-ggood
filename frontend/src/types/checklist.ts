@@ -32,7 +32,7 @@ export interface ChecklistPreview extends RoomInfo {
 
 export interface ChecklistCompare extends RoomInfo {
   checklistId: number;
-  rank: number;
+  rank?: number;
   score: number;
   options: number[];
   categories: CategoryScore[];

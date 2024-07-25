@@ -19,9 +19,13 @@ const RoomComparePage = () => {
     const fetchCompareRoomList = async () => {
       const compareList = await getCompareRooms(roomsId);
       if (compareList.length === 3) {
-        const desiredOrder = [2, 1, 3];
-        const sortedList = desiredOrder.map(rank => compareList.find((item: ChecklistCompare) => item.rank === rank));
-        setRoomList(sortedList);
+        // TODO: 백엔드 랭킹 API 수정 이후 코드
+        // const desiredOrder = [2, 1, 3];
+        // const sortedList = desiredOrder.map(rank => compareList.find((item: ChecklistCompare) => item.rank === rank));
+        // setRoomList(sortedList);
+
+        // 대체 코드
+        setRoomList([compareList[1], compareList[0], compareList[2]]);
       } else setRoomList(compareList);
     };
     fetchCompareRoomList();

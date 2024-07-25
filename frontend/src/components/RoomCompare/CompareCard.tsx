@@ -44,7 +44,7 @@ const CompareCard = ({ room }: Props) => {
         isLabeled={isHightestRoom}
         item={
           <S.Item>
-            {room.station}까지
+            {room.station}/
             <br />
             도보 {room.walkingTime}분
           </S.Item>

@@ -42,6 +42,7 @@ const ChecklistCategory = (props: ChecklistType) => {
               addAnswer={props.addAnswer}
               deleteAnswer={props.deleteAnswer}
             />
+
             {index !== category.questions.length - 1 && <Divider />}
           </>
         ),

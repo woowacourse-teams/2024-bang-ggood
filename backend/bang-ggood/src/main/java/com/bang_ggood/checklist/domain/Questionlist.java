@@ -1,5 +1,7 @@
 package com.bang_ggood.checklist.domain;
 
+import com.bang_ggood.exception.BangggoodException;
+import com.bang_ggood.exception.ExceptionCode;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.stereotype.Component;
@@ -7,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Questionlist {
 
-    public Map<Integer, Question> questions;
+    private Map<Integer, Question> questions;
 
     public Questionlist() {
         questions = new HashMap<>();
@@ -75,5 +77,13 @@ public class Questionlist {
     private void initEconomic() {
         questions.put(31, new Question("보증금/전월세 비용이 합리적인가요?", "관리비도 포함하여 고려하세요."));
         questions.put(32, new Question("교통 비용(지하철, 버스, 자가용)이 추가적으로 들지 않나요?", "주차 비용을 확인하세요."));
+    }
+
+    public String getTitleByQuestionId(int questionId) {
+        return questions.get(questionId).getTitle();
+    }
+
+    public String getSubtitleByQuestionId(int questionId) {
+        return questions.get(questionId).getSubtitle();
     }
 }

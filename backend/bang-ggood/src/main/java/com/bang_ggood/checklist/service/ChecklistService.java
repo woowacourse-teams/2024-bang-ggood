@@ -1,6 +1,7 @@
 package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.category.domain.Category;
+import com.bang_ggood.category.dto.CategoryQuestionsResponse;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
@@ -9,9 +10,11 @@ import com.bang_ggood.checklist.domain.Questionlist;
 import com.bang_ggood.checklist.dto.BadgeResponse;
 import com.bang_ggood.checklist.dto.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.ChecklistInfo;
+import com.bang_ggood.checklist.dto.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.QuestionCreateRequest;
 import com.bang_ggood.checklist.dto.UserChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.UserChecklistsPreviewResponse;
+import com.bang_ggood.checklist.dto.QuestionResponse;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
@@ -22,6 +25,7 @@ import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -141,5 +145,24 @@ public class ChecklistService {
         return Category.getBadges(questions).stream()
                 .map(BadgeResponse::from)
                 .toList();
+      
+    public ChecklistQuestionsResponse readChecklistQuestions() {
+        List<CategoryQuestionsResponse> categoryQuestionsResponses = new ArrayList<>();
+        for (Category category : Category.values()) {
+            CategoryQuestionsResponse categoryQuestionsResponse =
+                    new CategoryQuestionsResponse(category.getId(), category.getDescription(),  readChecklistQuestion(category));
+            categoryQuestionsResponses.add(categoryQuestionsResponse);
+        }
+        return new ChecklistQuestionsResponse(categoryQuestionsResponses);
+    }
+
+    private List<QuestionResponse> readChecklistQuestion(Category category) {
+        List<QuestionResponse> questionResponses = new ArrayList<>();
+        category.getQuestionIds().stream()
+                .map(questionId -> new QuestionResponse(questionId,
+                        questionList.getTitleByQuestionId(questionId),
+                        questionList.getSubtitleByQuestionId(questionId)))
+                .forEach(questionResponses::add);
+        return questionResponses;
     }
 }

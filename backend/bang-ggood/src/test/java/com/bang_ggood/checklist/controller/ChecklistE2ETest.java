@@ -1,7 +1,11 @@
 package com.bang_ggood.checklist.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.bang_ggood.AcceptanceTest;
+import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.dto.ChecklistQuestionsResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
@@ -40,5 +44,19 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .when().post("/checklists")
                 .then().log().all()
                 .statusCode(400);
+    }
+
+    @DisplayName("체크리스트 질문 조회 성공")
+    @Test
+    void readChecklistQuestions() {
+        ChecklistQuestionsResponse checklistQuestionsResponse = RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .when().get("/checklists/questions")
+                .then().log().all()
+                .statusCode(200)
+                .extract()
+                .as(ChecklistQuestionsResponse.class);
+
+        assertThat(checklistQuestionsResponse.categories().size()).isEqualTo(Category.values().length);
     }
 }

@@ -2,6 +2,7 @@ package com.bang_ggood.checklist.controller;
 
 import com.bang_ggood.checklist.dto.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.UserChecklistsPreviewResponse;
+import com.bang_ggood.checklist.dto.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.service.ChecklistService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -29,5 +30,9 @@ public class ChecklistController {
     @GetMapping("/checklists")
     public ResponseEntity<UserChecklistsPreviewResponse> readUserChecklistsPreview() {
         return ResponseEntity.ok(checklistService.readUserChecklistsPreview());
+
+    @GetMapping("/checklists/questions")
+    public ResponseEntity<ChecklistQuestionsResponse> readChecklistQuestions() {
+        return ResponseEntity.ok(checklistService.readChecklistQuestions());
     }
 }

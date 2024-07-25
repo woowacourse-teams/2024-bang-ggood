@@ -31,6 +31,7 @@ const OptionModalInfoBox = ({ selectedOptions, setSelectedOptions }: Props) => {
       <S.TotalSelectBox>
         <Checkbox
           isChecked={isAllSelected}
+          setIsChecked={setIsAllSelected}
           onClick={onClickSelectAllOptions}
           color={theme.palette.yellow500}
           hoverBorderColor={theme.palette.yellow600}

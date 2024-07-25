@@ -33,10 +33,6 @@ const OptionModal = () => {
 
   const optionCounts = new Array(totalOptionCount).fill(0).map((e, i) => i + 1);
 
-  // useEffect(() => {
-  //   setIsAllSelected(selectedOptions.length === totalOptionCount);
-  // }, [selectedOptions]);
-
   return (
     <div>
       <Modal position={'bottom'} isOpen={isOpen} onClose={onCloseModal} hasCloseButton={true}>

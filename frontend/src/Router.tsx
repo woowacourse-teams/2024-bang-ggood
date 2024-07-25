@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 
+import OptionModal from '@/components/NewChecklist/OptionModal/OptionModal';
 import CategoryChoosePage from '@/pages/CategoryChoosePage';
 import ChecklistListPage from '@/pages/ChecklistListPage';
 import ChecklistPreviewPage from '@/pages/ChecklistPreviewPage';
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     element: <CategoryChoosePage />,
     path: '/category-choose',
+  },
+  {
+    element: <OptionModal />,
+    path: '/option',
   },
 ]);
 

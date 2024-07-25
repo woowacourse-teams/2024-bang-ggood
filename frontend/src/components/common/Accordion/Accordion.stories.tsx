@@ -3,15 +3,13 @@ import type { Meta, StoryObj } from '@storybook/react';
 import Accordion from '@/components/common/Accordion/Accordion';
 import theme from '@/styles/theme';
 
+/**
+ * Accordion 컴포넌트는 아이템을 확장하$여 보여줄 수 있는 컴포넌트입니다.
+ */
 const meta = {
   title: 'components/Accordion',
   component: Accordion,
   parameters: {
-    docs: {
-      description: {
-        component: 'Accordion 컴포넌트는 아이템을 확장하$여 보여줄 수 있는 컴포넌트입니다.',
-      },
-    },
     backgrounds: {
       default: 'grey',
       values: [

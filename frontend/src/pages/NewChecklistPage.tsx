@@ -3,9 +3,10 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { getChecklistQuestions } from '@/apis/checklist';
 import Accordion from '@/components/common/Accordion/Accordion';
-import Tabs from '@/components/common/Tabs/Tabs';
+import Header from '@/components/common/Header/Header';
+import BasicTabs from '@/components/common/Tabs/BasicTabs';
 import ChecklistCategory from '@/components/NewChecklist/ChecklistCategory';
-import { flexColumn } from '@/styles/common';
+import { flexCenter, flexColumn, title2 } from '@/styles/common';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 
 export interface Answer {
@@ -18,23 +19,8 @@ export interface addAnswerProps {
   newAnswer: number;
 }
 
-const ChecklistPage = () => {
+const NewChecklistPage = () => {
   const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategoryQuestions[]>([]);
-
-  const menuList = [
-    {
-      name: '기본 정보',
-      path: 'basic-info',
-    },
-    {
-      name: '체크리스트',
-      path: 'checklist',
-    },
-    {
-      name: '메모 및 사진',
-      path: 'extra-info',
-    },
-  ];
 
   useEffect(() => {
     const fetchChecklist = async () => {
@@ -69,7 +55,8 @@ const ChecklistPage = () => {
 
   return (
     <>
-      <Tabs menuList={menuList} />
+      <Header left={<Header.Backward />} center={<S.Title>{'새 체크리스트'}</S.Title>} />
+      <BasicTabs />
       <Accordion>
         {checklistQuestions?.map(category => (
           <S.Container key={category.categoryId}>
@@ -90,12 +77,18 @@ const ChecklistPage = () => {
   );
 };
 
-export default ChecklistPage;
+export default NewChecklistPage;
 
 const Container = styled.div`
   ${flexColumn}
 `;
 
+const Title = styled.div`
+  ${title2}
+  ${flexCenter}
+`;
+
 const S = {
   Container,
+  Title,
 };

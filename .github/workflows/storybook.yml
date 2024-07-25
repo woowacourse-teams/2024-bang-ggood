@@ -75,7 +75,7 @@ jobs:
         run: |
           cd frontend
           yarn test
-          echo "result=테스트실행!" >> "$GITHUB_OUTPUT"
+          echo "result=테스트실행!" >> $GITHUB_OUTPUT
 
       - name: Comment on PR
         uses: thollander/actions-comment-pull-request@v2

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import { QuestionDot } from '@/assets/assets';
-import FaceIcon from '@/components/common/FaceMark/FaceIcon';
+import FaceMark from '@/components/common/FaceMark/FaceMark';
 import { addAnswerProps } from '@/pages/NewChecklistPage';
 import { ChecklistQuestion } from '@/types/checklist';
 
@@ -11,7 +11,12 @@ interface Props {
   addAnswer: ({ questionId, newAnswer }: addAnswerProps) => void;
   deleteAnswer: (questionId: number) => void;
 }
-
+type Emotion = 'bad' | 'soso' | 'good';
+const emotionPhrase: Record<Emotion, string> = {
+  bad: '별로에요',
+  soso: '평범해요',
+  good: '좋아요',
+};
 const ChecklistQuestion = ({ question, addAnswer, deleteAnswer }: Props) => {
   const [answer, setAnswer] = useState<null | number>(null);
 
@@ -47,8 +52,13 @@ const ChecklistQuestion = ({ question, addAnswer, deleteAnswer }: Props) => {
       {question?.subtitle && <S.Subtitle>•{question?.subtitle}</S.Subtitle>}
       <S.Options>
         {emotions.map(emotion => {
-          const { name, id } = emotion;
-          return <FaceIcon isFilled={answer === id} key={id} emotion={name} onClick={() => handleClick(id)} />;
+          const { name: emotionName, id } = emotion;
+          return (
+            <FaceMark onClick={() => handleClick(id)} key={id}>
+              <FaceMark.FaceIcon emotion={emotionName} isFilled={answer === id} />
+              <FaceMark.Footer>{emotionPhrase[emotionName]}</FaceMark.Footer>
+            </FaceMark>
+          );
         })}
       </S.Options>
     </S.Container>

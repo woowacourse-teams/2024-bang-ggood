@@ -1,7 +1,7 @@
 export const checklistList = [
   {
     checklistId: 1,
-    roomName: '스튜디오 아파트',
+    name: '스튜디오 아파트',
     address: '미국 애니타운 메인 스트리트',
     deposit: 500,
     rent: 65,
@@ -39,7 +39,7 @@ export const checklistList = [
   },
   {
     checklistId: 2,
-    roomName: '베드룸 아파트',
+    name: '베드룸 아파트',
     address: '미국 아더타운 엘름 스트리트',
     deposit: 800,
     rent: 50,
@@ -56,7 +56,7 @@ export const checklistList = [
   },
   {
     checklistId: 3,
-    roomName: '베스트 콘도',
+    name: '베스트 콘도',
     address: '미국 썸타운 오크 스트리트',
     deposit: 1000,
     rent: 70,

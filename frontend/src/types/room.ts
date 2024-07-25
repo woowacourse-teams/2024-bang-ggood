@@ -1,7 +1,7 @@
-import { ChecklistFormAnswer } from '@/types/checklist';
+import { ChecklistFormAfterAnswer } from '@/types/checklist';
 
 export interface RoomInfo {
-  roomName: string;
+  name: string;
   address?: string;
   deposit?: number;
   rent?: number;
@@ -16,6 +16,6 @@ export type RoomInfoName = keyof RoomInfo;
 
 export interface ChecklistForm {
   room: RoomInfo;
-  option: number[];
-  questions: ChecklistFormAnswer[];
+  options: number[];
+  questions: ChecklistFormAfterAnswer[];
 }

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { postChecklist } from '@/apis/checklist';
 import Button from '@/components/common/Button/Button';
@@ -9,7 +9,7 @@ import useInputs from '@/hooks/useInput';
 import NewChecklistInfoTemplate from '@/pages/NewChecklistPage/NewChecklistInfoTemplate';
 import NewChecklistTemplate from '@/pages/NewChecklistPage/NewChecklistTemplate';
 import { flexCenter, flexColumn, title2 } from '@/styles/common';
-import { ChecklistFormAnswer } from '@/types/checklist';
+import { ChecklistFormAfterAnswer, ChecklistFormAnswer } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
 
 export type TemplateType = 'checklist' | 'info';
@@ -26,7 +26,7 @@ const menuList: Menu[] = [
 ];
 
 const DefaultRoomInfo: RoomInfo = {
-  roomName: '살기 좋은 방',
+  name: '살기 좋은 방',
   address: '인천광역시 부평구',
   deposit: 2000,
   rent: 50,
@@ -55,24 +55,22 @@ const NewChecklistPage = () => {
 
   //TODO: 프롭스 드릴링 등 나중에 리팩토링 필요 가능성
   const onSubmitChecklist = () => {
+    const emotionAnswers: ChecklistFormAfterAnswer[] = checklistAnswers.map(question => {
+      if (question.answer === 1) return { ...question, answer: 'BAD' };
+      if (question.answer === 2) return { ...question, answer: 'SOSO' };
+      return { ...question, answer: 'GOOD' };
+    });
+
     const fetchNewChecklist = async () => {
       await postChecklist({
         room: roomInfo,
-        option: selectedOptions,
-        questions: checklistAnswers,
+        options: selectedOptions,
+        questions: emotionAnswers,
       });
     };
 
-    console.log('보내는 데이터', { room: roomInfo, option: selectedOptions, questions: checklistAnswers });
-
     fetchNewChecklist();
   };
-
-  useEffect(() => {
-    console.log('roomInfo', roomInfo);
-    console.log('selectedOptions', selectedOptions);
-    console.log('checklistAnswers', checklistAnswers);
-  }, [roomInfo, selectedOptions, checklistAnswers]);
 
   return (
     <S.Container>

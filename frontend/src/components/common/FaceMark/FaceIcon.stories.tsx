@@ -13,20 +13,20 @@ type Story = StoryObj<typeof meta>;
 
 /** Round Button */
 export const Good: Story = {
-  args: { emotion: 'good' },
+  args: { emotion: 'GOOD' },
 };
 export const Soso: Story = {
-  args: { emotion: 'soso' },
+  args: { emotion: 'SOSO' },
 };
 export const Bad: Story = {
-  args: { emotion: 'bad' },
+  args: { emotion: 'BAD' },
 };
 export const GoodFill: Story = {
-  args: { emotion: 'good', isFilled: true },
+  args: { emotion: 'GOOD', isFilled: true },
 };
 export const SosoFill: Story = {
-  args: { emotion: 'soso', isFilled: true },
+  args: { emotion: 'SOSO', isFilled: true },
 };
 export const BadFill: Story = {
-  args: { emotion: 'bad', isFilled: true },
+  args: { emotion: 'BAD', isFilled: true },
 };

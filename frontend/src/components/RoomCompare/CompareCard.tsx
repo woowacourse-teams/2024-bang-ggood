@@ -15,7 +15,7 @@ const CompareCard = ({ room }: Props) => {
 
   return (
     <S.Container isHightLight={isHightestRoom}>
-      <S.Title>{room.roomName}</S.Title>
+      <S.Title>{room.name}</S.Title>
       <S.RankWrapper>
         <S.Rank>{room.rank}등</S.Rank>
         <S.Score>({room.score}점)</S.Score>

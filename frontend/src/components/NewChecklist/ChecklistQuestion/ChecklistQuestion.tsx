@@ -5,17 +5,17 @@ import { QuestionDot } from '@/assets/assets';
 import FaceMark from '@/components/common/FaceMark/FaceMark';
 import { addAnswerProps } from '@/pages/ChecklistPreviewPage';
 import { ChecklistQuestion } from '@/types/checklist';
+import { Emotion } from '@/types/emotionAnswer';
 
 interface Props {
   question: ChecklistQuestion;
   addAnswer: ({ questionId, newAnswer }: addAnswerProps) => void;
   deleteAnswer: (questionId: number) => void;
 }
-type Emotion = 'bad' | 'soso' | 'good';
 const emotionPhrase: Record<Emotion, string> = {
-  bad: '별로에요',
-  soso: '평범해요',
-  good: '좋아요',
+  BAD: '별로에요',
+  SOSO: '평범해요',
+  GOOD: '좋아요',
 };
 const ChecklistQuestion = ({ question, addAnswer, deleteAnswer }: Props) => {
   const [answer, setAnswer] = useState<null | number>(null);
@@ -30,17 +30,15 @@ const ChecklistQuestion = ({ question, addAnswer, deleteAnswer }: Props) => {
     }
   };
 
-  type Emotion = 'good' | 'bad' | 'soso';
-
   interface Emotions {
     name: Emotion;
     id: number;
   }
 
   const emotions: Emotions[] = [
-    { name: 'bad', id: 1 },
-    { name: 'soso', id: 2 },
-    { name: 'good', id: 3 },
+    { name: 'BAD', id: 1 },
+    { name: 'SOSO', id: 2 },
+    { name: 'GOOD', id: 3 },
   ];
 
   return (
@@ -73,10 +71,10 @@ const S = {
   `,
   Title: styled.div`
     display: flex;
-
     margin: 5px 0;
 
     font-size: ${({ theme }) => theme.text.size.medium};
+    line-height: 1.5;
     gap: 10px;
   `,
   Subtitle: styled.div`

@@ -26,7 +26,7 @@ const ChecklistPreviewCard = ({ checklist }: Props) => {
       </S.Row>
       <S.Row>
         <S.Column>
-          <S.Title>{checklist.roomName}</S.Title>
+          <S.Title>{checklist.name}</S.Title>
           <S.Deposit>
             {checklist.deposit}/{checklist.rent}
           </S.Deposit>

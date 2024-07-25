@@ -12,7 +12,7 @@ const request = async ({ url, method, body, headers = {}, errorMessage }: Reques
     method,
     body: body ? JSON.stringify(body) : undefined,
     headers: {
-      // Authorization: 'token들어갈 자리',
+      // Authorization: process.env.
       ...headers,
     },
   });

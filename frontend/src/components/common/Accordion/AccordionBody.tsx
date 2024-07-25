@@ -22,10 +22,10 @@ const Container = styled.div<{ isOpen: boolean }>`
   visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
   overflow: hidden;
 
+  height: ${({ isOpen }) => (isOpen ? 'auto' : '0')};
   margin-top: ${({ isOpen }) => (isOpen ? '10px' : '0')};
 
   background-color: ${({ theme }) => theme.palette.white};
-  max-height: ${({ isOpen }) => (isOpen ? '1000px' : '0')};
   transition: max-height 0.3s cubic-bezier(0.15, 0.1, 0.25, 1);
   border-radius: 10px;
 `;

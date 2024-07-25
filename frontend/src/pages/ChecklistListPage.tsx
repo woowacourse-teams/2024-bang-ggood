@@ -10,6 +10,7 @@ import FloatingButton from '@/components/common/Button/FloatingButton';
 import Footer from '@/components/common/Footer/Footer';
 import Header from '@/components/common/Header/Header';
 import Layout from '@/components/common/layout/Layout';
+import { ROUTE_PATH } from '@/constants/routePath';
 import { flexColumn } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
 
@@ -19,8 +20,10 @@ const ChecklistListPage = () => {
   useEffect(() => {
     const fetchChecklist = async () => {
       const checklistList = await getChecklists();
+      console.log(checklistList);
       setChecklistList(checklistList);
     };
+
     fetchChecklist();
   }, []);
 
@@ -28,7 +31,7 @@ const ChecklistListPage = () => {
 
   const handleClick = () => {
     // TODO: 비교 방 선택 페이지 작업으로 이후 변경 필요 (3차 스프린트)
-    navigate('/room-compare', {
+    navigate(ROUTE_PATH.roomCompare, {
       state: {
         id1: checklistList[0].checklistId,
         id2: checklistList[1].checklistId,
@@ -44,13 +47,13 @@ const ChecklistListPage = () => {
       <Layout>
         <S.ListBox>
           {checklistList?.map(checklist => (
-            <Link to={`checklist/${checklist.checklistId}`} key={checklist.checklistId}>
+            <Link to={ROUTE_PATH.checklistOne(checklist.checklistId)} key={checklist.checklistId}>
               <ChecklistPreviewCard key={checklist.checklistId} checklist={checklist} />
             </Link>
           ))}
         </S.ListBox>
       </Layout>
-      <Link to="/new-checklist">
+      <Link to={ROUTE_PATH.checklistNew}>
         <FloatingButton>
           <Plus />
         </FloatingButton>

@@ -54,7 +54,7 @@ const S = {
   `,
 };
 type MakeOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
-const linkDecorator = (Logo: React.FC, path: string) => {
+export const linkDecorator = (Logo: React.FC, path: string) => {
   const LogoLinked = (props: MakeOptional<LinkProps, 'to'>) => (
     <Link to={path} {...props}>
       <Logo />

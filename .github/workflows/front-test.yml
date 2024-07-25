@@ -1,4 +1,4 @@
-name: "Chromatic"
+name: "jest test"
 
 on:
   pull_request:
@@ -7,9 +7,11 @@ on:
       - "frontend/**"
 
 jobs:
-  chromatic:
-    name: Run Chromatic
+  test:
+    name: Run Test
     runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.test1.outputs.result}}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -33,13 +35,9 @@ jobs:
         run: |
           cd frontend
           yarn install --frozen-lockfile
-      - name: Run Chromatic
-        uses: chromaui/action@latest
-        id: publish_chromatic
-        with:
-          workingDir: frontend
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-      - name: Comment on PR
-        uses: thollander/actions-comment-pull-request@v2
-        with:
-          message: "🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}"
+      - name: Run Test
+        id: test1
+        run: |
+          cd frontend
+          yarn test
+          echo "result=테스트실행!" >> $GITHUB_OUTPUT

@@ -1,6 +1,6 @@
-import { Badge } from '@/types/Badge';
+import { Badge } from '@/types/badge';
 import { CategoryScore } from '@/types/category';
-import { RoomInfo } from '@/types/Room';
+import { RoomInfo } from '@/types/room';
 
 export interface ChecklistCategoryQuestions {
   categoryId: number;

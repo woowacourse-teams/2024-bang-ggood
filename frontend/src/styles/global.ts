@@ -10,8 +10,9 @@ export const baseStyle = css`
     max-width: 600px;
     height: 100vh;
     margin: 0px auto;
-    outline: 1px solid ${theme.palette.grey200};
-    outline-offset: -1px;
+    box-sizing: border-box;
+    border-left: 1px solid ${theme.palette.grey200};
+    border-right: 1px solid ${theme.palette.grey200};
     box-shadow: 0 0 20px ${theme.palette.grey100};
   }
 `;

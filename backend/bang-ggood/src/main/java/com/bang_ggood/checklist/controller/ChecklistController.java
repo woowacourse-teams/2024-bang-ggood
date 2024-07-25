@@ -30,6 +30,7 @@ public class ChecklistController {
     @GetMapping("/checklists")
     public ResponseEntity<UserChecklistsPreviewResponse> readUserChecklistsPreview() {
         return ResponseEntity.ok(checklistService.readUserChecklistsPreview());
+    }
 
     @GetMapping("/checklists/questions")
     public ResponseEntity<ChecklistQuestionsResponse> readChecklistQuestions() {

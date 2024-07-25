@@ -4,6 +4,7 @@ import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.Grade;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public enum Category {
@@ -43,10 +44,14 @@ public enum Category {
   
     public Badge getBadge() { return badge; }
 
+    public Set<Integer> getQuestionIds() {
+        return questionIds;
+    }
+
     public static List<Badge> getBadges(List<ChecklistQuestion> questions) {
         return Arrays.stream(values())
                 .filter(category -> {
-                    List<Integer> questionIds = category.questionIds;
+                    Set<Integer> questionIds = category.questionIds;
                     List<ChecklistQuestion> categoryQuestions = questions.stream()
                             .filter(checklistQuestion -> questionIds.contains(checklistQuestion.getQuestionId()))
                             .toList();
@@ -62,8 +67,5 @@ public enum Category {
                 })
                 .map(Category::getBadge)
                 .toList();
-      
-    public Set<Integer> getQuestionIds() {
-        return questionIds;
     }
 }

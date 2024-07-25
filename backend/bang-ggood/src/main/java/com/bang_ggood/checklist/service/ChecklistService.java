@@ -12,9 +12,9 @@ import com.bang_ggood.checklist.dto.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.ChecklistInfo;
 import com.bang_ggood.checklist.dto.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.QuestionCreateRequest;
+import com.bang_ggood.checklist.dto.QuestionResponse;
 import com.bang_ggood.checklist.dto.UserChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.UserChecklistsPreviewResponse;
-import com.bang_ggood.checklist.dto.QuestionResponse;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
@@ -145,12 +145,14 @@ public class ChecklistService {
         return Category.getBadges(questions).stream()
                 .map(BadgeResponse::from)
                 .toList();
-      
-    public ChecklistQuestionsResponse readChecklistQuestions() {
+    }
+
+    public ChecklistQuestionsResponse readChecklistQuestions () {
         List<CategoryQuestionsResponse> categoryQuestionsResponses = new ArrayList<>();
         for (Category category : Category.values()) {
             CategoryQuestionsResponse categoryQuestionsResponse =
-                    new CategoryQuestionsResponse(category.getId(), category.getDescription(),  readChecklistQuestion(category));
+                    new CategoryQuestionsResponse(category.getId(), category.getDescription(),
+                            readChecklistQuestion(category));
             categoryQuestionsResponses.add(categoryQuestionsResponse);
         }
         return new ChecklistQuestionsResponse(categoryQuestionsResponses);

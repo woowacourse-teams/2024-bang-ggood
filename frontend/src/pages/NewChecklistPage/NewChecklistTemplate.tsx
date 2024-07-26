@@ -14,9 +14,10 @@ export interface addAnswerProps {
 interface Props {
   answers: ChecklistFormAnswer[];
   setAnswers: React.Dispatch<React.SetStateAction<ChecklistFormAnswer[]>>;
+  questionSelectedAnswer: (questionId: number) => number | undefined;
 }
 
-const NewChecklistTemplate = ({ answers, setAnswers }: Props) => {
+const NewChecklistTemplate = ({ answers, setAnswers, questionSelectedAnswer }: Props) => {
   const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategoryQuestions[]>([]);
 
   useEffect(() => {
@@ -61,6 +62,7 @@ const NewChecklistTemplate = ({ answers, setAnswers }: Props) => {
                 category={category}
                 addAnswer={addAnswer}
                 deleteAnswer={deleteAnswer}
+                questionSelectedAnswer={questionSelectedAnswer}
               />
             </Accordion.body>
           </div>

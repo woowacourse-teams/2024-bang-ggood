@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
 
 import { QuestionDot } from '@/assets/assets';
 import FaceMark from '@/components/common/FaceMark/FaceMark';
@@ -11,21 +10,23 @@ interface Props {
   question: ChecklistQuestion;
   addAnswer: ({ questionId, newAnswer }: addAnswerProps) => void;
   deleteAnswer: (questionId: number) => void;
+  questionSelectedAnswer: (questionId: number) => number | void;
 }
 const emotionPhrase: Record<Emotion, string> = {
   BAD: '별로에요',
   SOSO: '평범해요',
   GOOD: '좋아요',
 };
-const ChecklistQuestion = ({ question, addAnswer, deleteAnswer }: Props) => {
-  const [answer, setAnswer] = useState<null | number>(null);
+
+const ChecklistQuestion = ({ question, addAnswer, deleteAnswer, questionSelectedAnswer }: Props) => {
+  // const [answer, setAnswer] = useState<null | number>(null);
 
   const handleClick = (newAnswer: number) => {
-    if (answer === newAnswer) {
-      setAnswer(null);
+    if (questionSelectedAnswer(question.questionId) === newAnswer) {
+      // setAnswer(null);
       deleteAnswer(question.questionId);
     } else {
-      setAnswer(newAnswer);
+      // setAnswer(newAnswer);
       addAnswer({ questionId: question.questionId, newAnswer });
     }
   };
@@ -53,7 +54,7 @@ const ChecklistQuestion = ({ question, addAnswer, deleteAnswer }: Props) => {
           const { name: emotionName, id } = emotion;
           return (
             <FaceMark onClick={() => handleClick(id)} key={id}>
-              <FaceMark.FaceIcon emotion={emotionName} isFilled={answer === id} />
+              <FaceMark.FaceIcon emotion={emotionName} isFilled={questionSelectedAnswer(question.questionId) === id} />
               <FaceMark.Footer>{emotionPhrase[emotionName]}</FaceMark.Footer>
             </FaceMark>
           );

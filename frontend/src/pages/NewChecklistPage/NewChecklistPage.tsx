@@ -72,6 +72,12 @@ const NewChecklistPage = () => {
     fetchNewChecklist();
   };
 
+  const questionSelectedAnswer = (targetId: number) => {
+    const targetQuestion = checklistAnswers.filter(e => e.questionId === targetId);
+    if (!targetQuestion[0]) return;
+    return targetQuestion[0]?.answer;
+  };
+
   return (
     <S.Container>
       <Header
@@ -88,7 +94,11 @@ const NewChecklistPage = () => {
           setSelectedOptions={setSelectedOptions}
         />
       ) : (
-        <NewChecklistTemplate answers={checklistAnswers} setAnswers={setChecklistAnswers} />
+        <NewChecklistTemplate
+          answers={checklistAnswers}
+          setAnswers={setChecklistAnswers}
+          questionSelectedAnswer={questionSelectedAnswer}
+        />
       )}
     </S.Container>
   );

@@ -38,7 +38,7 @@ const config = {
     }),
     new webpack.DefinePlugin(envKeys),
     // Add your plugins here
-    // Learn more about plugins from https://webpack.js.org/configuration/plugins/
+    // Learn more about plugins from https:/webpack.js.org/configuration/plugins/
   ],
   performance: {
     hints: false,

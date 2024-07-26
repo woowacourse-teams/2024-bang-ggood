@@ -20,20 +20,44 @@ interface Props {
 
 const FooterWrapper = ({ children, ...rest }: Props) => {
   const match = useMatch('/:page');
-
+  const currentPath = match.params.page;
   return (
     <>
       <S.EmptyBox />
       <S.Wrapper {...rest}>
         <S.FlexBox>
-          {children.map(child => (
-            <div key={child.path}>{child.path === match.params.page ? child.nodeActive : child.node}</div>
+          {children.map(logo => (
+            <div key={logo.path}>{compare(logo.path, currentPath) ? logo.nodeActive : logo.node}</div>
           ))}
         </S.FlexBox>
       </S.Wrapper>
     </>
   );
 };
+const compare = (path1: string, path2: string) =>
+  new URL(path1, 'https://abc.com').pathname === new URL(path2, 'https://abc.com').pathname;
+
+type MakeOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
+export const linkDecorator = (Logo: React.FC, path: string) => {
+  const LogoLinked = (props: MakeOptional<LinkProps, 'to'>) => (
+    <Link to={path} {...props}>
+      <Logo />
+    </Link>
+  );
+  return LogoLinked;
+};
+
+const Footer = Object.assign(FooterWrapper, {
+  HomeLogo: linkDecorator(HomeLogo, '/'),
+  LocationLogo: linkDecorator(LocationLogo, '/location'),
+  ChecklistLogo: linkDecorator(ChecklistLogo, ROUTE_PATH.checklistList),
+  MyPageLogo: linkDecorator(MyPageLogo, '/mypage'),
+  HomeLogoActive: linkDecorator(HomeLogoActive, '/'),
+  LocationLogoActive: linkDecorator(LocationLogoActive, '/location'),
+  ChecklistLogoActive: linkDecorator(ChecklistLogoActive, ROUTE_PATH.checklistList),
+  MyPageLogoActive: linkDecorator(MyPageLogoActive, '/mypage'),
+});
 
 const S = {
   EmptyBox: styled.div`
@@ -65,25 +89,4 @@ const S = {
   `,
 };
 
-type MakeOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
-
-export const linkDecorator = (Logo: React.FC, path: string) => {
-  const LogoLinked = (props: MakeOptional<LinkProps, 'to'>) => (
-    <Link to={path} {...props}>
-      <Logo />
-    </Link>
-  );
-  return LogoLinked;
-};
-
-const Footer = Object.assign(FooterWrapper, {
-  HomeLogo: linkDecorator(HomeLogo, '/'),
-  LocationLogo: linkDecorator(LocationLogo, '/location'),
-  ChecklistLogo: linkDecorator(ChecklistLogo, ROUTE_PATH.checklistList),
-  MyPageLogo: linkDecorator(MyPageLogo, '/mypage'),
-  HomeLogoActive: linkDecorator(HomeLogoActive, '/'),
-  LocationLogoActive: linkDecorator(LocationLogoActive, '/location'),
-  ChecklistLogoActive: linkDecorator(ChecklistLogoActive, ROUTE_PATH.checklistList),
-  MyPageLogoActive: linkDecorator(MyPageLogoActive, '/mypage'),
-});
 export default Footer;

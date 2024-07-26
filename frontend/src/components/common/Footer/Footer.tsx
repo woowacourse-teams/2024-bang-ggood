@@ -12,6 +12,7 @@ import {
   MyPageLogo,
   MyPageLogoActive,
 } from '@/assets/assets';
+import { ROUTE_PATH } from '@/constants/routePath';
 
 interface Props {
   children: { node: ReactNode; nodeActive: ReactNode; path: string }[];
@@ -78,11 +79,11 @@ export const linkDecorator = (Logo: React.FC, path: string) => {
 const Footer = Object.assign(FooterWrapper, {
   HomeLogo: linkDecorator(HomeLogo, '/'),
   LocationLogo: linkDecorator(LocationLogo, '/location'),
-  ChecklistLogo: linkDecorator(ChecklistLogo, '/checklist-list'),
+  ChecklistLogo: linkDecorator(ChecklistLogo, ROUTE_PATH.checklistList),
   MyPageLogo: linkDecorator(MyPageLogo, '/mypage'),
   HomeLogoActive: linkDecorator(HomeLogoActive, '/'),
   LocationLogoActive: linkDecorator(LocationLogoActive, '/location'),
-  ChecklistLogoActive: linkDecorator(ChecklistLogoActive, '/checklist-list'),
+  ChecklistLogoActive: linkDecorator(ChecklistLogoActive, ROUTE_PATH.checklistList),
   MyPageLogoActive: linkDecorator(MyPageLogoActive, '/mypage'),
 });
 export default Footer;

@@ -24,7 +24,7 @@ Accordion.body = AccordionBody;
 const Container = styled.div<{ width: string }>`
   ${flexColumn};
   width: ${({ width }) => width};
-  gap: 15px;
+  gap: 10px;
 `;
 
 const S = {

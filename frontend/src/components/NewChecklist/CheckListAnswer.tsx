@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 
 import { QuestionDot } from '@/assets/assets';
-import FaceIcon from '@/components/common/FaceMark/FaceIcon';
+import FaceMark from '@/components/common/FaceMark/FaceMark';
+import { emotionPhrase } from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
 import { ChecklistAnswer } from '@/types/checklist';
 import { Emotion } from '@/types/emotionAnswer';
 
@@ -26,7 +27,7 @@ interface Props {
 }
 
 const ChecklistAnswer = ({ QandA }: Props) => {
-  const emotionName = getEmotionNameById(QandA?.answer);
+  // const emotionName = getEmotionNameById(QandA?.answer);
 
   return (
     <S.Container>
@@ -38,7 +39,11 @@ const ChecklistAnswer = ({ QandA }: Props) => {
         {QandA?.subtitle && <S.Subtitle>•{QandA?.subtitle}</S.Subtitle>}
       </S.TitleContainer>
       <S.Answer>
-        <FaceIcon emotion={emotionName} isFilled={true} />
+        <FaceMark>
+          <FaceMark.FaceIcon emotion={QandA.answer} isFilled={true} />
+          <FaceMark.Footer>{emotionPhrase[QandA.answer]}</FaceMark.Footer>
+          {/* <FaceMark.Footer>{Math.round(category.score / 10)}점</FaceMark.Footer> */}
+        </FaceMark>
       </S.Answer>
     </S.Container>
   );

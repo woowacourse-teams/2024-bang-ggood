@@ -186,10 +186,10 @@ public class ChecklistService {
     @Transactional
     public WrittenChecklistResponse readChecklistById(long id) {
         Checklist checklist = checklistRepository.getById(id);
+        WrittenRoomResponse writtenRoomResponse = WrittenRoomResponse.of(checklist);
 
-        WrittenRoomResponse writtenRoomResponse = WrittenRoomResponse.of(checklist.getRoom(), checklist.getDeposit(),
-                checklist.getRent(), checklist.getContractTerm(), checklist.getRealEstate());
         List<Integer> optionIds = readOptionsByChecklistId(id);
+
         List<WrittenCategoryQuestionsResponse> writtenCategoryQuestionsResponses =
                 readCategoryQuestionsByChecklistId(id);
 
@@ -212,7 +212,6 @@ public class ChecklistService {
 
     private WrittenCategoryQuestionsResponse readQuestionsByCategory(Category category,
                                                                      List<ChecklistQuestion> checklistQuestions) {
-        //TODO 리팩토링 필요
         List<WrittenQuestionResponse> writtenQuestionResponses = new ArrayList<>();
         for (ChecklistQuestion checklistQuestion : checklistQuestions) {
             int questionId = checklistQuestion.getQuestionId();
@@ -225,6 +224,7 @@ public class ChecklistService {
         return new WrittenCategoryQuestionsResponse(category.getId(), category.getDescription(),
                 writtenQuestionResponses);
     }
+
 
     @Transactional
     public ChecklistsComparisonReadResponse readChecklistsComparison(List<Long> checklistIds) {

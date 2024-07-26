@@ -1,7 +1,9 @@
 import { ChecklistFormAfterAnswer } from '@/types/checklist';
 
 export interface RoomInfo {
-  roomName: string;
+  // TODO: roomName 이슈
+  roomName?: string;
+  name?: string;
   address?: string;
   deposit?: number;
   rent?: number;

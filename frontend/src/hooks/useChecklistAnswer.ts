@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { addAnswerProps } from '@/pages/ChecklistPreviewPage';
+import { addAnswerProps } from '@/pages/ChecklistSummaryPage';
 import { ChecklistFormAnswer } from '@/types/checklist';
 
 const useChecklistAnswer = () => {

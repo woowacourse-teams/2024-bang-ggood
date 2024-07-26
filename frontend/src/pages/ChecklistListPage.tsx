@@ -75,5 +75,6 @@ const S = {
   ListBox: styled.div`
     ${flexColumn}
     gap: 8px;
+    overflow-y: scroll;
   `,
 };

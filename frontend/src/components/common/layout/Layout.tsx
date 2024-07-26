@@ -12,6 +12,7 @@ export default Layout;
 
 const S = {
   Wrapper: styled.div`
+    overflow-y: scroll;
     padding: 16px;
   `,
 };

@@ -15,27 +15,35 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 const HeaderWrapper = ({ left, right, center, ...rest }: Props) => {
   return (
-    <S.Wrapper {...rest}>
-      <S.FlexBox>
-        <S.Left>{left ? left : <div />}</S.Left>
-        <S.Center>{center ? center : <div />}</S.Center>
-        <S.Right>{right ? right : <div />}</S.Right>
-      </S.FlexBox>
-    </S.Wrapper>
+    <>
+      <S.Wrapper {...rest}>
+        <S.FlexBox>
+          <S.Left>{left ? left : <div />}</S.Left>
+          <S.Center>{center ? center : <div />}</S.Center>
+          <S.Right>{right ? right : <div />}</S.Right>
+        </S.FlexBox>
+      </S.Wrapper>
+      <S.EmptyBox />
+    </>
   );
 };
 
 const S = {
+  EmptyBox: styled.div`
+    height: 64px;
+  `,
   Wrapper: styled.header`
     display: flex;
+    max-width: 600px;
+    position: fixed;
     width: 100%;
     height: 64px;
     padding: 16px;
+
+    background-color: ${({ theme }) => theme.palette.white};
     align-items: center;
     box-sizing: border-box;
     justify-content: space-between;
-
-    background-color: ${({ theme }) => theme.palette.white};
   `,
   FlexBox: styled.div`
     display: flex;

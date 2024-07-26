@@ -33,7 +33,7 @@ const useChecklistAnswer = () => {
     });
   };
 
-  return { addAnswer, deleteAnswer, questionSelectedAnswer };
+  return { addAnswer, deleteAnswer, questionSelectedAnswer, checklistAnswers };
 };
 
 export default useChecklistAnswer;

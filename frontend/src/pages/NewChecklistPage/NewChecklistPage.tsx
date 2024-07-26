@@ -13,7 +13,7 @@ import useInputs from '@/hooks/useInput';
 import NewChecklistInfoTemplate from '@/pages/NewChecklistPage/NewChecklistInfoTemplate';
 import NewChecklistTemplate from '@/pages/NewChecklistPage/NewChecklistTemplate';
 import { flexCenter, flexColumn, title2 } from '@/styles/common';
-import { ChecklistFormAfterAnswer, ChecklistFormAnswer } from '@/types/checklist';
+import { ChecklistFormAfterAnswer } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
 
 export type TemplateType = 'checklist' | 'info';
@@ -57,9 +57,8 @@ const NewChecklistPage = () => {
   const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
 
   /*체크리스트 답변*/
-  const [checklistAnswers, setChecklistAnswers] = useState<ChecklistFormAnswer[]>([]);
 
-  const { addAnswer, deleteAnswer, questionSelectedAnswer } = useChecklistAnswer();
+  const { addAnswer, deleteAnswer, questionSelectedAnswer, checklistAnswers } = useChecklistAnswer();
 
   const navigate = useNavigate();
 
@@ -101,6 +100,8 @@ const NewChecklistPage = () => {
         right={<Button label={'저장'} size="small" color="dark" onClick={onSubmitChecklist} />}
       />
 
+      <button onClick={() => setIsToastShow(true)}>토스트</button>
+
       <Tabs menuList={menuList} onMoveMenu={onMoveTemplate} currentMenuId={currentTemplateId} />
       {currentTemplateId === 'info' ? (
         <NewChecklistInfoTemplate
@@ -112,7 +113,6 @@ const NewChecklistPage = () => {
       ) : (
         <NewChecklistTemplate
           answers={checklistAnswers}
-          setAnswers={setChecklistAnswers}
           addAnswer={addAnswer}
           deleteAnswer={deleteAnswer}
           questionSelectedAnswer={questionSelectedAnswer}

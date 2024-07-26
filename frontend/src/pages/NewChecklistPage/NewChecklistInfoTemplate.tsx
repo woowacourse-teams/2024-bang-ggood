@@ -114,7 +114,7 @@ const S = {
     font-size: ${({ theme }) => theme.text.size.large};
   `,
   SubmitButton: styled(Button)`
-    width: 96%;
+    width: 100%;
     border-radius: 4px;
 
     background-color: ${({ theme }) => theme.palette.yellow500};

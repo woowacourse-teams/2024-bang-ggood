@@ -2,8 +2,7 @@ import styled from '@emotion/styled';
 import { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import ArrowBack from '@/assets/arrow-back.svg';
-import Logo from '@/assets/logo.svg';
+import { ArrowBack, BangGgoodTextIcon } from '@/assets/assets';
 import { linkDecorator } from '@/components/common/Footer/Footer';
 import { flexCenter, title2 } from '@/styles/common';
 
@@ -75,7 +74,7 @@ const S = {
 };
 
 const Header = Object.assign(HeaderWrapper, {
-  Logo: linkDecorator(Logo, '/'),
+  Logo: linkDecorator(BangGgoodTextIcon, '/'),
   Backward: (props: React.SVGProps<SVGSVGElement>) => {
     const navigate = useNavigate();
     const handleClick = () => navigate(-1);

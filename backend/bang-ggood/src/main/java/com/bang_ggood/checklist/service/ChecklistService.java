@@ -7,6 +7,7 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.Option;
+import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.domain.Questionlist;
 import com.bang_ggood.checklist.dto.BadgeResponse;
 import com.bang_ggood.checklist.dto.CategoryScoreReadResponse;
@@ -32,6 +33,7 @@ import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -47,16 +49,14 @@ public class ChecklistService {
     private final RoomRepository roomRepository;
     private final ChecklistOptionRepository checklistOptionRepository;
     private final ChecklistQuestionRepository checklistQuestionRepository;
-    private final Questionlist questionList;
 
     public ChecklistService(ChecklistRepository checklistRepository, RoomRepository roomRepository,
                             ChecklistOptionRepository checklistOptionRepository,
-                            ChecklistQuestionRepository checklistQuestionRepository, Questionlist questionList) {
+                            ChecklistQuestionRepository checklistQuestionRepository) {
         this.checklistRepository = checklistRepository;
         this.roomRepository = roomRepository;
         this.checklistOptionRepository = checklistOptionRepository;
         this.checklistQuestionRepository = checklistQuestionRepository;
-        this.questionList = questionList;
     }
 
 
@@ -132,7 +132,7 @@ public class ChecklistService {
 
     private void validateQuestionInvalid(List<QuestionCreateRequest> questions) {
         for (QuestionCreateRequest questionCreateRequest : questions) {
-            if (!questionList.contains(questionCreateRequest.questionId())) {
+            if (!Questionlist.contains(questionCreateRequest.questionId())) {
                 throw new BangggoodException(ExceptionCode.INVALID_QUESTION);
             }
         }
@@ -171,13 +171,15 @@ public class ChecklistService {
     }
 
     private List<QuestionResponse> readChecklistQuestion(Category category) {
-        List<QuestionResponse> questionResponses = new ArrayList<>();
-        category.getQuestionIds().stream()
-                .map(questionId -> new QuestionResponse(questionId,
-                        questionList.getTitleByQuestionId(questionId),
-                        questionList.getSubtitleByQuestionId(questionId)))
-                .forEach(questionResponses::add);
-        return questionResponses;
+        List<Question> questions = Questionlist.getQuestionsByCategoryId(category.getId());
+        return questions.stream()
+                .map(question -> {
+                    int questionId = Questionlist.getQuestionIdByQuestion(question);
+                    String title = Questionlist.getTitleByQuestionId(questionId);
+                    String subtitle = Questionlist.getSubtitleByQuestionId(questionId);
+                    return new QuestionResponse(questionId, title, subtitle);
+                })
+                .toList();
     }
 
     //TODO 테스트해야 함
@@ -214,10 +216,10 @@ public class ChecklistService {
         List<WrittenQuestionResponse> writtenQuestionResponses = new ArrayList<>();
         for (ChecklistQuestion checklistQuestion : checklistQuestions) {
             int questionId = checklistQuestion.getQuestionId();
-            if (category.isQuestionIn(questionId)) {
+            if (Questionlist.isQuestionsInCategory(questionId, category.getId())) {
                 writtenQuestionResponses.add(
-                        new WrittenQuestionResponse(questionId, questionList.getTitleByQuestionId(questionId),
-                                questionList.getSubtitleByQuestionId(questionId), checklistQuestion.getAnswer()));
+                        new WrittenQuestionResponse(questionId, Questionlist.getTitleByQuestionId(questionId),
+                                Questionlist.getSubtitleByQuestionId(questionId), checklistQuestion.getAnswer()));
             }
         }
         return new WrittenCategoryQuestionsResponse(category.getId(), category.getDescription(),
@@ -241,7 +243,8 @@ public class ChecklistService {
                     int checklistOptionCount = checklistOptionRepository.countByChecklist(checklist);
 
                     return ChecklistComparisonReadResponse.of(
-                            checklist, checklistOptionCount, checklistScore, categoryScores);})
+                            checklist, checklistOptionCount, checklistScore, categoryScores);
+                })
                 .sorted(Comparator.comparing(ChecklistComparisonReadResponse::score).reversed())
                 .toList();
 

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { getChecklistQuestions } from '@/apis/checklist';
 import Accordion from '@/components/common/Accordion/Accordion';
@@ -12,11 +12,16 @@ export interface addAnswerProps {
 }
 
 interface Props {
+  addAnswer: ({ questionId, newAnswer }: addAnswerProps) => void;
+  deleteAnswer: (questionId: number) => void;
   answers: ChecklistFormAnswer[];
   setAnswers: React.Dispatch<React.SetStateAction<ChecklistFormAnswer[]>>;
+  questionSelectedAnswer: (questionId: number) => number | undefined;
 }
 
-const NewChecklistTemplate = ({ answers, setAnswers }: Props) => {
+const NewChecklistTemplate = (props: Props) => {
+  const { questionSelectedAnswer, addAnswer, deleteAnswer } = props;
+
   const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategoryQuestions[]>([]);
 
   useEffect(() => {
@@ -26,27 +31,6 @@ const NewChecklistTemplate = ({ answers, setAnswers }: Props) => {
     };
     fetchChecklist();
   }, []);
-
-  const addAnswer = useCallback(
-    ({ questionId, newAnswer }: addAnswerProps) => {
-      const target = [...answers].find(answer => answer.questionId === questionId);
-      if (target) {
-        const newAnswers = [...answers].map(answer =>
-          answer.questionId === questionId ? { questionId, answer: newAnswer } : answer,
-        );
-        setAnswers(newAnswers);
-        return;
-      }
-      setAnswers(prev => [...prev, { questionId, answer: newAnswer }]);
-    },
-    [answers],
-  );
-
-  const deleteAnswer = (questionId: number) => {
-    setAnswers(prevAnswers => {
-      return prevAnswers.filter(answer => answer.questionId !== questionId);
-    });
-  };
 
   return (
     <S.ContentBox>
@@ -61,6 +45,7 @@ const NewChecklistTemplate = ({ answers, setAnswers }: Props) => {
                 category={category}
                 addAnswer={addAnswer}
                 deleteAnswer={deleteAnswer}
+                questionSelectedAnswer={questionSelectedAnswer}
               />
             </Accordion.body>
           </div>

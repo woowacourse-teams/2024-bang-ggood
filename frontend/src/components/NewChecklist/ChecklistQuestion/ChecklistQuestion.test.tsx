@@ -14,6 +14,7 @@ const mockQuestion = {
 
 const mockAddAnswer = jest.fn();
 const mockDeleteAnswer = jest.fn();
+const mockQuestionSelectedAnswer = jest.fn();
 
 const renderWithTheme = (children: React.ReactNode) => {
   return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
@@ -22,7 +23,12 @@ const renderWithTheme = (children: React.ReactNode) => {
 describe('ChecklistQuestion 테스트', () => {
   beforeEach(() => {
     renderWithTheme(
-      <ChecklistQuestion question={mockQuestion} addAnswer={mockAddAnswer} deleteAnswer={mockDeleteAnswer} />,
+      <ChecklistQuestion
+        questionSelectedAnswer={mockQuestionSelectedAnswer}
+        question={mockQuestion}
+        addAnswer={mockAddAnswer}
+        deleteAnswer={mockDeleteAnswer}
+      />,
     );
   });
   test('모든 선택 옵션(좋아요, 평범해요, 좋아요)이 렌더링 된다.', () => {

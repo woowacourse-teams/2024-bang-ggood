@@ -16,7 +16,7 @@ const meta: Meta<typeof Footer> = {
     },
     reactRouter: reactRouterParameters({
       location: {
-        pathParams: { page: 'location' },
+        pathParams: { page: 'checklist-list' },
       },
       routing: { path: '/:page' },
     }),
@@ -33,7 +33,7 @@ export const InLocationPage: Story = {
       {[
         { node: <Footer.HomeLogo />, nodeActive: <Footer.HomeLogoActive />, path: 'home' },
         { node: <Footer.LocationLogo />, nodeActive: <Footer.LocationLogoActive />, path: 'location' },
-        { node: <Footer.ChecklistLogo />, nodeActive: <Footer.ChecklistLogoActive />, path: 'checklist' },
+        { node: <Footer.ChecklistLogo />, nodeActive: <Footer.ChecklistLogoActive />, path: 'checklist-list' },
         { node: <Footer.MyPageLogo />, nodeActive: <Footer.MyPageLogoActive />, path: 'my-page' },
       ]}
     </Footer>

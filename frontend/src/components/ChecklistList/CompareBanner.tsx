@@ -37,7 +37,7 @@ const S = {
 
     &:hover,
     &:active {
-      background-color: ${({ theme }) => theme.palette.yellow500};
+      background-color: ${({ theme }) => theme.palette.yellow300};
     }
   `,
   Box: styled.div`

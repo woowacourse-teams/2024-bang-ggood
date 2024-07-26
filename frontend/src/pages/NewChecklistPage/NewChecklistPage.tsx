@@ -1,10 +1,14 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { postChecklist } from '@/apis/checklist';
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import Tabs, { Menu } from '@/components/common/Tabs/Tabs';
+import Toast from '@/components/common/Toast/Toast';
+import { ROUTE_PATH } from '@/constants/routePath';
+import useChecklistAnswer from '@/hooks/useChecklistAnswer';
 import useInputs from '@/hooks/useInput';
 import NewChecklistInfoTemplate from '@/pages/NewChecklistPage/NewChecklistInfoTemplate';
 import NewChecklistTemplate from '@/pages/NewChecklistPage/NewChecklistTemplate';
@@ -25,6 +29,7 @@ const menuList: Menu[] = [
   },
 ];
 
+// TODO: roomName 이슈로 인해 데모 버전으로 변경
 const DefaultRoomInfo: RoomInfo = {
   name: '살기 좋은 방',
   address: '인천광역시 부평구',
@@ -39,6 +44,7 @@ const DefaultRoomInfo: RoomInfo = {
 
 const NewChecklistPage = () => {
   const [currentTemplateId, setCurrentTemplateId] = useState<string>(menuList[0].id);
+  const [isToastShow, setIsToastShow] = useState(false);
 
   const onMoveTemplate = (templateId: TemplateType) => {
     setCurrentTemplateId(templateId);
@@ -52,6 +58,10 @@ const NewChecklistPage = () => {
 
   /*체크리스트 답변*/
   const [checklistAnswers, setChecklistAnswers] = useState<ChecklistFormAnswer[]>([]);
+
+  const { addAnswer, deleteAnswer, questionSelectedAnswer } = useChecklistAnswer();
+
+  const navigate = useNavigate();
 
   //TODO: 프롭스 드릴링 등 나중에 리팩토링 필요 가능성
   const onSubmitChecklist = () => {
@@ -69,21 +79,30 @@ const NewChecklistPage = () => {
       });
     };
 
-    fetchNewChecklist();
-
-    // Toast({
-    //   message: '체크리스트가 저장되었습니다.',
-    //   duration: 3,
-    // });
+    try {
+      fetchNewChecklist();
+      setIsToastShow(true);
+      setTimeout(() => {
+        navigate(ROUTE_PATH.checklistList);
+      }, 500);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <S.Container>
+      {isToastShow && (
+        <Toast message={'체크리스트가 저장되었습니다.'} onClose={() => setIsToastShow(false)} duration={3} />
+      )}
       <Header
         left={<Header.Backward />}
         center={<S.Title>{'새 체크리스트'}</S.Title>}
-        right={<Button label={'저장'} size="small" onClick={onSubmitChecklist} />}
+        right={<Button label={'저장'} size="small" color="dark" onClick={onSubmitChecklist} />}
       />
+
+      <button onClick={() => setIsToastShow(true)}>토스트</button>
+
       <Tabs menuList={menuList} onMoveMenu={onMoveTemplate} currentMenuId={currentTemplateId} />
       {currentTemplateId === 'info' ? (
         <NewChecklistInfoTemplate
@@ -93,7 +112,13 @@ const NewChecklistPage = () => {
           setSelectedOptions={setSelectedOptions}
         />
       ) : (
-        <NewChecklistTemplate answers={checklistAnswers} setAnswers={setChecklistAnswers} />
+        <NewChecklistTemplate
+          answers={checklistAnswers}
+          setAnswers={setChecklistAnswers}
+          addAnswer={addAnswer}
+          deleteAnswer={deleteAnswer}
+          questionSelectedAnswer={questionSelectedAnswer}
+        />
       )}
     </S.Container>
   );

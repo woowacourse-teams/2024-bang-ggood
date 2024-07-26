@@ -16,9 +16,10 @@ const Toast = (props: Props) => {
   const { message, onClose, duration } = props;
 
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       onClose();
     }, duration * 1000);
+    return () => clearTimeout(timer);
   }, [duration, onClose]);
 
   return createPortal(
@@ -35,10 +36,12 @@ const Container = styled.div`
   position: fixed;
   bottom: 50px;
   left: 50%;
+
   transform: translateX(-50%);
 `;
 
 const InnerBox = styled.div`
+  z-index: 10;
   width: 314px;
   height: 40px;
 

@@ -1,17 +1,17 @@
 import { useCallback, useState } from 'react';
 
 const useToast = () => {
-  const [toast, setToast] = useState<{ message: string; duration: number } | null>(null);
+  const [isToastShow, setIsToastShow] = useState(false);
 
-  const showToast = useCallback((message: string, duration: number) => {
-    setToast({ message, duration });
+  const showToast = useCallback(() => {
+    setIsToastShow(true);
   }, []);
 
   const hideToast = useCallback(() => {
-    setToast(null);
+    setIsToastShow(false);
   }, []);
 
-  return { showToast, hideToast, toast };
+  return { showToast, hideToast, isToastShow };
 };
 
 export default useToast;

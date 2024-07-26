@@ -5,6 +5,7 @@ import { postChecklist } from '@/apis/checklist';
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import Tabs, { Menu } from '@/components/common/Tabs/Tabs';
+import { ROUTE_PATH } from '@/constants/routePath';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';
 import useInputs from '@/hooks/useInput';
 import NewChecklistInfoTemplate from '@/pages/NewChecklistPage/NewChecklistInfoTemplate';
@@ -12,6 +13,7 @@ import NewChecklistTemplate from '@/pages/NewChecklistPage/NewChecklistTemplate'
 import { flexCenter, flexColumn, title2 } from '@/styles/common';
 import { ChecklistFormAfterAnswer, ChecklistFormAnswer } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
+import { useNavigate } from 'react-router-dom';
 
 export type TemplateType = 'checklist' | 'info';
 
@@ -26,8 +28,9 @@ const menuList: Menu[] = [
   },
 ];
 
+// TODO: roomName 이슈로 인해 데모 버전으로 변경
 const DefaultRoomInfo: RoomInfo = {
-  roomName: '살기 좋은 방',
+  name: '살기 좋은 방',
   address: '인천광역시 부평구',
   deposit: 2000,
   rent: 50,
@@ -56,6 +59,8 @@ const NewChecklistPage = () => {
 
   const { addAnswer, deleteAnswer, questionSelectedAnswer } = useChecklistAnswer();
 
+  const navigate = useNavigate();
+
   //TODO: 프롭스 드릴링 등 나중에 리팩토링 필요 가능성
   const onSubmitChecklist = () => {
     const emotionAnswers: ChecklistFormAfterAnswer[] = checklistAnswers.map(question => {
@@ -73,6 +78,8 @@ const NewChecklistPage = () => {
     };
 
     fetchNewChecklist();
+
+    navigate(ROUTE_PATH.checklistList);
   };
 
   return (
@@ -80,7 +87,7 @@ const NewChecklistPage = () => {
       <Header
         left={<Header.Backward />}
         center={<S.Title>{'새 체크리스트'}</S.Title>}
-        right={<Button label={'저장'} size="small" onClick={onSubmitChecklist} />}
+        right={<Button label={'저장'} size="small" color="dark" onClick={onSubmitChecklist} />}
       />
       <Tabs menuList={menuList} onMoveMenu={onMoveTemplate} currentMenuId={currentTemplateId} />
       {currentTemplateId === 'info' ? (

@@ -5,6 +5,7 @@ import { postChecklist } from '@/apis/checklist';
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import Tabs, { Menu } from '@/components/common/Tabs/Tabs';
+import useChecklistAnswer from '@/hooks/useChecklistAnswer';
 import useInputs from '@/hooks/useInput';
 import NewChecklistInfoTemplate from '@/pages/NewChecklistPage/NewChecklistInfoTemplate';
 import NewChecklistTemplate from '@/pages/NewChecklistPage/NewChecklistTemplate';
@@ -53,6 +54,8 @@ const NewChecklistPage = () => {
   /*체크리스트 답변*/
   const [checklistAnswers, setChecklistAnswers] = useState<ChecklistFormAnswer[]>([]);
 
+  const { addAnswer, deleteAnswer, questionSelectedAnswer } = useChecklistAnswer();
+
   //TODO: 프롭스 드릴링 등 나중에 리팩토링 필요 가능성
   const onSubmitChecklist = () => {
     const emotionAnswers: ChecklistFormAfterAnswer[] = checklistAnswers.map(question => {
@@ -70,12 +73,6 @@ const NewChecklistPage = () => {
     };
 
     fetchNewChecklist();
-  };
-
-  const questionSelectedAnswer = (targetId: number) => {
-    const targetQuestion = checklistAnswers.filter(e => e.questionId === targetId);
-    if (!targetQuestion[0]) return;
-    return targetQuestion[0]?.answer;
   };
 
   return (
@@ -97,6 +94,8 @@ const NewChecklistPage = () => {
         <NewChecklistTemplate
           answers={checklistAnswers}
           setAnswers={setChecklistAnswers}
+          addAnswer={addAnswer}
+          deleteAnswer={deleteAnswer}
           questionSelectedAnswer={questionSelectedAnswer}
         />
       )}

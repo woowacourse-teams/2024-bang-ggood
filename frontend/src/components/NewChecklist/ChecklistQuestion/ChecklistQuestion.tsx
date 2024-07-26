@@ -19,14 +19,10 @@ const emotionPhrase: Record<Emotion, string> = {
 };
 
 const ChecklistQuestion = ({ question, addAnswer, deleteAnswer, questionSelectedAnswer }: Props) => {
-  // const [answer, setAnswer] = useState<null | number>(null);
-
   const handleClick = (newAnswer: number) => {
     if (questionSelectedAnswer(question.questionId) === newAnswer) {
-      // setAnswer(null);
       deleteAnswer(question.questionId);
     } else {
-      // setAnswer(newAnswer);
       addAnswer({ questionId: question.questionId, newAnswer });
     }
   };

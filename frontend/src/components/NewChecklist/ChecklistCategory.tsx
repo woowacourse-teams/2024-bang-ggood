@@ -33,7 +33,7 @@ const ChecklistCategory = (props: ChecklistType) => {
         isPreview ? (
           <>
             <ChecklistAnswer key={question.questionId} QandA={question} />
-            {index !== category.questions.length - 1 && <Divider />}
+            {index !== category.questions.length - 1 && <Divider key={question.questionId} />}
           </>
         ) : (
           <>
@@ -44,7 +44,7 @@ const ChecklistCategory = (props: ChecklistType) => {
               deleteAnswer={props.deleteAnswer}
               questionSelectedAnswer={props.questionSelectedAnswer}
             />
-            {index !== category.questions.length - 1 && <Divider />}
+            {index !== category.questions.length - 1 && <Divider key={question.questionId} />}
           </>
         ),
       )}

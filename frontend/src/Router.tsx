@@ -4,6 +4,7 @@ import { ROUTE_PATH } from '@/constants/routePath';
 import CategoryChoosePage from '@/pages/CategoryChoosePage';
 import ChecklistListPage from '@/pages/ChecklistListPage';
 import NewChecklistPage from '@/pages/NewChecklistPage/NewChecklistPage';
+import NotFound from '@/pages/NotFound';
 import RoomComparePage from '@/pages/RoomComparePage';
 
 const router = createBrowserRouter([
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     element: <RoomComparePage />,
     path: ROUTE_PATH.roomCompare,
+  },
+  {
+    element: <NotFound />,
+    path: '*',
   },
 ]);
 

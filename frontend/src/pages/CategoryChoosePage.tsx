@@ -62,9 +62,6 @@ const CategoryChoosePage = () => {
         <S.Wrapper>
           <S.Content>
             <S.TitleSection>
-              <Link to={ROUTE_PATH.checklistNew}>
-                <div>이동</div>
-              </Link>
               <S.Title>
                 방을 선택할 때 <br />
                 {`중요한 요소를 최대 ${MAX_SELECT_CATEGORY_COUNT}개 선택해주세요!`}
@@ -87,7 +84,7 @@ const CategoryChoosePage = () => {
             <LampIcon />
           </S.IconWrapper>
           {selectedCategory.length === 0 ? (
-            <Button size="full" label="넘어가기" color="light" onClick={() => navigate('/')} />
+            <Button size="full" label="넘어가기" color="light" onClick={() => navigate(ROUTE_PATH.checklistList)} />
           ) : (
             <Button size="full" label="완료" color="dark" onClick={handleSubmit} />
           )}
@@ -128,6 +125,7 @@ const S = {
   ButtonWrapper: styled.div`
     display: flex;
     width: 90%;
+    max-width: 350px;
     height: auto;
     flex-wrap: wrap;
     gap: 15px 10px;

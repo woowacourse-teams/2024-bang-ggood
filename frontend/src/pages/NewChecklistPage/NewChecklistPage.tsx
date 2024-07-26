@@ -27,7 +27,7 @@ const menuList: Menu[] = [
 ];
 
 const DefaultRoomInfo: RoomInfo = {
-  name: '살기 좋은 방',
+  roomName: '살기 좋은 방',
   address: '인천광역시 부평구',
   deposit: 2000,
   rent: 50,

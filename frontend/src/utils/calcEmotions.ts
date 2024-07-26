@@ -1,6 +1,6 @@
 const calcEmotions = (score: number) => {
-  if (score >= 7) return 'GOOD';
-  if (score <= 3) return 'BAD';
+  if (score >= 70) return 'GOOD';
+  if (score <= 30) return 'BAD';
   return 'SOSO';
 };
 

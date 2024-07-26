@@ -182,7 +182,6 @@ public class ChecklistService {
                 .toList();
     }
 
-    //TODO 테스트해야 함
     @Transactional
     public WrittenChecklistResponse readChecklistById(long id) {
         Checklist checklist = checklistRepository.getById(id);

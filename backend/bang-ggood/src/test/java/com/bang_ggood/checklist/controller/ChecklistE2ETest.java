@@ -1,15 +1,17 @@
 package com.bang_ggood.checklist.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.bang_ggood.AcceptanceTest;
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.dto.ChecklistQuestionsResponse;
+import com.bang_ggood.checklist.dto.WrittenChecklistResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ChecklistE2ETest extends AcceptanceTest {
 
@@ -58,5 +60,22 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .as(ChecklistQuestionsResponse.class);
 
         assertThat(checklistQuestionsResponse.categories().size()).isEqualTo(Category.values().length);
+    }
+
+    @DisplayName("작성된 체크리스트 조회 성공")
+    @Test
+    void readChecklistById() {
+        WrittenChecklistResponse writtenChecklistResponse = RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .when().get("/checklists/1")
+                .then().log().all()
+                .statusCode(200)
+                .extract()
+                .as(WrittenChecklistResponse.class);
+
+        Assertions.assertAll(
+                () -> assertThat(writtenChecklistResponse.room().name()).isEqualTo("살기 좋은 방"),
+                () -> assertThat(writtenChecklistResponse.room().address()).isEqualTo("인천광역시 부평구")
+        );
     }
 }

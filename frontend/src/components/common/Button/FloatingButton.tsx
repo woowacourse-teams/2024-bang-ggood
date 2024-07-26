@@ -13,6 +13,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   size?: Size;
   color?: Color;
   'aria-label'?: string;
+  onClick: () => void;
 }
 
 const FloatingButton = ({
@@ -20,11 +21,12 @@ const FloatingButton = ({
   size = 'medium',
   color = 'yellow',
   'aria-label': ariaLabel = 'add',
+  onClick,
   ...rest
 }: Props) => {
   return (
     <S.Wrapper>
-      <S.Button size={size} color={color} aria-label={ariaLabel} {...rest}>
+      <S.Button size={size} color={color} aria-label={ariaLabel} {...rest} onClick={onClick}>
         {children}
       </S.Button>
     </S.Wrapper>

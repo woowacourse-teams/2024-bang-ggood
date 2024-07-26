@@ -1,4 +1,6 @@
+import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { getChecklistSummary } from '@/apis/checklist';
 import Accordion from '@/components/common/Accordion/Accordion';
@@ -7,8 +9,6 @@ import Layout from '@/components/common/layout/Layout';
 import ChecklistCategory from '@/components/NewChecklist/ChecklistCategory';
 import theme from '@/styles/theme';
 import { ChecklistInfo } from '@/types/checklist';
-import styled from '@emotion/styled';
-import { useLocation } from 'react-router-dom';
 
 export interface addAnswerProps {
   questionId: number;

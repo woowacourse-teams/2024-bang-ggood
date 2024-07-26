@@ -3,7 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { ROUTE_PATH } from '@/constants/routePath';
 import CategoryChoosePage from '@/pages/CategoryChoosePage';
 import ChecklistListPage from '@/pages/ChecklistListPage';
-import ChecklistPreviewPage from '@/pages/ChecklistSummaryPage';
+import ChecklistSummaryPage from '@/pages/ChecklistSummaryPage';
 import NewChecklistPage from '@/pages/NewChecklistPage/NewChecklistPage';
 import NotFound from '@/pages/NotFound';
 import RoomComparePage from '@/pages/RoomComparePage';
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     path: ROUTE_PATH.checklistList,
   },
   {
-    element: <ChecklistPreviewPage />,
+    element: <ChecklistSummaryPage />,
     path: '/checklists/:id',
   },
   {

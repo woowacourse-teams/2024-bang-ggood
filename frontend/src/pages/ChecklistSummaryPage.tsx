@@ -15,7 +15,7 @@ export interface addAnswerProps {
   newAnswer: number;
 }
 
-const ChecklistPreviewPage = () => {
+const ChecklistSummaryPage = () => {
   // TODO: Param 으로 변경해보기
   const location = useLocation();
   const checklistId = location.state?.id;
@@ -38,12 +38,12 @@ const ChecklistPreviewPage = () => {
         <S.Wrapper>
           <Accordion>
             {checklist?.categories?.map(category => (
-              <>
+              <div key={category.categoryId}>
                 <Accordion.header text={category.categoryName} id={category.categoryId} />
                 <Accordion.body id={category.categoryId}>
                   <ChecklistCategory type="preview" key={category.categoryId} category={category} />
                 </Accordion.body>
-              </>
+              </div>
             ))}
           </Accordion>
         </S.Wrapper>
@@ -52,7 +52,7 @@ const ChecklistPreviewPage = () => {
   );
 };
 
-export default ChecklistPreviewPage;
+export default ChecklistSummaryPage;
 
 const S = {
   Wrapper: styled.div`

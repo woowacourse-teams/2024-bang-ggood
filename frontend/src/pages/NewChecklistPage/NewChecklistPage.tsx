@@ -84,7 +84,7 @@ const NewChecklistPage = () => {
       setIsToastShow(true);
       setTimeout(() => {
         navigate(ROUTE_PATH.checklistList);
-      }, 500);
+      }, 1000);
     } catch (error) {
       console.error(error);
     }

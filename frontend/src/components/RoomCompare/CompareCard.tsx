@@ -63,6 +63,7 @@ const CompareCard = ({ count, room }: Props) => {
         item={<S.OptionButton>{room.optionCount}개</S.OptionButton>}
       />
       {/* TODO: 모든 카테고리를 다 보여주고 없으면 - 표시로 변경 */}
+      <S.Subtitle isLabeled={isHightestRoom}>체크리스트</S.Subtitle>
       {room.categories.map(category => (
         <CompareItem
           key={category.categoryId}
@@ -71,7 +72,7 @@ const CompareCard = ({ count, room }: Props) => {
           item={
             <FaceMark>
               <FaceMark.FaceIcon emotion={calcEmotions(category.score)} isFilled={true} />
-              <FaceMark.Footer>{category.score}점</FaceMark.Footer>
+              <FaceMark.Footer>{Math.round(category.score / 10)}점</FaceMark.Footer>
             </FaceMark>
           }
         />
@@ -89,7 +90,7 @@ const S = {
     box-sizing: border-box;
     ${flexColumn};
     align-items: center;
-    gap: 30px;
+    gap: 20px;
 
     background-color: ${({ isHightLight }) => isHightLight && '#FBFBFB'};
   `,
@@ -123,5 +124,11 @@ const S = {
     border: 1px solid ${({ theme }) => theme.palette.grey300};
     border-radius: 8px;
     ${boxShadow}
+  `,
+  Subtitle: styled.div<{ isLabeled: boolean }>`
+    visibility: ${({ isLabeled }) => (isLabeled ? 'visible' : 'hidden')};
+    margin-top: 20px;
+
+    font-size: ${({ theme }) => theme.text.size.medium};
   `,
 };

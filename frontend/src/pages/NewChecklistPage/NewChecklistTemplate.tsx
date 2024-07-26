@@ -15,7 +15,6 @@ interface Props {
   addAnswer: ({ questionId, newAnswer }: addAnswerProps) => void;
   deleteAnswer: (questionId: number) => void;
   answers: ChecklistFormAnswer[];
-  setAnswers: React.Dispatch<React.SetStateAction<ChecklistFormAnswer[]>>;
   questionSelectedAnswer: (questionId: number) => number | undefined;
 }
 

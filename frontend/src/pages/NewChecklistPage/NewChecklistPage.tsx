@@ -84,7 +84,7 @@ const NewChecklistPage = () => {
       setIsToastShow(true);
       setTimeout(() => {
         navigate(ROUTE_PATH.checklistList);
-      }, 1000);
+      }, 2000);
     } catch (error) {
       console.error(error);
     }
@@ -100,8 +100,6 @@ const NewChecklistPage = () => {
         center={<S.Title>{'새 체크리스트'}</S.Title>}
         right={<Button label={'저장'} size="small" color="dark" onClick={onSubmitChecklist} />}
       />
-
-      <button onClick={() => setIsToastShow(true)}>토스트</button>
 
       <Tabs menuList={menuList} onMoveMenu={onMoveTemplate} currentMenuId={currentTemplateId} />
       {currentTemplateId === 'info' ? (

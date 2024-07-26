@@ -22,6 +22,7 @@ export default CompareItem;
 const S = {
   ItemContainer: styled.div`
     width: 100%;
+    min-height: 60px;
     ${flexColumn};
     align-items: center;
   `,

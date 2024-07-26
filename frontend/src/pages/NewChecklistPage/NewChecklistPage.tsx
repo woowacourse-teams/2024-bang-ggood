@@ -1,10 +1,12 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { postChecklist } from '@/apis/checklist';
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import Tabs, { Menu } from '@/components/common/Tabs/Tabs';
+import Toast from '@/components/common/Toast/Toast';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';
 import useInputs from '@/hooks/useInput';
@@ -13,7 +15,6 @@ import NewChecklistTemplate from '@/pages/NewChecklistPage/NewChecklistTemplate'
 import { flexCenter, flexColumn, title2 } from '@/styles/common';
 import { ChecklistFormAfterAnswer, ChecklistFormAnswer } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
-import { useNavigate } from 'react-router-dom';
 
 export type TemplateType = 'checklist' | 'info';
 
@@ -43,6 +44,7 @@ const DefaultRoomInfo: RoomInfo = {
 
 const NewChecklistPage = () => {
   const [currentTemplateId, setCurrentTemplateId] = useState<string>(menuList[0].id);
+  const [isToastShow, setIsToastShow] = useState(false);
 
   const onMoveTemplate = (templateId: TemplateType) => {
     setCurrentTemplateId(templateId);
@@ -77,18 +79,28 @@ const NewChecklistPage = () => {
       });
     };
 
-    fetchNewChecklist();
-
-    navigate(ROUTE_PATH.checklistList);
+    try {
+      fetchNewChecklist();
+      setIsToastShow(true);
+      setTimeout(() => {
+        navigate(ROUTE_PATH.checklistList);
+      }, 2000);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <S.Container>
+      {isToastShow && (
+        <Toast message={'체크리스트가 저장되었습니다.'} onClose={() => setIsToastShow(false)} duration={3} />
+      )}
       <Header
         left={<Header.Backward />}
         center={<S.Title>{'새 체크리스트'}</S.Title>}
         right={<Button label={'저장'} size="small" color="dark" onClick={onSubmitChecklist} />}
       />
+
       <Tabs menuList={menuList} onMoveMenu={onMoveTemplate} currentMenuId={currentTemplateId} />
       {currentTemplateId === 'info' ? (
         <NewChecklistInfoTemplate

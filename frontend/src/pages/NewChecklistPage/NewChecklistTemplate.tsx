@@ -35,13 +35,17 @@ const NewChecklistTemplate = (props: Props) => {
   return (
     <S.ContentBox>
       <Accordion>
-        {checklistQuestions?.map(category => (
-          <div key={category.categoryId}>
-            <Accordion.header text={category.categoryName} id={category.categoryId} />
-            <Accordion.body id={category.categoryId}>
+        {checklistQuestions?.map((category, categoryIndex) => (
+          <div key={`category-${category.categoryId}`}>
+            <Accordion.header
+              text={category.categoryName}
+              id={category.categoryId}
+              key={`header-${category.categoryId}`}
+            />
+            <Accordion.body id={category.categoryId} key={`body-${category.categoryId}`}>
               <ChecklistCategory
                 type="question"
-                key={category.categoryId}
+                key={`category-${category.categoryId}-${categoryIndex}`}
                 category={category}
                 addAnswer={addAnswer}
                 deleteAnswer={deleteAnswer}

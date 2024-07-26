@@ -32,19 +32,19 @@ const ChecklistCategory = (props: ChecklistType) => {
       {category.questions.map((question, index) =>
         isPreview ? (
           <>
-            <ChecklistAnswer key={question.questionId} QandA={question} />
-            {index !== category.questions.length - 1 && <Divider key={question.questionId} />}
+            <ChecklistAnswer key={`answer-${question.questionId}`} QandA={question} />
+            {index !== category.questions.length - 1 && <Divider />}
           </>
         ) : (
           <>
             <ChecklistQuestion
-              key={question.questionId}
+              key={`question-${question.questionId}`}
               question={question}
               addAnswer={props.addAnswer}
               deleteAnswer={props.deleteAnswer}
               questionSelectedAnswer={props.questionSelectedAnswer}
             />
-            {index !== category.questions.length - 1 && <Divider key={question.questionId} />}
+            {index !== category.questions.length - 1 && <Divider />}
           </>
         ),
       )}

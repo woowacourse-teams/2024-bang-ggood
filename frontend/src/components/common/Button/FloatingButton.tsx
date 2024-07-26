@@ -83,9 +83,16 @@ const colorStyle = {
 
 const S = {
   Wrapper: styled.div`
-    position: absolute;
-    right: 7%;
+    display: flex;
+    position: fixed;
     bottom: 10%;
+    left: 45%;
+    z-index: 1000;
+    width: 100%;
+    padding-right: 16px;
+    transform: translateX(-45%);
+    max-width: 600px;
+    justify-content: flex-end;
   `,
   Button: styled.button<{ size: Size; color: Color }>`
     display: flex;

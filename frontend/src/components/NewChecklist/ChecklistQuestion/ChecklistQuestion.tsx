@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { QuestionDot } from '@/assets/assets';
 import FaceMark from '@/components/common/FaceMark/FaceMark';
-import { addAnswerProps } from '@/pages/ChecklistPreviewPage';
+import { addAnswerProps } from '@/pages/ChecklistSummaryPage';
 import { ChecklistQuestion } from '@/types/checklist';
 import { Emotion } from '@/types/emotionAnswer';
 
@@ -12,7 +12,8 @@ interface Props {
   deleteAnswer: (questionId: number) => void;
   questionSelectedAnswer: (questionId: number) => number | void;
 }
-const emotionPhrase: Record<Emotion, string> = {
+
+export const emotionPhrase: Record<Emotion, string> = {
   BAD: '별로에요',
   SOSO: '평범해요',
   GOOD: '좋아요',

@@ -9,14 +9,15 @@ import formattedDate from '@/utils/formattedDate';
 
 interface Props {
   checklist: ChecklistPreview;
+  onClick: () => void;
 }
 
-const ChecklistPreviewCard = ({ checklist }: Props) => {
+const ChecklistPreviewCard = ({ checklist, onClick }: Props) => {
   const extraBadgeCount =
     checklist.badge.length > MAX_BADGE_DISPLAY_COUNT ? checklist.badge.length - MAX_BADGE_DISPLAY_COUNT : null;
 
   return (
-    <S.Container>
+    <S.Container onClick={onClick}>
       <S.Row>
         <S.LocationWrapper>
           <LocationLineIcon />

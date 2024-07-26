@@ -19,7 +19,7 @@ const CompareCard = ({ count, room }: Props) => {
 
   return (
     <S.Container isHightLight={isHightestRoom}>
-      <S.Title>{room.name}</S.Title>
+      <S.Title>{room.roomName}</S.Title>
       <S.RankWrapper>
         {/* <S.Rank>{room.rank}등</S.Rank> */}
         {count === 0 && <S.Rank>2등</S.Rank>}

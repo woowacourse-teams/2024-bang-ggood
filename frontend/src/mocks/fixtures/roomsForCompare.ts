@@ -2,7 +2,7 @@ export const threeRoomsForCompare = {
   checklists: [
     {
       checklistId: 1,
-      name: '서울대입구 B방',
+      roomName: '서울대입구 B방',
       rank: 1,
       score: 87,
       deposit: 1000,
@@ -30,7 +30,7 @@ export const threeRoomsForCompare = {
     },
     {
       checklistId: 2,
-      name: '잠실 A방',
+      roomName: '잠실 A방',
       rank: 2,
       score: 87,
       deposit: 1000,
@@ -58,7 +58,7 @@ export const threeRoomsForCompare = {
     },
     {
       checklistId: 3,
-      name: '구의역 C방',
+      roomName: '구의역 C방',
       rank: 3,
       score: 77,
       deposit: 1000,
@@ -91,7 +91,7 @@ export const twoRoomsForCompare = {
   checklists: [
     {
       checklistId: 1,
-      name: '서울대입구 B방',
+      roomName: '서울대입구 B방',
       rank: 1,
       score: 87,
       deposit: 1000,
@@ -119,7 +119,7 @@ export const twoRoomsForCompare = {
     },
     {
       checklistId: 2,
-      name: '잠실 A방',
+      roomName: '잠실 A방',
       rank: 2,
       score: 87,
       deposit: 1000,

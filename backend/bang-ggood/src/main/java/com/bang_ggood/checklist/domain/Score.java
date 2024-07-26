@@ -24,6 +24,7 @@ public class Score {
     }
 
     public int intValue(int maxScore) {
+        if (count == 0) return 0;
         return scoreSum * maxScore / (count * Grade.GOOD.getScore());
     }
 }

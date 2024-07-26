@@ -16,7 +16,7 @@ export interface ChecklistQuestion {
 }
 
 export interface ChecklistAnswer extends ChecklistQuestion {
-  answer?: number | null;
+  answer?: Emotion;
 }
 
 export interface ChecklistFormAfterAnswer {
@@ -49,4 +49,11 @@ export interface ChecklistCompare extends RoomInfo {
   // options: number[];
   optionCount: number;
   categories: CategoryScore[];
+}
+
+export interface ChecklistInfo {
+  room: RoomInfo;
+  checklistId: number;
+  options: number[];
+  categories: ChecklistCategoryQuestions[];
 }

@@ -20,6 +20,7 @@ const ChecklistListPage = () => {
   useEffect(() => {
     const fetchChecklist = async () => {
       const checklistList = await getChecklists();
+      console.log(checklistList);
       setChecklistList(checklistList);
     };
 
@@ -30,12 +31,21 @@ const ChecklistListPage = () => {
 
   const handleClick = () => {
     // TODO: 비교 방 선택 페이지 작업으로 이후 변경 필요 (3차 스프린트)
+    const length = checklistList?.length - 1;
+    console.log(length);
     navigate(ROUTE_PATH.roomCompare, {
       state: {
-        id1: checklistList[0].checklistId,
-        id2: checklistList[1].checklistId,
-        id3: checklistList[2]?.checklistId,
+        id1: checklistList[length].checklistId,
+        id2: checklistList[length - 1].checklistId,
+        id3: checklistList[length - 2]?.checklistId,
       },
+    });
+  };
+
+  const handleClickCard = (id: number) => {
+    console.log('id', id);
+    navigate(ROUTE_PATH.checklistOne(id), {
+      state: { id: id },
     });
   };
 
@@ -46,9 +56,13 @@ const ChecklistListPage = () => {
       <Layout>
         <S.ListBox>
           {checklistList?.map(checklist => (
-            <Link to={ROUTE_PATH.checklistOne(checklist.checklistId)} key={checklist.checklistId}>
-              <ChecklistPreviewCard key={checklist.checklistId} checklist={checklist} />
-            </Link>
+            // <Link to={ROUTE_PATH.checklistOne(checklist.checklistId)} key={checklist.checklistId}>
+            <ChecklistPreviewCard
+              key={checklist.checklistId}
+              checklist={checklist}
+              onClick={() => handleClickCard(checklist.checklistId)}
+            />
+            // </Link>
           ))}
         </S.ListBox>
       </Layout>

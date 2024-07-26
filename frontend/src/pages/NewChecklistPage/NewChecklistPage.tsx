@@ -70,6 +70,11 @@ const NewChecklistPage = () => {
     };
 
     fetchNewChecklist();
+
+    // Toast({
+    //   message: '체크리스트가 저장되었습니다.',
+    //   duration: 3,
+    // });
   };
 
   return (

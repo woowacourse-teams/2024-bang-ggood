@@ -7,7 +7,7 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.Option;
-import com.bang_ggood.checklist.domain.Questionlist;
+import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.BadgeResponse;
 import com.bang_ggood.checklist.dto.CategoryScoreReadResponse;
 import com.bang_ggood.checklist.dto.ChecklistComparisonReadResponse;
@@ -30,6 +30,7 @@ import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.WrittenRoomResponse;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
+import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
@@ -47,16 +48,14 @@ public class ChecklistService {
     private final RoomRepository roomRepository;
     private final ChecklistOptionRepository checklistOptionRepository;
     private final ChecklistQuestionRepository checklistQuestionRepository;
-    private final Questionlist questionList;
 
     public ChecklistService(ChecklistRepository checklistRepository, RoomRepository roomRepository,
                             ChecklistOptionRepository checklistOptionRepository,
-                            ChecklistQuestionRepository checklistQuestionRepository, Questionlist questionList) {
+                            ChecklistQuestionRepository checklistQuestionRepository) {
         this.checklistRepository = checklistRepository;
         this.roomRepository = roomRepository;
         this.checklistOptionRepository = checklistOptionRepository;
         this.checklistQuestionRepository = checklistQuestionRepository;
-        this.questionList = questionList;
     }
 
 
@@ -106,14 +105,20 @@ public class ChecklistService {
     }
 
     private void createChecklistQuestions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
-        List<QuestionCreateRequest> questions = checklistCreateRequest.questions();
-        validateQuestion(questions);
-        for (QuestionCreateRequest questionCreateRequest : questions) {
-            Integer questionId = questionCreateRequest.questionId();
-            ChecklistQuestion checklistQuestion = new ChecklistQuestion(checklist, questionId,
-                    questionCreateRequest.answer());
-            checklistQuestionRepository.save(checklistQuestion);
-        }
+        validateQuestion(checklistCreateRequest.questions());
+        Map<Integer, String> existQuestions = checklistCreateRequest.questions()
+                .stream()
+                .collect(Collectors.toMap(QuestionCreateRequest::questionId, QuestionCreateRequest::answer));
+
+        List<ChecklistQuestion> checklistQuestions = Arrays.stream(Question.values())
+                .map(question -> {
+                    int questionId = question.getId();
+                    String answer = existQuestions.getOrDefault(questionId, null);
+                    return new ChecklistQuestion(checklist, questionId, answer);
+                })
+                .collect(Collectors.toList());
+
+        checklistQuestionRepository.saveAll(checklistQuestions);
     }
 
     private void validateQuestion(List<QuestionCreateRequest> questions) {
@@ -132,7 +137,7 @@ public class ChecklistService {
 
     private void validateQuestionInvalid(List<QuestionCreateRequest> questions) {
         for (QuestionCreateRequest questionCreateRequest : questions) {
-            if (!questionList.contains(questionCreateRequest.questionId())) {
+            if (!Question.contains(questionCreateRequest.questionId())) {
                 throw new BangggoodException(ExceptionCode.INVALID_QUESTION);
             }
         }
@@ -158,7 +163,7 @@ public class ChecklistService {
                 .toList();
     }
 
-    @Transactional
+   /* @Transactional
     public ChecklistQuestionsResponse readChecklistQuestions() {
         List<CategoryQuestionsResponse> categoryQuestionsResponses = new ArrayList<>();
         for (Category category : Category.values()) {
@@ -168,9 +173,9 @@ public class ChecklistService {
             categoryQuestionsResponses.add(categoryQuestionsResponse);
         }
         return new ChecklistQuestionsResponse(categoryQuestionsResponses);
-    }
+    }*/
 
-    private List<QuestionResponse> readChecklistQuestion(Category category) {
+    /*private List<QuestionResponse> readChecklistQuestion(Category category) {
         List<QuestionResponse> questionResponses = new ArrayList<>();
         category.getQuestionIds().stream()
                 .map(questionId -> new QuestionResponse(questionId,
@@ -178,10 +183,10 @@ public class ChecklistService {
                         questionList.getSubtitleByQuestionId(questionId)))
                 .forEach(questionResponses::add);
         return questionResponses;
-    }
+    }*/
 
     //TODO 테스트해야 함
-    @Transactional
+    /*@Transactional
     public WrittenChecklistResponse readChecklistById(long id) {
         Checklist checklist = checklistRepository.getById(id);
 
@@ -192,7 +197,7 @@ public class ChecklistService {
                 readCategoryQuestionsByChecklistId(id);
 
         return new WrittenChecklistResponse(writtenRoomResponse, optionIds, writtenCategoryQuestionsResponses);
-    }
+    }*/
 
     private List<Integer> readOptionsByChecklistId(long checklistId) {
         return checklistOptionRepository.findByChecklistId(checklistId)
@@ -201,14 +206,14 @@ public class ChecklistService {
                 .toList();
     }
 
-    private List<WrittenCategoryQuestionsResponse> readCategoryQuestionsByChecklistId(long checklistId) {
+    /*private List<WrittenCategoryQuestionsResponse> readCategoryQuestionsByChecklistId(long checklistId) {
         List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findByChecklistId(checklistId);
         return Arrays.stream(Category.values())
                 .map(category -> readQuestionsByCategory(category, checklistQuestions))
                 .collect(Collectors.toList());
-    }
+    }*/
 
-    private WrittenCategoryQuestionsResponse readQuestionsByCategory(Category category,
+    /*private WrittenCategoryQuestionsResponse readQuestionsByCategory(Category category,
                                                                      List<ChecklistQuestion> checklistQuestions) {
         //TODO 리팩토링 필요
         List<WrittenQuestionResponse> writtenQuestionResponses = new ArrayList<>();
@@ -222,7 +227,7 @@ public class ChecklistService {
         }
         return new WrittenCategoryQuestionsResponse(category.getId(), category.getDescription(),
                 writtenQuestionResponses);
-    }
+    }*/
 
     @Transactional
     public ChecklistsComparisonReadResponse readChecklistsComparison(List<Long> checklistIds) {

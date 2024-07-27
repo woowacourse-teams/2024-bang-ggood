@@ -35,20 +35,20 @@ public class ChecklistController {
     }
 
     //TODO 테스트해야 함
-    @GetMapping("/checklists/{id}")
+    /*@GetMapping("/checklists/{id}")
     public ResponseEntity<WrittenChecklistResponse> readChecklistById(@PathVariable long id) {
         return ResponseEntity.ok(checklistService.readChecklistById(id));
-    }
+    }*/
       
     @GetMapping("/checklists")
     public ResponseEntity<UserChecklistsPreviewResponse> readUserChecklistsPreview() {
         return ResponseEntity.ok(checklistService.readUserChecklistsPreview());
     }
 
-    @GetMapping("/checklists/questions")
+    /*@GetMapping("/checklists/questions")
     public ResponseEntity<ChecklistQuestionsResponse> readChecklistQuestions() {
         return ResponseEntity.ok(checklistService.readChecklistQuestions());
-    }
+    }*/
 
     @GetMapping("/checklists/comparison")
     public ResponseEntity<ChecklistsComparisonReadResponse> readChecklistsComparison(@RequestParam("id")List<Long> checklistIds) {

@@ -16,8 +16,8 @@ public class ChecklistScore {
         return totalScore * 100 / maxScore;
     }
 
-    public static int calculateCategoryScore(Category category, Questionlist questionlist, List<ChecklistQuestion> questions) {
-        List<ChecklistQuestion> filteredQuestions = questionlist.filterQuestions(category, questions);
+    public static int calculateCategoryScore(Category category, List<ChecklistQuestion> questions) {
+        List<ChecklistQuestion> filteredQuestions = Question.filter(category, questions);
 
         if (filteredQuestions.isEmpty()) {
             return 0;

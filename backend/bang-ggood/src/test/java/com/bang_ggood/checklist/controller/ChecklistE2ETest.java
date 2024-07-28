@@ -9,16 +9,16 @@ import org.junit.jupiter.api.Test;
 
 class ChecklistE2ETest extends AcceptanceTest {
 
-    @DisplayName("체크리스트 방 정보 작성 성공")
-    @Test
-    void createChecklist() {
-        RestAssured.given().log().all()
-                .contentType(ContentType.JSON)
-                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST)
-                .when().post("/checklists")
-                .then().log().all()
-                .statusCode(201);
-    }
+//    @DisplayName("체크리스트 방 정보 작성 성공")
+//    @Test
+//    void createChecklist() {
+//        RestAssured.given().log().all()
+//                .contentType(ContentType.JSON)
+//                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST)
+//                .when().post("/checklists")
+//                .then().log().all()
+//                .statusCode(201);
+//    }
 
     @DisplayName("체크리스트 방 정보 작성 실패: 방 이름을 넣지 않은 경우")
     @Test

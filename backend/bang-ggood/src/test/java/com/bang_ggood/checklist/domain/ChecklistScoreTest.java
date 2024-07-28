@@ -10,24 +10,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ChecklistScoreTest {
 
-    private static final Questionlist questionList = new Questionlist();
-
     @DisplayName("체크리스트 총점 계산")
     @Test
     void calculateTotalScore() {
         // given
         List<ChecklistQuestion> questions = List.of(
                 // 청결
-                new ChecklistQuestion(null, 1, "GOOD"),
-                new ChecklistQuestion(null, 2, "GOOD"),
-                new ChecklistQuestion(null, 3, "GOOD"),
-                new ChecklistQuestion(null, 4, "SOSO"),
-                new ChecklistQuestion(null, 5, "BAD"),
+                new ChecklistQuestion(null, Question.CLEAN_1, Grade.GOOD),
+                new ChecklistQuestion(null, Question.CLEAN_2, Grade.GOOD),
+                new ChecklistQuestion(null, Question.CLEAN_3, Grade.GOOD),
+                new ChecklistQuestion(null, Question.CLEAN_4, Grade.SOSO),
+                new ChecklistQuestion(null, Question.CLEAN_5, Grade.BAD),
 
                 // 편의시설
-                new ChecklistQuestion(null, 12, "SOSO"),
-                new ChecklistQuestion(null, 13, "SOSO"),
-                new ChecklistQuestion(null, 14, "GOOD"));
+                new ChecklistQuestion(null, Question.AMENITY_12, Grade.SOSO),
+                new ChecklistQuestion(null, Question.AMENITY_13, Grade.SOSO),
+                new ChecklistQuestion(null, Question.AMENITY_14, Grade.GOOD));
 
         // when
         int totalScore = ChecklistScore.calculateTotalScore(questions);
@@ -42,19 +40,19 @@ class ChecklistScoreTest {
         // given
         List<ChecklistQuestion> questions = List.of(
                 // 청결
-                new ChecklistQuestion(null, 1, "GOOD"),
-                new ChecklistQuestion(null, 2, "GOOD"),
-                new ChecklistQuestion(null, 3, "GOOD"),
-                new ChecklistQuestion(null, 4, "SOSO"),
-                new ChecklistQuestion(null, 5, "BAD"),
+                new ChecklistQuestion(null, Question.CLEAN_1, Grade.GOOD),
+                new ChecklistQuestion(null, Question.CLEAN_2, Grade.GOOD),
+                new ChecklistQuestion(null, Question.CLEAN_3, Grade.GOOD),
+                new ChecklistQuestion(null, Question.CLEAN_4, Grade.SOSO),
+                new ChecklistQuestion(null, Question.CLEAN_5, Grade.BAD),
 
                 // 편의시설
-                new ChecklistQuestion(null, 12, "SOSO"),
-                new ChecklistQuestion(null, 13, "SOSO"),
-                new ChecklistQuestion(null, 14, "GOOD"));
+                new ChecklistQuestion(null, Question.AMENITY_12, Grade.SOSO),
+                new ChecklistQuestion(null, Question.AMENITY_13, Grade.SOSO),
+                new ChecklistQuestion(null, Question.AMENITY_14, Grade.GOOD));
 
         // when
-        int totalScore = ChecklistScore.calculateCategoryScore(AMENITY, questionList, questions);
+        int totalScore = ChecklistScore.calculateCategoryScore(AMENITY, questions);
 
         // then
         assertThat(totalScore).isEqualTo(7);
@@ -66,19 +64,18 @@ class ChecklistScoreTest {
         // given
         List<ChecklistQuestion> questions = List.of(
                 // 청결
-                new ChecklistQuestion(null, 1, "GOOD"),
-                new ChecklistQuestion(null, 2, "GOOD"),
-                new ChecklistQuestion(null, 3, "GOOD"),
-                new ChecklistQuestion(null, 4, "SOSO"),
-                new ChecklistQuestion(null, 5, "BAD"),
+                new ChecklistQuestion(null, Question.CLEAN_1, Grade.GOOD),
+                new ChecklistQuestion(null, Question.CLEAN_2, Grade.GOOD),
+                new ChecklistQuestion(null, Question.CLEAN_3, Grade.GOOD),
+                new ChecklistQuestion(null, Question.CLEAN_4, Grade.SOSO),
+                new ChecklistQuestion(null, Question.CLEAN_5, Grade.BAD),
 
                 // 편의시설
-                new ChecklistQuestion(null, 12, "SOSO"),
-                new ChecklistQuestion(null, 13, "SOSO"),
-                new ChecklistQuestion(null, 14, "GOOD"));
-
+                new ChecklistQuestion(null, Question.AMENITY_12, Grade.SOSO),
+                new ChecklistQuestion(null, Question.AMENITY_13, Grade.SOSO),
+                new ChecklistQuestion(null, Question.AMENITY_14, Grade.GOOD));
         // when
-        int totalScore = ChecklistScore.calculateCategoryScore(ECONOMIC, questionList, questions);
+        int totalScore = ChecklistScore.calculateCategoryScore(ECONOMIC, questions);
 
         // then
         assertThat(totalScore).isEqualTo(0);

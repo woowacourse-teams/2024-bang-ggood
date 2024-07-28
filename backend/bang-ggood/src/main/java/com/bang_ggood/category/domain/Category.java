@@ -1,9 +1,6 @@
 package com.bang_ggood.category.domain;
 
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
-import com.bang_ggood.checklist.domain.Questionlist;
-import com.bang_ggood.exception.BangggoodException;
-import com.bang_ggood.exception.ExceptionCode;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -36,21 +33,8 @@ public enum Category {
                 .anyMatch(category -> category.id == id);
     }
 
-    //TODO 테스트해야 함
-    public boolean isQuestionIn(Questionlist questionlist, int questionId) {
-        return this.id == findIdByQuestionId(questionlist, questionId);
-    }
-
-    private int findIdByQuestionId(Questionlist questionlist, int questionId) {
-        return Arrays.stream(Category.values())
-                .filter(category -> questionlist.isCategory(questionId, category))
-                .mapToInt(category -> category.id)
-                .findFirst()
-                .orElseThrow(() -> new BangggoodException(ExceptionCode.INVALID_QUESTION));
-    }
-
-    public Badge provideBadge(Questionlist questionlist, List<ChecklistQuestion> questions) {
-        int categoryScore = calculateCategoryScore(this, questionlist, questions);
+    public Badge provideBadge(List<ChecklistQuestion> questions) {
+        int categoryScore = calculateCategoryScore(this, questions);
 
         if (categoryScore >= 8) {
             return this.badge;
@@ -69,4 +53,17 @@ public enum Category {
     public Set<Integer> getQuestionIds() {
         return null;
     }
+
+    //TODO 테스트해야 함
+//    public boolean isQuestionIn(Questionlist questionlist, int questionId) {
+//        return this.id == findIdByQuestionId(questionlist, questionId);
+//    }
+//
+//    private int findIdByQuestionId(Questionlist questionlist, int questionId) {
+//        return Arrays.stream(Category.values())
+//                .filter(category -> questionlist.isCategory(questionId, category))
+//                .mapToInt(category -> category.id)
+//                .findFirst()
+//                .orElseThrow(() -> new BangggoodException(ExceptionCode.INVALID_QUESTION));
+//    }
 }

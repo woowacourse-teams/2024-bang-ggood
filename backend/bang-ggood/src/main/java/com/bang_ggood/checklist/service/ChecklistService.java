@@ -1,41 +1,27 @@
 package com.bang_ggood.checklist.service;
 
-import com.bang_ggood.category.domain.Category;
-import com.bang_ggood.category.dto.CategoryQuestionsResponse;
-import com.bang_ggood.category.dto.WrittenCategoryQuestionsResponse;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
+import com.bang_ggood.checklist.domain.Grade;
 import com.bang_ggood.checklist.domain.Option;
 import com.bang_ggood.checklist.domain.Question;
-import com.bang_ggood.checklist.dto.BadgeResponse;
-import com.bang_ggood.checklist.dto.CategoryScoreReadResponse;
-import com.bang_ggood.checklist.dto.ChecklistComparisonReadResponse;
 import com.bang_ggood.checklist.dto.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.ChecklistInfo;
-import com.bang_ggood.checklist.dto.ChecklistQuestionsResponse;
-import com.bang_ggood.checklist.dto.ChecklistsComparisonReadResponse;
 import com.bang_ggood.checklist.dto.QuestionCreateRequest;
-import com.bang_ggood.checklist.dto.QuestionResponse;
-import com.bang_ggood.checklist.dto.UserChecklistPreviewResponse;
-import com.bang_ggood.checklist.dto.UserChecklistsPreviewResponse;
-import com.bang_ggood.checklist.dto.WrittenChecklistResponse;
-import com.bang_ggood.checklist.dto.WrittenQuestionResponse;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.domain.Room;
-import com.bang_ggood.room.dto.WrittenRoomResponse;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
 import java.util.Map;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -99,7 +85,7 @@ public class ChecklistService {
     private void validateOptionInvalid(List<Integer> optionIds) {
         for (Integer optionId : optionIds) {
             if (!Option.contains(optionId)) {
-                throw new BangggoodException(ExceptionCode.INVALID_OPTION);
+                throw new BangggoodException(ExceptionCode.OPTION_INVALID);
             }
         }
     }
@@ -113,8 +99,9 @@ public class ChecklistService {
         List<ChecklistQuestion> checklistQuestions = Arrays.stream(Question.values())
                 .map(question -> {
                     int questionId = question.getId();
-                    String answer = existQuestions.getOrDefault(questionId, null);
-                    return new ChecklistQuestion(checklist, questionId, answer);
+                    return Optional.ofNullable(existQuestions.get(questionId))
+                            .map(answer -> new ChecklistQuestion(checklist, Question.findById(questionId), Grade.from(answer)))
+                            .orElseGet(() -> new ChecklistQuestion(checklist, Question.findById(questionId), null));
                 })
                 .collect(Collectors.toList());
 
@@ -138,12 +125,12 @@ public class ChecklistService {
     private void validateQuestionInvalid(List<QuestionCreateRequest> questions) {
         for (QuestionCreateRequest questionCreateRequest : questions) {
             if (!Question.contains(questionCreateRequest.questionId())) {
-                throw new BangggoodException(ExceptionCode.INVALID_QUESTION);
+                throw new BangggoodException(ExceptionCode.QUESTION_INVALID);
             }
         }
     }
 
-    @Transactional
+    /*@Transactional
     public UserChecklistsPreviewResponse readUserChecklistsPreview() {
         User user = new User(1L, "방방이");
         List<Checklist> checklists = checklistRepository.findByUser(user);
@@ -155,13 +142,13 @@ public class ChecklistService {
                 .toList();
 
         return new UserChecklistsPreviewResponse(responses);
-    }
+    }*/
 
-    private List<BadgeResponse> createBadges(List<ChecklistQuestion> questions) {
+    /*private List<BadgeResponse> createBadges(List<ChecklistQuestion> questions) {
         return Category.getBadges(questions).stream()
                 .map(BadgeResponse::from)
                 .toList();
-    }
+    }*/
 
    /* @Transactional
     public ChecklistQuestionsResponse readChecklistQuestions() {
@@ -199,12 +186,12 @@ public class ChecklistService {
         return new WrittenChecklistResponse(writtenRoomResponse, optionIds, writtenCategoryQuestionsResponses);
     }*/
 
-    private List<Integer> readOptionsByChecklistId(long checklistId) {
+    /*private List<Integer> readOptionsByChecklistId(long checklistId) {
         return checklistOptionRepository.findByChecklistId(checklistId)
                 .stream()
                 .map(ChecklistOption::getOptionId)
                 .toList();
-    }
+    }*/
 
     /*private List<WrittenCategoryQuestionsResponse> readCategoryQuestionsByChecklistId(long checklistId) {
         List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findByChecklistId(checklistId);
@@ -229,7 +216,7 @@ public class ChecklistService {
                 writtenQuestionResponses);
     }*/
 
-    @Transactional
+    /*@Transactional
     public ChecklistsComparisonReadResponse readChecklistsComparison(List<Long> checklistIds) {
         User user = new User(1L, "방끗");
 
@@ -251,9 +238,9 @@ public class ChecklistService {
                 .toList();
 
         return new ChecklistsComparisonReadResponse(responses);
-    }
+    }*/
 
-    private List<CategoryScoreReadResponse> calculateCategoryScores(Checklist checklist) {
+    /*private List<CategoryScoreReadResponse> calculateCategoryScores(Checklist checklist) {
         List<CategoryScoreReadResponse> categoryScores = new ArrayList<>();
 
         for (Category category : Category.values()) {
@@ -268,11 +255,11 @@ public class ChecklistService {
         }
 
         return categoryScores;
-    }
+    }*/
 
-    private int calculateChecklistScore(List<CategoryScoreReadResponse> categoryScores) {
+    /*private int calculateChecklistScore(List<CategoryScoreReadResponse> categoryScores) {
         return categoryScores.stream()
                 .mapToInt(CategoryScoreReadResponse::score)
                 .sum() / categoryScores.size();
-    }
+    }*/
 }

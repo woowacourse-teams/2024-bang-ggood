@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.bang_ggood.AcceptanceTest;
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.checklist.ChecklistFixture;
-import com.bang_ggood.checklist.dto.ChecklistQuestionsResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;

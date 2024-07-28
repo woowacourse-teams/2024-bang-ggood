@@ -1,10 +1,10 @@
 package com.bang_ggood.checklist.controller;
 
-import com.bang_ggood.checklist.dto.ChecklistCreateRequest;
-import com.bang_ggood.checklist.dto.ChecklistQuestionsResponse;
-import com.bang_ggood.checklist.dto.WrittenChecklistResponse;
-import com.bang_ggood.checklist.dto.ChecklistsWithScoreReadResponse;
-import com.bang_ggood.checklist.dto.UserChecklistsPreviewResponse;
+import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
+import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
+import com.bang_ggood.checklist.dto.response.WrittenChecklistResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistsWithScoreReadResponse;
+import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
 import com.bang_ggood.checklist.service.ChecklistService;
 
 import jakarta.validation.Valid;

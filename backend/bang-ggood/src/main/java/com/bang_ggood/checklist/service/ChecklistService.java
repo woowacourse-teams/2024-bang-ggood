@@ -10,19 +10,19 @@ import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.Option;
 import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.domain.Questionlist;
-import com.bang_ggood.checklist.dto.BadgeResponse;
-import com.bang_ggood.checklist.dto.CategoryScoreReadResponse;
+import com.bang_ggood.checklist.dto.response.BadgeResponse;
+import com.bang_ggood.checklist.dto.response.CategoryScoreReadResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistWithScoreReadResponse;
-import com.bang_ggood.checklist.dto.ChecklistCreateRequest;
+import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.ChecklistInfo;
-import com.bang_ggood.checklist.dto.ChecklistQuestionsResponse;
-import com.bang_ggood.checklist.dto.ChecklistsWithScoreReadResponse;
-import com.bang_ggood.checklist.dto.QuestionCreateRequest;
-import com.bang_ggood.checklist.dto.QuestionResponse;
-import com.bang_ggood.checklist.dto.UserChecklistPreviewResponse;
-import com.bang_ggood.checklist.dto.UserChecklistsPreviewResponse;
-import com.bang_ggood.checklist.dto.WrittenChecklistResponse;
-import com.bang_ggood.checklist.dto.WrittenQuestionResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistsWithScoreReadResponse;
+import com.bang_ggood.checklist.dto.request.QuestionCreateRequest;
+import com.bang_ggood.checklist.dto.response.QuestionResponse;
+import com.bang_ggood.checklist.dto.response.UserChecklistPreviewResponse;
+import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
+import com.bang_ggood.checklist.dto.response.WrittenChecklistResponse;
+import com.bang_ggood.checklist.dto.response.WrittenQuestionResponse;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
@@ -146,11 +146,14 @@ public class ChecklistService {
         List<Checklist> checklists = checklistRepository.findByUser(user);
 
         List<UserChecklistPreviewResponse> responses = checklists.stream()
-                .map(checklist -> UserChecklistPreviewResponse.of(
-                        checklist, createBadges(checklist.getQuestions())))
+                .map(this::getChecklistPreview)
                 .toList();
 
         return new UserChecklistsPreviewResponse(responses);
+    }
+
+    private UserChecklistPreviewResponse getChecklistPreview(Checklist checklist) {
+        return UserChecklistPreviewResponse.of(checklist, createBadges(checklist.getQuestions()));
     }
 
     private List<BadgeResponse> createBadges(List<ChecklistQuestion> questions) {

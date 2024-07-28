@@ -2,44 +2,31 @@ package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.category.dto.CategoryQuestionsResponse;
-import com.bang_ggood.category.dto.WrittenCategoryQuestionsResponse;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.Option;
 import com.bang_ggood.checklist.domain.Question;
-import com.bang_ggood.checklist.dto.BadgeResponse;
 import com.bang_ggood.checklist.dto.CategoryScoreReadResponse;
-import com.bang_ggood.checklist.dto.ChecklistComparisonReadResponse;
 import com.bang_ggood.checklist.dto.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.ChecklistInfo;
 import com.bang_ggood.checklist.dto.ChecklistQuestionsResponse;
-import com.bang_ggood.checklist.dto.ChecklistsComparisonReadResponse;
 import com.bang_ggood.checklist.dto.QuestionCreateRequest;
 import com.bang_ggood.checklist.dto.QuestionResponse;
-import com.bang_ggood.checklist.dto.UserChecklistPreviewResponse;
-import com.bang_ggood.checklist.dto.UserChecklistsPreviewResponse;
-import com.bang_ggood.checklist.dto.WrittenChecklistResponse;
-import com.bang_ggood.checklist.dto.WrittenQuestionResponse;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.domain.Room;
-import com.bang_ggood.room.dto.WrittenRoomResponse;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
-import java.util.stream.Stream;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class ChecklistService {
@@ -59,7 +46,7 @@ public class ChecklistService {
     }
 
 
-    @Transactional
+    /*@Transactional
     public long createChecklist(ChecklistCreateRequest checklistCreateRequest) {
         Room room = roomRepository.save(checklistCreateRequest.toRoomEntity());
 
@@ -71,7 +58,7 @@ public class ChecklistService {
         createChecklistOptions(checklistCreateRequest, checklist);
         createChecklistQuestions(checklistCreateRequest, checklist);
         return checklist.getId();
-    }
+    }*/
 
     private void createChecklistOptions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
         List<Integer> optionIds = checklistCreateRequest.options();
@@ -99,12 +86,12 @@ public class ChecklistService {
     private void validateOptionInvalid(List<Integer> optionIds) {
         for (Integer optionId : optionIds) {
             if (!Option.contains(optionId)) {
-                throw new BangggoodException(ExceptionCode.INVALID_OPTION);
+                throw new BangggoodException(ExceptionCode.OPTION_INVALID);
             }
         }
     }
 
-    private void createChecklistQuestions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
+    /*private void createChecklistQuestions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
         List<QuestionCreateRequest> questions = checklistCreateRequest.questions();
         validateQuestion(questions);
         for (QuestionCreateRequest questionCreateRequest : questions) {
@@ -113,7 +100,7 @@ public class ChecklistService {
                     questionCreateRequest.answer());
             checklistQuestionRepository.save(checklistQuestion);
         }
-    }
+    }*/
 
     private void validateQuestion(List<QuestionCreateRequest> questions) {
         validateQuestionDuplicate(questions);
@@ -132,7 +119,7 @@ public class ChecklistService {
     private void validateQuestionInvalid(List<QuestionCreateRequest> questions) {
         for (QuestionCreateRequest questionCreateRequest : questions) {
             if (!Question.contains(questionCreateRequest.questionId())) {
-                throw new BangggoodException(ExceptionCode.INVALID_QUESTION);
+                throw new BangggoodException(ExceptionCode.QUESTION_INVALID);
             }
         }
     }

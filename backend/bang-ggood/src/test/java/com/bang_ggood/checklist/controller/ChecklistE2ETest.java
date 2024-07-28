@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 class ChecklistE2ETest extends AcceptanceTest {
 
-    @DisplayName("체크리스트 방 정보 작성 성공")
+    /*@DisplayName("체크리스트 방 정보 작성 성공")
     @Test
     void createChecklist() {
         RestAssured.given().log().all()
@@ -44,7 +44,7 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .when().post("/checklists")
                 .then().log().all()
                 .statusCode(400);
-    }
+    }*/
 
     @DisplayName("체크리스트 질문 조회 성공")
     @Test

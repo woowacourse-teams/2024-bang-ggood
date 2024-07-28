@@ -85,7 +85,7 @@ public enum Question {
         return Arrays.stream(values())
                 .filter(question -> question.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new BangggoodException(ExceptionCode.INVALID_QUESTION));
+                .orElseThrow(() -> new BangggoodException(ExceptionCode.QUESTION_INVALID));
     }
 
     public static boolean contains(int id) {

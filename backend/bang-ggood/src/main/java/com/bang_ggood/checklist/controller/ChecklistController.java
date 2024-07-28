@@ -28,11 +28,11 @@ public class ChecklistController {
         this.checklistService = checklistService;
     }
 
-    @PostMapping("/checklists")
+    /*@PostMapping("/checklists")
     public ResponseEntity<Void> createChecklist(@Valid @RequestBody ChecklistCreateRequest checklistCreateRequest) {
         long checklistId = checklistService.createChecklist(checklistCreateRequest);
         return ResponseEntity.created(URI.create("/checklists/" + checklistId)).build();
-    }
+    }*/
 
     /*//TODO 테스트해야 함
     @GetMapping("/checklists/{id}")

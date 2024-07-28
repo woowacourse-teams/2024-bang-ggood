@@ -54,7 +54,7 @@ class QuestionTest {
         //when & then
         assertThatThrownBy(() -> Question.findById(questionId))
                 .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.INVALID_QUESTION.getMessage());
+                .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
     }
 
     @DisplayName("질문 아이디를 통해 포함되어 있는지 확인 : 포함일 경우")

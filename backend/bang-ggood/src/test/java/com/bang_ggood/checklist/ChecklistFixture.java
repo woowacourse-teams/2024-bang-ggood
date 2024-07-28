@@ -1,8 +1,11 @@
 package com.bang_ggood.checklist;
 
+import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.request.QuestionCreateRequest;
 import com.bang_ggood.room.RoomFixture;
+import com.bang_ggood.room.domain.Room;
+import com.bang_ggood.user.domain.User;
 import java.util.List;
 
 public class ChecklistFixture {
@@ -30,7 +33,6 @@ public class ChecklistFixture {
     public static final QuestionCreateRequest QUESTION_CREATE_REQUEST_INVALID_ID = new QuestionCreateRequest(
             9999, "SOSO"
     );
-
 
     public static final ChecklistCreateRequest CHECKLIST_CREATE_REQUEST = new ChecklistCreateRequest(
             RoomFixture.ROOM_CREATE_REQUEST, List.of(1, 2, 3, 5),
@@ -73,4 +75,8 @@ public class ChecklistFixture {
             List.of(QUESTION_1_CREATE_REQUEST, QUESTION_2_CREATE_REQUEST,
                     QUESTION_3_CREATE_REQUEST, QUESTION_5_CREATE_REQUEST)
     );
+
+    public static Checklist createChecklist(User user, Room room) {
+        return new Checklist(user, room, 1000, 60, 24, "방끗부동산");
+    }
 }

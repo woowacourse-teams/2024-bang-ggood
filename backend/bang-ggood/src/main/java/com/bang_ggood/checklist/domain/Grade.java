@@ -9,7 +9,8 @@ public enum Grade {
 
     GOOD(3),
     SOSO(2),
-    BAD(1);
+    BAD(1),
+    ;
 
     private final int score;
 

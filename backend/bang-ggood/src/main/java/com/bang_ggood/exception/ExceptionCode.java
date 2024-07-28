@@ -10,6 +10,8 @@ public enum ExceptionCode {
     INVALID_QUESTION(HttpStatus.BAD_REQUEST, "잘못된 질문 ID입니다."),
     QUESTION_DUPLICATED(HttpStatus.BAD_REQUEST, "중복된 질문이 존재합니다."),
     USER_NOT_FOUND(HttpStatus.BAD_REQUEST, "유저가 존재하지 않습니다."),
+
+    // Category
     CATEGORY_PRIORITY_INVALID_COUNT(HttpStatus.BAD_REQUEST, "카테고리 개수가 유효하지 않습니다."),
     CATEGORY_NOT_FOUND(HttpStatus.BAD_REQUEST, "카테코리가 존재하지 않습니다."),
     CATEGORY_DUPLICATED(HttpStatus.BAD_REQUEST, "중복된 카테고리가 존재합니다."),

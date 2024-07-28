@@ -14,7 +14,7 @@ class CategoryTest {
 
     @DisplayName("뱃지 부여 : 카테고리 총점이 8점 이상일 때")
     @Test
-    void getBadges() {
+    void provideBadge() {
         // given
 
         // 청결
@@ -26,7 +26,7 @@ class CategoryTest {
                 new ChecklistQuestion(null, Question.CLEAN_5, Grade.BAD));
 
         // when
-        Badge badge = CLEAN.provideBadge(questions);
+        Badge badge = Category.CLEAN.provideBadge(questions);
 
         // then
         assertThat(badge).isEqualTo(Badge.CLEAN);
@@ -34,7 +34,7 @@ class CategoryTest {
 
     @DisplayName("뱃지 미부여 : 카테고리 총점이 8점 미만일 때")
     @Test
-    void getBadges_NoBadges() {
+    void provideBadge_None() {
         // given
 
         // 청결
@@ -47,6 +47,46 @@ class CategoryTest {
 
         // when
         Badge badge = CLEAN.provideBadge(questions);
+
+        // then
+        assertThat(badge).isEqualTo(Badge.NONE);
+    }
+
+    @DisplayName("뱃지 부여 : null이 포함되어 있을 때")
+    @Test
+    void provideBadge_ContainNull() {
+        // given
+
+        // 청결
+        List<ChecklistQuestion> questions = List.of(
+                new ChecklistQuestion(null, Question.CLEAN_1, Grade.GOOD),
+                new ChecklistQuestion(null, Question.CLEAN_2, Grade.GOOD),
+                new ChecklistQuestion(null, Question.CLEAN_3, Grade.GOOD),
+                new ChecklistQuestion(null, Question.CLEAN_4, null),
+                new ChecklistQuestion(null, Question.CLEAN_5, null));
+
+        // when
+        Badge badge = Category.CLEAN.provideBadge(questions);
+
+        // then
+        assertThat(badge).isEqualTo(Badge.CLEAN);
+    }
+
+    @DisplayName("뱃지 미부여 : null이 포함되어 있을 때")
+    @Test
+    void provideBadge_None_ContainNull() {
+        // given
+
+        // 청결
+        List<ChecklistQuestion> questions = List.of(
+                new ChecklistQuestion(null, Question.CLEAN_1, Grade.GOOD),
+                new ChecklistQuestion(null, Question.CLEAN_2, Grade.BAD),
+                new ChecklistQuestion(null, Question.CLEAN_3, Grade.BAD),
+                new ChecklistQuestion(null, Question.CLEAN_4, null),
+                new ChecklistQuestion(null, Question.CLEAN_5, null));
+
+        // when
+        Badge badge = Category.CLEAN.provideBadge(questions);
 
         // then
         assertThat(badge).isEqualTo(Badge.NONE);

@@ -60,9 +60,10 @@ public enum Question {
         this.subtitle = subtitle;
     }
 
+    // TODO 테스트 필요
     public static List<ChecklistQuestion> filter(Category category, List<ChecklistQuestion> questions) {
         return questions.stream()
-                .filter(question -> question.getQuestion().isCategory(category))
+                .filter(question -> question.getQuestion().isCategory(category) && question.getGrade() != null)
                 .toList();
     }
 
@@ -70,6 +71,7 @@ public enum Question {
         return this.category == category;
     }
 
+    // TODO 테스트 필요
     public static Question findById(int id) {
         return Arrays.stream(values())
                 .filter(question -> question.id == id)
@@ -81,6 +83,7 @@ public enum Question {
         return Arrays.stream(values())
                 .anyMatch(question -> question.getId() == id);
     }
+
     public int getId() {
         return id;
     }

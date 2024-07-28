@@ -11,7 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import java.util.Objects;
 
-
 @Entity
 public class ChecklistQuestion extends BaseEntity {
 

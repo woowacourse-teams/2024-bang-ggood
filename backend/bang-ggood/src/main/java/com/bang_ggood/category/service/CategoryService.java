@@ -1,5 +1,9 @@
 package com.bang_ggood.category.service;
 
+import static com.bang_ggood.exception.ExceptionCode.CATEGORY_DUPLICATED;
+import static com.bang_ggood.exception.ExceptionCode.CATEGORY_NOT_FOUND;
+import static com.bang_ggood.exception.ExceptionCode.CATEGORY_PRIORITY_INVALID_COUNT;
+
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.category.domain.CategoryPriority;
 import com.bang_ggood.category.dto.CategoriesReadResponse;
@@ -9,15 +13,11 @@ import com.bang_ggood.category.repository.CategoryPriorityRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-
-import static com.bang_ggood.exception.ExceptionCode.CATEGORY_DUPLICATED;
-import static com.bang_ggood.exception.ExceptionCode.CATEGORY_NOT_FOUND;
-import static com.bang_ggood.exception.ExceptionCode.CATEGORY_PRIORITY_INVALID_COUNT;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CategoryService {

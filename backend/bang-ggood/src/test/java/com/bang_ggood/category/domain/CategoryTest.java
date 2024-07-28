@@ -1,14 +1,5 @@
 package com.bang_ggood.category.domain;
 
-import com.bang_ggood.checklist.domain.ChecklistQuestion;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import java.util.List;
-
-import static com.bang_ggood.category.domain.Category.CLEAN;
-import static com.bang_ggood.category.domain.Category.SECURITY;
-import static org.assertj.core.api.Assertions.assertThat;
-
 class CategoryTest {
 
     /*@DisplayName("뱃지 부여 : 카테고리 총점이 80점 이상일 때")

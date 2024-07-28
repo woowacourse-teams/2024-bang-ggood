@@ -1,23 +1,13 @@
 package com.bang_ggood.checklist.controller;
 
-import com.bang_ggood.category.dto.WrittenCategoryQuestionsResponse;
 import com.bang_ggood.checklist.dto.ChecklistCreateRequest;
-import com.bang_ggood.checklist.dto.ChecklistQuestionsResponse;
-import com.bang_ggood.checklist.dto.WrittenChecklistResponse;
-import com.bang_ggood.checklist.dto.ChecklistsComparisonReadResponse;
-import com.bang_ggood.checklist.dto.UserChecklistsPreviewResponse;
 import com.bang_ggood.checklist.service.ChecklistService;
-
 import jakarta.validation.Valid;
+import java.net.URI;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import java.net.URI;
-import java.util.List;
 
 @RestController
 public class ChecklistController {

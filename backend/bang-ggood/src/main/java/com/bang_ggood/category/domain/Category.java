@@ -2,8 +2,6 @@ package com.bang_ggood.category.domain;
 
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
-import com.bang_ggood.checklist.domain.ChecklistQuestion;
-
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;

@@ -1,5 +1,6 @@
 package com.bang_ggood.checklist.service;
 
+import com.bang_ggood.category.domain.Badge;
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.category.dto.CategoryQuestionsResponse;
 import com.bang_ggood.category.dto.WrittenCategoryQuestionsResponse;
@@ -7,6 +8,7 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.Option;
+import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.domain.Questionlist;
 import com.bang_ggood.checklist.dto.BadgeResponse;
 import com.bang_ggood.checklist.dto.CategoryScoreReadResponse;
@@ -109,8 +111,8 @@ public class ChecklistService {
         List<QuestionCreateRequest> questions = checklistCreateRequest.questions();
         validateQuestion(questions);
         for (QuestionCreateRequest questionCreateRequest : questions) {
-            Integer questionId = questionCreateRequest.questionId();
-            ChecklistQuestion checklistQuestion = new ChecklistQuestion(checklist, questionId,
+            Question question = questionList.findById(questionCreateRequest.questionId());
+            ChecklistQuestion checklistQuestion = new ChecklistQuestion(checklist, questionCreateRequest.questionId(),
                     questionCreateRequest.answer());
             checklistQuestionRepository.save(checklistQuestion);
         }
@@ -145,15 +147,16 @@ public class ChecklistService {
 
         List<UserChecklistPreviewResponse> responses = checklists.stream()
                 .map(checklist -> UserChecklistPreviewResponse.of(
-                        checklist,
-                        createBadges(checklist.getQuestions())))
+                        checklist, createBadges(checklist.getQuestions())))
                 .toList();
 
         return new UserChecklistsPreviewResponse(responses);
     }
 
     private List<BadgeResponse> createBadges(List<ChecklistQuestion> questions) {
-        return Category.getBadges(questions).stream()
+        return Arrays.stream(Category.values())
+                .map(category -> category.provideBadge(questionList, questions))
+                .filter(badge -> badge != Badge.NONE)
                 .map(BadgeResponse::from)
                 .toList();
     }
@@ -214,7 +217,7 @@ public class ChecklistService {
         List<WrittenQuestionResponse> writtenQuestionResponses = new ArrayList<>();
         for (ChecklistQuestion checklistQuestion : checklistQuestions) {
             int questionId = checklistQuestion.getQuestionId();
-            if (category.isQuestionIn(questionId)) {
+            if (category.isQuestionIn(questionList, questionId)) {
                 writtenQuestionResponses.add(
                         new WrittenQuestionResponse(questionId, questionList.getTitleByQuestionId(questionId),
                                 questionList.getSubtitleByQuestionId(questionId), checklistQuestion.getAnswer()));
@@ -252,7 +255,7 @@ public class ChecklistService {
         List<CategoryScoreReadResponse> categoryScores = new ArrayList<>();
 
         for (Category category : Category.values()) {
-            int categoryScore = category.calculateTotalScore(checklist.getQuestions());
+            int categoryScore = category.calculateHaTotalScore(questionList, checklist.getQuestions());
             if (categoryScore != 0) {
                 categoryScores.add(new CategoryScoreReadResponse(
                         category.getId(),

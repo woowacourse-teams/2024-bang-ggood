@@ -8,7 +8,8 @@ public enum Badge {
     OPTION("옵션", "옵션이 많아요", "🛋️"),
     ENVIRONMENT("주거환경", "주거환경이 좋아요", "🌱"),
     SECURITY("보안", "안전해요", "🔒"),
-    ECONOMIC("경제적", "경제적이에요", "💰")
+    ECONOMIC("경제적", "경제적이에요", "💰"),
+    NONE("", "", "")
     ;
   
     private static final String DESCRIPTION_FORMAT = "%s %s";

@@ -1,6 +1,7 @@
 package com.bang_ggood.checklist.domain;
 
 import java.util.Arrays;
+import java.util.List;
 
 public enum Grade {
 
@@ -16,6 +17,12 @@ public enum Grade {
 
     public static int calculateMaxScore(int size) {
         return GOOD.score * size;
+    }
+
+    public static int calculateTotalScore(List<ChecklistQuestion> questions) {
+        return questions.stream()
+                .mapToInt(question -> getScore(question.getAnswer()))
+                .sum();
     }
 
     public static int getScore(String answer) { //TODO null 예외처리

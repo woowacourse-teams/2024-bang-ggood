@@ -6,16 +6,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.bang_ggood.IntegrationTestSupport;
-import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Question;
-import com.bang_ggood.checklist.dto.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
-import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
-import io.micrometer.observation.Observation.CheckedCallable;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +43,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         assertThatThrownBy(
                         () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_QUESTION_ID))
                 .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.INVALID_QUESTION.getMessage());
+                .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
     }
 
     @DisplayName("체크리스트 방 정보 작성 실패: 질문 id가 중복일 경우")
@@ -68,7 +63,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         assertThatThrownBy(
                 () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_OPTION_ID))
                 .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.INVALID_OPTION.getMessage());
+                .hasMessage(ExceptionCode.OPTION_INVALID.getMessage());
     }
 
     @DisplayName("체크리스트 방 정보 작성 실패: 옵션 id가 중복일 경우")

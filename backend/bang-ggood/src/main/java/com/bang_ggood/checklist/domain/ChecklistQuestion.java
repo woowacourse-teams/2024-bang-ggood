@@ -2,6 +2,8 @@ package com.bang_ggood.checklist.domain;
 
 import com.bang_ggood.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,12 +24,13 @@ public class ChecklistQuestion extends BaseEntity {
 
     private int questionId;
 
-    private String answer;
+    @Enumerated(value = EnumType.STRING)
+    private Grade grade;
 
-    public ChecklistQuestion(Checklist checklist, int questionId, String answer) {
+    public ChecklistQuestion(Checklist checklist, int questionId, Grade grade) {
         this.checklist = checklist;
         this.questionId = questionId;
-        this.answer = answer;
+        this.grade = grade;
     }
 
     protected ChecklistQuestion() {
@@ -45,8 +48,12 @@ public class ChecklistQuestion extends BaseEntity {
         return questionId;
     }
 
-    public String getAnswer() {
-        return answer;
+    public Question getQuestion() {
+        return Question.findById(questionId);
+    }
+
+    public Grade getGrade() {
+        return grade;
     }
 
     @Override
@@ -72,7 +79,7 @@ public class ChecklistQuestion extends BaseEntity {
                 "id=" + id +
                 ", checklist=" + checklist +
                 ", questionId=" + questionId +
-                ", answer=" + answer +
+                ", grade=" + grade +
                 '}';
     }
 }

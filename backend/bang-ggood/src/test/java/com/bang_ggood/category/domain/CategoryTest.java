@@ -1,6 +1,7 @@
 package com.bang_ggood.category.domain;
 
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
+import com.bang_ggood.checklist.domain.Grade;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.List;
@@ -17,11 +18,11 @@ class CategoryTest {
         // given
 
         // 청결
-        List<ChecklistQuestion> questions = List.of(new ChecklistQuestion(null, 1, "GOOD"),
-                new ChecklistQuestion(null, 2, "GOOD"),
-                new ChecklistQuestion(null, 3, "GOOD"),
-                new ChecklistQuestion(null, 4, "SOSO"),
-                new ChecklistQuestion(null, 5, "BAD"));
+        List<ChecklistQuestion> questions = List.of(new ChecklistQuestion(null, 1, Grade.GOOD),
+                new ChecklistQuestion(null, 2, Grade.GOOD),
+                new ChecklistQuestion(null, 3, Grade.GOOD),
+                new ChecklistQuestion(null, 4, Grade.SOSO),
+                new ChecklistQuestion(null, 5, Grade.BAD));
 
         // when
         List<Badge> badges = Category.getBadges(questions);
@@ -36,11 +37,11 @@ class CategoryTest {
         // given
 
         // 청결
-        List<ChecklistQuestion> questions = List.of(new ChecklistQuestion(null, 1, "GOOD"),
-                new ChecklistQuestion(null, 2, "GOOD"),
-                new ChecklistQuestion(null, 3, "GOOD"),
-                new ChecklistQuestion(null, 4, "BAD"),
-                new ChecklistQuestion(null, 5, "BAD"));
+        List<ChecklistQuestion> questions = List.of(new ChecklistQuestion(null, 1, Grade.GOOD),
+                new ChecklistQuestion(null, 2, Grade.GOOD),
+                new ChecklistQuestion(null, 3, Grade.GOOD),
+                new ChecklistQuestion(null, 4, Grade.BAD),
+                new ChecklistQuestion(null, 5, Grade.BAD));
 
         // when
         List<Badge> badges = Category.getBadges(questions);
@@ -53,11 +54,11 @@ class CategoryTest {
     @Test
     void calculateTotalScore() {
         // given
-        List<ChecklistQuestion> questions = List.of(new ChecklistQuestion(null, 1, "GOOD"),
-                new ChecklistQuestion(null, 2, "GOOD"),
-                new ChecklistQuestion(null, 3, "GOOD"),
-                new ChecklistQuestion(null, 4, "BAD"),
-                new ChecklistQuestion(null, 5, "BAD"));
+        List<ChecklistQuestion> questions = List.of(new ChecklistQuestion(null, 1, Grade.GOOD),
+                new ChecklistQuestion(null, 2, Grade.GOOD),
+                new ChecklistQuestion(null, 3, Grade.GOOD),
+                new ChecklistQuestion(null, 4, Grade.BAD),
+                new ChecklistQuestion(null, 5, Grade.BAD));
 
         // when
         int totalScore = CLEAN.calculateTotalScore(questions);
@@ -70,11 +71,11 @@ class CategoryTest {
     @Test
     void calculateTotalScore_WhenCategoryDoesNotMatch() {
         // given
-        List<ChecklistQuestion> questions = List.of(new ChecklistQuestion(null, 1, "GOOD"),
-                new ChecklistQuestion(null, 2, "GOOD"),
-                new ChecklistQuestion(null, 3, "GOOD"),
-                new ChecklistQuestion(null, 4, "BAD"),
-                new ChecklistQuestion(null, 5, "BAD"));
+        List<ChecklistQuestion> questions = List.of(new ChecklistQuestion(null, 1, Grade.GOOD),
+                new ChecklistQuestion(null, 2, Grade.GOOD),
+                new ChecklistQuestion(null, 3, Grade.GOOD),
+                new ChecklistQuestion(null, 4, Grade.BAD),
+                new ChecklistQuestion(null, 5, Grade.BAD));
 
         // when
         int totalScore = SECURITY.calculateTotalScore(questions);

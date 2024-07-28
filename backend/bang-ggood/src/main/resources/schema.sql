@@ -58,7 +58,7 @@ CREATE TABLE checklist_question
     checklist_id BIGINT  NOT NULL,
     created_at   TIMESTAMP(6),
     modified_at  TIMESTAMP(6),
-    answer       VARCHAR(255),
+    grade        VARCHAR(255),
     FOREIGN KEY (checklist_id) REFERENCES checklist (id)
 );
 

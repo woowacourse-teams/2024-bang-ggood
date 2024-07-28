@@ -2,11 +2,14 @@ package com.bang_ggood.checklist.domain;
 
 import com.bang_ggood.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+
 import java.util.Objects;
 
 
@@ -20,14 +23,16 @@ public class ChecklistQuestion extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Checklist checklist;
 
-    private int questionId;
+    @Enumerated(EnumType.STRING)
+    private Question question;
 
-    private String answer;
+    @Enumerated(EnumType.STRING)
+    private Grade grade;
 
-    public ChecklistQuestion(Checklist checklist, int questionId, String answer) {
+    public ChecklistQuestion(Checklist checklist, Question question, Grade grade) {
         this.checklist = checklist;
-        this.questionId = questionId;
-        this.answer = answer;
+        this.question = question;
+        this.grade = grade;
     }
 
     protected ChecklistQuestion() {
@@ -41,12 +46,12 @@ public class ChecklistQuestion extends BaseEntity {
         return checklist;
     }
 
-    public int getQuestionId() {
-        return questionId;
+    public Question getQuestion() {
+        return question;
     }
 
-    public String getAnswer() {
-        return answer;
+    public Grade getGrade() {
+        return grade;
     }
 
     @Override
@@ -71,8 +76,8 @@ public class ChecklistQuestion extends BaseEntity {
         return "ChecklistQuestion{" +
                 "id=" + id +
                 ", checklist=" + checklist +
-                ", questionId=" + questionId +
-                ", answer=" + answer +
+                ", question=" + question +
+                ", grade=" + grade +
                 '}';
     }
 }

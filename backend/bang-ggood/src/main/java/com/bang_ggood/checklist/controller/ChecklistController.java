@@ -1,6 +1,6 @@
 package com.bang_ggood.checklist.controller;
 
-import com.bang_ggood.checklist.dto.WrittenChecklistResponse;
+import com.bang_ggood.checklist.dto.response.WrittenChecklistResponse;
 import com.bang_ggood.checklist.service.ChecklistService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

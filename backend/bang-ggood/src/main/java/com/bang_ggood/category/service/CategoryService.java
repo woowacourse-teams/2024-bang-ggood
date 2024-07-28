@@ -2,9 +2,9 @@ package com.bang_ggood.category.service;
 
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.category.domain.CategoryPriority;
-import com.bang_ggood.category.dto.CategoriesReadResponse;
-import com.bang_ggood.category.dto.CategoryPriorityCreateRequest;
-import com.bang_ggood.category.dto.CategoryReadResponse;
+import com.bang_ggood.category.dto.response.CategoriesReadResponse;
+import com.bang_ggood.category.dto.request.CategoryPriorityCreateRequest;
+import com.bang_ggood.category.dto.response.CategoryReadResponse;
 import com.bang_ggood.category.repository.CategoryPriorityRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.user.domain.User;

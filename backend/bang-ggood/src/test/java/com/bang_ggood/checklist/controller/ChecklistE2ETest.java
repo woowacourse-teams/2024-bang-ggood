@@ -1,7 +1,7 @@
 package com.bang_ggood.checklist.controller;
 
 import com.bang_ggood.AcceptanceTest;
-import com.bang_ggood.checklist.dto.WrittenChecklistResponse;
+import com.bang_ggood.checklist.dto.response.WrittenChecklistResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Assertions;

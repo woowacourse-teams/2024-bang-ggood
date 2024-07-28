@@ -1,4 +1,4 @@
-package com.bang_ggood.room.dto;
+package com.bang_ggood.room.dto.response;
 
 import com.bang_ggood.checklist.domain.Checklist;
 

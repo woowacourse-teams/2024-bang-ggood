@@ -44,7 +44,6 @@ const DefaultRoomInfo: RoomInfo = {
 
 const NewChecklistPage = () => {
   const [currentTemplateId, setCurrentTemplateId] = useState<string>(menuList[0].id);
-  // const [isToastShow, setIsToastShow] = useState(false);
   const { showToast } = useToastContext();
 
   const onMoveTemplate = (templateId: TemplateType) => {
@@ -81,8 +80,7 @@ const NewChecklistPage = () => {
 
     try {
       fetchNewChecklist();
-      // showToast('체크리스트가 저장되었습니다.');
-      // setIsToastShow(true);
+      showToast('체크리스트가 저장되었습니다.');
       setTimeout(() => {
         navigate(ROUTE_PATH.checklistList);
       }, 2000);
@@ -98,9 +96,7 @@ const NewChecklistPage = () => {
         center={<S.Title>{'새 체크리스트'}</S.Title>}
         right={<Button label={'저장'} size="small" color="dark" onClick={onSubmitChecklist} />}
       />
-      <button onClick={() => showToast('체크리스트가 저장되었습니다.')}>토스트22</button>
       <Tabs menuList={menuList} onMoveMenu={onMoveTemplate} currentMenuId={currentTemplateId} />
-
       {currentTemplateId === 'info' ? (
         <NewChecklistInfoTemplate
           roomInfo={roomInfo}

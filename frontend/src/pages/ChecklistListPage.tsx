@@ -20,7 +20,6 @@ const ChecklistListPage = () => {
   useEffect(() => {
     const fetchChecklist = async () => {
       const checklistList = await getChecklists();
-      console.log(checklistList);
       setChecklistList(checklistList);
     };
 
@@ -32,7 +31,6 @@ const ChecklistListPage = () => {
   const handleClick = () => {
     // TODO: 비교 방 선택 페이지 작업으로 이후 변경 필요 (3차 스프린트)
     const length = checklistList?.length - 1;
-    console.log(length);
     navigate(ROUTE_PATH.roomCompare, {
       state: {
         id1: checklistList[length].checklistId,
@@ -43,7 +41,6 @@ const ChecklistListPage = () => {
   };
 
   const handleClickCard = (id: number) => {
-    console.log('id', id);
     navigate(ROUTE_PATH.checklistOne(id), {
       state: { id: id },
     });

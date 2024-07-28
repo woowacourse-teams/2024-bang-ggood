@@ -1,11 +1,6 @@
 package com.bang_ggood.category.domain;
 
-import com.bang_ggood.checklist.domain.ChecklistQuestion;
-import com.bang_ggood.checklist.domain.Grade;
-import com.bang_ggood.checklist.domain.Questionlist;
-
 import java.util.Arrays;
-import java.util.List;
 
 public enum Category {
 
@@ -18,12 +13,12 @@ public enum Category {
     ECONOMIC(7, "경제적", Badge.ECONOMIC);
 
     private final int id;
-    private final String description;
+    private final String name;
     private final Badge badge;
 
-    Category(int id, String description, Badge badge) {
+    Category(int id, String name, Badge badge) {
         this.id = id;
-        this.description = description;
+        this.name = name;
         this.badge = badge;
     }
 
@@ -32,42 +27,12 @@ public enum Category {
                 .anyMatch(category -> category.id == id);
     }
 
-    // 2. 뱃지 부여
-    public static List<Badge> getBadges(List<ChecklistQuestion> questions) {
-        return Arrays.stream(values())
-                .filter(category -> category.calculateTotalScore(questions) >= 80)
-                .map(Category::getBadge)
-                .toList();
-    }
-
-    // 1. 총점 : score * 100 / maxScore
-    public int calculateTotalScore(List<ChecklistQuestion> questions) {
-        List<ChecklistQuestion> filteredQuestions = filterQuestion(questions);
-
-        if (filteredQuestions.isEmpty()) {
-            return 0;
-        }
-
-        int maxScore = Grade.calculateMaxScore(filteredQuestions.size());
-        int score = filteredQuestions.stream()
-                .mapToInt(question -> Grade.getScore(question.getAnswer()))
-                .sum();
-
-        return score * 100 / maxScore;
-    }
-
-    private List<ChecklistQuestion> filterQuestion(List<ChecklistQuestion> questions) {
-        return questions.stream()
-                .filter(checklistQuestion -> Questionlist.isQuestionsInCategory(checklistQuestion.getQuestionId(), id))
-                .toList();
-    }
-
     public int getId() {
         return id;
     }
 
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
 
     public Badge getBadge() {

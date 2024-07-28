@@ -52,7 +52,7 @@ public enum Category {
     public Badge provideBadge(Questionlist questionlist, List<ChecklistQuestion> questions) {
         int categoryScore = calculateCategoryScore(this, questionlist, questions);
 
-        if (categoryScore >= 80) {
+        if (categoryScore >= 8) {
             return this.badge;
         }
         return NONE;

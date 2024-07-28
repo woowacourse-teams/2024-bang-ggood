@@ -43,27 +43,20 @@ const text = {
   },
 };
 
-// export const RESPONSIVE = {
-//   LAPTOP: {
-//     DEVICE: 'laptop',
-//     FONT_SIZE: 4,
-//     MIN_WIDTH: 1024,
-//   },
-//   TABLET: {
-//     DEVICE: 'tablet',
-//     FONT_SIZE: 4,
-//     MAX_WIDTH: 1023,
-//   },
-//   MOBILE: {
-//     DEVICE: 'mobile',
-//     FONT_SIZE: 3.5,
-//     MAX_WIDTH: 767,
-//   },
-// };
+const zIndex = {
+  'LEVEL-1': 10,
+  'LEVEL-2': 20,
+  'LEVEL-3': 30,
+  'LEVEL-4': 40,
+  'LEVEL-5': 50,
+  'LEVEL-6': 60,
+  'LEVEL-7': 70,
+};
 
 const theme = {
   palette,
   text,
+  zIndex,
 };
 
 export default theme;

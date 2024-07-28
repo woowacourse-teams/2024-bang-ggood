@@ -4,6 +4,7 @@ import Button from '@/components/common/Button/Button';
 import Modal from '@/components/common/Modal/Modal';
 import ModalFooter from '@/components/common/Modal/ModalFooter';
 import OptionButton from '@/components/common/OptionButton/OptionButton';
+import { useToastContext } from '@/components/common/Toast/ToastContext';
 import OptionModalInfoBox from '@/components/NewChecklist/OptionModal/OptionModalInfoBox';
 import { flexColumn } from '@/styles/common';
 
@@ -36,9 +37,12 @@ const OptionModal = ({ isOpen, setIsOpen, selectedOptions, setSelectedOptions }:
 
   const optionCounts = new Array(totalOptionCount).fill(0).map((e, i) => i + 1);
 
+  const { showToast } = useToastContext();
+
   return (
     <div>
       <Modal position={'bottom'} isOpen={isOpen} onClose={onCloseModal} hasCloseButton={true}>
+        <button onClick={() => showToast('체크리스트가 저장되었습니다.')}>토스트22</button>
         <Modal.header title={'방에 포함된 옵션을 선택해주세요.'}></Modal.header>
         <Modal.body>
           <S.FlexBoxColumn>

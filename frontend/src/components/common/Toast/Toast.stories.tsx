@@ -15,8 +15,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    message: '돈까스가 도착했습니다.',
-    onClose: () => {},
+    // message: '돈까스가 도착했습니다.',
+    // onClose: () => {},
     duration: 3000,
   },
 };

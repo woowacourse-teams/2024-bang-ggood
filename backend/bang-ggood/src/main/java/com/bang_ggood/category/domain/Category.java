@@ -1,7 +1,6 @@
 package com.bang_ggood.category.domain;
 
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
-import com.bang_ggood.checklist.domain.Grade;
 import com.bang_ggood.checklist.domain.Questionlist;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
@@ -10,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import static com.bang_ggood.category.domain.Badge.NONE;
+import static com.bang_ggood.checklist.domain.ChecklistScore.calculateCategoryScore;
 
 public enum Category {
 
@@ -22,12 +22,12 @@ public enum Category {
     ECONOMIC(7, "경제적", Badge.ECONOMIC);
 
     private final int id;
-    private final String description;
+    private final String name;
     private final Badge badge;
 
-    Category(int id, String description, Badge badge) {
+    Category(int id, String name, Badge badge) {
         this.id = id;
-        this.description = description;
+        this.name = name;
         this.badge = badge;
     }
 
@@ -50,40 +50,20 @@ public enum Category {
     }
 
     public Badge provideBadge(Questionlist questionlist, List<ChecklistQuestion> questions) {
-        List<ChecklistQuestion> filteredQuestions = questionlist.filterQuestions(this, questions);
+        int categoryScore = calculateCategoryScore(this, questionlist, questions);
 
-        if (filteredQuestions.isEmpty()) {
-            return NONE;
-        }
-
-        int maxScore = Grade.calculateMaxScore(filteredQuestions.size());
-        int score = Grade.calculateTotalScore(filteredQuestions);
-
-        if (score * 100 / maxScore >= 80) {
+        if (categoryScore >= 80) {
             return this.badge;
         }
         return NONE;
-    }
-
-    public int calculateTotalScore(Questionlist questionlist, List<ChecklistQuestion> questions) {
-        List<ChecklistQuestion> filteredQuestions = questionlist.filterQuestions(this, questions);
-
-        if (filteredQuestions.isEmpty()) {
-            return 0;
-        }
-
-        int maxScore = Grade.calculateMaxScore(filteredQuestions.size());
-        int score = Grade.calculateTotalScore(filteredQuestions);
-
-        return score * 100 / maxScore;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
 
     public Set<Integer> getQuestionIds() {

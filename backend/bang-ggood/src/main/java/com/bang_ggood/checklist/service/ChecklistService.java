@@ -10,14 +10,14 @@ import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.Option;
 import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.domain.Questionlist;
+import com.bang_ggood.checklist.dto.ChecklistInfo;
+import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
+import com.bang_ggood.checklist.dto.request.QuestionCreateRequest;
 import com.bang_ggood.checklist.dto.response.BadgeResponse;
 import com.bang_ggood.checklist.dto.response.CategoryScoreReadResponse;
-import com.bang_ggood.checklist.dto.response.ChecklistWithScoreReadResponse;
-import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
-import com.bang_ggood.checklist.dto.ChecklistInfo;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistWithScoreReadResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsWithScoreReadResponse;
-import com.bang_ggood.checklist.dto.request.QuestionCreateRequest;
 import com.bang_ggood.checklist.dto.response.QuestionResponse;
 import com.bang_ggood.checklist.dto.response.UserChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
@@ -41,6 +41,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.bang_ggood.checklist.domain.ChecklistScore.calculateCategoryScore;
+import static com.bang_ggood.checklist.domain.ChecklistScore.calculateTotalScore;
 
 @Service
 public class ChecklistService {
@@ -169,7 +172,7 @@ public class ChecklistService {
         List<CategoryQuestionsResponse> categoryQuestionsResponses = new ArrayList<>();
         for (Category category : Category.values()) {
             CategoryQuestionsResponse categoryQuestionsResponse =
-                    new CategoryQuestionsResponse(category.getId(), category.getDescription(),
+                    new CategoryQuestionsResponse(category.getId(), category.getName(),
                             readChecklistQuestion(category));
             categoryQuestionsResponses.add(categoryQuestionsResponse);
         }
@@ -226,7 +229,7 @@ public class ChecklistService {
                                 questionList.getSubtitleByQuestionId(questionId), checklistQuestion.getAnswer()));
             }
         }
-        return new WrittenCategoryQuestionsResponse(category.getId(), category.getDescription(),
+        return new WrittenCategoryQuestionsResponse(category.getId(), category.getName(),
                 writtenQuestionResponses);
     }
 
@@ -245,7 +248,7 @@ public class ChecklistService {
 
     private ChecklistWithScoreReadResponse getChecklistWithScore(Checklist checklist) {
         List<CategoryScoreReadResponse> categoryScores = getCategoryScores(checklist);
-        int checklistScore = calculateChecklistScore(categoryScores);
+        int checklistScore = getChecklistScore(checklist);
         int checklistOptionCount = checklistOptionRepository.countByChecklist(checklist);
 
         return ChecklistWithScoreReadResponse.of(checklist, checklistOptionCount, checklistScore, categoryScores);
@@ -253,14 +256,12 @@ public class ChecklistService {
 
     private List<CategoryScoreReadResponse> getCategoryScores(Checklist checklist) {
         return Arrays.stream(Category.values())
-                .map(category -> CategoryScoreReadResponse.of(category, category.calculateTotalScore(questionList, checklist.getQuestions())))
-                .filter(response -> response.score() == 0)
+                .map(category -> CategoryScoreReadResponse.of(category, calculateCategoryScore(category, questionList, checklist.getQuestions())))
+                .filter(response -> response.score() != 0)
                 .toList();
     }
 
-    private int calculateChecklistScore(List<CategoryScoreReadResponse> categoryScores) {
-        return categoryScores.stream()
-                .mapToInt(CategoryScoreReadResponse::score)
-                .sum() / categoryScores.size();
+    private int getChecklistScore(Checklist checklist) {
+        return calculateTotalScore(checklist.getQuestions());
     }
 }

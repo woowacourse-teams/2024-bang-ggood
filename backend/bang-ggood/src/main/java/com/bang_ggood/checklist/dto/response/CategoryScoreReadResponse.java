@@ -7,6 +7,6 @@ public record CategoryScoreReadResponse(
 ) {
 
     public static CategoryScoreReadResponse of(Category category, int score) {
-        return new CategoryScoreReadResponse(category.getId(), category.getDescription(), score);
+        return new CategoryScoreReadResponse(category.getId(), category.getName(), score);
     }
 }

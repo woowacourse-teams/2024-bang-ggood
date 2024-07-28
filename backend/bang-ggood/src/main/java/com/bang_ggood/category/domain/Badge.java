@@ -13,21 +13,21 @@ public enum Badge {
     ;
   
     private static final String DESCRIPTION_FORMAT = "%s %s";
-    private final String shortDescription;
-    private final String longDescription;
+    private final String shortName;
+    private final String longName;
     private final String emoji;
 
-    Badge(String shortDescription, String longDescription, String emoji) {
-        this.shortDescription = shortDescription;
-        this.longDescription = longDescription;
+    Badge(String shortName, String longName, String emoji) {
+        this.shortName = shortName;
+        this.longName = longName;
         this.emoji = emoji;
     }
 
-    public String getShortDescriptionWithEmoji() {
-        return String.format(DESCRIPTION_FORMAT, this.emoji, this.shortDescription);
+    public String getShortNameWithEmoji() {
+        return String.format(DESCRIPTION_FORMAT, this.emoji, this.shortName);
     }
 
-    public String getLongDescriptionWithEmoji() {
-        return String.format(DESCRIPTION_FORMAT, this.emoji, this.longDescription);
+    public String getLongNameWithEmoji() {
+        return String.format(DESCRIPTION_FORMAT, this.emoji, this.longName);
     }
 }

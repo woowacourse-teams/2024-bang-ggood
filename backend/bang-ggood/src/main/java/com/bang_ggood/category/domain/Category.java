@@ -1,16 +1,15 @@
 package com.bang_ggood.category.domain;
 
+import com.bang_ggood.checklist.domain.ChecklistQuestion;
+import com.bang_ggood.checklist.domain.Grade;
 import com.bang_ggood.checklist.domain.Questionlist;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
-import com.bang_ggood.checklist.domain.ChecklistQuestion;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import static com.bang_ggood.category.domain.Badge.*;
-import static com.bang_ggood.checklist.domain.Grade.*;
+import static com.bang_ggood.category.domain.Badge.NONE;
 
 public enum Category {
 
@@ -53,8 +52,12 @@ public enum Category {
     public Badge provideBadge(Questionlist questionlist, List<ChecklistQuestion> questions) {
         List<ChecklistQuestion> filteredQuestions = questionlist.filterQuestions(this, questions);
 
-        int maxScore = calculateMaxScore(filteredQuestions.size());
-        int score = calculateTotalScore(filteredQuestions);
+        if (filteredQuestions.isEmpty()) {
+            return NONE;
+        }
+
+        int maxScore = Grade.calculateMaxScore(filteredQuestions.size());
+        int score = Grade.calculateTotalScore(filteredQuestions);
 
         if (score * 100 / maxScore >= 80) {
             return this.badge;
@@ -62,18 +65,15 @@ public enum Category {
         return NONE;
     }
 
-    // 1. 총점 : score * 100 / maxScore
-    public int calculateHaTotalScore(Questionlist questionlist, List<ChecklistQuestion> questions) {
+    public int calculateTotalScore(Questionlist questionlist, List<ChecklistQuestion> questions) {
         List<ChecklistQuestion> filteredQuestions = questionlist.filterQuestions(this, questions);
 
         if (filteredQuestions.isEmpty()) {
             return 0;
         }
 
-        int maxScore = calculateMaxScore(filteredQuestions.size());
-        int score = filteredQuestions.stream()
-                .mapToInt(question -> getScore(question.getAnswer()))
-                .sum();
+        int maxScore = Grade.calculateMaxScore(filteredQuestions.size());
+        int score = Grade.calculateTotalScore(filteredQuestions);
 
         return score * 100 / maxScore;
     }
@@ -84,10 +84,6 @@ public enum Category {
 
     public String getDescription() {
         return description;
-    }
-    
-    public Badge getBadge() {
-        return badge;
     }
 
     public Set<Integer> getQuestionIds() {

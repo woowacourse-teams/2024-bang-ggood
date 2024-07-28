@@ -1,10 +1,9 @@
 package com.bang_ggood.checklist.controller;
 
-import com.bang_ggood.category.dto.WrittenCategoryQuestionsResponse;
 import com.bang_ggood.checklist.dto.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.WrittenChecklistResponse;
-import com.bang_ggood.checklist.dto.ChecklistsComparisonReadResponse;
+import com.bang_ggood.checklist.dto.ChecklistsWithScoreReadResponse;
 import com.bang_ggood.checklist.dto.UserChecklistsPreviewResponse;
 import com.bang_ggood.checklist.service.ChecklistService;
 
@@ -51,7 +50,7 @@ public class ChecklistController {
     }
 
     @GetMapping("/checklists/comparison")
-    public ResponseEntity<ChecklistsComparisonReadResponse> readChecklistsComparison(@RequestParam("id")List<Long> checklistIds) {
+    public ResponseEntity<ChecklistsWithScoreReadResponse> readChecklistsComparison(@RequestParam("id")List<Long> checklistIds) {
         return ResponseEntity.ok(checklistService.readChecklistsComparison(checklistIds));
     }
 }

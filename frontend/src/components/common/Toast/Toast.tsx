@@ -5,15 +5,10 @@ import { createPortal } from 'react-dom';
 import { useToastContext } from '@/components/common/Toast/ToastContext';
 import { flexCenter, title4 } from '@/styles/common';
 
-interface Props {
-  duration: number;
-}
-
 const toastRoot = document.getElementById('toast');
 
-const Toast = (props: Props) => {
-  const { hideToast, toast } = useToastContext();
-  const { duration } = props;
+const Toast = () => {
+  const { hideToast, toast, duration } = useToastContext();
 
   useEffect(() => {
     const timer = setTimeout(() => {

@@ -1,12 +1,7 @@
-import { createContext, useCallback, useContext, useState } from 'react';
+import { createContext, useContext } from 'react';
 
 import Toast from '@/components/common/Toast/Toast';
-
-interface ToastContextProps {
-  toast: string | null;
-  showToast: (message: string) => void;
-  hideToast: () => void;
-}
+import useToast from '@/components/common/Toast/useToast';
 
 /**
  * @description 전역 토스트를 보여주는 컨텍스트입니다.
@@ -15,30 +10,14 @@ interface ToastContextProps {
  * @property {function(): void} hideToast - 현재 표시되고 있는 토스트 메시지를 숨기는 함수입니다. 기본적으로 3초 뒤에 사라지도록 설정되어 있습니다.
  */
 
-export const ToastContext = createContext({} as ToastContextProps);
-
-const TOAST_DURATION = 3;
+export const ToastContext = createContext({} as ReturnType<typeof useToast>);
 
 export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
-  const [toast, setToast] = useState(null);
-
-  const showToast = useCallback((message: string) => {
-    setToast(message);
-  }, []);
-
-  const hideToast = useCallback(() => {
-    setToast(null);
-  }, []);
-
-  const value = {
-    toast,
-    showToast,
-    hideToast,
-  };
+  const toastValue = useToast();
 
   return (
-    <ToastContext.Provider value={value}>
-      {toast && <Toast duration={TOAST_DURATION} />}
+    <ToastContext.Provider value={toastValue}>
+      {toastValue.toast && <Toast />}
       {children}
     </ToastContext.Provider>
   );
@@ -46,6 +25,7 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
 
 export const useToastContext = () => {
   const context = useContext(ToastContext);
+
   if (!context) {
     throw new Error('useToastContext는 ToastProvider에서 사용해야 합니다.');
   }

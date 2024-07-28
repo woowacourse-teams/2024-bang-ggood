@@ -3,7 +3,6 @@ package com.bang_ggood.category.domain;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
-import com.bang_ggood.checklist.domain.Grade;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -47,18 +46,18 @@ public enum Category {
                 .filter(category -> category.questionIds.contains(questionId))
                 .mapToInt(category -> category.id)
                 .findFirst()
-                .orElseThrow(() -> new BangggoodException(ExceptionCode.INVALID_QUESTION));
+                .orElseThrow(() -> new BangggoodException(ExceptionCode.QUESTION_INVALID));
     }
 
     // 2. 뱃지 부여
-    public static List<Badge> getBadges(List<ChecklistQuestion> questions) {
+    /*public static List<Badge> getBadges(List<ChecklistQuestion> questions) {
         return Arrays.stream(values())
                 .filter(category -> category.calculateTotalScore(questions) >= 80)
                 .map(Category::getBadge)
                 .toList();
-    }
+    }*/
 
-    // 1. 총점 : score * 100 / maxScore
+    /*// 1. 총점 : score * 100 / maxScore
     public int calculateTotalScore(List<ChecklistQuestion> questions) {
         List<ChecklistQuestion> filteredQuestions = filterQuestion(questions);
 
@@ -72,13 +71,13 @@ public enum Category {
                 .sum();
 
         return score * 100 / maxScore;
-    }
+    }*/
 
-    private List<ChecklistQuestion> filterQuestion(List<ChecklistQuestion> questions) {
+    /*private List<ChecklistQuestion> filterQuestion(List<ChecklistQuestion> questions) {
         return questions.stream()
                 .filter(checklistQuestion -> questionIds.contains(checklistQuestion.getQuestionId()))
                 .toList();
-    }
+    }*/
 
     public int getId() {
         return id;

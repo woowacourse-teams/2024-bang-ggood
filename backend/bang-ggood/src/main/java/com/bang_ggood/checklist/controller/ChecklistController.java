@@ -40,18 +40,18 @@ public class ChecklistController {
         return ResponseEntity.ok(checklistService.readChecklistById(id));
     }*/
       
-    @GetMapping("/checklists")
+    /*@GetMapping("/checklists")
     public ResponseEntity<UserChecklistsPreviewResponse> readUserChecklistsPreview() {
         return ResponseEntity.ok(checklistService.readUserChecklistsPreview());
-    }
+    }*/
 
     /*@GetMapping("/checklists/questions")
     public ResponseEntity<ChecklistQuestionsResponse> readChecklistQuestions() {
         return ResponseEntity.ok(checklistService.readChecklistQuestions());
     }*/
 
-    @GetMapping("/checklists/comparison")
+    /*@GetMapping("/checklists/comparison")
     public ResponseEntity<ChecklistsComparisonReadResponse> readChecklistsComparison(@RequestParam("id")List<Long> checklistIds) {
         return ResponseEntity.ok(checklistService.readChecklistsComparison(checklistIds));
-    }
+    }*/
 }

@@ -27,5 +27,4 @@ export const Default: Story = {
     const { showToast } = useToastContext();
     return <Button label={'토스트 생성'} onClick={() => showToast('토스트가 생성되었습니다.')} />;
   },
-  args: { duration: 3 },
 };

@@ -43,14 +43,11 @@ const text = {
   },
 };
 
+/*range: 10~50 */
 const zIndex = {
-  'LEVEL-1': 10,
-  'LEVEL-2': 20,
-  'LEVEL-3': 30,
-  'LEVEL-4': 40,
-  'LEVEL-5': 50,
-  'LEVEL-6': 60,
-  'LEVEL-7': 70,
+  FLOATING_BUTTON: 10,
+  MODAL: 20,
+  TOAST: 30,
 };
 
 const theme = {

@@ -34,7 +34,7 @@ const Container = styled.div`
   position: fixed;
   bottom: 50px;
   left: 50%;
-  z-index: ${({ theme }) => theme.zIndex['LEVEL-3']};
+  z-index: ${({ theme }) => theme.zIndex.TOAST};
 
   transform: translateX(-50%);
 `;

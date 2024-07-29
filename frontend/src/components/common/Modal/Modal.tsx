@@ -80,7 +80,7 @@ const ModalCenterStyle = css`
 const ModalWrapper = styled.div<{ open: boolean }>`
   display: ${({ open }) => (open ? 'flex' : 'none')};
   position: fixed;
-  z-index: ${({ theme }) => theme.zIndex['LEVEL-2']};
+  z-index: ${({ theme }) => theme.zIndex.MODAL};
 `;
 
 const ModalBackground = styled.div`

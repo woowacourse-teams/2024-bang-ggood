@@ -3,7 +3,6 @@ package com.bang_ggood.category.domain;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import static com.bang_ggood.category.domain.Badge.NONE;
 import static com.bang_ggood.checklist.domain.ChecklistScore.calculateCategoryScore;

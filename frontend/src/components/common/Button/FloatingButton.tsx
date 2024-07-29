@@ -87,7 +87,7 @@ const S = {
     position: fixed;
     bottom: 10%;
     left: 45%;
-    z-index: 1000;
+    z-index: ${({ theme }) => theme.zIndex.FLOATING_BUTTON};
     width: 100%;
     padding-right: 16px;
     transform: translateX(-45%);

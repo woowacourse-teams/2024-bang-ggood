@@ -2,29 +2,27 @@ import styled from '@emotion/styled';
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
+import { useToastContext } from '@/components/common/Toast/ToastContext';
 import { flexCenter, title4 } from '@/styles/common';
-
-interface Props {
-  message: string;
-  onClose: () => void;
-  duration: number;
-}
 
 const toastRoot = document.getElementById('toast');
 
-const Toast = (props: Props) => {
-  const { message, onClose, duration } = props;
+export const DEFAULT_TOAST_DURATION = 2;
+
+const Toast = () => {
+  const { hideToast, toast } = useToastContext();
+  const duration = DEFAULT_TOAST_DURATION;
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      onClose();
+      hideToast();
     }, duration * 1000);
     return () => clearTimeout(timer);
-  }, [duration, onClose]);
+  }, [duration, hideToast]);
 
   return createPortal(
     <S.Container>
-      <S.InnerBox>{message}</S.InnerBox>
+      <S.InnerBox>{toast}</S.InnerBox>
     </S.Container>,
     toastRoot,
   );
@@ -36,12 +34,12 @@ const Container = styled.div`
   position: fixed;
   bottom: 50px;
   left: 50%;
+  z-index: ${({ theme }) => theme.zIndex.TOAST};
 
   transform: translateX(-50%);
 `;
 
 const InnerBox = styled.div`
-  z-index: 10;
   width: 314px;
   height: 40px;
 

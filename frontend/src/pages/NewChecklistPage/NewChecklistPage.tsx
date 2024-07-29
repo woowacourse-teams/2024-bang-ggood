@@ -6,7 +6,7 @@ import { postChecklist } from '@/apis/checklist';
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import Tabs, { Menu } from '@/components/common/Tabs/Tabs';
-import Toast from '@/components/common/Toast/Toast';
+import { useToastContext } from '@/components/common/Toast/ToastContext';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';
 import useInputs from '@/hooks/useInput';
@@ -44,7 +44,7 @@ const DefaultRoomInfo: RoomInfo = {
 
 const NewChecklistPage = () => {
   const [currentTemplateId, setCurrentTemplateId] = useState<string>(menuList[0].id);
-  const [isToastShow, setIsToastShow] = useState(false);
+  const { showToast } = useToastContext();
 
   const onMoveTemplate = (templateId: TemplateType) => {
     setCurrentTemplateId(templateId);
@@ -80,7 +80,7 @@ const NewChecklistPage = () => {
 
     try {
       fetchNewChecklist();
-      setIsToastShow(true);
+      showToast('체크리스트가 저장되었습니다.');
       setTimeout(() => {
         navigate(ROUTE_PATH.checklistList);
       }, 2000);
@@ -91,17 +91,11 @@ const NewChecklistPage = () => {
 
   return (
     <S.Container>
-      {isToastShow && (
-        <Toast message={'체크리스트가 저장되었습니다.'} onClose={() => setIsToastShow(false)} duration={3} />
-      )}
       <Header
         left={<Header.Backward />}
         center={<S.Title>{'새 체크리스트'}</S.Title>}
         right={<Button label={'저장'} size="small" color="dark" onClick={onSubmitChecklist} />}
       />
-
-      <button onClick={() => setIsToastShow(true)}>토스트</button>
-
       <Tabs menuList={menuList} onMoveMenu={onMoveTemplate} currentMenuId={currentTemplateId} />
       {currentTemplateId === 'info' ? (
         <NewChecklistInfoTemplate

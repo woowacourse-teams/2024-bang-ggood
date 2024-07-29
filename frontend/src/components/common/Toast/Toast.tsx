@@ -7,8 +7,11 @@ import { flexCenter, title4 } from '@/styles/common';
 
 const toastRoot = document.getElementById('toast');
 
+export const DEFAULT_TOAST_DURATION = 2;
+
 const Toast = () => {
-  const { hideToast, toast, duration } = useToastContext();
+  const { hideToast, toast } = useToastContext();
+  const duration = DEFAULT_TOAST_DURATION;
 
   useEffect(() => {
     const timer = setTimeout(() => {

@@ -24,8 +24,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => {
-    const { showToast, setDuration } = useToastContext();
-    setDuration(0.5);
+    const { showToast } = useToastContext();
     return <Button label={'토스트 생성'} onClick={() => showToast('토스트가 생성되었습니다.')} />;
   },
+  args: { duration: 3 },
 };

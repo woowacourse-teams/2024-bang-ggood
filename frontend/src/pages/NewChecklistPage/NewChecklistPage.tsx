@@ -6,6 +6,7 @@ import { postChecklist } from '@/apis/checklist';
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import { TabProvider } from '@/components/common/Tabs/TabContext';
+import { Tab } from '@/components/common/Tabs/Tabs';
 import { useToastContext } from '@/components/common/Toast/ToastContext';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';
@@ -27,6 +28,37 @@ const DefaultRoomInfo: RoomInfo = {
   walkingTime: 10,
   realEstate: '방끗공인중개사',
 };
+
+const categoryTabs: Tab[] = [
+  {
+    id: 1,
+    categoryName: '청결',
+  },
+  {
+    id: 2,
+    categoryName: '방 컨디션',
+  },
+  {
+    id: 3,
+    categoryName: '편의시설',
+  },
+  {
+    id: 4,
+    categoryName: '옵션',
+  },
+  {
+    id: 5,
+    categoryName: '주거환경',
+  },
+  {
+    id: 6,
+    categoryName: '보안',
+  },
+  {
+    id: 7,
+    categoryName: '경제적',
+  },
+];
 
 const NewChecklistPage = () => {
   const { showToast } = useToastContext();
@@ -78,8 +110,9 @@ const NewChecklistPage = () => {
         right={<Button label={'저장'} size="small" color="dark" onClick={onSubmitChecklist} />}
       />
 
-      <TabProvider>
+      <TabProvider tabList={categoryTabs}>
         <NewChecklistTabContainer
+          categoryTabs={categoryTabs}
           roomInfo={roomInfo}
           onChange={onChange}
           selectedOptions={selectedOptions}

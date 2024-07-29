@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { TabProvider } from '@/components/common/Tabs/TabContext';
 import Tabs, { Tab } from '@/components/common/Tabs/Tabs';
+
+import mobileDecorator from '../../../../.storybook/common';
 
 const meta = {
   title: 'components/Tabs',
@@ -12,23 +15,48 @@ const meta = {
       },
     },
   },
+  decorators: [
+    Story => (
+      <TabProvider tabList={mockMenuList}>
+        <Story />
+      </TabProvider>
+    ),
+    mobileDecorator,
+  ],
 } satisfies Meta<typeof Tabs>;
+
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
 const mockMenuList: Tab[] = [
   {
-    name: '기본 정보',
-    id: 'basic-info',
+    id: 1,
+    name: '청결',
   },
   {
-    name: '체크리스트',
-    id: 'checklist',
+    id: 2,
+    name: '방 컨디션',
   },
   {
-    name: '메모 및 사진',
-    id: 'extra-info',
+    id: 3,
+    name: '편의시설',
+  },
+  {
+    id: 4,
+    name: '옵션',
+  },
+  {
+    id: 5,
+    name: '주거환경',
+  },
+  {
+    id: 6,
+    name: '보안',
+  },
+  {
+    id: 7,
+    name: '경제적',
   },
 ];
 

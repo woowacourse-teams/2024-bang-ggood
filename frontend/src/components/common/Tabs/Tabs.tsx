@@ -9,13 +9,13 @@ interface Props {
 
 export type Tab = {
   name: string;
-  id: string;
+  id: number;
 };
 
 const Tabs = ({ tabList }: Props) => {
   const { currentTabId, setCurrentTabId } = useTabContext();
 
-  const onMoveTab = (tabId: string) => {
+  const onMoveTab = (tabId: number) => {
     setCurrentTabId(tabId);
   };
 

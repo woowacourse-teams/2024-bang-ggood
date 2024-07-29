@@ -7,18 +7,8 @@ import { RoomInfo } from '@/types/room';
 
 export type TemplateType = 'checklist' | 'info';
 
-const categoryTabs: Tab[] = [
-  {
-    name: '기본 정보',
-    id: 'info',
-  },
-  {
-    name: '체크리스트',
-    id: 'checklist',
-  },
-];
-
 interface Props {
+  categoryTabs: Tab[];
   selectedOptions: number[];
   setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
   roomInfo: RoomInfo;
@@ -29,8 +19,16 @@ interface Props {
 }
 
 const NewChecklistTabContainer = (props: Props) => {
-  const { roomInfo, onChange, selectedOptions, setSelectedOptions, addAnswer, deleteAnswer, questionSelectedAnswer } =
-    props;
+  const {
+    categoryTabs,
+    roomInfo,
+    onChange,
+    selectedOptions,
+    setSelectedOptions,
+    addAnswer,
+    deleteAnswer,
+    questionSelectedAnswer,
+  } = props;
   const { currentTabId } = useTabContext();
 
   const renderTabContent = () => {

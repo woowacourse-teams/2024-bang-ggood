@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
 
+import { useTabContext } from '@/components/common/Tabs/TabContext';
 import { flexCenter } from '@/styles/common';
 
 interface Props {
@@ -10,17 +10,10 @@ interface Props {
 export type Tab = {
   name: string;
   id: string;
-  content: React.ReactNode;
 };
 
 const Tabs = ({ tabList }: Props) => {
-  const [currentTabId, setCurrentTabId] = useState(tabList[0].id);
-
-  const renderContent = () => {
-    const targetTab = tabList.filter(tab => tab.id === currentTabId)[0];
-    if (!targetTab) throw new Error('해당 탭이 존재하지 않습니다.');
-    return targetTab.content;
-  };
+  const { currentTabId, setCurrentTabId } = useTabContext();
 
   const onMoveTab = (tabId: string) => {
     setCurrentTabId(tabId);

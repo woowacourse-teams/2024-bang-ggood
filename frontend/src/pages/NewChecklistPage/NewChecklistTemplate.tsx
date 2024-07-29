@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { getChecklistQuestions } from '@/apis/checklist';
 import Accordion from '@/components/common/Accordion/Accordion';
 import ChecklistCategory from '@/components/NewChecklist/ChecklistCategory';
-import { ChecklistCategoryQuestions, ChecklistFormAnswer } from '@/types/checklist';
+import { ChecklistCategoryQuestions } from '@/types/checklist';
 
 export interface addAnswerProps {
   questionId: number;
@@ -14,7 +14,6 @@ export interface addAnswerProps {
 interface Props {
   addAnswer: ({ questionId, newAnswer }: addAnswerProps) => void;
   deleteAnswer: (questionId: number) => void;
-  answers: ChecklistFormAnswer[];
   questionSelectedAnswer: (questionId: number) => number | undefined;
 }
 

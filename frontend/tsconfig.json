@@ -3,18 +3,19 @@
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
-    "module": "es6",
+    "module": "esnext",
     "target": "es5",
     "allowJs": true,
     "moduleResolution": "node",
     "jsx": "react-jsx",
     "jsxImportSource": "@emotion/react",
     "resolveJsonModule": true,
-
+    "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "types": ["@testing-library/jest-dom"]
   },
   "include": ["src/**/*"]
 }

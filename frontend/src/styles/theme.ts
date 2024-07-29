@@ -24,6 +24,7 @@ const palette = {
   /* original */
   black: '#363636',
   white: '#FFFFFF',
+  backgroud: '#F5F4F2',
 };
 
 const text = {
@@ -37,13 +38,22 @@ const text = {
   weight: {
     thin: 200,
     medium: 400,
+    semiBold: 600,
     bold: 700,
   },
+};
+
+/*range: 10~50 */
+const zIndex = {
+  FLOATING_BUTTON: 10,
+  MODAL: 20,
+  TOAST: 30,
 };
 
 const theme = {
   palette,
   text,
+  zIndex,
 };
 
 export default theme;

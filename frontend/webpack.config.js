@@ -38,8 +38,13 @@ const config = {
     }),
     new webpack.DefinePlugin(envKeys),
     // Add your plugins here
-    // Learn more about plugins from https://webpack.js.org/configuration/plugins/
+    // Learn more about plugins from https:/webpack.js.org/configuration/plugins/
   ],
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
+  },
   module: {
     rules: [
       {
@@ -57,7 +62,8 @@ const config = {
       },
       {
         test: /\.svg$/i,
-        use: ['@svgr/webpack'],
+        issuer: /\.[jt]sx?$/,
+        use: [{ loader: '@svgr/webpack', options: {} }],
       },
       // Add your rules for custom modules here
       // Learn more about loaders from https://webpack.js.org/loaders/

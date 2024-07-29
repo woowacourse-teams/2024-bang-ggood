@@ -47,9 +47,10 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:react/jsx-runtime",
     "plugin:@typescript-eslint/recommended",
     "plugin:storybook/recommended"
   ],
-  "ignorePatterns": ["dist", "webpack.config.js", "tsconfig.json", "public", "assets"]
+  "ignorePatterns": ["dist", "webpack.config.js", "tsconfig.json", "public", "assets", "*.config.js"]
 }

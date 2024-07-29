@@ -64,6 +64,7 @@ const Tab = styled.div<{ active: boolean }>`
     active ? `3px solid ${theme.palette.yellow400}` : `3px solid ${theme.palette.yellow100}`};
 
   &:hover {
-    background-color: ${({ theme, active }) => (active ? theme.palette.yellow400 : '#ddd')};
+    background-color: ${({ theme }) => theme.palette.yellow200};
+    border-radius: 5px;
   }
 `;

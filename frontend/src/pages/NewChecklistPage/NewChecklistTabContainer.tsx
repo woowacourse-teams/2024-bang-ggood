@@ -1,8 +1,12 @@
+import { useEffect, useState } from 'react';
+
+import { getChecklistQuestions } from '@/apis/checklist';
 import { useTabContext } from '@/components/common/Tabs/TabContext';
 import Tabs, { Tab } from '@/components/common/Tabs/Tabs';
 import { addAnswerProps } from '@/pages/ChecklistSummaryPage';
 import NewChecklistInfoTemplate from '@/pages/NewChecklistPage/NewChecklistInfoTemplate';
 import NewChecklistTemplate from '@/pages/NewChecklistPage/NewChecklistTemplate';
+import { ChecklistCategoryQuestions } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
 
 export type TemplateType = 'checklist' | 'info';
@@ -31,9 +35,23 @@ const NewChecklistTabContainer = (props: Props) => {
   } = props;
   const { currentTabId } = useTabContext();
 
+  const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategoryQuestions[]>([]);
+
+  useEffect(() => {
+    const fetchChecklist = async () => {
+      const checklist = await getChecklistQuestions();
+      setChecklistQuestions(checklist);
+    };
+    fetchChecklist();
+  }, []);
+
+  const findQuestions = (targetId: number) => {
+    return checklistQuestions.filter(category => category.categoryId === targetId)[0].questions;
+  };
+
   const renderTabContent = () => {
     switch (currentTabId) {
-      case 'info':
+      case 0:
         return (
           <NewChecklistInfoTemplate
             roomInfo={roomInfo}
@@ -42,9 +60,10 @@ const NewChecklistTabContainer = (props: Props) => {
             setSelectedOptions={setSelectedOptions}
           />
         );
-      case 'checklist':
+      case 1: //청결
         return (
           <NewChecklistTemplate
+            checklistQuestions={findQuestions(currentTabId)}
             addAnswer={addAnswer}
             deleteAnswer={deleteAnswer}
             questionSelectedAnswer={questionSelectedAnswer}

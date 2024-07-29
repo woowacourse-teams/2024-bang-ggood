@@ -1,0 +1,56 @@
+package com.bang_ggood.checklist.controller;
+
+import com.bang_ggood.AcceptanceTest;
+import com.bang_ggood.checklist.ChecklistFixture;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+public class ChecklistE2ETest extends AcceptanceTest {
+
+    @DisplayName("체크리스트 방 정보 작성 성공")
+    @Test
+    void createChecklist() {
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST)
+                .when().post("/checklists")
+                .then().log().all()
+                .statusCode(201);
+    }
+
+    @DisplayName("체크리스트 방 정보 작성 실패: 방 이름을 넣지 않은 경우")
+    @Test
+    void createChecklist_noRoomName_exception() {
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_ROOM_NAME)
+                .when().post("/checklists")
+                .then().log().all()
+                .statusCode(400);
+    }
+
+    @DisplayName("체크리스트 방 정보 작성 실패: 질문 ID를 넣지 않은 경우")
+    @Test
+    void createChecklist_noQuestionId_exception() {
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_QUESTION_ID)
+                .when().post("/checklists")
+                .then().log().all()
+                .statusCode(400);
+    }
+
+    @DisplayName("체크리스트 방 정보 작성 실패: 질문 답변을 넣지 않은 경우")
+    @Test
+    void createChecklist_noAnswer_exception() {
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_ANSWER)
+                .when().post("/checklists")
+                .then().log().all()
+                .statusCode(400);
+    }
+
+}

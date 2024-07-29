@@ -60,7 +60,6 @@ public class ChecklistService {
         this.checklistQuestionRepository = checklistQuestionRepository;
     }
 
-
     @Transactional
     public long createChecklist(ChecklistCreateRequest checklistCreateRequest) {
         Room room = roomRepository.save(checklistCreateRequest.toRoomEntity());
@@ -113,7 +112,7 @@ public class ChecklistService {
         List<ChecklistQuestion> checklistQuestions = questionCreateRequests.stream()
                 .map(checklistQuestion -> new ChecklistQuestion(
                         checklist,
-                        checklistQuestion.questionId(),
+                        Question.findById(checklistQuestion.questionId()),
                         Grade.getInstance(checklistQuestion.answer())))
                 .toList();
 

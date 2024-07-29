@@ -22,14 +22,15 @@ public class ChecklistQuestion extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Checklist checklist;
 
-    private int questionId;
+    @Enumerated(value = EnumType.STRING)
+    private Question question;
 
     @Enumerated(value = EnumType.STRING)
     private Grade grade;
 
-    public ChecklistQuestion(Checklist checklist, int questionId, Grade grade) {
+    public ChecklistQuestion(Checklist checklist, Question question, Grade grade) {
         this.checklist = checklist;
-        this.questionId = questionId;
+        this.question = question;
         this.grade = grade;
     }
 
@@ -44,12 +45,8 @@ public class ChecklistQuestion extends BaseEntity {
         return checklist;
     }
 
-    public int getQuestionId() {
-        return questionId;
-    }
-
     public Question getQuestion() {
-        return Question.findById(questionId);
+        return question;
     }
 
     public Grade getGrade() {
@@ -78,7 +75,7 @@ public class ChecklistQuestion extends BaseEntity {
         return "ChecklistQuestion{" +
                 "id=" + id +
                 ", checklist=" + checklist +
-                ", questionId=" + questionId +
+                ", question=" + question +
                 ", grade=" + grade +
                 '}';
     }

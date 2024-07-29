@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { postChecklist } from '@/apis/checklist';
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
-import Tabs, { Menu } from '@/components/common/Tabs/Tabs';
 import { useToastContext } from '@/components/common/Toast/ToastContext';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';
@@ -18,16 +17,16 @@ import { RoomInfo } from '@/types/room';
 
 export type TemplateType = 'checklist' | 'info';
 
-const menuList: Menu[] = [
-  {
-    name: '기본 정보',
-    id: 'info',
-  },
-  {
-    name: '체크리스트',
-    id: 'checklist',
-  },
-];
+// const menuList: Menu[] = [
+//   {
+//     name: '기본 정보',
+//     id: 'info',
+//   },
+//   {
+//     name: '체크리스트',
+//     id: 'checklist',
+//   },
+// ];
 
 // TODO: roomName 이슈로 인해 데모 버전으로 변경
 const DefaultRoomInfo: RoomInfo = {
@@ -43,12 +42,12 @@ const DefaultRoomInfo: RoomInfo = {
 };
 
 const NewChecklistPage = () => {
-  const [currentTemplateId, setCurrentTemplateId] = useState<string>(menuList[0].id);
+  // const [currentTemplateId, setCurrentTemplateId] = useState<string>(menuList[0].id);
   const { showToast } = useToastContext();
 
-  const onMoveTemplate = (templateId: TemplateType) => {
-    setCurrentTemplateId(templateId);
-  };
+  // const onMoveTemplate = (templateId: TemplateType) => {
+  //   setCurrentTemplateId(templateId);
+  // };
 
   /*방 기본 정보 */
   const { values: roomInfo, onChange } = useInputs(DefaultRoomInfo);
@@ -96,7 +95,7 @@ const NewChecklistPage = () => {
         center={<S.Title>{'새 체크리스트'}</S.Title>}
         right={<Button label={'저장'} size="small" color="dark" onClick={onSubmitChecklist} />}
       />
-      <Tabs menuList={menuList} onMoveMenu={onMoveTemplate} currentMenuId={currentTemplateId} />
+      {/* <Tabs menuList={menuList} onMoveMenu={onMoveTemplate} currentMenuId={currentTemplateId} /> */}
       {currentTemplateId === 'info' ? (
         <NewChecklistInfoTemplate
           roomInfo={roomInfo}

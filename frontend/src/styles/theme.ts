@@ -46,6 +46,7 @@ const text = {
 /*range: 10~50 */
 const zIndex = {
   FLOATING_BUTTON: 10,
+  TABS: 10,
   MODAL: 20,
   TOAST: 30,
 };

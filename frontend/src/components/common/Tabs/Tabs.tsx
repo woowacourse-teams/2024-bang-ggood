@@ -1,61 +1,76 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 
 import { flexCenter } from '@/styles/common';
 
 interface Props {
-  menuList: Menu[];
-  onMoveMenu: (menu: string) => void;
-  currentMenuId: string;
+  tabList: Tab[];
 }
 
-export type Menu = {
+export type Tab = {
   name: string;
   id: string;
+  content: React.ReactNode;
 };
 
-const Tabs = ({ menuList, onMoveMenu, currentMenuId }: Props) => {
+const Tabs = ({ tabList }: Props) => {
+  const [currentTabId, setCurrentTabId] = useState(tabList[0].id);
+
+  const renderContent = () => {
+    const targetTab = tabList.filter(tab => tab.id === currentTabId)[0];
+    if (!targetTab) throw new Error('해당 탭이 존재하지 않습니다.');
+    return targetTab.content;
+  };
+
+  const onMoveTab = (tabId: string) => {
+    setCurrentTabId(tabId);
+  };
+
   return (
-    <S.Container>
-      <S.FlexContainer>
-        {menuList?.map((menu, index) => {
-          return (
-            <S.OneMenu
-              menuCount={menuList.length}
-              key={index}
-              onClick={() => onMoveMenu(menu.id)}
-              selected={menu.id === currentMenuId}
-            >
-              <div>{menu.name}</div>
-            </S.OneMenu>
-          );
-        })}
-      </S.FlexContainer>
-    </S.Container>
+    <Container>
+      <FlexContainer>
+        {tabList?.map(tab => (
+          <Tab key={tab.id} onClick={() => onMoveTab(tab.id)} active={tab.id === currentTabId}>
+            {tab.name}
+          </Tab>
+        ))}
+      </FlexContainer>
+    </Container>
   );
 };
 
 export default Tabs;
 
-export const S = {
-  Container: styled.div`
-    display: flex;
-    position: relative;
-    width: 100%;
-    height: 60px;
+const Container = styled.div`
+  width: 100%;
+  overflow-x: auto;
 
-    flex-direction: column;
-  `,
-  FlexContainer: styled.div`
-    display: flex;
-  `,
-  OneMenu: styled.div<{ selected?: boolean; menuCount: number }>`
-    width: ${({ menuCount }) => `calc(100% / ${menuCount})`};
-    height: 60px;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 
-    ${flexCenter}
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
-    font-weight: ${({ selected, theme }) => (selected ? theme.text.weight.bold : theme.text.weight.medium)};
-    border-bottom: ${({ selected, theme }) =>
-      selected ? `3px solid ${theme.palette.yellow400}` : `3px solid ${theme.palette.yellow100}`};
-  `,
-};
+const FlexContainer = styled.div`
+  display: inline-flex;
+`;
+
+const Tab = styled.div<{ active: boolean }>`
+  display: inline-block;
+  z-index: ${({ theme }) => theme.zIndex.TABS} ${flexCenter};
+  margin-right: 10px;
+  padding: 10px 20px;
+
+  color: ${({ theme, active }) => (active ? theme.palette.yellow600 : theme.palette.black)};
+  font-weight: ${({ active, theme }) => (active ? theme.text.weight.bold : theme.text.weight.medium)};
+  cursor: pointer;
+  border-bottom: ${({ active, theme }) =>
+    active ? `3px solid ${theme.palette.yellow400}` : `3px solid ${theme.palette.yellow100}`};
+
+  &:hover {
+    background-color: ${({ theme, active }) => (active ? theme.palette.yellow400 : '#ddd')};
+  }
+`;

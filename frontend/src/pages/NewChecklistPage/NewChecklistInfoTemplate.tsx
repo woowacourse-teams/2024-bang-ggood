@@ -12,7 +12,7 @@ import { RoomInfo, RoomInfoName } from '@/types/room';
 
 interface Props {
   selectedOptions: number[];
-  setSelectedOptions: React.Dispatch<number[]>;
+  setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
   roomInfo: RoomInfo;
   onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }

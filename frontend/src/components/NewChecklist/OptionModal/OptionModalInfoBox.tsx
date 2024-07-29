@@ -9,8 +9,9 @@ import theme from '@/styles/theme';
 
 interface Props {
   selectedOptions: number[];
-  setSelectedOptions: React.Dispatch<number[]>;
+  setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
 }
+
 const OptionModalInfoBox = ({ selectedOptions, setSelectedOptions }: Props) => {
   const allOptions = new Array(totalOptionCount).fill(0).map((e, i) => i + 1);
   const { onClickSelectAllOptions, isAllSelected, setIsAllSelected } = useAllSelect({

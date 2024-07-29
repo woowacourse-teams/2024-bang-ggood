@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 interface Props {
   allOptions: (number | string)[];
-  setSelectedOptions: React.Dispatch<(number | string)[]>;
+  setSelectedOptions: React.Dispatch<React.SetStateAction<(number | string)[]>>;
   selectedOptions: (number | string)[];
 }
 

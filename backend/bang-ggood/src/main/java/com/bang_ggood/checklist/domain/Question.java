@@ -5,6 +5,7 @@ import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public enum Question {
 
@@ -67,6 +68,12 @@ public enum Question {
                 .toList();
     }
 
+    public static List<Question> findQuestionsByCategory(Category category) {
+        return Arrays.stream(values())
+                .filter(question -> question.getCategory().equals(category))
+                .collect(Collectors.toList());
+    }
+
     private boolean isCategory(Category category) {
         return this.category == category;
     }
@@ -94,5 +101,9 @@ public enum Question {
 
     public String getSubtitle() {
         return subtitle;
+    }
+
+    public Category getCategory() {
+        return category;
     }
 }

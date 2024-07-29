@@ -1,4 +1,4 @@
-package com.bang_ggood.category.dto;
+package com.bang_ggood.category.dto.response;
 
 import java.util.List;
 

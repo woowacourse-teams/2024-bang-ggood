@@ -1,6 +1,6 @@
-package com.bang_ggood.checklist.dto;
+package com.bang_ggood.checklist.dto.response;
 
-import com.bang_ggood.category.dto.WrittenCategoryQuestionsResponse;
+import com.bang_ggood.category.dto.response.WrittenCategoryQuestionsResponse;
 import com.bang_ggood.room.dto.WrittenRoomResponse;
 import java.util.List;
 

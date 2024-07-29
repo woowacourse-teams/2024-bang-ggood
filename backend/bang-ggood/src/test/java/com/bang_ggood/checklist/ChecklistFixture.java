@@ -1,7 +1,7 @@
 package com.bang_ggood.checklist;
 
-import com.bang_ggood.checklist.dto.ChecklistCreateRequest;
-import com.bang_ggood.checklist.dto.QuestionCreateRequest;
+import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
+import com.bang_ggood.checklist.dto.request.QuestionCreateRequest;
 import com.bang_ggood.room.RoomFixture;
 import java.util.List;
 

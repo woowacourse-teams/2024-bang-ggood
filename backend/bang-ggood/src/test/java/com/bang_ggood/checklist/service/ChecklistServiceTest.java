@@ -5,8 +5,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Question;
+import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
@@ -73,6 +75,16 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_OPTION_ID))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.OPTION_DUPLICATED.getMessage());
+    }
+
+    @DisplayName("체크리스트 질문 조회 성공")
+    @Test
+    void readChecklistQuestions() {
+        // given & when
+        ChecklistQuestionsResponse checklistQuestionsResponse = checklistService.readChecklistQuestions();
+
+        // then
+        assertThat(checklistQuestionsResponse.categories().size()).isEqualTo(Category.values().length);
     }
 
 }

@@ -1,14 +1,18 @@
 package com.bang_ggood.checklist.service;
 
+import com.bang_ggood.category.domain.Category;
+import com.bang_ggood.category.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.Grade;
 import com.bang_ggood.checklist.domain.Option;
 import com.bang_ggood.checklist.domain.Question;
-import com.bang_ggood.checklist.dto.ChecklistCreateRequest;
-import com.bang_ggood.checklist.dto.ChecklistInfo;
-import com.bang_ggood.checklist.dto.QuestionCreateRequest;
+import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
+import com.bang_ggood.checklist.dto.request.ChecklistInfo;
+import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
+import com.bang_ggood.checklist.dto.request.QuestionCreateRequest;
+import com.bang_ggood.checklist.dto.response.QuestionResponse;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
@@ -17,6 +21,7 @@ import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -106,6 +111,19 @@ public class ChecklistService {
                 .collect(Collectors.toList());
 
         checklistQuestionRepository.saveAll(checklistQuestions);
+    }
+
+    @Transactional
+    public ChecklistQuestionsResponse readChecklistQuestions() {
+        List<CategoryQuestionsResponse> categoryQuestionsResponses = new ArrayList<>();
+        for (Category category : Category.values()) {
+            List<QuestionResponse> questionsByCategory = Question.findQuestionsByCategory(category)
+                    .stream()
+                    .map(QuestionResponse::of)
+                    .toList();
+            categoryQuestionsResponses.add(CategoryQuestionsResponse.of(category, questionsByCategory));
+        }
+        return new ChecklistQuestionsResponse(categoryQuestionsResponses);
     }
 
     private void validateQuestion(List<QuestionCreateRequest> questions) {

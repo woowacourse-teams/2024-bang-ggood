@@ -1,5 +1,6 @@
-package com.bang_ggood.checklist.dto;
+package com.bang_ggood.checklist.dto.request;
 
+import com.bang_ggood.checklist.dto.ChecklistInfo;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.RoomCreateRequest;
 import jakarta.validation.Valid;

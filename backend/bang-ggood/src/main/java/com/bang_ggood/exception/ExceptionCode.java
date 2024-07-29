@@ -15,8 +15,11 @@ public enum ExceptionCode {
     CATEGORY_PRIORITY_INVALID_COUNT(HttpStatus.BAD_REQUEST, "카테고리 개수가 유효하지 않습니다."),
     CATEGORY_NOT_FOUND(HttpStatus.BAD_REQUEST, "카테코리가 존재하지 않습니다."),
     CATEGORY_DUPLICATED(HttpStatus.BAD_REQUEST, "중복된 카테고리가 존재합니다."),
+    GRADE_INVALID(HttpStatus.BAD_REQUEST, "점수가 유효하지 않습니다."),
+
+    // Checklist
+    CHECKLIST_COMPARISON_INVALID_COUNT(HttpStatus.BAD_REQUEST, "비교할 체크리스트 개수가 유효하지 않습니다."),
     CHECKLIST_NOT_FOUND(HttpStatus.BAD_REQUEST, "체크리스트가 존재하지 않습니다."),
-    GRADE_INVALID(HttpStatus.BAD_REQUEST, "점수가 유효하지 않습니다.")
     ;
 
     private final HttpStatus httpStatus;

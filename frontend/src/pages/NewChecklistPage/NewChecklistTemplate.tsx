@@ -17,27 +17,17 @@ interface Props {
 const NewChecklistTemplate = (props: Props) => {
   const { questionSelectedAnswer, addAnswer, deleteAnswer, checklistQuestions } = props;
 
-  // const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategoryQuestions[]>([]);
-
-  // useEffect(() => {
-  //   const fetchChecklist = async () => {
-  //     const checklist = await getChecklistQuestions();
-  //     setChecklistQuestions(checklist);
-  //   };
-  //   fetchChecklist();
-  // }, []);
-
   return (
     <S.ContentBox>
       {checklistQuestions?.map(question => (
-        <div key={`question-${question.questionId}`}>
+        <S.QuestionBox key={`question-${question.questionId}`}>
           <ChecklistQuestion
             addAnswer={addAnswer}
             deleteAnswer={deleteAnswer}
             question={question}
             questionSelectedAnswer={questionSelectedAnswer}
           />
-        </div>
+        </S.QuestionBox>
       ))}
     </S.ContentBox>
   );
@@ -46,11 +36,21 @@ const NewChecklistTemplate = (props: Props) => {
 export default NewChecklistTemplate;
 
 const ContentBox = styled.div`
+  display: flex;
   padding: 16px;
-  min-height: 100vh;
+  gap: 10px;
+  flex-direction: column;
 
   background-color: ${({ theme }) => theme.palette.backgroud};
+  min-height: 100vh;
 `;
+
+const QuestionBox = styled.div`
+  background-color: ${({ theme }) => theme.palette.white};
+  border-radius: 8px;
+`;
+
 const S = {
   ContentBox,
+  QuestionBox,
 };

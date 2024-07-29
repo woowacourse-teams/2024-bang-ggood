@@ -4,13 +4,17 @@ import { useTabContext } from '@/components/common/Tabs/TabContext';
 import { flexCenter } from '@/styles/common';
 
 interface Props {
-  tabList: Tab[];
+  tabList: TabWithCompletion[];
 }
 
-export type Tab = {
+export interface Tab {
   name: string;
   id: number;
-};
+}
+
+export interface TabWithCompletion extends Tab {
+  isCompleted: boolean;
+}
 
 const Tabs = ({ tabList }: Props) => {
   const { currentTabId, setCurrentTabId } = useTabContext();
@@ -22,11 +26,15 @@ const Tabs = ({ tabList }: Props) => {
   return (
     <Container>
       <FlexContainer>
-        {tabList?.map(tab => (
-          <Tab key={tab.id} onClick={() => onMoveTab(tab.id)} active={tab.id === currentTabId}>
-            {tab.name}
-          </Tab>
-        ))}
+        {tabList?.map(tab => {
+          const { isCompleted, id, name } = tab;
+          return (
+            <Tab key={id} onClick={() => onMoveTab(tab.id)} active={tab.id === currentTabId}>
+              {name}
+              {!isCompleted && <UncompletedIndicator />}
+            </Tab>
+          );
+        })}
       </FlexContainer>
     </Container>
   );
@@ -52,19 +60,27 @@ const FlexContainer = styled.div`
 `;
 
 const Tab = styled.div<{ active: boolean }>`
-  display: inline-block;
+  position: relative;
   z-index: ${({ theme }) => theme.zIndex.TABS} ${flexCenter};
-  margin-right: 10px;
-  padding: 10px 20px;
+  margin-top: 10px;
+  margin-right: 6px;
+  padding: 10px 16px;
 
   color: ${({ theme, active }) => (active ? theme.palette.yellow600 : theme.palette.black)};
   font-weight: ${({ active, theme }) => (active ? theme.text.weight.bold : theme.text.weight.medium)};
   cursor: pointer;
   border-bottom: ${({ active, theme }) =>
     active ? `3px solid ${theme.palette.yellow400}` : `3px solid ${theme.palette.yellow100}`};
+`;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.palette.yellow200};
-    border-radius: 5px;
-  }
+const UncompletedIndicator = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 5px;
+  height: 5px;
+  margin-left: 8px;
+
+  background-color: ${({ theme }) => theme.palette.grey400};
+  border-radius: 50%;
 `;

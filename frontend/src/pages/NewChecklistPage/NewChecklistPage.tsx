@@ -29,7 +29,7 @@ const DefaultRoomInfo: RoomInfo = {
   realEstate: '방끗공인중개사',
 };
 
-export const categoryTabs: Tab[] = [
+export const newChecklistTabs: Tab[] = [
   { id: 0, name: '기본 정보' },
   {
     id: 1,
@@ -113,7 +113,7 @@ const NewChecklistPage = () => {
 
       <TabProvider>
         <NewChecklistBody
-          categoryTabs={categoryTabs}
+          newChecklistTabs={newChecklistTabs}
           roomInfo={roomInfo}
           onChange={onChange}
           selectedOptions={selectedOptions}
@@ -121,6 +121,7 @@ const NewChecklistPage = () => {
           addAnswer={addAnswer}
           deleteAnswer={deleteAnswer}
           questionSelectedAnswer={questionSelectedAnswer}
+          checklistAnswers={checklistAnswers}
         />
       </TabProvider>
     </S.Container>

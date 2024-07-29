@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+//TODO: indicator 컴포넌트화 필요
 import { QuestionDot } from '@/assets/assets';
 import FaceMark from '@/components/common/FaceMark/FaceMark';
 import { addAnswerProps } from '@/pages/ChecklistSummaryPage';
@@ -20,11 +21,13 @@ export const emotionPhrase: Record<Emotion, string> = {
 };
 
 const ChecklistQuestion = ({ question, addAnswer, deleteAnswer, questionSelectedAnswer }: Props) => {
+  const { questionId } = question;
+
   const handleClick = (newAnswer: number) => {
-    if (questionSelectedAnswer(question.questionId) === newAnswer) {
-      deleteAnswer(question.questionId);
+    if (questionSelectedAnswer(questionId) === newAnswer) {
+      deleteAnswer(questionId);
     } else {
-      addAnswer({ questionId: question.questionId, newAnswer });
+      addAnswer({ questionId: questionId, newAnswer });
     }
   };
 
@@ -51,7 +54,7 @@ const ChecklistQuestion = ({ question, addAnswer, deleteAnswer, questionSelected
           const { name: emotionName, id } = emotion;
           return (
             <FaceMark onClick={() => handleClick(id)} key={id}>
-              <FaceMark.FaceIcon emotion={emotionName} isFilled={questionSelectedAnswer(question.questionId) === id} />
+              <FaceMark.FaceIcon emotion={emotionName} isFilled={questionSelectedAnswer(questionId) === id} />
               <FaceMark.Footer>{emotionPhrase[emotionName]}</FaceMark.Footer>
             </FaceMark>
           );

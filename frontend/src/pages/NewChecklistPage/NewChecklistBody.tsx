@@ -6,13 +6,11 @@ import Tabs, { Tab } from '@/components/common/Tabs/Tabs';
 import { addAnswerProps } from '@/pages/ChecklistSummaryPage';
 import NewChecklistInfoTemplate from '@/pages/NewChecklistPage/NewChecklistInfoTemplate';
 import NewChecklistTemplate from '@/pages/NewChecklistPage/NewChecklistTemplate';
-import { ChecklistCategoryQuestions } from '@/types/checklist';
+import { ChecklistCategoryQuestions, ChecklistFormAnswer } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
 
-export type TemplateType = 'checklist' | 'info';
-
 interface Props {
-  categoryTabs: Tab[];
+  newChecklistTabs: Tab[];
   selectedOptions: number[];
   setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
   roomInfo: RoomInfo;
@@ -20,11 +18,12 @@ interface Props {
   addAnswer: ({ questionId, newAnswer }: addAnswerProps) => void;
   deleteAnswer: (questionId: number) => void;
   questionSelectedAnswer: (questionId: number) => number | undefined;
+  checklistAnswers: ChecklistFormAnswer[];
 }
 
 const NewChecklistBody = (props: Props) => {
   const {
-    categoryTabs,
+    newChecklistTabs,
     roomInfo,
     onChange,
     selectedOptions,
@@ -36,6 +35,9 @@ const NewChecklistBody = (props: Props) => {
   const { currentTabId } = useTabContext();
 
   const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategoryQuestions[]>([]);
+  //TODO: 체크리스트 인디케이터를 위한 로직 필요
+  // const checklistQuestionsCount = checklistQuestions.map(category => category.questions.length);
+  // const [isCompleteAnswer, setIsCompleteAnswer] = useState<boolean[]>(new Array(newChecklistTabs.length).fill(false));
 
   useEffect(() => {
     const fetchChecklist = async () => {
@@ -45,9 +47,14 @@ const NewChecklistBody = (props: Props) => {
     fetchChecklist();
   }, []);
 
+  //답변 바뀔 때마다 해당 카테고리에 답변이 다 채워졌는지 확인하는 로직
+
   const findQuestions = (targetId: number) => {
     return checklistQuestions.filter(category => category.categoryId === targetId)[0].questions;
   };
+
+  //TODO: 임시 수정 필요
+  const newChecklistTabsWithCompletion = newChecklistTabs.map(tabInfo => ({ ...tabInfo, isCompleted: false }));
 
   const renderTabContent = () => {
     switch (currentTabId) {
@@ -82,7 +89,7 @@ const NewChecklistBody = (props: Props) => {
   };
   return (
     <div>
-      <Tabs tabList={categoryTabs} />
+      <Tabs tabList={newChecklistTabsWithCompletion} />
       {currentTabId !== null && currentTabId !== undefined && renderTabContent()}
     </div>
   );

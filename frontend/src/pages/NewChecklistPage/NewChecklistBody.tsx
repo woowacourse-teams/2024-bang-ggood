@@ -22,7 +22,7 @@ interface Props {
   questionSelectedAnswer: (questionId: number) => number | undefined;
 }
 
-const NewChecklistTabContainer = (props: Props) => {
+const NewChecklistBody = (props: Props) => {
   const {
     categoryTabs,
     roomInfo,
@@ -51,7 +51,7 @@ const NewChecklistTabContainer = (props: Props) => {
 
   const renderTabContent = () => {
     switch (currentTabId) {
-      case 0:
+      case 0: //기본 정보
         return (
           <NewChecklistInfoTemplate
             roomInfo={roomInfo}
@@ -61,6 +61,12 @@ const NewChecklistTabContainer = (props: Props) => {
           />
         );
       case 1: //청결
+      case 2: //방 컨디션
+      case 3: //편의시설
+      case 4: //옵션
+      case 5: //주거 환경
+      case 6: //보안
+      case 7: //경제적
         return (
           <NewChecklistTemplate
             checklistQuestions={findQuestions(currentTabId)}
@@ -69,6 +75,7 @@ const NewChecklistTabContainer = (props: Props) => {
             questionSelectedAnswer={questionSelectedAnswer}
           />
         );
+
       default:
         return <div>콘텐츠가 없습니다.</div>;
     }
@@ -76,9 +83,9 @@ const NewChecklistTabContainer = (props: Props) => {
   return (
     <div>
       <Tabs tabList={categoryTabs} />
-      {currentTabId && renderTabContent()}
+      {currentTabId !== null && currentTabId !== undefined && renderTabContent()}
     </div>
   );
 };
 
-export default NewChecklistTabContainer;
+export default NewChecklistBody;

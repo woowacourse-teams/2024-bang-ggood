@@ -1,15 +1,13 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 
-import { Tab } from '@/components/common/Tabs/Tabs';
-
 interface ContextProps {
   currentTabId: number;
   setCurrentTabId: React.Dispatch<React.SetStateAction<number>>;
 }
 const TabContext = createContext<ContextProps>(null);
 
-export const TabProvider = ({ children, tabList }: { children: ReactNode; tabList: Tab[] }) => {
-  const [currentTabId, setCurrentTabId] = useState<number>(tabList[0].id);
+export const TabProvider = ({ children }: { children: ReactNode }) => {
+  const [currentTabId, setCurrentTabId] = useState<number>(0);
 
   return <TabContext.Provider value={{ currentTabId, setCurrentTabId }}>{children}</TabContext.Provider>;
 };

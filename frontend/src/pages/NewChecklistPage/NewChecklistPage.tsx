@@ -11,7 +11,7 @@ import { useToastContext } from '@/components/common/Toast/ToastContext';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';
 import useInputs from '@/hooks/useInput';
-import NewChecklistTabContainer from '@/pages/NewChecklistPage/NewChecklistTabContainer';
+import NewChecklistBody from '@/pages/NewChecklistPage/NewChecklistBody';
 import { flexCenter, flexColumn, title2 } from '@/styles/common';
 import { ChecklistFormAfterAnswer } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
@@ -111,8 +111,8 @@ const NewChecklistPage = () => {
         right={<Button label={'저장'} size="small" color="dark" onClick={onSubmitChecklist} />}
       />
 
-      <TabProvider tabList={categoryTabs}>
-        <NewChecklistTabContainer
+      <TabProvider>
+        <NewChecklistBody
           categoryTabs={categoryTabs}
           roomInfo={roomInfo}
           onChange={onChange}

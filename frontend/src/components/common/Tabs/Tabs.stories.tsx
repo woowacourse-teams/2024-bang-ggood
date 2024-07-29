@@ -17,7 +17,7 @@ const meta = {
   },
   decorators: [
     Story => (
-      <TabProvider tabList={mockMenuList}>
+      <TabProvider>
         <Story />
       </TabProvider>
     ),

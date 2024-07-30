@@ -40,8 +40,6 @@ const ChecklistCategory = (props: ChecklistType) => {
             <ChecklistQuestion
               key={`question-${question.questionId}`}
               question={question}
-              addAnswer={props.addAnswer}
-              deleteAnswer={props.deleteAnswer}
               questionSelectedAnswer={props.questionSelectedAnswer}
             />
             {index !== category.questions.length - 1 && <Divider />}

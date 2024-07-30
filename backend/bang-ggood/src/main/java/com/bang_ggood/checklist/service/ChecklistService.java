@@ -32,6 +32,10 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bang_ggood.category.dto.response.WrittenCategoryQuestionsResponse;
+import com.bang_ggood.checklist.dto.response.WrittenChecklistResponse;
+import com.bang_ggood.checklist.dto.response.WrittenQuestionResponse;
+
 @Service
 public class ChecklistService {
 
@@ -146,5 +150,42 @@ public class ChecklistService {
                 throw new BangggoodException(ExceptionCode.INVALID_QUESTION);
             }
         }
+    }
+
+    @Transactional
+    public WrittenChecklistResponse readChecklistById(long id) {
+        Checklist checklist = checklistRepository.getById(id);
+        WrittenRoomResponse writtenRoomResponse = WrittenRoomResponse.of(checklist);
+
+        List<Integer> optionIds = readOptionsByChecklistId(id);
+
+        List<WrittenCategoryQuestionsResponse> writtenCategoryQuestionsResponses =
+                readCategoryQuestionsByChecklistId(id);
+
+        return new WrittenChecklistResponse(writtenRoomResponse, optionIds, writtenCategoryQuestionsResponses);
+    }
+
+    private List<Integer> readOptionsByChecklistId(long checklistId) {
+        return checklistOptionRepository.findByChecklistId(checklistId)
+                .stream()
+                .map(ChecklistOption::getOptionId)
+                .toList();
+    }
+
+    private List<WrittenCategoryQuestionsResponse> readCategoryQuestionsByChecklistId(long checklistId) {
+        List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findByChecklistId(checklistId);
+        return Arrays.stream(Category.values())
+                .map(category -> readQuestionsByCategory(category, checklistQuestions))
+                .collect(Collectors.toList());
+    }
+
+    private WrittenCategoryQuestionsResponse readQuestionsByCategory(Category category,
+                                                                     List<ChecklistQuestion> checklistQuestions) {
+        List<WrittenQuestionResponse> writtenQuestionResponses =
+                Question.filter(category, checklistQuestions).stream()
+                        .map(WrittenQuestionResponse::of)
+                        .collect(Collectors.toList());
+
+        return WrittenCategoryQuestionsResponse.of(category, writtenQuestionResponses);
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import com.bang_ggood.checklist.dto.response.WrittenChecklistResponse;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -29,5 +31,10 @@ public class ChecklistController {
     @GetMapping("/checklists/questions")
     public ResponseEntity<ChecklistQuestionsResponse> readChecklistQuestions() {
         return ResponseEntity.ok(checklistService.readChecklistQuestions());
+    }
+
+    @GetMapping("/checklists/{id}")
+    public ResponseEntity<WrittenChecklistResponse> readChecklistById(@PathVariable long id) {
+        return ResponseEntity.ok(checklistService.readChecklistById(id));
     }
 }

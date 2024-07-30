@@ -1,11 +1,19 @@
 package com.bang_ggood.checklist;
 
+import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.request.QuestionCreateRequest;
 import com.bang_ggood.room.RoomFixture;
+import com.bang_ggood.user.domain.User;
 import java.util.List;
 
 public class ChecklistFixture {
+
+    public static final Checklist checklist = new Checklist(
+            new User(1L, "방방이"),
+            RoomFixture.ROOM,
+            1000, 50, 12, "방끗공인중개사"
+    );
 
     public static final QuestionCreateRequest QUESTION_1_CREATE_REQUEST = new QuestionCreateRequest(
             1, "GOOD"

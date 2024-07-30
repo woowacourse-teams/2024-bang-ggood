@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 
 import { ThemeProvider } from '@emotion/react';
-import { render, renderHook, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, renderHook, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { act } from 'react';
 
 import Toast from '@/components/common/Toast/Toast';
@@ -19,27 +19,19 @@ describe('useToast 테스트', () => {
     });
     const TOAST_MESSAGE = '토스트가 나타난다.';
     const TOAST_DURATION = 2000;
-    it('토스트에 메세지를 적으면 토스트가 3초간 나타난다.', async () => {
+    const TOAST_DURATION_MINUTE = TOAST_DURATION / 1000;
+
+    it(`토스트에 메세지를 적으면 토스트가 ${TOAST_DURATION_MINUTE}초간 나타난다.`, async () => {
       const { result } = renderHook(() => useToast());
 
       act(() => {
         result.current.showToast(TOAST_MESSAGE);
       });
 
-      await waitFor(() => expect(screen.getByText(TOAST_MESSAGE)).toBeInTheDocument(), { timeout: 1000 });
+      expect(screen.getByText(TOAST_MESSAGE)).toBeInTheDocument();
     });
 
-    it('토스트에 메세지를 적은 후 3초 뒤에 토스트가 사라진다.', async () => {
-      const { result } = renderHook(() => useToast());
-
-      act(() => {
-        result.current.showToast(TOAST_MESSAGE);
-      });
-
-      await waitFor(() => expect(screen.getByText(TOAST_MESSAGE)).toBeInTheDocument(), { timeout: 3000 });
-    });
-
-    it(`토스트에 메세지를 적은 후 ${TOAST_DURATION}초 뒤에 토스트가 사라진다.`, async () => {
+    it(`토스트에 메세지를 적은 후 ${TOAST_DURATION_MINUTE}초 뒤에 토스트가 사라진다.`, async () => {
       const { result } = renderHook(() => useToast());
 
       act(() => {

@@ -17,6 +17,8 @@ const Toast = () => {
     return () => clearTimeout(timer);
   }, [duration, hideToast]);
 
+  if (!toast) return;
+
   return (
     <S.Container>
       <S.InnerBox>{toast}</S.InnerBox>

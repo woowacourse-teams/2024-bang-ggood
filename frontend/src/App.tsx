@@ -5,20 +5,19 @@ import { RouterProvider } from 'react-router-dom';
 
 import Toast from '@/components/common/Toast/Toast';
 import router from '@/Router';
-import useToast from '@/store/useToast';
 import { baseStyle } from '@/styles/global';
 import theme from '@/styles/theme';
 
 const App = () => {
   const queryClient = new QueryClient();
-  const { toast } = useToast();
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <Global styles={baseStyle} />
         <RouterProvider router={router} />
         <ReactQueryDevtools initialIsOpen={false} />
-        {toast && <Toast />}
+        <Toast />
       </ThemeProvider>
     </QueryClientProvider>
   );

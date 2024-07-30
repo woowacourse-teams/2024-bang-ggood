@@ -14,7 +14,6 @@ import jakarta.persistence.OneToOne;
 import java.util.List;
 import java.util.Objects;
 
-
 @Entity
 public class Checklist extends BaseEntity {
 

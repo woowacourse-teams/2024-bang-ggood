@@ -8,25 +8,26 @@ public enum Badge {
     OPTION("옵션", "옵션이 많아요", "🛋️"),
     ENVIRONMENT("주거환경", "주거환경이 좋아요", "🌱"),
     SECURITY("보안", "안전해요", "🔒"),
-    ECONOMIC("경제적", "경제적이에요", "💰")
+    ECONOMIC("경제적", "경제적이에요", "💰"),
+    NONE("", "", "")
     ;
-  
+
     private static final String DESCRIPTION_FORMAT = "%s %s";
-    private final String shortDescription;
-    private final String longDescription;
+    private final String shortName;
+    private final String longName;
     private final String emoji;
 
-    Badge(String shortDescription, String longDescription, String emoji) {
-        this.shortDescription = shortDescription;
-        this.longDescription = longDescription;
+    Badge(String shortName, String longName, String emoji) {
+        this.shortName = shortName;
+        this.longName = longName;
         this.emoji = emoji;
     }
 
-    public String getShortDescriptionWithEmoji() {
-        return String.format(DESCRIPTION_FORMAT, this.emoji, this.shortDescription);
+    public String getShortNameWithEmoji() {
+        return String.format(DESCRIPTION_FORMAT, this.emoji, this.shortName);
     }
 
-    public String getLongDescriptionWithEmoji() {
-        return String.format(DESCRIPTION_FORMAT, this.emoji, this.longDescription);
+    public String getLongNameWithEmoji() {
+        return String.format(DESCRIPTION_FORMAT, this.emoji, this.longName);
     }
 }

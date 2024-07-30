@@ -11,4 +11,6 @@ public interface ChecklistOptionRepository extends JpaRepository<ChecklistOption
     List<ChecklistOption> findByChecklistId(long checklistId);
 
     Integer countByChecklist(Checklist checklist);
+
+    boolean existsIdIsIn(List<Integer> ids);
 }

@@ -1,7 +1,7 @@
 package com.bang_ggood.room;
 
-import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.request.RoomCreateRequest;
+import com.bang_ggood.room.domain.Room;
 
 public class RoomFixture {
 

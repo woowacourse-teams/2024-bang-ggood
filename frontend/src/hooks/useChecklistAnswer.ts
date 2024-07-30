@@ -33,6 +33,19 @@ const useChecklistAnswer = () => {
     });
   };
 
+  //TODO: 체크리스트 인디케이터를 위한 로직 필요
+  // const [tabWithCompletion, setTabWithCompletion] = useState(
+  //   newChecklistTabs.map(tab => ({ ...tab, isCompleted: false })),
+  // );
+
+  // const changeAnswerCompletion = (targetId: number) => {
+  //   const target = tabWithCompletion.filter(tab => tab.id === targetId);
+  //   return target;
+  // };
+
+  // const checklistQuestionsCount = checklistQuestions.map(category => category.);
+  // const [isCompleteAnswer, setIsCompleteAnswer] = useState<boolean[]>(new Array(newChecklistTabs.length).fill(false));
+
   return { addAnswer, deleteAnswer, questionSelectedAnswer, checklistAnswers };
 };
 

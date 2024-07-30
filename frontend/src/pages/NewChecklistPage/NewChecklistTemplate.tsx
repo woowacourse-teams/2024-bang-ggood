@@ -1,10 +1,6 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
 
-import { getChecklistQuestions } from '@/apis/checklist';
-import Accordion from '@/components/common/Accordion/Accordion';
-import ChecklistCategory from '@/components/NewChecklist/ChecklistCategory';
-import { ChecklistCategoryQuestions, ChecklistFormAnswer } from '@/types/checklist';
+import ChecklistQuestion from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
 
 export interface addAnswerProps {
   questionId: number;
@@ -14,46 +10,25 @@ export interface addAnswerProps {
 interface Props {
   addAnswer: ({ questionId, newAnswer }: addAnswerProps) => void;
   deleteAnswer: (questionId: number) => void;
-  answers: ChecklistFormAnswer[];
   questionSelectedAnswer: (questionId: number) => number | undefined;
+  checklistQuestions: ChecklistQuestion[];
 }
 
 const NewChecklistTemplate = (props: Props) => {
-  const { questionSelectedAnswer, addAnswer, deleteAnswer } = props;
-
-  const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategoryQuestions[]>([]);
-
-  useEffect(() => {
-    const fetchChecklist = async () => {
-      const checklist = await getChecklistQuestions();
-      setChecklistQuestions(checklist);
-    };
-    fetchChecklist();
-  }, []);
+  const { questionSelectedAnswer, addAnswer, deleteAnswer, checklistQuestions } = props;
 
   return (
     <S.ContentBox>
-      <Accordion>
-        {checklistQuestions?.map((category, categoryIndex) => (
-          <div key={`category-${category.categoryId}`}>
-            <Accordion.header
-              text={category.categoryName}
-              id={category.categoryId}
-              key={`header-${category.categoryId}`}
-            />
-            <Accordion.body id={category.categoryId} key={`body-${category.categoryId}`}>
-              <ChecklistCategory
-                type="question"
-                key={`category-${category.categoryId}-${categoryIndex}`}
-                category={category}
-                addAnswer={addAnswer}
-                deleteAnswer={deleteAnswer}
-                questionSelectedAnswer={questionSelectedAnswer}
-              />
-            </Accordion.body>
-          </div>
-        ))}
-      </Accordion>
+      {checklistQuestions?.map(question => (
+        <S.QuestionBox key={`question-${question.questionId}`}>
+          <ChecklistQuestion
+            addAnswer={addAnswer}
+            deleteAnswer={deleteAnswer}
+            question={question}
+            questionSelectedAnswer={questionSelectedAnswer}
+          />
+        </S.QuestionBox>
+      ))}
     </S.ContentBox>
   );
 };
@@ -61,11 +36,21 @@ const NewChecklistTemplate = (props: Props) => {
 export default NewChecklistTemplate;
 
 const ContentBox = styled.div`
+  display: flex;
   padding: 16px;
-  min-height: 100vh;
+  gap: 10px;
+  flex-direction: column;
 
   background-color: ${({ theme }) => theme.palette.backgroud};
+  min-height: 100vh;
 `;
+
+const QuestionBox = styled.div`
+  background-color: ${({ theme }) => theme.palette.white};
+  border-radius: 8px;
+`;
+
 const S = {
   ContentBox,
+  QuestionBox,
 };

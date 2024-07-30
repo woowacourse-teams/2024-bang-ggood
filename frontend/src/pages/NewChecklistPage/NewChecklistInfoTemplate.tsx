@@ -12,7 +12,7 @@ import { RoomInfo, RoomInfoName } from '@/types/room';
 
 interface Props {
   selectedOptions: number[];
-  setSelectedOptions: React.Dispatch<number[]>;
+  setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
   roomInfo: RoomInfo;
   onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
@@ -76,6 +76,7 @@ const NewChecklistInfoTemplate = ({ selectedOptions, setSelectedOptions, roomInf
     </S.ContentWrapper>
   );
 };
+
 const makeCustomForm = (res: MakeFormArgs) => (
   <S.CustomFormField key={res.label}>
     <FormField.Label label={res.label} required={res.required} />

@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Tabs, { Menu } from '@/components/common/Tabs/Tabs';
+import { TabProvider } from '@/components/common/Tabs/TabContext';
+import Tabs from '@/components/common/Tabs/Tabs';
+import { newChecklistTabs } from '@/constants/tabs';
+
+import mobileDecorator from '../../../../.storybook/common';
 
 const meta = {
   title: 'components/Tabs',
@@ -12,30 +16,24 @@ const meta = {
       },
     },
   },
+  decorators: [
+    Story => (
+      <TabProvider>
+        <Story />
+      </TabProvider>
+    ),
+    mobileDecorator,
+  ],
 } satisfies Meta<typeof Tabs>;
+
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const mockMenuList: Menu[] = [
-  {
-    name: '기본 정보',
-    id: 'basic-info',
-  },
-  {
-    name: '체크리스트',
-    id: 'checklist',
-  },
-  {
-    name: '메모 및 사진',
-    id: 'extra-info',
-  },
-];
+const mockTabsWithCompletion = newChecklistTabs.map(tab => ({ ...tab, isCompleted: true }));
 
 export const Default: Story = {
   args: {
-    menuList: mockMenuList,
-    onMoveMenu: () => {},
-    currentMenuId: 'basic-info',
+    tabList: mockTabsWithCompletion,
   },
 };

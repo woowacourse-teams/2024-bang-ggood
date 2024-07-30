@@ -1,61 +1,79 @@
 import styled from '@emotion/styled';
 
+import { useTabContext } from '@/components/common/Tabs/TabContext';
 import { flexCenter } from '@/styles/common';
+import { TabWithCompletion } from '@/types/tab';
 
 interface Props {
-  menuList: Menu[];
-  onMoveMenu: (menu: string) => void;
-  currentMenuId: string;
+  tabList: TabWithCompletion[];
 }
 
-export type Menu = {
-  name: string;
-  id: string;
-};
+const Tabs = ({ tabList }: Props) => {
+  const { currentTabId, setCurrentTabId } = useTabContext();
 
-const Tabs = ({ menuList, onMoveMenu, currentMenuId }: Props) => {
+  const onMoveTab = (tabId: number) => {
+    setCurrentTabId(tabId);
+  };
+
   return (
-    <S.Container>
-      <S.FlexContainer>
-        {menuList?.map((menu, index) => {
+    <Container>
+      <FlexContainer>
+        {tabList?.map(tab => {
+          const { isCompleted, id, name } = tab;
           return (
-            <S.OneMenu
-              menuCount={menuList.length}
-              key={index}
-              onClick={() => onMoveMenu(menu.id)}
-              selected={menu.id === currentMenuId}
-            >
-              <div>{menu.name}</div>
-            </S.OneMenu>
+            <Tab key={id} onClick={() => onMoveTab(tab.id)} active={tab.id === currentTabId}>
+              {name}
+              {!isCompleted && <UncompletedIndicator />}
+            </Tab>
           );
         })}
-      </S.FlexContainer>
-    </S.Container>
+      </FlexContainer>
+    </Container>
   );
 };
 
 export default Tabs;
 
-export const S = {
-  Container: styled.div`
-    display: flex;
-    position: relative;
-    width: 100%;
-    height: 60px;
+const Container = styled.div`
+  width: 100%;
+  overflow-x: auto;
 
-    flex-direction: column;
-  `,
-  FlexContainer: styled.div`
-    display: flex;
-  `,
-  OneMenu: styled.div<{ selected?: boolean; menuCount: number }>`
-    width: ${({ menuCount }) => `calc(100% / ${menuCount})`};
-    height: 60px;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 
-    ${flexCenter}
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
-    font-weight: ${({ selected, theme }) => (selected ? theme.text.weight.bold : theme.text.weight.medium)};
-    border-bottom: ${({ selected, theme }) =>
-      selected ? `3px solid ${theme.palette.yellow400}` : `3px solid ${theme.palette.yellow100}`};
-  `,
-};
+const FlexContainer = styled.div`
+  display: inline-flex;
+`;
+
+const Tab = styled.div<{ active: boolean }>`
+  position: relative;
+  z-index: ${({ theme }) => theme.zIndex.TABS};
+  ${flexCenter};
+  margin-top: 10px;
+  margin-right: 6px;
+  padding: 10px 16px;
+
+  color: ${({ theme, active }) => (active ? theme.palette.yellow600 : theme.palette.black)};
+  font-weight: ${({ active, theme }) => (active ? theme.text.weight.bold : theme.text.weight.medium)};
+  cursor: pointer;
+  border-bottom: ${({ active, theme }) =>
+    active ? `3px solid ${theme.palette.yellow400}` : `3px solid ${theme.palette.yellow100}`};
+`;
+
+const UncompletedIndicator = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 5px;
+  height: 5px;
+  margin-left: 8px;
+
+  background-color: ${({ theme }) => theme.palette.grey400};
+  border-radius: 50%;
+`;

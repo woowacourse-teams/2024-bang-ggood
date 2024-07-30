@@ -5,29 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import { postChecklist } from '@/apis/checklist';
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
-import Tabs, { Menu } from '@/components/common/Tabs/Tabs';
+import { TabProvider } from '@/components/common/Tabs/TabContext';
 import { useToastContext } from '@/components/common/Toast/ToastContext';
 import { ROUTE_PATH } from '@/constants/routePath';
+import { newChecklistTabs } from '@/constants/tabs';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';
 import useInputs from '@/hooks/useInput';
-import NewChecklistInfoTemplate from '@/pages/NewChecklistPage/NewChecklistInfoTemplate';
-import NewChecklistTemplate from '@/pages/NewChecklistPage/NewChecklistTemplate';
+import NewChecklistBody from '@/pages/NewChecklistPage/NewChecklistBody';
 import { flexCenter, flexColumn, title2 } from '@/styles/common';
 import { ChecklistFormAfterAnswer } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
-
-export type TemplateType = 'checklist' | 'info';
-
-const menuList: Menu[] = [
-  {
-    name: '기본 정보',
-    id: 'info',
-  },
-  {
-    name: '체크리스트',
-    id: 'checklist',
-  },
-];
 
 // TODO: roomName 이슈로 인해 데모 버전으로 변경
 const DefaultRoomInfo: RoomInfo = {
@@ -43,12 +30,7 @@ const DefaultRoomInfo: RoomInfo = {
 };
 
 const NewChecklistPage = () => {
-  const [currentTemplateId, setCurrentTemplateId] = useState<string>(menuList[0].id);
   const { showToast } = useToastContext();
-
-  const onMoveTemplate = (templateId: TemplateType) => {
-    setCurrentTemplateId(templateId);
-  };
 
   /*방 기본 정보 */
   const { values: roomInfo, onChange } = useInputs(DefaultRoomInfo);
@@ -57,7 +39,6 @@ const NewChecklistPage = () => {
   const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
 
   /*체크리스트 답변*/
-
   const { addAnswer, deleteAnswer, questionSelectedAnswer, checklistAnswers } = useChecklistAnswer();
 
   const navigate = useNavigate();
@@ -96,22 +77,20 @@ const NewChecklistPage = () => {
         center={<S.Title>{'새 체크리스트'}</S.Title>}
         right={<Button label={'저장'} size="small" color="dark" onClick={onSubmitChecklist} />}
       />
-      <Tabs menuList={menuList} onMoveMenu={onMoveTemplate} currentMenuId={currentTemplateId} />
-      {currentTemplateId === 'info' ? (
-        <NewChecklistInfoTemplate
+
+      <TabProvider>
+        <NewChecklistBody
+          newChecklistTabs={newChecklistTabs}
           roomInfo={roomInfo}
           onChange={onChange}
           selectedOptions={selectedOptions}
           setSelectedOptions={setSelectedOptions}
-        />
-      ) : (
-        <NewChecklistTemplate
-          answers={checklistAnswers}
           addAnswer={addAnswer}
           deleteAnswer={deleteAnswer}
           questionSelectedAnswer={questionSelectedAnswer}
+          checklistAnswers={checklistAnswers}
         />
-      )}
+      </TabProvider>
     </S.Container>
   );
 };

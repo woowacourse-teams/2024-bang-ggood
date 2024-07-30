@@ -11,9 +11,9 @@ export const totalOptionCount = 14;
 
 interface Props {
   isOpen: boolean;
-  setIsOpen: React.Dispatch<boolean>;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   selectedOptions: number[];
-  setSelectedOptions: React.Dispatch<number[]>;
+  setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
 const OptionModal = ({ isOpen, setIsOpen, selectedOptions, setSelectedOptions }: Props) => {

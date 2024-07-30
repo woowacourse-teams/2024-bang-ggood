@@ -1,4 +1,4 @@
-package com.bang_ggood.room.dto;
+package com.bang_ggood.room.dto.request;
 
 import com.bang_ggood.room.domain.Room;
 import jakarta.validation.constraints.NotNull;

@@ -1,17 +1,17 @@
 package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.category.domain.Category;
-import com.bang_ggood.category.dto.WrittenCategoryQuestionsResponse;
+import com.bang_ggood.category.dto.response.WrittenCategoryQuestionsResponse;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.Question;
-import com.bang_ggood.checklist.dto.WrittenChecklistResponse;
-import com.bang_ggood.checklist.dto.WrittenQuestionResponse;
+import com.bang_ggood.checklist.dto.response.WrittenChecklistResponse;
+import com.bang_ggood.checklist.dto.response.WrittenQuestionResponse;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
-import com.bang_ggood.room.dto.WrittenRoomResponse;
+import com.bang_ggood.room.dto.response.WrittenRoomResponse;
 import com.bang_ggood.room.repository.RoomRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

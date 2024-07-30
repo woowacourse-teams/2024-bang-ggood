@@ -2,7 +2,7 @@ package com.bang_ggood.checklist.controller;
 
 import com.bang_ggood.AcceptanceTest;
 import com.bang_ggood.checklist.ChecklistFixture;
-import com.bang_ggood.checklist.dto.WrittenChecklistResponse;
+import com.bang_ggood.checklist.dto.response.WrittenChecklistResponse;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.repository.RoomRepository;

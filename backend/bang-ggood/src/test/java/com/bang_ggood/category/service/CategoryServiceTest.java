@@ -2,8 +2,8 @@ package com.bang_ggood.category.service;
 
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.category.domain.Category;
-import com.bang_ggood.category.dto.CategoriesReadResponse;
-import com.bang_ggood.category.dto.CategoryPriorityCreateRequest;
+import com.bang_ggood.category.dto.response.CategoriesReadResponse;
+import com.bang_ggood.category.dto.request.CategoryPriorityCreateRequest;
 import com.bang_ggood.exception.BangggoodException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

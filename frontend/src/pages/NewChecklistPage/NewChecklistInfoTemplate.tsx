@@ -76,6 +76,7 @@ const NewChecklistInfoTemplate = ({ selectedOptions, setSelectedOptions, roomInf
     </S.ContentWrapper>
   );
 };
+
 const makeCustomForm = (res: MakeFormArgs) => (
   <S.CustomFormField key={res.label}>
     <FormField.Label label={res.label} required={res.required} />

@@ -35,9 +35,6 @@ const NewChecklistBody = (props: Props) => {
   const { currentTabId } = useTabContext();
 
   const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategoryQuestions[]>([]);
-  //TODO: 체크리스트 인디케이터를 위한 로직 필요
-  // const checklistQuestionsCount = checklistQuestions.map(category => category.questions.length);
-  // const [isCompleteAnswer, setIsCompleteAnswer] = useState<boolean[]>(new Array(newChecklistTabs.length).fill(false));
 
   useEffect(() => {
     const fetchChecklist = async () => {

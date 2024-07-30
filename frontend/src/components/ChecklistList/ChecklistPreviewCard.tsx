@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { LocationLineIcon } from '@/assets/assets';
 import Badge from '@/components/common/Badge/Badge';
 import { MAX_BADGE_DISPLAY_COUNT } from '@/constants/system';
-import { boxShadow, flexCenter, flexColumn, flexSpaceBetween, title3 } from '@/styles/common';
+import { boxShadow, flexCenter, flexColumn, flexRow, flexSpaceBetween, title3 } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
 import formattedDate from '@/utils/formattedDate';
 
@@ -13,27 +13,27 @@ interface Props {
 }
 
 const ChecklistPreviewCard = ({ checklist, onClick }: Props) => {
-  const extraBadgeCount =
-    checklist.badge.length > MAX_BADGE_DISPLAY_COUNT ? checklist.badge.length - MAX_BADGE_DISPLAY_COUNT : null;
+  const { roomName, address, createdAt, deposit, rent, badge } = checklist;
+  const extraBadgeCount = badge.length > MAX_BADGE_DISPLAY_COUNT ? badge.length - MAX_BADGE_DISPLAY_COUNT : null;
 
   return (
     <S.Container onClick={onClick}>
       <S.Row>
         <S.LocationWrapper>
           <LocationLineIcon />
-          {checklist.address}
+          {address}
         </S.LocationWrapper>
-        <S.Date>{formattedDate(checklist.createdAt)}</S.Date>
+        <S.Date>{formattedDate(createdAt)}</S.Date>
       </S.Row>
       <S.Row>
         <S.Column>
-          <S.Title>{checklist.roomName}</S.Title>
+          <S.Title>{roomName}</S.Title>
           <S.Deposit>
-            {checklist.deposit}/{checklist.rent}
+            {deposit}/{rent}
           </S.Deposit>
         </S.Column>
         <S.BadgeWrapper>
-          {checklist.badge.slice(0, MAX_BADGE_DISPLAY_COUNT).map((bd, count) => (
+          {badge.slice(0, MAX_BADGE_DISPLAY_COUNT).map((bd, count) => (
             <Badge key={count} label={bd.shortName} />
           ))}
           {extraBadgeCount && <S.ExtraBadgeBox>+{extraBadgeCount}</S.ExtraBadgeBox>}
@@ -60,8 +60,8 @@ const S = {
     ${boxShadow}
   `,
   Row: styled.div`
-    align-items: baseline;
     ${flexSpaceBetween}
+    align-items: baseline;
   `,
   Column: styled.div`
     ${flexColumn}
@@ -83,7 +83,7 @@ const S = {
     font-size: ${({ theme }) => theme.text.size.medium};
   `,
   BadgeWrapper: styled.div`
-    display: flex;
+    ${flexRow}
     justify-content: flex-end;
     flex-wrap: wrap;
     height: auto;
@@ -95,6 +95,7 @@ const S = {
     ${flexCenter}
     height: 26px;
     padding: 0 6px;
+
     box-sizing: border-box;
     border-radius: 16px;
     border: 1px solid ${({ theme }) => theme.palette.grey300};

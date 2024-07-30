@@ -53,13 +53,11 @@ const ChecklistListPage = () => {
       <Layout>
         <S.ListBox>
           {checklistList?.map(checklist => (
-            // <Link to={ROUTE_PATH.checklistOne(checklist.checklistId)} key={checklist.checklistId}>
             <ChecklistPreviewCard
               key={checklist.checklistId}
               checklist={checklist}
               onClick={() => handleClickCard(checklist.checklistId)}
             />
-            // </Link>
           ))}
         </S.ListBox>
       </Layout>

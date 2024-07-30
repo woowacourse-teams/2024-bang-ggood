@@ -1,21 +1,11 @@
 import styled from '@emotion/styled';
-import { useEffect } from 'react';
 
-import useToast from '@/store/useToast';
+import useToast from '@/hooks/useToast';
 import { flexCenter, title4 } from '@/styles/common';
 
-export const DEFAULT_TOAST_DURATION = 2;
-
+export const DEFAULT_DURATION = 2;
 const Toast = () => {
-  const { hideToast, toast } = useToast();
-  const duration = DEFAULT_TOAST_DURATION;
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      hideToast();
-    }, duration * 1000);
-    return () => clearTimeout(timer);
-  }, [duration, hideToast]);
+  const { toast } = useToast(DEFAULT_DURATION);
 
   if (!toast) return;
 

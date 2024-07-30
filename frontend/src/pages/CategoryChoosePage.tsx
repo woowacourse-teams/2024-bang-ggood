@@ -9,7 +9,7 @@ import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import Layout from '@/components/common/layout/Layout';
 import { ROUTE_PATH } from '@/constants/routePath';
-import useToast from '@/store/useToast';
+import useToast from '@/store/useToastState';
 import { flexColumn, flexRow, title2 } from '@/styles/common';
 import { Category } from '@/types/category';
 
@@ -37,7 +37,7 @@ const CategoryChoosePage = () => {
       } else if (prev.length < MAX_SELECT_CATEGORY_COUNT) {
         return [...prev, id];
       }
-      showToast('카테고리는 최대 3개까지만 선택 가능합니다.');
+      showToast(`카테고리는 최대 ${MAX_SELECT_CATEGORY_COUNT}개까지만 선택 가능합니다.`);
       return prev;
     });
   };

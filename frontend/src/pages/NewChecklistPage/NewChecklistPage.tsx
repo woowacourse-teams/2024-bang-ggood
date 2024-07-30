@@ -9,9 +9,9 @@ import { TabProvider } from '@/components/common/Tabs/TabContext';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { newChecklistTabs } from '@/constants/tabs';
 import useInputs from '@/hooks/useInput';
+import useToast from '@/hooks/useToast';
 import NewChecklistBody from '@/pages/NewChecklistPage/NewChecklistBody';
 import useChecklist from '@/store/useChecklist';
-import useToast from '@/store/useToast';
 import { flexCenter, flexColumn, title2 } from '@/styles/common';
 import { ChecklistFormAfterAnswer } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
@@ -30,7 +30,7 @@ const DefaultRoomInfo: RoomInfo = {
 };
 
 const NewChecklistPage = () => {
-  const { showToast } = useToast();
+  const { showToast } = useToast(3);
 
   /*방 기본 정보 */
   const { values: roomInfo, onChange } = useInputs(DefaultRoomInfo);

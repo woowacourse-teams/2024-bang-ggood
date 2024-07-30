@@ -3,7 +3,6 @@ package com.bang_ggood.checklist.dto.request;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.request.RoomCreateRequest;
 import jakarta.validation.Valid;
-
 import java.util.List;
 
 public record ChecklistCreateRequest(@Valid RoomCreateRequest room, List<Integer> options,

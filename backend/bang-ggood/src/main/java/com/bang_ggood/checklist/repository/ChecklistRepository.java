@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
+import java.util.List;
+import java.util.Optional;
 
 public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
 
@@ -22,8 +24,10 @@ public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
     default Checklist getById(long id) {
         return findById(id).orElseThrow(() -> new BangggoodException(ExceptionCode.CHECKLIST_NOT_FOUND));
     }
-  
+
     List<Checklist> findByUser(User user);
-  
+
     List<Checklist> findByUserAndIdIn(User user, List<Long> checklistIds);
+
+    long countAllByIdIn(List<Long> ids);
 }

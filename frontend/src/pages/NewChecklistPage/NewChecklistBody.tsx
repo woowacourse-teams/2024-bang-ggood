@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 
 import { getChecklistQuestions } from '@/apis/checklist';
 import { useTabContext } from '@/components/common/Tabs/TabContext';
-import Tabs, { Tab } from '@/components/common/Tabs/Tabs';
+import Tabs from '@/components/common/Tabs/Tabs';
 import { addAnswerProps } from '@/pages/ChecklistSummaryPage';
 import NewChecklistInfoTemplate from '@/pages/NewChecklistPage/NewChecklistInfoTemplate';
 import NewChecklistTemplate from '@/pages/NewChecklistPage/NewChecklistTemplate';
 import { ChecklistCategoryQuestions, ChecklistFormAnswer } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
+import { Tab } from '@/types/tab';
 
 interface Props {
   newChecklistTabs: Tab[];

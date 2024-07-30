@@ -2,18 +2,10 @@ import styled from '@emotion/styled';
 
 import { useTabContext } from '@/components/common/Tabs/TabContext';
 import { flexCenter } from '@/styles/common';
+import { TabWithCompletion } from '@/types/tab';
 
 interface Props {
   tabList: TabWithCompletion[];
-}
-
-export interface Tab {
-  name: string;
-  id: number;
-}
-
-export interface TabWithCompletion extends Tab {
-  isCompleted: boolean;
 }
 
 const Tabs = ({ tabList }: Props) => {
@@ -61,7 +53,8 @@ const FlexContainer = styled.div`
 
 const Tab = styled.div<{ active: boolean }>`
   position: relative;
-  z-index: ${({ theme }) => theme.zIndex.TABS} ${flexCenter};
+  z-index: ${({ theme }) => theme.zIndex.TABS};
+  ${flexCenter};
   margin-top: 10px;
   margin-right: 6px;
   padding: 10px 16px;

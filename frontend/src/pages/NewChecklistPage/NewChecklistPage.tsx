@@ -9,9 +9,9 @@ import { TabProvider } from '@/components/common/Tabs/TabContext';
 import { useToastContext } from '@/components/common/Toast/ToastContext';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { newChecklistTabs } from '@/constants/tabs';
-import useChecklistAnswer from '@/hooks/useChecklistAnswer';
 import useInputs from '@/hooks/useInput';
 import NewChecklistBody from '@/pages/NewChecklistPage/NewChecklistBody';
+import useChecklist from '@/store/useChecklist';
 import { flexCenter, flexColumn, title2 } from '@/styles/common';
 import { ChecklistFormAfterAnswer } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
@@ -39,7 +39,7 @@ const NewChecklistPage = () => {
   const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
 
   /*체크리스트 답변*/
-  const { addAnswer, deleteAnswer, questionSelectedAnswer, checklistAnswers } = useChecklistAnswer();
+  const { checklistAnswers, questionSelectedAnswer } = useChecklist();
 
   const navigate = useNavigate();
 
@@ -85,8 +85,6 @@ const NewChecklistPage = () => {
           onChange={onChange}
           selectedOptions={selectedOptions}
           setSelectedOptions={setSelectedOptions}
-          addAnswer={addAnswer}
-          deleteAnswer={deleteAnswer}
           questionSelectedAnswer={questionSelectedAnswer}
           checklistAnswers={checklistAnswers}
         />

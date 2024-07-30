@@ -12,8 +12,6 @@ const mockQuestion = {
   subtitle: '서비스에 대한 간단한 피드백을 주세요',
 };
 
-const mockAddAnswer = jest.fn();
-const mockDeleteAnswer = jest.fn();
 const mockQuestionSelectedAnswer = jest.fn();
 
 const renderWithTheme = (children: React.ReactNode) => {
@@ -22,14 +20,7 @@ const renderWithTheme = (children: React.ReactNode) => {
 
 describe('ChecklistQuestion 테스트', () => {
   beforeEach(() => {
-    renderWithTheme(
-      <ChecklistQuestion
-        questionSelectedAnswer={mockQuestionSelectedAnswer}
-        question={mockQuestion}
-        addAnswer={mockAddAnswer}
-        deleteAnswer={mockDeleteAnswer}
-      />,
-    );
+    renderWithTheme(<ChecklistQuestion questionSelectedAnswer={mockQuestionSelectedAnswer} question={mockQuestion} />);
   });
   test('모든 선택 옵션(좋아요, 평범해요, 좋아요)이 렌더링 된다.', () => {
     expect(screen.getByText('별로에요')).toBeInTheDocument();

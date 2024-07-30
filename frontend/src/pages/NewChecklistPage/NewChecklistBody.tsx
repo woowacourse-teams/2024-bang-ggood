@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import { getChecklistQuestions } from '@/apis/checklist';
 import { useTabContext } from '@/components/common/Tabs/TabContext';
 import Tabs from '@/components/common/Tabs/Tabs';
-import { addAnswerProps } from '@/pages/ChecklistSummaryPage';
 import NewChecklistInfoTemplate from '@/pages/NewChecklistPage/NewChecklistInfoTemplate';
 import NewChecklistTemplate from '@/pages/NewChecklistPage/NewChecklistTemplate';
+import useChecklist from '@/store/useChecklist';
 import { ChecklistCategoryQuestions, ChecklistFormAnswer } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
 import { Tab } from '@/types/tab';
@@ -16,23 +16,12 @@ interface Props {
   setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
   roomInfo: RoomInfo;
   onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  addAnswer: ({ questionId, newAnswer }: addAnswerProps) => void;
-  deleteAnswer: (questionId: number) => void;
   questionSelectedAnswer: (questionId: number) => number | undefined;
   checklistAnswers: ChecklistFormAnswer[];
 }
 
 const NewChecklistBody = (props: Props) => {
-  const {
-    newChecklistTabs,
-    roomInfo,
-    onChange,
-    selectedOptions,
-    setSelectedOptions,
-    addAnswer,
-    deleteAnswer,
-    questionSelectedAnswer,
-  } = props;
+  const { newChecklistTabs, roomInfo, onChange, selectedOptions, setSelectedOptions } = props;
   const { currentTabId } = useTabContext();
 
   const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategoryQuestions[]>([]);
@@ -50,6 +39,8 @@ const NewChecklistBody = (props: Props) => {
   const findQuestions = (targetId: number) => {
     return checklistQuestions.filter(category => category.categoryId === targetId)[0].questions;
   };
+
+  const { questionSelectedAnswer } = useChecklist();
 
   //TODO: 임시 수정 필요
   const newChecklistTabsWithCompletion = newChecklistTabs.map(tabInfo => ({ ...tabInfo, isCompleted: false }));
@@ -75,8 +66,6 @@ const NewChecklistBody = (props: Props) => {
         return (
           <NewChecklistTemplate
             checklistQuestions={findQuestions(currentTabId)}
-            addAnswer={addAnswer}
-            deleteAnswer={deleteAnswer}
             questionSelectedAnswer={questionSelectedAnswer}
           />
         );

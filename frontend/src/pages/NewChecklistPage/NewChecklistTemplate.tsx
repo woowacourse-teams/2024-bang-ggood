@@ -8,25 +8,18 @@ export interface addAnswerProps {
 }
 
 interface Props {
-  addAnswer: ({ questionId, newAnswer }: addAnswerProps) => void;
-  deleteAnswer: (questionId: number) => void;
   questionSelectedAnswer: (questionId: number) => number | undefined;
   checklistQuestions: ChecklistQuestion[];
 }
 
 const NewChecklistTemplate = (props: Props) => {
-  const { questionSelectedAnswer, addAnswer, deleteAnswer, checklistQuestions } = props;
+  const { questionSelectedAnswer, checklistQuestions } = props;
 
   return (
     <S.ContentBox>
       {checklistQuestions?.map(question => (
         <S.QuestionBox key={`question-${question.questionId}`}>
-          <ChecklistQuestion
-            addAnswer={addAnswer}
-            deleteAnswer={deleteAnswer}
-            question={question}
-            questionSelectedAnswer={questionSelectedAnswer}
-          />
+          <ChecklistQuestion question={question} questionSelectedAnswer={questionSelectedAnswer} />
         </S.QuestionBox>
       ))}
     </S.ContentBox>

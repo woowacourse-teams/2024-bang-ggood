@@ -3,14 +3,12 @@ import styled from '@emotion/styled';
 //TODO: indicator 컴포넌트화 필요
 import { QuestionDot } from '@/assets/assets';
 import FaceMark from '@/components/common/FaceMark/FaceMark';
-import { addAnswerProps } from '@/pages/ChecklistSummaryPage';
+import useChecklist from '@/store/useChecklist';
 import { ChecklistQuestion } from '@/types/checklist';
 import { Emotion } from '@/types/emotionAnswer';
 
 interface Props {
   question: ChecklistQuestion;
-  addAnswer: ({ questionId, newAnswer }: addAnswerProps) => void;
-  deleteAnswer: (questionId: number) => void;
   questionSelectedAnswer: (questionId: number) => number | void;
 }
 
@@ -20,9 +18,9 @@ export const emotionPhrase: Record<Emotion, string> = {
   GOOD: '좋아요',
 };
 
-const ChecklistQuestion = ({ question, addAnswer, deleteAnswer, questionSelectedAnswer }: Props) => {
+const ChecklistQuestion = ({ question, questionSelectedAnswer }: Props) => {
   const { questionId } = question;
-
+  const { deleteAnswer, addAnswer } = useChecklist();
   const handleClick = (newAnswer: number) => {
     if (questionSelectedAnswer(questionId) === newAnswer) {
       deleteAnswer(questionId);

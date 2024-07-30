@@ -6,11 +6,11 @@ import useToast from '@/hooks/useToast';
 export const ToastContext = createContext({} as ReturnType<typeof useToast>);
 
 export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
-  const toastValue = useToast();
+  const { toast, hideToast, showToast } = useToast();
 
   return (
-    <ToastContext.Provider value={toastValue}>
-      {toastValue.toast && <Toast />}
+    <ToastContext.Provider value={{ toast, hideToast, showToast }}>
+      {toast && <Toast />}
       {children}
     </ToastContext.Provider>
   );

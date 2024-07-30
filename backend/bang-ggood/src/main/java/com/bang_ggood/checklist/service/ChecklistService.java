@@ -2,6 +2,7 @@ package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.category.dto.response.CategoryQuestionsResponse;
+import com.bang_ggood.category.dto.response.WrittenCategoryQuestionsResponse;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
@@ -10,17 +11,22 @@ import com.bang_ggood.checklist.domain.Option;
 import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.request.ChecklistInfo;
-import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.request.QuestionCreateRequest;
+import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.QuestionResponse;
+import com.bang_ggood.checklist.dto.response.WrittenChecklistResponse;
+import com.bang_ggood.checklist.dto.response.WrittenQuestionResponse;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.domain.Room;
+import com.bang_ggood.room.dto.response.WrittenRoomResponse;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -29,12 +35,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.bang_ggood.category.dto.response.WrittenCategoryQuestionsResponse;
-import com.bang_ggood.checklist.dto.response.WrittenChecklistResponse;
-import com.bang_ggood.checklist.dto.response.WrittenQuestionResponse;
 
 @Service
 public class ChecklistService {
@@ -52,7 +52,6 @@ public class ChecklistService {
         this.checklistOptionRepository = checklistOptionRepository;
         this.checklistQuestionRepository = checklistQuestionRepository;
     }
-
 
     @Transactional
     public long createChecklist(ChecklistCreateRequest checklistCreateRequest) {
@@ -176,7 +175,7 @@ public class ChecklistService {
         List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findByChecklistId(checklistId);
         return Arrays.stream(Category.values())
                 .map(category -> readQuestionsByCategory(category, checklistQuestions))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private WrittenCategoryQuestionsResponse readQuestionsByCategory(Category category,
@@ -184,7 +183,7 @@ public class ChecklistService {
         List<WrittenQuestionResponse> writtenQuestionResponses =
                 Question.filter(category, checklistQuestions).stream()
                         .map(WrittenQuestionResponse::of)
-                        .collect(Collectors.toList());
+                        .toList();
 
         return WrittenCategoryQuestionsResponse.of(category, writtenQuestionResponses);
     }

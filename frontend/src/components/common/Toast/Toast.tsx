@@ -1,16 +1,13 @@
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
-import { createPortal } from 'react-dom';
 
-import { useToastContext } from '@/components/common/Toast/ToastContext';
+import useToast from '@/store/useToast';
 import { flexCenter, title4 } from '@/styles/common';
-
-const toastRoot = document.getElementById('toast');
 
 export const DEFAULT_TOAST_DURATION = 2;
 
 const Toast = () => {
-  const { hideToast, toast } = useToastContext();
+  const { hideToast, toast } = useToast();
   const duration = DEFAULT_TOAST_DURATION;
 
   useEffect(() => {
@@ -20,11 +17,10 @@ const Toast = () => {
     return () => clearTimeout(timer);
   }, [duration, hideToast]);
 
-  return createPortal(
+  return (
     <S.Container>
       <S.InnerBox>{toast}</S.InnerBox>
-    </S.Container>,
-    toastRoot,
+    </S.Container>
   );
 };
 

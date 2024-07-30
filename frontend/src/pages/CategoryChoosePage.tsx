@@ -8,8 +8,8 @@ import Badge from '@/components/common/Badge/Badge';
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import Layout from '@/components/common/layout/Layout';
-import { useToastContext } from '@/components/common/Toast/ToastContext';
 import { ROUTE_PATH } from '@/constants/routePath';
+import useToast from '@/store/useToast';
 import { flexColumn, flexRow, title2 } from '@/styles/common';
 import { Category } from '@/types/category';
 
@@ -18,7 +18,7 @@ const MAX_SELECT_CATEGORY_COUNT = 3;
 const CategoryChoosePage = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number[]>([]);
-  const { showToast } = useToastContext();
+  const { showToast } = useToast();
 
   const navigate = useNavigate();
 

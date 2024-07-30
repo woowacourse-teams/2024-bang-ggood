@@ -12,7 +12,7 @@ import useInputs from '@/hooks/useInput';
 import useToast from '@/hooks/useToast';
 import NewChecklistBody from '@/pages/NewChecklistPage/NewChecklistBody';
 import useChecklist from '@/store/useChecklist';
-import { flexCenter, flexColumn, title2 } from '@/styles/common';
+import { flexCenter, title2 } from '@/styles/common';
 import { ChecklistFormAfterAnswer } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
 
@@ -71,7 +71,7 @@ const NewChecklistPage = () => {
   };
 
   return (
-    <S.Container>
+    <>
       <Header
         left={<Header.Backward />}
         center={<S.Title>{'새 체크리스트'}</S.Title>}
@@ -89,15 +89,11 @@ const NewChecklistPage = () => {
           checklistAnswers={checklistAnswers}
         />
       </TabProvider>
-    </S.Container>
+    </>
   );
 };
 
 export default NewChecklistPage;
-
-const Container = styled.div`
-  ${flexColumn}
-`;
 
 const Title = styled.div`
   ${title2}
@@ -105,6 +101,5 @@ const Title = styled.div`
 `;
 
 const S = {
-  Container,
   Title,
 };

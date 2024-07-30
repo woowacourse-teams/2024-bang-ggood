@@ -16,39 +16,50 @@ const Tabs = ({ tabList }: Props) => {
   };
 
   return (
-    <Container>
-      <FlexContainer>
-        {tabList?.map(tab => {
-          const { isCompleted, id, name } = tab;
-          return (
-            <Tab
-              id={id}
-              name={name}
-              onMoveTab={onMoveTab}
-              key={id}
-              active={tab.id === currentTabId}
-              isCompleted={isCompleted}
-            />
-          );
-        })}
-      </FlexContainer>
-    </Container>
+    <VisibleContainer>
+      <Container>
+        <FlexContainer>
+          {tabList?.map(tab => {
+            const { isCompleted, id, name } = tab;
+            return (
+              <Tab
+                id={id}
+                name={name}
+                onMoveTab={onMoveTab}
+                key={id}
+                active={tab.id === currentTabId}
+                isCompleted={isCompleted}
+              />
+            );
+          })}
+        </FlexContainer>
+      </Container>
+    </VisibleContainer>
   );
 };
 
 export default Tabs;
 
 const Container = styled.div`
+  position: fixed;
+  max-width: 600px;
+
   width: 100%;
-  overflow-x: auto;
+
+  background-color: ${({ theme }) => theme.palette.white};
 
   white-space: nowrap;
+  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
     display: none;
   }
+`;
+
+const VisibleContainer = styled.div`
+  max-width: 600px;
 `;
 
 const FlexContainer = styled.div`

@@ -14,8 +14,6 @@ export default Layout;
 const S = {
   Wrapper: styled.div<{ bgColor: string }>`
     padding: 16px;
-
-    background-color: ${({ bgColor }) => bgColor};
     overflow-y: scroll;
   `,
 };

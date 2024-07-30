@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
 import { getChecklistQuestions } from '@/apis/checklist';
@@ -77,9 +78,18 @@ const NewChecklistBody = (props: Props) => {
   return (
     <div>
       <Tabs tabList={newChecklistTabsWithCompletion} />
-      {currentTabId !== null && currentTabId !== undefined && renderTabContent()}
+      <S.Container>{currentTabId !== null && currentTabId !== undefined && renderTabContent()}</S.Container>
     </div>
   );
 };
 
 export default NewChecklistBody;
+
+const Container = styled.div`
+  overflow-x: hidden;
+  min-height: calc(100vh - 60px);
+`;
+
+const S = {
+  Container,
+};

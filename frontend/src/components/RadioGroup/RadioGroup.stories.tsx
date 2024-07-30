@@ -1,7 +1,9 @@
+import styled from '@emotion/styled';
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 
 import RadioGroup from '@/components/RadioGroup/RadioGroup';
+import { flexColumn } from '@/styles/common';
 
 const meta: Meta<typeof RadioGroup> = {
   title: 'components/RadioGroup',
@@ -14,9 +16,9 @@ type Story = StoryObj<typeof meta>;
 
 export const InLocationPage: Story = {
   render: () => {
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState(null);
     return (
-      <>
+      <S.FlexColumn>
         <RadioGroup
           label=""
           value={value}
@@ -27,8 +29,17 @@ export const InLocationPage: Story = {
           <RadioGroup.RadioButton value="안좋음">안좋다</RadioGroup.RadioButton>
           <RadioGroup.RadioButton value="좋음">좋다</RadioGroup.RadioButton>
         </RadioGroup>
-        {`선택된 값 : ${value}`}
-      </>
+        {`선택된 값 : ${value ?? '없음'}`}
+      </S.FlexColumn>
     );
   },
+};
+
+const S = {
+  FlexColumn: styled.div`
+    ${flexColumn}
+    justify-content: center;
+    align-items: center;
+    row-gap: 10px;
+  `,
 };

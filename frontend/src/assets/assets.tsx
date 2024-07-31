@@ -8,7 +8,6 @@ import ArrowUpSmall from '@/assets/icons/arrow/arrow-up-small.svg';
 /*common-icons */
 import CheckIcon from '@/assets/icons/check.svg';
 import CloseIcon from '@/assets/icons/close.svg';
-import XIcon from '@/assets/icons/delete.svg';
 import LocationLineIcon from '@/assets/icons/location-lined.svg';
 import Plus from '@/assets/icons/plus.svg';
 
@@ -66,5 +65,4 @@ export {
   MyPageLogoActive,
   Plus,
   QuestionDot,
-  XIcon,
 };

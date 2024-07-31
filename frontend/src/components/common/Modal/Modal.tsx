@@ -3,11 +3,10 @@ import styled from '@emotion/styled';
 import { ComponentPropsWithRef } from 'react';
 import { createPortal } from 'react-dom';
 
-import { XIcon } from '@/assets/assets';
-import ModalBody, { ModalContentPosition } from '@/components/common/Modal/ModalBody';
+import { CloseIcon } from '@/assets/assets';
+import ModalBody from '@/components/common/Modal/ModalBody';
 import ModalFooter from '@/components/common/Modal/ModalFooter';
 import ModalHeader from '@/components/common/Modal/ModalHeader';
-import { flexCenter } from '@/styles/common';
 
 type ModalPosition = 'center' | 'bottom';
 
@@ -17,20 +16,19 @@ export interface ModalProps extends ComponentPropsWithRef<'dialog'> {
   isOpen: boolean;
   onClose: () => void;
   size?: ModalSize;
-  contentPosition?: ModalContentPosition;
-  hasCloseButton: boolean;
   position?: ModalPosition;
+  hasCloseButton?: boolean;
 }
 
 const modalRoot = document.getElementById('modal');
 
 const Modal = ({
   children,
-  isOpen,
-  position = 'center',
   onClose,
-  hasCloseButton = true,
+  isOpen,
   size = 'large',
+  position = 'center',
+  hasCloseButton = true,
 }: ModalProps) => {
   if (!modalRoot) return null;
 
@@ -38,14 +36,12 @@ const Modal = ({
     <S.ModalWrapper open={isOpen}>
       <S.ModalBackground onClick={onClose} />
       <S.ModalOuter $position={position} $size={size}>
-        <S.ModalInner>
-          {children}
-          {hasCloseButton && (
-            <S.CloseIcon>
-              <XIcon onClick={onClose} />
-            </S.CloseIcon>
-          )}
-        </S.ModalInner>
+        {children}
+        {hasCloseButton && (
+          <S.CloseButton>
+            <CloseIcon onClick={onClose} />
+          </S.CloseButton>
+        )}
       </S.ModalOuter>
     </S.ModalWrapper>,
     modalRoot,
@@ -58,38 +54,40 @@ Modal.body = ModalBody;
 
 export default Modal;
 
-const ModalBottomStyle = css`
-  top: auto;
-  bottom: 0;
-  width: 100%;
-  transform: translate(-50%);
-  border-radius: 8px 8px 0 0;
-`;
-
-const ModalCenterStyle = css`
-  transform: translate(-50%, -50%);
-  top: 50%;
-`;
-
-// const MODAL_WIDTH_MAP: Record<ModalSize, string> = {
-//   small: '320px',
-//   medium: '480px',
-//   large: '600px',
-// };
-
 const ModalWrapper = styled.div<{ open: boolean }>`
   display: ${({ open }) => (open ? 'flex' : 'none')};
   position: fixed;
   z-index: ${({ theme }) => theme.zIndex.MODAL};
+  width: 100%;
+  height: 100vh;
 `;
 
 const ModalBackground = styled.div`
   position: fixed;
   inset: 0;
-  width: 100vw;
-  height: 100vh;
   background: rgb(0 0 0 / 35%);
 `;
+
+const positionMapper = (position: ModalPosition) => {
+  switch (position) {
+    case 'center':
+      return css({
+        top: '50%',
+        transform: 'translate(-50%, -50%)',
+        borderRadius: '8px',
+        width: '100%',
+        maxWidth: '80%',
+      });
+    case 'bottom':
+      return css({
+        bottom: '0px',
+        transform: 'translate(-50%, 0%)',
+        borderRadius: '16px 16px 0px 0px',
+        width: '100%',
+        boxSizing: 'border-box',
+      });
+  }
+};
 
 const ModalOuter = styled.div<{
   $position: ModalPosition;
@@ -98,35 +96,20 @@ const ModalOuter = styled.div<{
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  min-height: 150px;
+
   position: fixed;
-  top: 50%;
   left: 50%;
+  ${({ $position }) => positionMapper($position)}
 
-  transform: translate(-50%, -50%);
-  border-radius: 8px;
-  ${({ $position }) => {
-    if ($position === 'bottom') return ModalBottomStyle;
-    return ModalCenterStyle;
-  }};
-  width: 100vw;
+  min-height: 150px;
+  padding: 12px;
 
-  background-color: white;
-  ${flexCenter}
+  background-color: ${({ theme }) => theme.palette.white};
 
-  max-width: 390px;
+  color: ${({ theme }) => theme.palette.black};
 `;
 
-const ModalInner = styled.div`
-  display: flex;
-  width: 100%;
-
-  flex-direction: column;
-
-  border-radius: 5px;
-`;
-
-const CloseIcon = styled.button`
+const CloseButton = styled.button`
   display: flex;
   position: absolute;
   top: 10px;
@@ -134,13 +117,9 @@ const CloseIcon = styled.button`
   width: 30px;
   height: 30px;
   padding: 0;
-
-  background-color: transparent;
-
-  color: black;
   align-items: center;
   justify-content: center;
   cursor: pointer;
 `;
 
-const S = { ModalWrapper, ModalBackground, ModalOuter, ModalInner, CloseIcon };
+const S = { ModalWrapper, ModalBackground, ModalOuter, CloseButton };

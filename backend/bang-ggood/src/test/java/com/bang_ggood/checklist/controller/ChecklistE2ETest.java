@@ -58,17 +58,6 @@ public class ChecklistE2ETest extends AcceptanceTest {
                 .statusCode(400);
     }
 
-    @DisplayName("체크리스트 방 정보 작성 실패: 질문 답변을 넣지 않은 경우")
-    @Test
-    void createChecklist_noAnswer_exception() {
-        RestAssured.given().log().all()
-                .contentType(ContentType.JSON)
-                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_ANSWER)
-                .when().post("/checklists")
-                .then().log().all()
-                .statusCode(400);
-    }
-
     @DisplayName("체크리스트 질문 조회 성공")
     @Test
     void readChecklistQuestions() {

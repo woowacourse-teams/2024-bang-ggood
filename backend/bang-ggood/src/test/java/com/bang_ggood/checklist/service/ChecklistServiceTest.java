@@ -8,6 +8,7 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.Grade;
 import com.bang_ggood.checklist.domain.Question;
+import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.response.BadgeResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsWithScoreReadResponse;
@@ -40,23 +41,27 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private ChecklistRepository checklistRepository;
+
     @Autowired
     private ChecklistQuestionRepository checklistQuestionRepository;
+
     @Autowired
     private RoomRepository roomRepository;
 
 
-    /*@DisplayName("체크리스트 방 정보 작성 성공")
+    @DisplayName("체크리스트 방 정보 작성 성공")
     @Test
     void createChecklist() {
-        //given & when
-        long checklistId = checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        //given
+        ChecklistCreateRequest checklist = ChecklistFixture.CHECKLIST_CREATE_REQUEST;
+
+        // when
+        long checklistId = checklistService.createChecklist(checklist);
 
         //then
         assertAll(
                 () -> assertThat(checklistId).isEqualTo(1),
-                () -> assertThat(checklistQuestionRepository.findByChecklistId(1).size()).isEqualTo(
-                        Question.values().length)
+                () -> assertThat(checklistQuestionRepository.findByChecklistId(1).size()).isEqualTo(checklist.questions().size())
         );
 
     }
@@ -100,7 +105,17 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_OPTION_ID))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.OPTION_DUPLICATED.getMessage());
-    }*/
+    }
+
+    @DisplayName("체크리스트 방 정보 작성 실패: 방이 지상층이 아닌데 floor를 입력했을 경우")
+    @Test
+    void createChecklist_roomFloorAndLevelInvalid_exception() {
+        //given & when & then
+        assertThatThrownBy(
+                () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_ROOM_LEVEL_AND_FLOOR))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.ROOM_FLOOR_AND_LEVEL_INVALID.getMessage());
+    }
 
     @DisplayName("체크리스트 질문 조회 성공")
     @Test

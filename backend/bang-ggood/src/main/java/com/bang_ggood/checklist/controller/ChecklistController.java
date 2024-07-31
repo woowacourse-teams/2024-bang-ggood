@@ -31,11 +31,11 @@ public class ChecklistController {
         this.checklistService = checklistService;
     }
 
-    /*@PostMapping("/checklists")
+    @PostMapping("/checklists")
     public ResponseEntity<Void> createChecklist(@Valid @RequestBody ChecklistCreateRequest checklistCreateRequest) {
         long checklistId = checklistService.createChecklist(checklistCreateRequest);
         return ResponseEntity.created(URI.create("/checklists/" + checklistId)).build();
-    }*/
+    }
 
     @GetMapping("/checklists/questions")
     public ResponseEntity<ChecklistQuestionsResponse> readChecklistQuestions() {

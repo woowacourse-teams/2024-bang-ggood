@@ -29,6 +29,7 @@ import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
+import com.bang_ggood.room.domain.FloorLevel;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.response.WrittenRoomResponse;
 import com.bang_ggood.room.repository.RoomRepository;
@@ -62,9 +63,9 @@ public class ChecklistService {
         this.checklistQuestionRepository = checklistQuestionRepository;
     }
 
-    /*@Transactional
+    @Transactional
     public long createChecklist(ChecklistCreateRequest checklistCreateRequest) {
-        Room room = roomRepository.save(checklistCreateRequest.toRoomEntity());
+        Room room = createRoom(checklistCreateRequest);
 
         ChecklistInfo checklistInfo = checklistCreateRequest.toChecklistInfo();
         Checklist checklist = new Checklist(new User(1L, "방방이"), room, checklistInfo.deposit(), checklistInfo.rent(),
@@ -74,7 +75,12 @@ public class ChecklistService {
         createChecklistOptions(checklistCreateRequest, checklist);
         createChecklistQuestions(checklistCreateRequest, checklist);
         return checklist.getId();
-    }*/
+    }
+
+    private Room createRoom(ChecklistCreateRequest checklistCreateRequest) {
+        validateRoom(checklistCreateRequest.toRoomEntity());
+        return roomRepository.save(checklistCreateRequest.toRoomEntity());
+    }
 
     private void createChecklistOptions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
         List<Integer> optionIds = checklistCreateRequest.options();
@@ -83,6 +89,12 @@ public class ChecklistService {
                 .map(option -> new ChecklistOption(checklist, option))
                 .toList();
         checklistOptionRepository.saveAll(checklistOptions);
+    }
+
+    private void validateRoom(Room room) {
+        if (room.getFloorLevel() != FloorLevel.GROUND && room.getFloor() != null) {
+            throw new BangggoodException(ExceptionCode.ROOM_FLOOR_AND_LEVEL_INVALID);
+        }
     }
 
     private void validateOptions(List<Integer> optionIds) {
@@ -107,24 +119,17 @@ public class ChecklistService {
         }
     }
 
-    /*private void createChecklistQuestions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
+    private void createChecklistQuestions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
         validateQuestion(checklistCreateRequest.questions());
-        Map<Integer, String> existQuestions = checklistCreateRequest.questions()
-                .stream()
-                .collect(Collectors.toMap(QuestionCreateRequest::questionId, QuestionCreateRequest::answer));
-
-        List<ChecklistQuestion> checklistQuestions = Arrays.stream(Question.values())
-                .map(question -> {
-                    int questionId = question.getId();
-                    return Optional.ofNullable(existQuestions.get(questionId))
-                            .map(answer -> new ChecklistQuestion(checklist, Question.findById(questionId),
-                                    Grade.from(answer)))
-                            .orElseGet(() -> new ChecklistQuestion(checklist, Question.findById(questionId), null));
-                })
+        List<ChecklistQuestion> checklistQuestions = checklistCreateRequest.questions().stream()
+                .map(question -> new ChecklistQuestion(
+                        checklist,
+                        Question.findById(question.questionId()),
+                        Grade.from(question.grade()),
+                        question.memo()))
                 .collect(Collectors.toList());
-
         checklistQuestionRepository.saveAll(checklistQuestions);
-    }*/
+    }
 
     @Transactional
     public ChecklistQuestionsResponse readChecklistQuestions() {

@@ -26,8 +26,12 @@ export const InLocationPage: Story = {
             setValue(e.target.value);
           }}
         >
-          <RadioGroup.RadioButton value="안좋음">안좋다</RadioGroup.RadioButton>
-          <RadioGroup.RadioButton value="좋음">좋다</RadioGroup.RadioButton>
+          <RadioGroup.RadioButton value="안좋음" color="green">
+            안좋다
+          </RadioGroup.RadioButton>
+          <RadioGroup.RadioButton value="좋음" color="green">
+            좋다
+          </RadioGroup.RadioButton>
         </RadioGroup>
         {`선택된 값 : ${value ?? '없음'}`}
       </S.FlexColumn>

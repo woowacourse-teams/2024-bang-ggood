@@ -97,10 +97,13 @@ const NewChecklistInfoTemplate = ({
               onChangeChild={e => {
                 setRoomStructure(e.target.value);
               }}
-              width="50%"
             >
-              <RadioGroup.RadioButton value="안좋음">안좋다</RadioGroup.RadioButton>
-              <RadioGroup.RadioButton value="좋음">좋다</RadioGroup.RadioButton>
+              <RadioGroup.RadioButton value="m2" color="green">
+                m2
+              </RadioGroup.RadioButton>
+              <RadioGroup.RadioButton value="평" color="green">
+                평
+              </RadioGroup.RadioButton>
             </S.RadioGroup>
           </S.FlexHorizontal>
           <FormField.P value="" />
@@ -117,10 +120,16 @@ const NewChecklistInfoTemplate = ({
               onChangeChild={e => {
                 setRoomStructure(e.target.value);
               }}
-              width="50%"
             >
-              <RadioGroup.RadioButton value="안좋음">안좋다</RadioGroup.RadioButton>
-              <RadioGroup.RadioButton value="좋음">좋다</RadioGroup.RadioButton>
+              <RadioGroup.RadioButton value="지상" color="green">
+                지상
+              </RadioGroup.RadioButton>
+              <RadioGroup.RadioButton value="반지하/지하" color="green">
+                반지하/지하
+              </RadioGroup.RadioButton>
+              <RadioGroup.RadioButton value="옥탑" color="green">
+                옥탑
+              </RadioGroup.RadioButton>
             </S.RadioGroup>
           </S.FlexHorizontal>
           <FormField.P value="" />
@@ -132,7 +141,8 @@ const NewChecklistInfoTemplate = ({
         {/* 부동산 이름 */}
         <CustomFormField label="부동산 이름" onChange={onChangeForForm} values={roomInfo} name="realEstate" />
         {/* 가구옵션 */}
-        가구옵션
+        <FormField.Label label="가구옵션" />
+        <S.FurnitureOptionContent value="TV, 냉장고, 신발, 에어컨" />
         {/* 가구옵션버튼 */}
         <S.AddOptionButton label="가구 옵션 추가하기" size="full" onClick={onClickOptionModalOpen} />
         {/*옵션 선택 모달*/}
@@ -243,7 +253,15 @@ const S = {
   `,
   RadioGroup: styled(RadioGroup)<{ width?: string }>`
     ${({ width }) => (width ? `width:${width};` : '')}
+    flex: 1 0 auto;
+
     ${flexCenter}
+    font-size: ${({ theme }) => theme.text.size.xSmall};
+    column-gap: 7px;
+  `,
+  FurnitureOptionContent: styled(FormField.P)`
+    color: ${({ theme }) => theme.palette.grey500};
+    font-weight: ${({ theme }) => theme.text.weight.semiBold};
   `,
 };
 

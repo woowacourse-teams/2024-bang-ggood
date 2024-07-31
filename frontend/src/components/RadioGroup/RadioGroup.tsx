@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { HTMLAttributes, useContext } from 'react';
 
 import { InputChangeEvent } from '@/components/common/Input/Input';
@@ -25,21 +26,27 @@ interface RadioButtonProps extends HTMLAttributes<HTMLLabelElement> {
   disabled?: boolean;
 }
 
-const RadioButton = ({ name, value, children, disabled = false, ...rest }: RadioButtonProps) => {
+const RadioButton = ({ name, value, children, disabled = false, color, ...rest }: RadioButtonProps) => {
   const group = useContext(RadioContext);
   return (
     <label {...rest}>
-      <input
+      <S.Input
         type="radio"
         name={name}
         value={value}
         disabled={disabled}
         checked={group.value !== undefined ? value === group.value : undefined}
         onChange={group.onChangeChild}
+        $color={color}
       />
       {children}
     </label>
   );
+};
+const S = {
+  Input: styled.input<{ $color: string }>`
+    ${({ $color }) => ($color ? `accent-color:  ${$color};` : '')}
+  `,
 };
 
 const RadioGroup = Object.assign(RadioGroupWrapper, { RadioButton });

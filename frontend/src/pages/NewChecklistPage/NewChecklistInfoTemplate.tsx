@@ -11,14 +11,14 @@ import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 import { RoomInfo, RoomInfoName } from '@/types/room';
 
 interface Props {
-  selectedOptions: number[];
-  setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
+  // selectedOptions: number[];
+  // setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
   roomInfo: RoomInfo;
   onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
 //TODO: 옵션 모달 등 복잡해서 추후 리팩토링 필요
-const NewChecklistInfoTemplate = ({ selectedOptions, setSelectedOptions, roomInfo, onChange }: Props) => {
+const NewChecklistInfoTemplate = ({ roomInfo, onChange }: Props) => {
   const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
 
   const onClickOptionModalOpen = () => setIsOptionModalOpen(true);
@@ -64,14 +64,7 @@ const NewChecklistInfoTemplate = ({ selectedOptions, setSelectedOptions, roomInf
         <S.SubmitButton label="가구 옵션 추가하기" size="full" onClick={onClickOptionModalOpen} />
 
         {/*옵션 선택 모달*/}
-        {isOptionModalOpen && (
-          <OptionModal
-            isOpen={isOptionModalOpen}
-            setIsOpen={setIsOptionModalOpen}
-            selectedOptions={selectedOptions}
-            setSelectedOptions={setSelectedOptions}
-          />
-        )}
+        {isOptionModalOpen && <OptionModal isOpen={isOptionModalOpen} setIsOpen={setIsOptionModalOpen} />}
       </S.Container>
     </S.ContentWrapper>
   );

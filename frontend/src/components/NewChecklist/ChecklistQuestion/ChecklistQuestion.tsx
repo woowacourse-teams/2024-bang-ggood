@@ -1,27 +1,27 @@
 import styled from '@emotion/styled';
 
-//TODO: indicator 컴포넌트화 필요
 import { QuestionDot } from '@/assets/assets';
 import FaceMark from '@/components/common/FaceMark/FaceMark';
 import useChecklist from '@/store/useChecklist';
 import { ChecklistQuestion } from '@/types/checklist';
-import { Emotion } from '@/types/emotionAnswer';
+import { Emotion, EmotionType } from '@/types/emotionAnswer';
 
 interface Props {
   question: ChecklistQuestion;
-  questionSelectedAnswer: (questionId: number) => number | void;
+  // questionSelectedAnswer: (questionId: number) => EmotionType | void;
 }
 
-export const emotionPhrase: Record<Emotion, string> = {
+export const emotionPhrase: Record<EmotionType, string> = {
   BAD: '별로에요',
   SOSO: '평범해요',
   GOOD: '좋아요',
 };
 
-const ChecklistQuestion = ({ question, questionSelectedAnswer }: Props) => {
+const ChecklistQuestion = ({ question }: Props) => {
   const { questionId } = question;
-  const { deleteAnswer, addAnswer } = useChecklist();
-  const handleClick = (newAnswer: number) => {
+  const { deleteAnswer, addAnswer, questionSelectedAnswer } = useChecklist();
+
+  const handleClick = (newAnswer: EmotionType) => {
     if (questionSelectedAnswer(questionId) === newAnswer) {
       deleteAnswer(questionId);
     } else {
@@ -29,12 +29,7 @@ const ChecklistQuestion = ({ question, questionSelectedAnswer }: Props) => {
     }
   };
 
-  interface Emotions {
-    name: Emotion;
-    id: number;
-  }
-
-  const emotions: Emotions[] = [
+  const emotions: Emotion[] = [
     { name: 'BAD', id: 1 },
     { name: 'SOSO', id: 2 },
     { name: 'GOOD', id: 3 },
@@ -51,8 +46,8 @@ const ChecklistQuestion = ({ question, questionSelectedAnswer }: Props) => {
         {emotions.map(emotion => {
           const { name: emotionName, id } = emotion;
           return (
-            <FaceMark onClick={() => handleClick(id)} key={id}>
-              <FaceMark.FaceIcon emotion={emotionName} isFilled={questionSelectedAnswer(questionId) === id} />
+            <FaceMark onClick={() => handleClick(emotionName)} key={id}>
+              <FaceMark.FaceIcon emotion={emotionName} isFilled={questionSelectedAnswer(questionId) === emotionName} />
               <FaceMark.Footer>{emotionPhrase[emotionName]}</FaceMark.Footer>
             </FaceMark>
           );

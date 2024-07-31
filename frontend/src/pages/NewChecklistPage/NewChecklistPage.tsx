@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { postChecklist } from '@/apis/checklist';
+import { getChecklistQuestions, postChecklist } from '@/apis/checklist';
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import { TabProvider } from '@/components/common/Tabs/TabContext';
@@ -12,8 +12,8 @@ import useInputs from '@/hooks/useInput';
 import useToast from '@/hooks/useToast';
 import NewChecklistBody from '@/pages/NewChecklistPage/NewChecklistBody';
 import useChecklist from '@/store/useChecklist';
+import useOptionStore from '@/store/useOptionStore';
 import { flexCenter, title2 } from '@/styles/common';
-import { ChecklistFormAfterAnswer } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
 
 // TODO: roomName 이슈로 인해 데모 버전으로 변경
@@ -36,26 +36,26 @@ const NewChecklistPage = () => {
   const { values: roomInfo, onChange } = useInputs(DefaultRoomInfo);
 
   /*선택된 옵션*/
-  const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
+  const { selectedOptions } = useOptionStore();
 
   /*체크리스트 답변*/
-  const { checklistAnswers, questionSelectedAnswer } = useChecklist();
+  const { checklistAnswers, setQuestions } = useChecklist();
 
   const navigate = useNavigate();
 
   //TODO: 프롭스 드릴링 등 나중에 리팩토링 필요 가능성
   const onSubmitChecklist = () => {
-    const emotionAnswers: ChecklistFormAfterAnswer[] = checklistAnswers.map(question => {
-      if (question.answer === 1) return { ...question, answer: 'BAD' };
-      if (question.answer === 2) return { ...question, answer: 'SOSO' };
-      return { ...question, answer: 'GOOD' };
-    });
+    // const emotionAnswers: ChecklistFormAfterAnswer[] = checklistAnswers.map(question => {
+    //   if (question.answer === 1) return { ...question, answer: 'BAD' };
+    //   if (question.answer === 2) return { ...question, answer: 'SOSO' };
+    //   return { ...question, answer: 'GOOD' };
+    // });
 
     const fetchNewChecklist = async () => {
       await postChecklist({
         room: roomInfo,
         options: selectedOptions,
-        questions: emotionAnswers,
+        questions: checklistAnswers,
       });
     };
 
@@ -70,6 +70,14 @@ const NewChecklistPage = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchChecklist = async () => {
+      const checklist = await getChecklistQuestions();
+      setQuestions(checklist);
+    };
+    fetchChecklist();
+  }, []);
+
   return (
     <>
       <Header
@@ -83,9 +91,7 @@ const NewChecklistPage = () => {
           newChecklistTabs={newChecklistTabs}
           roomInfo={roomInfo}
           onChange={onChange}
-          selectedOptions={selectedOptions}
-          setSelectedOptions={setSelectedOptions}
-          questionSelectedAnswer={questionSelectedAnswer}
+          // questionSelectedAnswer={questionSelectedAnswer}
           checklistAnswers={checklistAnswers}
         />
       </TabProvider>

@@ -3,30 +3,31 @@ import styled from '@emotion/styled';
 import Checkbox from '@/components/common/Checkbox/Checkbox';
 import SelectionCounter from '@/components/common/SelectionCounter/SelectionCounter';
 import { totalOptionCount } from '@/components/NewChecklist/OptionModal/OptionModal';
-import useAllSelect from '@/hooks/useAllSelect';
+import useOptionStore from '@/store/useOptionStore';
 import { flexCenter, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
 
-interface Props {
-  selectedOptions: number[];
-  setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
-}
+// interface Props {
+//   selectedOptions: number[];
+//   setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
+// }
 
-const OptionModalInfoBox = ({ selectedOptions, setSelectedOptions }: Props) => {
-  const allOptions = new Array(totalOptionCount).fill(0).map((e, i) => i + 1);
-  const { onClickSelectAllOptions, isAllSelected, setIsAllSelected } = useAllSelect({
-    allOptions,
-    setSelectedOptions,
-    selectedOptions,
-  });
+const OptionModalInfoBox = () => {
+  // const allOptions = new Array(totalOptionCount).fill(0).map((e, i) => i + 1);
+  // const { onClickSelectAllOptions, isAllSelected, setIsAllSelected } = useAllSelect({
+  //   allOptions,
+  //   setSelectedOptions,
+  //   selectedOptions,
+  // });
+  const { selectedOptions, isAllSelected, addAllOptions } = useOptionStore();
 
   return (
     <S.ButtonContainer>
       <S.TotalSelectBox>
         <Checkbox
-          isChecked={isAllSelected}
-          setIsChecked={setIsAllSelected}
-          onClick={onClickSelectAllOptions}
+          isChecked={isAllSelected()}
+          setIsChecked={addAllOptions}
+          onClick={addAllOptions}
           color={theme.palette.yellow500}
           hoverBorderColor={theme.palette.yellow600}
         />

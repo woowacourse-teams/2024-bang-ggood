@@ -11,6 +11,7 @@ const FormFieldWrapper = ({ ...rest }) => (
 const S = {
   MovedRequiredDot: styled(InputRequiredDot)`
     transform: translate(80%, -140%);
+    z-index: 0;
   `,
   P: styled.p`
     height: 10px;

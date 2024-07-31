@@ -1,19 +1,35 @@
 import { create } from 'zustand';
 
+// import { checklistQuestions } from '@/mocks/fixtures/checklistQuestions';
 import { addAnswerProps } from '@/pages/ChecklistSummaryPage';
-import { ChecklistFormAnswer } from '@/types/checklist';
+import { ChecklistAnswer, ChecklistCategoryQuestions } from '@/types/checklist';
+import { EmotionType } from '@/types/emotionAnswer';
 
 interface ChecklistState {
   basicInfo: Record<string, unknown>;
-  checklistAnswers: ChecklistFormAnswer[];
-  questionSelectedAnswer: (targetId: number) => number;
+  checklistQuestions: ChecklistCategoryQuestions[];
+  checklistAnswers: ChecklistAnswer[];
+  selectedOptions: number[];
+  setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
+  questionSelectedAnswer: (targetId: number) => EmotionType;
   addAnswer: (props: addAnswerProps) => void;
   deleteAnswer: (questionId: number) => void;
+  setQuestions: (questions: ChecklistCategoryQuestions[]) => void;
 }
 
 const useChecklist = create<ChecklistState>((set, get) => ({
   basicInfo: {},
+  checklistQuestions: null,
   checklistAnswers: [],
+  selectedOptions: [],
+
+  setQuestions: (questions: ChecklistCategoryQuestions[]) => {
+    set(state => ({ ...state, checklistQuestions: questions }));
+  },
+
+  setSelectedOptions: (newOptions: number[]) => {
+    set(state => ({ ...state, selectedOptions: newOptions }));
+  },
 
   questionSelectedAnswer: targetId => {
     const { checklistAnswers } = get();
@@ -22,16 +38,16 @@ const useChecklist = create<ChecklistState>((set, get) => ({
     return targetQuestion[0]?.answer;
   },
 
-  addAnswer: ({ questionId, newAnswer }) => {
+  addAnswer: ({ questionId, newAnswer }: { questionId: number; newAnswer: EmotionType }) => {
     set(state => {
       const target = state.checklistAnswers.find(answer => answer.questionId === questionId);
       if (target) {
-        const newAnswers = state.checklistAnswers.map(answer =>
-          answer.questionId === questionId ? { questionId, answer: newAnswer } : answer,
+        const newAnswers = state.checklistAnswers.map(e =>
+          e.questionId === questionId ? { ...e, answer: newAnswer } : e,
         );
-        return { checklistAnswers: newAnswers };
+        return { ...state, checklistAnswers: newAnswers };
       }
-      return { checklistAnswers: [...state.checklistAnswers, { questionId, answer: newAnswer }] };
+      return state;
     });
   },
 

@@ -1,4 +1,4 @@
-import { ChecklistFormAfterAnswer } from '@/types/checklist';
+import { ChecklistAnswer } from '@/types/checklist';
 
 export interface RoomInfo {
   // TODO: roomName 이슈
@@ -19,5 +19,5 @@ export type RoomInfoName = keyof RoomInfo;
 export interface ChecklistForm {
   room: RoomInfo;
   options: number[];
-  questions: ChecklistFormAfterAnswer[];
+  questions: ChecklistAnswer[];
 }

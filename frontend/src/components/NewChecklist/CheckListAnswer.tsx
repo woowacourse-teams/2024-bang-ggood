@@ -4,44 +4,51 @@ import { QuestionDot } from '@/assets/assets';
 import FaceMark from '@/components/common/FaceMark/FaceMark';
 import { emotionPhrase } from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
 import { ChecklistAnswer } from '@/types/checklist';
-import { Emotion } from '@/types/emotionAnswer';
+import { EmotionType } from '@/types/emotionAnswer';
 
-interface Emotions {
-  name: Emotion;
-  id: number;
-}
+// interface Emotions {
+//   name: Emotion;
+//   id: number;
+// }
 
-function getEmotionNameById(id: number): Emotion | null {
-  const emotions: Emotions[] = [
-    { name: 'BAD', id: 1 },
-    { name: 'SOSO', id: 2 },
-    { name: 'GOOD', id: 3 },
-  ];
+// function getEmotionNameById(id: number): Emotion | null {
+//   const emotions: Emotions[] = [
+//     { name: 'BAD', id: 1 },
+//     { name: 'SOSO', id: 2 },
+//     { name: 'GOOD', id: 3 },
+//   ];
 
-  const emotion = emotions.find(e => e.id === id);
-  return emotion ? emotion.name : null;
-}
+//   const emotion = emotions.find(e => e.id === id);
+//   return emotion ? emotion.name : null;
+// }
 
 interface Props {
-  QandA: ChecklistAnswer;
+  subtitle: string;
+  title: string;
+  answer: EmotionType;
 }
 
-const ChecklistAnswer = ({ QandA }: Props) => {
+const ChecklistAnswer = ({ answer, title, subtitle }: Props) => {
   // const emotionName = getEmotionNameById(QandA?.answer);
+  // const { checklistQuestions } = useChecklist();
+  // questionId: number;
+  // title: string;
+  // subtitle: string | null;
+  // const { title, subtitle, questionId } = checklistQuestions;
 
   return (
     <S.Container>
       <S.TitleContainer>
         <S.Title>
           <QuestionDot />
-          {QandA?.title}
+          {title}
         </S.Title>
-        {QandA?.subtitle && <S.Subtitle>•{QandA?.subtitle}</S.Subtitle>}
+        {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
       </S.TitleContainer>
       <S.Answer>
         <FaceMark>
-          <FaceMark.FaceIcon emotion={QandA.answer} isFilled={true} />
-          <FaceMark.Footer>{emotionPhrase[QandA.answer]}</FaceMark.Footer>
+          <FaceMark.FaceIcon emotion={answer} isFilled={true} />
+          <FaceMark.Footer>{emotionPhrase[answer]}</FaceMark.Footer>
           {/* <FaceMark.Footer>{Math.round(category.score / 10)}점</FaceMark.Footer> */}
         </FaceMark>
       </S.Answer>

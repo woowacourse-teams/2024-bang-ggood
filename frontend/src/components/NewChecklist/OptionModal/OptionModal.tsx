@@ -12,27 +12,27 @@ export const totalOptionCount = 14;
 interface Props {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  selectedOptions: number[];
-  setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
-const OptionModal = ({ isOpen, setIsOpen, selectedOptions, setSelectedOptions }: Props) => {
+const OptionModal = ({ isOpen, setIsOpen }: Props) => {
   const onCloseModal = () => {
     setIsOpen(false);
   };
 
-  const isSelectedOption = (optionId: number) => {
-    return selectedOptions.includes(optionId);
-  };
+  // const { isSelectedOption, addOption, removeOption } = useOptionStore();
 
-  const onToggleSelectOption = (targetId: number) => {
-    if (isSelectedOption(targetId)) {
-      const newSelectedOptions = selectedOptions.filter(optionId => optionId !== targetId);
-      setSelectedOptions(newSelectedOptions);
-    } else {
-      setSelectedOptions([...selectedOptions, targetId]);
-    }
-  };
+  // const isSelectedOption = (optionId: number) => {
+  //   return selectedOptions.includes(optionId);
+  // };
+
+  // const onToggleSelectOption = (targetId: number) => {
+  //   if (isSelectedOption(targetId)) {
+  //     const newSelectedOptions = selectedOptions.filter(optionId => optionId !== targetId);
+  //     setSelectedOptions(newSelectedOptions);
+  //   } else {
+  //     setSelectedOptions([...selectedOptions, targetId]);
+  //   }
+  // };
 
   const optionCounts = new Array(totalOptionCount).fill(0).map((e, i) => i + 1);
 
@@ -42,14 +42,14 @@ const OptionModal = ({ isOpen, setIsOpen, selectedOptions, setSelectedOptions }:
         <Modal.header title={'방에 포함된 옵션을 선택해주세요.'}></Modal.header>
         <Modal.body>
           <S.FlexBoxColumn>
-            <OptionModalInfoBox selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions} />
+            <OptionModalInfoBox />
             <S.OptionContainer>
               {optionCounts.map(optionId => (
                 <OptionButton
-                  onClickSelect={targetId => onToggleSelectOption(targetId)}
+                  // onClickSelect={targetId => onToggleSelectOption(targetId)}
                   optionId={optionId}
                   key={optionId}
-                  isSelected={isSelectedOption(optionId)}
+                  // isSelected={isSelectedOption(optionId)}
                 />
               ))}
             </S.OptionContainer>

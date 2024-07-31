@@ -1,47 +1,36 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
 
-import { getChecklistQuestions } from '@/apis/checklist';
 import { useTabContext } from '@/components/common/Tabs/TabContext';
 import Tabs from '@/components/common/Tabs/Tabs';
 import NewChecklistInfoTemplate from '@/pages/NewChecklistPage/NewChecklistInfoTemplate';
 import NewChecklistTemplate from '@/pages/NewChecklistPage/NewChecklistTemplate';
-import useChecklist from '@/store/useChecklist';
-import { ChecklistCategoryQuestions, ChecklistFormAnswer } from '@/types/checklist';
+import { ChecklistAnswer } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
 import { Tab } from '@/types/tab';
 
 interface Props {
   newChecklistTabs: Tab[];
-  selectedOptions: number[];
-  setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
+  // selectedOptions: number[];
+  // setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
   roomInfo: RoomInfo;
   onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  questionSelectedAnswer: (questionId: number) => number | undefined;
-  checklistAnswers: ChecklistFormAnswer[];
+  // questionSelectedAnswer: (questionId: number) => EmotionType | undefined;
+  checklistAnswers: ChecklistAnswer[];
 }
 
 const NewChecklistBody = (props: Props) => {
-  const { newChecklistTabs, roomInfo, onChange, selectedOptions, setSelectedOptions } = props;
+  const { newChecklistTabs, roomInfo, onChange } = props;
   const { currentTabId } = useTabContext();
 
-  const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategoryQuestions[]>([]);
-
-  useEffect(() => {
-    const fetchChecklist = async () => {
-      const checklist = await getChecklistQuestions();
-      setChecklistQuestions(checklist);
-    };
-    fetchChecklist();
-  }, []);
+  // const [checklistQuestions, setChecklistQuestions] = useState<ChecklistCategoryQuestions[]>([]);
 
   //답변 바뀔 때마다 해당 카테고리에 답변이 다 채워졌는지 확인하는 로직
 
-  const findQuestions = (targetId: number) => {
-    return checklistQuestions.filter(category => category.categoryId === targetId)[0].questions;
-  };
+  // const findQuestions = (targetId: number) => {
+  //   return checklistQuestions.filter(category => category.categoryId === targetId)[0].questions;
+  // };
 
-  const { questionSelectedAnswer } = useChecklist();
+  // const { questionSelectedAnswer } = useChecklist();
 
   //TODO: 임시 수정 필요
   const newChecklistTabsWithCompletion = newChecklistTabs.map(tabInfo => ({ ...tabInfo, isCompleted: false }));
@@ -53,8 +42,8 @@ const NewChecklistBody = (props: Props) => {
           <NewChecklistInfoTemplate
             roomInfo={roomInfo}
             onChange={onChange}
-            selectedOptions={selectedOptions}
-            setSelectedOptions={setSelectedOptions}
+            // selectedOptions={selectedOptions}
+            // setSelectedOptions={setSelectedOptions}
           />
         );
       case 1: //청결
@@ -66,8 +55,9 @@ const NewChecklistBody = (props: Props) => {
       case 7: //경제적
         return (
           <NewChecklistTemplate
-            checklistQuestions={findQuestions(currentTabId)}
-            questionSelectedAnswer={questionSelectedAnswer}
+          // currentTabId={currentTabId}
+          // checklistQuestions={findQuestions(currentTabId)}
+          // questionSelectedAnswer={questionSelectedAnswer}
           />
         );
 

@@ -1,5 +1,9 @@
 package com.bang_ggood.room.domain;
 
+import com.bang_ggood.exception.BangggoodException;
+import com.bang_ggood.exception.ExceptionCode;
+import java.util.Arrays;
+
 public enum Structure {
 
     STUDIO("오픈형 원룸"),
@@ -12,5 +16,12 @@ public enum Structure {
 
     Structure(String name) {
         this.name = name;
+    }
+
+    public static Structure from(String name) {
+        return Arrays.stream(Structure.values())
+                .filter(value -> value.name.equals(name))
+                .findFirst()
+                .orElseThrow(() -> new BangggoodException(ExceptionCode.STRUCTURE_INVALID));
     }
 }

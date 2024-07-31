@@ -34,7 +34,10 @@ public enum ExceptionCode {
     TYPE_INVALID(HttpStatus.BAD_REQUEST, "타입이 유효하지 않습니다."),
 
     // FloorLevel
-    FLOOR_LEVEL_INVALID(HttpStatus.BAD_REQUEST, "층 종류가 유효하지 않습니다.")
+    FLOOR_LEVEL_INVALID(HttpStatus.BAD_REQUEST, "층 종류가 유효하지 않습니다."),
+
+    // Structure
+    STRUCTURE_INVALID(HttpStatus.BAD_REQUEST, "방 구조가 유효하지 않습니다.")
     ;
 
 

@@ -19,7 +19,7 @@ describe('useToast 테스트', () => {
     });
 
     const TOAST_MESSAGE = '토스트가 나타난다.';
-    const TOAST_DURATION = 2000;
+    const TOAST_DURATION = 10;
     const TOAST_DURATION_MINUTE = TOAST_DURATION / 1000;
 
     it(`토스트에 메세지를 적으면 토스트가 ${TOAST_DURATION_MINUTE}초간 나타난다.`, async () => {

@@ -10,6 +10,7 @@ type Color = 'yellow' | 'green' | 'subGreen';
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
+  onClick: () => void;
   size?: Size;
   color?: Color;
   'aria-label'?: string;
@@ -17,6 +18,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 
 const FloatingButton = ({
   children,
+  onClick,
   size = 'medium',
   color = 'yellow',
   'aria-label': ariaLabel = 'add',
@@ -24,7 +26,7 @@ const FloatingButton = ({
 }: Props) => {
   return (
     <S.Wrapper>
-      <S.Button size={size} color={color} aria-label={ariaLabel} {...rest}>
+      <S.Button size={size} color={color} aria-label={ariaLabel} onClick={onClick} {...rest}>
         {children}
       </S.Button>
     </S.Wrapper>

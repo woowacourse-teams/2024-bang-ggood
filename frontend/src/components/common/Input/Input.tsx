@@ -9,7 +9,6 @@ const widthSize: Record<string, string | null> = {
   medium: '110px',
   large: '140px',
   full: '100%',
-  default: null,
 };
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
@@ -17,7 +16,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAre
 }
 export type InputChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 
-const Input = ({ width = 'default', onChange, ...rest }: Props) => {
+const Input = ({ width = 'full', onChange, ...rest }: Props) => {
   const handleChange = useCallback(
     (event: InputChangeEvent) => {
       if (!onChange) return;

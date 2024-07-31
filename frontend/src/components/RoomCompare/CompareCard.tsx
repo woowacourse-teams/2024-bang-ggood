@@ -7,32 +7,40 @@ import { ChecklistCompare } from '@/types/checklist';
 import calcEmotions from '@/utils/calcEmotions';
 
 interface Props {
-  count?: number;
   room: ChecklistCompare;
+  compareNum: number;
 }
 
-const CompareCard = ({ count, room }: Props) => {
-  // TODO: 백엔드 rank 전달 못함으로 인해 주석
-  // const isHightestRoom = room.rank === 1 ? true : false;
-
-  const isHightestRoom = count === 1 ? true : false;
+const CompareCard = ({ room, compareNum }: Props) => {
+  const {
+    roomName,
+    score,
+    rank,
+    address,
+    floor,
+    deposit,
+    rent,
+    contractTerm,
+    station,
+    walkingTime,
+    options,
+    categories,
+  } = room;
+  const isHightestRoom = rank === 1 || compareNum === 2 ? true : false;
 
   return (
-    <S.Container isHightLight={isHightestRoom}>
-      <S.Title>{room.roomName}</S.Title>
+    <S.Container isHightLight={isHightestRoom && compareNum === 3}>
+      <S.Title>{roomName}</S.Title>
       <S.RankWrapper>
-        {/* <S.Rank>{room.rank}등</S.Rank> */}
-        {count === 0 && <S.Rank>2등</S.Rank>}
-        {count === 1 && <S.Rank>1등</S.Rank>}
-        {count === 2 && <S.Rank>3등</S.Rank>}
-        <S.Score>({room.score}점)</S.Score>
+        <S.Rank>{rank}등</S.Rank>
+        <S.Score>({score}점)</S.Score>
       </S.RankWrapper>
       <CompareItem
         label={'주소 / 층수'}
         isLabeled={isHightestRoom}
         item={
           <S.Item>
-            {room.address} / {room.floor}층
+            {address} / {floor}층
           </S.Item>
         }
       />
@@ -41,42 +49,54 @@ const CompareCard = ({ count, room }: Props) => {
         isLabeled={isHightestRoom}
         item={
           <S.Item>
-            {room.deposit}/{room.rent}
+            {deposit}/{rent}
           </S.Item>
         }
       />
-      <CompareItem label={'계약기간'} isLabeled={isHightestRoom} item={<S.Item>{room.contractTerm}개월</S.Item>} />
+      {/* TODO: 백엔드 프로퍼티 작업 이후로 미룸 */}
+      {/* <CompareItem
+        label={'방 종류 / 구조'}
+        isLabeled={isHightestRoom}
+        item={
+          <S.Item>
+            {}/{rent}
+          </S.Item>
+        }
+      /> */}
+      <CompareItem label={'계약기간'} isLabeled={isHightestRoom} item={<S.Item>{contractTerm}개월</S.Item>} />
       <CompareItem
         label={'교통편'}
         isLabeled={isHightestRoom}
         item={
           <S.Item>
-            {room.station}/
+            {station}/
             <br />
-            도보 {room.walkingTime}분
+            도보 {walkingTime}분
           </S.Item>
         }
       />
       <CompareItem
         label={'옵션'}
         isLabeled={isHightestRoom}
-        item={<S.OptionButton>{room.optionCount}개</S.OptionButton>}
+        item={<S.OptionButton>{options.length}개</S.OptionButton>}
       />
-      {/* TODO: 모든 카테고리를 다 보여주고 없으면 - 표시로 변경 */}
       <S.Subtitle isLabeled={isHightestRoom}>체크리스트</S.Subtitle>
-      {room.categories.map(category => (
-        <CompareItem
-          key={category.categoryId}
-          label={category.categoryName}
-          isLabeled={isHightestRoom}
-          item={
-            <FaceMark>
-              <FaceMark.FaceIcon emotion={calcEmotions(category.score)} isFilled={true} />
-              <FaceMark.Footer>{Math.round(category.score / 10)}점</FaceMark.Footer>
-            </FaceMark>
-          }
-        />
-      ))}
+      {categories.map(category => {
+        const { categoryId, categoryName, score } = category;
+        return (
+          <CompareItem
+            key={categoryId}
+            label={categoryName}
+            isLabeled={isHightestRoom}
+            item={
+              <FaceMark>
+                <FaceMark.FaceIcon emotion={calcEmotions(score)} isFilled={!!score} />
+                <FaceMark.Footer>{score ? `${Math.round(score / 10)}점` : `-`}</FaceMark.Footer>
+              </FaceMark>
+            }
+          />
+        );
+      })}
     </S.Container>
   );
 };

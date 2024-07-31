@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import { HTMLAttributes, useContext } from 'react';
 
 import { InputChangeEvent } from '@/components/common/Input/Input';
-import RadioContext from '@/components/RadioGroup/RadioContext';
-import { flexCenter } from '@/styles/common';
+import RadioContext from '@/components/common/RadioGroup/RadioContext';
+import { flexCenter, flexRow } from '@/styles/common';
 
 interface Props extends HTMLAttributes<HTMLFieldSetElement> {
   label: string;
@@ -16,7 +16,9 @@ const RadioGroupWrapper = ({ label, value, children, onChangeChild, ...rest }: P
   return (
     <fieldset {...rest}>
       <legend>{label}</legend>
-      <RadioContext.Provider value={radioState}>{children}</RadioContext.Provider>
+      <RadioContext.Provider value={radioState}>
+        <S.RadioButtonContainer>{children}</S.RadioButtonContainer>
+      </RadioContext.Provider>
     </fieldset>
   );
 };
@@ -39,7 +41,7 @@ const RadioButton = ({ name, value, children, disabled = false, color, ...rest }
         disabled={disabled}
         checked={group.value !== undefined ? value === group.value : undefined}
         onChange={group.onChangeChild}
-        $color={color}
+        $color={color ?? 'green'}
       />
       {children}
     </S.Label>
@@ -47,8 +49,11 @@ const RadioButton = ({ name, value, children, disabled = false, color, ...rest }
 };
 
 const S = {
+  RadioButtonContainer: styled.div`
+    ${flexRow}
+  `,
   RadioButton: styled.input<{ $color: string }>`
-    ${({ $color }) => ($color ? `accent-color:  ${$color};` : '')}
+    ${({ $color }) => $color && `accent-color:  ${$color};`}
   `,
   Label: styled.label`
     ${flexCenter}

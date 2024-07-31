@@ -30,7 +30,7 @@ const Input = ({ width = 'default', onChange, ...rest }: Props) => {
 };
 const S = {
   Input: styled.input<StyledProps>`
-    ${({ width }) => (width ? `width: ${width}px;` : '')};
+    ${({ width }) => width && `width: ${width}px;`};
     height: 32px;
     padding: 6px 11px;
     border: 1px solid ${({ $color, theme }) => ($color ? $color : theme.palette.grey100)};

@@ -6,8 +6,8 @@ import Button from '@/components/common/Button/Button';
 import FormField from '@/components/common/FormField/FormField';
 import Header from '@/components/common/Header/Header';
 import { InputChangeEvent } from '@/components/common/Input/Input';
+import RadioGroup from '@/components/common/RadioGroup/RadioGroup';
 import OptionModal from '@/components/NewChecklist/OptionModal/OptionModal';
-import RadioGroup from '@/components/RadioGroup/RadioGroup';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 import { RoomInfo, RoomInfoName } from '@/types/room';
 

@@ -4,7 +4,12 @@ import { ChangeEvent, useCallback } from 'react';
 interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
   $color?: 'string';
 }
-const widthSize = { small: '45px', medium: '110px', large: '140px', full: '100%' };
+const widthSize: Record<string, string | null> = {
+  small: '45px',
+  medium: '110px',
+  large: '140px',
+  full: '100%',
+};
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   width?: keyof typeof widthSize;
@@ -24,8 +29,7 @@ const Input = ({ width = 'full', onChange, ...rest }: Props) => {
 };
 const S = {
   Input: styled.input<StyledProps>`
-    display: flex;
-    width: ${({ width }) => width};
+    ${({ width }) => width && `width: ${width}px;`};
     height: 32px;
     padding: 6px 11px;
     border: 1px solid ${({ $color, theme }) => ($color ? $color : theme.palette.grey100)};

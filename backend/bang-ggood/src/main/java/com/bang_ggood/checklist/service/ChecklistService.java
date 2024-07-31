@@ -174,6 +174,7 @@ public class ChecklistService {
         return new WrittenChecklistResponse(writtenRoomResponse, optionIds, writtenCategoryQuestionsResponses);
     }
 
+    //옵션이 아무것도 없을 때 어떻게 되는지 확인해서 정책 정해서 알려주기 헤일리
     private List<Integer> readOptionsByChecklistId(long checklistId) {
         return checklistOptionRepository.findByChecklistId(checklistId)
                 .stream()

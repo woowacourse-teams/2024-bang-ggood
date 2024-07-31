@@ -125,7 +125,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 
         // then
         Assertions.assertAll(
-                () -> assertThat(writtenChecklistResponse.room().name()).isEqualTo("살기 좋은 방"),
+                () -> assertThat(writtenChecklistResponse.room().roomName()).isEqualTo("살기 좋은 방"),
                 () -> assertThat(writtenChecklistResponse.room().address()).isEqualTo("인천광역시 부평구")
         );
     }

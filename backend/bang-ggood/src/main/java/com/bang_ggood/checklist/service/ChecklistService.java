@@ -23,6 +23,7 @@ import com.bang_ggood.checklist.dto.response.QuestionResponse;
 import com.bang_ggood.checklist.dto.response.UserChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.WrittenChecklistResponse;
+import com.bang_ggood.checklist.dto.response.WrittenOptionResponse;
 import com.bang_ggood.checklist.dto.response.WrittenQuestionResponse;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
@@ -35,6 +36,7 @@ import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -166,19 +168,18 @@ public class ChecklistService {
         Checklist checklist = checklistRepository.getById(id);
         WrittenRoomResponse writtenRoomResponse = WrittenRoomResponse.of(checklist);
 
-        List<Integer> optionIds = readOptionsByChecklistId(id);
+        List<WrittenOptionResponse> options = readOptionsByChecklistId(id);
 
         List<WrittenCategoryQuestionsResponse> writtenCategoryQuestionsResponses =
                 readCategoryQuestionsByChecklistId(id);
 
-        return new WrittenChecklistResponse(writtenRoomResponse, optionIds, writtenCategoryQuestionsResponses);
+        return new WrittenChecklistResponse(writtenRoomResponse, options, writtenCategoryQuestionsResponses);
     }
 
-    //옵션이 아무것도 없을 때 어떻게 되는지 확인해서 정책 정해서 알려주기 헤일리
-    private List<Integer> readOptionsByChecklistId(long checklistId) {
+    private List<WrittenOptionResponse> readOptionsByChecklistId(long checklistId) {
         return checklistOptionRepository.findByChecklistId(checklistId)
                 .stream()
-                .map(ChecklistOption::getOptionId)
+                .map(checklistOption -> WrittenOptionResponse.of(checklistOption.getOptionId()))
                 .toList();
     }
 

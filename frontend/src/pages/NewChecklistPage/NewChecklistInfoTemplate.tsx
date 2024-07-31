@@ -38,6 +38,7 @@ const NewChecklistInfoTemplate = ({
           <FormField.Input placeholder="" onChange={onChangeForForm} name="deposit" value={roomInfo.deposit} />
           <FormField.P value="" />
         </FormField>
+
         {/* 주소 */}
         <FormField>
           <S.FlexVertical>
@@ -49,11 +50,13 @@ const NewChecklistInfoTemplate = ({
             <FormField.P value="" />
           </S.FlexVertical>
         </FormField>
+
         {/* 교통편 */}
         <S.FlexVertical gap="15px">
           <FormField.Label label="가까운 교통편" />
           <FormField.P value="주소를 추가하면 가까운 역을 찾아드려요!" />
         </S.FlexVertical>
+
         {/* 보증금 월세 */}
         <FormField>
           <FormField.Label label="보증금 / 월세 (만원)" />
@@ -64,6 +67,7 @@ const NewChecklistInfoTemplate = ({
           </S.FlexHorizontal>
           <FormField.P value="" />
         </FormField>
+
         {/* 방 종류 */}
         <S.FlexVertical>
           <FormField.Label label="방 종류" />
@@ -74,6 +78,7 @@ const NewChecklistInfoTemplate = ({
             <Badge label="기타" type="button" />
           </S.OptionButtonContainer>
         </S.FlexVertical>
+
         {/* 방 구조 */}
         <S.FlexVertical>
           <FormField.Label label="방 구조" />
@@ -85,6 +90,7 @@ const NewChecklistInfoTemplate = ({
             <Badge label="복층" type="button" />
           </S.OptionButtonContainer>
         </S.FlexVertical>
+
         {/* 방 크기 */}
         <FormField>
           <FormField.Label label="방 크기" />
@@ -108,6 +114,7 @@ const NewChecklistInfoTemplate = ({
           </S.FlexHorizontal>
           <FormField.P value="" />
         </FormField>
+
         {/* 층수 */}
         <FormField>
           <FormField.Label label="층수" />
@@ -134,17 +141,22 @@ const NewChecklistInfoTemplate = ({
           </S.FlexHorizontal>
           <FormField.P value="" />
         </FormField>
+
         {/* 계약 기간 */}
         <S.FlexHorizontal>
           <CustomFormField label="계약 기간(개월)" values={roomInfo} name="contractTerm" onChange={onChangeForForm} />
         </S.FlexHorizontal>
+
         {/* 부동산 이름 */}
         <CustomFormField label="부동산 이름" onChange={onChangeForForm} values={roomInfo} name="realEstate" />
+
         {/* 가구옵션 */}
         <FormField.Label label="가구옵션" />
         <S.FurnitureOptionContent value="TV, 냉장고, 신발, 에어컨" />
+
         {/* 가구옵션버튼 */}
         <S.AddOptionButton label="가구 옵션 추가하기" size="full" onClick={onClickOptionModalOpen} />
+
         {/*옵션 선택 모달*/}
         {isOptionModalOpen && (
           <OptionModal

@@ -29,6 +29,7 @@ interface RadioButtonProps extends HTMLAttributes<HTMLLabelElement> {
 
 const RadioButton = ({ name, value, children, disabled = false, color, ...rest }: RadioButtonProps) => {
   const group = useContext(RadioContext);
+
   return (
     <S.Label {...rest}>
       <S.RadioButton

@@ -16,6 +16,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ChecklistE2ETest extends AcceptanceTest {
@@ -102,5 +106,19 @@ public class ChecklistE2ETest extends AcceptanceTest {
                 () -> assertThat(writtenChecklistResponse.room().name()).isEqualTo("살기 좋은 방"),
                 () -> assertThat(writtenChecklistResponse.room().address()).isEqualTo("인천광역시 부평구")
         );
+    }
+
+    @DisplayName("커스텀 체크리스트 업데이트 성공")
+    @Test
+    void updateCustomChecklist() {
+        Map<String, List<Integer>> params = new HashMap<>();
+        params.put("questionIds", List.of(1, 3, 5, 7, 9, 14, 21, 30));
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(params)
+                .when().put("/custom-checklist")
+                .then().log().all()
+                .statusCode(204);
     }
 }

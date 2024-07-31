@@ -14,6 +14,7 @@ import com.bang_ggood.checklist.domain.Option;
 import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.request.ChecklistInfo;
+import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.request.QuestionCreateRequest;
 import com.bang_ggood.checklist.dto.response.BadgeResponse;
 import com.bang_ggood.checklist.dto.response.CategoryScoreReadResponse;
@@ -37,7 +38,6 @@ import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -283,5 +283,33 @@ public class ChecklistService {
 
     private int getChecklistScore(List<ChecklistQuestion> questions) {
         return ChecklistScore.calculateTotalScore(questions);
+    }
+
+    @Transactional
+    public void updateCustomChecklist(CustomChecklistUpdateRequest request) {
+        List<Integer> questionIds = request.questionIds();
+        validateCustomQuestionsCount(questionIds);
+        validateCustomQuestionsDuplication(questionIds);
+
+        User user = new User(1L, "방방이");
+        customQuestionRepository.deleteAllByUser(user);
+
+        List<CustomQuestion> customQuestions = questionIds.stream()
+                .map(Question::findById)
+                .map(question -> new CustomQuestion(user, question))
+                .toList();
+        customQuestionRepository.saveAll(customQuestions);
+    }
+
+    private void validateCustomQuestionsCount(List<Integer> questionIds) {
+        if (questionIds.isEmpty()) {
+            throw new BangggoodException(ExceptionCode.CUSTOM_CHECKLIST_INVALID_COUNT);
+        }
+    }
+
+    private void validateCustomQuestionsDuplication(List<Integer> questionIds) {
+        if (questionIds.size() != Set.copyOf(questionIds).size()) {
+            throw new BangggoodException(ExceptionCode.QUESTION_DUPLICATED);
+        }
     }
 }

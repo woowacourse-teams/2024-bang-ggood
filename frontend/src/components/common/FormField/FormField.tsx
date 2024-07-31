@@ -5,12 +5,12 @@ import { InputRequiredDot } from '@/assets/assets';
 import Input from '@/components/common/Input/Input';
 import theme from '@/styles/theme';
 
-const FormFieldWrapper = styled.div`
-  display: 'flex';
-  width: 100%;
+const FormFieldWrapper = styled.div<{ rowGap?: string }>`
+  display: flex;
+
   flex: auto;
   flex-direction: column;
-  row-gap: 6px;
+  row-gap: ${({ rowGap }) => (rowGap ? rowGap : '10px')};
 `;
 const S = {
   MovedRequiredDot: styled(InputRequiredDot)`
@@ -36,7 +36,7 @@ const FormField = Object.assign(FormFieldWrapper, {
       {required && <S.MovedRequiredDot />}
     </label>
   ),
-  Input: ({ ...rest }: GetProps<typeof Input>) => <Input width={'full'} {...rest} />,
+  Input: ({ ...rest }: GetProps<typeof Input>) => <Input {...rest} />,
   P: ({ value, ...rest }: { value: string } & HTMLAttributes<HTMLParagraphElement>) => <S.P {...rest}>{value}</S.P>,
 });
 

@@ -6,27 +6,27 @@ import { RoomInfo } from '@/types/room';
 export interface ChecklistCategoryQuestions {
   categoryId: number;
   categoryName: string;
-  questions: ChecklistAnswer[];
+  questions: ChecklistQuestion[];
 }
 
+export interface ChecklistCategoryQnA {
+  categoryId: number;
+  categoryName: string;
+  questions: ChecklistQuestionWithAnswer[];
+}
 export interface ChecklistQuestion {
   questionId: number;
   title: string;
   subtitle: string | null;
 }
 
-export interface ChecklistAnswer extends ChecklistQuestion {
-  answer: EmotionType;
+export interface ChecklistQuestionWithAnswer extends ChecklistQuestion {
+  answer: EmotionType | null;
 }
 
-// export interface ChecklistAnswer {
-//   questionId: number;
-//   answer: EmotionType;
-// }
-
-export interface ChecklistFormAnswer {
+export interface ChecklistAnswer {
   questionId: number;
-  answer: number;
+  answer: EmotionType;
 }
 
 export interface Option {
@@ -45,8 +45,6 @@ export interface ChecklistCompare extends RoomInfo {
   checklistId: number;
   rank?: number;
   score: number;
-  // TODO: 백엔드 api 변경으로 인한 수정
-  // options: number[];
   optionCount: number;
   categories: CategoryScore[];
 }
@@ -55,5 +53,5 @@ export interface ChecklistInfo {
   room: RoomInfo;
   checklistId: number;
   options: number[];
-  categories: ChecklistCategoryQuestions[];
+  categories: ChecklistCategoryQnA[];
 }

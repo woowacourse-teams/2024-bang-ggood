@@ -1,60 +1,71 @@
 import { create } from 'zustand';
 
-// import { checklistQuestions } from '@/mocks/fixtures/checklistQuestions';
-import { addAnswerProps } from '@/pages/ChecklistSummaryPage';
-import { ChecklistAnswer, ChecklistCategoryQuestions } from '@/types/checklist';
+import { ChecklistCategoryQnA, ChecklistCategoryQuestions } from '@/types/checklist';
 import { EmotionType } from '@/types/emotionAnswer';
 
 interface ChecklistState {
   basicInfo: Record<string, unknown>;
-  checklistQuestions: ChecklistCategoryQuestions[];
-  checklistAnswers: ChecklistAnswer[];
-  selectedOptions: number[];
-  setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
-  questionSelectedAnswer: (targetId: number) => EmotionType;
-  addAnswer: (props: addAnswerProps) => void;
+  checklistCategoryQnA: ChecklistCategoryQnA[];
+  questionSelectedAnswer: (targetId: number) => EmotionType | null;
+  addAnswer: (props: { questionId: number; newAnswer: EmotionType }) => void;
   deleteAnswer: (questionId: number) => void;
-  setQuestions: (questions: ChecklistCategoryQuestions[]) => void;
+  setAnswerInQuestion: (questions: ChecklistCategoryQuestions[]) => void;
+  setAnswers: (answers: ChecklistCategoryQnA[]) => void;
 }
 
 const useChecklist = create<ChecklistState>((set, get) => ({
   basicInfo: {},
-  checklistQuestions: null,
-  checklistAnswers: [],
-  selectedOptions: [],
+  checklistCategoryQnA: [],
 
-  setQuestions: (questions: ChecklistCategoryQuestions[]) => {
-    set(state => ({ ...state, checklistQuestions: questions }));
+  setAnswerInQuestion: (questions: ChecklistCategoryQuestions[]) => {
+    const checklistCategoryQnA: ChecklistCategoryQnA[] = questions.map(category => ({
+      categoryId: category.categoryId,
+      categoryName: category.categoryName,
+      questions: category.questions.map(question => ({
+        ...question,
+        answer: null,
+      })),
+    }));
+    set({ checklistCategoryQnA });
   },
 
-  setSelectedOptions: (newOptions: number[]) => {
-    set(state => ({ ...state, selectedOptions: newOptions }));
+  setAnswers: (answers: ChecklistCategoryQnA[]) => {
+    set({ checklistCategoryQnA: answers });
   },
 
-  questionSelectedAnswer: targetId => {
-    const { checklistAnswers } = get();
-    const targetQuestion = checklistAnswers.filter(e => e.questionId === targetId);
-    if (!targetQuestion[0]) return undefined;
-    return targetQuestion[0]?.answer;
+  questionSelectedAnswer: (targetId: number) => {
+    const { checklistCategoryQnA } = get();
+    for (const category of checklistCategoryQnA) {
+      const targetQuestion = category.questions.find(q => q.questionId === targetId);
+      if (targetQuestion) {
+        return targetQuestion.answer;
+      }
+    }
+    return null;
   },
 
   addAnswer: ({ questionId, newAnswer }: { questionId: number; newAnswer: EmotionType }) => {
     set(state => {
-      const target = state.checklistAnswers.find(answer => answer.questionId === questionId);
-      if (target) {
-        const newAnswers = state.checklistAnswers.map(e =>
-          e.questionId === questionId ? { ...e, answer: newAnswer } : e,
-        );
-        return { ...state, checklistAnswers: newAnswers };
-      }
-      return state;
+      const newCategories = state.checklistCategoryQnA.map(category => ({
+        ...category,
+        questions: category.questions.map(question =>
+          question.questionId === questionId ? { ...question, answer: newAnswer } : question,
+        ),
+      }));
+      return { ...state, checklistCategoryQnA: newCategories };
     });
   },
 
-  deleteAnswer: questionId => {
-    set(state => ({
-      checklistAnswers: state.checklistAnswers.filter(answer => answer.questionId !== questionId),
-    }));
+  deleteAnswer: (questionId: number) => {
+    set(state => {
+      const newCategories = state.checklistCategoryQnA.map(category => ({
+        ...category,
+        questions: category.questions.map(question =>
+          question.questionId === questionId ? { ...question, answer: null } : question,
+        ),
+      }));
+      return { ...state, checklistCategoryQnA: newCategories };
+    });
   },
 }));
 

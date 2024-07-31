@@ -8,9 +8,9 @@ import { Emotion, EmotionType } from '@/types/emotionAnswer';
 
 interface Props {
   question: ChecklistQuestion;
-  // questionSelectedAnswer: (questionId: number) => EmotionType | void;
 }
 
+//TODO: constant로 이동
 export const emotionPhrase: Record<EmotionType, string> = {
   BAD: '별로에요',
   SOSO: '평범해요',

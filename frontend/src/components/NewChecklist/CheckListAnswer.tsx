@@ -3,24 +3,7 @@ import styled from '@emotion/styled';
 import { QuestionDot } from '@/assets/assets';
 import FaceMark from '@/components/common/FaceMark/FaceMark';
 import { emotionPhrase } from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
-import { ChecklistAnswer } from '@/types/checklist';
 import { EmotionType } from '@/types/emotionAnswer';
-
-// interface Emotions {
-//   name: Emotion;
-//   id: number;
-// }
-
-// function getEmotionNameById(id: number): Emotion | null {
-//   const emotions: Emotions[] = [
-//     { name: 'BAD', id: 1 },
-//     { name: 'SOSO', id: 2 },
-//     { name: 'GOOD', id: 3 },
-//   ];
-
-//   const emotion = emotions.find(e => e.id === id);
-//   return emotion ? emotion.name : null;
-// }
 
 interface Props {
   subtitle: string;
@@ -29,13 +12,6 @@ interface Props {
 }
 
 const ChecklistAnswer = ({ answer, title, subtitle }: Props) => {
-  // const emotionName = getEmotionNameById(QandA?.answer);
-  // const { checklistQuestions } = useChecklist();
-  // questionId: number;
-  // title: string;
-  // subtitle: string | null;
-  // const { title, subtitle, questionId } = checklistQuestions;
-
   return (
     <S.Container>
       <S.TitleContainer>

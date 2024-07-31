@@ -9,17 +9,12 @@ export interface addAnswerProps {
   newAnswer: number;
 }
 
-// interface Props {
-//   ///questionSelectedAnswer: (questionId: number) => EmotionType | undefined;
-//   // checklistQuestions: ChecklistQuestion[];
-// }
-
 const NewChecklistTemplate = () => {
   const { currentTabId } = useTabContext();
 
-  const { checklistQuestions } = useChecklist();
+  const { checklistCategoryQnA } = useChecklist();
 
-  const targetCategoryQuestions = checklistQuestions.filter(category => category.categoryId === currentTabId)[0];
+  const targetCategoryQuestions = checklistCategoryQnA.filter(category => category.categoryId === currentTabId)[0];
 
   return (
     <S.ContentBox>

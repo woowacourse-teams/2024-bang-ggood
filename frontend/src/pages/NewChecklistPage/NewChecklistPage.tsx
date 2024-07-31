@@ -14,6 +14,7 @@ import NewChecklistBody from '@/pages/NewChecklistPage/NewChecklistBody';
 import useChecklist from '@/store/useChecklist';
 import useOptionStore from '@/store/useOptionStore';
 import { flexCenter, title2 } from '@/styles/common';
+import { ChecklistCategoryQnA } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
 
 // TODO: roomName 이슈로 인해 데모 버전으로 변경
@@ -39,23 +40,25 @@ const NewChecklistPage = () => {
   const { selectedOptions } = useOptionStore();
 
   /*체크리스트 답변*/
-  const { checklistAnswers, setQuestions } = useChecklist();
+  const { setAnswerInQuestion, checklistCategoryQnA } = useChecklist();
 
   const navigate = useNavigate();
 
-  //TODO: 프롭스 드릴링 등 나중에 리팩토링 필요 가능성
-  const onSubmitChecklist = () => {
-    // const emotionAnswers: ChecklistFormAfterAnswer[] = checklistAnswers.map(question => {
-    //   if (question.answer === 1) return { ...question, answer: 'BAD' };
-    //   if (question.answer === 2) return { ...question, answer: 'SOSO' };
-    //   return { ...question, answer: 'GOOD' };
-    // });
+  const transformQuestions = (checklist: ChecklistCategoryQnA[]) => {
+    return checklist.flatMap(category =>
+      category.questions.map(question => ({
+        questionId: question.questionId,
+        answer: null,
+      })),
+    );
+  };
 
+  const onSubmitChecklist = () => {
     const fetchNewChecklist = async () => {
       await postChecklist({
         room: roomInfo,
         options: selectedOptions,
-        questions: checklistAnswers,
+        questions: transformQuestions(checklistCategoryQnA),
       });
     };
 
@@ -73,7 +76,9 @@ const NewChecklistPage = () => {
   useEffect(() => {
     const fetchChecklist = async () => {
       const checklist = await getChecklistQuestions();
-      setQuestions(checklist);
+
+      /*체크리스트 질문에 대한 답안지 객체 생성 */
+      setAnswerInQuestion(checklist);
     };
     fetchChecklist();
   }, []);
@@ -87,13 +92,7 @@ const NewChecklistPage = () => {
       />
 
       <TabProvider>
-        <NewChecklistBody
-          newChecklistTabs={newChecklistTabs}
-          roomInfo={roomInfo}
-          onChange={onChange}
-          // questionSelectedAnswer={questionSelectedAnswer}
-          checklistAnswers={checklistAnswers}
-        />
+        <NewChecklistBody newChecklistTabs={newChecklistTabs} roomInfo={roomInfo} onChange={onChange} />
       </TabProvider>
     </>
   );

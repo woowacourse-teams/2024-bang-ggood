@@ -5,14 +5,9 @@ import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.category.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.category.dto.response.WrittenCategoryQuestionsResponse;
 import com.bang_ggood.checklist.domain.Checklist;
-import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.ChecklistScore;
-import com.bang_ggood.checklist.domain.Grade;
-import com.bang_ggood.checklist.domain.Option;
 import com.bang_ggood.checklist.domain.Question;
-import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
-import com.bang_ggood.checklist.dto.request.ChecklistInfo;
 import com.bang_ggood.checklist.dto.request.QuestionCreateRequest;
 import com.bang_ggood.checklist.dto.response.BadgeResponse;
 import com.bang_ggood.checklist.dto.response.CategoryScoreReadResponse;
@@ -30,7 +25,6 @@ import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
-import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.response.WrittenRoomResponse;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
@@ -42,10 +36,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class ChecklistService {
@@ -173,7 +164,10 @@ public class ChecklistService {
         List<WrittenCategoryQuestionsResponse> writtenCategoryQuestionsResponses =
                 readCategoryQuestionsByChecklistId(id);
 
-        return new WrittenChecklistResponse(writtenRoomResponse, options, writtenCategoryQuestionsResponses);
+        int checklistScore = ChecklistScore.calculateTotalScore(checklist.getQuestions());
+
+        return new WrittenChecklistResponse(writtenRoomResponse, options, checklistScore,
+                writtenCategoryQuestionsResponses);
     }
 
     private List<WrittenOptionResponse> readOptionsByChecklistId(long checklistId) {
@@ -185,6 +179,7 @@ public class ChecklistService {
 
     private List<WrittenCategoryQuestionsResponse> readCategoryQuestionsByChecklistId(long checklistId) {
         List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findByChecklistId(checklistId);
+
         return Arrays.stream(Category.values())
                 .map(category -> readQuestionsByCategory(category, checklistQuestions))
                 .toList();
@@ -197,7 +192,9 @@ public class ChecklistService {
                         .map(WrittenQuestionResponse::of)
                         .toList();
 
-        return WrittenCategoryQuestionsResponse.of(category, writtenQuestionResponses);
+        int categoryScore = ChecklistScore.calculateCategoryScore(category, checklistQuestions);
+
+        return WrittenCategoryQuestionsResponse.of(category, categoryScore, writtenQuestionResponses);
     }
 
     @Transactional

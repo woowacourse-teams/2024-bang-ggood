@@ -194,9 +194,8 @@ const S = {
     background-color: white;
   `,
   Container: styled.div`
-    display: flex;
+    ${flexColumn}
     padding: 28px 22px;
-    flex-direction: column;
     justify-content: start;
     row-gap: 28px;
   `,

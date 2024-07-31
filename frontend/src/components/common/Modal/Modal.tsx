@@ -76,7 +76,7 @@ const positionMapper = (position: ModalPosition) => {
         transform: 'translate(-50%, -50%)',
         borderRadius: '8px',
         width: '100%',
-        maxWidth: '80%',
+        maxWidth: '85%',
       });
     case 'bottom':
       return css({

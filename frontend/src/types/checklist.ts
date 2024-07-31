@@ -29,23 +29,22 @@ export interface ChecklistFormAnswer {
   answer: number;
 }
 
-export interface Option {
-  id: number;
-  filled: string;
-  unfilled: string;
-}
-
 export interface ChecklistPreview extends RoomInfo {
   checklistId: number;
   badge?: Badge[];
   createdAt: string;
 }
 
+export interface Option {
+  optionId: number;
+  optionName: string;
+}
+
 export interface ChecklistCompare extends RoomInfo {
   checklistId: number;
   rank: number;
   score: number;
-  options: number[];
+  options: Option[];
   categories: CategoryScore[];
 }
 

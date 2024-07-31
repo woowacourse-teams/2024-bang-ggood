@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 
+import Badge from '@/components/common/Badge/Badge';
 import FaceMark from '@/components/common/FaceMark/FaceMark';
+import Modal from '@/components/common/Modal/Modal';
 import CompareItem from '@/components/RoomCompare/CompareItem';
 import { boxShadow, flexColumn, title1, title2, title3 } from '@/styles/common';
 import { ChecklistCompare } from '@/types/checklist';
@@ -27,6 +30,16 @@ const CompareCard = ({ room, compareNum }: Props) => {
     categories,
   } = room;
   const isHightestRoom = rank === 1 || compareNum === 2 ? true : false;
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleOpen = () => {
+    setIsModalOpen(true);
+  };
 
   return (
     <S.Container isHightLight={isHightestRoom && compareNum === 3}>
@@ -78,8 +91,18 @@ const CompareCard = ({ room, compareNum }: Props) => {
       <CompareItem
         label={'옵션'}
         isLabeled={isHightestRoom}
-        item={<S.OptionButton>{options.length}개</S.OptionButton>}
+        item={<S.OptionButton onClick={handleOpen}>{options.length}개</S.OptionButton>}
       />
+      <Modal isOpen={isModalOpen} onClose={handleClose} hasCloseButton={true}>
+        <Modal.header title="옵션 종류" />
+        <Modal.body>
+          <S.Box>
+            {options.map(option => (
+              <Badge type="long" key={option.optionId} label={option.optionName} />
+            ))}
+          </S.Box>
+        </Modal.body>
+      </Modal>
       <S.Subtitle isLabeled={isHightestRoom}>체크리스트</S.Subtitle>
       {categories.map(category => {
         const { categoryId, categoryName, score } = category;
@@ -144,6 +167,12 @@ const S = {
     border: 1px solid ${({ theme }) => theme.palette.grey300};
     border-radius: 8px;
     ${boxShadow}
+  `,
+  Box: styled.div`
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 10px;
   `,
   Subtitle: styled.div<{ isLabeled: boolean }>`
     visibility: ${({ isLabeled }) => (isLabeled ? 'visible' : 'hidden')};

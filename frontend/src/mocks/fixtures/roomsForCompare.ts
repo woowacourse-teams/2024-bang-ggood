@@ -10,7 +10,13 @@ export const threeRoomsForCompare = {
       contractTerm: 12,
       station: '잠실역',
       walkingTime: 10,
-      options: [1, 5, 6, 7, 10],
+      options: [
+        { optionId: 1, optionName: '냉장고' },
+        { optionId: 2, optionName: '전자레인지' },
+        { optionId: 3, optionName: '엘리베이터' },
+        { optionId: 4, optionName: '베란다' },
+        { optionId: 5, optionName: '반려동물 가능' },
+      ],
       realEstate: '방끗공인중개사',
       type: '원룸',
       size: 24,
@@ -43,7 +49,11 @@ export const threeRoomsForCompare = {
       station: '잠실역',
       walkingTime: 7,
       realEstate: '송파 부동산',
-      options: [1, 2, 3],
+      options: [
+        { optionId: 1, optionName: '냉장고' },
+        { optionId: 2, optionName: '전자레인지' },
+        { optionId: 3, optionName: '엘리베이터' },
+      ],
       categories: [
         {
           categoryId: 1,
@@ -65,7 +75,11 @@ export const threeRoomsForCompare = {
       score: 77,
       deposit: 1000,
       rent: 30,
-      options: [1, 2, 3],
+      options: [
+        { optionId: 1, optionName: '냉장고' },
+        { optionId: 2, optionName: '전자레인지' },
+        { optionId: 3, optionName: '엘리베이터' },
+      ],
       categories: [
         {
           categoryId: 1,
@@ -98,7 +112,11 @@ export const twoRoomsForCompare = {
       score: 87,
       deposit: 1000,
       rent: 30,
-      options: [1, 2, 3],
+      options: [
+        { optionId: 1, optionName: '냉장고' },
+        { optionId: 2, optionName: '전자레인지' },
+        { optionId: 3, optionName: '엘리베이터' },
+      ],
       categories: [
         {
           categoryId: 1,
@@ -126,7 +144,11 @@ export const twoRoomsForCompare = {
       score: 87,
       deposit: 1000,
       rent: 30,
-      options: [1, 2, 3],
+      options: [
+        { optionId: 1, optionName: '냉장고' },
+        { optionId: 2, optionName: '전자레인지' },
+        { optionId: 3, optionName: '엘리베이터' },
+      ],
       categories: [
         {
           categoryId: 1,

@@ -171,7 +171,7 @@ export const normalize = css`
 
   /* input */
   /* input 기본 스타일 초기화 */
-  input {
+  input:not([type]) {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;

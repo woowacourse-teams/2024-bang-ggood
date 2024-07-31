@@ -64,69 +64,69 @@ public class ChecklistService {
         this.checklistQuestionRepository = checklistQuestionRepository;
     }
 
-    @Transactional
-    public long createChecklist(ChecklistCreateRequest checklistCreateRequest) {
-        Room room = roomRepository.save(checklistCreateRequest.toRoomEntity());
-
-        ChecklistInfo checklistInfo = checklistCreateRequest.toChecklistInfo();
-        Checklist checklist = new Checklist(new User(1L, "방방이"), room, checklistInfo.deposit(), checklistInfo.rent(),
-                checklistInfo.contractTerm(), checklistInfo.realEstate());
-        checklistRepository.save(checklist);
-
-        createChecklistOptions(checklistCreateRequest, checklist);
-        createChecklistQuestions(checklistCreateRequest, checklist);
-        return checklist.getId();
-    }
-
-    private void createChecklistOptions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
-        List<Integer> optionIds = checklistCreateRequest.options();
-        validateOptions(optionIds);
-        List<ChecklistOption> checklistOptions = optionIds.stream()
-                .map(option -> new ChecklistOption(checklist, option))
-                .toList();
-        checklistOptionRepository.saveAll(checklistOptions);
-    }
-
-    private void validateOptions(List<Integer> optionIds) {
-        validateOptionDuplicate(optionIds);
-        validateOptionInvalid(optionIds);
-    }
-
-    private void validateOptionDuplicate(List<Integer> optionIds) {
-        Set<Integer> set = new HashSet<>();
-        optionIds.forEach(id -> {
-            if (!set.add(id)) {
-                throw new BangggoodException(ExceptionCode.OPTION_DUPLICATED);
-            }
-        });
-    }
-
-    private void validateOptionInvalid(List<Integer> optionIds) {
-        for (Integer optionId : optionIds) {
-            if (!Option.contains(optionId)) {
-                throw new BangggoodException(ExceptionCode.INVALID_OPTION);
-            }
-        }
-    }
-
-    private void createChecklistQuestions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
-        validateQuestion(checklistCreateRequest.questions());
-        Map<Integer, String> existQuestions = checklistCreateRequest.questions()
-                .stream()
-                .collect(Collectors.toMap(QuestionCreateRequest::questionId, QuestionCreateRequest::answer));
-
-        List<ChecklistQuestion> checklistQuestions = Arrays.stream(Question.values())
-                .map(question -> {
-                    int questionId = question.getId();
-                    return Optional.ofNullable(existQuestions.get(questionId))
-                            .map(answer -> new ChecklistQuestion(checklist, Question.findById(questionId),
-                                    Grade.from(answer)))
-                            .orElseGet(() -> new ChecklistQuestion(checklist, Question.findById(questionId), null));
-                })
-                .collect(Collectors.toList());
-
-        checklistQuestionRepository.saveAll(checklistQuestions);
-    }
+//    @Transactional
+//    public long createChecklist(ChecklistCreateRequest checklistCreateRequest) {
+//        Room room = roomRepository.save(checklistCreateRequest.toRoomEntity());
+//
+//        ChecklistInfo checklistInfo = checklistCreateRequest.toChecklistInfo();
+//        Checklist checklist = new Checklist(new User(1L, "방방이"), room, checklistInfo.deposit(), checklistInfo.rent(),
+//                checklistInfo.contractTerm(), checklistInfo.realEstate());
+//        checklistRepository.save(checklist);
+//
+//        createChecklistOptions(checklistCreateRequest, checklist);
+//        createChecklistQuestions(checklistCreateRequest, checklist);
+//        return checklist.getId();
+//    }
+//
+//    private void createChecklistOptions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
+//        List<Integer> optionIds = checklistCreateRequest.options();
+//        validateOptions(optionIds);
+//        List<ChecklistOption> checklistOptions = optionIds.stream()
+//                .map(option -> new ChecklistOption(checklist, option))
+//                .toList();
+//        checklistOptionRepository.saveAll(checklistOptions);
+//    }
+//
+//    private void validateOptions(List<Integer> optionIds) {
+//        validateOptionDuplicate(optionIds);
+//        validateOptionInvalid(optionIds);
+//    }
+//
+//    private void validateOptionDuplicate(List<Integer> optionIds) {
+//        Set<Integer> set = new HashSet<>();
+//        optionIds.forEach(id -> {
+//            if (!set.add(id)) {
+//                throw new BangggoodException(ExceptionCode.OPTION_DUPLICATED);
+//            }
+//        });
+//    }
+//
+//    private void validateOptionInvalid(List<Integer> optionIds) {
+//        for (Integer optionId : optionIds) {
+//            if (!Option.contains(optionId)) {
+//                throw new BangggoodException(ExceptionCode.INVALID_OPTION);
+//            }
+//        }
+//    }
+//
+//    private void createChecklistQuestions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
+//        validateQuestion(checklistCreateRequest.questions());
+//        Map<Integer, String> existQuestions = checklistCreateRequest.questions()
+//                .stream()
+//                .collect(Collectors.toMap(QuestionCreateRequest::questionId, QuestionCreateRequest::answer));
+//
+//        List<ChecklistQuestion> checklistQuestions = Arrays.stream(Question.values())
+//                .map(question -> {
+//                    int questionId = question.getId();
+//                    return Optional.ofNullable(existQuestions.get(questionId))
+//                            .map(answer -> new ChecklistQuestion(checklist, Question.findById(questionId),
+//                                    Grade.from(answer)))
+//                            .orElseGet(() -> new ChecklistQuestion(checklist, Question.findById(questionId), null));
+//                })
+//                .collect(Collectors.toList());
+//
+//        checklistQuestionRepository.saveAll(checklistQuestions);
+//    }
 
     @Transactional
     public ChecklistQuestionsResponse readChecklistQuestions() {

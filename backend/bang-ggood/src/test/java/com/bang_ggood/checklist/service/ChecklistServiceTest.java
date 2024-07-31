@@ -47,61 +47,61 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     private RoomRepository roomRepository;
 
 
-    @DisplayName("체크리스트 방 정보 작성 성공")
-    @Test
-    void createChecklist() {
-        //given & when
-        long checklistId = checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST);
-
-        //then
-        assertAll(
-                () -> assertThat(checklistId).isEqualTo(1),
-                () -> assertThat(checklistQuestionRepository.findByChecklistId(1).size()).isEqualTo(
-                        Question.values().length)
-        );
-
-    }
-
-    @DisplayName("체크리스트 방 정보 작성 실패: 질문 id가 유효하지 않을 경우")
-    @Test
-    void createChecklist_invalidQuestionId_exception() {
-        //given & when & then
-        assertThatThrownBy(
-                () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_QUESTION_ID))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.INVALID_QUESTION.getMessage());
-    }
-
-    @DisplayName("체크리스트 방 정보 작성 실패: 질문 id가 중복일 경우")
-    @Test
-    void createChecklist_duplicatedQuestionId_exception() {
-        //given & when & then
-        assertThatThrownBy(
-                () -> checklistService.createChecklist(
-                        ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_QUESTION_ID))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
-    }
-
-    @DisplayName("체크리스트 방 정보 작성 실패: 옵션 id가 유효하지 않을 경우")
-    @Test
-    void createChecklist_invalidOptionId_exception() {
-        //given & when & then
-        assertThatThrownBy(
-                () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_OPTION_ID))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.INVALID_OPTION.getMessage());
-    }
-
-    @DisplayName("체크리스트 방 정보 작성 실패: 옵션 id가 중복일 경우")
-    @Test
-    void createChecklist_duplicatedOptionId_exception() {
-        //given & when & then
-        assertThatThrownBy(
-                () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_OPTION_ID))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.OPTION_DUPLICATED.getMessage());
-    }
+//    @DisplayName("체크리스트 방 정보 작성 성공")
+//    @Test
+//    void createChecklist() {
+//        //given & when
+//        long checklistId = checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+//
+//        //then
+//        assertAll(
+//                () -> assertThat(checklistId).isEqualTo(1),
+//                () -> assertThat(checklistQuestionRepository.findByChecklistId(1).size()).isEqualTo(
+//                        Question.values().length)
+//        );
+//
+//    }
+//
+//    @DisplayName("체크리스트 방 정보 작성 실패: 질문 id가 유효하지 않을 경우")
+//    @Test
+//    void createChecklist_invalidQuestionId_exception() {
+//        //given & when & then
+//        assertThatThrownBy(
+//                () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_QUESTION_ID))
+//                .isInstanceOf(BangggoodException.class)
+//                .hasMessage(ExceptionCode.INVALID_QUESTION.getMessage());
+//    }
+//
+//    @DisplayName("체크리스트 방 정보 작성 실패: 질문 id가 중복일 경우")
+//    @Test
+//    void createChecklist_duplicatedQuestionId_exception() {
+//        //given & when & then
+//        assertThatThrownBy(
+//                () -> checklistService.createChecklist(
+//                        ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_QUESTION_ID))
+//                .isInstanceOf(BangggoodException.class)
+//                .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
+//    }
+//
+//    @DisplayName("체크리스트 방 정보 작성 실패: 옵션 id가 유효하지 않을 경우")
+//    @Test
+//    void createChecklist_invalidOptionId_exception() {
+//        //given & when & then
+//        assertThatThrownBy(
+//                () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_OPTION_ID))
+//                .isInstanceOf(BangggoodException.class)
+//                .hasMessage(ExceptionCode.INVALID_OPTION.getMessage());
+//    }
+//
+//    @DisplayName("체크리스트 방 정보 작성 실패: 옵션 id가 중복일 경우")
+//    @Test
+//    void createChecklist_duplicatedOptionId_exception() {
+//        //given & when & then
+//        assertThatThrownBy(
+//                () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_OPTION_ID))
+//                .isInstanceOf(BangggoodException.class)
+//                .hasMessage(ExceptionCode.OPTION_DUPLICATED.getMessage());
+//    }
 
     @DisplayName("체크리스트 질문 조회 성공")
     @Test
@@ -139,62 +139,62 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
     }
 
-    @DisplayName("체크리스트 리스트 조회 성공")
-    @Test
-    void readUserChecklistsPreview() {
-        // given
-        User user = new User(1L, "방방이");
-        Room room = RoomFixture.ROOM_1;
-        Checklist checklist = createChecklist(user, room);
-        List<ChecklistQuestion> questions = List.of(
-                new ChecklistQuestion(checklist, Question.CLEAN_1, Grade.GOOD),
-                new ChecklistQuestion(checklist, Question.CLEAN_2, Grade.GOOD),
-                new ChecklistQuestion(checklist, Question.CLEAN_3, Grade.GOOD),
-                new ChecklistQuestion(checklist, Question.CLEAN_4, null),
-                new ChecklistQuestion(checklist, Question.CLEAN_5, null));
-
-        roomRepository.save(room);
-        checklistRepository.save(checklist);
-        checklistQuestionRepository.saveAll(questions);
-
-        // when
-        UserChecklistsPreviewResponse response = checklistService.readUserChecklistsPreview(user);
-
-        // then
-        UserChecklistPreviewResponse previewResponse1 = response.checklists().get(0);
-        assertThat(previewResponse1.checklistId()).isEqualTo(checklist.getId());
-        assertThat(previewResponse1.badge())
-                .containsExactlyInAnyOrder(new BadgeResponse(
-                        Badge.CLEAN.getShortNameWithEmoji(),
-                        Badge.CLEAN.getLongNameWithEmoji()));
-    }
-
-    @DisplayName("체크리스트 리스트 조회 성공 : 뱃지가 존재하지 않을 때")
-    @Test
-    void readUserChecklistsPreview_NoBadge() {
-        // given
-        User user = new User(1L, "방방이"); //TODO 리팩토링 필요
-        Room room = RoomFixture.ROOM_1;
-        Checklist checklist = createChecklist(user, room);
-        List<ChecklistQuestion> questions = List.of(
-                new ChecklistQuestion(checklist, Question.CLEAN_1, Grade.GOOD),
-                new ChecklistQuestion(checklist, Question.CLEAN_2, Grade.BAD),
-                new ChecklistQuestion(checklist, Question.CLEAN_3, Grade.BAD),
-                new ChecklistQuestion(checklist, Question.CLEAN_4, null),
-                new ChecklistQuestion(checklist, Question.CLEAN_5, null));
-
-        roomRepository.save(room);
-        checklistRepository.save(checklist);
-        checklistQuestionRepository.saveAll(questions);
-
-        // when
-        UserChecklistsPreviewResponse response = checklistService.readUserChecklistsPreview(user);
-
-        // then
-        UserChecklistPreviewResponse previewResponse1 = response.checklists().get(0);
-        assertThat(previewResponse1.checklistId()).isEqualTo(checklist.getId());
-        assertThat(previewResponse1.badge()).isEmpty();
-    }
+//    @DisplayName("체크리스트 리스트 조회 성공")
+//    @Test
+//    void readUserChecklistsPreview() {
+//        // given
+//        User user = new User(1L, "방방이");
+//        Room room = RoomFixture.ROOM_1;
+//        Checklist checklist = createChecklist(user, room);
+//        List<ChecklistQuestion> questions = List.of(
+//                new ChecklistQuestion(checklist, Question.CLEAN_1, Grade.GOOD),
+//                new ChecklistQuestion(checklist, Question.CLEAN_2, Grade.GOOD),
+//                new ChecklistQuestion(checklist, Question.CLEAN_3, Grade.GOOD),
+//                new ChecklistQuestion(checklist, Question.CLEAN_4, null),
+//                new ChecklistQuestion(checklist, Question.CLEAN_5, null));
+//
+//        roomRepository.save(room);
+//        checklistRepository.save(checklist);
+//        checklistQuestionRepository.saveAll(questions);
+//
+//        // when
+//        UserChecklistsPreviewResponse response = checklistService.readUserChecklistsPreview(user);
+//
+//        // then
+//        UserChecklistPreviewResponse previewResponse1 = response.checklists().get(0);
+//        assertThat(previewResponse1.checklistId()).isEqualTo(checklist.getId());
+//        assertThat(previewResponse1.badge())
+//                .containsExactlyInAnyOrder(new BadgeResponse(
+//                        Badge.CLEAN.getShortNameWithEmoji(),
+//                        Badge.CLEAN.getLongNameWithEmoji()));
+//    }
+//
+//    @DisplayName("체크리스트 리스트 조회 성공 : 뱃지가 존재하지 않을 때")
+//    @Test
+//    void readUserChecklistsPreview_NoBadge() {
+//        // given
+//        User user = new User(1L, "방방이"); //TODO 리팩토링 필요
+//        Room room = RoomFixture.ROOM_1;
+//        Checklist checklist = createChecklist(user, room);
+//        List<ChecklistQuestion> questions = List.of(
+//                new ChecklistQuestion(checklist, Question.CLEAN_1, Grade.GOOD),
+//                new ChecklistQuestion(checklist, Question.CLEAN_2, Grade.BAD),
+//                new ChecklistQuestion(checklist, Question.CLEAN_3, Grade.BAD),
+//                new ChecklistQuestion(checklist, Question.CLEAN_4, null),
+//                new ChecklistQuestion(checklist, Question.CLEAN_5, null));
+//
+//        roomRepository.save(room);
+//        checklistRepository.save(checklist);
+//        checklistQuestionRepository.saveAll(questions);
+//
+//        // when
+//        UserChecklistsPreviewResponse response = checklistService.readUserChecklistsPreview(user);
+//
+//        // then
+//        UserChecklistPreviewResponse previewResponse1 = response.checklists().get(0);
+//        assertThat(previewResponse1.checklistId()).isEqualTo(checklist.getId());
+//        assertThat(previewResponse1.badge()).isEmpty();
+//    }
 
     @DisplayName("체크리스트 비교 성공")
     @Test

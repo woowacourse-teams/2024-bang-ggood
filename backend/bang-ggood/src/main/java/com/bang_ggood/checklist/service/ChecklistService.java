@@ -8,6 +8,7 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.ChecklistScore;
+import com.bang_ggood.checklist.domain.CustomQuestion;
 import com.bang_ggood.checklist.domain.Grade;
 import com.bang_ggood.checklist.domain.Option;
 import com.bang_ggood.checklist.domain.Question;
@@ -27,6 +28,7 @@ import com.bang_ggood.checklist.dto.response.WrittenQuestionResponse;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
+import com.bang_ggood.checklist.repository.CustomQuestionRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.domain.Room;
@@ -52,14 +54,17 @@ public class ChecklistService {
     private final RoomRepository roomRepository;
     private final ChecklistOptionRepository checklistOptionRepository;
     private final ChecklistQuestionRepository checklistQuestionRepository;
+    private final CustomQuestionRepository customQuestionRepository;
 
     public ChecklistService(ChecklistRepository checklistRepository, RoomRepository roomRepository,
                             ChecklistOptionRepository checklistOptionRepository,
-                            ChecklistQuestionRepository checklistQuestionRepository) {
+                            ChecklistQuestionRepository checklistQuestionRepository,
+                            CustomQuestionRepository customQuestionRepository) {
         this.checklistRepository = checklistRepository;
         this.roomRepository = roomRepository;
         this.checklistOptionRepository = checklistOptionRepository;
         this.checklistQuestionRepository = checklistQuestionRepository;
+        this.customQuestionRepository = customQuestionRepository;
     }
 
     @Transactional
@@ -128,14 +133,21 @@ public class ChecklistService {
 
     @Transactional
     public ChecklistQuestionsResponse readChecklistQuestions() {
-        List<CategoryQuestionsResponse> categoryQuestionsResponses = new ArrayList<>();
-        for (Category category : Category.values()) {
-            List<QuestionResponse> questionsByCategory = Question.findQuestionsByCategory(category)
-                    .stream()
-                    .map(QuestionResponse::of)
-                    .toList();
-            categoryQuestionsResponses.add(CategoryQuestionsResponse.of(category, questionsByCategory));
-        }
+        User user = new User(1L, "방방이");
+        List<CustomQuestion> customQuestions = customQuestionRepository.findByUser(user);
+
+        Map<Category, List<Question>> categoryQuestions = customQuestions.stream()
+                .map(CustomQuestion::getQuestion)
+                .collect(Collectors.groupingBy(Question::getCategory));
+
+        List<CategoryQuestionsResponse> categoryQuestionsResponses = categoryQuestions.entrySet().stream()
+                .map(entry -> CategoryQuestionsResponse.of(
+                        entry.getKey(),
+                        entry.getValue().stream()
+                                .map(QuestionResponse::of)
+                                .toList()))
+                .toList();
+
         return new ChecklistQuestionsResponse(categoryQuestionsResponses);
     }
 

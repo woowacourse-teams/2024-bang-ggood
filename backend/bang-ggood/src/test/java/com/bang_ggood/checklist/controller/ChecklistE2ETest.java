@@ -79,8 +79,8 @@ public class ChecklistE2ETest extends AcceptanceTest {
                 .statusCode(200)
                 .extract()
                 .as(ChecklistQuestionsResponse.class);
-
-        assertThat(checklistQuestionsResponse.categories().size()).isEqualTo(Category.values().length);
+        // Category.OPTION does not have default question
+        assertThat(checklistQuestionsResponse.categories().size()).isEqualTo(Category.values().length - 1);
     }
 
     @DisplayName("작성된 체크리스트 조회 성공")

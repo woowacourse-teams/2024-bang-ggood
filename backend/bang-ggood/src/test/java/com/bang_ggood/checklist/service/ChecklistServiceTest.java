@@ -108,8 +108,8 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         // given & when
         ChecklistQuestionsResponse checklistQuestionsResponse = checklistService.readChecklistQuestions();
 
-        // then
-        assertThat(checklistQuestionsResponse.categories().size()).isEqualTo(Category.values().length);
+        // then // Category.OPTION does not have default question
+        assertThat(checklistQuestionsResponse.categories().size()).isEqualTo(Category.values().length - 1);
     }
 
     @DisplayName("작성된 체크리스트 조회 성공")

@@ -20,7 +20,15 @@ public enum ExceptionCode {
     // Checklist
     CHECKLIST_COMPARISON_INVALID_COUNT(HttpStatus.BAD_REQUEST, "비교할 체크리스트 개수가 유효하지 않습니다."),
     CHECKLIST_NOT_FOUND(HttpStatus.BAD_REQUEST, "체크리스트가 존재하지 않습니다."),
-    ;
+
+    //FloorLevel
+    FLOOR_LEVEL_INVALID_NAME(HttpStatus.BAD_REQUEST, "층 종류가 유효하지 않습니다."),
+
+    //Structure
+    STRUCTURE_INVALID_NAME(HttpStatus.BAD_REQUEST, "방 구조가 유효하지 않습니다."),
+
+    //Type
+    TYPE_INVALID_NAME(HttpStatus.BAD_REQUEST, "방 종류가 유효하지 않습니다.");
 
     private final HttpStatus httpStatus;
     private final String message;

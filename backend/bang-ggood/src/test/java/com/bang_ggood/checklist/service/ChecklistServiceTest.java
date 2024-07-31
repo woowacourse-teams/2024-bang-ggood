@@ -26,11 +26,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ChecklistServiceTest extends IntegrationTestSupport {
@@ -116,7 +117,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void readChecklistById() {
         // given
-        roomRepository.save(RoomFixture.ROOM);
+        roomRepository.save(RoomFixture.ROOM_1);
         checklistRepository.save(ChecklistFixture.checklist);
 
         // when
@@ -143,7 +144,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     void readUserChecklistsPreview() {
         // given
         User user = new User(1L, "방방이");
-        Room room = new Room("살기 좋은 방", 3, "서울시 도봉구", "잠실", 10);
+        Room room = RoomFixture.ROOM_1;
         Checklist checklist = createChecklist(user, room);
         List<ChecklistQuestion> questions = List.of(
                 new ChecklistQuestion(checklist, Question.CLEAN_1, Grade.GOOD),
@@ -173,7 +174,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     void readUserChecklistsPreview_NoBadge() {
         // given
         User user = new User(1L, "방방이"); //TODO 리팩토링 필요
-        Room room = new Room("살기 좋은 방", 3, "서울시 도봉구", "잠실", 10);
+        Room room = RoomFixture.ROOM_1;
         Checklist checklist = createChecklist(user, room);
         List<ChecklistQuestion> questions = List.of(
                 new ChecklistQuestion(checklist, Question.CLEAN_1, Grade.GOOD),
@@ -200,9 +201,9 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     void readChecklistsComparison() {
         // given
         User user = new User(1L, "방방이");
-        Room room1 = new Room("살기 좋은 방", 3, "서울시 도봉구", "잠실", 10);
-        Room room2 = new Room("살기 좋은 방", 3, "서울시 도봉구", "잠실", 10);
-        Room room3 = new Room("살기 좋은 방", 3, "서울시 도봉구", "잠실", 10);
+        Room room1 = RoomFixture.ROOM_1;
+        Room room2 = RoomFixture.ROOM_2;
+        Room room3 = RoomFixture.ROOM_3;
         Checklist checklist1 = createChecklist(user, room1);
         Checklist checklist2 = createChecklist(user, room2);
         Checklist checklist3 = createChecklist(user, room3);
@@ -236,9 +237,9 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     void readChecklistsComparison_invalidId() {
         // given
         User user = new User(1L, "방방이");
-        Room room1 = new Room("살기 좋은 방", 3, "서울시 도봉구", "잠실", 10);
-        Room room2 = new Room("살기 좋은 방", 3, "서울시 도봉구", "잠실", 10);
-        Room room3 = new Room("살기 좋은 방", 3, "서울시 도봉구", "잠실", 10);
+        Room room1 = RoomFixture.ROOM_1;
+        Room room2 = RoomFixture.ROOM_2;
+        Room room3 = RoomFixture.ROOM_3;
         Checklist checklist1 = createChecklist(user, room1);
         Checklist checklist2 = createChecklist(user, room2);
         Checklist checklist3 = createChecklist(user, room3);

@@ -87,7 +87,7 @@ public class ChecklistE2ETest extends AcceptanceTest {
     @Test
     void readChecklistById() {
         //체크리스트 저장
-        roomRepository.save(RoomFixture.ROOM);
+        roomRepository.save(RoomFixture.ROOM_1);
         Checklist saved = checklistRepository.save(ChecklistFixture.checklist);
 
         WrittenChecklistResponse writtenChecklistResponse = RestAssured.given().log().all()

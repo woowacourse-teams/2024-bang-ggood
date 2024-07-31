@@ -31,7 +31,10 @@ public enum ExceptionCode {
     CHECKLIST_NOT_FOUND(HttpStatus.BAD_REQUEST, "체크리스트가 존재하지 않습니다."),
 
     // Type
-    TYPE_INVALID(HttpStatus.BAD_REQUEST, "타입이 유효하지 않습니다.")
+    TYPE_INVALID(HttpStatus.BAD_REQUEST, "타입이 유효하지 않습니다."),
+
+    // FloorLevel
+    FLOOR_LEVEL_INVALID(HttpStatus.BAD_REQUEST, "층 종류가 유효하지 않습니다.")
     ;
 
 

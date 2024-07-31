@@ -2,7 +2,7 @@ import { act, renderHook } from '@testing-library/react';
 
 import useChecklist from '@/store/useChecklist';
 
-describe('useChecklistAnswer 테스트', () => {
+describe('useChecklist 테스트', () => {
   describe('questionSelectedAnswer 함수', () => {
     it('Answer가 없을 때, undefined를 응답한다.', () => {
       const { result } = renderHook(() => useChecklist());

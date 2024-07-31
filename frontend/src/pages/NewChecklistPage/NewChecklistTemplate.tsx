@@ -30,12 +30,14 @@ export default NewChecklistTemplate;
 
 const ContentBox = styled.div`
   display: flex;
-  padding: 16px;
+  padding: 0 16px;
+  padding-top: 60px;
+  padding-bottom: 16px;
+
+  background-color: ${({ theme }) => theme.palette.background};
   gap: 10px;
   flex-direction: column;
-
-  background-color: ${({ theme }) => theme.palette.backgroud};
-  min-height: 100vh;
+  min-height: calc(100vh - 70px);
 `;
 
 const QuestionBox = styled.div`

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
+import Tab from '@/components/common/Tabs/Tab';
 import { useTabContext } from '@/components/common/Tabs/TabContext';
-import { flexCenter } from '@/styles/common';
 import { TabWithCompletion } from '@/types/tab';
 
 interface Props {
@@ -16,29 +16,40 @@ const Tabs = ({ tabList }: Props) => {
   };
 
   return (
-    <Container>
-      <FlexContainer>
-        {tabList?.map(tab => {
-          const { isCompleted, id, name } = tab;
-          return (
-            <Tab key={id} onClick={() => onMoveTab(tab.id)} active={tab.id === currentTabId}>
-              {name}
-              {!isCompleted && <UncompletedIndicator />}
-            </Tab>
-          );
-        })}
-      </FlexContainer>
-    </Container>
+    <VisibleContainer>
+      <Container>
+        <FlexContainer>
+          {tabList?.map(tab => {
+            const { isCompleted, id, name } = tab;
+            return (
+              <Tab
+                id={id}
+                name={name}
+                onMoveTab={onMoveTab}
+                key={id}
+                active={tab.id === currentTabId}
+                isCompleted={isCompleted}
+              />
+            );
+          })}
+        </FlexContainer>
+      </Container>
+    </VisibleContainer>
   );
 };
 
 export default Tabs;
 
 const Container = styled.div`
+  position: fixed;
+  max-width: 600px;
+
   width: 100%;
-  overflow-x: auto;
+
+  background-color: ${({ theme }) => theme.palette.white};
 
   white-space: nowrap;
+  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 
@@ -47,33 +58,10 @@ const Container = styled.div`
   }
 `;
 
+const VisibleContainer = styled.div`
+  max-width: 600px;
+`;
+
 const FlexContainer = styled.div`
   display: inline-flex;
-`;
-
-const Tab = styled.div<{ active: boolean }>`
-  position: relative;
-  z-index: ${({ theme }) => theme.zIndex.TABS};
-  ${flexCenter};
-  margin-top: 10px;
-  margin-right: 6px;
-  padding: 10px 16px;
-
-  color: ${({ theme, active }) => (active ? theme.palette.yellow600 : theme.palette.black)};
-  font-weight: ${({ active, theme }) => (active ? theme.text.weight.bold : theme.text.weight.medium)};
-  cursor: pointer;
-  border-bottom: ${({ active, theme }) =>
-    active ? `3px solid ${theme.palette.yellow400}` : `3px solid ${theme.palette.yellow100}`};
-`;
-
-const UncompletedIndicator = styled.div`
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 5px;
-  height: 5px;
-  margin-left: 8px;
-
-  background-color: ${({ theme }) => theme.palette.grey400};
-  border-radius: 50%;
 `;

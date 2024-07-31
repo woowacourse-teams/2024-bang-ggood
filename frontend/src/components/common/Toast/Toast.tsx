@@ -1,30 +1,18 @@
 import styled from '@emotion/styled';
-import { useEffect } from 'react';
-import { createPortal } from 'react-dom';
 
-import { useToastContext } from '@/components/common/Toast/ToastContext';
+import useToast from '@/hooks/useToast';
 import { flexCenter, title4 } from '@/styles/common';
 
-const toastRoot = document.getElementById('toast');
-
-export const DEFAULT_TOAST_DURATION = 2;
-
+export const DEFAULT_DURATION = 2;
 const Toast = () => {
-  const { hideToast, toast } = useToastContext();
-  const duration = DEFAULT_TOAST_DURATION;
+  const { toast } = useToast(DEFAULT_DURATION);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      hideToast();
-    }, duration * 1000);
-    return () => clearTimeout(timer);
-  }, [duration, hideToast]);
+  if (!toast) return;
 
-  return createPortal(
+  return (
     <S.Container>
       <S.InnerBox>{toast}</S.InnerBox>
-    </S.Container>,
-    toastRoot,
+    </S.Container>
   );
 };
 

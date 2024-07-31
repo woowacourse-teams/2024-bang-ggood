@@ -95,6 +95,8 @@ export interface MakeFormArgs {
 }
 const S = {
   ContentWrapper: styled.div`
+    padding-top: 40px;
+
     background-color: white;
   `,
   Container: styled.div`

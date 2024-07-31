@@ -62,7 +62,7 @@ public class ChecklistService {
         this.checklistQuestionRepository = checklistQuestionRepository;
     }
 
-    @Transactional
+    /*@Transactional
     public long createChecklist(ChecklistCreateRequest checklistCreateRequest) {
         Room room = roomRepository.save(checklistCreateRequest.toRoomEntity());
 
@@ -74,7 +74,7 @@ public class ChecklistService {
         createChecklistOptions(checklistCreateRequest, checklist);
         createChecklistQuestions(checklistCreateRequest, checklist);
         return checklist.getId();
-    }
+    }*/
 
     private void createChecklistOptions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
         List<Integer> optionIds = checklistCreateRequest.options();
@@ -107,7 +107,7 @@ public class ChecklistService {
         }
     }
 
-    private void createChecklistQuestions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
+    /*private void createChecklistQuestions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
         validateQuestion(checklistCreateRequest.questions());
         Map<Integer, String> existQuestions = checklistCreateRequest.questions()
                 .stream()
@@ -124,7 +124,7 @@ public class ChecklistService {
                 .collect(Collectors.toList());
 
         checklistQuestionRepository.saveAll(checklistQuestions);
-    }
+    }*/
 
     @Transactional
     public ChecklistQuestionsResponse readChecklistQuestions() {

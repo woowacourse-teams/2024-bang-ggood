@@ -21,6 +21,7 @@ public enum ExceptionCode {
     CHECKLIST_COMPARISON_INVALID_COUNT(HttpStatus.BAD_REQUEST, "비교할 체크리스트 개수가 유효하지 않습니다."),
     CHECKLIST_NOT_FOUND(HttpStatus.BAD_REQUEST, "체크리스트가 존재하지 않습니다."),
     CUSTOM_CHECKLIST_INVALID_COUNT(HttpStatus.BAD_REQUEST, "커스텀 질문 개수가 유효하지 않습니다.");
+    ;
 
     private final HttpStatus httpStatus;
     private final String message;

@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,5 +119,26 @@ public class ChecklistE2ETest extends AcceptanceTest {
                 .when().put("/custom-checklist")
                 .then().log().all()
                 .statusCode(204);
+    }
+
+    @DisplayName("작성된 체크리스트 조회 성공")
+    @Test
+    void readChecklistById() {
+        //체크리스트 저장
+        roomRepository.save(RoomFixture.ROOM);
+        Checklist saved = checklistRepository.save(ChecklistFixture.checklist);
+
+        WrittenChecklistResponse writtenChecklistResponse = RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .when().get("/checklists/" + saved.getId())
+                .then().log().all()
+                .statusCode(200)
+                .extract()
+                .as(WrittenChecklistResponse.class);
+
+        Assertions.assertAll(
+                () -> assertThat(writtenChecklistResponse.room().name()).isEqualTo("살기 좋은 방"),
+                () -> assertThat(writtenChecklistResponse.room().address()).isEqualTo("인천광역시 부평구")
+        );
     }
 }

@@ -147,7 +147,6 @@ public class ChecklistService {
                                 .map(QuestionResponse::of)
                                 .toList()))
                 .toList();
-
         return new ChecklistQuestionsResponse(categoryQuestionsResponses);
     }
 
@@ -217,6 +216,7 @@ public class ChecklistService {
                 .map(this::getChecklistPreview)
                 .toList();
 
+
         return new UserChecklistsPreviewResponse(responses);
     }
 
@@ -243,7 +243,6 @@ public class ChecklistService {
                 .map(this::getChecklistWithScore)
                 .sorted(Comparator.comparing(ChecklistWithScoreReadResponse::score).reversed())
                 .toList();
-
         return new ChecklistsWithScoreReadResponse(responses);
     }
 
@@ -313,3 +312,4 @@ public class ChecklistService {
         }
     }
 }
+

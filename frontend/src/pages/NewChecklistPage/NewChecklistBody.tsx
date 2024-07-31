@@ -78,18 +78,18 @@ const NewChecklistBody = (props: Props) => {
   return (
     <div>
       <Tabs tabList={newChecklistTabsWithCompletion} />
-      <S.Container>{currentTabId !== null && currentTabId !== undefined && renderTabContent()}</S.Container>
+      <S.ContentBox>{currentTabId !== null && currentTabId !== undefined && renderTabContent()}</S.ContentBox>
     </div>
   );
 };
 
 export default NewChecklistBody;
 
-const Container = styled.div`
+const ContentBox = styled.div`
   overflow-x: hidden;
   min-height: calc(100vh - 60px);
 `;
 
 const S = {
-  Container,
+  ContentBox,
 };

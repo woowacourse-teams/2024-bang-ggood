@@ -39,7 +39,7 @@ describe('useToast 테스트', () => {
         result.current.showToast(TOAST_MESSAGE);
       });
       expect(screen.getByText(TOAST_MESSAGE)).toBeInTheDocument();
-      await waitForElementToBeRemoved(() => screen.getByText(TOAST_MESSAGE), { timeout: 1 });
+      await waitForElementToBeRemoved(() => screen.getByText(TOAST_MESSAGE), { timeout: TOAST_DURATION + 1 });
     });
 
     it(`토스트 호출을 두번하면 이후 메세지로 토스트가 작성된다`, async () => {

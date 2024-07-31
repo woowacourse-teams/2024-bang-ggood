@@ -43,11 +43,9 @@ export interface ChecklistPreview extends RoomInfo {
 
 export interface ChecklistCompare extends RoomInfo {
   checklistId: number;
-  rank?: number;
+  rank: number;
   score: number;
-  // TODO: 백엔드 api 변경으로 인한 수정
-  // options: number[];
-  optionCount: number;
+  options: number[];
   categories: CategoryScore[];
 }
 

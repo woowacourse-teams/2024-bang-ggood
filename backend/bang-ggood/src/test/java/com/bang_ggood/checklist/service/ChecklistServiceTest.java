@@ -68,7 +68,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         assertThatThrownBy(
                 () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_QUESTION_ID))
                 .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.INVALID_QUESTION.getMessage());
+                .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
     }
 
     @DisplayName("체크리스트 방 정보 작성 실패: 질문 id가 중복일 경우")
@@ -89,7 +89,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         assertThatThrownBy(
                 () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_OPTION_ID))
                 .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.INVALID_OPTION.getMessage());
+                .hasMessage(ExceptionCode.OPTION_INVALID.getMessage());
     }
 
     @DisplayName("체크리스트 방 정보 작성 실패: 옵션 id가 중복일 경우")

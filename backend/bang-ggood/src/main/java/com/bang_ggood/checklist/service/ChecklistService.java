@@ -102,7 +102,7 @@ public class ChecklistService {
     private void validateOptionInvalid(List<Integer> optionIds) {
         for (Integer optionId : optionIds) {
             if (!Option.contains(optionId)) {
-                throw new BangggoodException(ExceptionCode.INVALID_OPTION);
+                throw new BangggoodException(ExceptionCode.OPTION_INVALID);
             }
         }
     }
@@ -156,7 +156,7 @@ public class ChecklistService {
     private void validateQuestionInvalid(List<QuestionCreateRequest> questions) {
         for (QuestionCreateRequest questionCreateRequest : questions) {
             if (!Question.contains(questionCreateRequest.questionId())) {
-                throw new BangggoodException(ExceptionCode.INVALID_QUESTION);
+                throw new BangggoodException(ExceptionCode.QUESTION_INVALID);
             }
         }
     }

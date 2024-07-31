@@ -3,6 +3,7 @@ import { HTMLAttributes, useContext } from 'react';
 
 import { InputChangeEvent } from '@/components/common/Input/Input';
 import RadioContext from '@/components/RadioGroup/RadioContext';
+import { flexCenter } from '@/styles/common';
 
 interface Props extends HTMLAttributes<HTMLFieldSetElement> {
   label: string;
@@ -29,8 +30,8 @@ interface RadioButtonProps extends HTMLAttributes<HTMLLabelElement> {
 const RadioButton = ({ name, value, children, disabled = false, color, ...rest }: RadioButtonProps) => {
   const group = useContext(RadioContext);
   return (
-    <label {...rest}>
-      <S.Input
+    <S.Label {...rest}>
+      <S.RadioButton
         type="radio"
         name={name}
         value={value}
@@ -40,12 +41,15 @@ const RadioButton = ({ name, value, children, disabled = false, color, ...rest }
         $color={color}
       />
       {children}
-    </label>
+    </S.Label>
   );
 };
 const S = {
-  Input: styled.input<{ $color: string }>`
+  RadioButton: styled.input<{ $color: string }>`
     ${({ $color }) => ($color ? `accent-color:  ${$color};` : '')}
+  `,
+  Label: styled.label`
+    ${flexCenter}
   `,
 };
 

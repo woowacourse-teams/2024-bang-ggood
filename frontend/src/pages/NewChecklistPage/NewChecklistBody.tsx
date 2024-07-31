@@ -87,7 +87,7 @@ export default NewChecklistBody;
 
 const ContentBox = styled.div`
   overflow-x: hidden;
-  min-height: calc(100vh - 60px);
+  min-height: calc(200vh - 60px);
 `;
 
 const S = {

@@ -12,6 +12,7 @@ const FormFieldWrapper = styled.div<{ rowGap?: string }>`
   flex-direction: column;
   row-gap: ${({ rowGap }) => (rowGap ? rowGap : '10px')};
 `;
+
 const S = {
   MovedRequiredDot: styled(InputRequiredDot)`
     transform: translate(80%, -140%);
@@ -25,6 +26,7 @@ const S = {
 };
 
 type GetProps<T> = T extends React.FC<infer P> ? P : never;
+
 interface LabelProps extends HTMLAttributes<HTMLLabelElement> {
   label: string;
   required?: boolean;

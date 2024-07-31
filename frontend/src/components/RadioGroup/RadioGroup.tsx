@@ -44,6 +44,7 @@ const RadioButton = ({ name, value, children, disabled = false, color, ...rest }
     </S.Label>
   );
 };
+
 const S = {
   RadioButton: styled.input<{ $color: string }>`
     ${({ $color }) => ($color ? `accent-color:  ${$color};` : '')}

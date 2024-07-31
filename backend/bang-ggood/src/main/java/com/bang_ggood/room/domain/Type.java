@@ -1,5 +1,9 @@
 package com.bang_ggood.room.domain;
 
+import com.bang_ggood.exception.BangggoodException;
+import com.bang_ggood.exception.ExceptionCode;
+import java.util.Arrays;
+
 public enum Type {
 
     VILLA("빌라"),
@@ -11,5 +15,12 @@ public enum Type {
 
     Type(String name) {
         this.name = name;
+    }
+
+    public static Type from(String name) {
+        return Arrays.stream(Type.values())
+                .filter(value -> value.name.equals(name))
+                .findFirst()
+                .orElseThrow(() -> new BangggoodException(ExceptionCode.TYPE_INVALID));
     }
 }

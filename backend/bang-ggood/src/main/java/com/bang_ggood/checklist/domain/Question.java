@@ -74,10 +74,6 @@ public enum Question {
                 .collect(Collectors.toList());
     }
 
-    private boolean isCategory(Category category) {
-        return this.category == category;
-    }
-
     // TODO 테스트 필요
     public static Question findById(int id) {
         return Arrays.stream(values())
@@ -89,6 +85,10 @@ public enum Question {
     public static boolean contains(int id) {
         return Arrays.stream(values())
                 .anyMatch(question -> question.getId() == id);
+    }
+
+    private boolean isCategory(Category category) {
+        return this.category == category;
     }
 
     public int getId() {

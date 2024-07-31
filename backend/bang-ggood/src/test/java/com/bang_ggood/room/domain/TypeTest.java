@@ -29,6 +29,6 @@ class TypeTest {
         // when & then
         assertThatThrownBy(() -> Type.from(name))
                 .isInstanceOf(BangggoodException.class)
-                        .hasMessage(ExceptionCode.TYPE_INVALID.getMessage());
+                .hasMessage(ExceptionCode.TYPE_INVALID.getMessage());
     }
 }

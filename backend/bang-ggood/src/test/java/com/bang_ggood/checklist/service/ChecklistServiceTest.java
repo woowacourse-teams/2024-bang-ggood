@@ -1,38 +1,25 @@
 package com.bang_ggood.checklist.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 import com.bang_ggood.IntegrationTestSupport;
-import com.bang_ggood.category.domain.Badge;
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.checklist.ChecklistFixture;
-import com.bang_ggood.checklist.domain.Checklist;
-import com.bang_ggood.checklist.domain.ChecklistQuestion;
-import com.bang_ggood.checklist.domain.Grade;
-import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
-import com.bang_ggood.checklist.dto.response.BadgeResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
-import com.bang_ggood.checklist.dto.response.ChecklistsWithScoreReadResponse;
-import com.bang_ggood.checklist.dto.response.UserChecklistPreviewResponse;
-import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.WrittenChecklistResponse;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.RoomFixture;
-import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
-import com.bang_ggood.user.domain.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ChecklistServiceTest extends IntegrationTestSupport {
 
@@ -61,7 +48,8 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         //then
         assertAll(
                 () -> assertThat(checklistId).isEqualTo(1),
-                () -> assertThat(checklistQuestionRepository.findByChecklistId(1).size()).isEqualTo(checklist.questions().size())
+                () -> assertThat(checklistQuestionRepository.findByChecklistId(1).size()).isEqualTo(
+                        checklist.questions().size())
         );
 
     }
@@ -75,7 +63,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
     }
-
+    
     @DisplayName("체크리스트 방 정보 작성 실패: 질문 id가 중복일 경우")
     @Test
     void createChecklist_duplicatedQuestionId_exception() {
@@ -112,7 +100,8 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     void createChecklist_roomFloorAndLevelInvalid_exception() {
         //given & when & then
         assertThatThrownBy(
-                () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_ROOM_LEVEL_AND_FLOOR))
+                () -> checklistService.createChecklist(
+                        ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_ROOM_LEVEL_AND_FLOOR))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.ROOM_FLOOR_AND_LEVEL_INVALID.getMessage());
     }

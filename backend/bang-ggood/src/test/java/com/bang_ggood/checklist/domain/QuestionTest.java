@@ -2,7 +2,7 @@ package com.bang_ggood.checklist.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.exception.BangggoodException;

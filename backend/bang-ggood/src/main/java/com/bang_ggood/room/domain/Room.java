@@ -40,7 +40,8 @@ public class Room extends BaseEntity {
     protected Room() {
     }
 
-    public Room(String name, String station, Integer walkingTime, String address, Type type, Integer size, Integer floor,
+    public Room(String name, String station, Integer walkingTime, String address, Type type, Integer size,
+                Integer floor,
                 FloorLevel floorLevel, Structure structure) {
         this.name = name;
         this.station = station;

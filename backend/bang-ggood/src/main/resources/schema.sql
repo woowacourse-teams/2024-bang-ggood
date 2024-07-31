@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS checklist_option CASCADE;
 DROP TABLE IF EXISTS checklist_question CASCADE;
 DROP TABLE IF EXISTS room CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS category_priority CASCADE;
 
 -- Create tables
 CREATE TABLE room

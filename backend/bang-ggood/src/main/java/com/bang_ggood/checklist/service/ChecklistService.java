@@ -8,7 +8,7 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.ChecklistScore;
-import com.bang_ggood.checklist.domain.CustomQuestion;
+import com.bang_ggood.checklist.domain.CustomChecklistQuestion;
 import com.bang_ggood.checklist.domain.Grade;
 import com.bang_ggood.checklist.domain.Option;
 import com.bang_ggood.checklist.domain.Question;
@@ -29,7 +29,7 @@ import com.bang_ggood.checklist.dto.response.WrittenQuestionResponse;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
-import com.bang_ggood.checklist.repository.CustomQuestionRepository;
+import com.bang_ggood.checklist.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.domain.Room;
@@ -54,17 +54,17 @@ public class ChecklistService {
     private final RoomRepository roomRepository;
     private final ChecklistOptionRepository checklistOptionRepository;
     private final ChecklistQuestionRepository checklistQuestionRepository;
-    private final CustomQuestionRepository customQuestionRepository;
+    private final CustomChecklistQuestionRepository customChecklistQuestionRepository;
 
     public ChecklistService(ChecklistRepository checklistRepository, RoomRepository roomRepository,
                             ChecklistOptionRepository checklistOptionRepository,
                             ChecklistQuestionRepository checklistQuestionRepository,
-                            CustomQuestionRepository customQuestionRepository) {
+                            CustomChecklistQuestionRepository customChecklistQuestionRepository) {
         this.checklistRepository = checklistRepository;
         this.roomRepository = roomRepository;
         this.checklistOptionRepository = checklistOptionRepository;
         this.checklistQuestionRepository = checklistQuestionRepository;
-        this.customQuestionRepository = customQuestionRepository;
+        this.customChecklistQuestionRepository = customChecklistQuestionRepository;
     }
 
     @Transactional
@@ -134,16 +134,16 @@ public class ChecklistService {
     @Transactional
     public ChecklistQuestionsResponse readChecklistQuestions() {
         User user = new User(1L, "방방이");
-        List<CustomQuestion> customQuestions = customQuestionRepository.findByUser(user);
+        List<CustomChecklistQuestion> customChecklistQuestions = customChecklistQuestionRepository.findByUser(user);
 
-        Map<Category, List<Question>> categoryQuestions = customQuestions.stream()
-                .map(CustomQuestion::getQuestion)
+        Map<Category, List<Question>> categoryQuestions = customChecklistQuestions.stream()
+                .map(CustomChecklistQuestion::getQuestion)
                 .collect(Collectors.groupingBy(Question::getCategory));
 
         List<CategoryQuestionsResponse> categoryQuestionsResponses = categoryQuestions.entrySet().stream()
-                .map(entry -> CategoryQuestionsResponse.of(
-                        entry.getKey(),
-                        entry.getValue().stream()
+                .map(categoryQuestionEntry -> CategoryQuestionsResponse.of(
+                        categoryQuestionEntry.getKey(),
+                        categoryQuestionEntry.getValue().stream()
                                 .map(QuestionResponse::of)
                                 .toList()))
                 .toList();
@@ -288,26 +288,26 @@ public class ChecklistService {
     @Transactional
     public void updateCustomChecklist(CustomChecklistUpdateRequest request) {
         List<Integer> questionIds = request.questionIds();
-        validateCustomQuestionsIsNotEmpty(questionIds);
-        validateCustomQuestionsDuplication(questionIds);
+        validateCustomChecklistQuestionsIsNotEmpty(questionIds);
+        validateCustomChecklistQuestionsDuplication(questionIds);
 
         User user = new User(1L, "방방이");
-        customQuestionRepository.deleteAllByUser(user);
+        customChecklistQuestionRepository.deleteAllByUser(user);
 
-        List<CustomQuestion> customQuestions = questionIds.stream()
+        List<CustomChecklistQuestion> customChecklistQuestions = questionIds.stream()
                 .map(Question::findById)
-                .map(question -> new CustomQuestion(user, question))
+                .map(question -> new CustomChecklistQuestion(user, question))
                 .toList();
-        customQuestionRepository.saveAll(customQuestions);
+        customChecklistQuestionRepository.saveAll(customChecklistQuestions);
     }
 
-    private void validateCustomQuestionsIsNotEmpty(List<Integer> questionIds) {
+    private void validateCustomChecklistQuestionsIsNotEmpty(List<Integer> questionIds) {
         if (questionIds.isEmpty()) {
-            throw new BangggoodException(ExceptionCode.CUSTOM_CHECKLIST_EMPTY);
+            throw new BangggoodException(ExceptionCode.CUSTOM_CHECKLIST_QUESTION_EMPTY);
         }
     }
 
-    private void validateCustomQuestionsDuplication(List<Integer> questionIds) {
+    private void validateCustomChecklistQuestionsDuplication(List<Integer> questionIds) {
         if (questionIds.size() != Set.copyOf(questionIds).size()) {
             throw new BangggoodException(ExceptionCode.QUESTION_DUPLICATED);
         }

@@ -17,7 +17,7 @@ import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.WrittenChecklistResponse;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
-import com.bang_ggood.checklist.repository.CustomQuestionRepository;
+import com.bang_ggood.checklist.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.RoomFixture;
@@ -48,7 +48,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Autowired
     private RoomRepository roomRepository;
     @Autowired
-    private CustomQuestionRepository customQuestionRepository;
+    private CustomChecklistQuestionRepository customChecklistQuestionRepository;
 
 
     @DisplayName("체크리스트 방 정보 작성 성공")
@@ -269,7 +269,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         checklistService.updateCustomChecklist(request);
 
         // then
-        assertThat(customQuestionRepository.findByUser(new User(1L, "방방이")))
+        assertThat(customChecklistQuestionRepository.findByUser(new User(1L, "방방이")))
                 .hasSize(request.questionIds().size());
     }
 
@@ -282,7 +282,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         // when & then
         assertThatThrownBy(() -> checklistService.updateCustomChecklist(request))
                 .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.CUSTOM_CHECKLIST_EMPTY.getMessage());
+                .hasMessage(ExceptionCode.CUSTOM_CHECKLIST_QUESTION_EMPTY.getMessage());
     }
 
     @DisplayName("커스텀 체크리스트 업데이트 실패 : 질문이 중복될 때")

@@ -1,7 +1,7 @@
 INSERT INTO users(id, name, created_at, modified_at)
 VALUES (1, '방방이', '2024-07-22 07:56:42', '2024-07-22 07:56:42');
 
-INSERT INTO custom_question(user_id, question, created_at, modified_at)
+INSERT INTO custom_checklist_question(user_id, question, created_at, modified_at)
 VALUES (1, 'CLEAN_1', '2024-07-22 07:56:42', '2024-07-22 07:56:42'),
        (1, 'CLEAN_4', '2024-07-22 07:56:42', '2024-07-22 07:56:42'),
        (1, 'ROOM_CONDITION_6', '2024-07-22 07:56:42', '2024-07-22 07:56:42'),

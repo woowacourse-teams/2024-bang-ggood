@@ -12,7 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class CustomQuestion extends BaseEntity {
+public class CustomChecklistQuestion extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,15 +21,15 @@ public class CustomQuestion extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @Enumerated(value = EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private Question question;
 
-    public CustomQuestion(User user, Question question) {
+    public CustomChecklistQuestion(User user, Question question) {
         this.user = user;
         this.question = question;
     }
 
-    protected CustomQuestion() {
+    protected CustomChecklistQuestion() {
     }
 
     public Long getId() {

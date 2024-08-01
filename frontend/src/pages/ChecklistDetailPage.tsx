@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { getChecklistDetail } from '@/apis/checklist';
 import ChecklistAnswerSection from '@/components/ChecklistDetail/ChecklistAnswerSection';
+import RoomInfoSection from '@/components/ChecklistDetail/RoomInfoSection';
 import Header from '@/components/common/Header/Header';
 import Layout from '@/components/common/layout/Layout';
 import theme from '@/styles/theme';
@@ -31,6 +32,7 @@ const ChecklistDetailPage = () => {
       <Header left={<Header.Backward />} center={<Header.Text>{checklist?.room.name}</Header.Text>} />
       <Layout bgColor={theme.palette.grey100}>
         <S.Wrapper>
+          <RoomInfoSection room={checklist?.room} score={checklist?.score} createdAt={checklist?.createdAt} />
           <ChecklistAnswerSection categories={checklist?.categories} />
         </S.Wrapper>
       </Layout>

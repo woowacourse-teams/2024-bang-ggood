@@ -1,9 +1,9 @@
 import CategoryAccordion from '@/components/ChecklistDetail/CategoryAccordion';
 import Accordion from '@/components/common/Accordion/Accordion';
-import { ChecklistCategoryQuestions } from '@/types/checklist';
+import { ChecklistCategoryQnA } from '@/types/checklist';
 
 interface Props {
-  categories: ChecklistCategoryQuestions[];
+  categories: ChecklistCategoryQnA[];
 }
 
 const ChecklistAnswerSection = ({ categories }: Props) => {

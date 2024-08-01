@@ -18,11 +18,11 @@ export interface ChecklistCategoryQnA {
 export interface ChecklistQuestion {
   questionId: number;
   title: string;
-  subtitle?: string;
+  subtitle: string | null;
 }
 
 export interface ChecklistQuestionWithAnswer extends ChecklistQuestion {
-  answer?: EmotionType;
+  answer: EmotionType | null;
 }
 
 export interface ChecklistAnswer {

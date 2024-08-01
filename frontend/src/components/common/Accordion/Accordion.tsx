@@ -7,11 +7,13 @@ import { AccordionProvider } from '@/components/common/Accordion/AccordionContex
 import { flexColumn } from '@/styles/common';
 
 interface Props extends PropsWithChildren {
+  // TODO: 내부 children 선언 혹은 extend 할지 통일하기
   width?: string;
 }
 
 const Accordion = ({ width = '100%', children }: Props) => {
   return (
+    // TODO: 숫자 7 상수처리
     <AccordionProvider count={7}>
       <S.Container width={width}>{children}</S.Container>
     </AccordionProvider>
@@ -21,13 +23,11 @@ const Accordion = ({ width = '100%', children }: Props) => {
 Accordion.header = AccordionHeader;
 Accordion.body = AccordionBody;
 
-const Container = styled.div<{ width: string }>`
-  ${flexColumn};
-  width: ${({ width }) => width};
-  gap: 10px;
-`;
-
 const S = {
-  Container,
+  Container: styled.div<{ width: string }>`
+    ${flexColumn};
+    width: ${({ width }) => width};
+    gap: 10px;
+  `,
 };
 export default Accordion;

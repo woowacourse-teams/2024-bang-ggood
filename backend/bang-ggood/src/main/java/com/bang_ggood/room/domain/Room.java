@@ -115,11 +115,15 @@ public class Room extends BaseEntity {
     public String toString() {
         return "Room{" +
                 "id=" + id +
-                ", roomName='" + name + '\'' +
+                ", name='" + name + '\'' +
                 ", floor=" + floor +
                 ", address='" + address + '\'' +
                 ", station='" + station + '\'' +
                 ", walkingTime=" + walkingTime +
+                ", type=" + type +
+                ", size=" + size +
+                ", floorLevel=" + floorLevel +
+                ", structure=" + structure +
                 '}';
     }
 }

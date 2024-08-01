@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { getChecklistDetail } from '@/apis/checklist';
 import Accordion from '@/components/common/Accordion/Accordion';
@@ -10,30 +10,26 @@ import ChecklistCategory from '@/components/NewChecklist/ChecklistCategory';
 import theme from '@/styles/theme';
 import { ChecklistInfo } from '@/types/checklist';
 
-export interface addAnswerProps {
-  questionId: number;
-  newAnswer: number;
+interface RouteParams {
+  [key: string]: string;
+  checklistId: string;
 }
 
 const ChecklistDetailPage = () => {
-  // TODO: Param 으로 변경해보기
-  const location = useLocation();
-  const checklistId = location.state?.id;
-
+  const { checklistId } = useParams<RouteParams>();
   const [checklist, setChecklist] = useState<ChecklistInfo>();
 
   useEffect(() => {
     const fetchChecklist = async () => {
-      const checklist = await getChecklistDetail(checklistId);
+      const checklist = await getChecklistDetail(Number(checklistId));
       setChecklist(checklist);
     };
     fetchChecklist();
-  }, []);
+  }, [checklistId]);
 
   return (
     <>
       <Header left={<Header.Backward />} center={<Header.Text>{checklist?.room.name}</Header.Text>} />
-
       <Layout bgColor={theme.palette.grey100}>
         <S.Wrapper>
           <Accordion>

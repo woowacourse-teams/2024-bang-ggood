@@ -19,7 +19,7 @@ const router = createBrowserRouter([
   },
   {
     element: <ChecklistDetailPage />,
-    path: '/checklists/:id',
+    path: '/checklists/:checklistId',
   },
   {
     element: <CategoryChoosePage />,

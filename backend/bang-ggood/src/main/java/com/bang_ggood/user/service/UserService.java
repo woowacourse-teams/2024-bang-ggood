@@ -13,6 +13,6 @@ public class UserService {
     }
 
     public void login(OauthLoginRequest request) {
-        oauthClient.requestToken(request);
+        oauthClient.requestOauthInfo(request);
     }
 }

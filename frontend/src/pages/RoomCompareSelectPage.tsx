@@ -1,33 +1,33 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
-import Layout from '@/components/common/layout/Layout';
-import CompareCard from '@/components/RoomCompare/CompareCard';
+import CompareSelectCard from '@/components/RoomCompare/CompareSelectCard';
+import useRoomCompareStore from '@/store/useRoomCompareStore';
 import { flexRow } from '@/styles/common';
-import { ChecklistCompare } from '@/types/checklist';
+import theme from '@/styles/theme';
 
 const RoomCompareSelectPage = () => {
-  const location = useLocation();
-  const roomsId = { ...location.state };
-
-  const [roomList, setRoomList] = useState<ChecklistCompare[]>([]);
-
+  const { rooms, toggleRoom } = useRoomCompareStore();
+  const roomList = [1, 2, 3];
   return (
     <>
       <Header
         left={<Header.Backward />}
         center={<Header.Text>방 비교하기</Header.Text>}
-        right={<Button label="비교" />}
-      />{' '}
-      <Layout>
-        <S.RoomGrid>
-          {/* TODO: Rank 없음으로 인해 count 전달 */}
-          {roomList?.map((room, count) => <CompareCard key={room.checklistId} count={count} room={room} />)}
-        </S.RoomGrid>
-      </Layout>
+        right={<Button label="비교" color="dark" size="small" />}
+      />
+      <S.Layout bgColor={theme.palette.grey100}>
+        {roomList.map(room => (
+          <CompareSelectCard
+            key={room}
+            isSelected={rooms.has(room)}
+            onClick={() => {
+              toggleRoom(room);
+            }}
+          />
+        ))}
+      </S.Layout>
     </>
   );
 };
@@ -37,5 +37,14 @@ export default RoomCompareSelectPage;
 const S = {
   RoomGrid: styled.div`
     ${flexRow}
+  `,
+  Layout: styled.div<{ bgColor: string }>`
+    display: flex;
+    padding: 16px;
+
+    background-color: ${({ bgColor }) => bgColor};
+    overflow-y: scroll;
+    flex-direction: column;
+    row-gap: 10px;
   `,
 };

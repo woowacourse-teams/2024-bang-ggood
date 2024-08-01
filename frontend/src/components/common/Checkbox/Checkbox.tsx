@@ -7,7 +7,7 @@ import theme from '@/styles/theme';
 
 interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
   isChecked: boolean;
-  setIsChecked: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsChecked?: React.Dispatch<React.SetStateAction<boolean>>;
   color?: string;
   hoverBorderColor?: string;
   onClick?: () => void;

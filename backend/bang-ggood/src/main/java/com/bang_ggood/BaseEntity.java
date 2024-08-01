@@ -17,11 +17,17 @@ public abstract class BaseEntity {
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
+    private boolean deleted = false;
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
     public LocalDateTime getModifiedAt() {
         return modifiedAt;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
     }
 }

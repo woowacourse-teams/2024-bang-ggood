@@ -50,6 +50,7 @@ export interface ChecklistCompare extends RoomInfo {
 
 export interface ChecklistInfo {
   checklistId: number;
+  score: number;
   room: RoomInfo;
   options: Option[];
   categories: ChecklistCategoryQuestions[];

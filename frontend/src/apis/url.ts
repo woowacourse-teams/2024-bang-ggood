@@ -8,9 +8,11 @@ export const ENDPOINT = {
   CHECKLISTS: '/checklists',
   CHECKLIST_QUESTION: '/checklists/questions',
   CHECKLIST_ID: (id: number) => `/checklists/${id}`,
-  // TODO: id3 없을 때 처리
-  CHECKLIST_COMPARE: ({ id1, id2, id3 }: { id1: number; id2: number; id3: number }) =>
-    `/checklists/comparison?id=${id1}&id=${id2}&id=${id3}`,
+  CHECKLIST_COMPARE: ({ id1, id2, id3 }: { id1: number; id2: number; id3?: number }) => {
+    const url = `/checklists/comparison?id=${id1}&id=${id2}`;
+    if (id3 !== null) return `${url}&id=${id3}`;
+    return url;
+  },
   /* category */
   CATEGORY: '/categories',
   CATEGORY_ADD: '/categories/priority',

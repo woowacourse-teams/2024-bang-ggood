@@ -18,14 +18,11 @@ const RoomComparePage = () => {
   useEffect(() => {
     const fetchCompareRoomList = async () => {
       const compareList = await getCompareRooms(roomsId);
-      if (compareList.length === 3) {
-        // TODO: 백엔드 랭킹 API 수정 이후 코드
-        // const desiredOrder = [2, 1, 3];
-        // const sortedList = desiredOrder.map(rank => compareList.find((item: ChecklistCompare) => item.rank === rank));
-        // setRoomList(sortedList);
 
-        // 대체 코드
-        setRoomList([compareList[1], compareList[0], compareList[2]]);
+      if (compareList.length === 3) {
+        const desiredOrder = [2, 1, 3];
+        const sortedList = desiredOrder.map(rank => compareList.find((item: ChecklistCompare) => item.rank === rank));
+        setRoomList(sortedList);
       } else setRoomList(compareList);
     };
     fetchCompareRoomList();
@@ -36,8 +33,7 @@ const RoomComparePage = () => {
       <Header left={<Header.Backward />} center={<Header.Text>방 비교하기</Header.Text>} />
       <Layout>
         <S.RoomGrid>
-          {/* TODO: Rank 없음으로 인해 count 전달 */}
-          {roomList?.map((room, count) => <CompareCard key={room.checklistId} count={count} room={room} />)}
+          {roomList?.map(room => <CompareCard key={room.checklistId} room={room} compareNum={roomList.length} />)}
         </S.RoomGrid>
       </Layout>
     </>

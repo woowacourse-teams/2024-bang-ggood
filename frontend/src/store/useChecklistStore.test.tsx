@@ -1,12 +1,13 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { checklistQuestions } from '@/mocks/fixtures/checklistQuestions';
 import useChecklistStore from '@/store/useChecklistStore';
 
 describe('useChecklistStore 테스트', () => {
   describe('questionSelectedAnswer 함수', () => {
     beforeEach(() => {
       const { result } = renderHook(() => useChecklistStore());
-      result.current.setAnswerInQuestion([]);
+      result.current.setAnswerInQuestion(checklistQuestions.categories);
     });
     it('Answer가 없을 때, null을 응답한다.', () => {
       const { result } = renderHook(() => useChecklistStore());
@@ -17,8 +18,8 @@ describe('useChecklistStore 테스트', () => {
       act(() => {
         result.current.addAnswer({ questionId: 1, newAnswer: 'SOSO' });
       });
-      expect(result.current.questionSelectedAnswer(1)).not.toBe(1);
-      expect(result.current.questionSelectedAnswer(1)).toBe(2);
+      expect(result.current.questionSelectedAnswer(1)).not.toBe('BAD');
+      expect(result.current.questionSelectedAnswer(1)).toBe('SOSO');
     });
     it('두 개의 Answer를 추가 후 하나를 삭제했을 때, 삭제된 answer는 null 반환한다.', () => {
       const { result } = renderHook(() => useChecklistStore());
@@ -30,7 +31,7 @@ describe('useChecklistStore 테스트', () => {
         result.current.deleteAnswer(1);
       });
       expect(result.current.questionSelectedAnswer(1)).toBe(null);
-      expect(result.current.questionSelectedAnswer(2)).toBe(3);
+      expect(result.current.questionSelectedAnswer(2)).toBe('BAD');
     });
   });
 });

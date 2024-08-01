@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react/*';
+import { useState } from 'react';
 
 import CompareSelectCard from './CompareSelectCard';
 
@@ -11,5 +12,8 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {
-  args: {},
+  render: () => {
+    const [isSelected, setIsSelected] = useState(false);
+    return <CompareSelectCard isSelected={isSelected} setIsChecked={setIsSelected} />;
+  },
 };

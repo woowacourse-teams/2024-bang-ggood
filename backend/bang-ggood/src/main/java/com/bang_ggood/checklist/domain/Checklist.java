@@ -74,11 +74,17 @@ public class Checklist extends BaseEntity {
         return room.getAddress();
     }
 
-    public Integer getRoomFloor() { return room.getFloor(); }
+    public Integer getRoomFloor() {
+        return room.getFloor();
+    }
 
-    public String getRoomStation() { return room.getStation(); }
+    public String getRoomStation() {
+        return room.getStation();
+    }
 
-    public Integer getRoomWalkingTime() { return room.getWalkingTime(); }
+    public Integer getRoomWalkingTime() {
+        return room.getWalkingTime();
+    }
 
     public Integer getDeposit() {
         return deposit;

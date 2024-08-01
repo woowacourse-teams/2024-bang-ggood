@@ -1,5 +1,7 @@
 package com.bang_ggood.checklist.domain;
 
+import com.bang_ggood.exception.BangggoodException;
+import com.bang_ggood.exception.ExceptionCode;
 import java.util.Arrays;
 
 public enum Option {
@@ -30,5 +32,18 @@ public enum Option {
     public static boolean contains(int id) {
         return Arrays.stream(Option.values())
                 .anyMatch(option -> option.id == id);
+    }
+
+    public static Option fromId(int id) {
+        for (Option option : values()) {
+            if (option.id == id) {
+                return option;
+            }
+        }
+        throw new BangggoodException(ExceptionCode.OPTION_INVALID);
+    }
+
+    public String getName() {
+        return name;
     }
 }

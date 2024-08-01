@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+
 import java.util.Objects;
 
 @Entity
@@ -27,10 +28,13 @@ public class ChecklistQuestion extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Grade grade;
 
-    public ChecklistQuestion(Checklist checklist, Question question, Grade grade) {
+    private String memo;
+
+    public ChecklistQuestion(Checklist checklist, Question question, Grade grade, String memo) {
         this.checklist = checklist;
         this.question = question;
         this.grade = grade;
+        this.memo = memo;
     }
 
     protected ChecklistQuestion() {
@@ -50,6 +54,10 @@ public class ChecklistQuestion extends BaseEntity {
 
     public Grade getGrade() {
         return grade;
+    }
+
+    public String getMemo() {
+        return memo;
     }
 
     @Override
@@ -76,6 +84,7 @@ public class ChecklistQuestion extends BaseEntity {
                 ", checklist=" + checklist +
                 ", question=" + question +
                 ", grade=" + grade +
+                ", memo='" + memo + '\'' +
                 '}';
     }
 }

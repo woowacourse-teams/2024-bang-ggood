@@ -3,9 +3,14 @@ package com.bang_ggood.checklist.controller;
 import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
-import com.bang_ggood.checklist.dto.response.WrittenChecklistResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistsWithScoreReadResponse;
+import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
 import com.bang_ggood.checklist.service.ChecklistService;
+import com.bang_ggood.user.domain.User;
 import jakarta.validation.Valid;
+import java.net.URI;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,12 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import java.net.URI;
-import com.bang_ggood.checklist.dto.response.ChecklistsWithScoreReadResponse;
-import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
-import com.bang_ggood.user.domain.User;
 import org.springframework.web.bind.annotation.RequestParam;
-import java.util.List;
+
 
 @RestController
 public class ChecklistController {
@@ -41,7 +42,7 @@ public class ChecklistController {
     }
 
     @GetMapping("/checklists/{id}")
-    public ResponseEntity<WrittenChecklistResponse> readChecklistById(@PathVariable("id") long id) {
+    public ResponseEntity<SelectedChecklistResponse> readChecklistById(@PathVariable("id") long id) {
         return ResponseEntity.ok(checklistService.readChecklistById(id));
     }
 

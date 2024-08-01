@@ -8,7 +8,6 @@ interface Props {
 
 const ChecklistAnswerSection = ({ categories }: Props) => {
   return (
-    // TODO: 아코디언 모음집이라면 명명 수정 (Accordions)
     <Accordion>
       {categories?.map(category => (
         <div key={category.categoryId}>

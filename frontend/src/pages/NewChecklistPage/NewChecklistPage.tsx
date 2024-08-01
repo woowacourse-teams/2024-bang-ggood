@@ -54,11 +54,7 @@ const NewChecklistPage = () => {
     );
   };
 
-<<<<<<< HEAD
-  const onSubmitChecklist = () => {
-=======
   const handleSubmitChecklist = () => {
->>>>>>> a731681721e51f77c7551909fa35b50081eed0d1
     const fetchNewChecklist = async () => {
       await postChecklist({
         room: roomInfo,

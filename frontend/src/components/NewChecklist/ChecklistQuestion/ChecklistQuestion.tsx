@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 
-import { QuestionDot } from '@/assets/assets';
+import { ArrowDownSmall, MemoFilled, MemoPlus, QuestionDot } from '@/assets/assets';
+import Accordion from '@/components/common/Accordion/Accordion';
 import FaceMark from '@/components/common/FaceMark/FaceMark';
+import { emotionPhrase } from '@/constants/emotion';
 import useChecklistStore from '@/store/useChecklistStore';
 import { ChecklistQuestion } from '@/types/checklist';
 import { Emotion, EmotionType } from '@/types/emotionAnswer';
@@ -10,11 +12,8 @@ interface Props {
   question: ChecklistQuestion;
 }
 
-//TODO: constant로 이동
-export const emotionPhrase: Record<EmotionType, string> = {
-  BAD: '별로에요',
-  SOSO: '평범해요',
-  GOOD: '좋아요',
+export const MemoToggleButton = ({ hasMemo }: { hasMemo: boolean }) => {
+  return hasMemo ? <MemoPlus /> : <MemoFilled />;
 };
 
 const ChecklistQuestion = ({ question }: Props) => {
@@ -36,24 +35,37 @@ const ChecklistQuestion = ({ question }: Props) => {
   ];
 
   return (
-    <S.Container>
-      <S.Title>
-        <QuestionDot />
-        {question?.title}
-      </S.Title>
-      {question?.subtitle && <S.Subtitle>•{question?.subtitle}</S.Subtitle>}
-      <S.Options>
-        {emotions.map(emotion => {
-          const { name: emotionName, id } = emotion;
-          return (
-            <FaceMark onClick={() => handleClick(emotionName)} key={id}>
-              <FaceMark.FaceIcon emotion={emotionName} isFilled={questionSelectedAnswer(questionId) === emotionName} />
-              <FaceMark.Footer>{emotionPhrase[emotionName]}</FaceMark.Footer>
-            </FaceMark>
-          );
-        })}
-      </S.Options>
-    </S.Container>
+    <Accordion>
+      <Accordion.header
+        id={questionId}
+        hasMark={false}
+        openButton={<MemoToggleButton hasMemo={false} />}
+        closeButton={<ArrowDownSmall />}
+      >
+        <S.FlexColumn>
+          <S.FlexRow>
+            <QuestionDot />
+            {question?.title}
+          </S.FlexRow>
+          {question?.subtitle && <S.Subtitle>{question?.subtitle}</S.Subtitle>}
+          <S.Options>
+            {emotions.map(emotion => {
+              const { name: emotionName, id } = emotion;
+              return (
+                <FaceMark onClick={() => handleClick(emotionName)} key={id}>
+                  <FaceMark.FaceIcon
+                    emotion={emotionName}
+                    isFilled={questionSelectedAnswer(questionId) === emotionName}
+                  />
+                  <FaceMark.Footer>{emotionPhrase[emotionName]}</FaceMark.Footer>
+                </FaceMark>
+              );
+            })}
+          </S.Options>
+        </S.FlexColumn>
+      </Accordion.header>
+      <Accordion.body id={1}>aa</Accordion.body>
+    </Accordion>
   );
 };
 
@@ -61,11 +73,27 @@ export default ChecklistQuestion;
 
 const S = {
   Container: styled.div`
+    display: flex;
     padding: 16px;
+  `,
+  FlexColumn: styled.div`
+    display: flex;
+    flex-direction: column;
+  `,
+  FlexRow: styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  `,
+  FlexBetween: styled.div`
+    display: flex;
+
+    justify-content: space-between;
   `,
   Title: styled.div`
     display: flex;
     margin: 5px 0;
+    flex-direction: column;
 
     font-size: ${({ theme }) => theme.text.size.medium};
     line-height: 1.5;

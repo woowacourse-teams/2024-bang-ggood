@@ -36,6 +36,10 @@ import LampIcon from '@/assets/icons/lamp-icon.svg';
 import BangGgoodTextIcon from '@/assets/icons/logo.svg';
 import QuestionDot from '@/assets/icons/question-dot.svg';
 
+/*memo */
+import MemoFilled from '@/assets/icons/memo-filled.svg';
+import MemoPlus from '@/assets/icons/memo-plus.svg';
+
 export {
   ArrowBack,
   ArrowDownSmall,
@@ -61,6 +65,8 @@ export {
   LocationLineIcon,
   LocationLogo,
   LocationLogoActive,
+  MemoFilled,
+  MemoPlus,
   MyPageLogo,
   MyPageLogoActive,
   Plus,

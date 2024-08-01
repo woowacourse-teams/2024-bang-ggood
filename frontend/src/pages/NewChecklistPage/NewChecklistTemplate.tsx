@@ -17,9 +17,7 @@ const NewChecklistTemplate = () => {
   return (
     <S.ContentBox>
       {targetCategoryQuestions.questions.map((question: ChecklistQuestionWithAnswer) => (
-        <S.QuestionBox key={`question-${question.questionId}`}>
-          <ChecklistQuestion question={question} />
-        </S.QuestionBox>
+        <ChecklistQuestion question={question} key={question.subtitle} />
       ))}
     </S.ContentBox>
   );

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { QuestionDot } from '@/assets/assets';
 import FaceMark from '@/components/common/FaceMark/FaceMark';
-import { emotionPhrase } from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
+import { emotionPhrase } from '@/constants/emotion';
 import { EmotionType } from '@/types/emotionAnswer';
 
 interface Props {

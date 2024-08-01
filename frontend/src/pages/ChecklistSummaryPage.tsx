@@ -41,7 +41,7 @@ const ChecklistSummaryPage = () => {
           <Accordion>
             {checklist?.categories?.map(category => (
               <div key={category.categoryId}>
-                <Accordion.header text={category.categoryName} id={category.categoryId} />
+                <Accordion.header hasMark={true} text={category.categoryName} id={category.categoryId} />
                 <Accordion.body id={category.categoryId}>
                   {category.questions.map((question, index) => {
                     const { title, subtitle, answer } = question;
@@ -52,7 +52,6 @@ const ChecklistSummaryPage = () => {
                       </>
                     );
                   })}
-                  {/* <ChecklistCategory type="preview" key={category.categoryId} category={category} /> */}
                 </Accordion.body>
               </div>
             ))}

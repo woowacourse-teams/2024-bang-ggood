@@ -17,9 +17,7 @@ const NewChecklistBody = (props: Props) => {
   const { newChecklistTabs, roomInfo, onChange } = props;
   const { currentTabId } = useTabContext();
 
-  // //TODO: 임시 수정 필요
-  // const newChecklistTabsWithCompletion = newChecklistTabs.map(tabInfo => ({ ...tabInfo, isCompleted: false }));
-
+  //TODO: 아무 질문도 없을 때 안뜨도록 하기
   const renderTabContent = () => {
     switch (currentTabId) {
       case 0: //기본 정보

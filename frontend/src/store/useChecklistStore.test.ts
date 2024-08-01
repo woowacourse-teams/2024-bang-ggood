@@ -19,7 +19,7 @@ describe('useChecklistStore 테스트', () => {
         result.current.addAnswer({ questionId: 1, newAnswer: 'SOSO' });
       });
       expect(result.current.questionSelectedAnswer(1)).not.toBe('BAD');
-      expect(result.current.questionSelectedAnswer(1)).toBe('SOSO');
+      expect(result.current.questionSelectedAnswer(1)).toBe('SOS');
     });
     it('두 개의 Answer를 추가 후 하나를 삭제했을 때, 삭제된 answer는 null 반환한다.', () => {
       const { result } = renderHook(() => useChecklistStore());

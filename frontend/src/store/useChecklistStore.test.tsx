@@ -7,7 +7,7 @@ describe('useChecklistStore 테스트', () => {
   describe('questionSelectedAnswer 함수', () => {
     beforeEach(() => {
       const { result } = renderHook(() => useChecklistStore());
-      result.current.setAnswerInQuestion(checklistQuestions.categories);
+      act(() => result.current.setAnswerInQuestion(checklistQuestions.categories));
     });
     it('Answer가 없을 때, null을 응답한다.', () => {
       const { result } = renderHook(() => useChecklistStore());

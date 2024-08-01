@@ -54,7 +54,11 @@ const NewChecklistPage = () => {
     );
   };
 
+<<<<<<< HEAD
   const onSubmitChecklist = () => {
+=======
+  const handleSubmitChecklist = () => {
+>>>>>>> a731681721e51f77c7551909fa35b50081eed0d1
     const fetchNewChecklist = async () => {
       await postChecklist({
         room: roomInfo,
@@ -89,7 +93,7 @@ const NewChecklistPage = () => {
       <Header
         left={<Header.Backward />}
         center={<S.Title>{'새 체크리스트'}</S.Title>}
-        right={<Button label={'저장'} size="small" color="dark" onClick={onSubmitChecklist} />}
+        right={<Button label={'저장'} size="small" color="dark" onClick={handleSubmitChecklist} />}
       />
 
       <TabProvider>

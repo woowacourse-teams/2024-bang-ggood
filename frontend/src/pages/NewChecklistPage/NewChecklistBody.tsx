@@ -40,7 +40,6 @@ const NewChecklistBody = (props: Props) => {
   return (
     <div>
       <NewChecklistTab newChecklistTabs={newChecklistTabs} />
-      {/* <Tabs tabList={newChecklistTabsWithCompletion} /> */}
       <S.ContentBox>{currentTabId !== null && currentTabId !== undefined && renderTabContent()}</S.ContentBox>
     </div>
   );

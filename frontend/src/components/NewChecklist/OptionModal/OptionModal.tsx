@@ -4,10 +4,9 @@ import Button from '@/components/common/Button/Button';
 import Modal from '@/components/common/Modal/Modal';
 import ModalFooter from '@/components/common/Modal/ModalFooter';
 import OptionButton from '@/components/common/OptionButton/OptionButton';
+import { OPTION_COUNT } from '@/components/common/OptionButton/OptionIcon';
 import OptionModalInfoBox from '@/components/NewChecklist/OptionModal/OptionModalInfoBox';
 import { flexColumn } from '@/styles/common';
-
-export const totalOptionCount = 14;
 
 interface Props {
   isOpen: boolean;
@@ -19,7 +18,7 @@ const OptionModal = ({ isOpen, setIsOpen }: Props) => {
     setIsOpen(false);
   };
 
-  const optionCounts = new Array(totalOptionCount).fill(0).map((e, i) => i + 1);
+  const optionCounts = new Array(OPTION_COUNT).fill(0).map((e, i) => i + 1);
 
   return (
     <div>
@@ -46,17 +45,12 @@ const OptionModal = ({ isOpen, setIsOpen }: Props) => {
 export default OptionModal;
 
 const OptionContainer = styled.div`
-  /* display: grid;
-  grid-template-columns: repeat(3, 1fr); */
   display: flex;
   flex-flow: row;
   flex-wrap: wrap;
   gap: 15px;
   width: 100%;
 
-  /* width: 300px; */
-
-  /* justify-content: center; */
   place-items: center;
 `;
 

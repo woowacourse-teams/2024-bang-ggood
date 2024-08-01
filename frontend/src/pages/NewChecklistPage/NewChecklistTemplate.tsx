@@ -5,11 +5,6 @@ import ChecklistQuestion from '@/components/NewChecklist/ChecklistQuestion/Check
 import useChecklistStore from '@/store/useChecklistStore';
 import { ChecklistCategoryQnA, ChecklistQuestionWithAnswer } from '@/types/checklist';
 
-export interface addAnswerProps {
-  questionId: number;
-  newAnswer: number;
-}
-
 const NewChecklistTemplate = () => {
   const { currentTabId } = useTabContext();
 

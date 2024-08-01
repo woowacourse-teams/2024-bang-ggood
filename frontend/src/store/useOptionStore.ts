@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 
+import { OPTION_COUNT } from '@/components/common/OptionButton/OptionIcon';
+
 interface OptionState {
   selectedOptions: number[];
   addOption: (option: number) => void;
@@ -10,8 +12,6 @@ interface OptionState {
   addAllOptions: () => void;
   removeAllOptions: () => void;
 }
-
-const OPTION_COUNT = 14;
 
 const useOptionStore = create<OptionState>((set, get) => ({
   selectedOptions: [],
@@ -42,7 +42,7 @@ const useOptionStore = create<OptionState>((set, get) => ({
 
   isAllSelected: () => {
     const state = get();
-    return state.selectedOptions.length === 14;
+    return state.selectedOptions.length === OPTION_COUNT;
   },
 }));
 

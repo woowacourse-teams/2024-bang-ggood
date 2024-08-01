@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { getChecklistSummary } from '@/apis/checklist';
+import { getChecklistDetail } from '@/apis/checklist';
 import Accordion from '@/components/common/Accordion/Accordion';
 import Header from '@/components/common/Header/Header';
 import Layout from '@/components/common/layout/Layout';
@@ -15,7 +15,7 @@ export interface addAnswerProps {
   newAnswer: number;
 }
 
-const ChecklistSummaryPage = () => {
+const ChecklistDetailPage = () => {
   // TODO: Param 으로 변경해보기
   const location = useLocation();
   const checklistId = location.state?.id;
@@ -24,7 +24,7 @@ const ChecklistSummaryPage = () => {
 
   useEffect(() => {
     const fetchChecklist = async () => {
-      const checklist = await getChecklistSummary(checklistId);
+      const checklist = await getChecklistDetail(checklistId);
       setChecklist(checklist);
     };
     fetchChecklist();
@@ -52,7 +52,7 @@ const ChecklistSummaryPage = () => {
   );
 };
 
-export default ChecklistSummaryPage;
+export default ChecklistDetailPage;
 
 const S = {
   Wrapper: styled.div`

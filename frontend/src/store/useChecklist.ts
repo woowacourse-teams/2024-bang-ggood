@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { addAnswerProps } from '@/pages/ChecklistSummaryPage';
+import { addAnswerProps } from '@/pages/ChecklistDetailPage';
 import { ChecklistFormAnswer } from '@/types/checklist';
 
 interface ChecklistState {

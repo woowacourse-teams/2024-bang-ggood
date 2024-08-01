@@ -8,7 +8,7 @@ export const getChecklistQuestions = async () => {
   return data.categories;
 };
 
-export const getChecklistSummary = async (id: number) => {
+export const getChecklistDetail = async (id: number) => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_ID(id) });
   const data = await response.json();
   return data;

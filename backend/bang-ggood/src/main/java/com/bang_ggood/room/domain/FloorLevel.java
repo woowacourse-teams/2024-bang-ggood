@@ -2,6 +2,7 @@ package com.bang_ggood.room.domain;
 
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
+import java.util.Arrays;
 
 public enum FloorLevel {
 
@@ -15,16 +16,12 @@ public enum FloorLevel {
         this.name = name;
     }
 
-    public static FloorLevel fromName(String name) {
-        for (FloorLevel floorLevel : FloorLevel.values()) {
-            if (floorLevel.name.equals(name)) {
-                return floorLevel;
-            }
-        }
-        throw new BangggoodException(ExceptionCode.FLOOR_LEVEL_INVALID_NAME);
+    public static FloorLevel from(String name) {
+        return Arrays.stream(FloorLevel.values())
+                .filter(value -> value.name.equals(name))
+                .findFirst()
+                .orElseThrow(() -> new BangggoodException(ExceptionCode.FLOOR_LEVEL_INVALID));
     }
 
-    public String getName() {
-        return name;
-    }
+    
 }

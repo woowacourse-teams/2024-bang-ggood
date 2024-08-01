@@ -10,19 +10,26 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class StructureTest {
 
-    @DisplayName("방 구조 이름으로 조회 성공")
+    @DisplayName("name으로 Structure 생성 성공")
     @Test
-    void fromName() {
-        assertThat(Structure.fromName(Structure.DIVIDED_ONE_ROOM.getName()))
-                .isEqualTo(Structure.DIVIDED_ONE_ROOM);
+    void from() {
+        // given
+        String name = "복층";
+
+        // when & then
+        assertThat(Structure.from(name)).isEqualTo(Structure.DUPLEX);
     }
 
-    @DisplayName("방 구조 이름으로 조회 실패 : 유효하지 않은 방 구조 이름일 경우")
+    @DisplayName("name으로 Structure 생성 실패 : 해당하지 않는 이름일 경우")
     @Test
-    void fromName_invalidStructure_exception() {
-        assertThatThrownBy(() -> Structure.fromName("InvalidStructure"))
+    void from_invalidStructure_exception() {
+        // given
+        String name = "제제";
+
+        // when & then
+        assertThatThrownBy(() -> Structure.from(name))
                 .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.STRUCTURE_INVALID_NAME.getMessage());
+                .hasMessage(ExceptionCode.STRUCTURE_INVALID.getMessage());
     }
 
 }

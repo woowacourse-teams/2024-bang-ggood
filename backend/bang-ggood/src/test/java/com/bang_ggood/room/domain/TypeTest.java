@@ -10,18 +10,25 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class TypeTest {
 
-    @DisplayName("방 종류 이름으로 조회 성공")
+    @DisplayName("name으로 Type 생성 성공")
     @Test
-    void fromName() {
-        assertThat(Type.fromName(Type.APARTMENT.getName()))
-                .isEqualTo(Type.APARTMENT);
+    void from() {
+        // given
+        String name = "빌라";
+
+        // when & then
+        assertThat(Type.from(name)).isEqualTo(Type.VILLA);
     }
 
-    @DisplayName("방 종류 이름으로 조회 실패 : 유효하지 않은 방 종류 이름일 경우")
+    @DisplayName("name으로 Type 생성 실패 : 해당하지 않는 이름일 경우")
     @Test
-    void fromName_invalidType_exception() {
-        assertThatThrownBy(() -> Type.fromName("InvalidType"))
+    void from_invalidType_exception() {
+        // given
+        String name = "시소";
+
+        // when & then
+        assertThatThrownBy(() -> Type.from(name))
                 .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.TYPE_INVALID_NAME.getMessage());
+                .hasMessage(ExceptionCode.TYPE_INVALID.getMessage());
     }
 }

@@ -10,18 +10,25 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FloorLevelTest {
 
-    @DisplayName("층 종류 이름으로 조회 성공")
+    @DisplayName("name으로 FloorLevel 생성 성공")
     @Test
-    void fromName() {
-        assertThat(FloorLevel.fromName(FloorLevel.BASEMENT.getName()))
-                .isEqualTo(FloorLevel.BASEMENT);
+    void from() {
+        // given
+        String name = "반지하/지하";
+
+        // when & then
+        assertThat(FloorLevel.from(name)).isEqualTo(FloorLevel.BASEMENT);
     }
 
-    @DisplayName("층 종류 이름으로 조회 실패 : 유효하지 않은 층 종류 이름일 경우")
+    @DisplayName("name으로 FloorLevel 생성 실패 : 해당하지 않는 이름일 경우")
     @Test
-    void fromName_invalidFloorLevel_exception() {
-        assertThatThrownBy(() -> FloorLevel.fromName("InvalidFloorLevel"))
+    void from_invalidFloorLevel_exception() {
+        // given
+        String name = "우주";
+
+        // when & then
+        assertThatThrownBy(() -> FloorLevel.from(name))
                 .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.FLOOR_LEVEL_INVALID_NAME.getMessage());
+                .hasMessage(ExceptionCode.FLOOR_LEVEL_INVALID.getMessage());
     }
 }

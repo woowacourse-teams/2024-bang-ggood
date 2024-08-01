@@ -4,25 +4,24 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsWithScoreReadResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.dto.response.WrittenChecklistResponse;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.RoomFixture;
-import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
-import com.bang_ggood.user.domain.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -34,67 +33,72 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private ChecklistRepository checklistRepository;
+
     @Autowired
     private ChecklistQuestionRepository checklistQuestionRepository;
+
     @Autowired
     private RoomRepository roomRepository;
 
 
-//    @DisplayName("체크리스트 방 정보 작성 성공")
-//    @Test
-//    void createChecklist() {
-//        //given & when
-//        long checklistId = checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST);
-//
-//        //then
-//        assertAll(
-//                () -> assertThat(checklistId).isEqualTo(1),
-//                () -> assertThat(checklistQuestionRepository.findByChecklistId(1).size()).isEqualTo(
-//                        Question.values().length)
-//        );
-//
-//    }
-//
-//    @DisplayName("체크리스트 방 정보 작성 실패: 질문 id가 유효하지 않을 경우")
-//    @Test
-//    void createChecklist_invalidQuestionId_exception() {
-//        //given & when & then
-//        assertThatThrownBy(
-//                () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_QUESTION_ID))
-//                .isInstanceOf(BangggoodException.class)
-//                .hasMessage(ExceptionCode.INVALID_QUESTION.getMessage());
-//    }
-//
-//    @DisplayName("체크리스트 방 정보 작성 실패: 질문 id가 중복일 경우")
-//    @Test
-//    void createChecklist_duplicatedQuestionId_exception() {
-//        //given & when & then
-//        assertThatThrownBy(
-//                () -> checklistService.createChecklist(
-//                        ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_QUESTION_ID))
-//                .isInstanceOf(BangggoodException.class)
-//                .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
-//    }
-//
-//    @DisplayName("체크리스트 방 정보 작성 실패: 옵션 id가 유효하지 않을 경우")
-//    @Test
-//    void createChecklist_invalidOptionId_exception() {
-//        //given & when & then
-//        assertThatThrownBy(
-//                () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_OPTION_ID))
-//                .isInstanceOf(BangggoodException.class)
-//                .hasMessage(ExceptionCode.INVALID_OPTION.getMessage());
-//    }
-//
-//    @DisplayName("체크리스트 방 정보 작성 실패: 옵션 id가 중복일 경우")
-//    @Test
-//    void createChecklist_duplicatedOptionId_exception() {
-//        //given & when & then
-//        assertThatThrownBy(
-//                () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_OPTION_ID))
-//                .isInstanceOf(BangggoodException.class)
-//                .hasMessage(ExceptionCode.OPTION_DUPLICATED.getMessage());
-//    }
+    @DisplayName("체크리스트 방 정보 작성 성공")
+    @Test
+    void createChecklist() {
+        //given
+        ChecklistCreateRequest checklist = ChecklistFixture.CHECKLIST_CREATE_REQUEST;
+
+        // when
+        long checklistId = checklistService.createChecklist(checklist);
+
+        //then
+        assertAll(
+                () -> assertThat(checklistId).isEqualTo(1),
+                () -> assertThat(checklistQuestionRepository.findByChecklistId(1).size()).isEqualTo(
+                        checklist.questions().size())
+        );
+
+    }
+
+    @DisplayName("체크리스트 방 정보 작성 실패: 질문 id가 유효하지 않을 경우")
+    @Test
+    void createChecklist_invalidQuestionId_exception() {
+        //given & when & then
+        assertThatThrownBy(
+                () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_QUESTION_ID))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
+    }
+
+    @DisplayName("체크리스트 방 정보 작성 실패: 질문 id가 중복일 경우")
+    @Test
+    void createChecklist_duplicatedQuestionId_exception() {
+        //given & when & then
+        assertThatThrownBy(
+                () -> checklistService.createChecklist(
+                        ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_QUESTION_ID))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
+    }
+
+    @DisplayName("체크리스트 방 정보 작성 실패: 옵션 id가 유효하지 않을 경우")
+    @Test
+    void createChecklist_invalidOptionId_exception() {
+        //given & when & then
+        assertThatThrownBy(
+                () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_OPTION_ID))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.OPTION_INVALID.getMessage());
+    }
+
+    @DisplayName("체크리스트 방 정보 작성 실패: 옵션 id가 중복일 경우")
+    @Test
+    void createChecklist_duplicatedOptionId_exception() {
+        //given & when & then
+        assertThatThrownBy(
+                () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_OPTION_ID))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.OPTION_DUPLICATED.getMessage());
+    }
 
     @DisplayName("체크리스트 질문 조회 성공")
     @Test

@@ -30,7 +30,6 @@ import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -55,69 +54,62 @@ public class ChecklistService {
         this.checklistQuestionRepository = checklistQuestionRepository;
     }
 
-//    @Transactional
-//    public long createChecklist(ChecklistCreateRequest checklistCreateRequest) {
-//        Room room = roomRepository.save(checklistCreateRequest.toRoomEntity());
-//
-//        ChecklistInfo checklistInfo = checklistCreateRequest.toChecklistInfo();
-//        Checklist checklist = new Checklist(new User(1L, "방방이"), room, checklistInfo.deposit(), checklistInfo.rent(),
-//                checklistInfo.contractTerm(), checklistInfo.realEstate());
-//        checklistRepository.save(checklist);
-//
-//        createChecklistOptions(checklistCreateRequest, checklist);
-//        createChecklistQuestions(checklistCreateRequest, checklist);
-//        return checklist.getId();
-//    }
-//
-//    private void createChecklistOptions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
-//        List<Integer> optionIds = checklistCreateRequest.options();
-//        validateOptions(optionIds);
-//        List<ChecklistOption> checklistOptions = optionIds.stream()
-//                .map(option -> new ChecklistOption(checklist, option))
-//                .toList();
-//        checklistOptionRepository.saveAll(checklistOptions);
-//    }
-//
-//    private void validateOptions(List<Integer> optionIds) {
-//        validateOptionDuplicate(optionIds);
-//        validateOptionInvalid(optionIds);
-//    }
-//
-//    private void validateOptionDuplicate(List<Integer> optionIds) {
-//        Set<Integer> set = new HashSet<>();
-//        optionIds.forEach(id -> {
-//            if (!set.add(id)) {
-//                throw new BangggoodException(ExceptionCode.OPTION_DUPLICATED);
-//            }
-//        });
-//    }
-//
-//    private void validateOptionInvalid(List<Integer> optionIds) {
-//        for (Integer optionId : optionIds) {
-//            if (!Option.contains(optionId)) {
-//                throw new BangggoodException(ExceptionCode.INVALID_OPTION);
-//            }
-//        }
-//    }
-//
-//    private void createChecklistQuestions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
-//        validateQuestion(checklistCreateRequest.questions());
-//        Map<Integer, String> existQuestions = checklistCreateRequest.questions()
-//                .stream()
-//                .collect(Collectors.toMap(QuestionCreateRequest::questionId, QuestionCreateRequest::answer));
-//
-//        List<ChecklistQuestion> checklistQuestions = Arrays.stream(Question.values())
-//                .map(question -> {
-//                    int questionId = question.getId();
-//                    return Optional.ofNullable(existQuestions.get(questionId))
-//                            .map(answer -> new ChecklistQuestion(checklist, Question.findById(questionId),
-//                                    Grade.from(answer)))
-//                            .orElseGet(() -> new ChecklistQuestion(checklist, Question.findById(questionId), null));
-//                })
-//                .collect(Collectors.toList());
-//
-//        checklistQuestionRepository.saveAll(checklistQuestions);
-//    }
+    @Transactional
+    public long createChecklist(ChecklistCreateRequest checklistCreateRequest) {
+        Room room = roomRepository.save(checklistCreateRequest.toRoomEntity());
+
+        ChecklistInfo checklistInfo = checklistCreateRequest.toChecklistInfo();
+        Checklist checklist = new Checklist(new User(1L, "방방이"), room, checklistInfo.deposit(), checklistInfo.rent(),
+                checklistInfo.contractTerm(), checklistInfo.realEstate());
+        checklistRepository.save(checklist);
+
+        createChecklistOptions(checklistCreateRequest, checklist);
+        createChecklistQuestions(checklistCreateRequest, checklist);
+        return checklist.getId();
+    }
+
+    private void createChecklistOptions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
+        List<Integer> optionIds = checklistCreateRequest.options();
+        validateOptions(optionIds);
+        List<ChecklistOption> checklistOptions = optionIds.stream()
+                .map(option -> new ChecklistOption(checklist, option))
+                .toList();
+        checklistOptionRepository.saveAll(checklistOptions);
+    }
+
+    private void validateOptions(List<Integer> optionIds) {
+        validateOptionDuplicate(optionIds);
+        validateOptionInvalid(optionIds);
+    }
+
+    private void validateOptionDuplicate(List<Integer> optionIds) {
+        Set<Integer> set = new HashSet<>();
+        optionIds.forEach(id -> {
+            if (!set.add(id)) {
+                throw new BangggoodException(ExceptionCode.OPTION_DUPLICATED);
+            }
+        });
+    }
+
+    private void validateOptionInvalid(List<Integer> optionIds) {
+        for (Integer optionId : optionIds) {
+            if (!Option.contains(optionId)) {
+                throw new BangggoodException(ExceptionCode.OPTION_INVALID);
+            }
+        }
+    }
+
+    private void createChecklistQuestions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
+        validateQuestion(checklistCreateRequest.questions());
+        List<ChecklistQuestion> checklistQuestions = checklistCreateRequest.questions().stream()
+                .map(question -> new ChecklistQuestion(
+                        checklist,
+                        Question.fromId(question.questionId()),
+                        Grade.from(question.grade()),
+                        question.memo()))
+                .collect(Collectors.toList());
+        checklistQuestionRepository.saveAll(checklistQuestions);
+    }
 
     @Transactional
     public ChecklistQuestionsResponse readChecklistQuestions() {
@@ -149,7 +141,7 @@ public class ChecklistService {
     private void validateQuestionInvalid(List<QuestionCreateRequest> questions) {
         for (QuestionCreateRequest questionCreateRequest : questions) {
             if (!Question.contains(questionCreateRequest.questionId())) {
-                throw new BangggoodException(ExceptionCode.INVALID_QUESTION);
+                throw new BangggoodException(ExceptionCode.QUESTION_INVALID);
             }
         }
     }

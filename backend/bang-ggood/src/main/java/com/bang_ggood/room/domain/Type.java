@@ -2,6 +2,7 @@ package com.bang_ggood.room.domain;
 
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
+import java.util.Arrays;
 
 public enum Type {
 
@@ -16,16 +17,10 @@ public enum Type {
         this.name = name;
     }
 
-    public static Type fromName(String name) {
-        for (Type type : Type.values()) {
-            if (type.name.equals(name)) {
-                return type;
-            }
-        }
-        throw new BangggoodException(ExceptionCode.TYPE_INVALID_NAME);
-    }
-
-    public String getName() {
-        return name;
+    public static Type from(String name) {
+        return Arrays.stream(Type.values())
+                .filter(value -> value.name.equals(name))
+                .findFirst()
+                .orElseThrow(() -> new BangggoodException(ExceptionCode.TYPE_INVALID));
     }
 }

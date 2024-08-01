@@ -44,6 +44,7 @@ const Container = styled.div`
   position: fixed;
   max-width: 600px;
 
+  z-index: ${({ theme }) => theme.zIndex.TABS};
   width: 100%;
 
   background-color: ${({ theme }) => theme.palette.white};

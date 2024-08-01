@@ -33,13 +33,14 @@ const S = {
   `,
   Wrapper: styled.header`
     display: flex;
-    max-width: 600px;
     position: fixed;
+    z-index: ${({ theme }) => theme.zIndex.HEADER};
     width: 100%;
     height: 64px;
     padding: 16px;
 
     background-color: ${({ theme }) => theme.palette.white};
+    max-width: 600px;
     align-items: center;
     box-sizing: border-box;
     justify-content: space-between;

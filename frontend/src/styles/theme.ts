@@ -47,6 +47,7 @@ const text = {
 const zIndex = {
   FLOATING_BUTTON: 10,
   TABS: 10,
+  HEADER: 10,
   MODAL: 20,
   TOAST: 30,
 };

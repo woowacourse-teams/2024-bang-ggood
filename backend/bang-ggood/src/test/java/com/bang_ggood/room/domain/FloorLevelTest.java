@@ -31,5 +31,4 @@ class FloorLevelTest {
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.FLOOR_LEVEL_INVALID.getMessage());
     }
-
 }

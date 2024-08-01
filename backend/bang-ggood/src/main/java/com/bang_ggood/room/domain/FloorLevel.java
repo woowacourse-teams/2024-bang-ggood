@@ -22,4 +22,8 @@ public enum FloorLevel {
                 .findFirst()
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.FLOOR_LEVEL_INVALID));
     }
+
+    public String getName() {
+        return name;
+    }
 }

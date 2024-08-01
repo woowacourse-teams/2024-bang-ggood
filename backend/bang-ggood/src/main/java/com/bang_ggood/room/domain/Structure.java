@@ -6,8 +6,8 @@ import java.util.Arrays;
 
 public enum Structure {
 
-    STUDIO("오픈형 원룸"),
-    DIVIDED("분리형 원룸"),
+    OPEN_ONE_ROOM("오픈형 원룸"),
+    DIVIDED_ONE_ROOM("분리형 원룸"),
     TWO_ROOM("투룸"),
     THREE_ROOM_OR_MORE("쓰리룸 이상"),
     DUPLEX("복층");
@@ -23,5 +23,9 @@ public enum Structure {
                 .filter(value -> value.name.equals(name))
                 .findFirst()
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.STRUCTURE_INVALID));
+    }
+
+    public String getName() {
+        return name;
     }
 }

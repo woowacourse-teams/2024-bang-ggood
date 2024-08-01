@@ -23,4 +23,8 @@ public enum Type {
                 .findFirst()
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.TYPE_INVALID));
     }
+
+    public String getName() {
+        return name;
+    }
 }

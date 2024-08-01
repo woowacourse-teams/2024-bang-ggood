@@ -63,7 +63,7 @@ public class ChecklistService {
 
     @Transactional
     public long createChecklist(ChecklistCreateRequest checklistCreateRequest) {
-        Room room = createRoom(checklistCreateRequest);
+        Room room = roomRepository.save(checklistCreateRequest.toRoomEntity());
 
         ChecklistInfo checklistInfo = checklistCreateRequest.toChecklistInfo();
         Checklist checklist = new Checklist(new User(1L, "방방이"), room, checklistInfo.deposit(), checklistInfo.rent(),
@@ -75,11 +75,6 @@ public class ChecklistService {
         return checklist.getId();
     }
 
-    private Room createRoom(ChecklistCreateRequest checklistCreateRequest) {
-        validateRoom(checklistCreateRequest.toRoomEntity());
-        return roomRepository.save(checklistCreateRequest.toRoomEntity());
-    }
-
     private void createChecklistOptions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
         List<Integer> optionIds = checklistCreateRequest.options();
         validateOptions(optionIds);
@@ -87,12 +82,6 @@ public class ChecklistService {
                 .map(option -> new ChecklistOption(checklist, option))
                 .toList();
         checklistOptionRepository.saveAll(checklistOptions);
-    }
-
-    private void validateRoom(Room room) {
-        if (room.getFloorLevel() != FloorLevel.GROUND && room.getFloor() != null) {
-            throw new BangggoodException(ExceptionCode.ROOM_FLOOR_AND_LEVEL_INVALID);
-        }
     }
 
     private void validateOptions(List<Integer> optionIds) {

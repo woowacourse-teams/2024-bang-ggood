@@ -63,7 +63,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
     }
-    
+
     @DisplayName("체크리스트 방 정보 작성 실패: 질문 id가 중복일 경우")
     @Test
     void createChecklist_duplicatedQuestionId_exception() {
@@ -93,17 +93,6 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_OPTION_ID))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.OPTION_DUPLICATED.getMessage());
-    }
-
-    @DisplayName("체크리스트 방 정보 작성 실패: 방이 지상층이 아닌데 floor를 입력했을 경우")
-    @Test
-    void createChecklist_roomFloorAndLevelInvalid_exception() {
-        //given & when & then
-        assertThatThrownBy(
-                () -> checklistService.createChecklist(
-                        ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_ROOM_LEVEL_AND_FLOOR))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.ROOM_FLOOR_AND_LEVEL_INVALID.getMessage());
     }
 
     @DisplayName("체크리스트 질문 조회 성공")

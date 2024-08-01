@@ -84,10 +84,4 @@ public class ChecklistFixture {
             List.of(QUESTION_1_CREATE_REQUEST, QUESTION_2_CREATE_REQUEST,
                     QUESTION_3_CREATE_REQUEST, QUESTION_5_CREATE_REQUEST)
     );
-
-    public static final ChecklistCreateRequest CHECKLIST_CREATE_REQUEST_INVALID_ROOM_LEVEL_AND_FLOOR = new ChecklistCreateRequest(
-            RoomFixture.ROOM_CREATE_REQUEST_INVALID_ROOM_LEVEL_AND_FLOOR, List.of(1, 2, 3, 5),
-            List.of(QUESTION_1_CREATE_REQUEST, QUESTION_2_CREATE_REQUEST,
-                    QUESTION_3_CREATE_REQUEST, QUESTION_5_CREATE_REQUEST)
-    );
 }

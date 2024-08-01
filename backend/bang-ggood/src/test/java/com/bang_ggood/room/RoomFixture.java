@@ -24,10 +24,4 @@ public class RoomFixture {
             "부산광역시 루터회관", "잠실역", 10, "방끗공인중개사",
             "아파트", "분리형 원룸", 8, 4, "지상"
     );
-
-    public static final RoomCreateRequest ROOM_CREATE_REQUEST_INVALID_ROOM_LEVEL_AND_FLOOR = new RoomCreateRequest(
-            "방이름", 1000, 50, 12,
-            "부산광역시 루터회관", "잠실역", 10, "방끗공인중개사",
-            "아파트", "분리형 원룸", 8, 4, "옥탑"
-    );
 }

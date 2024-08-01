@@ -1,6 +1,8 @@
 package com.bang_ggood.room.domain;
 
 import com.bang_ggood.BaseEntity;
+import com.bang_ggood.exception.BangggoodException;
+import com.bang_ggood.exception.ExceptionCode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -41,8 +43,7 @@ public class Room extends BaseEntity {
     }
 
     public Room(String name, String station, Integer walkingTime, String address, Type type, Integer size,
-                Integer floor,
-                FloorLevel floorLevel, Structure structure) {
+                Integer floor, FloorLevel floorLevel, Structure structure) {
         this.name = name;
         this.station = station;
         this.walkingTime = walkingTime;
@@ -52,6 +53,7 @@ public class Room extends BaseEntity {
         this.floor = floor;
         this.floorLevel = floorLevel;
         this.structure = structure;
+        validateFloorAndLevel();
     }
 
     public Long getId() {
@@ -92,6 +94,14 @@ public class Room extends BaseEntity {
 
     public Structure getStructure() {
         return structure;
+    }
+
+
+
+    private void validateFloorAndLevel() {
+        if (floorLevel != FloorLevel.GROUND && floor != null) {
+            throw new BangggoodException(ExceptionCode.ROOM_FLOOR_AND_LEVEL_INVALID);
+        }
     }
 
     @Override

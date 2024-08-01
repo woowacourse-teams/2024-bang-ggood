@@ -24,4 +24,8 @@ public enum Structure {
                 .findFirst()
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.STRUCTURE_INVALID));
     }
+
+    public String getName() {
+        return name;
+    }
 }

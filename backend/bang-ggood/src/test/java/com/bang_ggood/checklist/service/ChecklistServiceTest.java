@@ -8,23 +8,24 @@ import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsWithScoreReadResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
-import com.bang_ggood.checklist.dto.response.WrittenChecklistResponse;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.RoomFixture;
+import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
-import org.junit.jupiter.api.Assertions;
+import com.bang_ggood.user.domain.User;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
+
 
 class ChecklistServiceTest extends IntegrationTestSupport {
 
@@ -121,7 +122,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         SelectedChecklistResponse selectedChecklistResponse = checklistService.readChecklistById(1L);
 
         // then
-        Assertions.assertAll(
+        assertAll(
                 () -> assertThat(selectedChecklistResponse.room().roomName()).isEqualTo("살기 좋은 방"),
                 () -> assertThat(selectedChecklistResponse.room().address()).isEqualTo("인천광역시 부평구")
         );

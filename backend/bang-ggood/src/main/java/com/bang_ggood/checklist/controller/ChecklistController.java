@@ -1,6 +1,7 @@
 package com.bang_ggood.checklist.controller;
 
 import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
+import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsWithScoreReadResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
@@ -14,9 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 public class ChecklistController {
@@ -53,5 +56,11 @@ public class ChecklistController {
     public ResponseEntity<ChecklistsWithScoreReadResponse> readChecklistsComparison(
             @RequestParam("id") List<Long> checklistIds) {
         return ResponseEntity.ok(checklistService.readChecklistsComparison(checklistIds));
+    }
+
+    @PutMapping("/custom-checklist")
+    public ResponseEntity<Void> updateCustomChecklist(@RequestBody CustomChecklistUpdateRequest request) {
+        checklistService.updateCustomChecklist(request);
+        return ResponseEntity.noContent().build();
     }
 }

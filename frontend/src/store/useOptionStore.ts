@@ -8,28 +8,17 @@ interface OptionState {
   setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
   isAllSelected: () => boolean;
   addAllOptions: () => void;
+  removeAllOptions: () => void;
 }
+
+const OPTION_COUNT = 14;
 
 const useOptionStore = create<OptionState>((set, get) => ({
   selectedOptions: [],
 
   setSelectedOptions: (options: number[]) => set({ selectedOptions: options }),
 
-  isSelectedOption: (optionId: number) => {
-    const state = get();
-    return state.selectedOptions.includes(optionId);
-  },
-
-  addAllOptions: () => {
-    set(() => ({
-      selectedOptions: Array.from({ length: 10 }, (_, i) => i + 1),
-    }));
-  },
-
-  isAllSelected: () => {
-    const state = get();
-    return state.selectedOptions.length === 14;
-  },
+  isSelectedOption: optionId => get().selectedOptions.includes(optionId),
 
   addOption: option =>
     set(state => ({
@@ -40,6 +29,21 @@ const useOptionStore = create<OptionState>((set, get) => ({
     set(state => ({
       selectedOptions: state.selectedOptions.filter(o => o !== option),
     })),
+
+  addAllOptions: () => {
+    set(() => ({
+      selectedOptions: Array.from({ length: OPTION_COUNT }, (_, i) => i + 1),
+    }));
+  },
+
+  removeAllOptions: () => {
+    set({ selectedOptions: [] });
+  },
+
+  isAllSelected: () => {
+    const state = get();
+    return state.selectedOptions.length === 14;
+  },
 }));
 
 export default useOptionStore;

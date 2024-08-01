@@ -113,8 +113,7 @@ const ModalOuter = styled.div<{
 
   background-color: white;
   ${flexCenter}
-
-  max-width: 390px;
+  max-width: 600px;
 `;
 
 const ModalInner = styled.div`

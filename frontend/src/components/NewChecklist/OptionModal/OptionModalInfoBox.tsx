@@ -7,27 +7,19 @@ import useOptionStore from '@/store/useOptionStore';
 import { flexCenter, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
 
-// interface Props {
-//   selectedOptions: number[];
-//   setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
-// }
-
 const OptionModalInfoBox = () => {
-  // const allOptions = new Array(totalOptionCount).fill(0).map((e, i) => i + 1);
-  // const { onClickSelectAllOptions, isAllSelected, setIsAllSelected } = useAllSelect({
-  //   allOptions,
-  //   setSelectedOptions,
-  //   selectedOptions,
-  // });
-  const { selectedOptions, isAllSelected, addAllOptions } = useOptionStore();
+  const { selectedOptions, isAllSelected, addAllOptions, removeAllOptions } = useOptionStore();
+
+  const onToggleAllSelect = isAllSelected() ? () => removeAllOptions : () => addAllOptions;
 
   return (
     <S.ButtonContainer>
       <S.TotalSelectBox>
+        {/*전체 선택 버튼*/}
         <Checkbox
           isChecked={isAllSelected()}
-          setIsChecked={addAllOptions}
-          onClick={addAllOptions}
+          setIsChecked={onToggleAllSelect()}
+          onClick={onToggleAllSelect()}
           color={theme.palette.yellow500}
           hoverBorderColor={theme.palette.yellow600}
         />
@@ -41,7 +33,8 @@ const OptionModalInfoBox = () => {
 
 const ButtonContainer = styled.div`
   display: flex;
-  width: 280px;
+
+  /* width: 280px; */
   height: 50px;
 
   justify-content: space-between;

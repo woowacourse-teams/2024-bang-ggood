@@ -19,38 +19,18 @@ const OptionModal = ({ isOpen, setIsOpen }: Props) => {
     setIsOpen(false);
   };
 
-  // const { isSelectedOption, addOption, removeOption } = useOptionStore();
-
-  // const isSelectedOption = (optionId: number) => {
-  //   return selectedOptions.includes(optionId);
-  // };
-
-  // const onToggleSelectOption = (targetId: number) => {
-  //   if (isSelectedOption(targetId)) {
-  //     const newSelectedOptions = selectedOptions.filter(optionId => optionId !== targetId);
-  //     setSelectedOptions(newSelectedOptions);
-  //   } else {
-  //     setSelectedOptions([...selectedOptions, targetId]);
-  //   }
-  // };
-
   const optionCounts = new Array(totalOptionCount).fill(0).map((e, i) => i + 1);
 
   return (
     <div>
-      <Modal position={'bottom'} isOpen={isOpen} onClose={onCloseModal} hasCloseButton={true}>
+      <Modal position={'center'} isOpen={isOpen} onClose={onCloseModal} hasCloseButton={true}>
         <Modal.header title={'방에 포함된 옵션을 선택해주세요.'}></Modal.header>
         <Modal.body>
           <S.FlexBoxColumn>
             <OptionModalInfoBox />
             <S.OptionContainer>
               {optionCounts.map(optionId => (
-                <OptionButton
-                  // onClickSelect={targetId => onToggleSelectOption(targetId)}
-                  optionId={optionId}
-                  key={optionId}
-                  // isSelected={isSelectedOption(optionId)}
-                />
+                <OptionButton optionId={optionId} key={optionId} />
               ))}
             </S.OptionContainer>
           </S.FlexBoxColumn>
@@ -66,12 +46,17 @@ const OptionModal = ({ isOpen, setIsOpen }: Props) => {
 export default OptionModal;
 
 const OptionContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* display: grid;
+  grid-template-columns: repeat(3, 1fr); */
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
   gap: 15px;
-  width: 300px;
+  width: 100%;
 
-  justify-content: center;
+  /* width: 300px; */
+
+  /* justify-content: center; */
   place-items: center;
 `;
 

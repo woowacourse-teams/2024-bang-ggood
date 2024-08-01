@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
-import useToastState from '@/store/useToastState';
+import useToastStore from '@/store/useToastStore';
 
 const useToast = (durationMinute: number) => {
-  const { hideToast, toast, showToast } = useToastState();
+  const { hideToast, toast, showToast } = useToastStore();
 
   useEffect(() => {
     if (toast) {

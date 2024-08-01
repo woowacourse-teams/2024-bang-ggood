@@ -12,8 +12,6 @@ import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 import { RoomInfo, RoomInfoName } from '@/types/room';
 
 interface Props {
-  // selectedOptions: number[];
-  // setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
   roomInfo: RoomInfo;
   onChange: (event: InputChangeEvent) => void;
 }

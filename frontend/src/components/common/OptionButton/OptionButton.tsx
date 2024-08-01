@@ -3,13 +3,12 @@ import useOptionStore from '@/store/useOptionStore';
 
 interface Props {
   optionId: number;
-  // isSelected: boolean;
-  // onClickSelect: (optionId: number) => void;
 }
 
 const OptionButton = ({ optionId }: Props) => {
   const option = Object.values(options).find(opt => opt.id === optionId);
   const { isSelectedOption, addOption, removeOption } = useOptionStore();
+
   if (!option) {
     return null;
   }
@@ -19,7 +18,11 @@ const OptionButton = ({ optionId }: Props) => {
 
   return (
     <div>
-      {isSelectedOption ? <FilledIcon onClick={() => addOption} /> : <UnfilledIcon onClick={() => removeOption} />}
+      {isSelectedOption(optionId) ? (
+        <FilledIcon onClick={() => removeOption(optionId)} />
+      ) : (
+        <UnfilledIcon onClick={() => addOption(optionId)} />
+      )}
     </div>
   );
 };

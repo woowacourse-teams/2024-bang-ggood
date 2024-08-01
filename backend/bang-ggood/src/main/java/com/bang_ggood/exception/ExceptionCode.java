@@ -20,7 +20,9 @@ public enum ExceptionCode {
     // Checklist
     CHECKLIST_COMPARISON_INVALID_COUNT(HttpStatus.BAD_REQUEST, "비교할 체크리스트 개수가 유효하지 않습니다."),
     CHECKLIST_NOT_FOUND(HttpStatus.BAD_REQUEST, "체크리스트가 존재하지 않습니다."),
-    ;
+
+    // Auth
+    OAUTH_TOKEN_INTERNAL_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "토큰을 요청하는 과정에서 예상치 못한 예외가 발생했습니다.");
 
     private final HttpStatus httpStatus;
     private final String message;

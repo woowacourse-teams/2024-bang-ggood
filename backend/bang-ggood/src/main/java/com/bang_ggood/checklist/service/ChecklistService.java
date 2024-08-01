@@ -8,11 +8,13 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.ChecklistScore;
+import com.bang_ggood.checklist.domain.CustomChecklistQuestion;
 import com.bang_ggood.checklist.domain.Grade;
 import com.bang_ggood.checklist.domain.Option;
 import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.request.ChecklistInfo;
+import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.request.QuestionCreateRequest;
 import com.bang_ggood.checklist.dto.response.BadgeResponse;
 import com.bang_ggood.checklist.dto.response.CategoryScoreReadResponse;
@@ -28,21 +30,22 @@ import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
+import com.bang_ggood.checklist.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
-import java.util.ArrayList;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ChecklistService {
@@ -51,14 +54,17 @@ public class ChecklistService {
     private final RoomRepository roomRepository;
     private final ChecklistOptionRepository checklistOptionRepository;
     private final ChecklistQuestionRepository checklistQuestionRepository;
+    private final CustomChecklistQuestionRepository customChecklistQuestionRepository;
 
     public ChecklistService(ChecklistRepository checklistRepository, RoomRepository roomRepository,
                             ChecklistOptionRepository checklistOptionRepository,
-                            ChecklistQuestionRepository checklistQuestionRepository) {
+                            ChecklistQuestionRepository checklistQuestionRepository,
+                            CustomChecklistQuestionRepository customChecklistQuestionRepository) {
         this.checklistRepository = checklistRepository;
         this.roomRepository = roomRepository;
         this.checklistOptionRepository = checklistOptionRepository;
         this.checklistQuestionRepository = checklistQuestionRepository;
+        this.customChecklistQuestionRepository = customChecklistQuestionRepository;
     }
 
     @Transactional
@@ -120,14 +126,21 @@ public class ChecklistService {
 
     @Transactional
     public ChecklistQuestionsResponse readChecklistQuestions() {
-        List<CategoryQuestionsResponse> categoryQuestionsResponses = new ArrayList<>();
-        for (Category category : Category.values()) {
-            List<QuestionResponse> questionsByCategory = Question.findQuestionsByCategory(category)
-                    .stream()
-                    .map(QuestionResponse::of)
-                    .toList();
-            categoryQuestionsResponses.add(CategoryQuestionsResponse.of(category, questionsByCategory));
-        }
+        User user = new User(1L, "방방이");
+        List<CustomChecklistQuestion> customChecklistQuestions = customChecklistQuestionRepository.findByUser(user);
+
+        Map<Category, List<Question>> categoryQuestions = customChecklistQuestions.stream()
+                .map(CustomChecklistQuestion::getQuestion)
+                .collect(Collectors.groupingBy(Question::getCategory));
+
+        List<CategoryQuestionsResponse> categoryQuestionsResponses = categoryQuestions.entrySet().stream()
+                .map(categoryQuestionEntry -> CategoryQuestionsResponse.of(
+                        categoryQuestionEntry.getKey(),
+                        categoryQuestionEntry.getValue().stream()
+                                .map(QuestionResponse::of)
+                                .toList()))
+                .toList();
+
         return new ChecklistQuestionsResponse(categoryQuestionsResponses);
     }
 
@@ -269,5 +282,33 @@ public class ChecklistService {
 
     private int getChecklistScore(List<ChecklistQuestion> questions) {
         return ChecklistScore.calculateTotalScore(questions);
+    }
+
+    @Transactional
+    public void updateCustomChecklist(CustomChecklistUpdateRequest request) {
+        List<Integer> questionIds = request.questionIds();
+        validateCustomChecklistQuestionsIsNotEmpty(questionIds);
+        validateCustomChecklistQuestionsDuplication(questionIds);
+
+        User user = new User(1L, "방방이");
+        customChecklistQuestionRepository.deleteAllByUser(user);
+
+        List<CustomChecklistQuestion> customChecklistQuestions = questionIds.stream()
+                .map(Question::fromId)
+                .map(question -> new CustomChecklistQuestion(user, question))
+                .toList();
+        customChecklistQuestionRepository.saveAll(customChecklistQuestions);
+    }
+
+    private void validateCustomChecklistQuestionsIsNotEmpty(List<Integer> questionIds) {
+        if (questionIds.isEmpty()) {
+            throw new BangggoodException(ExceptionCode.CUSTOM_CHECKLIST_QUESTION_EMPTY);
+        }
+    }
+
+    private void validateCustomChecklistQuestionsDuplication(List<Integer> questionIds) {
+        if (questionIds.size() != Set.copyOf(questionIds).size()) {
+            throw new BangggoodException(ExceptionCode.QUESTION_DUPLICATED);
+        }
     }
 }

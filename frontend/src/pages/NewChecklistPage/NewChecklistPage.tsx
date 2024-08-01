@@ -44,7 +44,7 @@ const NewChecklistPage = () => {
 
   const navigate = useNavigate();
 
-  /*받아온 질문에 답변 속성을 추가하는 함수*/
+  /*현재 상태를 백엔드에 보내는 답안 포맷으로 바꾸는 함수*/
   const transformQuestions = (checklist: ChecklistCategoryQnA[]) => {
     return checklist.flatMap(category =>
       category.questions.map(question => ({

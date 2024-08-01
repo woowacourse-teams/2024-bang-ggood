@@ -44,11 +44,8 @@ export interface ChecklistCompare extends RoomInfo {
   checklistId: number;
   rank: number;
   score: number;
-<<<<<<< HEAD
   optionCount: number;
-=======
   options: Option[];
->>>>>>> ab2effad9378e1bdf25c7ac31ce9bd9f380039fe
   categories: CategoryScore[];
 }
 

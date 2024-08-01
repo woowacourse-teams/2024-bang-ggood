@@ -104,15 +104,9 @@ const ModalOuter = styled.div<{
   min-height: 150px;
   padding: 12px;
 
-<<<<<<< HEAD
-  background-color: white;
-  ${flexCenter}
-  max-width: 600px;
-=======
   background-color: ${({ theme }) => theme.palette.white};
 
   color: ${({ theme }) => theme.palette.black};
->>>>>>> ab2effad9378e1bdf25c7ac31ce9bd9f380039fe
 `;
 
 const CloseButton = styled.button`

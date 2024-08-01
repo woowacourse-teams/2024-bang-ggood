@@ -2,8 +2,8 @@ package com.bang_ggood.category.service;
 
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.category.domain.CategoryPriority;
-import com.bang_ggood.category.dto.response.CategoriesReadResponse;
 import com.bang_ggood.category.dto.request.CategoryPriorityCreateRequest;
+import com.bang_ggood.category.dto.response.CategoriesReadResponse;
 import com.bang_ggood.category.dto.response.CategoryReadResponse;
 import com.bang_ggood.category.repository.CategoryPriorityRepository;
 import com.bang_ggood.exception.BangggoodException;
@@ -62,7 +62,9 @@ public class CategoryService {
         request.categoryIds().stream()
                 .filter(id -> !Category.contains(id))
                 .findAny()
-                .ifPresent(id -> { throw new BangggoodException(CATEGORY_NOT_FOUND); });
+                .ifPresent(id -> {
+                    throw new BangggoodException(CATEGORY_NOT_FOUND);
+                });
     }
 
     public CategoriesReadResponse readCategories() {

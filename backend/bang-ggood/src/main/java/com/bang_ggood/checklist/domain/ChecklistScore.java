@@ -5,6 +5,9 @@ import java.util.List;
 
 public class ChecklistScore {
 
+    private ChecklistScore() {
+    }
+
     public static int calculateTotalScore(List<ChecklistQuestion> questions) {
         if (questions.isEmpty()) {
             return 0;
@@ -27,8 +30,5 @@ public class ChecklistScore {
         int totalScore = Grade.calculateTotalScore(filteredQuestions);
 
         return totalScore * 10 / maxScore;
-    }
-
-    private ChecklistScore() {
     }
 }

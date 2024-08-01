@@ -27,7 +27,8 @@ public class GlobalExceptionHandler {
 
     //TODO 로깅해야함
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ExceptionResponse> handleRuntimeException(RuntimeException runtimeException, HttpServletRequest request) {
+    public ResponseEntity<ExceptionResponse> handleRuntimeException(RuntimeException runtimeException,
+                                                                    HttpServletRequest request) {
         runtimeException.printStackTrace();
         ExceptionResponse response = new ExceptionResponse(
                 request.getMethod(),

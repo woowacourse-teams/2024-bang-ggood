@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
 import { useTabContext } from '@/components/common/Tabs/TabContext';
-import Tabs from '@/components/common/Tabs/Tabs';
 import NewChecklistInfoTemplate from '@/pages/NewChecklistPage/NewChecklistInfoTemplate';
+import NewChecklistTab from '@/pages/NewChecklistPage/NewChecklistTab';
 import NewChecklistTemplate from '@/pages/NewChecklistPage/NewChecklistTemplate';
 import { RoomInfo } from '@/types/room';
 import { Tab } from '@/types/tab';
@@ -17,8 +17,8 @@ const NewChecklistBody = (props: Props) => {
   const { newChecklistTabs, roomInfo, onChange } = props;
   const { currentTabId } = useTabContext();
 
-  //TODO: 임시 수정 필요
-  const newChecklistTabsWithCompletion = newChecklistTabs.map(tabInfo => ({ ...tabInfo, isCompleted: false }));
+  // //TODO: 임시 수정 필요
+  // const newChecklistTabsWithCompletion = newChecklistTabs.map(tabInfo => ({ ...tabInfo, isCompleted: false }));
 
   const renderTabContent = () => {
     switch (currentTabId) {
@@ -39,7 +39,8 @@ const NewChecklistBody = (props: Props) => {
   };
   return (
     <div>
-      <Tabs tabList={newChecklistTabsWithCompletion} />
+      <NewChecklistTab newChecklistTabs={newChecklistTabs} />
+      {/* <Tabs tabList={newChecklistTabsWithCompletion} /> */}
       <S.ContentBox>{currentTabId !== null && currentTabId !== undefined && renderTabContent()}</S.ContentBox>
     </div>
   );

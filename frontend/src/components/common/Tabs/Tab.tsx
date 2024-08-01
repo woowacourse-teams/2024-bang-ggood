@@ -26,7 +26,6 @@ const Container = styled.div<{ active: boolean }>`
   z-index: ${({ theme }) => theme.zIndex.TABS};
   ${flexCenter};
   margin-top: 10px;
-  margin-right: 6px;
   padding: 10px 16px;
 
   color: ${({ theme, active }) => (active ? theme.palette.yellow600 : theme.palette.black)};

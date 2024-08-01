@@ -12,7 +12,7 @@
     "dev": "webpack serve",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test": "jest & tsc --noEmit",
+    "test": "concurrently --names ,[TYPE] --prefix {name} \"jest\" \"tsc --noEmit\"",
     "postinstall": "cd .. && husky frontend/.husky",
     "format": "prettier --cache --write .",
     "lint": "eslint --cache .",

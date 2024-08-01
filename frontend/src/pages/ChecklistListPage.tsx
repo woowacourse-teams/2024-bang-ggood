@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { getChecklists } from '@/apis/checklist';
 import { Plus } from '@/assets/assets';
@@ -46,6 +46,10 @@ const ChecklistListPage = () => {
     });
   };
 
+  const handleClickFloatingButton = () => {
+    navigate(ROUTE_PATH.checklistNew);
+  };
+
   return (
     <>
       <Header center={<Header.Text>체크리스트</Header.Text>} />
@@ -61,11 +65,9 @@ const ChecklistListPage = () => {
           ))}
         </S.ListBox>
       </Layout>
-      <Link to={ROUTE_PATH.checklistNew}>
-        <FloatingButton>
-          <Plus />
-        </FloatingButton>
-      </Link>
+      <FloatingButton onClick={handleClickFloatingButton}>
+        <Plus />
+      </FloatingButton>
       <FooterDefault />
     </>
   );

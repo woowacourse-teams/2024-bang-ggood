@@ -5,7 +5,6 @@ import { ChecklistForm } from '@/types/room';
 export const getChecklistQuestions = async () => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_QUESTION });
   const data = await response.json();
-  console.log(data);
   return data.categories;
 };
 
@@ -26,7 +25,7 @@ export const postChecklist = async (answers: ChecklistForm) => {
   return response;
 };
 
-export const getCompareRooms = async ({ id1, id2, id3 }: { id1: number; id2: number; id3: number }) => {
+export const getCompareRooms = async ({ id1, id2, id3 }: { id1: number; id2: number; id3?: number }) => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_COMPARE({ id1, id2, id3 }) });
   const data = await response.json();
   return data.checklists;

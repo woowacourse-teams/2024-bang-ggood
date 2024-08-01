@@ -6,5 +6,5 @@ export interface Category {
 }
 
 export interface CategoryScore extends Category {
-  score: number;
+  score?: number;
 }

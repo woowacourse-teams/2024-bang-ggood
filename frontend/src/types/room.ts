@@ -12,6 +12,9 @@ export interface RoomInfo {
   station?: string;
   walkingTime?: number;
   realEstate?: string;
+  type?: string;
+  size?: number;
+  floorLevel?: string;
 }
 
 export type RoomInfoName = keyof RoomInfo;

@@ -29,23 +29,26 @@ export interface ChecklistAnswer {
   answer: EmotionType;
 }
 
-export interface Option {
-  id: number;
-  filled: string;
-  unfilled: string;
-}
-
 export interface ChecklistPreview extends RoomInfo {
   checklistId: number;
   badge?: Badge[];
   createdAt: string;
 }
 
+export interface Option {
+  optionId: number;
+  optionName: string;
+}
+
 export interface ChecklistCompare extends RoomInfo {
   checklistId: number;
-  rank?: number;
+  rank: number;
   score: number;
+<<<<<<< HEAD
   optionCount: number;
+=======
+  options: Option[];
+>>>>>>> ab2effad9378e1bdf25c7ac31ce9bd9f380039fe
   categories: CategoryScore[];
 }
 

@@ -1,5 +1,5 @@
+import CategoryAccordion from '@/components/ChecklistDetail/CategoryAccordion';
 import Accordion from '@/components/common/Accordion/Accordion';
-import ChecklistCategory from '@/components/NewChecklist/ChecklistCategory';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 
 interface Props {
@@ -8,12 +8,13 @@ interface Props {
 
 const ChecklistAnswerSection = ({ categories }: Props) => {
   return (
+    // TODO: 아코디언 모음집이라면 명명 수정 (Accordions)
     <Accordion>
       {categories?.map(category => (
         <div key={category.categoryId}>
           <Accordion.header text={category.categoryName} id={category.categoryId} />
           <Accordion.body id={category.categoryId}>
-            <ChecklistCategory type="answered" key={category.categoryId} category={category} />
+            <CategoryAccordion key={category.categoryId} category={category} />
           </Accordion.body>
         </div>
       ))}

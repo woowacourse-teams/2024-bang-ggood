@@ -13,7 +13,7 @@ public class ChecklistScore {
         int maxScore = Grade.calculateMaxScore(questions.size());
         int totalScore = Grade.calculateTotalScore(questions);
 
-        return totalScore * 10 / maxScore;
+        return totalScore * 100 / maxScore;
     }
 
     public static int calculateCategoryScore(Category category, List<ChecklistQuestion> questions) {

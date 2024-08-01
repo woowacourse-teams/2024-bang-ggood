@@ -288,7 +288,7 @@ public class ChecklistService {
     @Transactional
     public void updateCustomChecklist(CustomChecklistUpdateRequest request) {
         List<Integer> questionIds = request.questionIds();
-        validateCustomQuestionsCount(questionIds);
+        validateCustomQuestionsIsNotEmpty(questionIds);
         validateCustomQuestionsDuplication(questionIds);
 
         User user = new User(1L, "방방이");
@@ -301,9 +301,9 @@ public class ChecklistService {
         customQuestionRepository.saveAll(customQuestions);
     }
 
-    private void validateCustomQuestionsCount(List<Integer> questionIds) {
+    private void validateCustomQuestionsIsNotEmpty(List<Integer> questionIds) {
         if (questionIds.isEmpty()) {
-            throw new BangggoodException(ExceptionCode.CUSTOM_CHECKLIST_INVALID_COUNT);
+            throw new BangggoodException(ExceptionCode.CUSTOM_CHECKLIST_EMPTY);
         }
     }
 

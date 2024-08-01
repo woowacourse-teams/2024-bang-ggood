@@ -273,16 +273,16 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 .hasSize(request.questionIds().size());
     }
 
-    @DisplayName("커스텀 체크리스트 업데이트 실패 : 질문 개수가 유효하지 않을 때")
+    @DisplayName("커스텀 체크리스트 업데이트 실패 : 선택한 질문 개수가 0개일 때")
     @Test
-    void updateCustomChecklist_invalidQuestionCount_exception() {
+    void updateCustomChecklist_empty_exception() {
         // given
         CustomChecklistUpdateRequest request = new CustomChecklistUpdateRequest(new ArrayList<>());
 
         // when & then
         assertThatThrownBy(() -> checklistService.updateCustomChecklist(request))
                 .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.CUSTOM_CHECKLIST_INVALID_COUNT.getMessage());
+                .hasMessage(ExceptionCode.CUSTOM_CHECKLIST_EMPTY.getMessage());
     }
 
     @DisplayName("커스텀 체크리스트 업데이트 실패 : 질문이 중복될 때")

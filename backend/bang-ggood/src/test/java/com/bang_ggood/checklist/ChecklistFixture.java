@@ -16,32 +16,31 @@ public class ChecklistFixture {
     );
 
     public static final QuestionCreateRequest QUESTION_1_CREATE_REQUEST = new QuestionCreateRequest(
-            1, "GOOD"
+            1, "GOOD", "메모1"
     );
 
     public static final QuestionCreateRequest QUESTION_2_CREATE_REQUEST = new QuestionCreateRequest(
-            2, "SOSO"
+            2, "SOSO", null
     );
 
     public static final QuestionCreateRequest QUESTION_3_CREATE_REQUEST = new QuestionCreateRequest(
-            3, "BAD"
+            3, "BAD", "메모3"
     );
 
     public static final QuestionCreateRequest QUESTION_5_CREATE_REQUEST = new QuestionCreateRequest(
-            5, "GOOD"
+            5, "GOOD", null
     );
 
     public static final QuestionCreateRequest QUESTION_CREATE_REQUEST_NO_ANSWER = new QuestionCreateRequest(
-            6, null
+            6, null, "메모6"
     );
     public static final QuestionCreateRequest QUESTION_CREATE_REQUEST_NO_ID = new QuestionCreateRequest(
-            null, "GOOD"
+            null, "GOOD", "메모"
     );
 
     public static final QuestionCreateRequest QUESTION_CREATE_REQUEST_INVALID_ID = new QuestionCreateRequest(
-            9999, "SOSO"
+            9999, "SOSO", null
     );
-
 
 
     public static final ChecklistCreateRequest CHECKLIST_CREATE_REQUEST = new ChecklistCreateRequest(
@@ -84,11 +83,5 @@ public class ChecklistFixture {
             RoomFixture.ROOM_CREATE_REQUEST, List.of(1, 2, 3, 3),
             List.of(QUESTION_1_CREATE_REQUEST, QUESTION_2_CREATE_REQUEST,
                     QUESTION_3_CREATE_REQUEST, QUESTION_5_CREATE_REQUEST)
-    );
-
-    public static final ChecklistCreateRequest CHECKLIST_CREATE_REQUEST_NO_ANSWER = new ChecklistCreateRequest(
-            RoomFixture.ROOM_CREATE_REQUEST, List.of(1, 2, 3, 3),
-            List.of(QUESTION_1_CREATE_REQUEST, QUESTION_2_CREATE_REQUEST,
-                    QUESTION_3_CREATE_REQUEST, QUESTION_CREATE_REQUEST_NO_ANSWER)
     );
 }

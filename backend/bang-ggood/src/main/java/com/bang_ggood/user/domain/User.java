@@ -28,7 +28,7 @@ public class User extends BaseEntity {
     public User(String name) {
         this.name = name;
     }
-  
+
     protected User() {
     }
 

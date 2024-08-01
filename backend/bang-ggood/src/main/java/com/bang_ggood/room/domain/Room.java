@@ -1,7 +1,11 @@
 package com.bang_ggood.room.domain;
 
 import com.bang_ggood.BaseEntity;
+import com.bang_ggood.exception.BangggoodException;
+import com.bang_ggood.exception.ExceptionCode;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,23 +20,40 @@ public class Room extends BaseEntity {
 
     private String name;
 
-    private Integer floor;
-
-    private String address;
-
     private String station;
 
     private Integer walkingTime;
 
+    private String address;
+
+    @Enumerated(EnumType.STRING)
+    private Type type;
+
+    private Integer size;
+
+    private Integer floor;
+
+    @Enumerated(EnumType.STRING)
+    private FloorLevel floorLevel;
+
+    @Enumerated(EnumType.STRING)
+    private Structure structure;
+
     protected Room() {
     }
 
-    public Room(String name, Integer floor, String address, String station, Integer walkingTime) {
+    public Room(String name, String station, Integer walkingTime, String address, Type type, Integer size,
+                Integer floor, FloorLevel floorLevel, Structure structure) {
         this.name = name;
-        this.floor = floor;
-        this.address = address;
         this.station = station;
         this.walkingTime = walkingTime;
+        this.address = address;
+        this.type = type;
+        this.size = size;
+        this.floor = floor;
+        this.floorLevel = floorLevel;
+        this.structure = structure;
+        validateFloorAndLevel();
     }
 
     public Long getId() {
@@ -59,6 +80,29 @@ public class Room extends BaseEntity {
         return walkingTime;
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public FloorLevel getFloorLevel() {
+        return floorLevel;
+    }
+
+    public Structure getStructure() {
+        return structure;
+    }
+
+
+    private void validateFloorAndLevel() {
+        if (floorLevel != FloorLevel.GROUND && floor != null) {
+            throw new BangggoodException(ExceptionCode.ROOM_FLOOR_AND_LEVEL_INVALID);
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -81,10 +125,14 @@ public class Room extends BaseEntity {
         return "Room{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", floor=" + floor +
-                ", address='" + address + '\'' +
                 ", station='" + station + '\'' +
                 ", walkingTime=" + walkingTime +
+                ", address='" + address + '\'' +
+                ", type=" + type +
+                ", size=" + size +
+                ", floor=" + floor +
+                ", floorLevel=" + floorLevel +
+                ", structure=" + structure +
                 '}';
     }
 }

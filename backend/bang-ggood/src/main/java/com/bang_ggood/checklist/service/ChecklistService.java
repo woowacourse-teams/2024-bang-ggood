@@ -40,8 +40,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -102,27 +100,20 @@ public class ChecklistService {
     private void validateOptionInvalid(List<Integer> optionIds) {
         for (Integer optionId : optionIds) {
             if (!Option.contains(optionId)) {
-                throw new BangggoodException(ExceptionCode.INVALID_OPTION);
+                throw new BangggoodException(ExceptionCode.OPTION_INVALID);
             }
         }
     }
 
     private void createChecklistQuestions(ChecklistCreateRequest checklistCreateRequest, Checklist checklist) {
         validateQuestion(checklistCreateRequest.questions());
-        Map<Integer, String> existQuestions = checklistCreateRequest.questions()
-                .stream()
-                .collect(Collectors.toMap(QuestionCreateRequest::questionId, QuestionCreateRequest::answer));
-
-        List<ChecklistQuestion> checklistQuestions = Arrays.stream(Question.values())
-                .map(question -> {
-                    int questionId = question.getId();
-                    return Optional.ofNullable(existQuestions.get(questionId))
-                            .map(answer -> new ChecklistQuestion(checklist, Question.findById(questionId),
-                                    Grade.from(answer)))
-                            .orElseGet(() -> new ChecklistQuestion(checklist, Question.findById(questionId), null));
-                })
+        List<ChecklistQuestion> checklistQuestions = checklistCreateRequest.questions().stream()
+                .map(question -> new ChecklistQuestion(
+                        checklist,
+                        Question.fromId(question.questionId()),
+                        Grade.from(question.grade()),
+                        question.memo()))
                 .collect(Collectors.toList());
-
         checklistQuestionRepository.saveAll(checklistQuestions);
     }
 
@@ -156,7 +147,7 @@ public class ChecklistService {
     private void validateQuestionInvalid(List<QuestionCreateRequest> questions) {
         for (QuestionCreateRequest questionCreateRequest : questions) {
             if (!Question.contains(questionCreateRequest.questionId())) {
-                throw new BangggoodException(ExceptionCode.INVALID_QUESTION);
+                throw new BangggoodException(ExceptionCode.QUESTION_INVALID);
             }
         }
     }

@@ -7,8 +7,6 @@ import OptionButton from '@/components/common/OptionButton/OptionButton';
 import OptionModalInfoBox from '@/components/NewChecklist/OptionModal/OptionModalInfoBox';
 import { flexColumn } from '@/styles/common';
 
-export const totalOptionCount = 14;
-
 interface Props {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -46,17 +44,12 @@ const OptionModal = ({ isOpen, setIsOpen }: Props) => {
 export default OptionModal;
 
 const OptionContainer = styled.div`
-  /* display: grid;
-  grid-template-columns: repeat(3, 1fr); */
   display: flex;
   flex-flow: row;
   flex-wrap: wrap;
   gap: 15px;
   width: 100%;
 
-  /* width: 300px; */
-
-  /* justify-content: center; */
   place-items: center;
 `;
 

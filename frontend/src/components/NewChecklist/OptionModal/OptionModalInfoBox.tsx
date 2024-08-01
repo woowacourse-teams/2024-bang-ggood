@@ -10,7 +10,7 @@ import theme from '@/styles/theme';
 const OptionModalInfoBox = () => {
   const { selectedOptions, isAllSelected, addAllOptions, removeAllOptions } = useOptionStore();
 
-  const onToggleAllSelect = isAllSelected() ? () => removeAllOptions : () => addAllOptions;
+  const handleToggleAllSelect = isAllSelected() ? removeAllOptions : addAllOptions;
 
   return (
     <S.ButtonContainer>
@@ -18,8 +18,8 @@ const OptionModalInfoBox = () => {
         {/*전체 선택 버튼*/}
         <Checkbox
           isChecked={isAllSelected()}
-          setIsChecked={onToggleAllSelect()}
-          onClick={onToggleAllSelect()}
+          setIsChecked={handleToggleAllSelect}
+          onClick={handleToggleAllSelect}
           color={theme.palette.yellow500}
           hoverBorderColor={theme.palette.yellow600}
         />

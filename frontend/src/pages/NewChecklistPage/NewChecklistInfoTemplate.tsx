@@ -15,7 +15,7 @@ interface Props {
   roomInfo: RoomInfo;
   onChange: (event: InputChangeEvent) => void;
 }
-//TODO: 옵션 모달 등 복잡해서 추후 리팩토링 필요
+
 const NewChecklistInfoTemplate = ({ roomInfo, onChange: onChangeForForm }: Props) => {
   const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
 

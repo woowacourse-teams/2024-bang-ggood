@@ -10,7 +10,7 @@ interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
   setIsChecked: React.Dispatch<React.SetStateAction<boolean>>;
   color?: string;
   hoverBorderColor?: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const Checkbox = ({

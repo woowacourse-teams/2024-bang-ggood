@@ -8,10 +8,10 @@ import {
   FaceIconSoso,
   FaceIconSosoGray,
 } from '@/assets/assets';
-import { Emotion } from '@/types/emotionAnswer';
+import { EmotionType } from '@/types/emotionAnswer';
 
 interface FaceIconProps extends SVGProps<SVGSVGElement> {
-  emotion: Emotion;
+  emotion: EmotionType;
   isFilled?: boolean;
 }
 

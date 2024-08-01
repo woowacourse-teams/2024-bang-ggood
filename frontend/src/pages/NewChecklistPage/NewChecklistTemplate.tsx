@@ -1,25 +1,24 @@
 import styled from '@emotion/styled';
 
+import { useTabContext } from '@/components/common/Tabs/TabContext';
 import ChecklistQuestion from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
+import useChecklistStore from '@/store/useChecklistStore';
+import { ChecklistCategoryQnA, ChecklistQuestionWithAnswer } from '@/types/checklist';
 
-export interface addAnswerProps {
-  questionId: number;
-  newAnswer: number;
-}
+const NewChecklistTemplate = () => {
+  const { currentTabId } = useTabContext();
 
-interface Props {
-  questionSelectedAnswer: (questionId: number) => number | undefined;
-  checklistQuestions: ChecklistQuestion[];
-}
+  const { checklistCategoryQnA } = useChecklistStore();
 
-const NewChecklistTemplate = (props: Props) => {
-  const { questionSelectedAnswer, checklistQuestions } = props;
+  const targetCategoryQuestions = checklistCategoryQnA.filter(
+    (categoryQnA: ChecklistCategoryQnA) => categoryQnA.categoryId === currentTabId,
+  )[0];
 
   return (
     <S.ContentBox>
-      {checklistQuestions?.map(question => (
+      {targetCategoryQuestions.questions.map((question: ChecklistQuestionWithAnswer) => (
         <S.QuestionBox key={`question-${question.questionId}`}>
-          <ChecklistQuestion question={question} questionSelectedAnswer={questionSelectedAnswer} />
+          <ChecklistQuestion question={question} />
         </S.QuestionBox>
       ))}
     </S.ContentBox>

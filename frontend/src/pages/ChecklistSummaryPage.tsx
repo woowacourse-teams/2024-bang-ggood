@@ -4,15 +4,17 @@ import { useLocation } from 'react-router-dom';
 
 import { getChecklistSummary } from '@/apis/checklist';
 import Accordion from '@/components/common/Accordion/Accordion';
+import Divider from '@/components/common/Divider/Divider';
 import Header from '@/components/common/Header/Header';
 import Layout from '@/components/common/layout/Layout';
-import ChecklistCategory from '@/components/NewChecklist/ChecklistCategory';
+import ChecklistAnswer from '@/components/NewChecklist/CheckListAnswer';
 import theme from '@/styles/theme';
 import { ChecklistInfo } from '@/types/checklist';
+import { EmotionType } from '@/types/emotionAnswer';
 
 export interface addAnswerProps {
   questionId: number;
-  newAnswer: number;
+  newAnswer: EmotionType;
 }
 
 const ChecklistSummaryPage = () => {
@@ -41,7 +43,16 @@ const ChecklistSummaryPage = () => {
               <div key={category.categoryId}>
                 <Accordion.header text={category.categoryName} id={category.categoryId} />
                 <Accordion.body id={category.categoryId}>
-                  <ChecklistCategory type="preview" key={category.categoryId} category={category} />
+                  {category.questions.map((question, index) => {
+                    const { title, subtitle, answer } = question;
+                    return (
+                      <>
+                        <ChecklistAnswer subtitle={subtitle} title={title} answer={answer} />
+                        {index !== category.questions.length - 1 && <Divider />}
+                      </>
+                    );
+                  })}
+                  {/* <ChecklistCategory type="preview" key={category.categoryId} category={category} /> */}
                 </Accordion.body>
               </div>
             ))}

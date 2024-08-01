@@ -47,4 +47,6 @@ const options = {
 const filledOptions = Object.values(options).map(option => option.filled);
 const unfilledOptions = Object.values(options).map(option => option.unfilled);
 
-export { filledOptions, options, unfilledOptions };
+const OPTION_COUNT = 14;
+
+export { OPTION_COUNT, filledOptions, options, unfilledOptions };

@@ -15,13 +15,19 @@ const FormFieldWrapper = styled.div<{ rowGap?: string }>`
 
 const S = {
   MovedRequiredDot: styled(InputRequiredDot)`
-    transform: translate(80%, -140%);
+    position: absolute;
+    top: -5px;
+    left: 50px;
   `,
   P: styled.p`
     height: 10px;
 
     color: black;
     font-size: ${({ theme }) => theme.text.size.small};
+  `,
+  LabelContainer: styled.label`
+    position: relative;
+    z-index: 0;
   `,
 };
 
@@ -31,12 +37,13 @@ interface LabelProps extends HTMLAttributes<HTMLLabelElement> {
   label: string;
   required?: boolean;
 }
+
 const FormField = Object.assign(FormFieldWrapper, {
   Label: ({ label, required = false, ...rest }: LabelProps) => (
-    <label {...rest} style={{ fontSize: theme.text.size.medium, fontWeight: theme.text.weight.bold }}>
+    <S.LabelContainer {...rest} style={{ fontSize: theme.text.size.medium, fontWeight: theme.text.weight.bold }}>
       {label}
       {required && <S.MovedRequiredDot />}
-    </label>
+    </S.LabelContainer>
   ),
   Input: ({ ...rest }: GetProps<typeof Input>) => <Input {...rest} />,
   P: ({ value, ...rest }: { value: string } & HTMLAttributes<HTMLParagraphElement>) => <S.P {...rest}>{value}</S.P>,

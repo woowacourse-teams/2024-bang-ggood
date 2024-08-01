@@ -12,7 +12,7 @@ interface toastState {
  * @property {function(): void} hideToast - 현재 표시되고 있는 토스트 메시지를 숨기는 함수입니다. 기본적으로 3초 뒤에 사라지도록 설정되어 있습니다.
  */
 
-const useToastState = create<toastState>(set => ({
+const useToastStore = create<toastState>(set => ({
   toast: null,
   showToast: (message: string) => {
     set(state => ({ ...state, toast: message }));
@@ -22,4 +22,4 @@ const useToastState = create<toastState>(set => ({
   },
 }));
 
-export default useToastState;
+export default useToastStore;

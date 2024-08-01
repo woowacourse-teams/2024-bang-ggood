@@ -43,11 +43,13 @@ const CompareCard = ({ room, compareNum }: Props) => {
 
   return (
     <S.Container isHightLight={isHightestRoom && compareNum === 3}>
+      {/* 방 이름 / 점수 */}
       <S.Title>{roomName}</S.Title>
       <S.RankWrapper>
         <S.Rank>{rank}등</S.Rank>
         <S.Score>({score}점)</S.Score>
       </S.RankWrapper>
+      {/* 주소 / 층수 */}
       <CompareItem
         label={'주소 / 층수'}
         isLabeled={isHightestRoom}
@@ -57,6 +59,7 @@ const CompareCard = ({ room, compareNum }: Props) => {
           </S.Item>
         }
       />
+      {/* 보증금 / 월세 */}
       <CompareItem
         label={'보증금 / 월세'}
         isLabeled={isHightestRoom}
@@ -72,11 +75,13 @@ const CompareCard = ({ room, compareNum }: Props) => {
         isLabeled={isHightestRoom}
         item={
           <S.Item>
-            {}/{rent}
+      {}
           </S.Item>
         }
       /> */}
+      {/* 계약기간 */}
       <CompareItem label={'계약기간'} isLabeled={isHightestRoom} item={<S.Item>{contractTerm}개월</S.Item>} />
+      {/* 교통편 */}
       <CompareItem
         label={'교통편'}
         isLabeled={isHightestRoom}
@@ -88,6 +93,7 @@ const CompareCard = ({ room, compareNum }: Props) => {
           </S.Item>
         }
       />
+      {/* 옵션 버튼 및 모달 */}
       <CompareItem
         label={'옵션'}
         isLabeled={isHightestRoom}
@@ -103,6 +109,7 @@ const CompareCard = ({ room, compareNum }: Props) => {
           </S.Box>
         </Modal.body>
       </Modal>
+      {/* 체크리스트 카테고리별 모음 */}
       <S.Subtitle isLabeled={isHightestRoom}>체크리스트</S.Subtitle>
       {categories.map(category => {
         const { categoryId, categoryName, score } = category;
@@ -133,12 +140,15 @@ const S = {
     box-sizing: border-box;
     ${flexColumn};
     align-items: center;
-    gap: 20px;
+    gap: 10px;
 
     background-color: ${({ isHightLight }) => isHightLight && '#FBFBFB'};
   `,
   Title: styled.div`
     ${title2}
+    text-align: center;
+    min-height: 40px;
+    word-break: keep-all;
   `,
   RankWrapper: styled.div`
     ${flexColumn}
@@ -153,13 +163,14 @@ const S = {
   Item: styled.div`
     display: flex;
     width: 100%;
+    min-height: 60px;
 
     font-size: ${({ theme }) => theme.text.size.medium};
     line-height: 1.2rem;
     letter-spacing: 0.05rem;
     text-align: center;
     justify-content: center;
-    word-break: keep-all;
+    word-break: break-all;
   `,
   OptionButton: styled.button`
     ${title3}
@@ -179,5 +190,8 @@ const S = {
     margin-top: 20px;
 
     font-size: ${({ theme }) => theme.text.size.medium};
+  `,
+  MinBox: styled.div`
+    min-height: 60px;
   `,
 };

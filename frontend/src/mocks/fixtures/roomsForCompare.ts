@@ -70,7 +70,7 @@ export const threeRoomsForCompare = {
     },
     {
       checklistId: 3,
-      roomName: '구의역 C방',
+      roomName: '서울대입구역 C방',
       rank: 3,
       score: 77,
       deposit: 1000,
@@ -96,7 +96,7 @@ export const threeRoomsForCompare = {
       address: '서울시 광진구 구의동',
       contractTerm: 12,
       floor: 1,
-      station: '구의역',
+      station: '동대문역사문화공원역',
       walkingTime: 3,
       realEstate: '광진 부동산',
     },

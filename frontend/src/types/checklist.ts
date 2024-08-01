@@ -22,7 +22,7 @@ export interface ChecklistQuestion {
 }
 
 export interface ChecklistQuestionWithAnswer extends ChecklistQuestion {
-  answer: EmotionType | null;
+  answer?: EmotionType;
 }
 
 export interface ChecklistAnswer {

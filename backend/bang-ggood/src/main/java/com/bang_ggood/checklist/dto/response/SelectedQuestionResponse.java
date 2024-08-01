@@ -2,11 +2,11 @@ package com.bang_ggood.checklist.dto.response;
 
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 
-public record WrittenQuestionResponse(Integer questionId, String title,
-                                      String subtitle, String grade, String memo) {
+public record SelectedQuestionResponse(Integer questionId, String title,
+                                       String subtitle, String grade, String memo) {
 
-    public static WrittenQuestionResponse of(ChecklistQuestion checklistQuestion) {
-        return new WrittenQuestionResponse(
+    public static SelectedQuestionResponse of(ChecklistQuestion checklistQuestion) {
+        return new SelectedQuestionResponse(
                 checklistQuestion.getQuestion().getId(),
                 checklistQuestion.getQuestion().getTitle(),
                 checklistQuestion.getQuestion().getSubtitle(),

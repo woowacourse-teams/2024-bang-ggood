@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw';
 
 import { BASE_URL, ENDPOINT } from '@/apis/url';
+import { checklistDetail } from '@/mocks/fixtures/checklistDetail';
 import { checklistList } from '@/mocks/fixtures/checklistList';
 import { checklistQuestions } from '@/mocks/fixtures/checklistQuestions';
 import { threeRoomsForCompare, twoRoomsForCompare } from '@/mocks/fixtures/roomsForCompare';
@@ -8,6 +9,10 @@ import { threeRoomsForCompare, twoRoomsForCompare } from '@/mocks/fixtures/rooms
 export const checklistHandlers = [
   http.get(BASE_URL + ENDPOINT.CHECKLIST_QUESTION, () => {
     return HttpResponse.json(checklistQuestions, { status: 200 });
+  }),
+
+  http.get(BASE_URL + ENDPOINT.CHECKLIST_ID(1), () => {
+    return HttpResponse.json(checklistDetail, { status: 200 });
   }),
 
   http.get(BASE_URL + ENDPOINT.CHECKLISTS, () => {

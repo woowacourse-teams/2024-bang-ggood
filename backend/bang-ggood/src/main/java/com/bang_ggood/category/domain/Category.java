@@ -1,11 +1,11 @@
 package com.bang_ggood.category.domain;
 
-import static com.bang_ggood.category.domain.Badge.NONE;
-import static com.bang_ggood.checklist.domain.ChecklistScore.calculateCategoryScore;
-
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.bang_ggood.category.domain.Badge.NONE;
+import static com.bang_ggood.checklist.domain.ChecklistScore.calculateCategoryScore;
 
 public enum Category {
 

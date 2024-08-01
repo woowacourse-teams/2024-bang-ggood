@@ -1,7 +1,5 @@
 package com.bang_ggood.checklist.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.bang_ggood.AcceptanceTest;
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.checklist.ChecklistFixture;
@@ -17,6 +15,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ChecklistE2ETest extends AcceptanceTest {
 

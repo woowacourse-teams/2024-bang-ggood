@@ -1,12 +1,11 @@
 package com.bang_ggood.room.domain;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
-import com.bang_ggood.room.RoomFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RoomTest {
 

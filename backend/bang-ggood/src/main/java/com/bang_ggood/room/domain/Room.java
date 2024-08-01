@@ -97,7 +97,6 @@ public class Room extends BaseEntity {
     }
 
 
-
     private void validateFloorAndLevel() {
         if (floorLevel != FloorLevel.GROUND && floor != null) {
             throw new BangggoodException(ExceptionCode.ROOM_FLOOR_AND_LEVEL_INVALID);

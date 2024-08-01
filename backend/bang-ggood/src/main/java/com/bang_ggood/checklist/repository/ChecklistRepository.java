@@ -12,20 +12,24 @@ import java.util.Optional;
 
 public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
 
-    //TODO 테스트해야 함
+    //TODO: 논리적 삭제 리팩토링
     @Query("SELECT c FROM Checklist c "
             + "JOIN FETCH Room r "
             + "ON c.id = :id "
             + "AND c.room.id = r.id")
     Optional<Checklist> findById(@Param("id") long id);
 
+    //TODO: 논리적 삭제 리팩토링
     default Checklist getById(long id) {
         return findById(id).orElseThrow(() -> new BangggoodException(ExceptionCode.CHECKLIST_NOT_FOUND));
     }
 
+    //TODO: 논리적 삭제 리팩토링
     List<Checklist> findByUser(User user);
 
+    //TODO: 논리적 삭제 리팩토링
     List<Checklist> findByUserAndIdIn(User user, List<Long> checklistIds);
 
+    //TODO: 논리적 삭제 리팩토링
     long countAllByIdIn(List<Long> ids);
 }

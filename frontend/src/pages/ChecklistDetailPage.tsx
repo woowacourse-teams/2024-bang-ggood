@@ -10,13 +10,12 @@ import Layout from '@/components/common/layout/Layout';
 import theme from '@/styles/theme';
 import { ChecklistInfo } from '@/types/checklist';
 
-interface RouteParams {
-  [key: string]: string;
+type RouteParams = {
   checklistId: string;
-}
+};
 
 const ChecklistDetailPage = () => {
-  const { checklistId } = useParams<RouteParams>();
+  const { checklistId } = useParams() as RouteParams;
   const [checklist, setChecklist] = useState<ChecklistInfo>();
 
   useEffect(() => {

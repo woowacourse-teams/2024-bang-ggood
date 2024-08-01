@@ -6,15 +6,15 @@ import { flexColumn, flexRow } from '@/styles/common';
 
 interface Props {
   isSelected: boolean;
-  setIsChecked: React.Dispatch<React.SetStateAction<boolean>>;
+  onClick?: () => void;
 }
 
-const CompareSelectCard = ({ isSelected, setIsChecked }: Props) => {
+const CompareSelectCard = ({ isSelected, onClick }: Props) => {
   return (
-    <S.Card>
+    <S.Card onClick={onClick}>
       <S.FlexRow>
         <div>
-          <Checkbox isChecked={isSelected} setIsChecked={setIsChecked} />
+          <Checkbox isChecked={isSelected} />
         </div>
         <S.FlexColumn>
           <S.HeaderContainer>
@@ -37,11 +37,12 @@ const S = {
     ${flexColumn}
     height: 80px;
     padding: 14px 18px;
-    border: 2px solid ${({ theme }) => theme.palette.grey300};
+    border: 2px solid ${({ theme }) => theme.palette.grey200};
     border-radius: 10px;
 
     background-color: white;
     row-gap: 5px;
+    cursor: pointer;
   `,
   HeaderContainer: styled.div`
     ${flexRow}

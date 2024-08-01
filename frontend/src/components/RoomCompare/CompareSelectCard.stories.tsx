@@ -14,6 +14,6 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: () => {
     const [isSelected, setIsSelected] = useState(false);
-    return <CompareSelectCard isSelected={isSelected} setIsChecked={setIsSelected} />;
+    return <CompareSelectCard isSelected={isSelected} onClick={() => setIsSelected(!isSelected)} />;
   },
 };

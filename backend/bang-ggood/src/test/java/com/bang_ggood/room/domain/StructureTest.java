@@ -13,8 +13,8 @@ class StructureTest {
     @DisplayName("방 구조 이름으로 조회 성공")
     @Test
     void fromName() {
-        assertThat(Structure.fromName(Structure.DIVIDED.getName()))
-                .isEqualTo(Structure.DIVIDED);
+        assertThat(Structure.fromName(Structure.DIVIDED_ONE_ROOM.getName()))
+                .isEqualTo(Structure.DIVIDED_ONE_ROOM);
     }
 
     @DisplayName("방 구조 이름으로 조회 실패 : 유효하지 않은 방 구조 이름일 경우")

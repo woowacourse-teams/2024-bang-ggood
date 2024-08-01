@@ -15,7 +15,7 @@ public class RoomFixture {
 
     public static final Room ROOM_2 = new Room(
             "살기 싫은 방", 4, "대구광역시 중구", "대구", 10,
-            Type.OFFICETEL, 44, FloorLevel.BASEMENT, Structure.DIVIDED
+            Type.OFFICETEL, 44, FloorLevel.BASEMENT, Structure.DIVIDED_ONE_ROOM
     );
 
     public static final Room ROOM_3 = new Room(
@@ -32,6 +32,6 @@ public class RoomFixture {
     public static final RoomCreateRequest ROOM_CREATE_REQUEST_NO_ROOM_NAME = new RoomCreateRequest(
             null, 1000, 50, 12, 3,
             "부산광역시 루터회관", "잠실역", 10, "방끗공인중개사",
-            Type.APARTMENT.getName(), 44, FloorLevel.BASEMENT.getName(), Structure.DIVIDED.getName()
+            Type.APARTMENT.getName(), 44, FloorLevel.BASEMENT.getName(), Structure.DIVIDED_ONE_ROOM.getName()
     );
 }

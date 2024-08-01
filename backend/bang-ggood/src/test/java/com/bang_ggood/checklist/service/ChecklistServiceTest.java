@@ -31,6 +31,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST;
+import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED;
+import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_EMPTY;
+import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_INVALID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -263,7 +267,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateCustomChecklist() {
         // given
-        CustomChecklistUpdateRequest request = new CustomChecklistUpdateRequest(List.of(1, 3, 5, 7, 8, 11, 15, 30));
+        CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST;
 
         // when
         checklistService.updateCustomChecklist(request);
@@ -277,7 +281,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateCustomChecklist_empty_exception() {
         // given
-        CustomChecklistUpdateRequest request = new CustomChecklistUpdateRequest(new ArrayList<>());
+        CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_EMPTY;
 
         // when & then
         assertThatThrownBy(() -> checklistService.updateCustomChecklist(request))
@@ -289,7 +293,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateCustomChecklist_duplicatedQuestion_exception() {
         // given
-        CustomChecklistUpdateRequest request = new CustomChecklistUpdateRequest(List.of(1, 1, 1));
+        CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED;
 
         // when & then
         assertThatThrownBy(() -> checklistService.updateCustomChecklist(request))
@@ -301,7 +305,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateCustomChecklist_invalidQuestionId_exception() {
         // given
-        CustomChecklistUpdateRequest request = new CustomChecklistUpdateRequest(List.of(99999));
+        CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_INVALID;
 
         // when & then
         assertThatThrownBy(() -> checklistService.updateCustomChecklist(request))

@@ -1,7 +1,7 @@
 import Divider from '@/components/common/Divider/Divider';
 import ChecklistAnswer from '@/components/NewChecklist/CheckListAnswer';
 import ChecklistQuestion from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
-import { addAnswerProps } from '@/pages/ChecklistDetailPage';
+import { addAnswerProps } from '@/pages/NewChecklistPage/NewChecklistTemplate';
 import { ChecklistCategoryQuestions } from '@/types/checklist';
 
 interface QuestionProps {
@@ -18,19 +18,19 @@ interface AnswerProps {
   category: ChecklistCategoryQuestions;
   toggleOpen?: (id: number) => void;
   isAccordianOpen?: boolean;
-  type: 'preview';
+  type: 'answered';
 }
 
 type ChecklistType = QuestionProps | AnswerProps;
 
 const ChecklistCategory = (props: ChecklistType) => {
   const { category, type } = props;
-  const isPreview = type === 'preview';
+  const isAnswered = type === 'answered';
 
   return (
     <>
       {category.questions.map((question, index) =>
-        isPreview ? (
+        isAnswered ? (
           <>
             <ChecklistAnswer key={`answer-${question.questionId}`} QandA={question} />
             {index !== category.questions.length - 1 && <Divider />}

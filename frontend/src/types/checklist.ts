@@ -12,7 +12,7 @@ export interface ChecklistCategoryQuestions {
 export interface ChecklistQuestion {
   questionId: number;
   title: string;
-  subtitle: string | null;
+  subtitle?: string;
 }
 
 export interface ChecklistAnswer extends ChecklistQuestion {
@@ -49,8 +49,8 @@ export interface ChecklistCompare extends RoomInfo {
 }
 
 export interface ChecklistInfo {
-  room: RoomInfo;
   checklistId: number;
-  options: number[];
+  room: RoomInfo;
+  options: Option[];
   categories: ChecklistCategoryQuestions[];
 }

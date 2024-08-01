@@ -12,10 +12,11 @@ interface Props {
   questionSelectedAnswer: (questionId: number) => number | void;
 }
 
-export const emotionPhrase: Record<Emotion, string> = {
+export const emotionPhrase: Record<Emotion | string, string> = {
   BAD: '별로에요',
   SOSO: '평범해요',
   GOOD: '좋아요',
+  null: '-',
 };
 
 const ChecklistQuestion = ({ question, questionSelectedAnswer }: Props) => {

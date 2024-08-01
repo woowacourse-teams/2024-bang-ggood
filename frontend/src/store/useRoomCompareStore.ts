@@ -5,6 +5,7 @@ interface RoomCompareState {
   addRoom: (roomId: number) => void;
   deleteRoom: (roomId: number) => void;
   toggleRoom: (roomId: number) => void;
+  has: (roomId: number) => boolean;
   clear: () => void;
 }
 const useRoomCompareStore = create<RoomCompareState>((set, get) => ({
@@ -27,21 +28,12 @@ const useRoomCompareStore = create<RoomCompareState>((set, get) => ({
   },
   has: (roomId: number) => get().rooms.has(roomId),
   toggleRoom: (roomId: number) => {
-    // TODO: addRoom, deleteRoom을 여기서도 사용하는 방법 찾기 (되어야 코드짧아짐)
-    const isIncluded = get().rooms.has(roomId);
-    if (!isIncluded) {
-      set(({ rooms }) => ({
-        rooms: rooms.add(roomId),
-      }));
+    const { addRoom, deleteRoom, has } = get();
+    if (has(roomId)) {
+      deleteRoom(roomId);
       return;
     }
-
-    set(({ rooms }) => {
-      rooms.delete(roomId);
-      return {
-        rooms,
-      };
-    });
+    addRoom(roomId);
   },
 }));
 

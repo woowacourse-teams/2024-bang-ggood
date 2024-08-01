@@ -31,12 +31,12 @@ class QuestionTest {
 
     @DisplayName("질문 아이디를 통해 질문 찾기 성공")
     @Test
-    void findById() {
+    void fromId() {
         //given
         int questionId = 1;
 
         //when
-        Question question = Question.findById(questionId);
+        Question question = Question.fromId(questionId);
 
         //then
         assertAll(
@@ -47,12 +47,12 @@ class QuestionTest {
 
     @DisplayName("질문 아이디를 통해 질문 찾기 실패 : 유효하지 않은 질문 아이디일 경우")
     @Test
-    void findById_invalidQuestion_exception() {
+    void fromId_invalidQuestion_exception() {
         //given
         int questionId = 999;
 
         //when & then
-        assertThatThrownBy(() -> Question.findById(questionId))
+        assertThatThrownBy(() -> Question.fromId(questionId))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
     }

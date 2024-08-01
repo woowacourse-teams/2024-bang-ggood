@@ -29,7 +29,6 @@ import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
-import com.bang_ggood.room.domain.FloorLevel;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.response.WrittenRoomResponse;
 import com.bang_ggood.room.repository.RoomRepository;
@@ -111,7 +110,7 @@ public class ChecklistService {
         List<ChecklistQuestion> checklistQuestions = checklistCreateRequest.questions().stream()
                 .map(question -> new ChecklistQuestion(
                         checklist,
-                        Question.findById(question.questionId()),
+                        Question.fromId(question.questionId()),
                         Grade.from(question.grade()),
                         question.memo()))
                 .collect(Collectors.toList());

@@ -61,7 +61,13 @@ public enum Question {
         this.subtitle = subtitle;
     }
 
-    // TODO 테스트 필요
+    public static Question fromId(int id) {
+        return Arrays.stream(values())
+                .filter(question -> question.id == id)
+                .findFirst()
+                .orElseThrow(() -> new BangggoodException(ExceptionCode.QUESTION_INVALID));
+    }
+
     public static List<ChecklistQuestion> filter(Category category, List<ChecklistQuestion> questions) {
         return questions.stream()
                 .filter(question -> question.getQuestion().isCategory(category) && question.getGrade() != null)
@@ -72,14 +78,6 @@ public enum Question {
         return Arrays.stream(values())
                 .filter(question -> question.getCategory().equals(category))
                 .collect(Collectors.toList());
-    }
-
-    // TODO 테스트 필요
-    public static Question findById(int id) {
-        return Arrays.stream(values())
-                .filter(question -> question.id == id)
-                .findFirst()
-                .orElseThrow(() -> new BangggoodException(ExceptionCode.QUESTION_INVALID));
     }
 
     public static boolean contains(int id) {

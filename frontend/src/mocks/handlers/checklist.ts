@@ -13,6 +13,9 @@ export const checklistHandlers = [
   http.get(BASE_URL + ENDPOINT.CHECKLISTS, () => {
     return HttpResponse.json(checklistList, { status: 200 });
   }),
+  http.post(BASE_URL + ENDPOINT.CHECKLISTS, () => {
+    return HttpResponse.json({}, { status: 201 });
+  }),
 
   http.get(BASE_URL + ENDPOINT.CHECKLIST_COMPARE({ id1: 1, id2: 2, id3: 3 }), ({ request }) => {
     const url = new URL(request.url);

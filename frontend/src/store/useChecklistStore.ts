@@ -13,7 +13,7 @@ interface ChecklistState {
   setAnswers: (answers: ChecklistCategoryQnA[]) => void;
 }
 
-const useChecklist = create<ChecklistState>((set, get) => ({
+const useChecklistStore = create<ChecklistState>((set, get) => ({
   basicInfo: {},
   checklistCategoryQnA: [],
 
@@ -69,4 +69,4 @@ const useChecklist = create<ChecklistState>((set, get) => ({
   },
 }));
 
-export default useChecklist;
+export default useChecklistStore;

@@ -11,7 +11,7 @@ import { newChecklistTabs } from '@/constants/tabs';
 import useInputs from '@/hooks/useInput';
 import useToast from '@/hooks/useToast';
 import NewChecklistBody from '@/pages/NewChecklistPage/NewChecklistBody';
-import useChecklist from '@/store/useChecklist';
+import useChecklistStore from '@/store/useChecklistStore';
 import useOptionStore from '@/store/useOptionStore';
 import { flexCenter, title2 } from '@/styles/common';
 import { ChecklistCategoryQnA } from '@/types/checklist';
@@ -40,10 +40,11 @@ const NewChecklistPage = () => {
   const { selectedOptions } = useOptionStore();
 
   /*체크리스트 답변*/
-  const { setAnswerInQuestion, checklistCategoryQnA } = useChecklist();
+  const { setAnswerInQuestion, checklistCategoryQnA } = useChecklistStore();
 
   const navigate = useNavigate();
 
+  /*받아온 질문에 답변 속성을 추가하는 함수*/
   const transformQuestions = (checklist: ChecklistCategoryQnA[]) => {
     return checklist.flatMap(category =>
       category.questions.map(question => ({

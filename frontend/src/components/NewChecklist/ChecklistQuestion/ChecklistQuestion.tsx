@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { QuestionDot } from '@/assets/assets';
 import FaceMark from '@/components/common/FaceMark/FaceMark';
-import useChecklist from '@/store/useChecklist';
+import useChecklistStore from '@/store/useChecklistStore';
 import { ChecklistQuestion } from '@/types/checklist';
 import { Emotion, EmotionType } from '@/types/emotionAnswer';
 
@@ -19,7 +19,7 @@ export const emotionPhrase: Record<EmotionType, string> = {
 
 const ChecklistQuestion = ({ question }: Props) => {
   const { questionId } = question;
-  const { deleteAnswer, addAnswer, questionSelectedAnswer } = useChecklist();
+  const { deleteAnswer, addAnswer, questionSelectedAnswer } = useChecklistStore();
 
   const handleClick = (newAnswer: EmotionType) => {
     if (questionSelectedAnswer(questionId) === newAnswer) {

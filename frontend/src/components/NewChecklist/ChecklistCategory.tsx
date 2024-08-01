@@ -1,9 +1,9 @@
 import Divider from '@/components/common/Divider/Divider';
 import ChecklistQuestion from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
-import useChecklist from '@/store/useChecklist';
+import useChecklistStore from '@/store/useChecklistStore';
 
 const ChecklistCategory = () => {
-  const { checklistCategoryQnA } = useChecklist();
+  const { checklistCategoryQnA } = useChecklistStore();
 
   return (
     <>

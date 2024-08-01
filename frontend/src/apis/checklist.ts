@@ -5,6 +5,7 @@ import { ChecklistForm } from '@/types/room';
 export const getChecklistQuestions = async () => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_QUESTION });
   const data = await response.json();
+  console.log(data);
   return data.categories;
 };
 

@@ -4,7 +4,7 @@ import { ChangeEvent, useCallback } from 'react';
 interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
   $color?: 'string';
 }
-const widthSize: Record<string, string | null> = {
+const widthSize = {
   small: '45px',
   medium: '110px',
   large: '140px',

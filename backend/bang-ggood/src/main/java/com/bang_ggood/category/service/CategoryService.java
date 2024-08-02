@@ -2,6 +2,9 @@ package com.bang_ggood.category.service;
 
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.category.domain.CategoryPriority;
+import com.bang_ggood.category.dto.request.CategoryPriorityCreateRequest;
+import com.bang_ggood.category.dto.response.CategoriesReadResponse;
+import com.bang_ggood.category.dto.response.CategoryReadResponse;
 import com.bang_ggood.category.dto.response.CategoriesReadResponse;
 import com.bang_ggood.category.dto.request.CategoryPriorityCreateRequest;
 import com.bang_ggood.category.dto.response.CategoryReadResponse;

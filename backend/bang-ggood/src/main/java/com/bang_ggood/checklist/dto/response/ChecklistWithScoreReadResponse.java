@@ -1,7 +1,6 @@
 package com.bang_ggood.checklist.dto.response;
 
 import com.bang_ggood.checklist.domain.Checklist;
-
 import java.util.List;
 
 public record ChecklistWithScoreReadResponse(
@@ -11,7 +10,8 @@ public record ChecklistWithScoreReadResponse(
         Integer optionCount, Integer score,
         List<CategoryScoreReadResponse> categories
 ) {
-    public static ChecklistWithScoreReadResponse of(Checklist checklist, int checklistOptionCount, int checklistScore, List<CategoryScoreReadResponse> categoryScores) {
+    public static ChecklistWithScoreReadResponse of(Checklist checklist, int checklistOptionCount, int checklistScore,
+                                                    List<CategoryScoreReadResponse> categoryScores) {
         return new ChecklistWithScoreReadResponse(
                 checklist.getId(),
                 checklist.getRoomName(),

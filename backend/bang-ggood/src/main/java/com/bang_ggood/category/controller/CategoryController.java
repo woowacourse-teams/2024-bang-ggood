@@ -1,5 +1,7 @@
 package com.bang_ggood.category.controller;
 
+import com.bang_ggood.category.dto.request.CategoryPriorityCreateRequest;
+import com.bang_ggood.category.dto.response.CategoriesReadResponse;
 import com.bang_ggood.category.dto.response.CategoriesReadResponse;
 import com.bang_ggood.category.dto.request.CategoryPriorityCreateRequest;
 import com.bang_ggood.category.service.CategoryService;

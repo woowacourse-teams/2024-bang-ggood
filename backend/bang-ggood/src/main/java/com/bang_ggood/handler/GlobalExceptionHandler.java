@@ -1,5 +1,9 @@
-package com.bang_ggood.exception;
+package com.bang_ggood.handler;
 
+import com.bang_ggood.exception.BangggoodException;
+import com.bang_ggood.exception.dto.ExceptionResponse;
+import com.bang_ggood.exception.OauthException;
+import com.bang_ggood.exception.dto.OauthExceptionResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +27,8 @@ public class GlobalExceptionHandler {
 
     //TODO 로깅해야함
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ExceptionResponse> handleRuntimeException(RuntimeException runtimeException, HttpServletRequest request) {
+    public ResponseEntity<ExceptionResponse> handleRuntimeException(RuntimeException runtimeException,
+                                                                    HttpServletRequest request) {
         runtimeException.printStackTrace();
         ExceptionResponse response = new ExceptionResponse(
                 request.getMethod(),
@@ -43,5 +48,11 @@ public class GlobalExceptionHandler {
                 exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(response);
+    }
+
+    @ExceptionHandler(OauthException.class)
+    public ResponseEntity<OauthExceptionResponse> handleOauthException(OauthException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(exception.getResponse());
     }
 }

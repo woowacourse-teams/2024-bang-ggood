@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { getChecklists } from '@/apis/checklist';
 import { Plus } from '@/assets/assets';
@@ -40,12 +40,6 @@ const ChecklistListPage = () => {
     });
   };
 
-  const handleClickCard = (id: number) => {
-    navigate(ROUTE_PATH.checklistOne(id), {
-      state: { id: id },
-    });
-  };
-
   const handleClickFloatingButton = () => {
     navigate(ROUTE_PATH.checklistNew);
   };
@@ -57,11 +51,9 @@ const ChecklistListPage = () => {
       <Layout>
         <S.ListBox>
           {checklistList?.map(checklist => (
-            <ChecklistPreviewCard
-              key={checklist.checklistId}
-              checklist={checklist}
-              onClick={() => handleClickCard(checklist.checklistId)}
-            />
+            <Link to={ROUTE_PATH.checklistOne(checklist.checklistId)} key={checklist.checklistId}>
+              <ChecklistPreviewCard checklist={checklist} />
+            </Link>
           ))}
         </S.ListBox>
       </Layout>

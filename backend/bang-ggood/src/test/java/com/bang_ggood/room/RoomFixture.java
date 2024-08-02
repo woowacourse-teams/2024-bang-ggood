@@ -29,6 +29,12 @@ public class RoomFixture {
             Structure.TWO_ROOM.getName(), 33, 3, FloorLevel.GROUND.getName()
     );
 
+    public static final RoomRequest ROOM_UPDATE_REQUEST = new RoomRequest(
+            "방이름", 1000, 50, 12, "부산광역시 루터회관",
+            "잠실역", 10, "방끗공인중개사", Type.VILLA.getName(),
+            Structure.OPEN_ONE_ROOM.getName(), 33, 3, FloorLevel.GROUND.getName()
+    );
+
     public static final RoomRequest ROOM_CREATE_REQUEST_NO_ROOM_NAME = new RoomRequest(
             null, 1000, 50, 12, "부산광역시 루터회관",
             "잠실역", 10, "방끗공인중개사", Type.VILLA.getName(),

@@ -20,9 +20,18 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    public User(Long id, String name) {
+    @Column(nullable = false)
+    private String email;
+
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
+    public User(Long id, String name, String email) { // TODO 테스트용
         this.id = id;
         this.name = name;
+        this.email = email;
     }
 
     public User(String name) {
@@ -34,6 +43,14 @@ public class User extends BaseEntity {
 
     public Long getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     @Override

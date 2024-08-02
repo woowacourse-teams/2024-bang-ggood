@@ -72,7 +72,7 @@ public class ChecklistService {
         Room room = roomRepository.save(checklistCreateRequest.toRoomEntity());
 
         ChecklistInfo checklistInfo = checklistCreateRequest.toChecklistInfo();
-        Checklist checklist = new Checklist(new User(1L, "방방이"), room, checklistInfo.deposit(), checklistInfo.rent(),
+        Checklist checklist = new Checklist(new User(1L, "방방이", "bang-ggood@gmail.com"), room, checklistInfo.deposit(), checklistInfo.rent(),
                 checklistInfo.contractTerm(), checklistInfo.realEstate());
         checklistRepository.save(checklist);
 
@@ -126,7 +126,7 @@ public class ChecklistService {
 
     @Transactional
     public ChecklistQuestionsResponse readChecklistQuestions() {
-        User user = new User(1L, "방방이");
+        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
         List<CustomChecklistQuestion> customChecklistQuestions = customChecklistQuestionRepository.findByUser(user);
 
         Map<Category, List<Question>> categoryQuestions = customChecklistQuestions.stream()
@@ -233,7 +233,7 @@ public class ChecklistService {
 
     @Transactional
     public ChecklistsWithScoreReadResponse readChecklistsComparison(List<Long> checklistIds) {
-        User user = new User(1L, "방끗");
+        User user = new User(1L, "방끗", "bang-ggood@gmail.com");
 
         validateChecklistComparison(checklistIds);
 
@@ -290,7 +290,7 @@ public class ChecklistService {
         validateCustomChecklistQuestionsIsNotEmpty(questionIds);
         validateCustomChecklistQuestionsDuplication(questionIds);
 
-        User user = new User(1L, "방방이");
+        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
         customChecklistQuestionRepository.deleteAllByUser(user);
 
         List<CustomChecklistQuestion> customChecklistQuestions = questionIds.stream()

@@ -4,8 +4,8 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
-import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
+import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsWithScoreReadResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
@@ -18,10 +18,10 @@ import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 
 import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST;
 import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED;
@@ -206,7 +206,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void readChecklistsComparison() {
         // given
-        User user = new User(1L, "방방이");
+        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
         Room room1 = RoomFixture.ROOM_1;
         Room room2 = RoomFixture.ROOM_2;
         Room room3 = RoomFixture.ROOM_3;
@@ -242,7 +242,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void readChecklistsComparison_invalidId() {
         // given
-        User user = new User(1L, "방방이");
+        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
         Room room1 = RoomFixture.ROOM_1;
         Room room2 = RoomFixture.ROOM_2;
         Room room3 = RoomFixture.ROOM_3;
@@ -271,7 +271,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         checklistService.updateCustomChecklist(request);
 
         // then
-        assertThat(customChecklistQuestionRepository.findByUser(new User(1L, "방방이")))
+        assertThat(customChecklistQuestionRepository.findByUser(new User(1L, "방방이", "bang-ggood@gmail.com")))
                 .hasSize(request.questionIds().size());
     }
 

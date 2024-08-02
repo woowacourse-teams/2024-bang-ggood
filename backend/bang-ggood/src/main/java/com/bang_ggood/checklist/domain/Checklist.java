@@ -54,6 +54,15 @@ public class Checklist extends BaseEntity {
     protected Checklist() {
     }
 
+    public void change(Checklist updateChecklist) {
+        this.user = updateChecklist.user;
+        this.room = updateChecklist.room;
+        this.deposit = updateChecklist.deposit;
+        this.rent = updateChecklist.rent;
+        this.contractTerm = updateChecklist.contractTerm;
+        this.realEstate = updateChecklist.realEstate;
+    }
+
     public Long getId() {
         return id;
     }

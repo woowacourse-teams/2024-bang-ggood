@@ -31,18 +31,14 @@ const RoomCompareSelectPage = () => {
         right={<Button label="비교" color="dark" size="small" />}
       />
       <S.Layout bgColor={theme.palette.grey100}>
-        {checklistList.map(room => (
+        {checklistList.map(roomPreview => (
           <CompareSelectCard
-            key={room.checklistId}
-            isSelected={rooms.has(room.checklistId)}
+            key={roomPreview.checklistId}
+            isSelected={rooms.has(roomPreview.checklistId)}
             onClick={() => {
-              toggleRoom(room.checklistId);
+              toggleRoom(roomPreview.checklistId);
             }}
-            roomName={room.roomName}
-            location={room.address}
-            deposit={room.deposit}
-            rent={room.rent}
-            createDate={new Date(room.createdAt)}
+            room={roomPreview}
           />
         ))}
       </S.Layout>

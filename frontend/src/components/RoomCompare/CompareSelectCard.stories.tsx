@@ -23,11 +23,7 @@ export const Default: Story = {
         key={room.checklistId}
         isSelected={isSelected}
         onClick={() => setIsSelected(!isSelected)}
-        roomName={room.roomName}
-        location={room.address}
-        deposit={room.deposit}
-        rent={room.rent}
-        createDate={new Date(room.createdAt)}
+        room={room}
       />
     );
   },

@@ -3,21 +3,18 @@ import styled from '@emotion/styled';
 import { LocationLineIcon } from '@/assets/assets';
 import Checkbox from '@/components/common/Checkbox/Checkbox';
 import { flexColumn, flexRow, flexSpaceBetween } from '@/styles/common';
+import { ChecklistPreview } from '@/types/checklist';
+import formattedDate from '@/utils/formattedDate';
 
-interface Props extends RoomData {
+interface Props {
   isSelected: boolean;
   onClick?: () => void;
+  room: ChecklistPreview;
 }
 
-interface RoomData {
-  roomName: string;
-  location: string;
-  deposit: number;
-  rent: number;
-  createDate: Date;
-}
+const CompareSelectCard = ({ isSelected, onClick, room }: Props) => {
+  const { roomName, address, deposit, rent, createdAt } = room;
 
-const CompareSelectCard = ({ isSelected, onClick, roomName, location, deposit, rent, createDate }: Props) => {
   return (
     <S.Card onClick={onClick}>
       <S.FlexRow>
@@ -28,9 +25,9 @@ const CompareSelectCard = ({ isSelected, onClick, roomName, location, deposit, r
           <S.HeaderContainer>
             <S.FlexRow gap="4px">
               <LocationLineIcon />
-              <p>{location}</p>
+              <p>{address}</p>
             </S.FlexRow>
-            <label>{`${createDate.getFullYear()}.${createDate.getMonth() + 1}.${createDate.getDate()}`}</label>
+            <label>{`${formattedDate(createdAt, '.')}`}</label>
           </S.HeaderContainer>
           <S.Title>{roomName}</S.Title>
           <S.RentPrice>{`${deposit}/${rent}`}</S.RentPrice>

@@ -4,20 +4,20 @@ import { LocationLineIcon } from '@/assets/assets';
 import Checkbox from '@/components/common/Checkbox/Checkbox';
 import { flexColumn, flexRow, flexSpaceBetween } from '@/styles/common';
 
-interface Props {
+interface Props extends RoomData {
   isSelected: boolean;
   onClick?: () => void;
 }
 
-const roomData = {
-  roomName: '루터 오피스텔',
-  location: '서울 관악구',
-  deposit: 2000,
-  rent: 56,
-  createDate: new Date(),
-};
+interface RoomData {
+  roomName: string;
+  location: string;
+  deposit: number;
+  rent: number;
+  createDate: Date;
+}
 
-const CompareSelectCard = ({ isSelected, onClick }: Props) => {
+const CompareSelectCard = ({ isSelected, onClick, roomName, location, deposit, rent, createDate }: Props) => {
   return (
     <S.Card onClick={onClick}>
       <S.FlexRow>
@@ -28,12 +28,12 @@ const CompareSelectCard = ({ isSelected, onClick }: Props) => {
           <S.HeaderContainer>
             <S.FlexRow gap="4px">
               <LocationLineIcon />
-              <p>{roomData.location}</p>
+              <p>{location}</p>
             </S.FlexRow>
-            <label>{`${roomData.createDate.getFullYear()}.${roomData.createDate.getMonth() + 1}.${roomData.createDate.getDate()}`}</label>
+            <label>{`${createDate.getFullYear()}.${createDate.getMonth() + 1}.${createDate.getDate()}`}</label>
           </S.HeaderContainer>
-          <S.Title>{roomData.roomName}</S.Title>
-          <S.RentPrice>{`${roomData.deposit}/${roomData.rent}`}</S.RentPrice>
+          <S.Title>{roomName}</S.Title>
+          <S.RentPrice>{`${deposit}/${rent}`}</S.RentPrice>
         </S.FlexColumn>
       </S.FlexRow>
     </S.Card>

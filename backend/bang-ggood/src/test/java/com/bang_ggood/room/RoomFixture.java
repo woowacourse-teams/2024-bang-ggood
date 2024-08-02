@@ -4,7 +4,7 @@ import com.bang_ggood.room.domain.FloorLevel;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.domain.Structure;
 import com.bang_ggood.room.domain.Type;
-import com.bang_ggood.room.dto.request.RoomCreateRequest;
+import com.bang_ggood.room.dto.request.RoomRequest;
 
 public class RoomFixture {
 
@@ -23,13 +23,13 @@ public class RoomFixture {
             Type.VILLA, 55, null, FloorLevel.ROOFTOP, Structure.DUPLEX
     );
 
-    public static final RoomCreateRequest ROOM_CREATE_REQUEST = new RoomCreateRequest(
+    public static final RoomRequest ROOM_CREATE_REQUEST = new RoomRequest(
             "방이름", 1000, 50, 12, "부산광역시 루터회관",
             "잠실역", 10, "방끗공인중개사", Type.VILLA.getName(),
             Structure.TWO_ROOM.getName(), 33, 3, FloorLevel.GROUND.getName()
     );
 
-    public static final RoomCreateRequest ROOM_CREATE_REQUEST_NO_ROOM_NAME = new RoomCreateRequest(
+    public static final RoomRequest ROOM_CREATE_REQUEST_NO_ROOM_NAME = new RoomRequest(
             null, 1000, 50, 12, "부산광역시 루터회관",
             "잠실역", 10, "방끗공인중개사", Type.VILLA.getName(),
             Structure.TWO_ROOM.getName(), 33, 3, FloorLevel.GROUND.getName()

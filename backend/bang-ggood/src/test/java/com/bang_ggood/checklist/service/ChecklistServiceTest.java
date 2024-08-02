@@ -5,7 +5,7 @@ import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
-import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
+import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsWithScoreReadResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
@@ -54,7 +54,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void createChecklist() {
         //given
-        ChecklistCreateRequest checklist = ChecklistFixture.CHECKLIST_CREATE_REQUEST;
+        ChecklistRequest checklist = ChecklistFixture.CHECKLIST_CREATE_REQUEST;
 
         // when
         long checklistId = checklistService.createChecklist(checklist);

@@ -10,4 +10,6 @@ public interface ChecklistOptionRepository extends JpaRepository<ChecklistOption
     List<ChecklistOption> findByChecklistId(long checklistId);
 
     Integer countByChecklist(Checklist checklist);
+
+    void deleteAllByChecklistId(long checklistId);
 }

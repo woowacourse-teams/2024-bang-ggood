@@ -1,23 +1,12 @@
 import '@testing-library/jest-dom';
 
-import { ThemeProvider } from '@emotion/react';
-import { render, renderHook, waitFor } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
 import { act } from 'react';
 
-import Toast from '@/components/common/Toast/Toast';
 import useToast from '@/hooks/useToast';
-import theme from '@/styles/theme';
-
-const renderWithTheme = (children: React.ReactNode) => {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-};
 
 describe('useToast 테스트', () => {
   describe('showToast 함수 테스트', () => {
-    beforeEach(() => {
-      renderWithTheme(<Toast />);
-    });
-
     const TOAST_MESSAGE = '토스트가 나타난다.';
     const TOAST_DURATION = 10;
     const TOAST_DURATION_MINUTE = TOAST_DURATION / 1000;
@@ -39,7 +28,7 @@ describe('useToast 테스트', () => {
         result.current.showToast(TOAST_MESSAGE);
       });
       expect(result.current.toast).toBe(TOAST_MESSAGE);
-      await waitFor(() => expect(result.current.toast).toBe(null), { timeout: TOAST_DURATION + 1 });
+      await waitFor(() => expect(result.current.toast).toBe(null), { timeout: 200, interval: 10 });
     });
 
     it(`토스트 호출을 두번하면 이후 메세지로 토스가 바뀐다.`, async () => {

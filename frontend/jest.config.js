@@ -1,7 +1,7 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} **/
 module.exports = {
   transform: {
-    '^.+.tsx?$': ['ts-jest', {}],
+    '^.+.tsx?$': ['esbuild-jest', { sourcemap: true }],
     '^.+\\.svg$': 'jest-transformer-svg',
   },
   moduleNameMapper: {

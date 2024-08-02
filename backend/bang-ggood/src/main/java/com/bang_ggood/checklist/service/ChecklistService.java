@@ -118,7 +118,7 @@ public class ChecklistService {
                 .map(question -> new ChecklistQuestion(
                         checklist,
                         Question.fromId(question.questionId()),
-                        Grade.from(question.grade()),
+                        question.grade() == null ? null : Grade.from(question.grade()),
                         question.memo()))
                 .collect(Collectors.toList());
         checklistQuestionRepository.saveAll(checklistQuestions);
@@ -310,5 +310,13 @@ public class ChecklistService {
         if (questionIds.size() != Set.copyOf(questionIds).size()) {
             throw new BangggoodException(ExceptionCode.QUESTION_DUPLICATED);
         }
+    }
+
+    @Transactional
+    public void deleteChecklistById(long id) {
+        if (!checklistRepository.existsById(id)) {
+            throw new BangggoodException(ExceptionCode.CHECKLIST_NOT_FOUND);
+        }
+        checklistRepository.deleteById(id);
     }
 }

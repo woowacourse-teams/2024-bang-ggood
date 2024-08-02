@@ -14,6 +14,7 @@ export interface ChecklistCategoryQnA {
   categoryName: string;
   questions: ChecklistQuestionWithAnswer[];
 }
+
 export interface ChecklistQuestion {
   questionId: number;
   title: string;
@@ -50,8 +51,10 @@ export interface ChecklistCompare extends RoomInfo {
 }
 
 export interface ChecklistInfo {
-  room: RoomInfo;
   checklistId: number;
-  options: number[];
+  score: number;
+  createdAt: string;
+  room: RoomInfo;
+  options: Option[];
   categories: ChecklistCategoryQnA[];
 }

@@ -29,9 +29,7 @@ export const Default: Story = {
   render: () => {
     return (
       <Accordion>
-        <Accordion.header id={1} hasMark={true}>
-          <div>청결도</div>
-        </Accordion.header>
+        <Accordion.header id={1} text="청결도" />
         <Accordion.body id={1}>
           <ul>
             <li>list 1</li>

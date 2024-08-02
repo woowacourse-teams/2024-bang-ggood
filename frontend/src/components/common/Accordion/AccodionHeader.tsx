@@ -5,24 +5,19 @@ import { flexCenter, title2 } from '@/styles/common';
 
 interface Props {
   id: number;
-  children?: React.ReactNode;
-  hasMark: boolean;
-  hasRightArrowButton?: boolean;
   openButton?: React.ReactNode;
   closeButton?: React.ReactNode;
   text?: string;
+  isMarked?: boolean;
 }
-const AccordionHeader = ({ children, id, hasMark, openButton, closeButton, text }: Props) => {
+const AccordionHeader = ({ id, openButton, closeButton, text, isMarked = true }: Props) => {
   const { isAccordionOpen, handleAccordionOpenChange } = useAccordionContext();
 
   return (
     <S.HeaderContainer onClick={() => handleAccordionOpenChange(id)}>
       <S.FlexBetween>
-        <S.FlexBox>
-          {hasMark && <S.HeaderMark isMarked={isAccordionOpen(id)} />}
-          {text}
-          <S.HeaderTitle>{children}</S.HeaderTitle>
-        </S.FlexBox>
+        <S.HeaderMark isMarked={isMarked} />
+        <S.HeaderTitle>{text}</S.HeaderTitle>
         <S.OpenBox onClick={() => handleAccordionOpenChange}>
           {isAccordionOpen(id) ? openButton : closeButton}
         </S.OpenBox>
@@ -36,7 +31,7 @@ export default AccordionHeader;
 const HeaderContainer = styled.div`
   display: flex;
   position: relative;
-  padding: 16px;
+  height: 45px;
 
   background-color: ${({ theme }) => theme.palette.white};
   border-radius: 12px;
@@ -50,17 +45,20 @@ const FlexBox = styled.div`
 
 const FlexBetween = styled.div`
   display: flex;
+  height: 100%;
   justify-content: space-between;
 `;
 
 const HeaderTitle = styled.div`
-  ${title2}
+  ${title2};
+  display: flex;
+  padding-left: 15px;
+  align-items: center;
 `;
 
 const HeaderMark = styled.div<{ isMarked: boolean }>`
   opacity: ${({ isMarked }) => (isMarked ? 1 : 0)};
   width: 12px;
-  height: 100%;
 
   background-color: ${({ theme }) => theme.palette.yellow500};
   border-radius: 8px 0 0 8px;

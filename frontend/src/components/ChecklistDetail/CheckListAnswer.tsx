@@ -3,15 +3,15 @@ import styled from '@emotion/styled';
 import { QuestionDot } from '@/assets/assets';
 import FaceMark from '@/components/common/FaceMark/FaceMark';
 import { EMOTION_PHARSE } from '@/constants/emotion';
-import { EmotionType } from '@/types/emotionAnswer';
+import { ChecklistQuestionWithAnswer } from '@/types/checklist';
 
 interface Props {
-  subtitle: string;
-  title: string;
-  answer: EmotionType;
+  QuestionAndAnswer: ChecklistQuestionWithAnswer;
 }
 
-const ChecklistAnswer = ({ answer, title, subtitle }: Props) => {
+const ChecklistAnswer = ({ QuestionAndAnswer }: Props) => {
+  const { title, subtitle, answer } = QuestionAndAnswer;
+
   return (
     <S.Container>
       <S.TitleContainer>
@@ -25,7 +25,6 @@ const ChecklistAnswer = ({ answer, title, subtitle }: Props) => {
         <FaceMark>
           <FaceMark.FaceIcon emotion={answer} isFilled={true} />
           <FaceMark.Footer>{EMOTION_PHARSE[answer]}</FaceMark.Footer>
-          {/* <FaceMark.Footer>{Math.round(category.score / 10)}점</FaceMark.Footer> */}
         </FaceMark>
       </S.Answer>
     </S.Container>

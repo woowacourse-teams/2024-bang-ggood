@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { getChecklists } from '@/apis/checklist';
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
+import Layout from '@/components/common/layout/Layout';
 import CompareSelectCard from '@/components/RoomCompare/CompareSelectCard';
 import useRoomCompareStore from '@/store/useRoomCompareStore';
 import { flexRow } from '@/styles/common';
@@ -30,18 +31,20 @@ const RoomCompareSelectPage = () => {
         center={<Header.Text>방 비교하기</Header.Text>}
         right={<Button label="비교" color="dark" size="small" />}
       />
-      <S.Layout bgColor={theme.palette.grey100}>
-        {checklistList.map(roomPreview => (
-          <CompareSelectCard
-            key={roomPreview.checklistId}
-            isSelected={rooms.has(roomPreview.checklistId)}
-            onClick={() => {
-              toggleRoom(roomPreview.checklistId);
-            }}
-            room={roomPreview}
-          />
-        ))}
-      </S.Layout>
+      <Layout bgColor={theme.palette.grey100}>
+        <S.Wrapper bgColor={theme.palette.grey100}>
+          {checklistList.map(roomPreview => (
+            <CompareSelectCard
+              key={roomPreview.checklistId}
+              isSelected={rooms.has(roomPreview.checklistId)}
+              onClick={() => {
+                toggleRoom(roomPreview.checklistId);
+              }}
+              room={roomPreview}
+            />
+          ))}
+        </S.Wrapper>
+      </Layout>
     </>
   );
 };
@@ -52,9 +55,8 @@ const S = {
   RoomGrid: styled.div`
     ${flexRow}
   `,
-  Layout: styled.div<{ bgColor: string }>`
+  Wrapper: styled.div<{ bgColor: string }>`
     display: flex;
-    padding: 16px;
 
     background-color: ${({ bgColor }) => bgColor};
     overflow-y: scroll;

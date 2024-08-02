@@ -1,7 +1,10 @@
 package com.bang_ggood.checklist.domain;
 
 import com.bang_ggood.BaseEntity;
+import com.bang_ggood.room.domain.FloorLevel;
 import com.bang_ggood.room.domain.Room;
+import com.bang_ggood.room.domain.Structure;
+import com.bang_ggood.room.domain.Type;
 import com.bang_ggood.user.domain.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -84,6 +87,22 @@ public class Checklist extends BaseEntity {
 
     public Integer getRoomWalkingTime() {
         return room.getWalkingTime();
+    }
+
+    public Type getRoomType() {
+        return room.getType();
+    }
+
+    public Integer getRoomSize() {
+        return room.getSize();
+    }
+
+    public FloorLevel getRoomFloorLevel() {
+        return room.getFloorLevel();
+    }
+
+    public Structure getRoomStructure() {
+        return room.getStructure();
     }
 
     public Integer getDeposit() {

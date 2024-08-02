@@ -9,6 +9,14 @@ interface Props {
   onClick?: () => void;
 }
 
+const roomData = {
+  roomName: '루터 오피스텔',
+  location: '서울 관악구',
+  deposit: 2000,
+  rent: 56,
+  createDate: new Date(),
+};
+
 const CompareSelectCard = ({ isSelected, onClick }: Props) => {
   return (
     <S.Card onClick={onClick}>
@@ -20,12 +28,12 @@ const CompareSelectCard = ({ isSelected, onClick }: Props) => {
           <S.HeaderContainer>
             <S.FlexRow gap="4px">
               <LocationLineIcon />
-              <p>서울 관악구</p>
+              <p>{roomData.location}</p>
             </S.FlexRow>
-            <label>2023.01.23</label>
+            <label>{`${roomData.createDate.getFullYear()}.${roomData.createDate.getMonth() + 1}.${roomData.createDate.getDate()}`}</label>
           </S.HeaderContainer>
-          <S.Title>루터 오피스텔</S.Title>
-          <S.RentPrice>2000/56</S.RentPrice>
+          <S.Title>{roomData.roomName}</S.Title>
+          <S.RentPrice>{`${roomData.deposit}/${roomData.rent}`}</S.RentPrice>
         </S.FlexColumn>
       </S.FlexRow>
     </S.Card>

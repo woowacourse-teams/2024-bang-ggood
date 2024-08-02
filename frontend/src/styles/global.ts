@@ -1,23 +1,12 @@
 import { css } from '@emotion/react';
 
+import { fonts } from '@/styles/font';
+
 import { normalize } from '../styles/reset';
 import theme from '../styles/theme';
 
 export const baseStyle = css`
-  @font-face {
-    font-family: 'SUIT';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'SUIT';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Bold.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
-  }
-
+  ${fonts}
   ${normalize}
 
   body {

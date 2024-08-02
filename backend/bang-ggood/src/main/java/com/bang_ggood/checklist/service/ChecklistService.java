@@ -7,6 +7,7 @@ import com.bang_ggood.category.dto.response.SelectedCategoryQuestionsResponse;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
+import com.bang_ggood.checklist.domain.ChecklistRank;
 import com.bang_ggood.checklist.domain.ChecklistScore;
 import com.bang_ggood.checklist.domain.CustomChecklistQuestion;
 import com.bang_ggood.checklist.domain.Grade;
@@ -37,8 +38,6 @@ import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -46,6 +45,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ChecklistService {
@@ -237,13 +238,25 @@ public class ChecklistService {
 
         validateChecklistComparison(checklistIds);
 
-        List<ChecklistWithScoreReadResponse> responses = checklistRepository.findByUserAndIdIn(user, checklistIds)
+        List<ChecklistWithScoreReadResponse> checklistsWithScore = checklistRepository.findByUserAndIdIn(user,
+                        checklistIds)
                 .stream()
                 .map(this::getChecklistWithScore)
-                .sorted(Comparator.comparing(ChecklistWithScoreReadResponse::score).reversed())
+                .sorted(Comparator.comparing(ChecklistWithScoreReadResponse::getScore).reversed())
                 .toList();
 
-        return new ChecklistsWithScoreReadResponse(responses);
+        List<Integer> scores = checklistsWithScore.stream()
+                .map(ChecklistWithScoreReadResponse::getScore)
+                .toList();
+
+        List<Integer> ranks = ChecklistRank.calculateRanksByDescendingScores(scores);
+
+        for (int idx = 0; idx < checklistsWithScore.size(); idx++) {
+            ChecklistWithScoreReadResponse checklistWithScore = checklistsWithScore.get(idx);
+            checklistWithScore.assignRank(ranks.get(idx));
+        }
+
+        return new ChecklistsWithScoreReadResponse(checklistsWithScore);
     }
 
     private void validateChecklistComparison(List<Long> checklistIds) {
@@ -263,13 +276,13 @@ public class ChecklistService {
         }
     }
 
-
     private ChecklistWithScoreReadResponse getChecklistWithScore(Checklist checklist) {
         List<CategoryScoreReadResponse> categoryScores = getCategoryScores(checklist.getQuestions());
         int checklistScore = getChecklistScore(checklist.getQuestions());
-        int checklistOptionCount = checklistOptionRepository.countByChecklist(checklist);
+        SelectedRoomResponse selectedRoom = SelectedRoomResponse.of(checklist);
+        List<SelectedOptionResponse> options = readOptionsByChecklistId(checklist.getId());
 
-        return ChecklistWithScoreReadResponse.of(checklist, checklistOptionCount, checklistScore, categoryScores);
+        return ChecklistWithScoreReadResponse.of(checklist, checklistScore, selectedRoom, options, categoryScores);
     }
 
     private List<CategoryScoreReadResponse> getCategoryScores(List<ChecklistQuestion> questions) {

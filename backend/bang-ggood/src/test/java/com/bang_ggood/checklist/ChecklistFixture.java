@@ -43,9 +43,6 @@ public class ChecklistFixture {
             5, "GOOD", "메모"
     );
 
-    public static final QuestionRequest QUESTION_CREATE_REQUEST_NO_ANSWER = new QuestionRequest(
-            6, null, "메모6"
-    );
     public static final QuestionRequest QUESTION_CREATE_REQUEST_NO_ID = new QuestionRequest(
             null, "GOOD", "메모"
     );
@@ -67,11 +64,16 @@ public class ChecklistFixture {
                     QUESTION_3_CREATE_REQUEST, QUESTION_5_UPDATE_REQUEST)
     );
 
-
     public static final ChecklistRequest CHECKLIST_CREATE_REQUEST_NO_ROOM_NAME = new ChecklistRequest(
             RoomFixture.ROOM_CREATE_REQUEST_NO_ROOM_NAME, List.of(1, 2, 3, 5),
             List.of(QUESTION_1_CREATE_REQUEST, QUESTION_2_CREATE_REQUEST,
                     QUESTION_3_CREATE_REQUEST, QUESTION_5_CREATE_REQUEST)
+    );
+
+    public static final ChecklistRequest CHECKLIST_UPDATE_REQUEST_NO_ROOM_NAME = new ChecklistRequest(
+            RoomFixture.ROOM_CREATE_REQUEST_NO_ROOM_NAME, List.of(1, 2, 3, 4),
+            List.of(QUESTION_1_CREATE_REQUEST, QUESTION_2_CREATE_REQUEST,
+                    QUESTION_3_CREATE_REQUEST, QUESTION_5_UPDATE_REQUEST)
     );
 
     public static final ChecklistRequest CHECKLIST_CREATE_REQUEST_NO_QUESTION_ID = new ChecklistRequest(

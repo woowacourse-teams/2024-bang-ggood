@@ -58,6 +58,12 @@ public class ChecklistController {
         return ResponseEntity.ok(checklistService.readChecklistsComparison(checklistIds));
     }
 
+    @PutMapping("/checklists/{id}")
+    public ResponseEntity<Void> updateChecklistById(@PathVariable("id") long id, @Valid @RequestBody ChecklistRequest checklistRequest) {
+        checklistService.updateChecklistById(id, checklistRequest);
+        return ResponseEntity.noContent().build();
+    }
+
     @PutMapping("/custom-checklist")
     public ResponseEntity<Void> updateCustomChecklist(@RequestBody CustomChecklistUpdateRequest request) {
         checklistService.updateCustomChecklist(request);

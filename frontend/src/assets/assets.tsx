@@ -33,7 +33,6 @@ import MyPageLogo from '@/assets/icons/footer-icon/my-page-logo.svg';
 import BangBangIcon from '@/assets/icons/bang-bang-icon.svg';
 import InputRequiredDot from '@/assets/icons/input-required-dot.svg';
 import LampIcon from '@/assets/icons/lamp-icon.svg';
-import LocationMarkerPin from '@/assets/icons/location-marker-pin.svg';
 import BangGgoodTextIcon from '@/assets/icons/logo.svg';
 import QuestionDot from '@/assets/icons/question-dot.svg';
 
@@ -62,7 +61,6 @@ export {
   LocationLineIcon,
   LocationLogo,
   LocationLogoActive,
-  LocationMarkerPin,
   MyPageLogo,
   MyPageLogoActive,
   Plus,

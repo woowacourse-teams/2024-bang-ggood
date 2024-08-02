@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { LocationMarkerPin } from '@/assets/assets';
+import { LocationLineIcon } from '@/assets/assets';
 import Checkbox from '@/components/common/Checkbox/Checkbox';
 import { flexColumn, flexRow } from '@/styles/common';
 
@@ -19,7 +19,7 @@ const CompareSelectCard = ({ isSelected, onClick }: Props) => {
         <S.FlexColumn>
           <S.HeaderContainer>
             <S.FlexRow gap="4px">
-              <LocationMarkerPin />
+              <LocationLineIcon />
               <p>서울 관악구</p>
             </S.FlexRow>
             <label>2023.01.23</label>
@@ -58,7 +58,8 @@ const S = {
   `,
   FlexRow: styled.div<{ gap?: string; width?: string }>`
     ${flexRow}
-    column-gap:${({ gap }) => (gap ? gap : '4%')};
+    align-items: center;
+    column-gap: ${({ gap }) => (gap ? gap : '4%')};
     ${({ width }) => width && `width:${width}`};
     height: 100%;
   `,

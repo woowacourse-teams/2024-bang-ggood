@@ -57,11 +57,11 @@ const S = {
     ${flexSpaceBetween}
   `,
   Title: styled.h4`
-    font-weight: ${({ theme }) => theme.text.weight.semiBold};
+    font-weight: ${({ theme }) => theme.text.weight.bold};
     font-size: ${({ theme }) => theme.text.size.large};
   `,
   RentPrice: styled.p`
-    font-weight: ${({ theme }) => theme.text.weight.semiBold};
+    font-weight: ${({ theme }) => theme.text.weight.bold};
     font-size: ${({ theme }) => theme.text.size.medium};
   `,
   FlexRow: styled.div<{ gap?: string; width?: string }>`

@@ -1,6 +1,9 @@
 package com.bang_ggood.checklist;
 
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.ChecklistQuestion;
+import com.bang_ggood.checklist.domain.Grade;
+import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.QuestionRequest;
 import com.bang_ggood.room.RoomFixture;
@@ -84,5 +87,13 @@ public class ChecklistFixture {
             RoomFixture.ROOM_CREATE_REQUEST, List.of(1, 2, 3, 3),
             List.of(QUESTION_1_CREATE_REQUEST, QUESTION_2_CREATE_REQUEST,
                     QUESTION_3_CREATE_REQUEST, QUESTION_5_CREATE_REQUEST)
+    );
+
+    public static final ChecklistQuestion CHECKLIST_QUESTION_1 = new ChecklistQuestion(
+            checklist, Question.fromId(1), Grade.BAD, "메모"
+    );
+
+    public static final ChecklistQuestion CHECKLIST_QUESTION_2 = new ChecklistQuestion(
+            checklist, Question.fromId(2), Grade.BAD, "메모"
     );
 }

@@ -43,7 +43,10 @@ public enum ExceptionCode {
     STRUCTURE_INVALID(HttpStatus.BAD_REQUEST, "방 구조가 유효하지 않습니다."),
 
     // Room
-    ROOM_FLOOR_AND_LEVEL_INVALID(HttpStatus.BAD_REQUEST, "방이 지상층일 경우에만 층수를 입력할 수 있습니다.");
+    ROOM_FLOOR_AND_LEVEL_INVALID(HttpStatus.BAD_REQUEST, "방이 지상층일 경우에만 층수를 입력할 수 있습니다."),
+
+    // Auth
+    OAUTH_TOKEN_INTERNAL_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "토큰을 요청하는 과정에서 예상치 못한 예외가 발생했습니다.");
 
     private final HttpStatus httpStatus;
     private final String message;

@@ -57,7 +57,7 @@ class QuestionTest {
                 .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
     }
 
-    @DisplayName("질문 아이디를 통해 포함되어 있는지 확인 : 포함일 경우")
+    @DisplayName("질문 아이디를 통해 포함되어 있는지 확인 성공 : 포함일 경우")
     @Test
     void contains_true() {
         //given
@@ -67,7 +67,7 @@ class QuestionTest {
         assertThat(Question.contains(questionId)).isTrue();
     }
 
-    @DisplayName("질문 아이디를 통해 포함되어 있는지 확인 : 포함이 아닐 경우")
+    @DisplayName("질문 아이디를 통해 포함되어 있는지 확인 성공 : 포함이 아닐 경우")
     @Test
     void contains_false() {
         //given
@@ -75,6 +75,28 @@ class QuestionTest {
 
         //when & then
         assertThat(Question.contains(questionId)).isFalse();
+    }
+
+    @DisplayName("질문끼리 다른 id를 갖고 있는지 확인 성공 : 다른 id일 경우")
+    @Test
+    void isDifferentId_true() {
+        //given
+        Question question1 = Question.fromId(1);
+        Question question2 = Question.fromId(2);
+
+        //when & then
+        assertThat(question1.isDifferentId(question2)).isTrue();
+    }
+
+    @DisplayName("질문끼리 다른 id를 갖고 있는지 확인 성공 : 같은 id일 경우")
+    @Test
+    void isDifferentId_false() {
+        //given
+        Question question = Question.fromId(1);
+        Question compareQuestion = Question.fromId(1);
+
+        //when & then
+        assertThat(question.isDifferentId(compareQuestion)).isFalse();
     }
 
 }

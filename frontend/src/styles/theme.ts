@@ -9,11 +9,17 @@ const palette = {
   /*green*/
   green600: '#22BD6A',
   green500: '#49CE7F',
+  green400: '#6DD899',
+  green300: '#92E2B2',
   green200: '#B6EBCC',
+  green100: '#DBF5E5',
   /*subGreen*/
   subGreen600: '#8BB26B',
   subGreen500: '#A6CF85',
+  subGreen400: '#B8D99E',
+  subGreen300: '#CAE2B6',
   subGreen200: '#D3ECAD',
+  subGreen100: '#EDF5E7',
   /* grey */
   grey600: '#484947',
   grey500: '#7C7C7C',

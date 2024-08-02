@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { LocationLineIcon } from '@/assets/assets';
 import Checkbox from '@/components/common/Checkbox/Checkbox';
-import { flexColumn, flexRow } from '@/styles/common';
+import { flexColumn, flexRow, flexSpaceBetween } from '@/styles/common';
 
 interface Props {
   isSelected: boolean;
@@ -46,7 +46,7 @@ const S = {
   `,
   HeaderContainer: styled.div`
     ${flexRow}
-    justify-content: space-between;
+    ${flexSpaceBetween}
   `,
   Title: styled.h4`
     font-weight: ${({ theme }) => theme.text.weight.semiBold};

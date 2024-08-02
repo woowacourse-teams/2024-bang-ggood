@@ -8,6 +8,7 @@ interface RoomCompareState {
   hasRoom: (roomId: number) => boolean;
   clear: () => void;
 }
+
 const useRoomCompareStore = create<RoomCompareState>((set, get) => ({
   rooms: new Set(),
   addRoom: (roomId: number) => {

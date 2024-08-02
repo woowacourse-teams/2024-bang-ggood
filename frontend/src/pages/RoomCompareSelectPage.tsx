@@ -10,6 +10,7 @@ import theme from '@/styles/theme';
 const RoomCompareSelectPage = () => {
   const { rooms, toggleRoom } = useRoomCompareStore();
   const roomList = [1, 2, 3];
+
   return (
     <>
       <Header

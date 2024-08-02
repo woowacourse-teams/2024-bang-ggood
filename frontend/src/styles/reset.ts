@@ -190,4 +190,14 @@ export const normalize = css`
     -moz-appearance: none;
     appearance: none;
   }
+
+  textarea {
+    border: none;
+    outline: none;
+    background: none;
+    box-shadow: none;
+    resize: none;
+    font: inherit;
+    color: inherit;
+  }
 `;

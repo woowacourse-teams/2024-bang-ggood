@@ -1,24 +1,26 @@
 import styled from '@emotion/styled';
 
-import { ArrowDownSmall, MemoFilled, MemoPlus, QuestionDot } from '@/assets/assets';
-import Accordion from '@/components/common/Accordion/Accordion';
+import { QuestionDot } from '@/assets/assets';
 import FaceMark from '@/components/common/FaceMark/FaceMark';
-import { emotionPhrase } from '@/constants/emotion';
+import QuestionMemo from '@/components/NewChecklist/ChecklistQuestion/QuestionMemo';
+import { EMOTION_PHARSE, EMOTIONS } from '@/constants/emotion';
+import useInputs from '@/hooks/useInput';
 import useChecklistStore from '@/store/useChecklistStore';
 import { ChecklistQuestion } from '@/types/checklist';
-import { Emotion, EmotionType } from '@/types/emotionAnswer';
+import { EmotionType } from '@/types/emotionAnswer';
 
 interface Props {
   question: ChecklistQuestion;
 }
 
-export const MemoToggleButton = ({ hasMemo }: { hasMemo: boolean }) => {
-  return hasMemo ? <MemoPlus /> : <MemoFilled />;
-};
-
 const ChecklistQuestion = ({ question }: Props) => {
   const { questionId } = question;
   const { deleteAnswer, addAnswer, questionSelectedAnswer } = useChecklistStore();
+
+  const {
+    values: { text },
+    onChange,
+  } = useInputs({ text: '' });
 
   const handleClick = (newAnswer: EmotionType) => {
     if (questionSelectedAnswer(questionId) === newAnswer) {
@@ -28,44 +30,27 @@ const ChecklistQuestion = ({ question }: Props) => {
     }
   };
 
-  const emotions: Emotion[] = [
-    { name: 'BAD', id: 1 },
-    { name: 'SOSO', id: 2 },
-    { name: 'GOOD', id: 3 },
-  ];
-
   return (
-    <Accordion>
-      <Accordion.header
-        id={questionId}
-        hasMark={false}
-        openButton={<MemoToggleButton hasMemo={false} />}
-        closeButton={<ArrowDownSmall />}
-      >
-        <S.FlexColumn>
-          <S.FlexRow>
-            <QuestionDot />
-            {question?.title}
-          </S.FlexRow>
-          {question?.subtitle && <S.Subtitle>{question?.subtitle}</S.Subtitle>}
-          <S.Options>
-            {emotions.map(emotion => {
-              const { name: emotionName, id } = emotion;
-              return (
-                <FaceMark onClick={() => handleClick(emotionName)} key={id}>
-                  <FaceMark.FaceIcon
-                    emotion={emotionName}
-                    isFilled={questionSelectedAnswer(questionId) === emotionName}
-                  />
-                  <FaceMark.Footer>{emotionPhrase[emotionName]}</FaceMark.Footer>
-                </FaceMark>
-              );
-            })}
-          </S.Options>
-        </S.FlexColumn>
-      </Accordion.header>
-      <Accordion.body id={1}>aa</Accordion.body>
-    </Accordion>
+    <S.Container>
+      <S.Title>
+        <QuestionDot />
+        {question?.title}
+      </S.Title>
+      {question?.subtitle && <S.Subtitle>•{question?.subtitle}</S.Subtitle>}
+
+      <S.Options>
+        {EMOTIONS.map(emotion => {
+          const { name: emotionName, id } = emotion;
+          return (
+            <FaceMark onClick={() => handleClick(emotionName)} key={id}>
+              <FaceMark.FaceIcon emotion={emotionName} isFilled={questionSelectedAnswer(questionId) === emotionName} />
+              <FaceMark.Footer>{EMOTION_PHARSE[emotionName]}</FaceMark.Footer>
+            </FaceMark>
+          );
+        })}
+      </S.Options>
+      <QuestionMemo text={text} onChange={onChange} />
+    </S.Container>
   );
 };
 
@@ -73,27 +58,15 @@ export default ChecklistQuestion;
 
 const S = {
   Container: styled.div`
-    display: flex;
+    position: relative;
     padding: 16px;
-  `,
-  FlexColumn: styled.div`
-    display: flex;
-    flex-direction: column;
-  `,
-  FlexRow: styled.div`
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  `,
-  FlexBetween: styled.div`
-    display: flex;
 
-    justify-content: space-between;
+    background-color: ${({ theme }) => theme.palette.white};
+    border-radius: 8px;
   `,
   Title: styled.div`
     display: flex;
     margin: 5px 0;
-    flex-direction: column;
 
     font-size: ${({ theme }) => theme.text.size.medium};
     line-height: 1.5;

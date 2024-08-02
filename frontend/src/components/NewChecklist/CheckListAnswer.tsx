@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { QuestionDot } from '@/assets/assets';
 import FaceMark from '@/components/common/FaceMark/FaceMark';
-import { emotionPhrase } from '@/constants/emotion';
+import { EMOTION_PHARSE } from '@/constants/emotion';
 import { EmotionType } from '@/types/emotionAnswer';
 
 interface Props {
@@ -24,7 +24,7 @@ const ChecklistAnswer = ({ answer, title, subtitle }: Props) => {
       <S.Answer>
         <FaceMark>
           <FaceMark.FaceIcon emotion={answer} isFilled={true} />
-          <FaceMark.Footer>{emotionPhrase[answer]}</FaceMark.Footer>
+          <FaceMark.Footer>{EMOTION_PHARSE[answer]}</FaceMark.Footer>
           {/* <FaceMark.Footer>{Math.round(category.score / 10)}점</FaceMark.Footer> */}
         </FaceMark>
       </S.Answer>

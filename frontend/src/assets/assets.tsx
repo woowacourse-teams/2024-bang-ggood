@@ -37,8 +37,8 @@ import BangGgoodTextIcon from '@/assets/icons/logo.svg';
 import QuestionDot from '@/assets/icons/question-dot.svg';
 
 /*memo */
+import MemoEmpty from '@/assets/icons/memo-empty.svg';
 import MemoFilled from '@/assets/icons/memo-filled.svg';
-import MemoPlus from '@/assets/icons/memo-plus.svg';
 
 export {
   ArrowBack,
@@ -65,8 +65,8 @@ export {
   LocationLineIcon,
   LocationLogo,
   LocationLogoActive,
+  MemoEmpty,
   MemoFilled,
-  MemoPlus,
   MyPageLogo,
   MyPageLogoActive,
   Plus,

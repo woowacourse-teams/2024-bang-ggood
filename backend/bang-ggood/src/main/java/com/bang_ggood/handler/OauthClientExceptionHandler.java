@@ -12,7 +12,7 @@ import org.springframework.web.client.ResponseErrorHandler;
 import java.io.IOException;
 
 @Component
-public class RestClientExceptionHandler implements ResponseErrorHandler {
+public class OauthClientExceptionHandler implements ResponseErrorHandler {
 
     @Override
     public boolean hasError(ClientHttpResponse response) {

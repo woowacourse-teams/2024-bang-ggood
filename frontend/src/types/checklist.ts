@@ -27,7 +27,8 @@ export interface ChecklistQuestionWithAnswer extends ChecklistQuestion {
 
 export interface ChecklistAnswer {
   questionId: number;
-  answer: EmotionType;
+  grade: EmotionType | null;
+  memo: string | null;
 }
 
 export interface ChecklistPreview extends RoomInfo {

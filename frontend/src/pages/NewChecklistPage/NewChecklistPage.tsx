@@ -14,12 +14,11 @@ import NewChecklistBody from '@/pages/NewChecklistPage/NewChecklistBody';
 import useChecklistStore from '@/store/useChecklistStore';
 import useOptionStore from '@/store/useOptionStore';
 import { flexCenter, title2 } from '@/styles/common';
-import { ChecklistCategoryQnA } from '@/types/checklist';
+import { ChecklistAnswer, ChecklistCategoryQnA } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
 
-// TODO: roomName 이슈로 인해 데모 버전으로 변경
 const DefaultRoomInfo: RoomInfo = {
-  name: '살기 좋은 방',
+  roomName: '살기 좋은 방',
   address: '인천광역시 부평구',
   deposit: 2000,
   rent: 50,
@@ -45,11 +44,12 @@ const NewChecklistPage = () => {
   const navigate = useNavigate();
 
   /*현재 상태를 백엔드에 보내는 답안 포맷으로 바꾸는 함수*/
-  const transformQuestions = (checklist: ChecklistCategoryQnA[]) => {
+  const transformQuestions = (checklist: ChecklistCategoryQnA[]): ChecklistAnswer[] => {
     return checklist.flatMap(category =>
       category.questions.map(question => ({
         questionId: question.questionId,
-        answer: null,
+        grade: null,
+        memo: null,
       })),
     );
   };

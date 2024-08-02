@@ -5,7 +5,7 @@ interface RoomCompareState {
   addRoom: (roomId: number) => void;
   deleteRoom: (roomId: number) => void;
   toggleRoom: (roomId: number) => void;
-  has: (roomId: number) => boolean;
+  hasRoom: (roomId: number) => boolean;
   clear: () => void;
 }
 const useRoomCompareStore = create<RoomCompareState>((set, get) => ({
@@ -26,9 +26,9 @@ const useRoomCompareStore = create<RoomCompareState>((set, get) => ({
       rooms: new Set(),
     });
   },
-  has: (roomId: number) => get().rooms.has(roomId),
+  hasRoom: (roomId: number) => get().rooms.has(roomId),
   toggleRoom: (roomId: number) => {
-    const { addRoom, deleteRoom, has } = get();
+    const { addRoom, deleteRoom, hasRoom: has } = get();
     if (has(roomId)) {
       deleteRoom(roomId);
       return;

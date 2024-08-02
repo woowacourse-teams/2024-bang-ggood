@@ -40,6 +40,13 @@ public class ChecklistQuestion extends BaseEntity {
     protected ChecklistQuestion() {
     }
 
+    public void change(ChecklistQuestion checklistQuestion) {
+        this.checklist = checklistQuestion.checklist;
+        this.question = checklistQuestion.question;
+        this.grade = checklistQuestion.grade;
+        this.memo = checklistQuestion.memo;
+    }
+
     public Long getId() {
         return id;
     }

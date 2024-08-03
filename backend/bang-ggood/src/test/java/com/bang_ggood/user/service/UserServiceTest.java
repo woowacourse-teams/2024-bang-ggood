@@ -15,6 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static com.bang_ggood.user.UserFixture.USER1;
 import static com.bang_ggood.user.UserFixture.oauthInfoResponseUSER1;
+import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest extends IntegrationTestSupport {
@@ -28,15 +29,17 @@ class UserServiceTest extends IntegrationTestSupport {
     @Autowired
     private UserRepository userRepository;
 
+    private static final OauthLoginRequest oauthLoginRequest = new OauthLoginRequest("testCode");
+
     @DisplayName("로그인 성공 : 존재하지 않는 회원이면 데이터베이스에 새로운 유저를 추가하고 토큰을 반환한다.")
     @Test
     void login_signup() {
         // given
-        Mockito.when(oauthClient.requestOauthInfo(new OauthLoginRequest("")))
+        Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.oauthInfoResponseUSER2);
 
         // when
-        String token = userService.login(new OauthLoginRequest(""));
+        String token = userService.login(oauthLoginRequest);
 
         // then
         Assertions.assertThat(token).isNotBlank();
@@ -47,11 +50,11 @@ class UserServiceTest extends IntegrationTestSupport {
     void login() {
         // given
         userRepository.save(USER1);
-        Mockito.when(oauthClient.requestOauthInfo(new OauthLoginRequest("")))
+        Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(oauthInfoResponseUSER1);
 
         // when
-        String token = userService.login(new OauthLoginRequest(""));
+        String token = userService.login(oauthLoginRequest);
 
         // then
         Assertions.assertThat(token).isNotBlank();

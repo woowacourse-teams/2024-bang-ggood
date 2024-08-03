@@ -174,13 +174,13 @@ public class ChecklistService {
 
         List<SelectedOptionResponse> options = readOptionsByChecklistId(id);
 
-        List<SelectedCategoryQuestionsResponse> selectedCategoryQuestionsRespons =
+        List<SelectedCategoryQuestionsResponse> selectedCategoryQuestionsResponse =
                 readCategoryQuestionsByChecklistId(id);
 
         int checklistScore = ChecklistScore.calculateTotalScore(checklist.getQuestions());
 
         return new SelectedChecklistResponse(selectedRoomResponse, options, checklistScore,
-                selectedCategoryQuestionsRespons);
+                selectedCategoryQuestionsResponse);
     }
 
     private List<SelectedOptionResponse> readOptionsByChecklistId(long checklistId) {
@@ -200,14 +200,14 @@ public class ChecklistService {
 
     private SelectedCategoryQuestionsResponse readQuestionsByCategory(Category category,
                                                                       List<ChecklistQuestion> checklistQuestions) {
-        List<SelectedQuestionResponse> selectedQuestionRespons =
+        List<SelectedQuestionResponse> selectedQuestionResponse =
                 Question.filter(category, checklistQuestions).stream()
                         .map(SelectedQuestionResponse::of)
                         .toList();
 
         int categoryScore = ChecklistScore.calculateCategoryScore(category, checklistQuestions);
 
-        return SelectedCategoryQuestionsResponse.of(category, categoryScore, selectedQuestionRespons);
+        return SelectedCategoryQuestionsResponse.of(category, categoryScore, selectedQuestionResponse);
     }
 
     @Transactional
@@ -289,7 +289,6 @@ public class ChecklistService {
         return Arrays.stream(Category.values())
                 .map(category -> CategoryScoreReadResponse.of(category,
                         ChecklistScore.calculateCategoryScore(category, questions)))
-                .filter(response -> response.score() != 0)
                 .toList();
     }
 

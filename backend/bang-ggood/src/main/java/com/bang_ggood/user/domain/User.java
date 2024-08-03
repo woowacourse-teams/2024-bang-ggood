@@ -37,11 +37,6 @@ public class User extends BaseEntity {
         this.email = email;
     }
 
-    public User(String name) {
-        this.name = name;
-        this.deleted = Boolean.FALSE;
-    }
-
     protected User() {
     }
 

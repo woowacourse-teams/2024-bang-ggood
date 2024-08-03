@@ -5,8 +5,8 @@ import { ArrowUpSmall, MemoEmpty, MemoFilled, QuestionDot } from '@/assets/asset
 import FaceMark from '@/components/common/FaceMark/FaceMark';
 import QuestionMemo from '@/components/NewChecklist/ChecklistQuestion/QuestionMemo';
 import { EMOTION_PHARSE, EMOTIONS } from '@/constants/emotion';
-import useInputs from '@/hooks/useInput';
-import useChecklistStore from '@/store/useChecklistStore';
+import useChecklistAnswer from '@/hooks/useChecklistAnswer';
+import useInputs from '@/hooks/useInputs';
 import { flexCenter } from '@/styles/common';
 import { ChecklistQuestion } from '@/types/checklist';
 import { EmotionType } from '@/types/emotionAnswer';
@@ -17,7 +17,8 @@ interface Props {
 
 const ChecklistQuestion = ({ question }: Props) => {
   const { questionId } = question;
-  const { deleteAnswer, addAnswer, questionSelectedAnswer } = useChecklistStore();
+  const { deleteAnswer, addAnswer, questionSelectedAnswer } = useChecklistAnswer();
+
   const [isMemoOpen, setIsMemoOpen] = useState(false);
 
   const {

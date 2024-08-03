@@ -7,7 +7,7 @@ import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import { TabProvider } from '@/components/common/Tabs/TabContext';
 import { ROUTE_PATH } from '@/constants/routePath';
-import useInputs from '@/hooks/useInput';
+import useInputs from '@/hooks/useInputs';
 import useToast from '@/hooks/useToast';
 import NewChecklistContent from '@/pages/NewChecklistPage/NewChecklistContent';
 import NewChecklistTab from '@/pages/NewChecklistPage/NewChecklistTab';

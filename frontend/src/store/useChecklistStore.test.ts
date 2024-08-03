@@ -26,13 +26,13 @@ describe('useChecklistStore 테스트', () => {
         result.current.addAnswer({ questionId: 1, newAnswer: 'BAD' });
       });
       act(() => {
-        result.current.addAnswer({ questionId: 2, newAnswer: 'BAD' });
+        result.current.addAnswer({ questionId: 4, newAnswer: 'BAD' }); // QuestionId에 2는 존재하지않으므로 4로 변경
       });
       act(() => {
         result.current.deleteAnswer(1);
       });
       expect(result.current.questionSelectedAnswer(1)).toBe(null);
-      expect(result.current.questionSelectedAnswer(2)).toBe('BAD');
+      expect(result.current.questionSelectedAnswer(4)).toBe('BAD');
     });
   });
 });

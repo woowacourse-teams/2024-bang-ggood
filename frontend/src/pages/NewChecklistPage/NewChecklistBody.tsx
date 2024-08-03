@@ -27,7 +27,7 @@ const NewChecklistBody = (props: Props) => {
       case 1: //청결
       case 2: //방 컨디션
       case 3: //편의시설
-      case 4: //옵션
+      case 4: // TODO: 옵션은 탭에서 질문을통해묻는게아니라, 모달로 질문하므로 제거해주세요
       case 5: //주거 환경
       case 6: //보안
       case 7: //경제적

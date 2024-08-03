@@ -16,7 +16,7 @@ const NewChecklistTemplate = ({ questions }: { questions: ChecklistCategoryQnA }
 };
 
 export default NewChecklistTemplate;
-4;
+
 const ContentBox = styled.div`
   display: flex;
   padding: 0 16px;

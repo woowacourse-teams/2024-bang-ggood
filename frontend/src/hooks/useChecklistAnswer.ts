@@ -53,7 +53,7 @@ const useChecklistAnswer = () => {
       setAnswers(newCategories);
     }
   };
-  const questionSelectedAnswer = ({ categoryId, questionId }: Props) => {
+  const findCategoryQuestion = ({ categoryId, questionId }: Props) => {
     const targetCategory = checklistCategoryQnA?.find(category => category.categoryId === categoryId);
 
     if (targetCategory) {
@@ -66,7 +66,7 @@ const useChecklistAnswer = () => {
     return null;
   };
 
-  return { updateAnswer, updateMemo, questionSelectedAnswer };
+  return { updateAnswer, updateMemo, findCategoryQuestion };
 };
 
 export default useChecklistAnswer;

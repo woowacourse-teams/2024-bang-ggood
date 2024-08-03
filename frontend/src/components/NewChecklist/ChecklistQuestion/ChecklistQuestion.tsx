@@ -17,12 +17,12 @@ interface Props {
 
 const ChecklistQuestion = ({ question }: Props) => {
   const { questionId } = question;
-  const { updateAnswer, questionSelectedAnswer } = useChecklistAnswer();
+  const { updateAnswer, findCategoryQuestion } = useChecklistAnswer();
   const { currentTabId } = useTabContext();
 
   const [isMemoOpen, setIsMemoOpen] = useState(false);
 
-  const { answer, memo } = questionSelectedAnswer({ categoryId: currentTabId, questionId });
+  const { answer, memo } = findCategoryQuestion({ categoryId: currentTabId, questionId });
 
   const handleClick = (newAnswer: EmotionType) => {
     updateAnswer({ categoryId: currentTabId, questionId: questionId, newAnswer });

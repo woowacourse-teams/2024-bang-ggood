@@ -16,11 +16,14 @@ const NewChecklistContent = ({ roomInfo, onChangeRoomInfo }: Props) => {
   return (
     <>
       {currentTabId === 0 ? (
-        <NewChecklistInfoTemplate roomInfo={roomInfo} onChange={onChangeRoomInfo} />
+        <>
+          {/*방 기본정보 템플릿*/}
+          <NewChecklistInfoTemplate roomInfo={roomInfo} onChange={onChangeRoomInfo} />
+        </>
       ) : (
         <>
+          {/*체크리스트 템플릿*/}
           <NewChecklistTemplate questions={categoryQnA(currentTabId)} />
-          <div>컨텐츠가 없습니다.</div>
         </>
       )}
     </>

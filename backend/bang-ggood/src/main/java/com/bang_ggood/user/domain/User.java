@@ -23,9 +23,12 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String email;
 
+    private Boolean deleted;
+
     public User(String name, String email) {
         this.name = name;
         this.email = email;
+        this.deleted = Boolean.FALSE;
     }
 
     public User(Long id, String name, String email) { // TODO 테스트용
@@ -36,6 +39,7 @@ public class User extends BaseEntity {
 
     public User(String name) {
         this.name = name;
+        this.deleted = Boolean.FALSE;
     }
 
     protected User() {
@@ -75,6 +79,8 @@ public class User extends BaseEntity {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", deleted=" + deleted +
                 '}';
     }
 }

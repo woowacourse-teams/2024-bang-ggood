@@ -24,6 +24,8 @@ describe('useChecklistStore 테스트', () => {
       const { result } = renderHook(() => useChecklistStore());
       act(() => {
         result.current.addAnswer({ questionId: 1, newAnswer: 'BAD' });
+      });
+      act(() => {
         result.current.addAnswer({ questionId: 2, newAnswer: 'BAD' });
       });
       act(() => {

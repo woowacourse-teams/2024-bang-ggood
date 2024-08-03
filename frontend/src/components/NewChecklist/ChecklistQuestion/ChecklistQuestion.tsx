@@ -6,7 +6,7 @@ import FaceMark from '@/components/common/FaceMark/FaceMark';
 import QuestionMemo from '@/components/NewChecklist/ChecklistQuestion/QuestionMemo';
 import { EMOTION_PHARSE, EMOTIONS } from '@/constants/emotion';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';
-import useInputs from '@/hooks/useInputs';
+import useInput from '@/hooks/useInput';
 import { flexCenter } from '@/styles/common';
 import { ChecklistQuestion } from '@/types/checklist';
 import { EmotionType } from '@/types/emotionAnswer';
@@ -21,10 +21,7 @@ const ChecklistQuestion = ({ question }: Props) => {
 
   const [isMemoOpen, setIsMemoOpen] = useState(false);
 
-  const {
-    values: { text },
-    onChange,
-  } = useInputs({ text: '' });
+  const { value: memoText, onChange } = useInput(null);
 
   const handleClick = (newAnswer: EmotionType) => {
     if (questionSelectedAnswer(questionId) === newAnswer) {
@@ -54,7 +51,7 @@ const ChecklistQuestion = ({ question }: Props) => {
       <S.ButtonBox>
         {isMemoOpen ? (
           <ArrowUpSmall onClick={handleCloseMemo} />
-        ) : text.length ? (
+        ) : memoText?.length ? (
           <MemoFilled onClick={handleOpenMemo} />
         ) : (
           <MemoEmpty onClick={handleOpenMemo} />
@@ -72,7 +69,7 @@ const ChecklistQuestion = ({ question }: Props) => {
           );
         })}
       </S.Options>
-      {isMemoOpen && <QuestionMemo text={text} onChange={onChange} />}
+      {isMemoOpen && <QuestionMemo text={memoText} onChange={onChange} />}
     </S.Container>
   );
 };

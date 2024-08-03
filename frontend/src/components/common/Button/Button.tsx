@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { title2, title3, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
 
-type ButtonSize = 'small' | 'medium' | 'full';
+type ButtonSize = 'xSmall' | 'small' | 'medium' | 'full';
 type ColorOption = 'light' | 'dark' | 'disabled';
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
@@ -33,7 +33,7 @@ export default Button;
 
 const S = {
   Button: styled.button<{ size: ButtonSize; color: ColorOption; isSquare: boolean }>`
-    ${({ isSquare }) => (isSquare ? 'border-radius: 8px' : 'border-radius: 100px')};
+    ${({ isSquare }) => (isSquare ? 'border-radius: 4px' : 'border-radius: 100px')};
     ${({ size }) => sizeStyles[size]};
     ${({ color }) => ColorStyles[color]};
     cursor: pointer;
@@ -53,13 +53,13 @@ const ColorStyles = {
     }
   `,
   dark: css`
-    background-color: ${theme.palette.black};
+    background-color: ${theme.palette.grey600};
 
     color: ${theme.palette.white};
 
     &:hover,
     &:active {
-      background-color: ${theme.palette.grey600};
+      background-color: ${theme.palette.black};
     }
   `,
   disabled: css`
@@ -70,6 +70,10 @@ const ColorStyles = {
 };
 
 const sizeStyles = {
+  xSmall: css`
+    padding: 8px 15px;
+    ${title4}
+  `,
   small: css`
     padding: 10px 24px;
     ${title4}

@@ -19,6 +19,9 @@ public enum Grade {
     }
 
     public static Grade from(String grade) {
+        if(grade == null) {
+            return null;
+        }
         return Arrays.stream(Grade.values())
                 .filter(value -> value.name().equals(grade))
                 .findFirst()
@@ -31,6 +34,7 @@ public enum Grade {
 
     public static int calculateTotalScore(List<ChecklistQuestion> questions) {
         return questions.stream()
+                .filter(question -> question.getGrade() != null)
                 .mapToInt(question -> question.getGrade().score)
                 .sum();
     }

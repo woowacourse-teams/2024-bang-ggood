@@ -1,40 +1,72 @@
 import useChecklistStore from '@/store/useChecklistStore';
 import { EmotionType } from '@/types/emotionAnswer';
 
+export interface Props {
+  questionId: number;
+  categoryId: number;
+}
+
+export interface UpdateAnswerProps extends Props {
+  newAnswer: EmotionType;
+}
+
+export interface updateMemoProps extends Props {
+  newMemo: string | null;
+}
+
 const useChecklistAnswer = () => {
   const { setAnswers, checklistCategoryQnA } = useChecklistStore();
 
-  const addAnswer = ({ questionId, newAnswer }: { questionId: number; newAnswer: EmotionType }) => {
-    const newCategories = checklistCategoryQnA.map(category => ({
-      ...category,
-      questions: category.questions.map(question =>
-        question.questionId === questionId ? { ...question, answer: newAnswer } : question,
-      ),
-    }));
-    setAnswers(newCategories);
-  };
+  const updateAnswer = ({ categoryId, questionId, newAnswer }: UpdateAnswerProps) => {
+    const targetCategory = checklistCategoryQnA.find(category => category.categoryId === categoryId);
 
-  const deleteAnswer = (questionId: number) => {
-    const newCategories = checklistCategoryQnA.map(category => ({
-      ...category,
-      questions: category.questions.map(question =>
-        question.questionId === questionId ? { ...question, answer: null } : question,
-      ),
-    }));
-    setAnswers(newCategories);
-  };
+    if (targetCategory) {
+      const updatedCategory = {
+        ...targetCategory,
+        questions: targetCategory.questions.map(question =>
+          question.questionId === questionId ? { ...question, answer: newAnswer } : question,
+        ),
+      };
 
-  const questionSelectedAnswer = (targetId: number) => {
-    for (const category of checklistCategoryQnA) {
-      const targetQuestion = category.questions.find(q => q.questionId === targetId);
+      const newCategories = checklistCategoryQnA.map(category =>
+        category.categoryId === categoryId ? updatedCategory : category,
+      );
+
+      setAnswers(newCategories);
+    }
+  };
+  const updateMemo = ({ categoryId, questionId, newMemo }: updateMemoProps) => {
+    const targetCategory = checklistCategoryQnA.find(category => category.categoryId === categoryId);
+
+    if (targetCategory) {
+      const updatedCategory = {
+        ...targetCategory,
+        questions: targetCategory.questions.map(question =>
+          question.questionId === questionId ? { ...question, memo: newMemo } : question,
+        ),
+      };
+
+      const newCategories = checklistCategoryQnA.map(category =>
+        category.categoryId === categoryId ? updatedCategory : category,
+      );
+
+      setAnswers(newCategories);
+    }
+  };
+  const questionSelectedAnswer = ({ categoryId, questionId }: Props) => {
+    const targetCategory = checklistCategoryQnA?.find(category => category.categoryId === categoryId);
+
+    if (targetCategory) {
+      const targetQuestion = targetCategory.questions.find(q => q.questionId === questionId);
       if (targetQuestion) {
-        return targetQuestion.answer;
+        return targetQuestion;
       }
     }
+
     return null;
   };
 
-  return { addAnswer, deleteAnswer, questionSelectedAnswer };
+  return { updateAnswer, updateMemo, questionSelectedAnswer };
 };
 
 export default useChecklistAnswer;

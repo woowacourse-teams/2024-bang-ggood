@@ -3,10 +3,10 @@ import { useState } from 'react';
 
 import { ArrowUpSmall, MemoEmpty, MemoFilled, QuestionDot } from '@/assets/assets';
 import FaceMark from '@/components/common/FaceMark/FaceMark';
+import { useTabContext } from '@/components/common/Tabs/TabContext';
 import QuestionMemo from '@/components/NewChecklist/ChecklistQuestion/QuestionMemo';
 import { EMOTION_PHARSE, EMOTIONS } from '@/constants/emotion';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';
-import useInput from '@/hooks/useInput';
 import { flexCenter } from '@/styles/common';
 import { ChecklistQuestion } from '@/types/checklist';
 import { EmotionType } from '@/types/emotionAnswer';
@@ -17,18 +17,15 @@ interface Props {
 
 const ChecklistQuestion = ({ question }: Props) => {
   const { questionId } = question;
-  const { deleteAnswer, addAnswer, questionSelectedAnswer } = useChecklistAnswer();
+  const { updateAnswer, questionSelectedAnswer } = useChecklistAnswer();
+  const { currentTabId } = useTabContext();
 
   const [isMemoOpen, setIsMemoOpen] = useState(false);
 
-  const { value: memoText, onChange } = useInput(null);
+  const { answer, memo } = questionSelectedAnswer({ categoryId: currentTabId, questionId });
 
   const handleClick = (newAnswer: EmotionType) => {
-    if (questionSelectedAnswer(questionId) === newAnswer) {
-      deleteAnswer(questionId);
-    } else {
-      addAnswer({ questionId: questionId, newAnswer });
-    }
+    updateAnswer({ categoryId: currentTabId, questionId: questionId, newAnswer });
   };
 
   const handleCloseMemo = () => {
@@ -51,7 +48,7 @@ const ChecklistQuestion = ({ question }: Props) => {
       <S.ButtonBox>
         {isMemoOpen ? (
           <ArrowUpSmall onClick={handleCloseMemo} />
-        ) : memoText?.length ? (
+        ) : memo?.length ? (
           <MemoFilled onClick={handleOpenMemo} />
         ) : (
           <MemoEmpty onClick={handleOpenMemo} />
@@ -63,13 +60,13 @@ const ChecklistQuestion = ({ question }: Props) => {
           const { name: emotionName, id } = emotion;
           return (
             <FaceMark onClick={() => handleClick(emotionName)} key={id}>
-              <FaceMark.FaceIcon emotion={emotionName} isFilled={questionSelectedAnswer(questionId) === emotionName} />
+              <FaceMark.FaceIcon emotion={emotionName} isFilled={answer === emotionName} />
               <FaceMark.Footer>{EMOTION_PHARSE[emotionName]}</FaceMark.Footer>
             </FaceMark>
           );
         })}
       </S.Options>
-      {isMemoOpen && <QuestionMemo text={memoText} onChange={onChange} />}
+      {isMemoOpen && <QuestionMemo questionId={questionId} text={memo} />}
     </S.Container>
   );
 };

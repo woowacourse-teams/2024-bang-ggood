@@ -26,6 +26,7 @@ const useChecklistStore = create<ChecklistState>((set, get) => ({
       categoryName: category.categoryName,
       questions: category.questions.map(question => ({
         ...question,
+        memo: null,
         answer: null,
       })),
     }));

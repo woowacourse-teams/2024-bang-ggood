@@ -48,10 +48,15 @@ const NewChecklistPage = () => {
   /*현재 상태를 백엔드에 보내는 답안 포맷으로 바꾸는 함수*/
   const transformQuestions = (checklist: ChecklistCategoryQnA[]) => {
     return checklist.flatMap(category =>
-      category.questions.map(question => ({
-        questionId: question.questionId,
-        answer: null,
-      })),
+      category.questions.map(question => {
+        const { questionId, memo } = question;
+
+        return {
+          questionId,
+          memo,
+          grade: null,
+        };
+      }),
     );
   };
 

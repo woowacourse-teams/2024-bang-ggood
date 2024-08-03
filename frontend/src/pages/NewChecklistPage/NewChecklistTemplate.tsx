@@ -1,20 +1,22 @@
 import styled from '@emotion/styled';
 
+import { useTabContext } from '@/components/common/Tabs/TabContext';
 import ChecklistQuestion from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
 import { ChecklistCategoryQnA, ChecklistQuestionWithAnswer } from '@/types/checklist';
 
 const NewChecklistTemplate = ({ questions }: { questions: ChecklistCategoryQnA }) => {
+  const { currentTabId } = useTabContext();
   return (
     <S.ContentBox>
       {questions.questions.map((question: ChecklistQuestionWithAnswer) => (
-        <ChecklistQuestion question={question} key={question.questionId} />
+        <ChecklistQuestion question={question} key={`${currentTabId}-${question.questionId}`} />
       ))}
     </S.ContentBox>
   );
 };
 
 export default NewChecklistTemplate;
-
+4;
 const ContentBox = styled.div`
   display: flex;
   padding: 0 16px;

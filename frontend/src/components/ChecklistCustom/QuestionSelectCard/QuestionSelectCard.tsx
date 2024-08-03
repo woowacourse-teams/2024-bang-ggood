@@ -15,9 +15,11 @@ const QuestionSelectCard = ({ question }: { question: ChecklistQuestionWithIsChe
           <QuestionDot />
           <S.Title>{title}</S.Title>
         </S.FlexRow>
-        <S.Subtitle>{subtitle}</S.Subtitle>
+        {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
       </S.FlexColumn>
-      <Checkbox isChecked={isChecked} />
+      <S.CheckBoxContainer>
+        <Checkbox isChecked={isChecked} />
+      </S.CheckBoxContainer>
     </S.Container>
   );
 };
@@ -28,19 +30,20 @@ const S = {
   Container: styled.div`
     display: flex;
     width: 100%;
-    height: 50px;
+    min-height: 40px;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid red;
   `,
   FlexColumn: styled.div`
     display: flex;
+    padding: 10px;
+    padding-left: 10px;
     flex-direction: column;
     justify-content: space-between;
   `,
   FlexRow: styled.div`
     ${flexCenter}
-    gap: 5px;
+    gap: 8px;
   `,
   Title: styled.div`
     display: flex;
@@ -50,12 +53,14 @@ const S = {
     gap: 10px;
   `,
   Subtitle: styled.div`
-    margin-bottom: 10px;
     padding-left: 20px;
 
     color: ${({ theme }) => theme.palette.grey500};
     font-size: ${({ theme }) => theme.text.size.small};
     line-height: 1.5;
     word-break: keep-all;
+  `,
+  CheckBoxContainer: styled.div`
+    padding: 10px;
   `,
 };

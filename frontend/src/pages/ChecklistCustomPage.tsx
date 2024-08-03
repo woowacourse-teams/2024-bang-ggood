@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getChecklistQuestions, putCustomChecklist } from '@/apis/checklist';
+import QuestionCardList from '@/components/ChecklistCustom/QuestionCardList/QuestionCardList';
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import ChecklistTabs from '@/components/common/Tabs/NewChecklistTab';
-import { TabProvider } from '@/components/common/Tabs/TabContext';
+import { TabProvider, useTabContext } from '@/components/common/Tabs/TabContext';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useToast from '@/hooks/useToast';
 import useChecklistCustomStore from '@/store/useChecklistCustomStore';
@@ -15,8 +16,11 @@ import { flexCenter, title2 } from '@/styles/common';
 const ChecklistCustomPage = () => {
   const { showToast } = useToast(3);
 
-  /*체크리스트 답변*/
-  const { setChecklistAllQuestionList } = useChecklistCustomStore();
+  const { currentTabId } = useTabContext();
+  const { categoryQnA, setChecklistAllQuestionList } = useChecklistCustomStore();
+
+  const currentQuestions = categoryQnA(currentTabId);
+
   const [selectedQuestions, setSelectedQuestions] = useState<number[]>([]);
 
   const navigate = useNavigate();
@@ -56,6 +60,7 @@ const ChecklistCustomPage = () => {
         {/*체크리스트 작성의 탭*/}
         <ChecklistTabs mode="edit" />
         {/*체크리스트 콘텐츠 섹션*/}
+        <QuestionCardList questions={currentQuestions.questions} />
       </TabProvider>
     </>
   );

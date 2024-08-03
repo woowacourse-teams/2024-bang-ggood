@@ -9,14 +9,14 @@ import ChecklistTabs from '@/components/common/Tabs/NewChecklistTab';
 import { TabProvider } from '@/components/common/Tabs/TabContext';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useToast from '@/hooks/useToast';
-import useChecklistStore from '@/store/useChecklistStore';
+import useChecklistCustomStore from '@/store/useChecklistCustomStore';
 import { flexCenter, title2 } from '@/styles/common';
 
 const ChecklistCustomPage = () => {
   const { showToast } = useToast(3);
 
   /*체크리스트 답변*/
-  const { setAnswerInQuestion, setValidCategory } = useChecklistStore();
+  const { setChecklistAllQuestionList } = useChecklistCustomStore();
   const [selectedQuestions, setSelectedQuestions] = useState<number[]>([]);
 
   const navigate = useNavigate();
@@ -37,12 +37,10 @@ const ChecklistCustomPage = () => {
 
   useEffect(() => {
     const fetchChecklist = async () => {
-      const checklist = await getChecklistQuestions();
+      const checklistQuestions = await getChecklistQuestions();
 
-      /*체크리스트 질문에 대한 답안지 객체 생성 */
-      setAnswerInQuestion(checklist);
-      /*현재 질문이 있는 유효한 카테고리 생성*/
-      setValidCategory();
+      /*체크리스트의 모든 질문 전역 상태로 저장 */
+      setChecklistAllQuestionList(checklistQuestions);
     };
     fetchChecklist();
   }, []);

@@ -1,17 +1,17 @@
-import QuestionCard from '@/components/ChecklistCustom/QuestionCard';
+import QuestionSelectCard from '@/components/ChecklistCustom/QuestionSelectCard/QuestionSelectCard';
 import { useTabContext } from '@/components/common/Tabs/TabContext';
-import useChecklistStore from '@/store/useChecklistStore';
+import useChecklistCustomStore from '@/store/useChecklistCustomStore';
 
 const QuestionCardList = () => {
   const { currentTabId } = useTabContext();
-  const { categoryQnA } = useChecklistStore();
+  const { categoryQnA } = useChecklistCustomStore();
 
   const currentQuestions = categoryQnA(currentTabId);
 
   return (
     <>
       {currentQuestions.questions.map(question => {
-        <QuestionCard question={question} />;
+        <QuestionSelectCard question={question} />;
       })}
     </>
   );

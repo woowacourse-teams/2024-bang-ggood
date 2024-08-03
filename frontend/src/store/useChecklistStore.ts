@@ -4,7 +4,6 @@ import { Category, CategoryName } from '@/types/category';
 import {
   CategoryAndQuestion,
   ChecklistCategoryQnA,
-  ChecklistCategoryQnIsChecked,
   ChecklistCategoryQuestions,
   ChecklistQuestionWithAnswer,
 } from '@/types/checklist';
@@ -13,7 +12,6 @@ interface ChecklistState {
   basicInfo: Record<string, unknown>;
   checklistCategoryQnA: ChecklistCategoryQnA[];
   validCategory: Category[];
-  checklistAllQuestionList: ChecklistCategoryQnIsChecked[];
 
   isCategoryQuestionAllCompleted: (targetId: number) => boolean;
   findCategoryQuestion: ({ categoryId, questionId }: CategoryAndQuestion) => ChecklistQuestionWithAnswer;
@@ -21,7 +19,6 @@ interface ChecklistState {
   setValidCategory: () => void;
   setAnswerInQuestion: (questions: ChecklistCategoryQuestions[]) => void;
   setAnswers: (answers: ChecklistCategoryQnA[]) => void;
-  setChecklistAllQuestionList: (answers: ChecklistCategoryQnIsChecked[]) => void;
 }
 
 const useChecklistStore = create<ChecklistState>((set, get) => ({
@@ -41,10 +38,6 @@ const useChecklistStore = create<ChecklistState>((set, get) => ({
       })),
     }));
     set({ checklistCategoryQnA });
-  },
-
-  setChecklistAllQuestionList: (questions: ChecklistCategoryQnIsChecked[]) => {
-    set({ checklistAllQuestionList: questions });
   },
 
   findCategoryQuestion: ({ categoryId, questionId }: { categoryId: number; questionId: number }) => {

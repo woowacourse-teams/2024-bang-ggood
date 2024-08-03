@@ -7,6 +7,7 @@ import { useTabContext } from '@/components/common/Tabs/TabContext';
 import QuestionMemo from '@/components/NewChecklist/ChecklistQuestion/QuestionMemo';
 import { EMOTION_PHARSE, EMOTIONS } from '@/constants/emotion';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';
+import useChecklistStore from '@/store/useChecklistStore';
 import { flexCenter } from '@/styles/common';
 import { ChecklistQuestion } from '@/types/checklist';
 import { EmotionType } from '@/types/emotionAnswer';
@@ -17,7 +18,8 @@ interface Props {
 
 const ChecklistQuestion = ({ question }: Props) => {
   const { questionId } = question;
-  const { updateAnswer, findCategoryQuestion } = useChecklistAnswer();
+  const { findCategoryQuestion } = useChecklistStore();
+  const { updateAnswer } = useChecklistAnswer();
   const { currentTabId } = useTabContext();
 
   const [isMemoOpen, setIsMemoOpen] = useState(false);

@@ -7,10 +7,10 @@ import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import { TabProvider } from '@/components/common/Tabs/TabContext';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { newChecklistTabs } from '@/constants/tabs';
 import useInputs from '@/hooks/useInput';
 import useToast from '@/hooks/useToast';
-import NewChecklistBody from '@/pages/NewChecklistPage/NewChecklistBody';
+import NewChecklistContent from '@/pages/NewChecklistPage/NewChecklistContent';
+import NewChecklistTab from '@/pages/NewChecklistPage/NewChecklistTab';
 import useChecklistStore from '@/store/useChecklistStore';
 import useOptionStore from '@/store/useOptionStore';
 import { flexCenter, title2 } from '@/styles/common';
@@ -33,14 +33,15 @@ const DefaultRoomInfo: RoomInfo = {
 const NewChecklistPage = () => {
   const { showToast } = useToast(3);
 
+  //TODO:  방 기본 정보도 전역 상태로 관리 필요
   /*방 기본 정보 */
-  const { values: roomInfo, onChange } = useInputs(DefaultRoomInfo);
+  const { values: roomInfo, onChange: onChangeRoomInfo } = useInputs(DefaultRoomInfo);
 
   /*선택된 옵션*/
   const { selectedOptions } = useOptionStore();
 
   /*체크리스트 답변*/
-  const { setAnswerInQuestion, checklistCategoryQnA } = useChecklistStore();
+  const { setAnswerInQuestion, checklistCategoryQnA, setValidCategory } = useChecklistStore();
 
   const navigate = useNavigate();
 
@@ -80,6 +81,8 @@ const NewChecklistPage = () => {
 
       /*체크리스트 질문에 대한 답안지 객체 생성 */
       setAnswerInQuestion(checklist);
+      /*현재 질문이 있는 유효한 카테고리 생성*/
+      setValidCategory();
     };
     fetchChecklist();
   }, []);
@@ -91,9 +94,11 @@ const NewChecklistPage = () => {
         center={<S.Title>{'새 체크리스트'}</S.Title>}
         right={<Button label={'저장'} size="small" color="dark" onClick={handleSubmitChecklist} />}
       />
-
       <TabProvider>
-        <NewChecklistBody newChecklistTabs={newChecklistTabs} roomInfo={roomInfo} onChange={onChange} />
+        {/*체크리스트 작성의 탭*/}
+        <NewChecklistTab />
+        {/*체크리스트 콘텐츠 섹션*/}
+        <NewChecklistContent roomInfo={roomInfo} onChangeRoomInfo={onChangeRoomInfo} />
       </TabProvider>
     </>
   );

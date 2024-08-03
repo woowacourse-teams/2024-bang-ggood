@@ -1,11 +1,13 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 
-import { QuestionDot } from '@/assets/assets';
+import { ArrowUpSmall, MemoEmpty, MemoFilled, QuestionDot } from '@/assets/assets';
 import FaceMark from '@/components/common/FaceMark/FaceMark';
 import QuestionMemo from '@/components/NewChecklist/ChecklistQuestion/QuestionMemo';
 import { EMOTION_PHARSE, EMOTIONS } from '@/constants/emotion';
 import useInputs from '@/hooks/useInput';
 import useChecklistStore from '@/store/useChecklistStore';
+import { flexCenter } from '@/styles/common';
 import { ChecklistQuestion } from '@/types/checklist';
 import { EmotionType } from '@/types/emotionAnswer';
 
@@ -16,6 +18,7 @@ interface Props {
 const ChecklistQuestion = ({ question }: Props) => {
   const { questionId } = question;
   const { deleteAnswer, addAnswer, questionSelectedAnswer } = useChecklistStore();
+  const [isMemoOpen, setIsMemoOpen] = useState(false);
 
   const {
     values: { text },
@@ -30,13 +33,32 @@ const ChecklistQuestion = ({ question }: Props) => {
     }
   };
 
+  const handleCloseMemo = () => {
+    setIsMemoOpen(false);
+  };
+
+  const handleOpenMemo = () => {
+    setIsMemoOpen(true);
+  };
+
   return (
     <S.Container>
       <S.Title>
         <QuestionDot />
         {question?.title}
       </S.Title>
-      {question?.subtitle && <S.Subtitle>•{question?.subtitle}</S.Subtitle>}
+
+      {question?.subtitle && <S.Subtitle>{question?.subtitle}</S.Subtitle>}
+
+      <S.ButtonBox>
+        {isMemoOpen ? (
+          <ArrowUpSmall onClick={handleCloseMemo} />
+        ) : text.length ? (
+          <MemoFilled onClick={handleOpenMemo} />
+        ) : (
+          <MemoEmpty onClick={handleOpenMemo} />
+        )}
+      </S.ButtonBox>
 
       <S.Options>
         {EMOTIONS.map(emotion => {
@@ -49,7 +71,7 @@ const ChecklistQuestion = ({ question }: Props) => {
           );
         })}
       </S.Options>
-      <QuestionMemo text={text} onChange={onChange} />
+      {isMemoOpen && <QuestionMemo text={text} onChange={onChange} />}
     </S.Container>
   );
 };
@@ -66,6 +88,7 @@ const S = {
   `,
   Title: styled.div`
     display: flex;
+    width: 90%;
     margin: 5px 0;
 
     font-size: ${({ theme }) => theme.text.size.medium};
@@ -88,5 +111,18 @@ const S = {
     margin: 0 auto;
     margin-top: 10px;
     justify-content: space-between;
+  `,
+  ButtonBox: styled.div`
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    ${flexCenter}
+
+    :hover {
+      background-color: ${({ theme }) => theme.palette.background};
+    }
   `,
 };

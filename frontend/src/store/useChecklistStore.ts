@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 
+import { Category, CategoryName } from '@/types/category';
 import { ChecklistCategoryQnA, ChecklistCategoryQuestions } from '@/types/checklist';
 import { EmotionType } from '@/types/emotionAnswer';
 
@@ -8,7 +9,11 @@ interface ChecklistState {
   checklistCategoryQnA: ChecklistCategoryQnA[];
   questionSelectedAnswer: (targetId: number) => EmotionType | null;
   addAnswer: (props: { questionId: number; newAnswer: EmotionType }) => void;
+  isCategoryQuestionAllCompleted: (targetId: number) => boolean;
   deleteAnswer: (questionId: number) => void;
+  categoryQnA: (categoryId: number) => ChecklistCategoryQnA;
+  validCategory: Category[];
+  setValidCategory: () => void;
   setAnswerInQuestion: (questions: ChecklistCategoryQuestions[]) => void;
   setAnswers: (answers: ChecklistCategoryQnA[]) => void;
 }
@@ -16,6 +21,7 @@ interface ChecklistState {
 const useChecklistStore = create<ChecklistState>((set, get) => ({
   basicInfo: {},
   checklistCategoryQnA: [],
+  validCategory: [],
 
   setAnswerInQuestion: (questions: ChecklistCategoryQuestions[]) => {
     const checklistCategoryQnA: ChecklistCategoryQnA[] = questions.map(category => ({
@@ -29,8 +35,31 @@ const useChecklistStore = create<ChecklistState>((set, get) => ({
     set({ checklistCategoryQnA });
   },
 
+  categoryQnA: (categoryId: number) => {
+    const { checklistCategoryQnA } = get();
+    return checklistCategoryQnA.filter(category => category.categoryId === categoryId)[0];
+  },
+
   setAnswers: (answers: ChecklistCategoryQnA[]) => {
     set({ checklistCategoryQnA: answers });
+  },
+
+  setValidCategory: () => {
+    const { checklistCategoryQnA } = get();
+    const validCategory = checklistCategoryQnA.map(category => ({
+      categoryId: category.categoryId,
+      categoryName: category.categoryName as CategoryName,
+    }));
+    set({ validCategory });
+  },
+
+  isCategoryQuestionAllCompleted: (targetId: number) => {
+    const { checklistCategoryQnA } = get();
+    const targetCategory = checklistCategoryQnA.filter(category => category.categoryId === targetId)[0];
+    if (targetCategory?.questions) {
+      return !targetCategory?.questions?.find(question => question === null);
+    }
+    return true;
   },
 
   questionSelectedAnswer: (targetId: number) => {

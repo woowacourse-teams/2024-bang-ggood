@@ -4,5 +4,5 @@ export interface Tab {
 }
 
 export interface TabWithCompletion extends Tab {
-  isCompleted: boolean;
+  isCompleted?: boolean;
 }

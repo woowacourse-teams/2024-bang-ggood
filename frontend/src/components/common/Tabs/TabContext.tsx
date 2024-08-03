@@ -6,8 +6,8 @@ interface ContextProps {
 }
 const TabContext = createContext<ContextProps>(null);
 
-export const TabProvider = ({ children }: { children: ReactNode }) => {
-  const [currentTabId, setCurrentTabId] = useState<number>(0);
+export const TabProvider = ({ children, initialTab }: { children: ReactNode; initialTab?: number }) => {
+  const [currentTabId, setCurrentTabId] = useState<number>(initialTab);
 
   return <TabContext.Provider value={{ currentTabId, setCurrentTabId }}>{children}</TabContext.Provider>;
 };

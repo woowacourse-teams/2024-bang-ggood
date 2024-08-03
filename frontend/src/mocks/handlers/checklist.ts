@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw';
 
 import { BASE_URL, ENDPOINT } from '@/apis/url';
+import { checklistAllQuestions } from '@/mocks/fixtures/checklistAllQuestions';
 import { checklistDetail } from '@/mocks/fixtures/checklistDetail';
 import { checklistList } from '@/mocks/fixtures/checklistList';
 import { checklistQuestions } from '@/mocks/fixtures/checklistQuestions';
@@ -28,5 +29,8 @@ export const checklistHandlers = [
 
     if (!roomIds[2]) return HttpResponse.json(twoRoomsForCompare, { status: 200 });
     return HttpResponse.json(threeRoomsForCompare, { status: 200 });
+  }),
+  http.get(BASE_URL + ENDPOINT.CHECKLIST_ALL_QUESTION, () => {
+    return HttpResponse.json(checklistAllQuestions.categories, { status: 200 });
   }),
 ];

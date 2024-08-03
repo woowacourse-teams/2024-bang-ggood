@@ -3,6 +3,7 @@ export const ROUTE_PATH = {
   checklistNew: '/checklist-new',
   checklistList: '/checklist-list',
   checklistOne: (id: number) => `/checklists/${id}`,
+  checklistCustom: `/checklist/custom`,
   categoryChoose: '/category-choose',
   roomCompareSelect: '/room-compare-select',
   roomCompare: '/room-compare',

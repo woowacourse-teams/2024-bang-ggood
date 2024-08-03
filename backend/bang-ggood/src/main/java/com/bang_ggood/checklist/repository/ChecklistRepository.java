@@ -25,7 +25,17 @@ public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
 
     List<Checklist> findByUser(User user);
 
-    List<Checklist> findByUserAndIdIn(User user, List<Long> checklistIds);
+    @Query("SELECT c FROM Checklist c "
+            + "JOIN FETCH c.user u "
+            + "JOIN FETCH c.room r "
+            + "WHERE u = :user "
+            + "AND c.id IN :checklistIds "
+            + "AND c.deleted = false")
+    List<Checklist> findByUserAndIdIn(@Param("user") User user, @Param("checklistIds") List<Long> checklistIds);
 
-    long countAllByIdIn(List<Long> ids);
+    @Query("SELECT COUNT(c) FROM Checklist c "
+            + "WHERE c.user = :user "
+            + "AND c.id IN :ids "
+            + "AND c.deleted = false")
+    long countAllByIdIn(@Param("user") User user, @Param("ids") List<Long> ids);
 }

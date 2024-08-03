@@ -236,7 +236,7 @@ public class ChecklistService {
     public ChecklistsWithScoreReadResponse readChecklistsComparison(List<Long> checklistIds) {
         User user = new User(1L, "방끗");
 
-        validateChecklistComparison(checklistIds);
+        validateChecklistComparison(user, checklistIds);
 
         List<ChecklistWithScoreReadResponse> checklistsWithScore = checklistRepository.findByUserAndIdIn(user,
                         checklistIds)
@@ -259,9 +259,9 @@ public class ChecklistService {
         return new ChecklistsWithScoreReadResponse(checklistsWithScore);
     }
 
-    private void validateChecklistComparison(List<Long> checklistIds) {
+    private void validateChecklistComparison(User user, List<Long> checklistIds) {
         validateChecklistComparisonCount(checklistIds);
-        validateChecklist(checklistIds);
+        validateUserChecklist(user, checklistIds);
     }
 
     private void validateChecklistComparisonCount(List<Long> checklistIds) {
@@ -270,8 +270,8 @@ public class ChecklistService {
         }
     }
 
-    private void validateChecklist(List<Long> checklistIds) {
-        if (checklistRepository.countAllByIdIn(checklistIds) != checklistIds.size()) {
+    private void validateUserChecklist(User user, List<Long> checklistIds) {
+        if (checklistRepository.countAllByIdIn(user, checklistIds) != checklistIds.size()) {
             throw new BangggoodException(ExceptionCode.CHECKLIST_NOT_FOUND);
         }
     }

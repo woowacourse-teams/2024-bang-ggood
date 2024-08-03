@@ -19,11 +19,8 @@ const useChecklistStore = create<ChecklistState>((set, get) => ({
 
   setAnswerInQuestion: (questions: ChecklistCategoryQuestions[]) => {
     const checklistCategoryQnA: ChecklistCategoryQnA[] = questions.map(category => ({
-      categoryId: category.categoryId,
-      categoryName: category.categoryName,
+      ...category,
       questions: category.questions.map(question => ({
-        // TODO : #194 커밋에서 answer:null로 되어있던데, 이것때문에 post요청시 무조건 사용자응답이 null로 가고있습니다.
-        // grade, memo를 알맞게 수정필요
         ...question,
         grade: null,
         memo: null,
@@ -38,13 +35,11 @@ const useChecklistStore = create<ChecklistState>((set, get) => ({
 
   questionSelectedAnswer: (targetId: number) => {
     const { checklistCategoryQnA } = get();
-    for (const category of checklistCategoryQnA) {
-      const targetQuestion = category.questions.find(q => q.questionId === targetId);
-      if (targetQuestion) {
-        return targetQuestion.grade;
-      }
-    }
-    return null;
+
+    const questions = checklistCategoryQnA.flatMap(category => category.questions);
+    const targetQuestion = questions.find(q => q.questionId === targetId);
+
+    return targetQuestion?.grade ?? null;
   },
 
   addAnswer: ({ questionId, newAnswer }: { questionId: number; newAnswer: EmotionName }) => {

@@ -21,7 +21,7 @@ const OptionModalInfoBox = () => {
           setIsChecked={handleToggleAllSelect}
           onClick={handleToggleAllSelect}
           color={theme.palette.yellow500}
-          hoverBorderColor={theme.palette.yellow600}
+          hoverColor={theme.palette.yellow600}
         />
 
         <span>전체선택</span>

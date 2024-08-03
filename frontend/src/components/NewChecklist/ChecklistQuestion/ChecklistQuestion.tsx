@@ -4,28 +4,24 @@ import { QuestionDot } from '@/assets/assets';
 import FaceMark from '@/components/common/FaceMark/FaceMark';
 import useChecklistStore from '@/store/useChecklistStore';
 import { ChecklistQuestion } from '@/types/checklist';
-import { Emotion, EmotionType } from '@/types/emotionAnswer';
+import { Emotion, EmotionNameWithNull } from '@/types/emotionAnswer';
 
 interface Props {
   question: ChecklistQuestion;
 }
 
-export const emotionPhrase: Record<EmotionType | string, string> = {
-  BAD: '별로에요',
-  SOSO: '평범해요',
-  GOOD: '좋아요',
-  null: '-',
-};
+export const emotionPhrase = { BAD: '별로에요', SOSO: '평범해요', GOOD: '좋아요' };
 
 const ChecklistQuestion = ({ question }: Props) => {
   const { questionId } = question;
   const { deleteAnswer, addAnswer, questionSelectedAnswer } = useChecklistStore();
 
-  const handleClick = (newAnswer: EmotionType) => {
-    if (questionSelectedAnswer(questionId) === newAnswer) {
+  const handleClick = (emotion: EmotionNameWithNull) => {
+    if (!emotion) return;
+    if (questionSelectedAnswer(questionId) === emotion) {
       deleteAnswer(questionId);
     } else {
-      addAnswer({ questionId: questionId, newAnswer });
+      addAnswer({ questionId: questionId, newAnswer: emotion });
     }
   };
 

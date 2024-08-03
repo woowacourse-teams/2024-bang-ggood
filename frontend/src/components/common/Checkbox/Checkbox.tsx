@@ -13,10 +13,7 @@ interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
   onClick?: () => void;
 }
 
-const colorForCheckState = new Map([
-  [true, theme.palette.green500],
-  [false, theme.palette.grey400],
-]);
+const colorForCheckState = (isChecked: boolean) => (isChecked ? theme.palette.green500 : theme.palette.grey400);
 
 const Checkbox = ({
   isChecked = false,
@@ -26,15 +23,13 @@ const Checkbox = ({
   onClick,
 }: StyledProps) => {
   const handleClick = useCallback(() => {
-    setIsChecked(!isChecked);
+    setIsChecked && setIsChecked(!isChecked);
   }, [isChecked, setIsChecked]);
 
+  color = color ? color : colorForCheckState(isChecked);
+
   return (
-    <S.Checkbox
-      $color={color ? color : colorForCheckState.get(isChecked)}
-      $hoverColor={isChecked ? color : hoverColor}
-      onClick={onClick}
-    >
+    <S.Checkbox $color={color} $hoverColor={isChecked ? color : hoverColor} onClick={onClick}>
       <S.FlexBox>
         <CheckIcon />
       </S.FlexBox>

@@ -20,7 +20,7 @@ interface Props {
 
 const FooterWrapper = ({ children, ...rest }: Props) => {
   const match = useMatch('/:page');
-  const currentPath = match.params.page;
+  const currentPath = match?.params.page as string;
   return (
     <>
       <S.EmptyBox />

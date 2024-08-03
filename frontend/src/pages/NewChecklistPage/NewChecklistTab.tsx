@@ -8,7 +8,7 @@ const NewChecklistTab = ({ newChecklistTabs }: { newChecklistTabs: Tab[] }) => {
   const isCategoryQuestionAllCompleted = (targetId: number) => {
     const targetCartegory = checklistCategoryQnA.filter(category => category.categoryId === targetId)[0];
     if (targetCartegory) {
-      return !targetCartegory.questions.find(question => question.answer === null);
+      return !targetCartegory.questions.find(question => question.grade === null);
     }
     return true;
   };

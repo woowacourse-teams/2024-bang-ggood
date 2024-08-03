@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 
 import { ChecklistCategoryQnA, ChecklistCategoryQuestions } from '@/types/checklist';
-import { EmotionType } from '@/types/emotionAnswer';
+import { EmotionName, EmotionNameWithNull } from '@/types/emotionAnswer';
 
 interface ChecklistState {
   basicInfo: Record<string, unknown>;
   checklistCategoryQnA: ChecklistCategoryQnA[];
-  questionSelectedAnswer: (targetId: number) => EmotionType | null;
-  addAnswer: (props: { questionId: number; newAnswer: EmotionType }) => void;
+  questionSelectedAnswer: (targetId: number) => EmotionNameWithNull;
+  addAnswer: (props: { questionId: number; newAnswer: EmotionName }) => void;
   deleteAnswer: (questionId: number) => void;
   setAnswerInQuestion: (questions: ChecklistCategoryQuestions[]) => void;
   setAnswers: (answers: ChecklistCategoryQnA[]) => void;
@@ -23,7 +23,8 @@ const useChecklistStore = create<ChecklistState>((set, get) => ({
       categoryName: category.categoryName,
       questions: category.questions.map(question => ({
         ...question,
-        answer: null,
+        grade: null,
+        memo: null,
       })),
     }));
     set({ checklistCategoryQnA });
@@ -38,13 +39,13 @@ const useChecklistStore = create<ChecklistState>((set, get) => ({
     for (const category of checklistCategoryQnA) {
       const targetQuestion = category.questions.find(q => q.questionId === targetId);
       if (targetQuestion) {
-        return targetQuestion.answer;
+        return targetQuestion.grade;
       }
     }
     return null;
   },
 
-  addAnswer: ({ questionId, newAnswer }: { questionId: number; newAnswer: EmotionType }) => {
+  addAnswer: ({ questionId, newAnswer }: { questionId: number; newAnswer: EmotionName }) => {
     set(state => {
       const newCategories = state.checklistCategoryQnA.map(category => ({
         ...category,
@@ -61,7 +62,7 @@ const useChecklistStore = create<ChecklistState>((set, get) => ({
       const newCategories = state.checklistCategoryQnA.map(category => ({
         ...category,
         questions: category.questions.map(question =>
-          question.questionId === questionId ? { ...question, answer: null } : question,
+          question.questionId === questionId ? { ...question, grade: null } : question,
         ),
       }));
       return { ...state, checklistCategoryQnA: newCategories };

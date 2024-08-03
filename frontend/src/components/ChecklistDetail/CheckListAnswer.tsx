@@ -10,7 +10,7 @@ interface Props {
 }
 
 const ChecklistAnswer = ({ QuestionAndAnswer }: Props) => {
-  const { title, subtitle, answer } = QuestionAndAnswer;
+  const { title, subtitle, grade } = QuestionAndAnswer;
 
   return (
     <S.Container>
@@ -23,8 +23,9 @@ const ChecklistAnswer = ({ QuestionAndAnswer }: Props) => {
       </S.TitleContainer>
       <S.Answer>
         <FaceMark>
-          <FaceMark.FaceIcon emotion={answer} isFilled={true} />
-          <FaceMark.Footer>{emotionPhrase[answer]}</FaceMark.Footer>
+          <FaceMark.FaceIcon emotion={grade} isFilled={true} />
+          {/* TODO : 기존에 null 체크 안되고있었음. 일단 SOSO로 해뒀으나 미입력시의 아이콘으로 수정필요 */}
+          <FaceMark.Footer>{emotionPhrase[grade ?? 'SOSO']}</FaceMark.Footer>
         </FaceMark>
       </S.Answer>
     </S.Container>

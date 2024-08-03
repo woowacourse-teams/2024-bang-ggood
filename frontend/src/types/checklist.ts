@@ -1,6 +1,6 @@
 import { Badge } from '@/types/badge';
 import { CategoryScore } from '@/types/category';
-import { EmotionType } from '@/types/emotionAnswer';
+import { EmotionNameWithNull } from '@/types/emotionAnswer';
 import { RoomInfo } from '@/types/room';
 
 export interface ChecklistCategoryQuestions {
@@ -21,13 +21,11 @@ export interface ChecklistQuestion {
   subtitle: string | null;
 }
 
-export interface ChecklistQuestionWithAnswer extends ChecklistQuestion {
-  answer: EmotionType | null;
-}
+export interface ChecklistQuestionWithAnswer extends ChecklistQuestion, ChecklistAnswer {}
 
 export interface ChecklistAnswer {
   questionId: number;
-  grade: EmotionType | null;
+  grade: EmotionNameWithNull | null;
   memo: string | null;
 }
 

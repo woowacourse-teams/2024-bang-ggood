@@ -13,7 +13,8 @@ interface Props {
 
 const ChecklistPreviewCard = ({ checklist }: Props) => {
   const { roomName, address, createdAt, deposit, rent, badge } = checklist;
-  const extraBadgeCount = badge.length > MAX_BADGE_DISPLAY_COUNT ? badge.length - MAX_BADGE_DISPLAY_COUNT : null;
+  const extraBadgeCount =
+    badge && badge.length > MAX_BADGE_DISPLAY_COUNT ? badge.length - MAX_BADGE_DISPLAY_COUNT : null;
 
   return (
     <S.Container>
@@ -32,9 +33,8 @@ const ChecklistPreviewCard = ({ checklist }: Props) => {
           </S.Deposit>
         </S.Column>
         <S.BadgeWrapper>
-          {badge.slice(0, MAX_BADGE_DISPLAY_COUNT).map((bd, count) => (
-            <Badge key={count} label={bd.shortName} />
-          ))}
+          {badge &&
+            badge.slice(0, MAX_BADGE_DISPLAY_COUNT).map((bd, count) => <Badge key={count} label={bd.shortName} />)}
           {extraBadgeCount && <S.ExtraBadgeBox>+{extraBadgeCount}</S.ExtraBadgeBox>}
         </S.BadgeWrapper>
       </S.Row>

@@ -53,20 +53,8 @@ const useChecklistAnswer = () => {
       setAnswers(newCategories);
     }
   };
-  const findCategoryQuestion = ({ categoryId, questionId }: Props) => {
-    const targetCategory = checklistCategoryQnA?.find(category => category.categoryId === categoryId);
 
-    if (targetCategory) {
-      const targetQuestion = targetCategory.questions.find(q => q.questionId === questionId);
-      if (targetQuestion) {
-        return targetQuestion;
-      }
-    }
-
-    return null;
-  };
-
-  return { updateAnswer, updateMemo, findCategoryQuestion };
+  return { updateAnswer, updateMemo };
 };
 
 export default useChecklistAnswer;

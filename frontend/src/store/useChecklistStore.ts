@@ -1,23 +1,33 @@
 import { create } from 'zustand';
 
 import { Category, CategoryName } from '@/types/category';
-import { ChecklistCategoryQnA, ChecklistCategoryQuestions } from '@/types/checklist';
+import {
+  CategoryAndQuestion,
+  ChecklistCategoryQnA,
+  ChecklistCategoryQnIsChecked,
+  ChecklistCategoryQuestions,
+  ChecklistQuestionWithAnswer,
+} from '@/types/checklist';
 
 interface ChecklistState {
   basicInfo: Record<string, unknown>;
   checklistCategoryQnA: ChecklistCategoryQnA[];
   validCategory: Category[];
+  checklistAllQuestionList: ChecklistCategoryQnIsChecked[];
 
   isCategoryQuestionAllCompleted: (targetId: number) => boolean;
+  findCategoryQuestion: ({ categoryId, questionId }: CategoryAndQuestion) => ChecklistQuestionWithAnswer;
   categoryQnA: (categoryId: number) => ChecklistCategoryQnA;
   setValidCategory: () => void;
   setAnswerInQuestion: (questions: ChecklistCategoryQuestions[]) => void;
   setAnswers: (answers: ChecklistCategoryQnA[]) => void;
+  setChecklistAllQuestionList: (answers: ChecklistCategoryQnIsChecked[]) => void;
 }
 
 const useChecklistStore = create<ChecklistState>((set, get) => ({
   basicInfo: {},
   checklistCategoryQnA: [],
+  checklistAllQuestionList: [],
   validCategory: [],
 
   setAnswerInQuestion: (questions: ChecklistCategoryQuestions[]) => {
@@ -31,6 +41,24 @@ const useChecklistStore = create<ChecklistState>((set, get) => ({
       })),
     }));
     set({ checklistCategoryQnA });
+  },
+
+  setChecklistAllQuestionList: (questions: ChecklistCategoryQnIsChecked[]) => {
+    set({ checklistAllQuestionList: questions });
+  },
+
+  findCategoryQuestion: ({ categoryId, questionId }: { categoryId: number; questionId: number }) => {
+    const { checklistCategoryQnA } = get();
+    const targetCategory = checklistCategoryQnA?.find(category => category.categoryId === categoryId);
+
+    if (targetCategory) {
+      const targetQuestion = targetCategory.questions.find(q => q.questionId === questionId);
+      if (targetQuestion) {
+        return targetQuestion;
+      }
+    }
+
+    return null;
   },
 
   setValidCategory: () => {

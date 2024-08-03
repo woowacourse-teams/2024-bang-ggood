@@ -15,6 +15,12 @@ export interface ChecklistCategoryQnA {
   questions: ChecklistQuestionWithAnswer[];
 }
 
+export interface ChecklistCategoryQnIsChecked {
+  categoryId: number;
+  categoryName: string;
+  questions: ChecklistQuestionWithIsChecked[];
+}
+
 export interface ChecklistQuestion {
   questionId: number;
   title: string;
@@ -24,6 +30,10 @@ export interface ChecklistQuestion {
 export interface ChecklistQuestionWithAnswer extends ChecklistQuestion {
   answer: EmotionType | null;
   memo: string;
+}
+
+export interface ChecklistQuestionWithIsChecked extends ChecklistQuestion {
+  isChecked: boolean;
 }
 
 export interface ChecklistAnswer {
@@ -59,4 +69,13 @@ export interface ChecklistInfo {
   room: RoomInfo;
   options: Option[];
   categories: ChecklistCategoryQnA[];
+}
+
+export interface ChecklistCustom {
+  questionIds: number[];
+}
+
+export interface CategoryAndQuestion {
+  categoryId: number;
+  questionId: number;
 }

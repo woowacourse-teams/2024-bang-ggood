@@ -1,22 +1,26 @@
 import Tabs from '@/components/common/Tabs/Tabs';
 import useChecklistStore from '@/store/useChecklistStore';
 
-const NewChecklistTab = () => {
+type MODE = 'edit' | 'write';
+
+const ChecklistTabs = ({ mode }: { mode: MODE }) => {
   const { validCategory, isCategoryQuestionAllCompleted } = useChecklistStore();
 
   const newChecklistTabsWithCompletion = validCategory.map(category => ({
     id: category.categoryId,
-    name: category.categoryName,
+    name: category.categoryName as string,
     isCompleted: isCategoryQuestionAllCompleted(category.categoryId),
   }));
 
-  const tabsWithBasicInfo = [{ id: 0, name: '방 기본정보', isCompleted: false }, ...newChecklistTabsWithCompletion];
+  if (mode === 'write') {
+    newChecklistTabsWithCompletion.unshift({ id: 0, name: '방 기본정보', isCompleted: false });
+  }
 
   return (
     <>
-      <Tabs tabList={tabsWithBasicInfo} />
+      <Tabs tabList={newChecklistTabsWithCompletion} />
     </>
   );
 };
 
-export default NewChecklistTab;
+export default ChecklistTabs;

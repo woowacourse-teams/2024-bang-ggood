@@ -15,7 +15,6 @@ interface Props {
   roomInfo: RoomInfo;
   onChange: (event: InputChangeEvent) => void;
 }
-
 const NewChecklistInfoTemplate = ({ roomInfo, onChange: onChangeForForm }: Props) => {
   const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
 

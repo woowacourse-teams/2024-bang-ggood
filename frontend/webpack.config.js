@@ -59,14 +59,20 @@ const config = {
       {
         test: /\.(eot|ttf|woff|woff2|png|jpg|gif)$/i,
         type: 'asset',
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'assets/fonts/[name].[hash:8].[ext]',
+            },
+          },
+        ],
       },
       {
         test: /\.svg$/i,
         issuer: /\.[jt]sx?$/,
         use: [{ loader: '@svgr/webpack', options: {} }],
       },
-      // Add your rules for custom modules here
-      // Learn more about loaders from https://webpack.js.org/loaders/
     ],
   },
   resolve: {

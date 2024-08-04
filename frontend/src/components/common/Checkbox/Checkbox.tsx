@@ -9,47 +9,49 @@ interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
   isChecked: boolean;
   setIsChecked: React.Dispatch<React.SetStateAction<boolean>>;
   color?: string;
-  hoverBorderColor?: string;
-  onClick: () => void;
+  hoverColor?: string;
+  onClick?: () => void;
 }
 
 const Checkbox = ({
   isChecked = false,
   color = theme.palette.green500,
-  hoverBorderColor = theme.palette.green600,
+  hoverColor = theme.palette.green300,
   setIsChecked,
   onClick,
 }: StyledProps) => {
   const handleClick = useCallback(() => {
     setIsChecked(!isChecked);
-  }, [isChecked]);
+  }, [isChecked, setIsChecked]);
+
+  const checkedColor = color || (isChecked ? theme.palette.green500 : theme.palette.grey400);
 
   return (
-    <S.Checkbox $color={color} $isChecked={isChecked} $hoverBorderColor={hoverBorderColor} onClick={onClick}>
-      {isChecked && (
-        <S.FlexBox>
-          <CheckIcon />
-        </S.FlexBox>
-      )}
+    <S.Checkbox $color={checkedColor} $hoverColor={hoverColor} onClick={onClick}>
+      <S.FlexBox>
+        <CheckIcon />
+      </S.FlexBox>
       <S.CheckboxInput type="checkbox" onChange={handleClick} checked={isChecked} />
     </S.Checkbox>
   );
 };
 
 const S = {
-  Checkbox: styled.label<{ $color: string; $isChecked: boolean; $hoverBorderColor: string }>`
+  Checkbox: styled.label<{ $color: string; $hoverColor: string }>`
     display: inline-block;
     position: relative;
     cursor: pointer;
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    border: 2px solid ${({ $color }) => $color && $color};
+    border: 2px solid ${({ $color }) => $color};
 
-    background-color: ${({ $color, $isChecked }) => ($isChecked ? $color : 'transparent')};
+    background-color: ${({ $color }) => $color};
 
     &:hover {
-      border-color: ${({ $hoverBorderColor }) => $hoverBorderColor};
+      border-color: ${({ $hoverColor }) => $hoverColor};
+
+      background-color: ${({ $hoverColor }) => $hoverColor};
     }
   `,
   CheckboxInput: styled.input`

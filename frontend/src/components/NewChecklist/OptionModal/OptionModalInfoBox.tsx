@@ -4,7 +4,7 @@ import Checkbox from '@/components/common/Checkbox/Checkbox';
 import { OPTION_COUNT } from '@/components/common/OptionButton/OptionIcon';
 import SelectionCounter from '@/components/common/SelectionCounter/SelectionCounter';
 import useOptionStore from '@/store/useOptionStore';
-import { flexCenter, title4 } from '@/styles/common';
+import { flexCenter, flexSpaceBetween, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
 
 const OptionModalInfoBox = () => {
@@ -21,7 +21,7 @@ const OptionModalInfoBox = () => {
           setIsChecked={handleToggleAllSelect}
           onClick={handleToggleAllSelect}
           color={theme.palette.yellow500}
-          hoverBorderColor={theme.palette.yellow600}
+          hoverColor={theme.palette.yellow600}
         />
 
         <span>전체선택</span>
@@ -32,10 +32,9 @@ const OptionModalInfoBox = () => {
 };
 
 const ButtonContainer = styled.div`
-  display: flex;
+  ${flexSpaceBetween}
   height: 50px;
 
-  justify-content: space-between;
   align-items: center;
 `;
 

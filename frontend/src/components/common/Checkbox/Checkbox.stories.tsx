@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { useState } from 'react';
 
 import Checkbox from '@/components/common/Checkbox/Checkbox';
 import theme from '@/styles/theme';
@@ -7,7 +8,11 @@ import theme from '@/styles/theme';
 const meta: Meta<typeof Checkbox> = {
   title: 'components/Checkbox',
   component: Checkbox,
-  parameters: {},
+  argTypes: {
+    isChecked: { control: 'boolean' },
+    color: { control: 'color' },
+    hoverColor: { control: 'color' },
+  },
 };
 
 export default meta;
@@ -15,7 +20,16 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const UnChecked: Story = {
-  args: { isChecked: false },
+  render: () => {
+    const [isChecked, setIsChecked] = useState(false);
+    return (
+      <Checkbox
+        isChecked={isChecked}
+        onClick={() => setIsChecked(isChecked => !isChecked)}
+        setIsChecked={() => setIsChecked(isChecked => !isChecked)}
+      />
+    );
+  },
 };
 export const Hover: Story = {
   args: { isChecked: false },
@@ -26,5 +40,5 @@ export const Checked: Story = {
 };
 
 export const GreyChecked: Story = {
-  args: { isChecked: true, color: theme.palette.grey300, hoverBorderColor: theme.palette.grey400 },
+  args: { isChecked: true, color: theme.palette.grey300, hoverColor: theme.palette.grey400 },
 };

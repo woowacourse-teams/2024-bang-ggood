@@ -7,6 +7,7 @@ import ChecklistListPage from '@/pages/ChecklistListPage';
 import NewChecklistPage from '@/pages/NewChecklistPage/NewChecklistPage';
 import NotFound from '@/pages/NotFound';
 import RoomComparePage from '@/pages/RoomComparePage';
+import RoomCompareSelectPage from '@/pages/RoomCompareSelectPage';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     element: <CategoryChoosePage />,
     path: '/',
+  },
+  {
+    element: <RoomCompareSelectPage />,
+    path: ROUTE_PATH.roomCompareSelect,
   },
   {
     element: <RoomComparePage />,

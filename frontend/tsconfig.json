@@ -15,7 +15,8 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "types": ["@testing-library/jest-dom"]
+    "types": ["@testing-library/jest-dom"],
+    "skipLibCheck": true
   },
   "include": ["src/**/*"]
 }

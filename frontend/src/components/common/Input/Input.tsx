@@ -4,7 +4,7 @@ import { ChangeEvent, useCallback } from 'react';
 interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
   $color?: 'string';
 }
-const widthSize: Record<string, string | null> = {
+const widthSize = {
   small: '45px',
   medium: '110px',
   large: '140px',
@@ -29,7 +29,7 @@ const Input = ({ width = 'full', onChange, ...rest }: Props) => {
 };
 const S = {
   Input: styled.input<StyledProps>`
-    ${({ width }) => width && `width: ${width}px;`};
+    ${({ width }) => width && `width: ${width};`};
     height: 32px;
     padding: 6px 11px;
     border: 1px solid ${({ $color, theme }) => ($color ? $color : theme.palette.grey100)};

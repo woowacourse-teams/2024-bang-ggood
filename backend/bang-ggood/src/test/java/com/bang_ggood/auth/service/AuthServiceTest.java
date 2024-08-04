@@ -1,8 +1,8 @@
-package com.bang_ggood.user.service;
+package com.bang_ggood.auth.service;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.user.UserFixture;
-import com.bang_ggood.user.dto.request.OauthLoginRequest;
 import com.bang_ggood.user.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -18,13 +18,13 @@ import static com.bang_ggood.user.UserFixture.oauthInfoResponseUSER1;
 import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
-class UserServiceTest extends IntegrationTestSupport {
+class AuthServiceTest extends IntegrationTestSupport {
 
     @MockBean
     private OauthClient oauthClient;
 
     @Autowired
-    private UserService userService;
+    private AuthService authService;
 
     @Autowired
     private UserRepository userRepository;
@@ -39,7 +39,7 @@ class UserServiceTest extends IntegrationTestSupport {
                 .thenReturn(UserFixture.oauthInfoResponseUSER2);
 
         // when
-        String token = userService.login(oauthLoginRequest);
+        String token = authService.login(oauthLoginRequest);
 
         // then
         Assertions.assertThat(token).isNotBlank();
@@ -54,7 +54,7 @@ class UserServiceTest extends IntegrationTestSupport {
                 .thenReturn(oauthInfoResponseUSER1);
 
         // when
-        String token = userService.login(oauthLoginRequest);
+        String token = authService.login(oauthLoginRequest);
 
         // then
         Assertions.assertThat(token).isNotBlank();

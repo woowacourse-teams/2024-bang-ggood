@@ -1,4 +1,4 @@
-package com.bang_ggood.user.dto.response;
+package com.bang_ggood.auth.dto.response;
 
 import com.bang_ggood.user.domain.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

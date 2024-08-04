@@ -1,4 +1,4 @@
-package com.bang_ggood.user.service;
+package com.bang_ggood.auth.service;
 
 import jakarta.validation.constraints.NotNull;
 

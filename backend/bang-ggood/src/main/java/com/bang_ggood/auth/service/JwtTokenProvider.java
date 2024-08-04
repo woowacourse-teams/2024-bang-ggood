@@ -1,4 +1,4 @@
-package com.bang_ggood.user.service;
+package com.bang_ggood.auth.service;
 
 import com.bang_ggood.user.domain.User;
 import io.jsonwebtoken.Claims;

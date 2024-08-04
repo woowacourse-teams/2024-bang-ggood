@@ -1,8 +1,8 @@
-package com.bang_ggood.user.service;
+package com.bang_ggood.auth.service;
 
-import com.bang_ggood.user.dto.request.OauthLoginRequest;
-import com.bang_ggood.user.dto.response.OauthInfoResponse;
-import com.bang_ggood.user.dto.response.OauthTokenResponse;
+import com.bang_ggood.auth.dto.request.OauthLoginRequest;
+import com.bang_ggood.auth.dto.response.OauthInfoResponse;
+import com.bang_ggood.auth.dto.response.OauthTokenResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;

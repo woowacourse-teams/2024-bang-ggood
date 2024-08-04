@@ -1,6 +1,7 @@
 package com.bang_ggood.category.service;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.auth.service.AuthUser;
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.category.dto.request.CategoryPriorityCreateRequest;
 import com.bang_ggood.category.dto.response.CategoriesReadResponse;
@@ -26,10 +27,11 @@ class CategoryServiceTest extends IntegrationTestSupport {
     @Test
     void createCategoriesPriority() {
         // given
+        AuthUser authUser = new AuthUser(1L);
         CategoryPriorityCreateRequest request = new CategoryPriorityCreateRequest(List.of(1, 2, 3));
 
         // when && then
-        assertThatCode(() -> categoryService.createCategoriesPriority(request))
+        assertThatCode(() -> categoryService.createCategoriesPriority(authUser, request))
                 .doesNotThrowAnyException();
     }
 
@@ -37,10 +39,11 @@ class CategoryServiceTest extends IntegrationTestSupport {
     @Test
     void createCategoriesPriority_invalidId_exception() {
         // given
+        AuthUser authUser = new AuthUser(1L);
         CategoryPriorityCreateRequest request = new CategoryPriorityCreateRequest(List.of(999));
 
         // when && then
-        assertThatThrownBy(() -> categoryService.createCategoriesPriority(request))
+        assertThatThrownBy(() -> categoryService.createCategoriesPriority(authUser, request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(CATEGORY_NOT_FOUND.getMessage());
     }
@@ -49,10 +52,11 @@ class CategoryServiceTest extends IntegrationTestSupport {
     @Test
     void createCategoriesPriority_overMaxCount_exception() {
         // given
+        AuthUser authUser = new AuthUser(1L);
         CategoryPriorityCreateRequest request = new CategoryPriorityCreateRequest(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9));
 
         // when && then
-        assertThatThrownBy(() -> categoryService.createCategoriesPriority(request))
+        assertThatThrownBy(() -> categoryService.createCategoriesPriority(authUser, request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(CATEGORY_PRIORITY_INVALID_COUNT.getMessage());
     }
@@ -61,10 +65,11 @@ class CategoryServiceTest extends IntegrationTestSupport {
     @Test
     void createCategoriesPriority_duplication_exception() {
         // given
+        AuthUser authUser = new AuthUser(1L);
         CategoryPriorityCreateRequest request = new CategoryPriorityCreateRequest(List.of(1, 1));
 
         // when && then
-        assertThatThrownBy(() -> categoryService.createCategoriesPriority(request))
+        assertThatThrownBy(() -> categoryService.createCategoriesPriority(authUser, request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(CATEGORY_DUPLICATED.getMessage());
     }

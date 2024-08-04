@@ -1,16 +1,15 @@
 package com.bang_ggood.category.service;
 
+import com.bang_ggood.auth.service.AuthUser;
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.category.domain.CategoryPriority;
 import com.bang_ggood.category.dto.request.CategoryPriorityCreateRequest;
 import com.bang_ggood.category.dto.response.CategoriesReadResponse;
 import com.bang_ggood.category.dto.response.CategoryReadResponse;
-import com.bang_ggood.category.dto.response.CategoriesReadResponse;
-import com.bang_ggood.category.dto.request.CategoryPriorityCreateRequest;
-import com.bang_ggood.category.dto.response.CategoryReadResponse;
 import com.bang_ggood.category.repository.CategoryPriorityRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.user.domain.User;
+import com.bang_ggood.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
@@ -26,14 +25,16 @@ public class CategoryService {
 
     private static final int MAX_CATEGORY_PRIORITY = 3;
     private final CategoryPriorityRepository categoryPriorityRepository;
+    private final UserRepository userRepository;
 
-    public CategoryService(CategoryPriorityRepository categoryPriorityRepository) {
+    public CategoryService(CategoryPriorityRepository categoryPriorityRepository, UserRepository userRepository) {
         this.categoryPriorityRepository = categoryPriorityRepository;
+        this.userRepository = userRepository;
     }
 
     @Transactional
-    public void createCategoriesPriority(CategoryPriorityCreateRequest request) {
-        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
+    public void createCategoriesPriority(AuthUser authUser, CategoryPriorityCreateRequest request) {
+        User user = userRepository.getUserById(authUser.id());
         validate(request);
         List<CategoryPriority> categoryPriorities = request.categoryIds().stream()
                 .map(id -> new CategoryPriority(id, user))

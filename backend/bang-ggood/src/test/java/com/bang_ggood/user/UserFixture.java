@@ -1,9 +1,9 @@
 package com.bang_ggood.user;
 
+import com.bang_ggood.auth.dto.response.KakaoAccountResponse;
+import com.bang_ggood.auth.dto.response.OauthInfoResponse;
+import com.bang_ggood.auth.dto.response.ProfileResponse;
 import com.bang_ggood.user.domain.User;
-import com.bang_ggood.user.dto.response.KakaoAccountResponse;
-import com.bang_ggood.user.dto.response.OauthInfoResponse;
-import com.bang_ggood.user.dto.response.ProfileResponse;
 
 public class UserFixture {
 

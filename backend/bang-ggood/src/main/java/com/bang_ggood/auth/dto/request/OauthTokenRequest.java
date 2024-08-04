@@ -1,4 +1,4 @@
-package com.bang_ggood.user.dto.request;
+package com.bang_ggood.auth.dto.request;
 
 public record OauthTokenRequest(String grantType, String clientId,
                                 String redirectUri, String code, String clientSecret) {

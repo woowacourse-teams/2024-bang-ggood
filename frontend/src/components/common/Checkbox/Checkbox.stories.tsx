@@ -8,7 +8,11 @@ import theme from '@/styles/theme';
 const meta: Meta<typeof Checkbox> = {
   title: 'components/Checkbox',
   component: Checkbox,
-  parameters: {},
+  argTypes: {
+    isChecked: { control: 'boolean' },
+    color: { control: 'color' },
+    hoverColor: { control: 'color' },
+  },
 };
 
 export default meta;
@@ -18,7 +22,13 @@ type Story = StoryObj<typeof meta>;
 export const UnChecked: Story = {
   render: () => {
     const [isChecked, setIsChecked] = useState(false);
-    return <Checkbox isChecked={isChecked} onClick={() => setIsChecked(isChecked => !isChecked)} />;
+    return (
+      <Checkbox
+        isChecked={isChecked}
+        onClick={() => setIsChecked(isChecked => !isChecked)}
+        setIsChecked={() => setIsChecked(isChecked => !isChecked)}
+      />
+    );
   },
 };
 export const Hover: Story = {

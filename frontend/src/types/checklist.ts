@@ -23,11 +23,13 @@ export interface ChecklistQuestion {
 
 export interface ChecklistQuestionWithAnswer extends ChecklistQuestion {
   answer: EmotionType | null;
+  memo: string | null;
 }
 
 export interface ChecklistAnswer {
   questionId: number;
-  answer: EmotionType;
+  grade: EmotionType | null;
+  memo: string | null;
 }
 
 export interface ChecklistPreview extends RoomInfo {

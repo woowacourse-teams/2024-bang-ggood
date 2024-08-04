@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { flexCenter, title2 } from '@/styles/common';
+import { flexCenter, flexSpaceBetween, title2 } from '@/styles/common';
 
 interface TitleProps
   extends React.PropsWithChildren<{
@@ -17,9 +17,9 @@ const ModalHeader = ({ title, children }: TitleProps) => {
 };
 
 const Container = styled.div`
-  display: flex;
+  ${flexSpaceBetween}
+
   ${flexCenter}
-  justify-content: space-between;
   align-items: flex-start;
   width: calc(100% - 32px);
   height: 60px;

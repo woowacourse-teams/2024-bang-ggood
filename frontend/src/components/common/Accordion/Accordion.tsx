@@ -1,13 +1,12 @@
 import styled from '@emotion/styled';
-import { PropsWithChildren } from 'react';
 
 import AccordionHeader from '@/components/common/Accordion/AccodionHeader';
 import AccordionBody from '@/components/common/Accordion/AccordionBody';
 import { AccordionProvider } from '@/components/common/Accordion/AccordionContext';
 import { flexColumn } from '@/styles/common';
 
-interface Props extends PropsWithChildren {
-  // TODO: 내부 children 선언 혹은 extend 할지 통일하기
+interface Props {
+  children?: React.ReactNode;
   width?: string;
 }
 

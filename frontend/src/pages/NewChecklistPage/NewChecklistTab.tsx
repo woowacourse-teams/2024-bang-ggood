@@ -1,24 +1,22 @@
 import Tabs from '@/components/common/Tabs/Tabs';
 import useChecklistStore from '@/store/useChecklistStore';
-import { Tab } from '@/types/tab';
 
-const NewChecklistTab = ({ newChecklistTabs }: { newChecklistTabs: Tab[] }) => {
-  const { checklistCategoryQnA } = useChecklistStore();
+const NewChecklistTab = () => {
+  const { validCategory, isCategoryQuestionAllCompleted } = useChecklistStore();
 
-  const isCategoryQuestionAllCompleted = (targetId: number) => {
-    const targetCartegory = checklistCategoryQnA.filter(category => category.categoryId === targetId)[0];
-    if (targetCartegory) {
-      return !targetCartegory.questions.find(question => question.answer === null);
-    }
-    return true;
-  };
-
-  const newChecklistTabsWithCompletion = newChecklistTabs.map(category => ({
-    ...category,
-    isCompleted: isCategoryQuestionAllCompleted(category.id),
+  const newChecklistTabsWithCompletion = validCategory.map(category => ({
+    id: category.categoryId,
+    name: category.categoryName,
+    isCompleted: isCategoryQuestionAllCompleted(category.categoryId),
   }));
 
-  return <div>{<Tabs tabList={newChecklistTabsWithCompletion} />}</div>;
+  const tabsWithBasicInfo = [{ id: 0, name: '방 기본정보', isCompleted: false }, ...newChecklistTabsWithCompletion];
+
+  return (
+    <>
+      <Tabs tabList={tabsWithBasicInfo} />
+    </>
+  );
 };
 
 export default NewChecklistTab;

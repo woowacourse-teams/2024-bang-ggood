@@ -37,8 +37,6 @@ import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -46,6 +44,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ChecklistService {
@@ -173,13 +173,13 @@ public class ChecklistService {
 
         List<SelectedOptionResponse> options = readOptionsByChecklistId(id);
 
-        List<SelectedCategoryQuestionsResponse> selectedCategoryQuestionsRespons =
+        List<SelectedCategoryQuestionsResponse> selectedCategoryQuestionsResponse =
                 readCategoryQuestionsByChecklistId(id);
 
         int checklistScore = ChecklistScore.calculateTotalScore(checklist.getQuestions());
 
-        return new SelectedChecklistResponse(selectedRoomResponse, options, checklistScore,
-                selectedCategoryQuestionsRespons);
+        return new SelectedChecklistResponse(checklistScore, checklist.getCreatedAt(), selectedRoomResponse,
+                options, selectedCategoryQuestionsResponse);
     }
 
     private List<SelectedOptionResponse> readOptionsByChecklistId(long checklistId) {
@@ -199,14 +199,14 @@ public class ChecklistService {
 
     private SelectedCategoryQuestionsResponse readQuestionsByCategory(Category category,
                                                                       List<ChecklistQuestion> checklistQuestions) {
-        List<SelectedQuestionResponse> selectedQuestionRespons =
+        List<SelectedQuestionResponse> selectedQuestionResponse =
                 Question.filter(category, checklistQuestions).stream()
                         .map(SelectedQuestionResponse::of)
                         .toList();
 
         int categoryScore = ChecklistScore.calculateCategoryScore(category, checklistQuestions);
 
-        return SelectedCategoryQuestionsResponse.of(category, categoryScore, selectedQuestionRespons);
+        return SelectedCategoryQuestionsResponse.of(category, categoryScore, selectedQuestionResponse);
     }
 
     @Transactional

@@ -21,7 +21,7 @@ const QuestionMemo = ({ questionId, text }: Props) => {
 
   return (
     <S.Container>
-      <Textarea height="medium" value={value} onChange={onChange} />
+      <Textarea height="medium" value={value || ''} onChange={onChange} />
       <S.ButtonBox>
         <Button label="저장" size="xSmall" isSquare={true} color="dark" onClick={handleUpdateMemo} />
       </S.ButtonBox>

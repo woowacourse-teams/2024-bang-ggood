@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getChecklistAllQuestions, putCustomChecklist } from '@/apis/checklist';
+import { ChecklistCustomTabs } from '@/components/ChecklistCustom/CustomTabs';
 import QuestionListTemplate from '@/components/ChecklistCustom/QuestionListTemplate/QuestionListTemplate';
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
-import ChecklistTabs from '@/components/common/Tabs/NewChecklistTab';
 import { TabProvider } from '@/components/common/Tabs/TabContext';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useToast from '@/hooks/useToast';
@@ -56,7 +56,7 @@ const ChecklistCustomPage = () => {
       />
       <TabProvider defaultTab={1}>
         {/*체크리스트 작성의 탭*/}
-        <ChecklistTabs mode="edit" />
+        <ChecklistCustomTabs />
         {/*체크리스트 콘텐츠 섹션*/}
         <S.Container>
           <QuestionListTemplate />

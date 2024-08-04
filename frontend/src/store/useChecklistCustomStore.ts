@@ -9,7 +9,7 @@ interface ChecklistCustomState {
   validCategory: Category[];
 
   setChecklistAllQuestionList: (answers: ChecklistCategoryQnIsChecked[]) => void;
-  findCategoryQuestion: ({ categoryId, questionId }: CategoryAndQuestion) => ChecklistQuestionWithIsChecked;
+  findCategoryQuestion: ({ categoryId, questionId }: CategoryAndQuestion) => ChecklistQuestionWithIsChecked | null;
   categoryQnA: (categoryId: number) => ChecklistCategoryQnIsChecked;
   setValidCategory: () => void;
 }

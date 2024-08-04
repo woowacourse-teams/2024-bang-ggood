@@ -31,6 +31,9 @@ const palette = {
   black: '#363636',
   white: '#FFFFFF',
   background: '#F5F4F2',
+
+  /* etc */
+  kakao: '#FEE500',
 };
 
 const text = {

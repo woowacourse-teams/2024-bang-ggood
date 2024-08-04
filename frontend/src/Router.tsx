@@ -4,6 +4,7 @@ import { ROUTE_PATH } from '@/constants/routePath';
 import CategoryChoosePage from '@/pages/CategoryChoosePage';
 import ChecklistDetailPage from '@/pages/ChecklistDetailPage';
 import ChecklistListPage from '@/pages/ChecklistListPage';
+import LoginPage from '@/pages/LoginPage';
 import NewChecklistPage from '@/pages/NewChecklistPage/NewChecklistPage';
 import NotFound from '@/pages/NotFound';
 import RoomComparePage from '@/pages/RoomComparePage';
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
   {
     element: <RoomComparePage />,
     path: ROUTE_PATH.roomCompare,
+  },
+  {
+    element: <LoginPage />,
+    path: ROUTE_PATH.login,
   },
   {
     element: <NotFound />,

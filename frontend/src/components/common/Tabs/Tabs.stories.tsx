@@ -18,7 +18,7 @@ const meta = {
   },
   decorators: [
     Story => (
-      <TabProvider>
+      <TabProvider initialTab={0}>
         <Story />
       </TabProvider>
     ),

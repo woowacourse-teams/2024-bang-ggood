@@ -1,9 +1,7 @@
 import { ChecklistAnswer } from '@/types/checklist';
 
 export interface RoomInfo {
-  // TODO: roomName 이슈
   roomName?: string;
-  name?: string;
   address?: string;
   deposit?: number;
   rent?: number;

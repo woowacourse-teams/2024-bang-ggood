@@ -7,7 +7,7 @@ import { flexCenter, flexRow } from '@/styles/common';
 
 interface Props extends HTMLAttributes<HTMLFieldSetElement> {
   label: string;
-  value: string;
+  value: string | null;
   onChangeChild: (e: InputChangeEvent) => void;
 }
 

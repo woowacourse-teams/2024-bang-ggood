@@ -2,8 +2,8 @@ import { createContext } from 'react';
 
 import { InputChangeEvent } from '@/components/common/Input/Input';
 
-interface RadioState {
-  value: string;
+export interface RadioState {
+  value: string | null;
   onChangeChild: (event: InputChangeEvent) => void;
 }
 const RadioContext = createContext<RadioState>({

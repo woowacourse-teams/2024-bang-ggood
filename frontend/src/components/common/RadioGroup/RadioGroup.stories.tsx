@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 
+import { RadioState } from '@/components/common/RadioGroup/RadioContext';
 import RadioGroup from '@/components/common/RadioGroup/RadioGroup';
 import { flexColumn } from '@/styles/common';
 
@@ -16,7 +17,7 @@ type Story = StoryObj<typeof meta>;
 
 export const InLocationPage: Story = {
   render: () => {
-    const [value, setValue] = useState(null);
+    const [value, setValue] = useState<RadioState['value']>(null);
     return (
       <S.FlexColumn>
         <RadioGroup

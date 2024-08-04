@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-    private final AuthService authService;
     public static final String TOKEN_COOKIE_NAME = "token";
+
+    private final AuthService authService;
 
     public AuthController(AuthService authService) {
         this.authService = authService;

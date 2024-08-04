@@ -44,6 +44,7 @@ export const Default: Story = {
         isChecked: false,
       },
     ],
+    currentTabId: 1,
   },
   decorators: [mobileDecorator],
 };

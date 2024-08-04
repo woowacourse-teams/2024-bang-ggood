@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getChecklistAllQuestions, putCustomChecklist } from '@/apis/checklist';
-import QuestionCardList from '@/components/ChecklistCustom/QuestionCardList/QuestionCardList';
+import QuestionListTemplate from '@/components/ChecklistCustom/QuestionListTemplate/QuestionListTemplate';
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import ChecklistTabs from '@/components/common/Tabs/NewChecklistTab';
@@ -54,12 +54,12 @@ const ChecklistCustomPage = () => {
         center={<S.Title>{'체크리스트 편집'}</S.Title>}
         right={<Button label={'저장'} size="small" color="dark" onClick={handleSubmitChecklist} />}
       />
-      <TabProvider initialTab={1}>
+      <TabProvider defaultTab={1}>
         {/*체크리스트 작성의 탭*/}
         <ChecklistTabs mode="edit" />
         {/*체크리스트 콘텐츠 섹션*/}
         <S.Container>
-          <QuestionCardList />
+          <QuestionListTemplate />
         </S.Container>
       </TabProvider>
     </>

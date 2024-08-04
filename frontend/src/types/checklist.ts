@@ -29,7 +29,7 @@ export interface ChecklistQuestion {
 
 export interface ChecklistQuestionWithAnswer extends ChecklistQuestion {
   answer: EmotionType | null;
-  memo: string;
+  memo: string | null;
 }
 
 export interface ChecklistQuestionWithIsChecked extends ChecklistQuestion {
@@ -38,8 +38,8 @@ export interface ChecklistQuestionWithIsChecked extends ChecklistQuestion {
 
 export interface ChecklistAnswer {
   questionId: number;
-  grade: EmotionType;
-  memo: string;
+  grade: EmotionType | null;
+  memo: string | null;
 }
 
 export interface ChecklistPreview extends RoomInfo {

@@ -7,8 +7,7 @@ import { useTabContext } from '@/components/common/Tabs/TabContext';
 import QuestionMemo from '@/components/NewChecklist/ChecklistQuestion/QuestionMemo';
 import { EMOTION_PHARSE, EMOTIONS } from '@/constants/emotion';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';
-import useChecklistStore from '@/store/useChecklistStore';
-import { flexCenter } from '@/styles/common';
+import { flexCenter, flexSpaceBetween } from '@/styles/common';
 import { ChecklistQuestion } from '@/types/checklist';
 import { EmotionType } from '@/types/emotionAnswer';
 
@@ -18,12 +17,12 @@ interface Props {
 
 const ChecklistQuestion = ({ question }: Props) => {
   const { questionId } = question;
-  const { findCategoryQuestion } = useChecklistStore();
-  const { updateAnswer } = useChecklistAnswer();
+  const { updateAnswer, findCategoryQuestion } = useChecklistAnswer();
   const { currentTabId } = useTabContext();
 
   const [isMemoOpen, setIsMemoOpen] = useState(false);
 
+  //TODO: 에러를 던지고 잇음/
   const { answer, memo } = findCategoryQuestion({ categoryId: currentTabId, questionId });
 
   const handleClick = (newAnswer: EmotionType) => {
@@ -68,7 +67,7 @@ const ChecklistQuestion = ({ question }: Props) => {
           );
         })}
       </S.Options>
-      {isMemoOpen && <QuestionMemo questionId={questionId} text={memo} />}
+      {isMemoOpen && <QuestionMemo questionId={questionId} text={memo ?? ''} />}
     </S.Container>
   );
 };
@@ -103,12 +102,12 @@ const S = {
     word-break: keep-all;
   `,
   Options: styled.div`
-    display: flex;
+    ${flexSpaceBetween}
     width: 80%;
     margin: 0 auto;
     margin-top: 10px;
-    justify-content: space-between;
   `,
+
   ButtonBox: styled.div`
     position: absolute;
     top: 10px;

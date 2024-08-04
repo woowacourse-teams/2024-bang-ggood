@@ -4,10 +4,16 @@ interface ContextProps {
   currentTabId: number;
   setCurrentTabId: React.Dispatch<React.SetStateAction<number>>;
 }
-const TabContext = createContext<ContextProps>(null);
 
-export const TabProvider = ({ children, initialTab }: { children: ReactNode; initialTab: number }) => {
-  const [currentTabId, setCurrentTabId] = useState<number>(initialTab);
+const defaultContext: ContextProps = {
+  currentTabId: 0,
+  setCurrentTabId: () => {},
+};
+
+const TabContext = createContext<ContextProps>(defaultContext);
+
+export const TabProvider = ({ children, defaultTab = 0 }: { children: ReactNode; defaultTab: number }) => {
+  const [currentTabId, setCurrentTabId] = useState<number>(defaultTab);
 
   return <TabContext.Provider value={{ currentTabId, setCurrentTabId }}>{children}</TabContext.Provider>;
 };

@@ -1,12 +1,7 @@
 import { create } from 'zustand';
 
 import { Category, CategoryName } from '@/types/category';
-import {
-  CategoryAndQuestion,
-  ChecklistCategoryQnA,
-  ChecklistCategoryQuestions,
-  ChecklistQuestionWithAnswer,
-} from '@/types/checklist';
+import { ChecklistCategoryQnA, ChecklistCategoryQuestions } from '@/types/checklist';
 
 interface ChecklistState {
   basicInfo: Record<string, unknown>;
@@ -14,7 +9,6 @@ interface ChecklistState {
   validCategory: Category[];
 
   isCategoryQuestionAllCompleted: (targetId: number) => boolean;
-  findCategoryQuestion: ({ categoryId, questionId }: CategoryAndQuestion) => ChecklistQuestionWithAnswer;
   categoryQnA: (categoryId: number) => ChecklistCategoryQnA;
   setValidCategory: () => void;
   setAnswerInQuestion: (questions: ChecklistCategoryQuestions[]) => void;
@@ -24,7 +18,6 @@ interface ChecklistState {
 const useChecklistStore = create<ChecklistState>((set, get) => ({
   basicInfo: {},
   checklistCategoryQnA: [],
-  checklistAllQuestionList: [],
   validCategory: [],
 
   setAnswerInQuestion: (questions: ChecklistCategoryQuestions[]) => {
@@ -38,20 +31,6 @@ const useChecklistStore = create<ChecklistState>((set, get) => ({
       })),
     }));
     set({ checklistCategoryQnA });
-  },
-
-  findCategoryQuestion: ({ categoryId, questionId }: { categoryId: number; questionId: number }) => {
-    const { checklistCategoryQnA } = get();
-    const targetCategory = checklistCategoryQnA?.find(category => category.categoryId === categoryId);
-
-    if (targetCategory) {
-      const targetQuestion = targetCategory.questions.find(q => q.questionId === questionId);
-      if (targetQuestion) {
-        return targetQuestion;
-      }
-    }
-
-    return null;
   },
 
   setValidCategory: () => {

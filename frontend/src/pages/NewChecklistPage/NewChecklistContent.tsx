@@ -13,8 +13,6 @@ const NewChecklistContent = ({ roomInfo, onChangeRoomInfo }: Props) => {
   const { currentTabId } = useTabContext();
   const { categoryQnA } = useChecklistStore();
 
-  const currentCategoryQuestions = categoryQnA(currentTabId);
-
   return (
     <>
       {currentTabId === 0 ? (
@@ -25,7 +23,7 @@ const NewChecklistContent = ({ roomInfo, onChangeRoomInfo }: Props) => {
       ) : (
         <>
           {/*체크리스트 템플릿*/}
-          <NewChecklistTemplate questions={currentCategoryQuestions} />
+          <NewChecklistTemplate questions={categoryQnA(currentTabId)} />
         </>
       )}
     </>

@@ -2,23 +2,21 @@ import styled from '@emotion/styled';
 
 import QuestionSelectCard from '@/components/ChecklistCustom/QuestionSelectCard/QuestionSelectCard';
 import Divider from '@/components/common/Divider/Divider';
-import { useTabContext } from '@/components/common/Tabs/TabContext';
-import useChecklistCustomStore from '@/store/useChecklistCustomStore';
+import { ChecklistQuestionWithIsChecked } from '@/types/checklist';
 
-const QuestionCardList = () => {
-  const { currentTabId } = useTabContext();
-  const { categoryQnA } = useChecklistCustomStore();
-
-  const currentQuestions = categoryQnA(currentTabId);
-
+interface Props {
+  currentTabId: number;
+  questions: ChecklistQuestionWithIsChecked[];
+}
+const QuestionCardList = ({ questions, currentTabId }: Props) => {
   return (
     <S.QuestionList>
-      {currentQuestions?.questions?.map((question, index) => {
+      {questions?.map((question, index) => {
         const { questionId } = question;
         return (
           <>
             <QuestionSelectCard question={question} key={`${currentTabId}-${questionId}`} />
-            {index !== currentQuestions?.questions.length - 1 && <Divider isBold={true} />}
+            {index !== questions.length - 1 && <Divider isBold={true} />}
           </>
         );
       })}

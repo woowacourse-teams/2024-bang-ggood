@@ -4,7 +4,6 @@ import { QuestionDot } from '@/assets/assets';
 import Checkbox from '@/components/common/Checkbox/Checkbox';
 import { useTabContext } from '@/components/common/Tabs/TabContext';
 import useChecklistQuestionUpdate from '@/hooks/useChecklistQuestionUpdate';
-import useChecklistCustomStore from '@/store/useChecklistCustomStore';
 import { flexCenter } from '@/styles/common';
 import { ChecklistQuestionWithIsChecked } from '@/types/checklist';
 
@@ -12,16 +11,13 @@ const QuestionSelectCard = ({ question }: { question: ChecklistQuestionWithIsChe
   const { title, subtitle, isChecked, questionId } = question;
   const { updateCheckQuestion } = useChecklistQuestionUpdate();
   const { currentTabId: categoryId } = useTabContext();
-  const { findCategoryQuestion } = useChecklistCustomStore();
 
   const handleCheckQuestion = () => {
     updateCheckQuestion({ questionId, isChecked: !isChecked, categoryId });
   };
 
-  const currentQuestion = findCategoryQuestion({ categoryId, questionId });
-
   return (
-    <S.Container isChecked={currentQuestion.isChecked} onClick={handleCheckQuestion}>
+    <S.Container isChecked={isChecked} onClick={handleCheckQuestion}>
       <S.FlexColumn>
         <S.FlexRow>
           <QuestionDot />
@@ -30,11 +26,7 @@ const QuestionSelectCard = ({ question }: { question: ChecklistQuestionWithIsChe
         {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
       </S.FlexColumn>
       <S.CheckBoxContainer>
-        <Checkbox
-          isChecked={currentQuestion.isChecked}
-          setIsChecked={handleCheckQuestion}
-          onClick={handleCheckQuestion}
-        />
+        <Checkbox isChecked={isChecked} setIsChecked={handleCheckQuestion} onClick={handleCheckQuestion} />
       </S.CheckBoxContainer>
     </S.Container>
   );

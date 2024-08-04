@@ -3,12 +3,12 @@ package com.bang_ggood.user.service;
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.bang_ggood.user.UserFixture.USER1;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 class JwtTokenProviderTest extends IntegrationTestSupport {
 
@@ -25,13 +25,9 @@ class JwtTokenProviderTest extends IntegrationTestSupport {
         String token = jwtTokenProvider.createToken(user);
 
         // when
-        AuthInfo authInfo = jwtTokenProvider.resolveToken(token);
+        AuthUser authUser = jwtTokenProvider.resolveToken(token);
 
         // then
-        assertAll(
-                () -> authInfo.id().equals(user.getId()),
-                () -> authInfo.name().equals(user.getName()),
-                () -> authInfo.email().equals(user.getEmail())
-        );
+        Assertions.assertThat(authUser.id()).isEqualTo(user.getId());
     }
 }

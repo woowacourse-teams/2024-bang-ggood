@@ -5,7 +5,6 @@ import { useTabContext } from '@/components/common/Tabs/TabContext';
 
 interface Props {
   tabList: TabWithCompletion[] | Tab[];
-  type: 'completion' | 'normal';
 }
 
 export interface Tab {
@@ -17,7 +16,7 @@ export interface TabWithCompletion extends Tab {
   isCompleted: boolean;
 }
 
-const Tabs = ({ tabList, type }: Props) => {
+const Tabs = ({ tabList }: Props) => {
   const { currentTabId, setCurrentTabId } = useTabContext();
 
   const onMoveTab = (tabId: number) => {
@@ -30,7 +29,8 @@ const Tabs = ({ tabList, type }: Props) => {
         <FlexContainer>
           {tabList?.map(tab => {
             const { id, name } = tab;
-            const isCompleted = type === 'completion' && 'isCompleted' in tab ? tab.isCompleted : null;
+            const isCompleted = 'isCompleted' in tab ? tab.isCompleted : null;
+
             return (
               <Tab
                 id={id}

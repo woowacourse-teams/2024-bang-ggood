@@ -44,14 +44,8 @@ const FlexBox = styled.div`
 `;
 
 const FlexBetween = styled.div`
-<<<<<<< HEAD
-  display: flex;
-  height: 100%;
-  justify-content: space-between;
-=======
   ${flexSpaceBetween}
   height: 100%;
->>>>>>> b2f1b688eab698542440aff67b11fe718081fabd
 `;
 
 const HeaderTitle = styled.div`

@@ -10,7 +10,7 @@ export const ChecklistCustomTabs = () => {
   }));
   return (
     <>
-      <Tabs type="normal" tabList={checklistCustomTabs} />
+      <Tabs tabList={checklistCustomTabs} />
     </>
   );
 };

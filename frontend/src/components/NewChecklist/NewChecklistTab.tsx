@@ -14,7 +14,7 @@ const NewChecklistTab = () => {
 
   return (
     <>
-      <Tabs tabList={tabsWithBasicInfo} type="completion" />
+      <Tabs tabList={tabsWithBasicInfo} />
     </>
   );
 };

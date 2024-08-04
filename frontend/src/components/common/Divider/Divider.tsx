@@ -1,4 +1,7 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+
+import theme from '@/styles/theme';
 
 type DirectionType = 'vertical' | 'horizontal';
 interface Props {
@@ -13,21 +16,28 @@ const Divider = ({ direction = 'horizontal', size = '100%', isBold = false }: Pr
 
 export default Divider;
 
+const LINE_STYLE = {
+  bold: css`
+    border-width: 1.5px;
+  `,
+  medium: css`
+    border-width: 1px;
+  `,
+  vertical: css`
+    border-left: solid ${theme.palette.grey200};
+  `,
+  horizontal: css`
+    border-bottom: solid ${theme.palette.grey200};
+  `,
+};
+
 const Container = styled.div<{ $direction: DirectionType; $size: string; $isBold: boolean }>`
   width: ${({ $size, $direction }) => $direction === 'horizontal' && $size};
   height: ${({ $size, $direction }) => $direction === 'vertical' && $size};
-  border-left: ${({ $direction, theme, $isBold }) =>
-    $direction === 'vertical' && !$isBold
-      ? `1px solid ${theme.palette.grey200}`
-      : $direction === 'vertical' && $isBold
-        ? `1.5px solid ${theme.palette.grey200}`
-        : 'none'};
-  border-bottom: ${({ $direction, theme, $isBold }) =>
-    $direction === 'horizontal' && !$isBold
-      ? `1px solid ${theme.palette.grey200}`
-      : $direction === 'horizontal' && $isBold
-        ? `1.5px solid ${theme.palette.grey200}`
-        : 'none'};
+  ${({ $direction, $isBold }) => css`
+    ${$isBold ? LINE_STYLE.bold : LINE_STYLE.medium};
+    ${$direction === 'horizontal' ? LINE_STYLE.horizontal : LINE_STYLE.vertical};
+  `}
 `;
 
 export const S = {

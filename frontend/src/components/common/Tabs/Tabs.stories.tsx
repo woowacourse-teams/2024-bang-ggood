@@ -34,7 +34,6 @@ const mockTabsWithCompletion = newChecklistTabs.map(tab => ({ ...tab, isComplete
 
 export const Default: Story = {
   args: {
-    type: 'completion',
     tabList: mockTabsWithCompletion,
   },
 };

@@ -3,7 +3,6 @@ package com.bang_ggood.checklist.dto.response;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import java.util.List;
-import java.util.Objects;
 
 public class ChecklistWithScoreReadResponse {
 
@@ -22,6 +21,18 @@ public class ChecklistWithScoreReadResponse {
         this.room = room;
         this.options = options;
         this.categories = categories;
+    }
+
+    public static ChecklistWithScoreReadResponse of(Checklist checklist, int checklistScore,
+                                                    SelectedRoomResponse room, List<SelectedOptionResponse> options,
+                                                    List<CategoryScoreReadResponse> categoryScores) {
+        return new ChecklistWithScoreReadResponse(
+                checklist.getId(),
+                checklistScore,
+                room,
+                options,
+                categoryScores
+        );
     }
 
     public void assignRank(int rank) {
@@ -50,17 +61,5 @@ public class ChecklistWithScoreReadResponse {
 
     public Integer getRank() {
         return rank;
-    }
-
-    public static ChecklistWithScoreReadResponse of(Checklist checklist, int checklistScore,
-                                                    SelectedRoomResponse room, List<SelectedOptionResponse> options,
-                                                    List<CategoryScoreReadResponse> categoryScores) {
-        return new ChecklistWithScoreReadResponse(
-                checklist.getId(),
-                checklistScore,
-                room,
-                options,
-                categoryScores
-        );
     }
 }

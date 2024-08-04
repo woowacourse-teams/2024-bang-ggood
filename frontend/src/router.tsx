@@ -25,7 +25,7 @@ const router = createBrowserRouter([
   },
   {
     element: <ChecklistDetailPage />,
-    path: '/checklists/:checklistId',
+    path: ROUTE_PATH.checklistId,
   },
   {
     element: <ChecklistCustomPage />,

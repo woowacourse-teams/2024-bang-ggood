@@ -63,35 +63,4 @@ public class ChecklistWithScoreReadResponse {
                 categoryScores
         );
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        ChecklistWithScoreReadResponse that = (ChecklistWithScoreReadResponse) o;
-        return Objects.equals(checklistId, that.checklistId) && Objects.equals(score, that.score)
-                && Objects.equals(room, that.room) && Objects.equals(options, that.options)
-                && Objects.equals(categories, that.categories) && Objects.equals(rank, that.rank);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(checklistId, score, room, options, categories, rank);
-    }
-
-    @Override
-    public String toString() {
-        return "ChecklistWithScoreReadResponse{" +
-                "checklistId=" + checklistId +
-                ", score=" + score +
-                ", room=" + room +
-                ", options=" + options +
-                ", categories=" + categories +
-                ", rank=" + rank +
-                '}';
-    }
 }

@@ -5,14 +5,14 @@ interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement | HTMLT
   $color?: 'string';
   $borderRadius: string;
 }
-const widthSize: Record<string, string | null> = {
+const widthSize: Record<string, string> = {
   small: '45px',
   medium: '110px',
   large: '140px',
   full: '100%',
 };
 
-const heightSize: Record<string, string | null> = {
+const heightSize: Record<string, string> = {
   small: '32px',
   medium: '100px',
   large: '180px',

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { useAccordionContext } from '@/components/common/Accordion/AccordionContext';
-import { flexCenter, title2 } from '@/styles/common';
+import { flexCenter, flexSpaceBetween, title2 } from '@/styles/common';
 
 interface Props {
   id: number;
@@ -44,9 +44,8 @@ const FlexBox = styled.div`
 `;
 
 const FlexBetween = styled.div`
-  display: flex;
+  ${flexSpaceBetween}
   height: 100%;
-  justify-content: space-between;
 `;
 
 const HeaderTitle = styled.div`

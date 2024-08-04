@@ -7,7 +7,7 @@ interface OptionState {
   addOption: (option: number) => void;
   removeOption: (option: number) => void;
   isSelectedOption: (optionId: number) => boolean;
-  setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
+  setSelectedOptions: (options: number[]) => void;
   isAllSelected: () => boolean;
   addAllOptions: () => void;
   removeAllOptions: () => void;

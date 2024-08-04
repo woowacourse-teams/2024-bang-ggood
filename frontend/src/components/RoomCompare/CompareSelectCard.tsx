@@ -19,7 +19,7 @@ const CompareSelectCard = ({ isSelected, onClick, room }: Props) => {
     <S.Card onClick={onClick}>
       <S.FlexRow>
         <div>
-          <Checkbox isChecked={isSelected} />
+          <Checkbox isChecked={isSelected} setIsChecked={() => {}} />
         </div>
         <S.FlexColumn>
           <S.HeaderContainer>

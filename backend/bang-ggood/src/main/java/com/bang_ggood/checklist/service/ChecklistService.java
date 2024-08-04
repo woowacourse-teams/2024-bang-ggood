@@ -200,7 +200,7 @@ public class ChecklistService {
     private SelectedCategoryQuestionsResponse readQuestionsByCategory(Category category,
                                                                       List<ChecklistQuestion> checklistQuestions) {
         List<SelectedQuestionResponse> selectedQuestionResponse =
-                Question.filter(category, checklistQuestions).stream()
+                Question.filterWithUnselectedGrade(category, checklistQuestions).stream()
                         .map(SelectedQuestionResponse::of)
                         .toList();
 

@@ -238,7 +238,7 @@ public class ChecklistService {
 
         validateChecklistComparison(user, checklistIds);
 
-        List<ChecklistWithScoreReadResponse> checklistsWithScore = checklistRepository.findByUserAndIdIn(user,
+        List<ChecklistWithScoreReadResponse> checklistsWithScore = checklistRepository.findByUserAndIdInJoinFetch(user,
                         checklistIds)
                 .stream()
                 .map(this::getChecklistWithScore)
@@ -271,7 +271,7 @@ public class ChecklistService {
     }
 
     private void validateUserChecklist(User user, List<Long> checklistIds) {
-        if (checklistRepository.countAllByIdIn(user, checklistIds) != checklistIds.size()) {
+        if (checklistRepository.findByUserAndIdIn(user, checklistIds).size() != checklistIds.size()) {
             throw new BangggoodException(ExceptionCode.CHECKLIST_NOT_FOUND);
         }
     }

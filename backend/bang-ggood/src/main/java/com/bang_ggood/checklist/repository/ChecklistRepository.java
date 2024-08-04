@@ -4,11 +4,11 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.user.domain.User;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import java.util.List;
-import java.util.Optional;
 
 public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
 
@@ -31,11 +31,12 @@ public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
             + "WHERE u = :user "
             + "AND c.id IN :checklistIds "
             + "AND c.deleted = false")
-    List<Checklist> findByUserAndIdIn(@Param("user") User user, @Param("checklistIds") List<Long> checklistIds);
+    List<Checklist> findByUserAndIdInJoinFetch(@Param("user") User user,
+                                               @Param("checklistIds") List<Long> checklistIds);
 
-    @Query("SELECT COUNT(c) FROM Checklist c "
+    @Query("SELECT c FROM Checklist c "
             + "WHERE c.user = :user "
-            + "AND c.id IN :ids "
+            + "AND c.id IN :checklistIds "
             + "AND c.deleted = false")
-    long countAllByIdIn(@Param("user") User user, @Param("ids") List<Long> ids);
+    List<Checklist> findByUserAndIdIn(@Param("user") User user, @Param("checklistIds") List<Long> checklistIds);
 }

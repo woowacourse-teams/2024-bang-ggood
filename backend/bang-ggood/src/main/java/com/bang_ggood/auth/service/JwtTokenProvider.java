@@ -1,7 +1,11 @@
 package com.bang_ggood.auth.service;
 
+import com.bang_ggood.exception.BangggoodException;
+import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.user.domain.User;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,13 +38,20 @@ public class JwtTokenProvider {
     }
 
     public AuthUser resolveToken(String token) {
-        Claims claims = Jwts.parserBuilder()
-                .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
 
-        Long id = Long.valueOf(claims.getSubject());
-        return AuthUser.from(id);
+            Long id = Long.valueOf(claims.getSubject());
+            return AuthUser.from(id);
+
+        } catch (ExpiredJwtException exception) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_EXPIRED);
+        } catch (JwtException exception) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_INVALID);
+        }
     }
 }

@@ -1,6 +1,8 @@
 package com.bang_ggood.auth.service;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.exception.BangggoodException;
+import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
 import org.assertj.core.api.Assertions;
@@ -29,5 +31,51 @@ class JwtTokenProviderTest extends IntegrationTestSupport {
 
         // then
         Assertions.assertThat(authUser.id()).isEqualTo(user.getId());
+    }
+
+    @DisplayName("토큰 획인 실패 : 유효시간이 지난 경우")
+    @Test
+    void resolveToken_expiredTime_exception() {
+        // given
+        String JWT_SECRET_KEY = "A".repeat(32);
+        int JWT_ACCESS_TOKEN_EXPIRE_LENGTH = 1;
+        JwtTokenProvider  expiredJwtTokenProvider = new JwtTokenProvider(JWT_SECRET_KEY, JWT_ACCESS_TOKEN_EXPIRE_LENGTH);
+
+        User user = userRepository.save(USER1);
+        String token =  expiredJwtTokenProvider.createToken(user);
+
+        // when & then
+        Assertions.assertThatCode(() ->  expiredJwtTokenProvider.resolveToken(token))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.AUTHENTICATION_TOKEN_EXPIRED.getMessage());
+    }
+
+    @DisplayName("토큰 확인 실패 : 시그니처가 잘못된 경우")
+    @Test
+    void resolveToken_invalidSignature_exception() {
+        // given
+        String JWT_SECRET_KEY = "A".repeat(32);
+        int JWT_ACCESS_TOKEN_EXPIRE_LENGTH = 1800000;
+        JwtTokenProvider invalidJwtTokenProvider = new JwtTokenProvider(JWT_SECRET_KEY, JWT_ACCESS_TOKEN_EXPIRE_LENGTH);
+
+        User user = userRepository.save(USER1);
+        String token =  jwtTokenProvider.createToken(user);
+
+        // when & then
+        Assertions.assertThatCode(() ->  invalidJwtTokenProvider.resolveToken(token))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.AUTHENTICATION_TOKEN_INVALID.getMessage());
+    }
+
+    @DisplayName("토큰 확인 실패 : 토큰 형태가 잘못된 경우")
+    @Test
+    void resolveToken_invalidToken_exception() {
+        // given
+        String invalidToken = "malformed";
+
+        // when & then
+        Assertions.assertThatCode(() ->  jwtTokenProvider.resolveToken(invalidToken))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.AUTHENTICATION_TOKEN_INVALID.getMessage());
     }
 }

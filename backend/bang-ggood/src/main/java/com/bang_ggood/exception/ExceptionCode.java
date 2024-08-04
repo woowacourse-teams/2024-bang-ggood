@@ -46,9 +46,11 @@ public enum ExceptionCode {
     ROOM_FLOOR_AND_LEVEL_INVALID(HttpStatus.BAD_REQUEST, "방이 지상층일 경우에만 층수를 입력할 수 있습니다."),
 
     // Auth
-    AUTHENTICATION_EMPTY(HttpStatus.UNAUTHORIZED, "인증 정보가 존재하지 않습니다."),
-    AUTHENTICATION_INVALID(HttpStatus.UNAUTHORIZED, "인증 정보가 올바르지 않습니다."),
-    OAUTH_TOKEN_INTERNAL_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "토큰을 요청하는 과정에서 예상치 못한 예외가 발생했습니다.");
+    AUTHENTICATION_COOKIE_EMPTY(HttpStatus.UNAUTHORIZED, "인증 정보가 존재하지 않습니다."),
+    AUTHENTICATION_COOKIE_INVALID(HttpStatus.UNAUTHORIZED, "인증 정보가 올바르지 않습니다."),
+    AUTHENTICATION_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "토큰이 만료되었습니다."),
+    AUTHENTICATION_TOKEN_INVALID(HttpStatus.UNAUTHORIZED, "토큰 정보가 올바르지 않습니다."),
+    OAUTH_TOKEN_INTERNAL_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "카카오 서버와 통신하는 과정 중 예상치 못한 예외가 발생했습니다.");
 
     private final HttpStatus httpStatus;
     private final String message;

@@ -35,7 +35,7 @@ public class AuthenticationPrincipalArgumentResolver implements HandlerMethodArg
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
 
         if (request.getCookies() == null) {
-            throw new BangggoodException(ExceptionCode.AUTHENTICATION_EMPTY);
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_COOKIE_EMPTY);
         }
 
         String token = extractToken(request.getCookies());
@@ -47,6 +47,6 @@ public class AuthenticationPrincipalArgumentResolver implements HandlerMethodArg
                 .filter(cookie -> cookie.getName().equals(AuthController.TOKEN_COOKIE_NAME))
                 .findAny()
                 .map(Cookie::getValue)
-                .orElseThrow(() -> new BangggoodException(ExceptionCode.AUTHENTICATION_INVALID));
+                .orElseThrow(() -> new BangggoodException(ExceptionCode.AUTHENTICATION_COOKIE_INVALID));
     }
 }

@@ -34,7 +34,7 @@ class AuthE2ETest extends AcceptanceTest {
                 .when().post("/categories/priority")
                 .then().log().all()
                 .statusCode(401)
-                .body("message", containsString(ExceptionCode.AUTHENTICATION_EMPTY.getMessage()));
+                .body("message", containsString(ExceptionCode.AUTHENTICATION_COOKIE_EMPTY.getMessage()));
     }
 
     @DisplayName("인증 실패 : 쿠키가 잘못된 형태로 들어간 경우")
@@ -49,6 +49,6 @@ class AuthE2ETest extends AcceptanceTest {
                 .when().post("/categories/priority")
                 .then().log().all()
                 .statusCode(401)
-                .body("message", containsString(ExceptionCode.AUTHENTICATION_INVALID.getMessage()));
+                .body("message", containsString(ExceptionCode.AUTHENTICATION_COOKIE_INVALID.getMessage()));
     }
 }

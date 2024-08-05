@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
 
 public class ChecklistE2ETest extends AcceptanceTest {
 
@@ -117,7 +118,8 @@ public class ChecklistE2ETest extends AcceptanceTest {
                 .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST_NO_ROOM_NAME)
                 .when().put("/checklists/" + checklistId)
                 .then().log().all()
-                .statusCode(400);
+                .statusCode(400)
+                .body("message", containsString("방 이름이 존재하지 않습니다."));
     }
 
     @DisplayName("체크리스트 수정 실패: 질문 ID를 넣지 않은 경우")
@@ -130,7 +132,8 @@ public class ChecklistE2ETest extends AcceptanceTest {
                 .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST_NO_QUESTION_ID)
                 .when().put("/checklists/" + checklistId)
                 .then().log().all()
-                .statusCode(400);
+                .statusCode(400)
+                .body("message", containsString("질문 아이디가 존재하지 않습니다."));
     }
 
     @DisplayName("커스텀 체크리스트 업데이트 성공")

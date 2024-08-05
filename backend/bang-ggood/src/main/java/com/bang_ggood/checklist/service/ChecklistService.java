@@ -323,7 +323,7 @@ public class ChecklistService {
                         question.memo()))
                 .toList();
 
-        validateSameQuestions(questions, updateQuestions); // 목록 같은지 검증
+        validateSameQuestions(questions, updateQuestions);
         IntStream.range(0, questions.size())
                 .forEach(i -> questions.get(i).change(updateQuestions.get(i)));
     }

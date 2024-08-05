@@ -5,13 +5,12 @@ import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.request.QuestionCreateRequest;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.user.domain.User;
-
 import java.util.List;
 
 public class ChecklistFixture {
 
     public static final Checklist checklist = new Checklist(
-            new User(1L, "방방이"),
+            new User(1L, "방방이", "bang-ggood@gmail.com"),
             RoomFixture.ROOM_1,
             1000, 50, 12, "방끗공인중개사"
     );
@@ -32,11 +31,8 @@ public class ChecklistFixture {
             5, "GOOD", null
     );
 
-    public static final QuestionCreateRequest QUESTION_CREATE_REQUEST_NO_ANSWER = new QuestionCreateRequest(
-            6, null, "메모6"
-    );
     public static final QuestionCreateRequest QUESTION_CREATE_REQUEST_NO_ID = new QuestionCreateRequest(
-            null, "GOOD", "메모"
+            null, "NONE", "메모"
     );
 
     public static final QuestionCreateRequest QUESTION_CREATE_REQUEST_INVALID_ID = new QuestionCreateRequest(

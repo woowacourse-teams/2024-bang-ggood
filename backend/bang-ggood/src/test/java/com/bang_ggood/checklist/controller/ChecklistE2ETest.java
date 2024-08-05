@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,6 +106,19 @@ public class ChecklistE2ETest extends AcceptanceTest {
                 .contentType(ContentType.JSON)
                 .body(params)
                 .when().put("/custom-checklist")
+                .then().log().all()
+                .statusCode(204);
+    }
+
+    @DisplayName("체크리스트 삭제 성공")
+    @Test
+    void deleteChecklistById() {
+        roomRepository.save(RoomFixture.ROOM_1);
+        Checklist saved = checklistRepository.save(ChecklistFixture.checklist);
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .when().delete("/checklists/" + saved.getId())
                 .then().log().all()
                 .statusCode(204);
     }

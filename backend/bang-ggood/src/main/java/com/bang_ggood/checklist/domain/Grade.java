@@ -31,7 +31,6 @@ public enum Grade {
 
     public static int calculateTotalScore(List<ChecklistQuestion> questions) {
         return questions.stream()
-                .filter(question -> question.getGrade() != null)
                 .mapToInt(question -> question.getGrade().score)
                 .sum();
     }

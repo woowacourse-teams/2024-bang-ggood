@@ -21,10 +21,10 @@ import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 
 import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST;
 import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED;
@@ -209,7 +209,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void readChecklistsComparison() {
         // given
-        User user = new User(1L, "방방이");
+        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
         Room room1 = RoomFixture.ROOM_1;
         Room room2 = RoomFixture.ROOM_2;
         Room room3 = RoomFixture.ROOM_3;
@@ -233,7 +233,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void readChecklistsComparison_compareRank() {
         // given
-        User user = new User(1L, "방방이");
+        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
         Room room1 = RoomFixture.ROOM_1;
         Room room2 = RoomFixture.ROOM_2;
         Room room3 = RoomFixture.ROOM_3;
@@ -277,7 +277,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void readChecklistsComparison_invalidId() {
         // given
-        User user = new User(1L, "방방이");
+        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
         Room room1 = RoomFixture.ROOM_1;
         Room room2 = RoomFixture.ROOM_2;
         Room room3 = RoomFixture.ROOM_3;
@@ -306,7 +306,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         checklistService.updateCustomChecklist(request);
 
         // then
-        assertThat(customChecklistQuestionRepository.findByUser(new User(1L, "방방이")))
+        assertThat(customChecklistQuestionRepository.findByUser(new User(1L, "방방이", "bang-ggood@gmail.com")))
                 .hasSize(request.questionIds().size());
     }
 
@@ -348,5 +348,28 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 
     public static Checklist createChecklist(User user, Room room) {
         return new Checklist(user, room, 1000, 60, 24, "방끗부동산");
+    }
+
+    @DisplayName("체크리스트 삭제 성공")
+    @Test
+    void deleteChecklistById() {
+        // given
+        roomRepository.save(RoomFixture.ROOM_1);
+        Checklist checklist = checklistRepository.save(ChecklistFixture.checklist);
+
+        // when
+        checklistService.deleteChecklistById(checklist.getId());
+
+        // then
+        assertThat(checklistRepository.existsById(checklist.getId().longValue())).isFalse();
+    }
+
+    @DisplayName("체크리스트 삭제 실패")
+    @Test
+    void deleteChecklistById_notFound_exception() {
+        // given & when & then
+        assertThatThrownBy(() -> checklistService.deleteChecklistById(-1))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
     }
 }

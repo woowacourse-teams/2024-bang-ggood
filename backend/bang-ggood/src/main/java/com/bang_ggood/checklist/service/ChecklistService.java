@@ -38,14 +38,14 @@ import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ChecklistService {
@@ -72,7 +72,8 @@ public class ChecklistService {
         Room room = roomRepository.save(checklistCreateRequest.toRoomEntity());
 
         ChecklistInfo checklistInfo = checklistCreateRequest.toChecklistInfo();
-        Checklist checklist = new Checklist(new User(1L, "방방이"), room, checklistInfo.deposit(), checklistInfo.rent(),
+        Checklist checklist = new Checklist(new User(1L, "방방이", "bang-ggood@gmail.com"), room, checklistInfo.deposit(),
+                checklistInfo.rent(),
                 checklistInfo.contractTerm(), checklistInfo.realEstate());
         checklistRepository.save(checklist);
 
@@ -126,7 +127,7 @@ public class ChecklistService {
 
     @Transactional
     public ChecklistQuestionsResponse readChecklistQuestions() {
-        User user = new User(1L, "방방이");
+        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
         List<CustomChecklistQuestion> customChecklistQuestions = customChecklistQuestionRepository.findByUser(user);
 
         Map<Category, List<Question>> categoryQuestions = customChecklistQuestions.stream()
@@ -233,7 +234,7 @@ public class ChecklistService {
 
     @Transactional
     public ChecklistsWithScoreReadResponse readChecklistsComparison(List<Long> checklistIds) {
-        User user = new User(1L, "방끗");
+        User user = new User(1L, "방끗", "bang-ggood@gmail.com");
 
         List<Checklist> checklists = checklistRepository.findByUserAndIdIn(user, checklistIds);
 
@@ -305,7 +306,7 @@ public class ChecklistService {
         validateCustomChecklistQuestionsIsNotEmpty(questionIds);
         validateCustomChecklistQuestionsDuplication(questionIds);
 
-        User user = new User(1L, "방방이");
+        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
         customChecklistQuestionRepository.deleteAllByUser(user);
 
         List<CustomChecklistQuestion> customChecklistQuestions = questionIds.stream()
@@ -325,5 +326,14 @@ public class ChecklistService {
         if (questionIds.size() != Set.copyOf(questionIds).size()) {
             throw new BangggoodException(ExceptionCode.QUESTION_DUPLICATED);
         }
+    }
+
+    @Transactional
+    public void deleteChecklistById(long id) {
+        // 사용자 검증 필요
+        if (!checklistRepository.existsById(id)) {
+            throw new BangggoodException(ExceptionCode.CHECKLIST_NOT_FOUND);
+        }
+        checklistRepository.deleteById(id);
     }
 }

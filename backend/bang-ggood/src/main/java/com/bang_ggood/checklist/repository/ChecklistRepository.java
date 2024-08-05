@@ -13,11 +13,12 @@ import java.util.Optional;
 public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
 
     //TODO 테스트해야 함
-    @Query("SELECT c FROM Checklist c "
-            + "JOIN FETCH c.user u "
-            + "JOIN FETCH c.room r "
-            + "LEFT JOIN FETCH c.questions q "
-            + "WHERE c.id = :id")
+    @Query("SELECT c FROM Checklist c " +
+            "JOIN FETCH c.user u " +
+            "JOIN FETCH c.room r " +
+            "LEFT JOIN FETCH c.questions q " +
+            "WHERE c.id = :id " +
+            "AND c.deleted = false")
     Optional<Checklist> findById(@Param("id") long id);
 
 

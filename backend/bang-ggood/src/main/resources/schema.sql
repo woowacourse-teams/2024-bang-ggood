@@ -75,7 +75,7 @@ CREATE TABLE checklist_option
     FOREIGN KEY (checklist_id) REFERENCES checklist (id)
 );
 
-CREATE TABLE if not exists category_priority
+CREATE TABLE category_priority
 (
     id
     bigint

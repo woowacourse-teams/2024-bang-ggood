@@ -76,5 +76,4 @@ class QuestionTest {
         //when & then
         assertThat(Question.contains(questionId)).isFalse();
     }
-
 }

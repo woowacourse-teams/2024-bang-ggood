@@ -31,12 +31,6 @@ public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
             + "WHERE u = :user "
             + "AND c.id IN :checklistIds "
             + "AND c.deleted = false")
-    List<Checklist> findByUserAndIdInJoinFetch(@Param("user") User user,
-                                               @Param("checklistIds") List<Long> checklistIds);
-
-    @Query("SELECT c FROM Checklist c "
-            + "WHERE c.user = :user "
-            + "AND c.id IN :checklistIds "
-            + "AND c.deleted = false")
-    List<Checklist> findByUserAndIdIn(@Param("user") User user, @Param("checklistIds") List<Long> checklistIds);
+    List<Checklist> findByUserAndIdIn(@Param("user") User user,
+                                      @Param("checklistIds") List<Long> checklistIds);
 }

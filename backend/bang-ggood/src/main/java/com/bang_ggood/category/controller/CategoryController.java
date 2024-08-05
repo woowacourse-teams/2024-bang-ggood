@@ -1,10 +1,10 @@
 package com.bang_ggood.category.controller;
 
-import com.bang_ggood.auth.AuthenticationPrincipal;
-import com.bang_ggood.auth.service.AuthUser;
+import com.bang_ggood.auth.config.AuthPrincipal;
 import com.bang_ggood.category.dto.request.CategoryPriorityCreateRequest;
 import com.bang_ggood.category.dto.response.CategoriesReadResponse;
 import com.bang_ggood.category.service.CategoryService;
+import com.bang_ggood.user.domain.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,13 +21,13 @@ public class CategoryController {
     }
 
     @PostMapping("/categories/priority")
-    public ResponseEntity<Void> createCategoriesPriority(@AuthenticationPrincipal AuthUser authUser, @RequestBody CategoryPriorityCreateRequest request) {
-        categoryService.createCategoriesPriority(authUser, request);
+    public ResponseEntity<Void> createCategoriesPriority(@AuthPrincipal User user, @RequestBody CategoryPriorityCreateRequest request) {
+        categoryService.createCategoriesPriority(user, request);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/categories")
-    public ResponseEntity<CategoriesReadResponse> readCategories() {
+    public ResponseEntity<CategoriesReadResponse> readCategories(@AuthPrincipal User user) {
         return ResponseEntity.ok(categoryService.readCategories());
     }
 }

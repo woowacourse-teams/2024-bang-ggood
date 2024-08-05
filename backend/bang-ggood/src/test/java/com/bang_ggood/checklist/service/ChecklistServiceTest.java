@@ -17,7 +17,9 @@ import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
+import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
+import com.bang_ggood.user.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,16 +50,19 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     private RoomRepository roomRepository;
     @Autowired
     private CustomChecklistQuestionRepository customChecklistQuestionRepository;
+    @Autowired
+    private UserRepository userRepository;
 
 
     @DisplayName("체크리스트 방 정보 작성 성공")
     @Test
     void createChecklist() {
         //given
+        User user = userRepository.save(UserFixture.USER1);
         ChecklistCreateRequest checklist = ChecklistFixture.CHECKLIST_CREATE_REQUEST;
 
         // when
-        long checklistId = checklistService.createChecklist(checklist);
+        long checklistId = checklistService.createChecklist(user, checklist);
 
         //then
         assertAll(
@@ -71,9 +76,12 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @DisplayName("체크리스트 방 정보 작성 실패: 질문 id가 유효하지 않을 경우")
     @Test
     void createChecklist_invalidQuestionId_exception() {
-        //given & when & then
+        //given
+        User user = userRepository.save(UserFixture.USER1);
+
+        // when & then
         assertThatThrownBy(
-                () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_QUESTION_ID))
+                () -> checklistService.createChecklist(user, ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_QUESTION_ID))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
     }
@@ -81,10 +89,13 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @DisplayName("체크리스트 방 정보 작성 실패: 질문 id가 중복일 경우")
     @Test
     void createChecklist_duplicatedQuestionId_exception() {
-        //given & when & then
+        //given
+        User user = userRepository.save(UserFixture.USER1);
+
+        //when & then
         assertThatThrownBy(
                 () -> checklistService.createChecklist(
-                        ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_QUESTION_ID))
+                        user, ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_QUESTION_ID))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
     }
@@ -92,9 +103,12 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @DisplayName("체크리스트 방 정보 작성 실패: 옵션 id가 유효하지 않을 경우")
     @Test
     void createChecklist_invalidOptionId_exception() {
-        //given & when & then
+        //given
+        User user = userRepository.save(UserFixture.USER1);
+
+        //when & then
         assertThatThrownBy(
-                () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_OPTION_ID))
+                () -> checklistService.createChecklist(user, ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_OPTION_ID))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.OPTION_INVALID.getMessage());
     }
@@ -102,9 +116,12 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @DisplayName("체크리스트 방 정보 작성 실패: 옵션 id가 중복일 경우")
     @Test
     void createChecklist_duplicatedOptionId_exception() {
-        //given & when & then
+        // given
+        User user = userRepository.save(UserFixture.USER1);
+
+        // when & then
         assertThatThrownBy(
-                () -> checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_OPTION_ID))
+                () -> checklistService.createChecklist(user, ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_OPTION_ID))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.OPTION_DUPLICATED.getMessage());
     }

@@ -1,10 +1,10 @@
-package com.bang_ggood.auth;
+package com.bang_ggood.auth.config;
 
-import com.bang_ggood.auth.controller.AuthController;
+import com.bang_ggood.auth.controller.CookieProvider;
 import com.bang_ggood.auth.service.AuthService;
-import com.bang_ggood.auth.service.AuthUser;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
+import com.bang_ggood.user.domain.User;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.MethodParameter;
@@ -16,22 +16,22 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import java.util.Arrays;
 
 @Component
-public class AuthenticationPrincipalArgumentResolver implements HandlerMethodArgumentResolver {
+public class AuthPrincipalArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final AuthService authService;
 
-    public AuthenticationPrincipalArgumentResolver(AuthService authService) {
+    public AuthPrincipalArgumentResolver(AuthService authService) {
         this.authService = authService;
     }
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(AuthenticationPrincipal.class);
+        return parameter.hasParameterAnnotation(AuthPrincipal.class);
     }
 
     @Override
-    public AuthUser resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-                                    NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
+    public User resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
+                                NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
 
         if (request.getCookies() == null) {
@@ -39,12 +39,12 @@ public class AuthenticationPrincipalArgumentResolver implements HandlerMethodArg
         }
 
         String token = extractToken(request.getCookies());
-        return authService.extractAuthUser(token);
+        return authService.extractUser(token);
     }
 
     private String extractToken(Cookie[] cookies) {
         return Arrays.stream(cookies)
-                .filter(cookie -> cookie.getName().equals(AuthController.TOKEN_COOKIE_NAME))
+                .filter(cookie -> cookie.getName().equals(CookieProvider.TOKEN_COOKIE_NAME))
                 .findAny()
                 .map(Cookie::getValue)
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.AUTHENTICATION_COOKIE_INVALID));

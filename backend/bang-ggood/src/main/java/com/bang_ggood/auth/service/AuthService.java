@@ -28,7 +28,9 @@ public class AuthService {
         return jwtTokenProvider.createToken(user);
     }
 
-    public AuthUser extractAuthUser(String token) {
-        return jwtTokenProvider.resolveToken(token);
+    public User extractUser(String token) {
+        AuthUser authUser = jwtTokenProvider.resolveToken(token);
+
+        return userRepository.getUserById(authUser.id());
     }
 }

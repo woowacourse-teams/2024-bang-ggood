@@ -13,23 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-    public static final String TOKEN_COOKIE_NAME = "token";
-
     private final AuthService authService;
+    private final CookieProvider cookieProvider;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, CookieProvider cookieProvider) {
         this.authService = authService;
+        this.cookieProvider = cookieProvider;
     }
 
     @PostMapping("/oauth/login")
     public ResponseEntity<Void> login(@Valid @RequestBody OauthLoginRequest request) {
         String token = authService.login(request);
-
-        ResponseCookie cookie = ResponseCookie
-                .from(TOKEN_COOKIE_NAME, token)
-                .httpOnly(true)
-                .path("/")
-                .build();
+        ResponseCookie cookie = cookieProvider.createCookie(token);
 
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).build();
     }

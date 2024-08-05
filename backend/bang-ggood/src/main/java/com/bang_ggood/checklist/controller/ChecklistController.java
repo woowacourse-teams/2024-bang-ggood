@@ -1,5 +1,6 @@
 package com.bang_ggood.checklist.controller;
 
+import com.bang_ggood.auth.config.AuthPrincipal;
 import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
@@ -31,8 +32,8 @@ public class ChecklistController {
     }
 
     @PostMapping("/checklists")
-    public ResponseEntity<Void> createChecklist(@Valid @RequestBody ChecklistCreateRequest checklistCreateRequest) {
-        long checklistId = checklistService.createChecklist(checklistCreateRequest);
+    public ResponseEntity<Void> createChecklist(@AuthPrincipal User user, @Valid @RequestBody ChecklistCreateRequest checklistCreateRequest) {
+        long checklistId = checklistService.createChecklist(user, checklistCreateRequest);
         return ResponseEntity.created(URI.create("/checklists/" + checklistId)).build();
     }
 

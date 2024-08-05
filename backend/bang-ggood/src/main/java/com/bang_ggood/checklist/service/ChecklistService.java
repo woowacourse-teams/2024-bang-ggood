@@ -1,5 +1,6 @@
 package com.bang_ggood.checklist.service;
 
+import com.bang_ggood.auth.config.AuthPrincipal;
 import com.bang_ggood.category.domain.Badge;
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.category.dto.response.CategoryQuestionsResponse;
@@ -68,11 +69,11 @@ public class ChecklistService {
     }
 
     @Transactional
-    public long createChecklist(ChecklistCreateRequest checklistCreateRequest) {
+    public long createChecklist(@AuthPrincipal User user, ChecklistCreateRequest checklistCreateRequest) {
         Room room = roomRepository.save(checklistCreateRequest.toRoomEntity());
 
         ChecklistInfo checklistInfo = checklistCreateRequest.toChecklistInfo();
-        Checklist checklist = new Checklist(new User(1L, "방방이", "bang-ggood@gmail.com"), room, checklistInfo.deposit(), checklistInfo.rent(),
+        Checklist checklist = new Checklist(user, room, checklistInfo.deposit(), checklistInfo.rent(),
                 checklistInfo.contractTerm(), checklistInfo.realEstate());
         checklistRepository.save(checklist);
 

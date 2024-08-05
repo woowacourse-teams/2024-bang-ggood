@@ -11,18 +11,19 @@ import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.repository.RoomRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.http.Header;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.HttpHeaders;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ChecklistE2ETest extends AcceptanceTest {
+class ChecklistE2ETest extends AcceptanceTest {
 
     @Autowired
     private ChecklistRepository checklistRepository;
@@ -34,6 +35,7 @@ public class ChecklistE2ETest extends AcceptanceTest {
     void createChecklist() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
                 .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST)
                 .when().post("/checklists")
                 .then().log().all()
@@ -45,6 +47,7 @@ public class ChecklistE2ETest extends AcceptanceTest {
     void createChecklist_noRoomName_exception() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
                 .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_ROOM_NAME)
                 .when().post("/checklists")
                 .then().log().all()
@@ -56,6 +59,7 @@ public class ChecklistE2ETest extends AcceptanceTest {
     void createChecklist_noQuestionId_exception() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
                 .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_QUESTION_ID)
                 .when().post("/checklists")
                 .then().log().all()

@@ -1,6 +1,5 @@
 package com.bang_ggood.category.service;
 
-import com.bang_ggood.auth.service.AuthUser;
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.category.domain.CategoryPriority;
 import com.bang_ggood.category.dto.request.CategoryPriorityCreateRequest;
@@ -33,8 +32,7 @@ public class CategoryService {
     }
 
     @Transactional
-    public void createCategoriesPriority(AuthUser authUser, CategoryPriorityCreateRequest request) {
-        User user = userRepository.getUserById(authUser.id());
+    public void createCategoriesPriority(User user, CategoryPriorityCreateRequest request) {
         validate(request);
         List<CategoryPriority> categoryPriorities = request.categoryIds().stream()
                 .map(id -> new CategoryPriority(id, user))

@@ -14,7 +14,7 @@ import java.util.List;
 public class ChecklistFixture {
 
     public static final Checklist checklist = new Checklist(
-            new User(1L, "방방이"),
+            new User(1L, "방방이", "bang-ggood@gmail.com"),
             RoomFixture.ROOM_1,
             1000, 50, 12, "방끗공인중개사"
     );
@@ -43,8 +43,8 @@ public class ChecklistFixture {
             5, "GOOD", "메모"
     );
 
-    public static final QuestionRequest QUESTION_CREATE_REQUEST_NO_ID = new QuestionRequest(
-            null, "GOOD", "메모"
+    public static final QuestionCreateRequest QUESTION_CREATE_REQUEST_NO_ID = new QuestionCreateRequest(
+            null, "NONE", "메모"
     );
 
     public static final QuestionRequest QUESTION_CREATE_REQUEST_INVALID_ID = new QuestionRequest(

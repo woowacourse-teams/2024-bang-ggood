@@ -149,4 +149,17 @@ public class ChecklistE2ETest extends AcceptanceTest {
                 .then().log().all()
                 .statusCode(204);
     }
+
+    @DisplayName("체크리스트 삭제 성공")
+    @Test
+    void deleteChecklistById() {
+        roomRepository.save(RoomFixture.ROOM_1);
+        Checklist saved = checklistRepository.save(ChecklistFixture.checklist);
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .when().delete("/checklists/" + saved.getId())
+                .then().log().all()
+                .statusCode(204);
+    }
 }

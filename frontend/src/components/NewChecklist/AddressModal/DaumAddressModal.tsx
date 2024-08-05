@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import Button from '@/components/common/Button/Button';
 import Modal from '@/components/common/Modal/Modal';
-import loadPostcode from '@/components/NewChecklist/AdressModal/loadPostcode';
+import loadPostcode from '@/components/NewChecklist/AddressModal/loadPostcode';
 import { Address, Postcode, PostcodeOptions } from '@/types/address';
 
 declare global {

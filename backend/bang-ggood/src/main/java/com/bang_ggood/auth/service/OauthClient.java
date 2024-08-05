@@ -1,7 +1,7 @@
 package com.bang_ggood.auth.service;
 
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
-import com.bang_ggood.auth.dto.response.OauthInfoResponse;
+import com.bang_ggood.auth.dto.response.OauthInfoApiResponse;
 import com.bang_ggood.auth.dto.response.OauthTokenResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -38,14 +38,14 @@ public class OauthClient {
         this.clientSecret = clientSecret;
     }
 
-    public OauthInfoResponse requestOauthInfo(OauthLoginRequest request) {
+    public OauthInfoApiResponse requestOauthInfo(OauthLoginRequest request) {
         OauthTokenResponse oauthTokenResponse = requestToken(request);
 
         return restClient.get()
                 .uri(userInfoRequestUri)
                 .header("Authorization", "Bearer " + oauthTokenResponse.access_token())
                 .retrieve()
-                .body(OauthInfoResponse.class);
+                .body(OauthInfoApiResponse.class);
     }
 
     private OauthTokenResponse requestToken(OauthLoginRequest request) {

@@ -1,7 +1,7 @@
 package com.bang_ggood.auth.service;
 
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
-import com.bang_ggood.auth.dto.response.OauthInfoResponse;
+import com.bang_ggood.auth.dto.response.OauthInfoApiResponse;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -20,10 +20,10 @@ public class AuthService {
     }
 
     public String login(OauthLoginRequest request) {
-        OauthInfoResponse oauthInfoResponse = oauthClient.requestOauthInfo(request);
+        OauthInfoApiResponse oauthInfoApiResponse = oauthClient.requestOauthInfo(request);
 
-        User user = userRepository.findByEmail(oauthInfoResponse.kakao_account().email())
-                .orElseGet(() -> userRepository.save(oauthInfoResponse.toUserEntity()));
+        User user = userRepository.findByEmail(oauthInfoApiResponse.kakao_account().email())
+                .orElseGet(() -> userRepository.save(oauthInfoApiResponse.toUserEntity()));
 
         return jwtTokenProvider.createToken(user);
     }

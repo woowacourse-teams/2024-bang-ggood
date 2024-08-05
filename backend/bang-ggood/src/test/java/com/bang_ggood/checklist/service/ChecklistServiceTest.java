@@ -20,6 +20,7 @@ import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
+import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -209,13 +210,13 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void readChecklistsComparison() {
         // given
-        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
+        User user1 = UserFixture.USER1;
         Room room1 = RoomFixture.ROOM_1;
         Room room2 = RoomFixture.ROOM_2;
         Room room3 = RoomFixture.ROOM_3;
-        Checklist checklist1 = createChecklist(user, room1);
-        Checklist checklist2 = createChecklist(user, room2);
-        Checklist checklist3 = createChecklist(user, room3);
+        Checklist checklist1 = createChecklist(user1, room1);
+        Checklist checklist2 = createChecklist(user1, room2);
+        Checklist checklist3 = createChecklist(user1, room3);
 
         roomRepository.saveAll(List.of(room1, room2, room3));
         List<Checklist> checklists = checklistRepository.saveAll(List.of(checklist1, checklist2, checklist3));
@@ -223,7 +224,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 checklists.get(2).getId());
 
         // when
-        ChecklistsWithScoreReadResponse response = checklistService.readChecklistsComparison(checklistIds);
+        ChecklistsWithScoreReadResponse response = checklistService.readChecklistsComparison(user1, checklistIds);
 
         // then
         assertThat(response.checklists()).hasSize(3);
@@ -233,13 +234,13 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void readChecklistsComparison_compareRank() {
         // given
-        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
+        User user1 = UserFixture.USER1;
         Room room1 = RoomFixture.ROOM_1;
         Room room2 = RoomFixture.ROOM_2;
         Room room3 = RoomFixture.ROOM_3;
-        Checklist checklist1 = createChecklist(user, room1);
-        Checklist checklist2 = createChecklist(user, room2);
-        Checklist checklist3 = createChecklist(user, room3);
+        Checklist checklist1 = createChecklist(user1, room1);
+        Checklist checklist2 = createChecklist(user1, room2);
+        Checklist checklist3 = createChecklist(user1, room3);
         ChecklistQuestion checklistQuestion1 = new ChecklistQuestion(checklist1, Question.CLEAN_1, Grade.GOOD, null);
         ChecklistQuestion checklistQuestion2 = new ChecklistQuestion(checklist2, Question.CLEAN_2, Grade.SOSO, null);
         ChecklistQuestion checklistQuestion3 = new ChecklistQuestion(checklist3, Question.CLEAN_3, Grade.BAD, null);
@@ -251,7 +252,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 checklists.get(2).getId());
 
         // when
-        ChecklistsWithScoreReadResponse response = checklistService.readChecklistsComparison(checklistIds);
+        ChecklistsWithScoreReadResponse response = checklistService.readChecklistsComparison(user1, checklistIds);
 
         // then
         assertAll(
@@ -265,10 +266,11 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void readChecklistsComparison_invalidIdCount() {
         // given
+        User user1 = UserFixture.USER1;
         List<Long> invalidChecklistIds = List.of(1L, 2L, 3L, 4L);
 
         // when & then
-        assertThatCode(() -> checklistService.readChecklistsComparison(invalidChecklistIds))
+        assertThatCode(() -> checklistService.readChecklistsComparison(user1, invalidChecklistIds))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_COMPARISON_INVALID_COUNT.getMessage());
     }
@@ -277,13 +279,13 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void readChecklistsComparison_invalidId() {
         // given
-        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
+        User user1 = UserFixture.USER1;
         Room room1 = RoomFixture.ROOM_1;
         Room room2 = RoomFixture.ROOM_2;
         Room room3 = RoomFixture.ROOM_3;
-        Checklist checklist1 = createChecklist(user, room1);
-        Checklist checklist2 = createChecklist(user, room2);
-        Checklist checklist3 = createChecklist(user, room3);
+        Checklist checklist1 = createChecklist(user1, room1);
+        Checklist checklist2 = createChecklist(user1, room2);
+        Checklist checklist3 = createChecklist(user1, room3);
 
         roomRepository.saveAll(List.of(room1, room2, room3));
         List<Checklist> checklists = checklistRepository.saveAll(List.of(checklist1, checklist2, checklist3));
@@ -291,7 +293,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 checklists.get(2).getId() + 1);
 
         // when & then
-        assertThatCode(() -> checklistService.readChecklistsComparison(invalidChecklistIds))
+        assertThatCode(() -> checklistService.readChecklistsComparison(user1, invalidChecklistIds))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
     }

@@ -233,9 +233,7 @@ public class ChecklistService {
     }
 
     @Transactional
-    public ChecklistsWithScoreReadResponse readChecklistsComparison(List<Long> checklistIds) {
-        User user = new User(1L, "방끗", "bang-ggood@gmail.com");
-
+    public ChecklistsWithScoreReadResponse readChecklistsComparison(User user, List<Long> checklistIds) {
         List<Checklist> checklists = checklistRepository.findByUserAndIdIn(user, checklistIds);
 
         validateChecklistComparison(checklists, checklistIds);

@@ -72,7 +72,7 @@ public class ChecklistService {
     public long createChecklist(ChecklistRequest checklistRequest) {
         Room room = roomRepository.save(checklistRequest.toRoomEntity());
 
-        ChecklistInfo checklistInfo = checklistCreateRequest.toChecklistInfo();
+        ChecklistInfo checklistInfo = checklistRequest.toChecklistInfo();
         Checklist checklist = new Checklist(new User(1L, "방방이", "bang-ggood@gmail.com"), room, checklistInfo.deposit(), checklistInfo.rent(),
                 checklistInfo.contractTerm(), checklistInfo.realEstate());
         checklistRepository.save(checklist);
@@ -293,7 +293,7 @@ public class ChecklistService {
         room.change(checklistRequest.toRoomEntity());
 
         ChecklistInfo checklistInfo = checklistRequest.toChecklistInfo();
-        Checklist updateChecklist = new Checklist(new User(1L, "방방이"), room, checklistInfo.deposit(), checklistInfo.rent(),
+        Checklist updateChecklist = new Checklist(new User(1L, "방방이", "bang-ggood@gmail.com"), room, checklistInfo.deposit(), checklistInfo.rent(),
                 checklistInfo.contractTerm(), checklistInfo.realEstate());
         checklist.change(updateChecklist);
 

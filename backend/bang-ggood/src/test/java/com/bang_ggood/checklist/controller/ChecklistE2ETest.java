@@ -29,6 +29,12 @@ public class ChecklistE2ETest extends AcceptanceTest {
     @Autowired
     private ChecklistService checklistService;
 
+    @Autowired
+    private ChecklistRepository checklistRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
+
     @DisplayName("체크리스트 방 정보 작성 성공")
     @Test
     void createChecklist() {

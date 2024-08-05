@@ -43,7 +43,7 @@ public class ChecklistFixture {
             5, "GOOD", "메모"
     );
 
-    public static final QuestionCreateRequest QUESTION_CREATE_REQUEST_NO_ID = new QuestionCreateRequest(
+    public static final QuestionRequest QUESTION_CREATE_REQUEST_NO_ID = new QuestionRequest(
             null, "NONE", "메모"
     );
 

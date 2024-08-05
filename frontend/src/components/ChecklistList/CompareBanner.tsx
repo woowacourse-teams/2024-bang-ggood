@@ -12,7 +12,6 @@ const CompareBanner = ({ onClick }: Props) => {
     <S.Banner onClick={onClick}>
       <BangBangIcon />
       <S.Title>방 비교하기</S.Title>
-      {/* <ArrowRightYellow /> */}
     </S.Banner>
   );
 };

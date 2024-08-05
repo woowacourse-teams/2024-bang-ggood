@@ -15,4 +15,5 @@ export const ROUTE_PATH = {
   /* TODO : 추후 추가될 페이지들의 라우트패스 */
   location: '/location',
   myPage: '/my-page',
+  login: '/login',
 };

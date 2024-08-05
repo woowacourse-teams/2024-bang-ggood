@@ -17,14 +17,22 @@ import { flexColumn } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
 
 const ChecklistListPage = () => {
+  // const code = new URL(window.location.href).searchParams.get('code');
   const [checklistList, setChecklistList] = useState<ChecklistPreview[]>([]);
 
   useEffect(() => {
+    // const postLogin = async () => {
+    //   // TODO: 로그인 인증 토큰 저장 작업 필요
+    //   await postKakaoCode(code);
+    // };
+
     const fetchChecklist = async () => {
       const checklistList = await getChecklists();
       setChecklistList(checklistList);
     };
 
+    // TODO: 백엔드 작업 이전
+    // postLogin();
     fetchChecklist();
   }, []);
 

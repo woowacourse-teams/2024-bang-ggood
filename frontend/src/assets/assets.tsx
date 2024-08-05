@@ -19,6 +19,7 @@ import FaceIconGood from '@/assets/icons/face-icon/face-icon-good.svg';
 import FaceIconNone from '@/assets/icons/face-icon/face-icon-none.svg';
 import FaceIconSosoGray from '@/assets/icons/face-icon/face-icon-soso-gray.svg';
 import FaceIconSoso from '@/assets/icons/face-icon/face-icon-soso.svg';
+
 /* logos */
 import ChecklistLogoActive from '@/assets/icons/footer-icon/checklist-logo-active.svg';
 import ChecklistLogo from '@/assets/icons/footer-icon/checklist-logo.svg';
@@ -32,6 +33,7 @@ import MyPageLogo from '@/assets/icons/footer-icon/my-page-logo.svg';
 /* etc */
 import BangBangIcon from '@/assets/icons/bang-bang-icon.svg';
 import InputRequiredDot from '@/assets/icons/input-required-dot.svg';
+import KakaoLogo from '@/assets/icons/kakao-logo.svg';
 import LampIcon from '@/assets/icons/lamp-icon.svg';
 import BangGgoodTextIcon from '@/assets/icons/logo.svg';
 import PencilIcon from '@/assets/icons/pencil-icon.svg';
@@ -63,6 +65,7 @@ export {
   HomeLogo,
   HomeLogoActive,
   InputRequiredDot,
+  KakaoLogo,
   LampIcon,
   LocationLineIcon,
   LocationLogo,

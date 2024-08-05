@@ -22,7 +22,6 @@ const ChecklistQuestion = ({ question }: Props) => {
 
   const [isMemoOpen, setIsMemoOpen] = useState(false);
 
-  //TODO: 에러를 던지고 잇음/
   const { answer, memo } = findCategoryQuestion({ categoryId: currentTabId, questionId });
 
   const handleClick = (newAnswer: EmotionType) => {
@@ -57,6 +56,7 @@ const ChecklistQuestion = ({ question }: Props) => {
       <S.Options>
         {EMOTIONS.map(emotion => {
           const { name: emotionName, id } = emotion;
+
           return (
             <FaceMark onClick={() => handleClick(emotionName)} key={id}>
               <FaceMark.FaceIcon emotion={emotionName} isFilled={answer === emotionName} />

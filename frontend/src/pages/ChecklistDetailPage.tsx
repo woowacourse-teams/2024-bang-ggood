@@ -26,6 +26,11 @@ const ChecklistDetailPage = () => {
     fetchChecklist();
   }, [checklistId]);
 
+  /*TODO: fetch 시 로딩 상태일 때 스켈레톤처리. 성공할 떄만 return 문 보여주는 로직이 필요 */
+  if (!checklist) {
+    return <div>체크리스트가 없어요</div>;
+  }
+
   return (
     <>
       <Header left={<Header.Backward />} center={<Header.Text>{checklist?.room.name}</Header.Text>} />

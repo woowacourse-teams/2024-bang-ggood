@@ -6,11 +6,11 @@ import { getChecklistQuestions, postChecklist } from '@/apis/checklist';
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import { TabProvider } from '@/components/common/Tabs/TabContext';
+import NewChecklistTab from '@/components/NewChecklist/NewChecklistTab';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useInputs from '@/hooks/useInputs';
 import useToast from '@/hooks/useToast';
 import NewChecklistContent from '@/pages/NewChecklistPage/NewChecklistContent';
-import NewChecklistTab from '@/pages/NewChecklistPage/NewChecklistTab';
 import useChecklistStore from '@/store/useChecklistStore';
 import useOptionStore from '@/store/useOptionStore';
 import { flexCenter, title2 } from '@/styles/common';
@@ -72,9 +72,7 @@ const NewChecklistPage = () => {
     try {
       fetchNewChecklist();
       showToast('체크리스트가 저장되었습니다.');
-      setTimeout(() => {
-        navigate(ROUTE_PATH.checklistList);
-      }, 2000);
+      navigate(ROUTE_PATH.checklistList);
     } catch (error) {
       console.error(error);
     }
@@ -99,7 +97,7 @@ const NewChecklistPage = () => {
         center={<S.Title>{'새 체크리스트'}</S.Title>}
         right={<Button label={'저장'} size="small" color="dark" onClick={handleSubmitChecklist} />}
       />
-      <TabProvider>
+      <TabProvider defaultTab={0}>
         {/*체크리스트 작성의 탭*/}
         <NewChecklistTab />
         {/*체크리스트 콘텐츠 섹션*/}

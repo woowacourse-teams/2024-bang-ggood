@@ -12,7 +12,7 @@ const defaultContext: ContextProps = {
 
 const TabContext = createContext<ContextProps>(defaultContext);
 
-export const TabProvider = ({ children, defaultTab = 0 }: { children: ReactNode; defaultTab?: number }) => {
+export const TabProvider = ({ children, defaultTab = 0 }: { children: ReactNode; defaultTab: number }) => {
   const [currentTabId, setCurrentTabId] = useState<number>(defaultTab);
 
   return <TabContext.Provider value={{ currentTabId, setCurrentTabId }}>{children}</TabContext.Provider>;

@@ -34,6 +34,7 @@ import BangBangIcon from '@/assets/icons/bang-bang-icon.svg';
 import InputRequiredDot from '@/assets/icons/input-required-dot.svg';
 import LampIcon from '@/assets/icons/lamp-icon.svg';
 import BangGgoodTextIcon from '@/assets/icons/logo.svg';
+import PencilIcon from '@/assets/icons/pencil-icon.svg';
 import QuestionDot from '@/assets/icons/question-dot.svg';
 
 /*memo */
@@ -69,6 +70,7 @@ export {
   MemoFilled,
   MyPageLogo,
   MyPageLogoActive,
+  PencilIcon,
   Plus,
   QuestionDot,
 };

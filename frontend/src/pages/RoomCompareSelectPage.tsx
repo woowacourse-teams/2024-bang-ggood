@@ -31,8 +31,8 @@ const RoomCompareSelectPage = () => {
         center={<Header.Text>방 비교하기</Header.Text>}
         right={<Button label="비교" color="dark" size="small" />}
       />
-      <Layout bgColor={theme.palette.grey100}>
-        <S.Wrapper bgColor={theme.palette.grey100}>
+      <Layout bgColor={theme.palette.background}>
+        <S.Wrapper bgColor={theme.palette.background}>
           {checklistList.map(roomPreview => (
             <CompareSelectCard
               key={roomPreview.checklistId}

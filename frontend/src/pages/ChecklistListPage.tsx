@@ -6,6 +6,7 @@ import { getChecklists } from '@/apis/checklist';
 import { Plus } from '@/assets/assets';
 import ChecklistPreviewCard from '@/components/ChecklistList/ChecklistPreviewCard';
 import CompareBanner from '@/components/ChecklistList/CompareBanner';
+import EditBanner from '@/components/ChecklistList/EditBanner';
 import FloatingButton from '@/components/common/Button/FloatingButton';
 import Header from '@/components/common/Header/Header';
 import Layout from '@/components/common/layout/Layout';
@@ -40,6 +41,10 @@ const ChecklistListPage = () => {
     });
   };
 
+  const handleClickMoveEditPage = () => {
+    navigate(ROUTE_PATH.checklistCustom);
+  };
+
   const handleClickFloatingButton = () => {
     navigate(ROUTE_PATH.checklistNew);
   };
@@ -47,7 +52,10 @@ const ChecklistListPage = () => {
   return (
     <>
       <Header center={<Header.Text>체크리스트</Header.Text>} />
-      <CompareBanner onClick={handleClick} />
+      <S.FlexBox>
+        <CompareBanner onClick={handleClick} />
+        <EditBanner onClick={handleClickMoveEditPage} />
+      </S.FlexBox>
       <Layout>
         <S.ListBox>
           {checklistList?.map(checklist => (
@@ -72,5 +80,8 @@ const S = {
     ${flexColumn}
     gap: 8px;
     overflow-y: scroll;
+  `,
+  FlexBox: styled.div`
+    display: flex;
   `,
 };

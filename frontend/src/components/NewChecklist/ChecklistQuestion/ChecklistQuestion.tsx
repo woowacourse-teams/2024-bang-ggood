@@ -107,6 +107,7 @@ const S = {
     margin: 0 auto;
     margin-top: 10px;
   `,
+
   ButtonBox: styled.div`
     position: absolute;
     top: 10px;

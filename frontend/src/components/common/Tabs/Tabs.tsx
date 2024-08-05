@@ -2,10 +2,18 @@ import styled from '@emotion/styled';
 
 import Tab from '@/components/common/Tabs/Tab';
 import { useTabContext } from '@/components/common/Tabs/TabContext';
-import { TabWithCompletion } from '@/types/tab';
 
 interface Props {
-  tabList: TabWithCompletion[];
+  tabList: TabWithCompletion[] | Tab[];
+}
+
+export interface Tab {
+  name: string;
+  id: number;
+}
+
+export interface TabWithCompletion extends Tab {
+  isCompleted: boolean;
 }
 
 const Tabs = ({ tabList }: Props) => {
@@ -20,7 +28,9 @@ const Tabs = ({ tabList }: Props) => {
       <Container>
         <FlexContainer>
           {tabList?.map(tab => {
-            const { isCompleted, id, name } = tab;
+            const { id, name } = tab;
+            const isCompleted = 'isCompleted' in tab ? tab.isCompleted : null;
+
             return (
               <Tab
                 id={id}

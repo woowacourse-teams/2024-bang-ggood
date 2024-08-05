@@ -24,7 +24,7 @@ const Checkbox = ({
     setIsChecked(!isChecked);
   }, [isChecked, setIsChecked]);
 
-  const checkedColor = color || (isChecked ? theme.palette.green500 : theme.palette.grey400);
+  const checkedColor = isChecked ? color || theme.palette.green500 : theme.palette.grey400;
 
   return (
     <S.Checkbox $color={checkedColor} $hoverColor={hoverColor} onClick={onClick}>

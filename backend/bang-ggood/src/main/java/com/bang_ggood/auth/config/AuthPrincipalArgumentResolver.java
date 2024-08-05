@@ -26,7 +26,8 @@ public class AuthPrincipalArgumentResolver implements HandlerMethodArgumentResol
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(AuthPrincipal.class);
+        return User.class.isAssignableFrom(parameter.getParameterType())
+                && parameter.hasParameterAnnotation(AuthPrincipal.class);
     }
 
     @Override

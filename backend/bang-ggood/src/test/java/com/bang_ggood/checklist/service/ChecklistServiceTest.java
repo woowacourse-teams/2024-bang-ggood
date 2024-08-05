@@ -4,9 +4,8 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
-import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
-
+import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsWithScoreReadResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
@@ -22,12 +21,10 @@ import com.bang_ggood.room.domain.Structure;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
-import java.sql.Struct;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST;
 import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED;
@@ -82,7 +79,8 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     void createChecklist_invalidQuestionId_exception() {
         //given & when & then
         assertThatThrownBy(
-                () -> checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_QUESTION_ID))
+                () -> checklistService.createChecklist(UserFixture.USER1,
+                        ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_QUESTION_ID))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
     }
@@ -138,7 +136,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         checklistRepository.save(ChecklistFixture.checklist);
 
         // when
-        SelectedChecklistResponse selectedChecklistResponse = checklistService.readChecklistById(1L);
+        SelectedChecklistResponse selectedChecklistResponse = checklistService.readChecklistById(UserFixture.USER1, 1L);
 
         // then
         assertAll(
@@ -151,7 +149,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void readChecklistById_invalidChecklistId_exception() {
         // given & when & then
-        assertThatThrownBy(() -> checklistService.readChecklistById(0))
+        assertThatThrownBy(() -> checklistService.readChecklistById(UserFixture.USER1, 0))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
     }
@@ -276,7 +274,8 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateChecklistById() {
         //given
-        long checklistId = checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistService.createChecklist(UserFixture.USER1,
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         //when
         checklistService.updateChecklistById(UserFixture.USER1, checklistId, ChecklistFixture.CHECKLIST_UPDATE_REQUEST);
@@ -285,7 +284,8 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         Checklist checklist = checklistRepository.getById(checklistId);
         assertAll(
                 () -> assertThat(checklist.getRoom().getStructure()).isEqualTo(Structure.OPEN_ONE_ROOM),
-                () -> assertThat(checklistOptionRepository.findByChecklistId(checklistId).get(3).getOptionId()).isEqualTo(4),
+                () -> assertThat(
+                        checklistOptionRepository.findByChecklistId(checklistId).get(3).getOptionId()).isEqualTo(4),
                 () -> assertThat(checklist.getQuestions().get(3).getMemo()).isEqualTo("메모")
         );
     }
@@ -294,11 +294,13 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateChecklistById_invalidQuestionId_exception() {
         //given
-        long checklistId = checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistService.createChecklist(UserFixture.USER1,
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         //when & then
         assertThatThrownBy(
-                () -> checklistService.updateChecklistById(UserFixture.USER1, checklistId, ChecklistFixture.CHECKLIST_UPDATE_REQUEST_INVALID_QUESTION_ID))
+                () -> checklistService.updateChecklistById(UserFixture.USER1, checklistId,
+                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_INVALID_QUESTION_ID))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
     }
@@ -307,11 +309,13 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateChecklistById_duplicatedQuestionId_exception() {
         //given
-        long checklistId = checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistService.createChecklist(UserFixture.USER1,
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         //when & then
         assertThatThrownBy(
-                () -> checklistService.updateChecklistById(UserFixture.USER1, checklistId, ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_QUESTION_ID))
+                () -> checklistService.updateChecklistById(UserFixture.USER1, checklistId,
+                        ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_QUESTION_ID))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
     }
@@ -320,11 +324,13 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateChecklistById_invalidOptionId_exception() {
         //given
-        long checklistId = checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistService.createChecklist(UserFixture.USER1,
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         //when & then
         assertThatThrownBy(
-                () -> checklistService.updateChecklistById(UserFixture.USER1, checklistId, ChecklistFixture.CHECKLIST_UPDATE_REQUEST_INVALID_OPTION_ID))
+                () -> checklistService.updateChecklistById(UserFixture.USER1, checklistId,
+                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_INVALID_OPTION_ID))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.OPTION_INVALID.getMessage());
     }
@@ -333,11 +339,13 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateChecklistById_duplicatedOptionId_exception() {
         //given
-        long checklistId = checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistService.createChecklist(UserFixture.USER1,
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         //when & then
         assertThatThrownBy(
-                () -> checklistService.updateChecklistById(UserFixture.USER1, checklistId, ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DUPLICATED_OPTION_ID))
+                () -> checklistService.updateChecklistById(UserFixture.USER1, checklistId,
+                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DUPLICATED_OPTION_ID))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.OPTION_DUPLICATED.getMessage());
     }
@@ -346,11 +354,13 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateChecklistById_differentQuestionLength_exception() {
         //given
-        long checklistId = checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistService.createChecklist(UserFixture.USER1,
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         //when & then
         assertThatThrownBy(
-                () -> checklistService.updateChecklistById(UserFixture.USER1, checklistId, ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION_LENGTH))
+                () -> checklistService.updateChecklistById(UserFixture.USER1, checklistId,
+                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION_LENGTH))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_DIFFERENT.getMessage());
     }
@@ -359,11 +369,13 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void createChecklist_differentQuestion_exception() {
         //given
-        long checklistId = checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistService.createChecklist(UserFixture.USER1,
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         //when & then
         assertThatThrownBy(
-                () -> checklistService.updateChecklistById(UserFixture.USER1, checklistId, ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION))
+                () -> checklistService.updateChecklistById(UserFixture.USER1, checklistId,
+                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_DIFFERENT.getMessage());
     }
@@ -440,8 +452,8 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void deleteChecklistById_notFound_exception() {
         // given & when & then
-       assertThatThrownBy(() -> checklistService.deleteChecklistById(-1))
-               .isInstanceOf(BangggoodException.class)
-               .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
+        assertThatThrownBy(() -> checklistService.deleteChecklistById(-1))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
     }
 }

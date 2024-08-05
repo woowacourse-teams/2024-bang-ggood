@@ -168,7 +168,7 @@ public class ChecklistService {
     }
 
     @Transactional
-    public SelectedChecklistResponse readChecklistById(long id) {
+    public SelectedChecklistResponse readChecklistById(User user, long id) {
         Checklist checklist = checklistRepository.getById(id);
         SelectedRoomResponse selectedRoomResponse = SelectedRoomResponse.of(checklist);
 

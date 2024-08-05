@@ -127,7 +127,7 @@ public class ChecklistService {
 
     @Transactional
     public ChecklistQuestionsResponse readChecklistQuestions() {
-        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
+        User user = new User(1L, "방방이");
         List<CustomChecklistQuestion> customChecklistQuestions = customChecklistQuestionRepository.findByUser(user);
 
         Map<Category, List<Question>> categoryQuestions = customChecklistQuestions.stream()
@@ -234,7 +234,7 @@ public class ChecklistService {
 
     @Transactional
     public ChecklistsWithScoreReadResponse readChecklistsComparison(List<Long> checklistIds) {
-        User user = new User(1L, "방끗", "bang-ggood@gmail.com");
+        User user = new User(1L, "방끗");
 
         validateChecklistComparison(checklistIds);
 
@@ -291,7 +291,7 @@ public class ChecklistService {
         validateCustomChecklistQuestionsIsNotEmpty(questionIds);
         validateCustomChecklistQuestionsDuplication(questionIds);
 
-        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
+        User user = new User(1L, "방방이");
         customChecklistQuestionRepository.deleteAllByUser(user);
 
         List<CustomChecklistQuestion> customChecklistQuestions = questionIds.stream()

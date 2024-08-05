@@ -12,14 +12,16 @@ const App = () => {
   const queryClient = new QueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <Global styles={baseStyle} />
-        <RouterProvider router={router} />
-        <ReactQueryDevtools initialIsOpen={false} />
-        <Toast />
-      </ThemeProvider>
-    </QueryClientProvider>
+    <>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <Global styles={baseStyle} />
+          <RouterProvider router={router} />
+          <ReactQueryDevtools initialIsOpen={false} />
+          <Toast />
+        </ThemeProvider>
+      </QueryClientProvider>
+    </>
   );
 };
 

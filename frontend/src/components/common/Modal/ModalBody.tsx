@@ -15,6 +15,8 @@ export type ModalContentPosition = 'center' | 'left';
 
 const Container = styled.div<{ contentPosition: ModalContentPosition }>`
   display: flex;
+  width: 100%;
+  box-sizing: border-box;
   margin-bottom: 10px;
   padding: 0 16px;
 

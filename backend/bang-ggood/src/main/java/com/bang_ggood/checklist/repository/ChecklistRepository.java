@@ -15,10 +15,11 @@ public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
 
     @Query("SELECT c FROM Checklist c "
             + "JOIN FETCH c.room r "
+            + "LEFT JOIN FETCH c.questions q "
             + "WHERE c.id = :id "
-            + "AND c.room.id = r.id "
             + "AND c.deleted = false")
     Optional<Checklist> findById(@Param("id") long id);
+
 
     default Checklist getById(long id) {
         return findById(id).orElseThrow(() -> new BangggoodException(ExceptionCode.CHECKLIST_NOT_FOUND));

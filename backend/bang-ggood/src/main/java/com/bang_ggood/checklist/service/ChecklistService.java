@@ -354,7 +354,7 @@ public class ChecklistService {
     }
 
     @Transactional
-    public void updateCustomChecklist(CustomChecklistUpdateRequest request, User user) {
+    public void updateCustomChecklist(User user, CustomChecklistUpdateRequest request) {
         List<Integer> questionIds = request.questionIds();
         validateCustomChecklistQuestionsIsNotEmpty(questionIds);
         validateCustomChecklistQuestionsDuplication(questionIds);

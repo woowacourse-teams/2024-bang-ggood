@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import { ArrowDownSmall, ArrowUpSmall } from '@/assets/assets';
 import { useAccordionContext } from '@/components/common/Accordion/AccordionContext';
 import { flexCenter, flexSpaceBetween, title2 } from '@/styles/common';
 
@@ -10,7 +11,13 @@ interface Props {
   text?: string;
   isMarked?: boolean;
 }
-const AccordionHeader = ({ id, openButton, closeButton, text, isMarked = true }: Props) => {
+const AccordionHeader = ({
+  id,
+  openButton = <ArrowDownSmall />,
+  closeButton = <ArrowUpSmall />,
+  text,
+  isMarked = true,
+}: Props) => {
   const { isAccordionOpen, handleAccordionOpenChange } = useAccordionContext();
 
   return (

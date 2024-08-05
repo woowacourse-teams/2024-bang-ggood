@@ -26,7 +26,6 @@ const ContentBox = styled.div`
   background-color: ${({ theme }) => theme.palette.background};
   gap: 10px;
   flex-direction: column;
-  min-height: calc(100vh - 70px);
 `;
 
 const QuestionBox = styled.div`

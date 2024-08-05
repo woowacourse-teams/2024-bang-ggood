@@ -53,11 +53,11 @@ const ChecklistListPage = () => {
   return (
     <>
       <Header center={<Header.Text>체크리스트</Header.Text>} />
-      <S.FlexBox>
-        <EditBanner onClick={handleClickMoveEditPage} />
-        <CompareBanner onClick={handleClick} />
-      </S.FlexBox>
       <Layout>
+        <S.FlexBox>
+          <EditBanner onClick={handleClickMoveEditPage} />
+          <CompareBanner onClick={handleClick} />
+        </S.FlexBox>
         <S.ListBox>
           {checklistList.length ? (
             <>
@@ -84,6 +84,7 @@ export default ChecklistListPage;
 
 const S = {
   ListBox: styled.div`
+    margin-top: 20px;
     ${flexColumn}
     gap: 8px;
     overflow-y: scroll;

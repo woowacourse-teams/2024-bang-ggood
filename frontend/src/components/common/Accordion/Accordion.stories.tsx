@@ -28,7 +28,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: () => {
     return (
-      <Accordion>
+      <Accordion totalCount={1}>
         <Accordion.header id={1} text="청결도" />
         <Accordion.body id={1}>
           <ul>
@@ -40,5 +40,5 @@ export const Default: Story = {
       </Accordion>
     );
   },
-  args: {},
+  args: { totalCount: 1 },
 };

@@ -16,6 +16,6 @@ const S = {
     padding: 16px;
 
     background-color: ${({ bgColor }) => bgColor};
-    overflow-y: scroll;
+    overflow-y: auto;
   `,
 };

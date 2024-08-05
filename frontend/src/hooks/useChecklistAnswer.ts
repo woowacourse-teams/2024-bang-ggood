@@ -23,9 +23,12 @@ const useChecklistAnswer = () => {
     if (targetCategory) {
       const updatedCategory = {
         ...targetCategory,
-        questions: targetCategory.questions.map(question =>
-          question.questionId === questionId ? { ...question, answer: newAnswer } : question,
-        ),
+        questions: targetCategory.questions.map(question => {
+          if (question.questionId === questionId) {
+            return { ...question, answer: question.answer === newAnswer ? 'NONE' : newAnswer };
+          }
+          return question;
+        }),
       };
 
       const newCategories = checklistCategoryQnA.map(category =>

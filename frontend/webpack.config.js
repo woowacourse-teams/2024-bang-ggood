@@ -116,6 +116,7 @@ module.exports = () => {
         project: 'javascript-react',
       }),
     );
+    config.devtool = 'source-map';
   } else {
     config.mode = 'development';
   }

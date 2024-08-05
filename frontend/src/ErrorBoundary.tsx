@@ -5,7 +5,7 @@ import { Component } from 'react';
 interface HTTPError extends Error {}
 
 interface ErrorBoundaryProps {
-  fallback: ReactElement;
+  fallback?: ReactElement;
 }
 
 interface State {
@@ -36,7 +36,7 @@ class ErrorBoundary extends Component<PropsWithChildren<ErrorBoundaryProps>, Sta
     const { error } = this.state;
 
     if (error) {
-      return <div> in Error Boundary </div>;
+      return this.props.fallback || <div> in Error Boundary </div>;
     }
 
     return this.props.children;

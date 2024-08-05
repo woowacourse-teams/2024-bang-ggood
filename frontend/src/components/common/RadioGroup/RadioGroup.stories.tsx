@@ -16,7 +16,7 @@ type Story = StoryObj<typeof meta>;
 
 export const InLocationPage: Story = {
   render: () => {
-    const [value, setValue] = useState('안좋음');
+    const [value, setValue] = useState(null);
     return (
       <S.FlexColumn>
         <RadioGroup

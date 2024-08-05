@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { ReactNode } from 'react';
-import { Link, LinkProps, useLocation } from 'react-router-dom';
+import { Link, LinkProps, useMatch } from 'react-router-dom';
 
 import {
   ChecklistLogo,
@@ -19,9 +19,8 @@ interface Props {
 }
 
 const FooterWrapper = ({ children, ...rest }: Props) => {
-  const location = useLocation();
-  const currentPath = location.pathname;
-
+  const match = useMatch('/:page');
+  const currentPath = match.params.page;
   return (
     <>
       <S.EmptyBox />
@@ -50,14 +49,14 @@ export const linkDecorator = (Logo: React.FC, path: string) => {
 };
 
 const Footer = Object.assign(FooterWrapper, {
-  HomeLogo: linkDecorator(HomeLogo, ROUTE_PATH.root),
-  LocationLogo: linkDecorator(LocationLogo, ROUTE_PATH.location),
+  HomeLogo: linkDecorator(HomeLogo, '/'),
+  LocationLogo: linkDecorator(LocationLogo, '/location'),
   ChecklistLogo: linkDecorator(ChecklistLogo, ROUTE_PATH.checklistList),
-  MyPageLogo: linkDecorator(MyPageLogo, ROUTE_PATH.myPage),
-  HomeLogoActive: linkDecorator(HomeLogoActive, ROUTE_PATH.root),
-  LocationLogoActive: linkDecorator(LocationLogoActive, ROUTE_PATH.location),
+  MyPageLogo: linkDecorator(MyPageLogo, '/mypage'),
+  HomeLogoActive: linkDecorator(HomeLogoActive, '/'),
+  LocationLogoActive: linkDecorator(LocationLogoActive, '/location'),
   ChecklistLogoActive: linkDecorator(ChecklistLogoActive, ROUTE_PATH.checklistList),
-  MyPageLogoActive: linkDecorator(MyPageLogoActive, ROUTE_PATH.myPage),
+  MyPageLogoActive: linkDecorator(MyPageLogoActive, '/mypage'),
 });
 
 const S = {

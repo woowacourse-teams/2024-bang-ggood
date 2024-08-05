@@ -1,4 +1,4 @@
-import { Tab } from '@/components/common/Tabs/Tabs';
+import { Tab } from '@/types/tab';
 
 export const newChecklistTabs: Tab[] = [
   { id: 0, name: '기본 정보' },

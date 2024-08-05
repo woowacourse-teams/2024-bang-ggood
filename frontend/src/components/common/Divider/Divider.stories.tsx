@@ -14,9 +14,6 @@ const meta = {
     args: {
       size: '400px',
     },
-    argTypes: {
-      isBold: { control: 'boolean' },
-    },
   },
 } satisfies Meta<typeof Divider>;
 export default meta;
@@ -29,8 +26,4 @@ export const Default: Story = {
 
 export const Vertical: Story = {
   args: { direction: 'vertical', size: '200px' },
-};
-
-export const BoldHorizontal: Story = {
-  args: { direction: 'horizontal', size: '200px', isBold: true },
 };

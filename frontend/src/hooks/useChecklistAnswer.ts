@@ -15,23 +15,17 @@ export interface updateMemoProps extends Props {
 }
 
 const useChecklistAnswer = () => {
-  const { setAnswers, checklistCategoryQnA, categoryQnA } = useChecklistStore();
+  const { setAnswers, checklistCategoryQnA } = useChecklistStore();
 
   const updateAnswer = ({ categoryId, questionId, newAnswer }: UpdateAnswerProps) => {
-    const targetCategory = categoryQnA(categoryId);
+    const targetCategory = checklistCategoryQnA.find(category => category.categoryId === categoryId);
 
     if (targetCategory) {
       const updatedCategory = {
         ...targetCategory,
-        questions: targetCategory.questions.map(question => {
-          if (question.answer === newAnswer && question.questionId === questionId) {
-            return { ...question, answer: null };
-          }
-          if (question.answer !== newAnswer && question.questionId === questionId) {
-            return { ...question, answer: newAnswer };
-          }
-          return question;
-        }),
+        questions: targetCategory.questions.map(question =>
+          question.questionId === questionId ? { ...question, answer: newAnswer } : question,
+        ),
       };
 
       const newCategories = checklistCategoryQnA.map(category =>

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { BangBangIcon } from '@/assets/assets';
+import { ArrowRightYellow, BangBangIcon } from '@/assets/assets';
 import { title3 } from '@/styles/common';
 
 interface Props {
@@ -11,8 +11,8 @@ const CompareBanner = ({ onClick }: Props) => {
   return (
     <S.Banner onClick={onClick}>
       <BangBangIcon />
-      <S.Title>방 비교하기</S.Title>
-      {/* <ArrowRightYellow /> */}
+      <S.Title> 가장 최적인 방 비교하러 가기 </S.Title>
+      <ArrowRightYellow />
     </S.Banner>
   );
 };
@@ -23,7 +23,7 @@ const S = {
   Banner: styled.div`
     display: flex;
 
-    width: 50%;
+    width: 100%;
     height: 75px;
     padding: 16px;
     box-sizing: border-box;
@@ -33,7 +33,7 @@ const S = {
     color: ${({ theme }) => theme.palette.black};
     justify-content: space-evenly;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
 
     &:hover,
     &:active {

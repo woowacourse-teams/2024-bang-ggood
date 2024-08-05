@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import App from '@/App';
 import { ROUTE_PATH } from '@/constants/routePath';
-import ErrorBoundaryForRouter from '@/ErrorBoundary';
+import ErrorBoundary from '@/ErrorBoundary';
 import CategoryChoosePage from '@/pages/CategoryChoosePage';
 import ChecklistCustomPage from '@/pages/ChecklistCustomPage';
 import ChecklistDetailPage from '@/pages/ChecklistDetailPage';
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
   {
     element: <App />,
     path: ROUTE_PATH.root,
-    errorElement: <ErrorBoundaryForRouter />,
+    ErrorBoundary: ErrorBoundary,
     children: [
       {
         element: <CategoryChoosePage />,

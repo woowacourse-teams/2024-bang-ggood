@@ -1,23 +1,22 @@
 import { Badge } from '@/types/badge';
 import { CategoryScore } from '@/types/category';
-import { EmotionType } from '@/types/emotionAnswer';
+import { EmotionNameWithNone } from '@/types/emotionAnswer';
 import { RoomInfo } from '@/types/room';
 
-export interface ChecklistCategoryQuestions {
+export interface ChecklistCategoryBase {
   categoryId: number;
   categoryName: string;
   questions: ChecklistQuestion[];
 }
+export interface ChecklistCategoryQuestions extends ChecklistCategoryBase {
+  questions: ChecklistQuestion[];
+}
 
-export interface ChecklistCategoryQnA {
-  categoryId: number;
-  categoryName: string;
+export interface ChecklistCategoryQnA extends ChecklistCategoryBase {
   questions: ChecklistQuestionWithAnswer[];
 }
 
-export interface ChecklistCategoryQnIsChecked {
-  categoryId: number;
-  categoryName: string;
+export interface ChecklistCategoryQnIsChecked extends ChecklistCategoryBase {
   questions: ChecklistQuestionWithIsChecked[];
 }
 
@@ -28,7 +27,7 @@ export interface ChecklistQuestion {
 }
 
 export interface ChecklistQuestionWithAnswer extends ChecklistQuestion {
-  answer: EmotionType | null;
+  answer: EmotionNameWithNone;
   memo: string | null;
 }
 
@@ -38,7 +37,7 @@ export interface ChecklistQuestionWithIsChecked extends ChecklistQuestion {
 
 export interface ChecklistAnswer {
   questionId: number;
-  grade: EmotionType | null;
+  grade: EmotionNameWithNone;
   memo: string | null;
 }
 

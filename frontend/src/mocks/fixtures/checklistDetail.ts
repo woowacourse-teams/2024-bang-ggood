@@ -6,7 +6,6 @@ export const checklistDetail: ChecklistInfo = {
   createdAt: '2024-02-01T10:00:00Z',
   room: {
     roomName: '아름다운 방',
-    name: '스위트룸',
     address: '서울시 강남구 테헤란로 123',
     deposit: 1000,
     rent: 50,
@@ -53,7 +52,7 @@ export const checklistDetail: ChecklistInfo = {
           questionId: 3,
           title: '시설이 잘 작동하나요?',
           subtitle: '모든 시설이 제대로 작동하는지 확인해 주세요.',
-          answer: null,
+          answer: 'NONE',
           memo: null,
         },
         {

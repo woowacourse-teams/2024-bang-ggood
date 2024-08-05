@@ -19,7 +19,7 @@ import { RoomInfo } from '@/types/room';
 
 // TODO: roomName 이슈로 인해 데모 버전으로 변경
 const DefaultRoomInfo: RoomInfo = {
-  name: '살기 좋은 방',
+  roomName: '살기 좋은 방',
   address: '인천광역시 부평구',
   deposit: 2000,
   rent: 50,
@@ -49,12 +49,12 @@ const NewChecklistPage = () => {
   const transformQuestions = (checklist: ChecklistCategoryQnA[]) => {
     return checklist.flatMap(category =>
       category.questions.map(question => {
-        const { questionId, memo } = question;
+        const { questionId, memo, answer } = question;
 
         return {
           questionId,
           memo,
-          grade: null,
+          grade: answer,
         };
       }),
     );

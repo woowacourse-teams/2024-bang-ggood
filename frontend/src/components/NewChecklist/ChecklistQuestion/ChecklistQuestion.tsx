@@ -9,7 +9,7 @@ import { EMOTION_PHARSE, EMOTIONS } from '@/constants/emotion';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';
 import { flexCenter, flexSpaceBetween } from '@/styles/common';
 import { ChecklistQuestion } from '@/types/checklist';
-import { EmotionType } from '@/types/emotionAnswer';
+import { EmotionName } from '@/types/emotionAnswer';
 
 interface Props {
   question: ChecklistQuestion;
@@ -17,14 +17,14 @@ interface Props {
 
 const ChecklistQuestion = ({ question }: Props) => {
   const { questionId } = question;
-  const { updateAnswer, findCategoryQuestion } = useChecklistAnswer();
+  const { updateAndToggleAnswer: updateAnswer, findCategoryQuestion } = useChecklistAnswer();
   const { currentTabId } = useTabContext();
 
   const [isMemoOpen, setIsMemoOpen] = useState(false);
 
   const { answer, memo } = findCategoryQuestion({ categoryId: currentTabId, questionId });
 
-  const handleClick = (newAnswer: EmotionType) => {
+  const handleClick = (newAnswer: EmotionName) => {
     updateAnswer({ categoryId: currentTabId, questionId: questionId, newAnswer });
   };
 

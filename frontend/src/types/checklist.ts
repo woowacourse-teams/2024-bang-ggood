@@ -3,21 +3,20 @@ import { CategoryScore } from '@/types/category';
 import { EmotionNameWithNone } from '@/types/emotionAnswer';
 import { RoomInfo } from '@/types/room';
 
-export interface ChecklistCategoryQuestions {
+export interface ChecklistCategoryBase {
   categoryId: number;
   categoryName: string;
   questions: ChecklistQuestion[];
 }
+export interface ChecklistCategoryQuestions extends ChecklistCategoryBase {
+  questions: ChecklistQuestion[];
+}
 
-export interface ChecklistCategoryQnA {
-  categoryId: number;
-  categoryName: string;
+export interface ChecklistCategoryQnA extends ChecklistCategoryBase {
   questions: ChecklistQuestionWithAnswer[];
 }
 
-export interface ChecklistCategoryQnIsChecked {
-  categoryId: number;
-  categoryName: string;
+export interface ChecklistCategoryQnIsChecked extends ChecklistCategoryBase {
   questions: ChecklistQuestionWithIsChecked[];
 }
 

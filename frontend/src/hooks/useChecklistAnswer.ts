@@ -1,5 +1,5 @@
 import useChecklistStore from '@/store/useChecklistStore';
-import { EmotionTypeWithNull } from '@/types/emotionAnswer';
+import { EmotionNameWithNone } from '@/types/emotionAnswer';
 
 export interface Props {
   questionId: number;
@@ -7,7 +7,7 @@ export interface Props {
 }
 
 export interface UpdateAnswerProps extends Props {
-  newAnswer: EmotionTypeWithNull;
+  newAnswer: EmotionNameWithNone;
 }
 
 export interface updateMemoProps extends Props {
@@ -24,11 +24,8 @@ const useChecklistAnswer = () => {
       const updatedCategory = {
         ...targetCategory,
         questions: targetCategory.questions.map(question => {
-          if (question.answer === newAnswer && question.questionId === questionId) {
-            return { ...question, answer: null };
-          }
-          if (question.answer !== newAnswer && question.questionId === questionId) {
-            return { ...question, answer: newAnswer };
+          if (question.questionId === questionId) {
+            return { ...question, answer: question.answer === newAnswer ? 'NONE' : newAnswer };
           }
           return question;
         }),
@@ -75,7 +72,7 @@ const useChecklistAnswer = () => {
     return targetQuestion;
   };
 
-  return { updateAnswer, updateMemo, findCategoryQuestion };
+  return { updateAndToggleAnswer: updateAnswer, updateMemo, findCategoryQuestion };
 };
 
 export default useChecklistAnswer;

@@ -118,7 +118,7 @@ public class ChecklistService {
                 .map(question -> new ChecklistQuestion(
                         checklist,
                         Question.fromId(question.questionId()),
-                        question.grade() == null ? null : Grade.from(question.grade()),
+                        Grade.from(question.grade()),
                         question.memo()))
                 .collect(Collectors.toList());
         checklistQuestionRepository.saveAll(checklistQuestions);

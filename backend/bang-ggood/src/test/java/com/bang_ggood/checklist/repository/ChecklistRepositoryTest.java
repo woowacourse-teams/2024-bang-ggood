@@ -7,11 +7,12 @@ import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.repository.RoomRepository;
-import org.assertj.core.api.Assertions;
+import com.bang_ggood.user.UserFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -50,6 +51,16 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
         assertThatThrownBy(() -> checklistRepository.getById(1))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
+    }
+
+    @DisplayName("체크리스트 아이디 리스트 중 유저가 생성한 체크리스트 목록 갖고 오기 성공")
+    @Test
+    void findByUserAndIdIn() {
+        //given
+        Checklist savedChecklist = checklistRepository.save(ChecklistFixture.checklist);
+
+        assertThat(checklistRepository.findByUserAndIdIn(UserFixture.USER1, List.of(savedChecklist.getId())))
+                .isEqualTo(List.of(savedChecklist));
     }
 
     @DisplayName("아이디를 통해 체크리스트 존재 확인 성공 : 존재하는 경우")

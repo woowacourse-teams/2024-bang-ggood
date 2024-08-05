@@ -7,14 +7,13 @@ import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.QuestionRequest;
 import com.bang_ggood.room.RoomFixture;
-import com.bang_ggood.user.domain.User;
-
+import com.bang_ggood.user.UserFixture;
 import java.util.List;
 
 public class ChecklistFixture {
 
     public static final Checklist checklist = new Checklist(
-            new User(1L, "방방이", "bang-ggood@gmail.com"),
+            UserFixture.USER1,
             RoomFixture.ROOM_1,
             1000, 50, 12, "방끗공인중개사"
     );

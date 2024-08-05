@@ -57,7 +57,8 @@ public class ChecklistController {
     @GetMapping("/checklists/comparison")
     public ResponseEntity<ChecklistsWithScoreReadResponse> readChecklistsComparison(
             @RequestParam("id") List<Long> checklistIds) {
-        return ResponseEntity.ok(checklistService.readChecklistsComparison(checklistIds));
+        User user = new User(1L, "방끗", "bang-ggood@gmail.com");
+        return ResponseEntity.ok(checklistService.readChecklistsComparison(user, checklistIds));
     }
 
     @PutMapping("/checklists/{id}")

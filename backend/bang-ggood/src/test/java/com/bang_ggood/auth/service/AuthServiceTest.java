@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static com.bang_ggood.user.UserFixture.USER1;
-import static com.bang_ggood.user.UserFixture.OAUTH_INFO_API_RESPONSE_USER_1;
 import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,7 +35,7 @@ class AuthServiceTest extends IntegrationTestSupport {
     void login_signup() {
         // given
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
-                .thenReturn(UserFixture.OAUTH_INFO_API_RESPONSE_USER_2);
+                .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2);
 
         // when
         String token = authService.login(oauthLoginRequest);
@@ -51,7 +50,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         // given
         userRepository.save(USER1);
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
-                .thenReturn(OAUTH_INFO_API_RESPONSE_USER_1);
+                .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER1);
 
         // when
         String token = authService.login(oauthLoginRequest);

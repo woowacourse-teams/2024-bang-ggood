@@ -127,7 +127,7 @@ public class ChecklistService {
 
     @Transactional
     public ChecklistQuestionsResponse readChecklistQuestions() {
-        User user = new User(1L, "방방이");
+        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
         List<CustomChecklistQuestion> customChecklistQuestions = customChecklistQuestionRepository.findByUser(user);
 
         Map<Category, List<Question>> categoryQuestions = customChecklistQuestions.stream()
@@ -234,7 +234,7 @@ public class ChecklistService {
 
     @Transactional
     public ChecklistsWithScoreReadResponse readChecklistsComparison(List<Long> checklistIds) {
-        User user = new User(1L, "방끗");
+        User user = new User(1L, "방끗", "bang-ggood@gmail.com");
 
         validateChecklistComparison(checklistIds);
 
@@ -291,7 +291,7 @@ public class ChecklistService {
         validateCustomChecklistQuestionsIsNotEmpty(questionIds);
         validateCustomChecklistQuestionsDuplication(questionIds);
 
-        User user = new User(1L, "방방이");
+        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
         customChecklistQuestionRepository.deleteAllByUser(user);
 
         List<CustomChecklistQuestion> customChecklistQuestions = questionIds.stream()
@@ -311,5 +311,14 @@ public class ChecklistService {
         if (questionIds.size() != Set.copyOf(questionIds).size()) {
             throw new BangggoodException(ExceptionCode.QUESTION_DUPLICATED);
         }
+    }
+
+    @Transactional
+    public void deleteChecklistById(long id) {
+        // 사용자 검증 필요
+        if (!checklistRepository.existsById(id)) {
+            throw new BangggoodException(ExceptionCode.CHECKLIST_NOT_FOUND);
+        }
+        checklistRepository.deleteById(id);
     }
 }

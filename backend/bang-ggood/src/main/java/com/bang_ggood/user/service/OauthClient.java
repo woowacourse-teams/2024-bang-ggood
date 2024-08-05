@@ -27,8 +27,8 @@ public class OauthClient {
             @Value("${kakao.user_get_uri}") String userInfoRequestUri,
             @Value("${kakao.grant_type}") String grantType,
             @Value("${kakao.client_id}") String clientId,
-            @Value("${kakao.redirect_uri}")String redirectUrl,
-            @Value("${kakao.client_secret}")String clientSecret) {
+            @Value("${kakao.redirect_uri}") String redirectUrl,
+            @Value("${kakao.client_secret}") String clientSecret) {
         this.restClient = restClient;
         this.tokenRequestUri = tokenRequestUri;
         this.userInfoRequestUri = userInfoRequestUri;

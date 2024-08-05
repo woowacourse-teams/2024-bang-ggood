@@ -13,8 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import static com.bang_ggood.user.UserFixture.USER1;
 import static com.bang_ggood.user.UserFixture.OAUTH_INFO_RESPONSE_USER1;
+import static com.bang_ggood.user.UserFixture.USER1;
 import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)

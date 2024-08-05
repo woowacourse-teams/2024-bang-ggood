@@ -4,6 +4,9 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.ChecklistQuestion;
+import com.bang_ggood.checklist.domain.Grade;
+import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
@@ -215,13 +218,13 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void readChecklistsComparison() {
         // given
-        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
+        User user1 = UserFixture.USER1;
         Room room1 = RoomFixture.ROOM_1;
         Room room2 = RoomFixture.ROOM_2;
         Room room3 = RoomFixture.ROOM_3;
-        Checklist checklist1 = createChecklist(user, room1);
-        Checklist checklist2 = createChecklist(user, room2);
-        Checklist checklist3 = createChecklist(user, room3);
+        Checklist checklist1 = createChecklist(user1, room1);
+        Checklist checklist2 = createChecklist(user1, room2);
+        Checklist checklist3 = createChecklist(user1, room3);
 
         roomRepository.saveAll(List.of(room1, room2, room3));
         List<Checklist> checklists = checklistRepository.saveAll(List.of(checklist1, checklist2, checklist3));
@@ -229,20 +232,53 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 checklists.get(2).getId());
 
         // when
-        ChecklistsWithScoreReadResponse response = checklistService.readChecklistsComparison(checklistIds);
+        ChecklistsWithScoreReadResponse response = checklistService.readChecklistsComparison(user1, checklistIds);
 
         // then
         assertThat(response.checklists()).hasSize(3);
+    }
+
+    @DisplayName("체크리스트 비교 성공 : 순위가 정상적으로 계산된 경우")
+    @Test
+    void readChecklistsComparison_compareRank() {
+        // given
+        User user1 = UserFixture.USER1;
+        Room room1 = RoomFixture.ROOM_1;
+        Room room2 = RoomFixture.ROOM_2;
+        Room room3 = RoomFixture.ROOM_3;
+        Checklist checklist1 = createChecklist(user1, room1);
+        Checklist checklist2 = createChecklist(user1, room2);
+        Checklist checklist3 = createChecklist(user1, room3);
+        ChecklistQuestion checklistQuestion1 = new ChecklistQuestion(checklist1, Question.CLEAN_1, Grade.GOOD, null);
+        ChecklistQuestion checklistQuestion2 = new ChecklistQuestion(checklist2, Question.CLEAN_2, Grade.SOSO, null);
+        ChecklistQuestion checklistQuestion3 = new ChecklistQuestion(checklist3, Question.CLEAN_3, Grade.BAD, null);
+
+        roomRepository.saveAll(List.of(room1, room2, room3));
+        List<Checklist> checklists = checklistRepository.saveAll(List.of(checklist1, checklist2, checklist3));
+        checklistQuestionRepository.saveAll(List.of(checklistQuestion1, checklistQuestion2, checklistQuestion3));
+        List<Long> checklistIds = List.of(checklists.get(0).getId(), checklists.get(1).getId(),
+                checklists.get(2).getId());
+
+        // when
+        ChecklistsWithScoreReadResponse response = checklistService.readChecklistsComparison(user1, checklistIds);
+
+        // then
+        assertAll(
+                () -> assertThat(response.checklists().get(0).getRank()).isEqualTo(1),
+                () -> assertThat(response.checklists().get(1).getRank()).isEqualTo(2),
+                () -> assertThat(response.checklists().get(2).getRank()).isEqualTo(3)
+        );
     }
 
     @DisplayName("체크리스트 비교 실패 : 아이디 개수가 유효하지 않을 때")
     @Test
     void readChecklistsComparison_invalidIdCount() {
         // given
+        User user1 = UserFixture.USER1;
         List<Long> invalidChecklistIds = List.of(1L, 2L, 3L, 4L);
 
         // when & then
-        assertThatCode(() -> checklistService.readChecklistsComparison(invalidChecklistIds))
+        assertThatCode(() -> checklistService.readChecklistsComparison(user1, invalidChecklistIds))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_COMPARISON_INVALID_COUNT.getMessage());
     }
@@ -251,13 +287,13 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void readChecklistsComparison_invalidId() {
         // given
-        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
+        User user1 = UserFixture.USER1;
         Room room1 = RoomFixture.ROOM_1;
         Room room2 = RoomFixture.ROOM_2;
         Room room3 = RoomFixture.ROOM_3;
-        Checklist checklist1 = createChecklist(user, room1);
-        Checklist checklist2 = createChecklist(user, room2);
-        Checklist checklist3 = createChecklist(user, room3);
+        Checklist checklist1 = createChecklist(user1, room1);
+        Checklist checklist2 = createChecklist(user1, room2);
+        Checklist checklist3 = createChecklist(user1, room3);
 
         roomRepository.saveAll(List.of(room1, room2, room3));
         List<Checklist> checklists = checklistRepository.saveAll(List.of(checklist1, checklist2, checklist3));
@@ -265,7 +301,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 checklists.get(2).getId() + 1);
 
         // when & then
-        assertThatCode(() -> checklistService.readChecklistsComparison(invalidChecklistIds))
+        assertThatCode(() -> checklistService.readChecklistsComparison(user1, invalidChecklistIds))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
     }

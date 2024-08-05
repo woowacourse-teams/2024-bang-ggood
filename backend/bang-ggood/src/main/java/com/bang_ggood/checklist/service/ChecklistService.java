@@ -7,6 +7,7 @@ import com.bang_ggood.category.dto.response.SelectedCategoryQuestionsResponse;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
+import com.bang_ggood.checklist.domain.ChecklistRank;
 import com.bang_ggood.checklist.domain.ChecklistScore;
 import com.bang_ggood.checklist.domain.CustomChecklistQuestion;
 import com.bang_ggood.checklist.domain.Grade;
@@ -40,7 +41,6 @@ import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -233,23 +233,24 @@ public class ChecklistService {
     }
 
     @Transactional
-    public ChecklistsWithScoreReadResponse readChecklistsComparison(List<Long> checklistIds) {
-        User user = new User(1L, "방끗", "bang-ggood@gmail.com");
+    public ChecklistsWithScoreReadResponse readChecklistsComparison(User user, List<Long> checklistIds) {
+        List<Checklist> checklists = checklistRepository.findByUserAndIdIn(user, checklistIds);
 
-        validateChecklistComparison(checklistIds);
+        validateChecklistComparison(checklists, checklistIds);
 
-        List<ChecklistWithScoreReadResponse> responses = checklistRepository.findByUserAndIdIn(user, checklistIds)
+        List<ChecklistWithScoreReadResponse> checklistsWithScore = checklists
                 .stream()
                 .map(this::getChecklistWithScore)
-                .sorted(Comparator.comparing(ChecklistWithScoreReadResponse::score).reversed())
                 .toList();
 
-        return new ChecklistsWithScoreReadResponse(responses);
+        assignRanks(checklistsWithScore, getScores(checklistsWithScore));
+
+        return new ChecklistsWithScoreReadResponse(checklistsWithScore);
     }
 
-    private void validateChecklistComparison(List<Long> checklistIds) {
+    private void validateChecklistComparison(List<Checklist> userChecklists, List<Long> checklistIds) {
         validateChecklistComparisonCount(checklistIds);
-        validateChecklist(checklistIds);
+        validateUserChecklist(userChecklists, checklistIds);
     }
 
     private void validateChecklistComparisonCount(List<Long> checklistIds) {
@@ -258,31 +259,43 @@ public class ChecklistService {
         }
     }
 
-    private void validateChecklist(List<Long> checklistIds) {
-        if (checklistRepository.countAllByIdIn(checklistIds) != checklistIds.size()) {
+    private void validateUserChecklist(List<Checklist> userChecklists, List<Long> checklistIds) {
+        if (userChecklists.size() != checklistIds.size()) {
             throw new BangggoodException(ExceptionCode.CHECKLIST_NOT_FOUND);
         }
     }
 
-
     private ChecklistWithScoreReadResponse getChecklistWithScore(Checklist checklist) {
         List<CategoryScoreReadResponse> categoryScores = getCategoryScores(checklist.getQuestions());
         int checklistScore = getChecklistScore(checklist.getQuestions());
-        int checklistOptionCount = checklistOptionRepository.countByChecklist(checklist);
+        SelectedRoomResponse selectedRoom = SelectedRoomResponse.of(checklist);
+        List<SelectedOptionResponse> options = readOptionsByChecklistId(checklist.getId());
 
-        return ChecklistWithScoreReadResponse.of(checklist, checklistOptionCount, checklistScore, categoryScores);
+        return ChecklistWithScoreReadResponse.of(checklist, checklistScore, selectedRoom, options, categoryScores);
     }
 
     private List<CategoryScoreReadResponse> getCategoryScores(List<ChecklistQuestion> questions) {
         return Arrays.stream(Category.values())
                 .map(category -> CategoryScoreReadResponse.of(category,
                         ChecklistScore.calculateCategoryScore(category, questions)))
-                .filter(response -> response.score() != 0)
                 .toList();
     }
 
     private int getChecklistScore(List<ChecklistQuestion> questions) {
         return ChecklistScore.calculateTotalScore(questions);
+    }
+
+    private List<Integer> getScores(List<ChecklistWithScoreReadResponse> checklistsWithScore) {
+        return checklistsWithScore.stream()
+                .map(ChecklistWithScoreReadResponse::getScore)
+                .toList();
+    }
+
+    private void assignRanks(List<ChecklistWithScoreReadResponse> checklistsWithScore, List<Integer> scores) {
+        checklistsWithScore
+                .forEach(checklistWithScore -> checklistWithScore.assignRank(
+                        ChecklistRank.calculateRanks(checklistWithScore.getScore(), scores)
+                ));
     }
 
     @Transactional

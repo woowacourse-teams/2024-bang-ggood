@@ -5,6 +5,7 @@ import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.service.ChecklistService;
+import com.bang_ggood.user.UserFixture;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +32,7 @@ class ChecklistOptionRepositoryTest extends IntegrationTestSupport {
 
     @BeforeEach
     void setUp() {
-        checklistId = checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        checklistId = checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
     }
 
     @DisplayName("체크리스트 ID로 옵션 찾기 성공")

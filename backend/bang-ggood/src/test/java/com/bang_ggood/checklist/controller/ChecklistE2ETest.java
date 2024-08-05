@@ -10,6 +10,7 @@ import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.service.ChecklistService;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.repository.RoomRepository;
+import com.bang_ggood.user.UserFixture;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Assertions;
@@ -85,7 +86,7 @@ public class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("작성된 체크리스트 조회 성공")
     @Test
     void readChecklistById() {
-        long checklistId = checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         SelectedChecklistResponse selectedChecklistResponse = RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
@@ -104,7 +105,7 @@ public class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 수정 성공")
     @Test
     void updateChecklist() {
-        long checklistId = checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
@@ -117,7 +118,7 @@ public class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 수정 실패: 방 이름을 넣지 않은 경우")
     @Test
     void updateChecklist_noRoomName_exception() {
-        long checklistId = checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
@@ -131,7 +132,7 @@ public class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 수정 실패: 질문 ID를 넣지 않은 경우")
     @Test
     void updateChecklist_noQuestionId_exception() {
-        long checklistId = checklistService.createChecklist(ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)

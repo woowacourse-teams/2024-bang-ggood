@@ -69,11 +69,11 @@ public class ChecklistService {
     }
 
     @Transactional
-    public long createChecklist(ChecklistRequest checklistRequest) {
+    public long createChecklist(User user, ChecklistRequest checklistRequest) {
         Room room = roomRepository.save(checklistRequest.toRoomEntity());
 
         ChecklistInfo checklistInfo = checklistRequest.toChecklistInfo();
-        Checklist checklist = new Checklist(new User(1L, "방방이", "bang-ggood@gmail.com"), room, checklistInfo.deposit(), checklistInfo.rent(),
+        Checklist checklist = new Checklist(user, room, checklistInfo.deposit(), checklistInfo.rent(),
                 checklistInfo.contractTerm(), checklistInfo.realEstate());
         checklistRepository.save(checklist);
 
@@ -286,14 +286,14 @@ public class ChecklistService {
     }
 
     @Transactional
-    public void updateChecklistById(long id, ChecklistRequest checklistRequest) {
+    public void updateChecklistById(User user, long id, ChecklistRequest checklistRequest) {
         Checklist checklist = checklistRepository.getById(id);
 
         Room room = checklist.getRoom();
         room.change(checklistRequest.toRoomEntity());
 
         ChecklistInfo checklistInfo = checklistRequest.toChecklistInfo();
-        Checklist updateChecklist = new Checklist(new User(1L, "방방이", "bang-ggood@gmail.com"), room, checklistInfo.deposit(), checklistInfo.rent(),
+        Checklist updateChecklist = new Checklist(user, room, checklistInfo.deposit(), checklistInfo.rent(),
                 checklistInfo.contractTerm(), checklistInfo.realEstate());
         checklist.change(updateChecklist);
 

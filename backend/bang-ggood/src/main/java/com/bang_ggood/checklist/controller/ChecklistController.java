@@ -33,7 +33,8 @@ public class ChecklistController {
 
     @PostMapping("/checklists")
     public ResponseEntity<Void> createChecklist(@Valid @RequestBody ChecklistRequest checklistRequest) {
-        long checklistId = checklistService.createChecklist(checklistRequest);
+        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
+        long checklistId = checklistService.createChecklist(user, checklistRequest);
         return ResponseEntity.created(URI.create("/checklists/" + checklistId)).build();
     }
 
@@ -61,7 +62,8 @@ public class ChecklistController {
 
     @PutMapping("/checklists/{id}")
     public ResponseEntity<Void> updateChecklistById(@PathVariable("id") long id, @Valid @RequestBody ChecklistRequest checklistRequest) {
-        checklistService.updateChecklistById(id, checklistRequest);
+        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
+        checklistService.updateChecklistById(user, id, checklistRequest);
         return ResponseEntity.noContent().build();
     }
 

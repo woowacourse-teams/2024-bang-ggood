@@ -6,7 +6,6 @@ export const checklistDetail: ChecklistInfo = {
   createdAt: '2024-02-01T10:00:00Z',
   room: {
     roomName: '아름다운 방',
-    name: '스위트룸',
     address: '서울시 강남구 테헤란로 123',
     deposit: 1000,
     rent: 50,

@@ -53,8 +53,8 @@ const ChecklistListPage = () => {
     <>
       <Header center={<Header.Text>체크리스트</Header.Text>} />
       <S.FlexBox>
-        <CompareBanner onClick={handleClick} />
         <EditBanner onClick={handleClickMoveEditPage} />
+        <CompareBanner onClick={handleClick} />
       </S.FlexBox>
       <Layout>
         <S.ListBox>

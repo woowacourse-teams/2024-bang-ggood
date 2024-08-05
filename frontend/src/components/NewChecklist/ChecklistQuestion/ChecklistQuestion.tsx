@@ -43,9 +43,7 @@ const ChecklistQuestion = ({ question }: Props) => {
         <QuestionDot />
         {question?.title}
       </S.Title>
-
       {question?.subtitle && <S.Subtitle>{question?.subtitle}</S.Subtitle>}
-
       <S.ButtonBox>
         {isMemoOpen ? (
           <ArrowUpSmall onClick={handleCloseMemo} />

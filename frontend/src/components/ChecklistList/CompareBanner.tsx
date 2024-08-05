@@ -28,7 +28,7 @@ const S = {
     padding: 16px;
     box-sizing: border-box;
 
-    background-color: ${({ theme }) => theme.palette.yellow200};
+    background-color: ${({ theme }) => theme.palette.subGreen400};
 
     color: ${({ theme }) => theme.palette.black};
     justify-content: space-evenly;
@@ -37,7 +37,7 @@ const S = {
 
     &:hover,
     &:active {
-      background-color: ${({ theme }) => theme.palette.yellow300};
+      background-color: ${({ theme }) => theme.palette.subGreen500};
     }
   `,
   Box: styled.div`

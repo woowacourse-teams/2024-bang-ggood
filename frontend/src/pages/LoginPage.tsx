@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 
-import { KakaoLogo } from '@/assets/assets';
-import { BangBangIcon } from '@/assets/icons/bang-bang-icon';
+import { BangBangIcon, KakaoLogo } from '@/assets/assets';
 import Layout from '@/components/common/layout/Layout';
 import { KAKAO_AUTH_URL } from '@/constants/OAuth';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
@@ -15,7 +14,7 @@ const LoginPage = () => {
     <>
       <Layout>
         <S.Wrapper>
-          <BangBangIcon size={150} />
+          <BangBangIcon width="350" height="150" />
           <S.TextWrapper>
             <S.Text isBold={true}>방끗</S.Text>
             <S.Text>방 구하기 끗! 그래서 방긋 :)</S.Text>

@@ -85,10 +85,6 @@ public enum Question {
                 .anyMatch(question -> question.getId() == id);
     }
 
-    public boolean isDifferentId(Question question) {
-        return this.id != question.id;
-    }
-
     private boolean isCategory(Category category) {
         return this.category == category;
     }

@@ -76,27 +76,4 @@ class QuestionTest {
         //when & then
         assertThat(Question.contains(questionId)).isFalse();
     }
-
-    @DisplayName("질문끼리 다른 id를 갖고 있는지 확인 성공 : 다른 id일 경우")
-    @Test
-    void isDifferentId_true() {
-        //given
-        Question question1 = Question.fromId(1);
-        Question question2 = Question.fromId(2);
-
-        //when & then
-        assertThat(question1.isDifferentId(question2)).isTrue();
-    }
-
-    @DisplayName("질문끼리 다른 id를 갖고 있는지 확인 성공 : 같은 id일 경우")
-    @Test
-    void isDifferentId_false() {
-        //given
-        Question question = Question.fromId(1);
-        Question compareQuestion = Question.fromId(1);
-
-        //when & then
-        assertThat(question.isDifferentId(compareQuestion)).isFalse();
-    }
-
 }

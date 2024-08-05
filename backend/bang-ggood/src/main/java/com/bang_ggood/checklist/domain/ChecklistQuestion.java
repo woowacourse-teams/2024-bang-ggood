@@ -48,7 +48,7 @@ public class ChecklistQuestion extends BaseEntity {
     }
 
     public boolean isDifferentQuestionId(ChecklistQuestion checklistQuestion) {
-        return this.question.isDifferentId(checklistQuestion.question);
+        return this.question != checklistQuestion.question;
     }
 
     public Long getId() {

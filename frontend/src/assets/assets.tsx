@@ -32,6 +32,7 @@ import MyPageLogo from '@/assets/icons/footer-icon/my-page-logo.svg';
 /* etc */
 import BangBangIcon from '@/assets/icons/bang-bang-icon.svg';
 import InputRequiredDot from '@/assets/icons/input-required-dot.svg';
+import KakaoLogo from '@/assets/icons/kakao-logo.svg';
 import LampIcon from '@/assets/icons/lamp-icon.svg';
 import BangGgoodTextIcon from '@/assets/icons/logo.svg';
 import PencilIcon from '@/assets/icons/pencil-icon.svg';
@@ -62,6 +63,7 @@ export {
   HomeLogo,
   HomeLogoActive,
   InputRequiredDot,
+  KakaoLogo,
   LampIcon,
   LocationLineIcon,
   LocationLogo,

@@ -17,7 +17,7 @@ interface Props {
 
 const ChecklistQuestion = ({ question }: Props) => {
   const { questionId } = question;
-  const { updateAnswer, findCategoryQuestion } = useChecklistAnswer();
+  const { updateAndToggleAnswer: updateAnswer, findCategoryQuestion } = useChecklistAnswer();
   const { currentTabId } = useTabContext();
 
   const [isMemoOpen, setIsMemoOpen] = useState(false);

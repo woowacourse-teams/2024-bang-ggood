@@ -72,7 +72,7 @@ const useChecklistAnswer = () => {
     return targetQuestion;
   };
 
-  return { updateAnswer, updateMemo, findCategoryQuestion };
+  return { updateAndToggleAnswer: updateAnswer, updateMemo, findCategoryQuestion };
 };
 
 export default useChecklistAnswer;

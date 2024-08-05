@@ -52,12 +52,12 @@ const ChecklistListPage = () => {
 
   return (
     <>
-      <Header center={<Header.Text>체크리스트</Header.Text>} />
-      <Layout>
-        <S.FlexBox>
-          <EditBanner onClick={handleClickMoveEditPage} />
-          <CompareBanner onClick={handleClick} />
-        </S.FlexBox>
+      <Header center={<Header.Text>체크리스트</Header.Text>} />{' '}
+      <S.FlexBox>
+        <EditBanner onClick={handleClickMoveEditPage} />
+        <CompareBanner onClick={handleClick} />
+      </S.FlexBox>
+      <Layout style={{ padding: '0 16px' }}>
         <S.ListBox>
           {checklistList.length ? (
             <>

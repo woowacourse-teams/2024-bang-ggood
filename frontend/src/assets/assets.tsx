@@ -35,7 +35,12 @@ import InputRequiredDot from '@/assets/icons/input-required-dot.svg';
 import KakaoLogo from '@/assets/icons/kakao-logo.svg';
 import LampIcon from '@/assets/icons/lamp-icon.svg';
 import BangGgoodTextIcon from '@/assets/icons/logo.svg';
+import PencilIcon from '@/assets/icons/pencil-icon.svg';
 import QuestionDot from '@/assets/icons/question-dot.svg';
+
+/*memo */
+import MemoEmpty from '@/assets/icons/memo-empty.svg';
+import MemoFilled from '@/assets/icons/memo-filled.svg';
 
 export {
   ArrowBack,
@@ -63,8 +68,11 @@ export {
   LocationLineIcon,
   LocationLogo,
   LocationLogoActive,
+  MemoEmpty,
+  MemoFilled,
   MyPageLogo,
   MyPageLogoActive,
+  PencilIcon,
   Plus,
   QuestionDot,
 };

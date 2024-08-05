@@ -7,7 +7,7 @@ interface TabProps {
   onMoveTab: (id: number) => void;
   name: string;
   active: boolean;
-  isCompleted: boolean;
+  isCompleted: boolean | null;
 }
 
 const Tab = ({ id, onMoveTab, name, active, isCompleted }: TabProps) => {

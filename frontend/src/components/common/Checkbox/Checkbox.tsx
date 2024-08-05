@@ -7,20 +7,15 @@ import theme from '@/styles/theme';
 
 interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
   isChecked: boolean;
-  setIsChecked?: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsChecked: React.Dispatch<React.SetStateAction<boolean>>;
   color?: string;
   hoverColor?: string;
   onClick?: () => void;
 }
 
-const colorForCheckState = new Map([
-  [true, theme.palette.green500],
-  [false, theme.palette.grey400],
-]);
-
 const Checkbox = ({
   isChecked = false,
-  color,
+  color = theme.palette.green500,
   hoverColor = theme.palette.green300,
   setIsChecked,
   onClick,
@@ -29,12 +24,10 @@ const Checkbox = ({
     setIsChecked(!isChecked);
   }, [isChecked, setIsChecked]);
 
+  const checkedColor = isChecked ? color || theme.palette.green500 : theme.palette.grey400;
+
   return (
-    <S.Checkbox
-      $color={color ? color : colorForCheckState.get(isChecked)}
-      $hoverColor={isChecked ? color : hoverColor}
-      onClick={onClick}
-    >
+    <S.Checkbox $color={checkedColor} $hoverColor={hoverColor} onClick={onClick}>
       <S.FlexBox>
         <CheckIcon />
       </S.FlexBox>

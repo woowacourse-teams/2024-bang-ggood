@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-const useInputs = <T extends object>(initialValue: T) => {
-  const [values, setValues] = useState(initialValue);
+const useInput = (initialValue: string | null) => {
+  const [value, setValue] = useState(initialValue);
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setValues(prev => ({
-      ...prev,
-      [event.target.name]: event.target.value,
-    }));
+  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setValue(e.target.value);
   };
 
-  return { values, onChange, setValues };
+  return { value, onChange, setValue };
 };
-export default useInputs;
+
+export default useInput;

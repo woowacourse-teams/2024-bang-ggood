@@ -9,7 +9,7 @@ interface Props {
   createdAt: string;
 }
 
-const RoomInfoSection = ({ room, score, createdAt }: Props) => {
+const RoomInfoSection = ({ room, score }: Props) => {
   // TODO: 로딩 중일 때 스켈레톤표시
   if (!room) return null;
   const { roomName, deposit, rent, address, contractTerm, floor, floorLevel, station, walkingTime, realEstate } = room;

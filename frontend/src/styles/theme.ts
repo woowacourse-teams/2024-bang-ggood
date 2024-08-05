@@ -13,6 +13,7 @@ const palette = {
   green300: '#92E2B2',
   green200: '#B6EBCC',
   green100: '#DBF5E5',
+  green50: '#E6F8ED',
   /*subGreen*/
   subGreen600: '#8BB26B',
   subGreen500: '#A6CF85',

@@ -1,23 +1,27 @@
 import styled from '@emotion/styled';
 
-import { ArrowDownSmall, ArrowUpSmall } from '@/assets/assets';
 import { useAccordionContext } from '@/components/common/Accordion/AccordionContext';
-import { flexCenter, title2 } from '@/styles/common';
+import { flexCenter, flexSpaceBetween, title2 } from '@/styles/common';
 
 interface Props {
-  text: string;
   id: number;
+  openButton?: React.ReactNode;
+  closeButton?: React.ReactNode;
+  text?: string;
+  isMarked?: boolean;
 }
-const AccordionHeader = ({ text, id }: Props) => {
+const AccordionHeader = ({ id, openButton, closeButton, text, isMarked = true }: Props) => {
   const { isAccordionOpen, handleAccordionOpenChange } = useAccordionContext();
 
   return (
     <S.HeaderContainer onClick={() => handleAccordionOpenChange(id)}>
-      <S.FlexBox>
-        <S.HeaderMark isMarked={isAccordionOpen(id)} />
+      <S.FlexBetween>
+        <S.HeaderMark isMarked={isMarked} />
         <S.HeaderTitle>{text}</S.HeaderTitle>
-      </S.FlexBox>
-      <S.ArrowBox>{isAccordionOpen(id) ? <ArrowUpSmall /> : <ArrowDownSmall />}</S.ArrowBox>
+        <S.OpenBox onClick={() => handleAccordionOpenChange}>
+          {isAccordionOpen(id) ? openButton : closeButton}
+        </S.OpenBox>
+      </S.FlexBetween>
     </S.HeaderContainer>
   );
 };
@@ -26,12 +30,11 @@ export default AccordionHeader;
 
 const HeaderContainer = styled.div`
   display: flex;
-  width: 100%;
-  height: 50px;
+  position: relative;
+  height: 45px;
 
   background-color: ${({ theme }) => theme.palette.white};
   border-radius: 12px;
-  justify-content: space-between;
   gap: 10px;
 `;
 
@@ -40,22 +43,31 @@ const FlexBox = styled.div`
   gap:10px;
 `;
 
+const FlexBetween = styled.div`
+  ${flexSpaceBetween}
+  height: 100%;
+`;
+
 const HeaderTitle = styled.div`
-  ${title2}
+  ${title2};
+  display: flex;
+  padding-left: 15px;
+  align-items: center;
 `;
 
 const HeaderMark = styled.div<{ isMarked: boolean }>`
   opacity: ${({ isMarked }) => (isMarked ? 1 : 0)};
   width: 12px;
-  height: 100%;
 
   background-color: ${({ theme }) => theme.palette.yellow500};
   border-radius: 8px 0 0 8px;
   transition: opacity 0.3s ease;
 `;
 
-const ArrowBox = styled.div`
-  width: 50px;
+const OpenBox = styled.div<{ onClick?: () => void }>`
+  position: absolute;
+  top: 10px;
+  right: 10px;
   ${flexCenter}
 `;
 
@@ -64,5 +76,6 @@ const S = {
   HeaderMark,
   HeaderTitle,
   FlexBox,
-  ArrowBox,
+  OpenBox,
+  FlexBetween,
 };

@@ -1,39 +1,41 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 
-import { QuestionDot } from '@/assets/assets';
+import { ArrowUpSmall, MemoEmpty, MemoFilled, QuestionDot } from '@/assets/assets';
 import FaceMark from '@/components/common/FaceMark/FaceMark';
-import useChecklistStore from '@/store/useChecklistStore';
+import { useTabContext } from '@/components/common/Tabs/TabContext';
+import QuestionMemo from '@/components/NewChecklist/ChecklistQuestion/QuestionMemo';
+import { EMOTION_PHARSE, EMOTIONS } from '@/constants/emotion';
+import useChecklistAnswer from '@/hooks/useChecklistAnswer';
+import { flexCenter, flexSpaceBetween } from '@/styles/common';
 import { ChecklistQuestion } from '@/types/checklist';
-import { Emotion, EmotionType } from '@/types/emotionAnswer';
+import { EmotionType } from '@/types/emotionAnswer';
 
 interface Props {
   question: ChecklistQuestion;
 }
 
-export const emotionPhrase: Record<EmotionType | string, string> = {
-  BAD: '별로에요',
-  SOSO: '평범해요',
-  GOOD: '좋아요',
-  null: '-',
-};
-
 const ChecklistQuestion = ({ question }: Props) => {
   const { questionId } = question;
-  const { deleteAnswer, addAnswer, questionSelectedAnswer } = useChecklistStore();
+  const { updateAnswer, findCategoryQuestion } = useChecklistAnswer();
+  const { currentTabId } = useTabContext();
+
+  const [isMemoOpen, setIsMemoOpen] = useState(false);
+
+  //TODO: 에러를 던지고 잇음/
+  const { answer, memo } = findCategoryQuestion({ categoryId: currentTabId, questionId });
 
   const handleClick = (newAnswer: EmotionType) => {
-    if (questionSelectedAnswer(questionId) === newAnswer) {
-      deleteAnswer(questionId);
-    } else {
-      addAnswer({ questionId: questionId, newAnswer });
-    }
+    updateAnswer({ categoryId: currentTabId, questionId: questionId, newAnswer });
   };
 
-  const emotions: Emotion[] = [
-    { name: 'BAD', id: 1 },
-    { name: 'SOSO', id: 2 },
-    { name: 'GOOD', id: 3 },
-  ];
+  const handleCloseMemo = () => {
+    setIsMemoOpen(false);
+  };
+
+  const handleOpenMemo = () => {
+    setIsMemoOpen(true);
+  };
 
   return (
     <S.Container>
@@ -41,18 +43,31 @@ const ChecklistQuestion = ({ question }: Props) => {
         <QuestionDot />
         {question?.title}
       </S.Title>
-      {question?.subtitle && <S.Subtitle>•{question?.subtitle}</S.Subtitle>}
+
+      {question?.subtitle && <S.Subtitle>{question?.subtitle}</S.Subtitle>}
+
+      <S.ButtonBox>
+        {isMemoOpen ? (
+          <ArrowUpSmall onClick={handleCloseMemo} />
+        ) : memo?.length ? (
+          <MemoFilled onClick={handleOpenMemo} />
+        ) : (
+          <MemoEmpty onClick={handleOpenMemo} />
+        )}
+      </S.ButtonBox>
+
       <S.Options>
-        {emotions.map(emotion => {
+        {EMOTIONS.map(emotion => {
           const { name: emotionName, id } = emotion;
           return (
             <FaceMark onClick={() => handleClick(emotionName)} key={id}>
-              <FaceMark.FaceIcon emotion={emotionName} isFilled={questionSelectedAnswer(questionId) === emotionName} />
-              <FaceMark.Footer>{emotionPhrase[emotionName]}</FaceMark.Footer>
+              <FaceMark.FaceIcon emotion={emotionName} isFilled={answer === emotionName} />
+              <FaceMark.Footer>{EMOTION_PHARSE[emotionName]}</FaceMark.Footer>
             </FaceMark>
           );
         })}
       </S.Options>
+      {isMemoOpen && <QuestionMemo questionId={questionId} text={memo ?? ''} />}
     </S.Container>
   );
 };
@@ -61,10 +76,15 @@ export default ChecklistQuestion;
 
 const S = {
   Container: styled.div`
+    position: relative;
     padding: 16px;
+
+    background-color: ${({ theme }) => theme.palette.white};
+    border-radius: 8px;
   `,
   Title: styled.div`
     display: flex;
+    width: 90%;
     margin: 5px 0;
 
     font-size: ${({ theme }) => theme.text.size.medium};
@@ -82,10 +102,23 @@ const S = {
     word-break: keep-all;
   `,
   Options: styled.div`
-    display: flex;
+    ${flexSpaceBetween}
     width: 80%;
     margin: 0 auto;
     margin-top: 10px;
-    justify-content: space-between;
+  `,
+
+  ButtonBox: styled.div`
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    ${flexCenter}
+
+    :hover {
+      background-color: ${({ theme }) => theme.palette.background};
+    }
   `,
 };

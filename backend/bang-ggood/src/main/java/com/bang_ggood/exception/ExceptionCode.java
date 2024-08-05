@@ -6,7 +6,6 @@ public enum ExceptionCode {
 
     // 전체
     INVALID_PARAMETER(HttpStatus.BAD_REQUEST, "잘못된 인자입니다."),
-    SCORE_NOT_DESCENDING_SORTED(HttpStatus.BAD_REQUEST, "정렬되지 않은 점수입니다."),
 
     // Option
     OPTION_INVALID(HttpStatus.BAD_REQUEST, "잘못된 옵션 ID입니다."),
@@ -44,7 +43,10 @@ public enum ExceptionCode {
     STRUCTURE_INVALID(HttpStatus.BAD_REQUEST, "방 구조가 유효하지 않습니다."),
 
     // Room
-    ROOM_FLOOR_AND_LEVEL_INVALID(HttpStatus.BAD_REQUEST, "방이 지상층일 경우에만 층수를 입력할 수 있습니다.");
+    ROOM_FLOOR_AND_LEVEL_INVALID(HttpStatus.BAD_REQUEST, "방이 지상층일 경우에만 층수를 입력할 수 있습니다."),
+
+    //Score
+    SCORE_NOT_DESCENDING_SORTED(HttpStatus.BAD_REQUEST, "정렬되지 않은 점수입니다.");
 
     private final HttpStatus httpStatus;
     private final String message;

@@ -240,9 +240,9 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         Checklist checklist1 = createChecklist(user, room1);
         Checklist checklist2 = createChecklist(user, room2);
         Checklist checklist3 = createChecklist(user, room3);
-        ChecklistQuestion checklistQuestion1 = new ChecklistQuestion(checklist1, Question.CLEAN_1, Grade.BAD, null);
+        ChecklistQuestion checklistQuestion1 = new ChecklistQuestion(checklist1, Question.CLEAN_1, Grade.GOOD, null);
         ChecklistQuestion checklistQuestion2 = new ChecklistQuestion(checklist2, Question.CLEAN_2, Grade.SOSO, null);
-        ChecklistQuestion checklistQuestion3 = new ChecklistQuestion(checklist3, Question.CLEAN_3, Grade.GOOD, null);
+        ChecklistQuestion checklistQuestion3 = new ChecklistQuestion(checklist3, Question.CLEAN_3, Grade.BAD, null);
 
         roomRepository.saveAll(List.of(room1, room2, room3));
         List<Checklist> checklists = checklistRepository.saveAll(List.of(checklist1, checklist2, checklist3));
@@ -254,7 +254,11 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         ChecklistsWithScoreReadResponse response = checklistService.readChecklistsComparison(checklistIds);
 
         // then
-        System.out.println(response);
+        assertAll(
+                () -> assertThat(response.checklists().get(0).getRank()).isEqualTo(1),
+                () -> assertThat(response.checklists().get(1).getRank()).isEqualTo(2),
+                () -> assertThat(response.checklists().get(2).getRank()).isEqualTo(3)
+        );
     }
 
     @DisplayName("체크리스트 비교 실패 : 아이디 개수가 유효하지 않을 때")

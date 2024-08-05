@@ -1,6 +1,5 @@
 package com.bang_ggood.checklist.controller;
 
-import com.bang_ggood.auth.config.AuthPrincipal;
 import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
@@ -33,8 +32,9 @@ public class ChecklistController {
     }
 
     @PostMapping("/checklists")
-    public ResponseEntity<Void> createChecklist(@AuthPrincipal User user, @Valid @RequestBody ChecklistCreateRequest checklistCreateRequest) {
-        long checklistId = checklistService.createChecklist(user, checklistCreateRequest);
+    public ResponseEntity<Void> createChecklist(@Valid @RequestBody ChecklistRequest checklistRequest) {
+        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
+        long checklistId = checklistService.createChecklist(user, checklistRequest);
         return ResponseEntity.created(URI.create("/checklists/" + checklistId)).build();
     }
 
@@ -57,7 +57,15 @@ public class ChecklistController {
     @GetMapping("/checklists/comparison")
     public ResponseEntity<ChecklistsWithScoreReadResponse> readChecklistsComparison(
             @RequestParam("id") List<Long> checklistIds) {
-        return ResponseEntity.ok(checklistService.readChecklistsComparison(checklistIds));
+        User user = new User(1L, "방끗", "bang-ggood@gmail.com");
+        return ResponseEntity.ok(checklistService.readChecklistsComparison(user, checklistIds));
+    }
+
+    @PutMapping("/checklists/{id}")
+    public ResponseEntity<Void> updateChecklistById(@PathVariable("id") long id, @Valid @RequestBody ChecklistRequest checklistRequest) {
+        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
+        checklistService.updateChecklistById(user, id, checklistRequest);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/custom-checklist")

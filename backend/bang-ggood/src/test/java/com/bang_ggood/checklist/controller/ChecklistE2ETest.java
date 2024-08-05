@@ -11,19 +11,18 @@ import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.repository.RoomRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.http.Header;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ChecklistE2ETest extends AcceptanceTest {
+public class ChecklistE2ETest extends AcceptanceTest {
 
     @Autowired
     private ChecklistRepository checklistRepository;
@@ -83,22 +82,61 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("작성된 체크리스트 조회 성공")
     @Test
     void readChecklistById() {
-        //체크리스트 저장
-        roomRepository.save(RoomFixture.ROOM_1);
-        Checklist saved = checklistRepository.save(ChecklistFixture.checklist);
+        long checklistId = checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         SelectedChecklistResponse selectedChecklistResponse = RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .when().get("/checklists/" + saved.getId())
+                .when().get("/checklists/" + checklistId)
                 .then().log().all()
                 .statusCode(200)
                 .extract()
                 .as(SelectedChecklistResponse.class);
 
         Assertions.assertAll(
-                () -> assertThat(selectedChecklistResponse.room().roomName()).isEqualTo("살기 좋은 방"),
-                () -> assertThat(selectedChecklistResponse.room().address()).isEqualTo("인천광역시 부평구")
+                () -> assertThat(selectedChecklistResponse.room().roomName()).isEqualTo("방이름"),
+                () -> assertThat(selectedChecklistResponse.room().address()).isEqualTo("부산광역시 루터회관")
         );
+    }
+
+    @DisplayName("체크리스트 수정 성공")
+    @Test
+    void updateChecklist() {
+        long checklistId = checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST)
+                .when().put("/checklists/" + checklistId)
+                .then().log().all()
+                .statusCode(204);
+    }
+
+    @DisplayName("체크리스트 수정 실패: 방 이름을 넣지 않은 경우")
+    @Test
+    void updateChecklist_noRoomName_exception() {
+        long checklistId = checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST_NO_ROOM_NAME)
+                .when().put("/checklists/" + checklistId)
+                .then().log().all()
+                .statusCode(400)
+                .body("message", containsString("방 이름이 존재하지 않습니다."));
+    }
+
+    @DisplayName("체크리스트 수정 실패: 질문 ID를 넣지 않은 경우")
+    @Test
+    void updateChecklist_noQuestionId_exception() {
+        long checklistId = checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST_NO_QUESTION_ID)
+                .when().put("/checklists/" + checklistId)
+                .then().log().all()
+                .statusCode(400)
+                .body("message", containsString("질문 아이디가 존재하지 않습니다."));
     }
 
     @DisplayName("커스텀 체크리스트 업데이트 성공")

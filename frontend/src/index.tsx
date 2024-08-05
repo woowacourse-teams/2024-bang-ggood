@@ -2,8 +2,9 @@ import './sentry'; // Sentry initialization should be imported first!
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { RouterProvider } from 'react-router-dom';
 
-import App from '@/App';
+import router from '@/router';
 
 async function enableMocking() {
   if (process.env.DEV_MODE === 'off') return;
@@ -22,7 +23,7 @@ async function enableMocking() {
 enableMocking().then(() => {
   ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-      <App />
+      <RouterProvider router={router} />
     </React.StrictMode>,
   );
 });

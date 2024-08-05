@@ -1,46 +1,18 @@
-import * as Sentry from '@sentry/react';
-import type { PropsWithChildren, ReactElement } from 'react';
-import { Component } from 'react';
+import { isRouteErrorResponse, useNavigate, useRouteError } from 'react-router-dom';
 
-interface HTTPError extends Error {}
+function ErrorBoundaryForRouter() {
+  const error = useRouteError();
+  const navigate = useNavigate();
 
-interface ErrorBoundaryProps {
-  fallback?: ReactElement;
-}
+  const reset = () => {
+    navigate('/', { replace: true });
+  };
 
-interface State {
-  hasError: boolean;
-  error: Error | null;
-}
-
-const initialState: State = {
-  hasError: false,
-  error: null,
-};
-
-class ErrorBoundary extends Component<PropsWithChildren<ErrorBoundaryProps>, State> {
-  state: State = initialState;
-
-  static getDerivedStateFromError(error: Error): State {
-    return { hasError: true, error };
+  if (isRouteErrorResponse(error)) {
+    return <div onClick={reset}>라우터 에러: {error.statusText}</div>;
   }
 
-  componentDidCatch(error: Error | HTTPError): void {
-    Sentry.withScope(scope => {
-      scope.setLevel('error');
-      Sentry.captureMessage(`[${error.name}] ${window.location.href}`);
-    });
-  }
-
-  render() {
-    const { error } = this.state;
-
-    if (error) {
-      return this.props.fallback || <div> in Error Boundary </div>;
-    }
-
-    return this.props.children;
-  }
+  return <div onClick={reset}>일반 에러: </div>;
 }
 
-export default ErrorBoundary;
+export default ErrorBoundaryForRouter;

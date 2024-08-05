@@ -1,6 +1,6 @@
 package com.bang_ggood.checklist.controller;
 
-import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
+import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsWithScoreReadResponse;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.net.URI;
 import java.util.List;
-
 
 @RestController
 public class ChecklistController {

@@ -7,15 +7,16 @@ import com.bang_ggood.category.dto.response.SelectedCategoryQuestionsResponse;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
+import com.bang_ggood.checklist.domain.ChecklistRank;
 import com.bang_ggood.checklist.domain.ChecklistScore;
 import com.bang_ggood.checklist.domain.CustomChecklistQuestion;
 import com.bang_ggood.checklist.domain.Grade;
 import com.bang_ggood.checklist.domain.Option;
 import com.bang_ggood.checklist.domain.Question;
-import com.bang_ggood.checklist.dto.request.ChecklistCreateRequest;
 import com.bang_ggood.checklist.dto.request.ChecklistInfo;
+import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
-import com.bang_ggood.checklist.dto.request.QuestionCreateRequest;
+import com.bang_ggood.checklist.dto.request.QuestionRequest;
 import com.bang_ggood.checklist.dto.response.BadgeResponse;
 import com.bang_ggood.checklist.dto.response.CategoryScoreReadResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
@@ -40,12 +41,12 @@ import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 public class ChecklistService {

@@ -7,23 +7,29 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
+import com.bang_ggood.checklist.service.ChecklistService;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.repository.RoomRepository;
+import com.bang_ggood.user.UserFixture;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.http.Header;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.HttpHeaders;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
 
-public class ChecklistE2ETest extends AcceptanceTest {
+class ChecklistE2ETest extends AcceptanceTest {
 
+    @Autowired
+    private ChecklistService checklistService;
     @Autowired
     private ChecklistRepository checklistRepository;
     @Autowired

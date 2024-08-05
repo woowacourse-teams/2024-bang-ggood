@@ -21,7 +21,7 @@ public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
     Optional<Checklist> findById(@Param("id") long id);
 
 
-    default Checklist getById(long id) {
+    default Checklist getById(@Param("id") long id) {
         return findById(id).orElseThrow(() -> new BangggoodException(ExceptionCode.CHECKLIST_NOT_FOUND));
     }
 

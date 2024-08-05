@@ -44,7 +44,7 @@ export interface ChecklistAnswer {
 
 export interface ChecklistPreview extends RoomInfo {
   checklistId: number;
-  badge?: Badge[];
+  badge: Badge[];
   createdAt: string;
 }
 

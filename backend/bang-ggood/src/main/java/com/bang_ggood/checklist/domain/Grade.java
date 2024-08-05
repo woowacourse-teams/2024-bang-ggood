@@ -19,10 +19,6 @@ public enum Grade {
     }
 
     public static Grade from(String grade) {
-        if (grade == null) {
-            return NONE;
-        }
-
         return Arrays.stream(Grade.values())
                 .filter(value -> value.name().equals(grade))
                 .findFirst()

@@ -91,7 +91,7 @@ const S = {
     left: 45%;
     z-index: ${({ theme }) => theme.zIndex.FLOATING_BUTTON};
     width: 100%;
-    padding-right: 16px;
+    padding-right: 10%;
     transform: translateX(-45%);
     max-width: 600px;
     justify-content: flex-end;

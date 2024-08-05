@@ -7,6 +7,7 @@ import { Plus } from '@/assets/assets';
 import ChecklistPreviewCard from '@/components/ChecklistList/ChecklistPreviewCard';
 import CompareBanner from '@/components/ChecklistList/CompareBanner';
 import EditBanner from '@/components/ChecklistList/EditBanner';
+import NoChecklistTemplate from '@/components/ChecklistList/NoChecklistTemplate';
 import FloatingButton from '@/components/common/Button/FloatingButton';
 import Header from '@/components/common/Header/Header';
 import Layout from '@/components/common/layout/Layout';
@@ -58,11 +59,17 @@ const ChecklistListPage = () => {
       </S.FlexBox>
       <Layout>
         <S.ListBox>
-          {checklistList?.map(checklist => (
-            <Link to={ROUTE_PATH.checklistOne(checklist.checklistId)} key={checklist.checklistId}>
-              <ChecklistPreviewCard checklist={checklist} />
-            </Link>
-          ))}
+          {checklistList.length ? (
+            <>
+              {checklistList?.map(checklist => (
+                <Link to={ROUTE_PATH.checklistOne(checklist.checklistId)} key={checklist.checklistId}>
+                  <ChecklistPreviewCard checklist={checklist} />
+                </Link>
+              ))}
+            </>
+          ) : (
+            <NoChecklistTemplate />
+          )}
         </S.ListBox>
       </Layout>
       <FloatingButton onClick={handleClickFloatingButton}>

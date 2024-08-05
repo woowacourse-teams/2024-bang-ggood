@@ -3,9 +3,11 @@ package com.bang_ggood.checklist.repository;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.List;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 public interface ChecklistOptionRepository extends JpaRepository<ChecklistOption, Long> {
 
@@ -14,5 +16,15 @@ public interface ChecklistOptionRepository extends JpaRepository<ChecklistOption
             + "AND co.deleted = false")
     List<ChecklistOption> findByChecklistId(@Param("checklistId") long checklistId);
 
+    @Query("SELECT COUNT(co) FROM ChecklistOption co " +
+            "WHERE co.checklist = :checklist " +
+            "AND co.deleted = false")
     Integer countByChecklist(Checklist checklist);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE ChecklistOption co "
+            + "SET co.deleted = true "
+            + "WHERE co.checklist.id = :checklistId")
+    void deleteAllByChecklistId(Long checklistId);
 }

@@ -57,7 +57,7 @@ class QuestionTest {
                 .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
     }
 
-    @DisplayName("질문 아이디를 통해 포함되어 있는지 확인 : 포함일 경우")
+    @DisplayName("질문 아이디를 통해 포함되어 있는지 확인 성공 : 포함일 경우")
     @Test
     void contains_true() {
         //given
@@ -67,7 +67,7 @@ class QuestionTest {
         assertThat(Question.contains(questionId)).isTrue();
     }
 
-    @DisplayName("질문 아이디를 통해 포함되어 있는지 확인 : 포함이 아닐 경우")
+    @DisplayName("질문 아이디를 통해 포함되어 있는지 확인 성공 : 포함이 아닐 경우")
     @Test
     void contains_false() {
         //given
@@ -76,5 +76,4 @@ class QuestionTest {
         //when & then
         assertThat(Question.contains(questionId)).isFalse();
     }
-
 }

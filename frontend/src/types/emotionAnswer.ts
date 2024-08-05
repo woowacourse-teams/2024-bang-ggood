@@ -1,8 +1,8 @@
-export type EmotionType = 'GOOD' | 'BAD' | 'SOSO';
+export type EmotionName = 'GOOD' | 'BAD' | 'SOSO';
 
-export type EmotionTypeWithNull = EmotionType | null;
+export type EmotionNameWithNone = EmotionName | 'NONE';
 
 export interface Emotion {
-  name: EmotionType;
+  name: EmotionName;
   id: number;
 }

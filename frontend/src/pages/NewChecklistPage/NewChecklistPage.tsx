@@ -49,12 +49,12 @@ const NewChecklistPage = () => {
   const transformQuestions = (checklist: ChecklistCategoryQnA[]) => {
     return checklist.flatMap(category =>
       category.questions.map(question => {
-        const { questionId, memo } = question;
+        const { questionId, memo, answer } = question;
 
         return {
           questionId,
           memo,
-          grade: null,
+          grade: answer,
         };
       }),
     );

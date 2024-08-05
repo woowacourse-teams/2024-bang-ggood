@@ -1,5 +1,5 @@
 import useChecklistStore from '@/store/useChecklistStore';
-import { EmotionTypeWithNull } from '@/types/emotionAnswer';
+import { EmotionNameWithNone } from '@/types/emotionAnswer';
 
 export interface Props {
   questionId: number;
@@ -7,7 +7,7 @@ export interface Props {
 }
 
 export interface UpdateAnswerProps extends Props {
-  newAnswer: EmotionTypeWithNull;
+  newAnswer: EmotionNameWithNone;
 }
 
 export interface updateMemoProps extends Props {

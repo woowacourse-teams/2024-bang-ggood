@@ -53,7 +53,7 @@ export const checklistDetail: ChecklistInfo = {
           questionId: 3,
           title: '시설이 잘 작동하나요?',
           subtitle: '모든 시설이 제대로 작동하는지 확인해 주세요.',
-          answer: null,
+          answer: 'NONE',
           memo: null,
         },
         {

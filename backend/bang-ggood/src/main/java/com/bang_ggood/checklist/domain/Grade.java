@@ -10,7 +10,7 @@ public enum Grade {
     GOOD(3),
     SOSO(2),
     BAD(1),
-    ;
+    NONE(0);
 
     private final int score;
 
@@ -19,9 +19,6 @@ public enum Grade {
     }
 
     public static Grade from(String grade) {
-        if(grade == null) {
-            return null;
-        }
         return Arrays.stream(Grade.values())
                 .filter(value -> value.name().equals(grade))
                 .findFirst()

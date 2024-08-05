@@ -38,7 +38,8 @@ public class ChecklistController {
 
     @GetMapping("/checklists/questions")
     public ResponseEntity<ChecklistQuestionsResponse> readChecklistQuestions() {
-        return ResponseEntity.ok(checklistService.readChecklistQuestions());
+        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
+        return ResponseEntity.ok(checklistService.readChecklistQuestions(user));
     }
 
     @GetMapping("/checklists/{id}")
@@ -60,7 +61,8 @@ public class ChecklistController {
 
     @PutMapping("/custom-checklist")
     public ResponseEntity<Void> updateCustomChecklist(@RequestBody CustomChecklistUpdateRequest request) {
-        checklistService.updateCustomChecklist(request);
+        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
+        checklistService.updateCustomChecklist(request, user);
         return ResponseEntity.noContent().build();
     }
 }

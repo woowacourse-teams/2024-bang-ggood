@@ -18,6 +18,8 @@ import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
+import com.bang_ggood.user.repository.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_U
 import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED;
 import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_EMPTY;
 import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_INVALID;
+import static com.bang_ggood.user.UserFixture.USER1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -46,9 +49,17 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private RoomRepository roomRepository;
+
     @Autowired
     private CustomChecklistQuestionRepository customChecklistQuestionRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @BeforeEach
+    void saveUser() {
+        userRepository.save(USER1);
+    }
 
     @DisplayName("체크리스트 방 정보 작성 성공")
     @Test
@@ -112,8 +123,10 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @DisplayName("체크리스트 질문 조회 성공")
     @Test
     void readChecklistQuestions() {
+        // TODO : 유저 생성 시 default 질문을 DB에 저장하는 기능 추가
+        checklistService.updateCustomChecklist(new CustomChecklistUpdateRequest(List.of(1, 4, 6, 7, 8, 12, 18, 19, 23, 25, 31)), USER1);
         // given & when
-        ChecklistQuestionsResponse checklistQuestionsResponse = checklistService.readChecklistQuestions();
+        ChecklistQuestionsResponse checklistQuestionsResponse = checklistService.readChecklistQuestions(USER1);
 
         // then // Category.OPTION does not have default question
         assertThat(checklistQuestionsResponse.categories().size()).isEqualTo(Category.values().length - 1);
@@ -268,10 +281,10 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST;
 
         // when
-        checklistService.updateCustomChecklist(request);
+        checklistService.updateCustomChecklist(request, USER1);
 
         // then
-        assertThat(customChecklistQuestionRepository.findByUser(new User(1L, "방방이", "bang-ggood@gmail.com")))
+        assertThat(customChecklistQuestionRepository.findByUser(USER1))
                 .hasSize(request.questionIds().size());
     }
 
@@ -282,7 +295,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_EMPTY;
 
         // when & then
-        assertThatThrownBy(() -> checklistService.updateCustomChecklist(request))
+        assertThatThrownBy(() -> checklistService.updateCustomChecklist(request, USER1))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CUSTOM_CHECKLIST_QUESTION_EMPTY.getMessage());
     }
@@ -294,7 +307,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED;
 
         // when & then
-        assertThatThrownBy(() -> checklistService.updateCustomChecklist(request))
+        assertThatThrownBy(() -> checklistService.updateCustomChecklist(request, USER1))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
     }
@@ -306,7 +319,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_INVALID;
 
         // when & then
-        assertThatThrownBy(() -> checklistService.updateCustomChecklist(request))
+        assertThatThrownBy(() -> checklistService.updateCustomChecklist(request, USER1))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
     }

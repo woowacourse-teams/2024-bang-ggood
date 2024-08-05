@@ -39,7 +39,6 @@ import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -238,23 +237,13 @@ public class ChecklistService {
 
         validateChecklistComparison(user, checklistIds);
 
-        List<ChecklistWithScoreReadResponse> checklistsWithScore = checklistRepository.findByUserAndIdInJoinFetch(user,
-                        checklistIds)
-                .stream()
-                .map(this::getChecklistWithScore)
-                .sorted(Comparator.comparing(ChecklistWithScoreReadResponse::getScore).reversed())
-                .toList();
+        List<ChecklistWithScoreReadResponse> checklistsWithScore =
+                checklistRepository.findByUserAndIdInJoinFetch(user, checklistIds)
+                        .stream()
+                        .map(this::getChecklistWithScore)
+                        .toList();
 
-        List<Integer> scores = checklistsWithScore.stream()
-                .map(ChecklistWithScoreReadResponse::getScore)
-                .toList();
-
-        List<Integer> ranks = ChecklistRank.calculateRanksByDescendingScores(scores);
-
-        for (int idx = 0; idx < checklistsWithScore.size(); idx++) {
-            ChecklistWithScoreReadResponse checklistWithScore = checklistsWithScore.get(idx);
-            checklistWithScore.assignRank(ranks.get(idx));
-        }
+        assignRanks(checklistsWithScore, getScores(checklistsWithScore));
 
         return new ChecklistsWithScoreReadResponse(checklistsWithScore);
     }
@@ -294,6 +283,19 @@ public class ChecklistService {
 
     private int getChecklistScore(List<ChecklistQuestion> questions) {
         return ChecklistScore.calculateTotalScore(questions);
+    }
+
+    private List<Integer> getScores(List<ChecklistWithScoreReadResponse> checklistsWithScore) {
+        return checklistsWithScore.stream()
+                .map(ChecklistWithScoreReadResponse::getScore)
+                .toList();
+    }
+
+    private void assignRanks(List<ChecklistWithScoreReadResponse> checklistsWithScore, List<Integer> scores) {
+        checklistsWithScore
+                .forEach(checklistWithScore -> checklistWithScore.assignRank(
+                        ChecklistRank.calculateRanks(checklistWithScore.getScore(), scores)
+                ));
     }
 
     @Transactional

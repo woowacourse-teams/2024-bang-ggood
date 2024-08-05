@@ -52,7 +52,7 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
     }
 
-    @DisplayName("아이디를 통해 체크리스트 존재 확인 : 존재하는 경우")
+    @DisplayName("아이디를 통해 체크리스트 존재 확인 성공 : 존재하는 경우")
     @Test
     void existsById_true() {
         //given & when
@@ -62,7 +62,7 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
         assertThat(checklistRepository.existsById(savedChecklist.getId().longValue())).isTrue();
     }
 
-    @DisplayName("아이디를 통해 체크리스트 존재 확인 : 존재하지 않는 경우")
+    @DisplayName("아이디를 통해 체크리스트 존재 확인 성공 : 존재하지 않는 경우")
     @Test
     void existsById_false() {
         //given & when & then

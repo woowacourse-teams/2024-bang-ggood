@@ -4,13 +4,13 @@ import com.bang_ggood.AcceptanceTest;
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.service.ChecklistService;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.repository.RoomRepository;
-import com.bang_ggood.user.UserFixture;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Header;
@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.bang_ggood.user.UserFixture.USER1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
@@ -74,8 +75,11 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 질문 조회 성공")
     @Test
     void readChecklistQuestions() {
+        checklistService.updateCustomChecklist(USER1, new CustomChecklistUpdateRequest(List.of(1, 4, 6, 7, 8, 12, 18, 19, 23, 25, 31)));
+
         ChecklistQuestionsResponse checklistQuestionsResponse = RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
                 .when().get("/checklists/questions")
                 .then().log().all()
                 .statusCode(200)
@@ -88,10 +92,11 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("작성된 체크리스트 조회 성공")
     @Test
     void readChecklistById() {
-        long checklistId = checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         SelectedChecklistResponse selectedChecklistResponse = RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
                 .when().get("/checklists/" + checklistId)
                 .then().log().all()
                 .statusCode(200)
@@ -107,10 +112,11 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 수정 성공")
     @Test
     void updateChecklist() {
-        long checklistId = checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
                 .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST)
                 .when().put("/checklists/" + checklistId)
                 .then().log().all()
@@ -120,10 +126,11 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 수정 실패: 방 이름을 넣지 않은 경우")
     @Test
     void updateChecklist_noRoomName_exception() {
-        long checklistId = checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
                 .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST_NO_ROOM_NAME)
                 .when().put("/checklists/" + checklistId)
                 .then().log().all()
@@ -134,10 +141,11 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 수정 실패: 질문 ID를 넣지 않은 경우")
     @Test
     void updateChecklist_noQuestionId_exception() {
-        long checklistId = checklistService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
                 .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST_NO_QUESTION_ID)
                 .when().put("/checklists/" + checklistId)
                 .then().log().all()
@@ -153,6 +161,7 @@ class ChecklistE2ETest extends AcceptanceTest {
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
                 .body(params)
                 .when().put("/custom-checklist")
                 .then().log().all()
@@ -167,6 +176,7 @@ class ChecklistE2ETest extends AcceptanceTest {
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
                 .when().delete("/checklists/" + saved.getId())
                 .then().log().all()
                 .statusCode(204);

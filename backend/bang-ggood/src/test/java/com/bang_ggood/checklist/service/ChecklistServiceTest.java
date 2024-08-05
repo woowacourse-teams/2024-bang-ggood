@@ -139,7 +139,8 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void readChecklistQuestions() {
         // TODO : 유저 생성 시 default 질문을 DB에 저장하는 기능 추가
-        checklistService.updateCustomChecklist(new CustomChecklistUpdateRequest(List.of(1, 4, 6, 7, 8, 12, 18, 19, 23, 25, 31)), USER1);
+        checklistService.updateCustomChecklist(USER1,
+                new CustomChecklistUpdateRequest(List.of(1, 4, 6, 7, 8, 12, 18, 19, 23, 25, 31)));
         // given & when
         ChecklistQuestionsResponse checklistQuestionsResponse = checklistService.readChecklistQuestions(USER1);
 
@@ -293,7 +294,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         List<Long> invalidChecklistIds = List.of(1L, 2L, 3L, 4L);
 
         // when & then
-        assertThatCode(() -> checklistService.readChecklistsComparison(user1, invalidChecklistIds))
+        assertThatCode(() -> checklistService.readChecklistsComparison(USER1, invalidChecklistIds))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_COMPARISON_INVALID_COUNT.getMessage());
     }
@@ -438,10 +439,10 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST;
 
         // when
-        checklistService.updateCustomChecklist(request);
+        checklistService.updateCustomChecklist(USER1, request);
 
         // then
-        assertThat(customChecklistQuestionRepository.findByUser(new User(1L, "방방이", "bang-ggood@gmail.com")))
+        assertThat(customChecklistQuestionRepository.findByUser(USER1))
                 .hasSize(request.questionIds().size());
     }
 
@@ -452,7 +453,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_EMPTY;
 
         // when & then
-        assertThatThrownBy(() -> checklistService.updateCustomChecklist(request, USER1))
+        assertThatThrownBy(() -> checklistService.updateCustomChecklist(USER1, request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CUSTOM_CHECKLIST_QUESTION_EMPTY.getMessage());
     }
@@ -464,7 +465,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED;
 
         // when & then
-        assertThatThrownBy(() -> checklistService.updateCustomChecklist(request, USER1))
+        assertThatThrownBy(() -> checklistService.updateCustomChecklist(USER1, request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
     }
@@ -476,7 +477,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_INVALID;
 
         // when & then
-        assertThatThrownBy(() -> checklistService.updateCustomChecklist(request, USER1))
+        assertThatThrownBy(() -> checklistService.updateCustomChecklist(USER1, request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
     }

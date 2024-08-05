@@ -311,4 +311,13 @@ public class ChecklistService {
             throw new BangggoodException(ExceptionCode.QUESTION_DUPLICATED);
         }
     }
+
+    @Transactional
+    public void deleteChecklistById(long id) {
+        // 사용자 검증 필요
+        if (!checklistRepository.existsById(id)) {
+            throw new BangggoodException(ExceptionCode.CHECKLIST_NOT_FOUND);
+        }
+        checklistRepository.deleteById(id);
+    }
 }

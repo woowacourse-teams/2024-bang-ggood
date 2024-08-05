@@ -46,9 +46,9 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private RoomRepository roomRepository;
+
     @Autowired
     private CustomChecklistQuestionRepository customChecklistQuestionRepository;
-
 
     @DisplayName("체크리스트 방 정보 작성 성공")
     @Test
@@ -313,5 +313,28 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 
     public static Checklist createChecklist(User user, Room room) {
         return new Checklist(user, room, 1000, 60, 24, "방끗부동산");
+    }
+
+    @DisplayName("체크리스트 삭제 성공")
+    @Test
+    void deleteChecklistById() {
+        // given
+        roomRepository.save(RoomFixture.ROOM_1);
+        Checklist checklist = checklistRepository.save(ChecklistFixture.checklist);
+
+        // when
+        checklistService.deleteChecklistById(checklist.getId());
+
+        // then
+        assertThat(checklistRepository.existsById(checklist.getId().longValue())).isFalse();
+    }
+
+    @DisplayName("체크리스트 삭제 실패")
+    @Test
+    void deleteChecklistById_notFound_exception() {
+        // given & when & then
+       assertThatThrownBy(() -> checklistService.deleteChecklistById(-1))
+               .isInstanceOf(BangggoodException.class)
+               .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
     }
 }

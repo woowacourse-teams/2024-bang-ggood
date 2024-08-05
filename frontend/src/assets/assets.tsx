@@ -16,9 +16,9 @@ import FaceIconBadGray from '@/assets/icons/face-icon/face-icon-bad-gray.svg';
 import FaceIconBad from '@/assets/icons/face-icon/face-icon-bad.svg';
 import FaceIconGoodGray from '@/assets/icons/face-icon/face-icon-good-gray.svg';
 import FaceIconGood from '@/assets/icons/face-icon/face-icon-good.svg';
+import FaceIconNone from '@/assets/icons/face-icon/face-icon-none.svg';
 import FaceIconSosoGray from '@/assets/icons/face-icon/face-icon-soso-gray.svg';
 import FaceIconSoso from '@/assets/icons/face-icon/face-icon-soso.svg';
-
 /* logos */
 import ChecklistLogoActive from '@/assets/icons/footer-icon/checklist-logo-active.svg';
 import ChecklistLogo from '@/assets/icons/footer-icon/checklist-logo.svg';
@@ -57,6 +57,7 @@ export {
   FaceIconBadGray,
   FaceIconGood,
   FaceIconGoodGray,
+  FaceIconNone,
   FaceIconSoso,
   FaceIconSosoGray,
   HomeLogo,

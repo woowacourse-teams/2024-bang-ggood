@@ -11,7 +11,7 @@ import java.util.List;
 public class ChecklistFixture {
 
     public static final Checklist checklist = new Checklist(
-            new User(1L, "방방이"),
+            new User(1L, "방방이", "bang-ggood@gmail.com"),
             RoomFixture.ROOM_1,
             1000, 50, 12, "방끗공인중개사"
     );

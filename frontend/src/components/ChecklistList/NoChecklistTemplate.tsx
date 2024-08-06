@@ -10,6 +10,7 @@ const NoChecklistTemplate = () => {
   const handleMoveNewChecklist = () => {
     navigate(ROUTE_PATH.checklistNew);
   };
+
   return (
     <S.Container>
       <S.TextBox>

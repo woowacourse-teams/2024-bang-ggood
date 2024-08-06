@@ -25,7 +25,7 @@ const FaceIcon = ({ emotion, isFilled = false, ...rest }: FaceIconProps) => {
       {emotion === 'SOSO' && !isFilled && <FaceIconSosoGray {...rest} />}
       {emotion === 'BAD' && isFilled && <FaceIconBad {...rest} />}
       {emotion === 'BAD' && !isFilled && <FaceIconBadGray {...rest} />}
-      {emotion === null && <FaceIconNone {...rest} />}
+      {emotion === 'NONE' && <FaceIconNone {...rest} />}
     </>
   );
 };

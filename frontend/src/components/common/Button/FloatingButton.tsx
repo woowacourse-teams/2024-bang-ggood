@@ -95,6 +95,10 @@ const S = {
     transform: translateX(-45%);
     max-width: 600px;
     justify-content: flex-end;
+
+    @media (min-width: ${({ theme }) => theme.viewport.MOBILE}px) {
+      padding-right: 20px;
+    }
   `,
   Button: styled.button<{ size: Size; color: Color }>`
     display: flex;

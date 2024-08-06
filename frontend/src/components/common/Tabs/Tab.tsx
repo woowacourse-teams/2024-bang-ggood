@@ -14,7 +14,7 @@ const Tab = ({ id, onMoveTab, name, active, isCompleted }: TabProps) => {
   return (
     <S.Container key={id} onClick={() => onMoveTab(id)} active={active}>
       {name}
-      {!isCompleted && <S.UncompletedIndicator />}
+      {!isCompleted && isCompleted !== null && <S.UncompletedIndicator />}
     </S.Container>
   );
 };

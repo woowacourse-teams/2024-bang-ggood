@@ -1,8 +1,8 @@
-package com.bang_ggood.user.service;
+package com.bang_ggood.auth.service;
 
-import com.bang_ggood.user.dto.request.OauthLoginRequest;
-import com.bang_ggood.user.dto.response.OauthInfoResponse;
-import com.bang_ggood.user.dto.response.OauthTokenResponse;
+import com.bang_ggood.auth.dto.request.OauthLoginRequest;
+import com.bang_ggood.auth.dto.response.OauthInfoApiResponse;
+import com.bang_ggood.auth.dto.response.OauthTokenResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -27,8 +27,8 @@ public class OauthClient {
             @Value("${kakao.user_get_uri}") String userInfoRequestUri,
             @Value("${kakao.grant_type}") String grantType,
             @Value("${kakao.client_id}") String clientId,
-            @Value("${kakao.redirect_uri}")String redirectUrl,
-            @Value("${kakao.client_secret}")String clientSecret) {
+            @Value("${kakao.redirect_uri}") String redirectUrl,
+            @Value("${kakao.client_secret}") String clientSecret) {
         this.restClient = restClient;
         this.tokenRequestUri = tokenRequestUri;
         this.userInfoRequestUri = userInfoRequestUri;
@@ -38,14 +38,14 @@ public class OauthClient {
         this.clientSecret = clientSecret;
     }
 
-    public OauthInfoResponse requestOauthInfo(OauthLoginRequest request) {
+    public OauthInfoApiResponse requestOauthInfo(OauthLoginRequest request) {
         OauthTokenResponse oauthTokenResponse = requestToken(request);
 
         return restClient.get()
                 .uri(userInfoRequestUri)
                 .header("Authorization", "Bearer " + oauthTokenResponse.access_token())
                 .retrieve()
-                .body(OauthInfoResponse.class);
+                .body(OauthInfoApiResponse.class);
     }
 
     private OauthTokenResponse requestToken(OauthLoginRequest request) {

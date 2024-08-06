@@ -5,9 +5,6 @@ import com.bang_ggood.category.domain.CategoryPriority;
 import com.bang_ggood.category.dto.request.CategoryPriorityCreateRequest;
 import com.bang_ggood.category.dto.response.CategoriesReadResponse;
 import com.bang_ggood.category.dto.response.CategoryReadResponse;
-import com.bang_ggood.category.dto.response.CategoriesReadResponse;
-import com.bang_ggood.category.dto.request.CategoryPriorityCreateRequest;
-import com.bang_ggood.category.dto.response.CategoryReadResponse;
 import com.bang_ggood.category.repository.CategoryPriorityRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.user.domain.User;
@@ -32,8 +29,7 @@ public class CategoryService {
     }
 
     @Transactional
-    public void createCategoriesPriority(CategoryPriorityCreateRequest request) {
-        User user = new User(1L, "방방이");
+    public void createCategoriesPriority(User user, CategoryPriorityCreateRequest request) {
         validate(request);
         List<CategoryPriority> categoryPriorities = request.categoryIds().stream()
                 .map(id -> new CategoryPriority(id, user))
@@ -65,7 +61,9 @@ public class CategoryService {
         request.categoryIds().stream()
                 .filter(id -> !Category.contains(id))
                 .findAny()
-                .ifPresent(id -> { throw new BangggoodException(CATEGORY_NOT_FOUND); });
+                .ifPresent(id -> {
+                    throw new BangggoodException(CATEGORY_NOT_FOUND);
+                });
     }
 
     public CategoriesReadResponse readCategories() {

@@ -27,6 +27,10 @@ public abstract class BaseEntity {
         return modifiedAt;
     }
 
+    public void delete() {
+        this.deleted = true;
+    }
+
     public boolean isDeleted() {
         return deleted;
     }

@@ -5,6 +5,9 @@ import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.category.dto.request.CategoryPriorityCreateRequest;
 import com.bang_ggood.category.dto.response.CategoriesReadResponse;
 import com.bang_ggood.exception.BangggoodException;
+import com.bang_ggood.user.UserFixture;
+import com.bang_ggood.user.repository.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,13 @@ class CategoryServiceTest extends IntegrationTestSupport {
 
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    UserRepository userRepository;
+
+    @BeforeEach
+    void setUp() {
+        userRepository.save(UserFixture.USER1);
+    }
 
     @DisplayName("카테고리 우선순위 저장 성공")
     @Test
@@ -29,7 +39,7 @@ class CategoryServiceTest extends IntegrationTestSupport {
         CategoryPriorityCreateRequest request = new CategoryPriorityCreateRequest(List.of(1, 2, 3));
 
         // when && then
-        assertThatCode(() -> categoryService.createCategoriesPriority(request))
+        assertThatCode(() -> categoryService.createCategoriesPriority(UserFixture.USER1, request))
                 .doesNotThrowAnyException();
     }
 
@@ -40,7 +50,7 @@ class CategoryServiceTest extends IntegrationTestSupport {
         CategoryPriorityCreateRequest request = new CategoryPriorityCreateRequest(List.of(999));
 
         // when && then
-        assertThatThrownBy(() -> categoryService.createCategoriesPriority(request))
+        assertThatThrownBy(() -> categoryService.createCategoriesPriority(UserFixture.USER1, request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(CATEGORY_NOT_FOUND.getMessage());
     }
@@ -52,7 +62,7 @@ class CategoryServiceTest extends IntegrationTestSupport {
         CategoryPriorityCreateRequest request = new CategoryPriorityCreateRequest(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9));
 
         // when && then
-        assertThatThrownBy(() -> categoryService.createCategoriesPriority(request))
+        assertThatThrownBy(() -> categoryService.createCategoriesPriority(UserFixture.USER1, request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(CATEGORY_PRIORITY_INVALID_COUNT.getMessage());
     }
@@ -64,7 +74,7 @@ class CategoryServiceTest extends IntegrationTestSupport {
         CategoryPriorityCreateRequest request = new CategoryPriorityCreateRequest(List.of(1, 1));
 
         // when && then
-        assertThatThrownBy(() -> categoryService.createCategoriesPriority(request))
+        assertThatThrownBy(() -> categoryService.createCategoriesPriority(UserFixture.USER1, request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(CATEGORY_DUPLICATED.getMessage());
     }

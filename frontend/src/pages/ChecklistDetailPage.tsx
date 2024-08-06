@@ -33,7 +33,7 @@ const ChecklistDetailPage = () => {
 
   return (
     <>
-      <Header left={<Header.Backward />} center={<Header.Text>{checklist?.room.name}</Header.Text>} />
+      <Header left={<Header.Backward />} center={<Header.Text>{checklist?.room.roomName}</Header.Text>} />
       <Layout bgColor={theme.palette.grey100}>
         <S.Wrapper>
           <RoomInfoSection room={checklist?.room} score={checklist?.score} createdAt={checklist?.createdAt} />

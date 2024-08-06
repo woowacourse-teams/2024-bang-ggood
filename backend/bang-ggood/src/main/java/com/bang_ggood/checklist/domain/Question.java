@@ -74,6 +74,13 @@ public enum Question {
                 .toList();
     }
 
+    public static List<ChecklistQuestion> filterWithUnselectedGrade(Category category,
+                                                                    List<ChecklistQuestion> questions) {
+        return questions.stream()
+                .filter(question -> question.getQuestion().isCategory(category))
+                .toList();
+    }
+
     public static List<Question> findQuestionsByCategory(Category category) {
         return Arrays.stream(values())
                 .filter(question -> question.getCategory().equals(category))

@@ -86,6 +86,7 @@ const config = {
                       },
                     },
                   },
+                  'prefixIds',
                 ],
               },
             },

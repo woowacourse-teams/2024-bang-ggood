@@ -4,8 +4,8 @@ import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
 import ModalFooter from '@/components/_common/Modal/ModalFooter';
 import OptionButton from '@/components/_common/OptionButton/OptionButton';
-import { OPTION_COUNT } from '@/components/_common/OptionButton/OptionIcon';
 import OptionModalInfoBox from '@/components/NewChecklist/OptionModal/OptionModalInfoBox';
+import { OPTIONS } from '@/constants/options';
 import { flexColumn } from '@/styles/common';
 
 interface Props {
@@ -18,8 +18,6 @@ const OptionModal = ({ isOpen, setIsOpen }: Props) => {
     setIsOpen(false);
   };
 
-  const optionCounts = new Array(OPTION_COUNT).fill(0).map((e, i) => i + 1);
-
   return (
     <Modal position={'center'} size={'small'} isOpen={isOpen} onClose={onCloseModal} hasCloseButton={true}>
       <Modal.header title={'방에 포함된 옵션을 선택해주세요.'}></Modal.header>
@@ -27,8 +25,8 @@ const OptionModal = ({ isOpen, setIsOpen }: Props) => {
         <S.FlexBoxColumn>
           <OptionModalInfoBox />
           <S.OptionContainer>
-            {optionCounts.map(optionId => (
-              <OptionButton optionId={optionId} key={optionId} />
+            {OPTIONS.map(option => (
+              <OptionButton option={option} key={option.id} />
             ))}
           </S.OptionContainer>
         </S.FlexBoxColumn>

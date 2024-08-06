@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
 import Checkbox from '@/components/_common/Checkbox/Checkbox';
-import { OPTION_COUNT } from '@/components/_common/OptionButton/OptionIcon';
 import SelectionCounter from '@/components/_common/SelectionCounter/SelectionCounter';
+import { OPTION_COUNT } from '@/constants/options';
 import useOptionStore from '@/store/useOptionStore';
 import { flexCenter, flexSpaceBetween, title4 } from '@/styles/common';
 import theme from '@/styles/theme';

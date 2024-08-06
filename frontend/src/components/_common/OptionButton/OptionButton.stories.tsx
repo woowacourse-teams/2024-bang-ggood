@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import OptionButton from '@/components/_common/OptionButton/OptionButton';
+import { OPTIONS } from '@/constants/options';
 
 const meta = {
   title: 'components/OptionButton',
@@ -21,5 +22,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: { optionId: 1 },
+  args: { option: OPTIONS[0] },
 };

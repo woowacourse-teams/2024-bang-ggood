@@ -8,6 +8,7 @@ import Layout from '@/components/_common/layout/Layout';
 import ChecklistAnswerSection from '@/components/ChecklistDetail/ChecklistAnswerSection';
 import RoomInfoSection from '@/components/ChecklistDetail/RoomInfoSection';
 import DeleteModal from '@/components/DeleteModal';
+import { ROUTE_PATH } from '@/constants/routePath';
 import useModalOpen from '@/hooks/useModalOpen';
 import theme from '@/styles/theme';
 import { ChecklistInfo } from '@/types/checklist';
@@ -30,7 +31,6 @@ const ChecklistDetailPage = () => {
       setChecklist(checklist);
     };
     fetchChecklist();
-    modalOpen();
   }, [checklistId]);
 
   // TODO: fetch 시 로딩 상태일 때 스켈레톤처리. 성공할 떄만 return 문 보여주는 로직이 필요
@@ -41,7 +41,7 @@ const ChecklistDetailPage = () => {
   const handleDelete = async () => {
     // await deleteChecklist(Number(checklistId));
     modalClose();
-    // navigate(ROUTE_PATH.checklistList);
+    navigate(ROUTE_PATH.checklistList);
   };
 
   return (

@@ -15,13 +15,12 @@ class UserRepositoryTest extends IntegrationTestSupport {
     @Autowired
     private UserRepository userRepository;
 
-    @DisplayName("유저 조회 성공 : 이메일로 유저 조회할 때")
+    @DisplayName("유저 이메일 조회 성공 : 유저 삭제 후 유저를 조회하면(논리적 삭제) 조회되지 않는다.")
     @Test
     void findByEmail() {
         // given
         User user = userRepository.save(USER1);
-        user.delete();
-        userRepository.save(user);
+        userRepository.deleteByUser(user);
 
         // when
         Optional<User> findUser = userRepository.findByEmail(user.getEmail());
@@ -29,5 +28,4 @@ class UserRepositoryTest extends IntegrationTestSupport {
         // then
         Assertions.assertThat(findUser).isEmpty();
     }
-
 }

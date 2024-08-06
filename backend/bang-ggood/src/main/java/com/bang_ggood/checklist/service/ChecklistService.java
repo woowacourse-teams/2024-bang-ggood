@@ -126,8 +126,7 @@ public class ChecklistService {
     }
 
     @Transactional
-    public ChecklistQuestionsResponse readChecklistQuestions() {
-        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
+    public ChecklistQuestionsResponse readChecklistQuestions(User user) {
         List<CustomChecklistQuestion> customChecklistQuestions = customChecklistQuestionRepository.findByUser(user);
 
         Map<Category, List<Question>> categoryQuestions = customChecklistQuestions.stream()
@@ -355,12 +354,11 @@ public class ChecklistService {
     }
 
     @Transactional
-    public void updateCustomChecklist(CustomChecklistUpdateRequest request) {
+    public void updateCustomChecklist(User user, CustomChecklistUpdateRequest request) {
         List<Integer> questionIds = request.questionIds();
         validateCustomChecklistQuestionsIsNotEmpty(questionIds);
         validateCustomChecklistQuestionsDuplication(questionIds);
 
-        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
         customChecklistQuestionRepository.deleteAllByUser(user);
 
         List<CustomChecklistQuestion> customChecklistQuestions = questionIds.stream()

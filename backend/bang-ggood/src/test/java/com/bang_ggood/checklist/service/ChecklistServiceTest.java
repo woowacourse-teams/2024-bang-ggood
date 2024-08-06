@@ -35,6 +35,7 @@ import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_U
 import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED;
 import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_EMPTY;
 import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_INVALID;
+import static com.bang_ggood.user.UserFixture.USER1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -137,8 +138,11 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @DisplayName("체크리스트 질문 조회 성공")
     @Test
     void readChecklistQuestions() {
+        // TODO : 유저 생성 시 default 질문을 DB에 저장하는 기능 추가
+        checklistService.updateCustomChecklist(USER1,
+                new CustomChecklistUpdateRequest(List.of(1, 4, 6, 7, 8, 12, 18, 19, 23, 25, 31)));
         // given & when
-        ChecklistQuestionsResponse checklistQuestionsResponse = checklistService.readChecklistQuestions();
+        ChecklistQuestionsResponse checklistQuestionsResponse = checklistService.readChecklistQuestions(USER1);
 
         // then // Category.OPTION does not have default question
         assertThat(checklistQuestionsResponse.categories().size()).isEqualTo(Category.values().length - 1);
@@ -287,11 +291,10 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void readChecklistsComparison_invalidIdCount() {
         // given
-        User user1 = UserFixture.USER1;
         List<Long> invalidChecklistIds = List.of(1L, 2L, 3L, 4L);
 
         // when & then
-        assertThatCode(() -> checklistService.readChecklistsComparison(user1, invalidChecklistIds))
+        assertThatCode(() -> checklistService.readChecklistsComparison(USER1, invalidChecklistIds))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_COMPARISON_INVALID_COUNT.getMessage());
     }
@@ -436,10 +439,10 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST;
 
         // when
-        checklistService.updateCustomChecklist(request);
+        checklistService.updateCustomChecklist(USER1, request);
 
         // then
-        assertThat(customChecklistQuestionRepository.findByUser(new User(1L, "방방이", "bang-ggood@gmail.com")))
+        assertThat(customChecklistQuestionRepository.findByUser(USER1))
                 .hasSize(request.questionIds().size());
     }
 
@@ -450,7 +453,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_EMPTY;
 
         // when & then
-        assertThatThrownBy(() -> checklistService.updateCustomChecklist(request))
+        assertThatThrownBy(() -> checklistService.updateCustomChecklist(USER1, request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CUSTOM_CHECKLIST_QUESTION_EMPTY.getMessage());
     }
@@ -462,7 +465,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED;
 
         // when & then
-        assertThatThrownBy(() -> checklistService.updateCustomChecklist(request))
+        assertThatThrownBy(() -> checklistService.updateCustomChecklist(USER1, request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
     }
@@ -474,7 +477,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_INVALID;
 
         // when & then
-        assertThatThrownBy(() -> checklistService.updateCustomChecklist(request))
+        assertThatThrownBy(() -> checklistService.updateCustomChecklist(USER1, request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
     }

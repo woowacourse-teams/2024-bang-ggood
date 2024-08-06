@@ -1,5 +1,6 @@
 package com.bang_ggood.checklist.controller;
 
+import com.bang_ggood.auth.config.AuthPrincipal;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.net.URI;
 import java.util.List;
 
+
 @RestController
 public class ChecklistController {
 
@@ -38,44 +40,42 @@ public class ChecklistController {
     }
 
     @GetMapping("/checklists/questions")
-    public ResponseEntity<ChecklistQuestionsResponse> readChecklistQuestions() {
-        return ResponseEntity.ok(checklistService.readChecklistQuestions());
+    public ResponseEntity<ChecklistQuestionsResponse> readChecklistQuestions(@AuthPrincipal User user) {
+        return ResponseEntity.ok(checklistService.readChecklistQuestions(user));
     }
 
     @GetMapping("/checklists/{id}")
-    public ResponseEntity<SelectedChecklistResponse> readChecklistById(@PathVariable("id") long id) {
-        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
+    public ResponseEntity<SelectedChecklistResponse> readChecklistById(@AuthPrincipal User user, @PathVariable("id") long id) {
         return ResponseEntity.ok(checklistService.readChecklistById(user, id));
     }
 
     @GetMapping("/checklists")
-    public ResponseEntity<UserChecklistsPreviewResponse> readUserChecklistsPreview() {
-        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
+    public ResponseEntity<UserChecklistsPreviewResponse> readUserChecklistsPreview(@AuthPrincipal User user) {
         return ResponseEntity.ok(checklistService.readUserChecklistsPreview(user));
     }
 
     @GetMapping("/checklists/comparison")
-    public ResponseEntity<ChecklistsWithScoreReadResponse> readChecklistsComparison(
-            @RequestParam("id") List<Long> checklistIds) {
-        User user = new User(1L, "방끗", "bang-ggood@gmail.com");
+    public ResponseEntity<ChecklistsWithScoreReadResponse> readChecklistsComparison(@AuthPrincipal User user, @RequestParam("id") List<Long> checklistIds) {
         return ResponseEntity.ok(checklistService.readChecklistsComparison(user, checklistIds));
     }
 
     @PutMapping("/checklists/{id}")
-    public ResponseEntity<Void> updateChecklistById(@PathVariable("id") long id, @Valid @RequestBody ChecklistRequest checklistRequest) {
-        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
+    public ResponseEntity<Void> updateChecklistById(
+            @AuthPrincipal User user,
+            @PathVariable("id") long id,
+            @Valid @RequestBody ChecklistRequest checklistRequest) {
         checklistService.updateChecklistById(user, id, checklistRequest);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/custom-checklist")
-    public ResponseEntity<Void> updateCustomChecklist(@RequestBody CustomChecklistUpdateRequest request) {
-        checklistService.updateCustomChecklist(request);
+    public ResponseEntity<Void> updateCustomChecklist(@AuthPrincipal User user, @RequestBody CustomChecklistUpdateRequest request) {
+        checklistService.updateCustomChecklist(user, request);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/checklists/{id}")
-    public ResponseEntity<Void> deleteChecklistById(@PathVariable("id") long id) {
+    public ResponseEntity<Void> deleteChecklistById(@AuthPrincipal User user, @PathVariable("id") long id) {
         checklistService.deleteChecklistById(id);
         return ResponseEntity.noContent().build();
     }

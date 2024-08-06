@@ -4,7 +4,6 @@ export const BASE_URL = API_URL;
 
 export const ENDPOINT = {
   /* checklist */
-  CHECKLIST: '/checklists',
   CHECKLISTS: '/checklists',
   CHECKLIST_QUESTION: '/checklists/questions',
   CHECKLIST_ALL_QUESTION: '/checklists/all-questions',

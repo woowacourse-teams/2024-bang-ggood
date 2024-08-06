@@ -53,6 +53,12 @@ const text = {
   },
 };
 
+const viewport = {
+  MOBILE: 576,
+  TABLET: 768,
+  DESKTOP: 769,
+};
+
 /*range: 10~50 */
 const zIndex = {
   FLOATING_BUTTON: 10,
@@ -66,6 +72,7 @@ const theme = {
   palette,
   text,
   zIndex,
+  viewport,
 };
 
 export default theme;

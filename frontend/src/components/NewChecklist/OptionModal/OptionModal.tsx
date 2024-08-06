@@ -21,37 +21,33 @@ const OptionModal = ({ isOpen, setIsOpen }: Props) => {
   const optionCounts = new Array(OPTION_COUNT).fill(0).map((e, i) => i + 1);
 
   return (
-    <div>
-      <Modal position={'center'} isOpen={isOpen} onClose={onCloseModal} hasCloseButton={true}>
-        <Modal.header title={'방에 포함된 옵션을 선택해주세요.'}></Modal.header>
-        <Modal.body>
-          <S.FlexBoxColumn>
-            <OptionModalInfoBox />
-            <S.OptionContainer>
-              {optionCounts.map(optionId => (
-                <OptionButton optionId={optionId} key={optionId} />
-              ))}
-            </S.OptionContainer>
-          </S.FlexBoxColumn>
-        </Modal.body>
-        <ModalFooter>
-          <Button size={'full'} label={'옵션 선택하기'} color="dark" onClick={onCloseModal} />
-        </ModalFooter>
-      </Modal>
-    </div>
+    <Modal position={'center'} isOpen={isOpen} onClose={onCloseModal} hasCloseButton={true}>
+      <Modal.header title={'방에 포함된 옵션을 선택해주세요.'}></Modal.header>
+      <Modal.body>
+        <S.FlexBoxColumn>
+          <OptionModalInfoBox />
+          <S.OptionContainer>
+            {optionCounts.map(optionId => (
+              <OptionButton optionId={optionId} key={optionId} />
+            ))}
+          </S.OptionContainer>
+        </S.FlexBoxColumn>
+      </Modal.body>
+      <ModalFooter>
+        <Button size={'full'} label={'옵션 선택하기'} color="dark" onClick={onCloseModal} />
+      </ModalFooter>
+    </Modal>
   );
 };
 
 export default OptionModal;
 
 const OptionContainer = styled.div`
-  display: flex;
-  flex-flow: row;
-  flex-wrap: wrap;
-  gap: 15px;
+  position: grid;
   width: 100%;
 
-  place-items: center;
+  justify-content: center;
+  grid-column: 1fr 1fr 1fr;
 `;
 
 const FlexBoxColumn = styled.div`

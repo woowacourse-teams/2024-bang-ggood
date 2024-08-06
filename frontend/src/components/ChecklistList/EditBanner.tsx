@@ -44,13 +44,6 @@ const S = {
       background-color: ${({ theme }) => theme.palette.yellow300};
     }
   `,
-  Box: styled.div`
-    display: flex;
-    width: 100%;
-    height: 100vh;
-    align-items: center;
-    justify-content: center;
-  `,
   Title: styled.span`
     ${flexCenter}
     ${title3}

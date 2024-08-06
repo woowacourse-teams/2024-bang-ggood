@@ -60,7 +60,7 @@ const ChecklistListPage = () => {
 
   return (
     <>
-      <Header center={<Header.Text>체크리스트</Header.Text>} />{' '}
+      <Header center={<Header.Text>체크리스트</Header.Text>} />
       <S.FlexBox>
         <EditBanner onClick={handleClickMoveEditPage} />
         <CompareBanner onClick={handleClick} />

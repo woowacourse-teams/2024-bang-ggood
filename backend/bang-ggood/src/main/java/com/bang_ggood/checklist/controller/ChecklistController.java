@@ -1,5 +1,6 @@
 package com.bang_ggood.checklist.controller;
 
+import com.bang_ggood.auth.config.AuthPrincipal;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
@@ -45,7 +46,7 @@ public class ChecklistController {
 
     @GetMapping("/checklists/{id}")
     public ResponseEntity<SelectedChecklistResponse> readChecklistById(@AuthPrincipal User user, @PathVariable("id") long id) {
-        return ResponseEntity.ok(checklistService.readChecklistById(id));
+        return ResponseEntity.ok(checklistService.readChecklistById(user, id));
     }
 
     @GetMapping("/checklists")

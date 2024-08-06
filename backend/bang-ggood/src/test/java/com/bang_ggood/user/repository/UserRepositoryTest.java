@@ -20,8 +20,7 @@ class UserRepositoryTest extends IntegrationTestSupport {
     void findByEmail() {
         // given
         User user = userRepository.save(USER1);
-        user.delete();
-        userRepository.save(user);
+        userRepository.deleteByUser(user);
 
         // when
         Optional<User> findUser = userRepository.findByEmail(user.getEmail());

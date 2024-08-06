@@ -7,6 +7,7 @@ import { Plus } from '@/assets/assets';
 import ChecklistPreviewCard from '@/components/ChecklistList/ChecklistPreviewCard';
 import CompareBanner from '@/components/ChecklistList/CompareBanner';
 import EditBanner from '@/components/ChecklistList/EditBanner';
+import NoChecklistTemplate from '@/components/ChecklistList/NoChecklistTemplate';
 import FloatingButton from '@/components/common/Button/FloatingButton';
 import Header from '@/components/common/Header/Header';
 import Layout from '@/components/common/layout/Layout';
@@ -61,16 +62,22 @@ const ChecklistListPage = () => {
     <>
       <Header center={<Header.Text>체크리스트</Header.Text>} />
       <S.FlexBox>
-        <CompareBanner onClick={handleClick} />
         <EditBanner onClick={handleClickMoveEditPage} />
+        <CompareBanner onClick={handleClick} />
       </S.FlexBox>
-      <Layout>
+      <Layout style={{ padding: '0 16px' }}>
         <S.ListBox>
-          {checklistList?.map(checklist => (
-            <Link to={ROUTE_PATH.checklistOne(checklist.checklistId)} key={checklist.checklistId}>
-              <ChecklistPreviewCard checklist={checklist} />
-            </Link>
-          ))}
+          {checklistList.length ? (
+            <>
+              {checklistList?.map(checklist => (
+                <Link to={ROUTE_PATH.checklistOne(checklist.checklistId)} key={checklist.checklistId}>
+                  <ChecklistPreviewCard checklist={checklist} />
+                </Link>
+              ))}
+            </>
+          ) : (
+            <NoChecklistTemplate />
+          )}
         </S.ListBox>
       </Layout>
       <FloatingButton onClick={handleClickFloatingButton}>
@@ -85,6 +92,7 @@ export default ChecklistListPage;
 
 const S = {
   ListBox: styled.div`
+    margin-top: 20px;
     ${flexColumn}
     gap: 8px;
     overflow-y: scroll;

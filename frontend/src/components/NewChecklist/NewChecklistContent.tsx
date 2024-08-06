@@ -1,6 +1,6 @@
 import { useTabContext } from '@/components/common/Tabs/TabContext';
-import NewChecklistInfoTemplate from '@/pages/NewChecklistPage/NewChecklistInfoTemplate';
-import NewChecklistTemplate from '@/pages/NewChecklistPage/NewChecklistTemplate';
+import NewChecklistInfoTemplate from '@/components/NewChecklist/NewChecklistInfoTemplate';
+import NewChecklistTemplate from '@/components/NewChecklist/NewChecklistTemplate';
 import useChecklistStore from '@/store/useChecklistStore';
 import { RoomInfo } from '@/types/room';
 

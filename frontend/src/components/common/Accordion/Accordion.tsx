@@ -8,12 +8,12 @@ import { flexColumn } from '@/styles/common';
 interface Props {
   children?: React.ReactNode;
   width?: string;
+  totalCount: number;
 }
 
-const Accordion = ({ width = '100%', children }: Props) => {
+const Accordion = ({ width = '100%', children, totalCount }: Props) => {
   return (
-    // TODO: 숫자 7 상수처리
-    <AccordionProvider count={7}>
+    <AccordionProvider count={totalCount}>
       <S.Container width={width}>{children}</S.Container>
     </AccordionProvider>
   );

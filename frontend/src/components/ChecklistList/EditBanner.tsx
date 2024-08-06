@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { PencilIcon } from '@/assets/assets';
-import { title3 } from '@/styles/common';
+import { flexCenter, title3 } from '@/styles/common';
 
 interface Props {
   onClick?: () => void;
@@ -16,7 +16,6 @@ const EditBanner = ({ onClick }: Props) => {
         <br />
         커스텀하기
       </S.Title>
-      {/* <ArrowRightYellow /> */}
     </S.Banner>
   );
 };
@@ -31,7 +30,7 @@ const S = {
     height: 75px;
     padding: 16px;
 
-    background-color: ${({ theme }) => theme.palette.green300};
+    background-color: ${({ theme }) => theme.palette.yellow200};
 
     color: ${({ theme }) => theme.palette.black};
     line-height: 1.3;
@@ -42,17 +41,11 @@ const S = {
 
     &:hover,
     &:active {
-      background-color: ${({ theme }) => theme.palette.green500};
+      background-color: ${({ theme }) => theme.palette.yellow300};
     }
   `,
-  Box: styled.div`
-    display: flex;
-    width: 100%;
-    height: 100vh;
-    align-items: center;
-    justify-content: center;
-  `,
   Title: styled.span`
+    ${flexCenter}
     ${title3}
   `,
 };

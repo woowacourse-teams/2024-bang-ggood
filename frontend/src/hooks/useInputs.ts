@@ -6,8 +6,10 @@ const useInputs = <T extends object>(initialValue: T) => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setValues(prev => ({
       ...prev,
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.type === 'number' ? parseInt(event.target.value) : event.target.value,
     }));
+    console.log(event.target.name, event.target.value);
+    console.log(values);
   };
 
   return { values, onChange, setValues };

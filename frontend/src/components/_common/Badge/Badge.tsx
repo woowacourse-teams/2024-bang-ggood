@@ -12,7 +12,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   onClick?: () => void;
 }
 
-const Badge = ({ type = 'short', label, isSelected = false, onClick }: Props) => {
+const Badge = ({ type = 'short', label, isSelected = false, onClick, ...rest }: Props) => {
   const handleClick = () => {
     if (onClick) {
       onClick();
@@ -20,7 +20,7 @@ const Badge = ({ type = 'short', label, isSelected = false, onClick }: Props) =>
   };
 
   return (
-    <S.Button size={type} onClick={handleClick} isSelected={isSelected}>
+    <S.Button size={type} onClick={handleClick} isSelected={isSelected} {...rest}>
       {label}
     </S.Button>
   );

@@ -18,8 +18,8 @@ interface Props {
 }
 const NewChecklistInfoTemplate = ({ roomInfo, onChange: onChangeForForm }: Props) => {
   const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
-
   const [roomStructure, setRoomStructure] = useState('');
+
   const onClickOptionModalOpen = () => setIsOptionModalOpen(true);
 
   const { getSelectedOptionsName } = useOptionStore();
@@ -30,7 +30,7 @@ const NewChecklistInfoTemplate = ({ roomInfo, onChange: onChangeForForm }: Props
         {/* 방이름 */}
         <FormField>
           <FormField.Label label="방 이름" required={true} />
-          <FormField.Input placeholder="" onChange={onChangeForForm} name="deposit" value={roomInfo.deposit} />
+          <FormField.Input placeholder="" onChange={onChangeForForm} name="roomName" value={roomInfo.roomName} />
           <FormField.P value="" />
         </FormField>
 
@@ -38,7 +38,7 @@ const NewChecklistInfoTemplate = ({ roomInfo, onChange: onChangeForForm }: Props
         <FormField>
           <S.FlexVertical>
             <FormField.Label label="주소" />
-            <S.FlexHorizontal gap={'3%'}>
+            <S.FlexHorizontal gap="3%">
               <S.CustomInput onChange={onChangeForForm} name="address" value={roomInfo.address} />
               <S.AddressButton isSquare={true} label="주소찾기" size="medium" color="dark" />
             </S.FlexHorizontal>
@@ -56,7 +56,13 @@ const NewChecklistInfoTemplate = ({ roomInfo, onChange: onChangeForForm }: Props
         <FormField>
           <FormField.Label label="보증금 / 월세 (만원)" />
           <S.FlexHorizontal gap={0}>
-            <S.CustomInput placeholder="" onChange={onChangeForForm} name="deposit" value={roomInfo.deposit} />
+            <S.CustomInput
+              placeholder=""
+              onChange={onChangeForForm}
+              type="number"
+              name="deposit"
+              value={roomInfo.deposit}
+            />
             <S.CustomLabel label=" / " />
             <S.CustomInput placeholder="" onChange={onChangeForForm} name="rent" value={roomInfo.rent} />
           </S.FlexHorizontal>
@@ -90,7 +96,7 @@ const NewChecklistInfoTemplate = ({ roomInfo, onChange: onChangeForForm }: Props
         <FormField>
           <FormField.Label label="방 크기" />
           <S.FlexHorizontal>
-            <S.CustomInput placeholder="" onChange={onChangeForForm} name="deposit" value={roomInfo.deposit} />
+            <S.CustomInput placeholder="" onChange={onChangeForForm} name="size" value={roomInfo.size} />
 
             <S.RadioGroup
               label=""
@@ -114,7 +120,7 @@ const NewChecklistInfoTemplate = ({ roomInfo, onChange: onChangeForForm }: Props
         <FormField>
           <FormField.Label label="층수" />
           <S.FlexHorizontal>
-            <S.CustomInput placeholder="" onChange={onChangeForForm} name="deposit" value={roomInfo.deposit} />
+            <S.CustomInput placeholder="" name="floor" value={roomInfo.floor} />
 
             <S.RadioGroup
               label=""

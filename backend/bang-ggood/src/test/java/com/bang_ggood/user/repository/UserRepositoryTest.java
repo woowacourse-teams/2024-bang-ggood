@@ -1,7 +1,8 @@
-package com.bang_ggood.user.repository;
+package com.bang_ggood.user.service;
 
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.user.domain.User;
+import com.bang_ggood.user.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.net.URI;
 import java.util.List;
 
-
 @RestController
 public class ChecklistController {
 

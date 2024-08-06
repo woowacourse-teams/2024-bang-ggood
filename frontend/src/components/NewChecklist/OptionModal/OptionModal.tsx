@@ -21,7 +21,7 @@ const OptionModal = ({ isOpen, setIsOpen }: Props) => {
   const optionCounts = new Array(OPTION_COUNT).fill(0).map((e, i) => i + 1);
 
   return (
-    <Modal position={'center'} isOpen={isOpen} onClose={onCloseModal} hasCloseButton={true}>
+    <Modal position={'center'} size={'small'} isOpen={isOpen} onClose={onCloseModal} hasCloseButton={true}>
       <Modal.header title={'방에 포함된 옵션을 선택해주세요.'}></Modal.header>
       <Modal.body>
         <S.FlexBoxColumn>
@@ -43,11 +43,13 @@ const OptionModal = ({ isOpen, setIsOpen }: Props) => {
 export default OptionModal;
 
 const OptionContainer = styled.div`
-  position: grid;
+  display: grid;
   width: 100%;
+  gap: 10px;
+  place-items: center center;
 
   justify-content: center;
-  grid-column: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
 `;
 
 const FlexBoxColumn = styled.div`

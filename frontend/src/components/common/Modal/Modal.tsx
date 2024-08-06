@@ -10,7 +10,18 @@ import ModalHeader from '@/components/common/Modal/ModalHeader';
 
 type ModalPosition = 'center' | 'bottom';
 
-type ModalSize = 'small' | 'medium' | 'large' | 'full';
+type ModalSize = 'small' | 'large';
+
+const SIZE_MAP = {
+  small: css`
+    max-width: 300px;
+    width: 75%;
+  `,
+  large: css`
+    max-width: 450px;
+    width: 85%;
+  `,
+};
 
 export interface ModalProps extends ComponentPropsWithRef<'dialog'> {
   isOpen: boolean;
@@ -83,6 +94,8 @@ const S = {
     min-height: 150px;
     padding: 12px;
 
+    ${({ $size }) => $size && SIZE_MAP[$size]}
+
     background-color: ${({ theme }) => theme.palette.white};
 
     color: ${({ theme }) => theme.palette.black};
@@ -106,8 +119,8 @@ const positionStyles = {
     top: 50%;
     transform: translate(-50%, -50%);
     border-radius: 8px;
-    width: 100%;
-    max-width: 85%;
+    width: 85%;
+    max-width: 500px;
   `,
   bottom: css`
     bottom: 0;

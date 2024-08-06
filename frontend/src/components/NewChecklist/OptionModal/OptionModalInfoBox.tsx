@@ -32,9 +32,9 @@ const OptionModalInfoBox = () => {
 };
 
 const ButtonContainer = styled.div`
+  width: 90%;
   ${flexSpaceBetween}
   height: 50px;
-
   align-items: center;
 `;
 

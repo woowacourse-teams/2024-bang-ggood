@@ -44,7 +44,8 @@ public class ChecklistController {
 
     @GetMapping("/checklists/{id}")
     public ResponseEntity<SelectedChecklistResponse> readChecklistById(@PathVariable("id") long id) {
-        return ResponseEntity.ok(checklistService.readChecklistById(id));
+        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
+        return ResponseEntity.ok(checklistService.readChecklistById(user, id));
     }
 
     @GetMapping("/checklists")

@@ -168,7 +168,7 @@ public class ChecklistService {
     }
 
     @Transactional
-    public SelectedChecklistResponse readChecklistById(long id) {
+    public SelectedChecklistResponse readChecklistById(User user, long id) {
         Checklist checklist = checklistRepository.getById(id);
         SelectedRoomResponse selectedRoomResponse = SelectedRoomResponse.of(checklist);
 
@@ -179,8 +179,8 @@ public class ChecklistService {
 
         int checklistScore = ChecklistScore.calculateTotalScore(checklist.getQuestions());
 
-        return new SelectedChecklistResponse(selectedRoomResponse, options, checklistScore,
-                selectedCategoryQuestionsResponse);
+        return new SelectedChecklistResponse(checklistScore, checklist.getCreatedAt(), selectedRoomResponse,
+                options, selectedCategoryQuestionsResponse);
     }
 
     private List<SelectedOptionResponse> readOptionsByChecklistId(long checklistId) {
@@ -201,7 +201,7 @@ public class ChecklistService {
     private SelectedCategoryQuestionsResponse readQuestionsByCategory(Category category,
                                                                       List<ChecklistQuestion> checklistQuestions) {
         List<SelectedQuestionResponse> selectedQuestionResponse =
-                Question.filter(category, checklistQuestions).stream()
+                Question.filterWithUnselectedGrade(category, checklistQuestions).stream()
                         .map(SelectedQuestionResponse::of)
                         .toList();
 

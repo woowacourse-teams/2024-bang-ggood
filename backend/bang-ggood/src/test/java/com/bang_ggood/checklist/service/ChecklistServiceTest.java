@@ -139,7 +139,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         checklistRepository.save(ChecklistFixture.checklist);
 
         // when
-        SelectedChecklistResponse selectedChecklistResponse = checklistService.readChecklistById(1L);
+        SelectedChecklistResponse selectedChecklistResponse = checklistService.readChecklistById(UserFixture.USER1, 1L);
 
         // then
         assertAll(
@@ -152,7 +152,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void readChecklistById_invalidChecklistId_exception() {
         // given & when & then
-        assertThatThrownBy(() -> checklistService.readChecklistById(0))
+        assertThatThrownBy(() -> checklistService.readChecklistById(UserFixture.USER1, 0))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
     }

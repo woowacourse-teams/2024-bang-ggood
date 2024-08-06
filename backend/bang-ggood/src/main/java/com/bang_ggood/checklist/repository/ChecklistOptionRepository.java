@@ -5,15 +5,16 @@ import com.bang_ggood.checklist.domain.ChecklistOption;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface ChecklistOptionRepository extends JpaRepository<ChecklistOption, Long> {
 
-    @Query("SELECT co FROM ChecklistOption co " +
-            "WHERE co.checklist.id = :checklistId " +
-            "AND co.deleted = false")
-    List<ChecklistOption> findByChecklistId(Long checklistId);
+    @Query("SELECT co FROM ChecklistOption co "
+            + "where co.checklist.id = :checklistId "
+            + "AND co.deleted = false")
+    List<ChecklistOption> findByChecklistId(@Param("checklistId") long checklistId);
 
     @Query("SELECT COUNT(co) FROM ChecklistOption co " +
             "WHERE co.checklist = :checklist " +

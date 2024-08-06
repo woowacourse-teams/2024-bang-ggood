@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { getChecklistDetail } from '@/apis/checklist';
+import Header from '@/components/_common/Header/Header';
+import Layout from '@/components/_common/layout/Layout';
 import ChecklistAnswerSection from '@/components/ChecklistDetail/ChecklistAnswerSection';
 import RoomInfoSection from '@/components/ChecklistDetail/RoomInfoSection';
-import Header from '@/components/common/Header/Header';
-import Layout from '@/components/common/layout/Layout';
 import theme from '@/styles/theme';
 import { ChecklistInfo } from '@/types/checklist';
 

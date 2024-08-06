@@ -1,5 +1,5 @@
 import ChecklistAnswer from '@/components/ChecklistDetail/CheckListAnswer';
-import Divider from '@/components/common/Divider/Divider';
+import Divider from '@/components/_common/Divider/Divider';
 import { ChecklistCategoryQnA } from '@/types/checklist';
 
 interface Props {

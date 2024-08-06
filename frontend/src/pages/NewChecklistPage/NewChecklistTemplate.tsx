@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { useTabContext } from '@/components/common/Tabs/TabContext';
+import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import ChecklistQuestion from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
 import { ChecklistCategoryQnA, ChecklistQuestionWithAnswer } from '@/types/checklist';
 

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { OPTION_COUNT } from '@/components/common/OptionButton/OptionIcon';
+import { OPTION_COUNT } from '@/components/_common/OptionButton/OptionIcon';
 
 interface OptionState {
   selectedOptions: number[];

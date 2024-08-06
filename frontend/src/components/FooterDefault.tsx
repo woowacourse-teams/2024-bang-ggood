@@ -1,4 +1,4 @@
-import Footer from '@/components/common/Footer/Footer';
+import Footer from '@/components/_common/Footer/Footer';
 import { ROUTE_PATH } from '@/constants/routePath';
 
 const FooterDefault = () => {

@@ -3,9 +3,9 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getChecklistQuestions, postChecklist } from '@/apis/checklist';
-import Button from '@/components/common/Button/Button';
-import Header from '@/components/common/Header/Header';
-import { TabProvider } from '@/components/common/Tabs/TabContext';
+import Button from '@/components/_common/Button/Button';
+import Header from '@/components/_common/Header/Header';
+import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import NewChecklistTab from '@/components/NewChecklist/NewChecklistTab';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useInputs from '@/hooks/useInputs';

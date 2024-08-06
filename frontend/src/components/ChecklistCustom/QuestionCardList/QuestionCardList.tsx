@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import QuestionSelectCard from '@/components/ChecklistCustom/QuestionSelectCard/QuestionSelectCard';
-import Divider from '@/components/common/Divider/Divider';
+import Divider from '@/components/_common/Divider/Divider';
 import { ChecklistQuestionWithIsChecked } from '@/types/checklist';
 
 interface Props {

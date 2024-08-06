@@ -1,4 +1,4 @@
-import { useTabContext } from '@/components/common/Tabs/TabContext';
+import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import NewChecklistInfoTemplate from '@/pages/NewChecklistPage/NewChecklistInfoTemplate';
 import NewChecklistTemplate from '@/pages/NewChecklistPage/NewChecklistTemplate';
 import useChecklistStore from '@/store/useChecklistStore';

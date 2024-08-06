@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { LocationLineIcon } from '@/assets/assets';
-import Badge from '@/components/common/Badge/Badge';
+import Badge from '@/components/_common/Badge/Badge';
 import { MAX_BADGE_DISPLAY_COUNT } from '@/constants/system';
 import { boxShadow, flexCenter, flexColumn, flexRow, flexSpaceBetween, title3 } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';

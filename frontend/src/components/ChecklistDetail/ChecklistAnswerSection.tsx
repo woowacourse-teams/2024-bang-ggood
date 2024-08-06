@@ -1,5 +1,5 @@
+import Accordion from '@/components/_common/Accordion/Accordion';
 import CategoryAccordion from '@/components/ChecklistDetail/CategoryAccordion';
-import Accordion from '@/components/common/Accordion/Accordion';
 import { ChecklistCategoryQnA } from '@/types/checklist';
 
 interface Props {

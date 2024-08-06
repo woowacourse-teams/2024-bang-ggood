@@ -4,10 +4,10 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { getCategory, postCategory } from '@/apis/category';
 import { CloseIcon, LampIcon } from '@/assets/assets';
-import Badge from '@/components/common/Badge/Badge';
-import Button from '@/components/common/Button/Button';
-import Header from '@/components/common/Header/Header';
-import Layout from '@/components/common/layout/Layout';
+import Badge from '@/components/_common/Badge/Badge';
+import Button from '@/components/_common/Button/Button';
+import Header from '@/components/_common/Header/Header';
+import Layout from '@/components/_common/layout/Layout';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useToast from '@/hooks/useToast';
 import { flexColumn, flexRow, title2 } from '@/styles/common';

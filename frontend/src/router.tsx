@@ -7,7 +7,7 @@ import ChecklistDetailPage from '@/pages/ChecklistDetailPage';
 import ChecklistListPage from '@/pages/ChecklistListPage';
 import ErrorPage from '@/pages/ErrorPage';
 import LoginPage from '@/pages/LoginPage';
-import NewChecklistPage from '@/pages/NewChecklistPage/NewChecklistPage';
+import NewChecklistPage from '@/pages/NewChecklistPage';
 import NotFound from '@/pages/NotFound';
 import RoomComparePage from '@/pages/RoomComparePage';
 import RoomCompareSelectPage from '@/pages/RoomCompareSelectPage';

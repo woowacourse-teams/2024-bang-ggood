@@ -25,7 +25,7 @@ const ChecklistAnswer = ({ QuestionAndAnswer }: Props) => {
       <S.Answer>
         <FaceMark>
           <FaceMark.FaceIcon emotion={answer} isFilled={true} />
-          <FaceMark.Footer>{EMOTION_PHARSE[answer ?? 'null']}</FaceMark.Footer>
+          <FaceMark.Footer>{EMOTION_PHARSE[answer]}</FaceMark.Footer>
         </FaceMark>
       </S.Answer>
     </S.Container>

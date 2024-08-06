@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 
+import { ArrowDownSmall, ArrowUpSmall } from '@/assets/assets';
 import { useAccordionContext } from '@/components/_common/Accordion/AccordionContext';
 import { flexCenter, flexSpaceBetween, title2 } from '@/styles/common';
+import theme from '@/styles/theme';
 
 interface Props {
   id: number;
@@ -9,14 +11,22 @@ interface Props {
   closeButton?: React.ReactNode;
   text?: string;
   isMarked?: boolean;
+  markColor?: string;
 }
-const AccordionHeader = ({ id, openButton, closeButton, text, isMarked = true }: Props) => {
+const AccordionHeader = ({
+  id,
+  openButton = <ArrowDownSmall />,
+  closeButton = <ArrowUpSmall />,
+  text,
+  isMarked = true,
+  markColor = theme.palette.yellow500,
+}: Props) => {
   const { isAccordionOpen, handleAccordionOpenChange } = useAccordionContext();
 
   return (
     <S.HeaderContainer onClick={() => handleAccordionOpenChange(id)}>
       <S.FlexBetween>
-        <S.HeaderMark isMarked={isMarked} />
+        <S.HeaderMark isMarked={isMarked} markColor={markColor} />
         <S.HeaderTitle>{text}</S.HeaderTitle>
         <S.OpenBox onClick={() => handleAccordionOpenChange}>
           {isAccordionOpen(id) ? openButton : closeButton}
@@ -55,11 +65,11 @@ const HeaderTitle = styled.div`
   align-items: center;
 `;
 
-const HeaderMark = styled.div<{ isMarked: boolean }>`
+const HeaderMark = styled.div<{ isMarked: boolean; markColor: string }>`
   opacity: ${({ isMarked }) => (isMarked ? 1 : 0)};
   width: 12px;
 
-  background-color: ${({ theme }) => theme.palette.yellow500};
+  background-color: ${({ markColor }) => markColor};
   border-radius: 8px 0 0 8px;
   transition: opacity 0.3s ease;
 `;

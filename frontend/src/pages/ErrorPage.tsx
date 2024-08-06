@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { isRouteErrorResponse, useNavigate, useRouteError } from 'react-router-dom';
 
 import { BangBangIcon } from '@/assets/assets';
-import Header from '@/components/common/Header/Header';
+import Header from '@/components/_common/Header/Header';
 import { flexColumn } from '@/styles/common';
 
 const ErrorPage = () => {

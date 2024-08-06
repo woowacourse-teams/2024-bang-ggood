@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
-import Layout from '@/components/common/layout/Layout';
-import { useTabContext } from '@/components/common/Tabs/TabContext';
+import Layout from '@/components/_common/layout/Layout';
+import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import ChecklistQuestion from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
 import theme from '@/styles/theme';
 import { ChecklistCategoryQnA, ChecklistQuestionWithAnswer } from '@/types/checklist';

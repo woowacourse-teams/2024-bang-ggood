@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 
-import Button from '@/components/common/Button/Button';
-import Modal from '@/components/common/Modal/Modal';
-import ModalFooter from '@/components/common/Modal/ModalFooter';
-import OptionButton from '@/components/common/OptionButton/OptionButton';
-import { OPTION_COUNT } from '@/components/common/OptionButton/OptionIcon';
+import Button from '@/components/_common/Button/Button';
+import Modal from '@/components/_common/Modal/Modal';
+import ModalFooter from '@/components/_common/Modal/ModalFooter';
+import OptionButton from '@/components/_common/OptionButton/OptionButton';
+import { OPTION_COUNT } from '@/components/_common/OptionButton/OptionIcon';
 import OptionModalInfoBox from '@/components/NewChecklist/OptionModal/OptionModalInfoBox';
 import { flexColumn } from '@/styles/common';
 

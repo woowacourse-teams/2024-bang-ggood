@@ -1,5 +1,5 @@
 import QuestionCardList from '@/components/ChecklistCustom/QuestionCardList/QuestionCardList';
-import { useTabContext } from '@/components/common/Tabs/TabContext';
+import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import useChecklistCustomStore from '@/store/useChecklistCustomStore';
 
 const QuestionListTemplate = () => {

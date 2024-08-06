@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
 import { QuestionDot } from '@/assets/assets';
-import Checkbox from '@/components/common/Checkbox/Checkbox';
-import { useTabContext } from '@/components/common/Tabs/TabContext';
+import Checkbox from '@/components/_common/Checkbox/Checkbox';
+import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import useChecklistQuestionUpdate from '@/hooks/useChecklistQuestionUpdate';
 import { flexCenter } from '@/styles/common';
 import { ChecklistQuestionWithIsChecked } from '@/types/checklist';

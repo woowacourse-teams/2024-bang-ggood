@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import { ArrowUpSmall, MemoEmpty, MemoFilled, QuestionDot } from '@/assets/assets';
-import FaceMark from '@/components/common/FaceMark/FaceMark';
-import { useTabContext } from '@/components/common/Tabs/TabContext';
+import FaceMark from '@/components/_common/FaceMark/FaceMark';
+import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import QuestionMemo from '@/components/NewChecklist/ChecklistQuestion/QuestionMemo';
 import { EMOTION_PHARSE, EMOTIONS } from '@/constants/emotion';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';

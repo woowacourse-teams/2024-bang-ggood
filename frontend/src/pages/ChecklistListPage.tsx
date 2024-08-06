@@ -4,13 +4,13 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { getChecklists } from '@/apis/checklist';
 import { Plus } from '@/assets/assets';
+import FloatingButton from '@/components/_common/Button/FloatingButton';
+import Header from '@/components/_common/Header/Header';
+import Layout from '@/components/_common/layout/Layout';
 import ChecklistPreviewCard from '@/components/ChecklistList/ChecklistPreviewCard';
 import CompareBanner from '@/components/ChecklistList/CompareBanner';
 import EditBanner from '@/components/ChecklistList/EditBanner';
 import NoChecklistTemplate from '@/components/ChecklistList/NoChecklistTemplate';
-import FloatingButton from '@/components/common/Button/FloatingButton';
-import Header from '@/components/common/Header/Header';
-import Layout from '@/components/common/layout/Layout';
 import FooterDefault from '@/components/FooterDefault';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { flexColumn } from '@/styles/common';

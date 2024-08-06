@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import Button from '@/components/common/Button/Button';
-import Modal from '@/components/common/Modal/Modal';
+import Button from '@/components/_common/Button/Button';
+import Modal from '@/components/_common/Modal/Modal';
 import loadPostcode from '@/components/NewChecklist/AddressModal/loadPostcode';
 import { Address, Postcode, PostcodeOptions } from '@/types/address';
 

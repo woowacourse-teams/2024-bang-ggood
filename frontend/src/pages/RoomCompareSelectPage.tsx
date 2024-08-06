@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
 import { getChecklists } from '@/apis/checklist';
-import Button from '@/components/common/Button/Button';
-import Header from '@/components/common/Header/Header';
-import Layout from '@/components/common/layout/Layout';
+import Button from '@/components/_common/Button/Button';
+import Header from '@/components/_common/Header/Header';
+import Layout from '@/components/_common/layout/Layout';
 import CompareSelectCard from '@/components/RoomCompare/CompareSelectCard';
 import useRoomCompareStore from '@/store/useRoomCompareStore';
 import { flexRow } from '@/styles/common';

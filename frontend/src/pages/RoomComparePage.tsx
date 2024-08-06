@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { getCompareRooms } from '@/apis/checklist';
-import Header from '@/components/common/Header/Header';
-import Layout from '@/components/common/layout/Layout';
+import Header from '@/components/_common/Header/Header';
+import Layout from '@/components/_common/layout/Layout';
 import CompareCard from '@/components/RoomCompare/CompareCard';
 import { flexRow } from '@/styles/common';
 import { ChecklistCompare } from '@/types/checklist';

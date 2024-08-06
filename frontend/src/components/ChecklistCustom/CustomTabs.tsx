@@ -1,4 +1,4 @@
-import Tabs from '@/components/common/Tabs/Tabs';
+import Tabs from '@/components/_common/Tabs/Tabs';
 import useChecklistCustomStore from '@/store/useChecklistCustomStore';
 
 export const ChecklistCustomTabs = () => {

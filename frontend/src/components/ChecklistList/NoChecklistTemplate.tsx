@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import Button from '@/components/common/Button/Button';
+import Button from '@/components/_common/Button/Button';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { flexCenter } from '@/styles/common';
 

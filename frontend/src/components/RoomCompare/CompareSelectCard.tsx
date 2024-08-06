@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { LocationLineIcon } from '@/assets/assets';
-import Checkbox from '@/components/common/Checkbox/Checkbox';
+import Checkbox from '@/components/_common/Checkbox/Checkbox';
 import { flexColumn, flexRow, flexSpaceBetween } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
 import formattedDate from '@/utils/formattedDate';

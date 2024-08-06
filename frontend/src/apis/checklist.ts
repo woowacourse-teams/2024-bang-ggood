@@ -32,6 +32,11 @@ export const postChecklist = async (answers: ChecklistForm) => {
   return response;
 };
 
+export const deleteChecklist = async (id: number) => {
+  const response = await fetcher.delete({ url: BASE_URL + ENDPOINT.CHECKLIST_ID(id) });
+  return response;
+};
+
 export const getCompareRooms = async ({ id1, id2, id3 }: { id1: number; id2: number; id3?: number }) => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_COMPARE({ id1, id2, id3 }) });
   const data = await response.json();

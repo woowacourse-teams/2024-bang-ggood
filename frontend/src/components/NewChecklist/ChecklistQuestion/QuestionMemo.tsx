@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
-import Button from '@/components/common/Button/Button';
-import { useTabContext } from '@/components/common/Tabs/TabContext';
-import Textarea from '@/components/common/Textarea/Textarea';
+import Button from '@/components/_common/Button/Button';
+import { useTabContext } from '@/components/_common/Tabs/TabContext';
+import Textarea from '@/components/_common/Textarea/Textarea';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';
 import useInput from '@/hooks/useInput';
 

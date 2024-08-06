@@ -31,6 +31,7 @@ import MyPageLogoActive from '@/assets/icons/footer-icon/my-page-logo-active.svg
 import MyPageLogo from '@/assets/icons/footer-icon/my-page-logo.svg';
 
 /* etc */
+import BangBangCryIcon from '@/assets/icons/bang-bang-cry-icon.svg';
 import BangBangIcon from '@/assets/icons/bang-bang-icon.svg';
 import InputRequiredDot from '@/assets/icons/input-required-dot.svg';
 import KakaoLogo from '@/assets/icons/kakao-logo.svg';
@@ -49,6 +50,7 @@ export {
   ArrowRightGreen,
   ArrowRightYellow,
   ArrowUpSmall,
+  BangBangCryIcon,
   BangBangIcon,
   BangGgoodTextIcon,
   CheckIcon,

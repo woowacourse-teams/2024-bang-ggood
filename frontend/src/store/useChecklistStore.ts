@@ -55,7 +55,7 @@ const useChecklistStore = create<ChecklistState>((set, get) => ({
     const { categoryQnA } = get();
     const targetCategory = categoryQnA(targetId);
     if (targetCategory) {
-      return targetCategory.questions.every(question => question.answer !== null);
+      return targetCategory.questions.every(question => question.answer !== 'NONE');
     }
     return false;
   },

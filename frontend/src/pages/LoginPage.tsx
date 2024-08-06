@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { BangBangIcon, KakaoLogo } from '@/assets/assets';
-import Layout from '@/components/common/layout/Layout';
+import Layout from '@/components/_common/layout/Layout';
 import { KAKAO_AUTH_URL } from '@/constants/OAuth';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 

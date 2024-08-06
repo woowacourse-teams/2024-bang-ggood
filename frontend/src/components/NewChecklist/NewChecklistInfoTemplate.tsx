@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import Badge from '@/components/common/Badge/Badge';
-import Button from '@/components/common/Button/Button';
-import FormField from '@/components/common/FormField/FormField';
-import Header from '@/components/common/Header/Header';
-import { InputChangeEvent } from '@/components/common/Input/Input';
-import RadioGroup from '@/components/common/RadioGroup/RadioGroup';
+import Badge from '@/components/_common/Badge/Badge';
+import Button from '@/components/_common/Button/Button';
+import FormField from '@/components/_common/FormField/FormField';
+import Header from '@/components/_common/Header/Header';
+import { InputChangeEvent } from '@/components/_common/Input/Input';
+import RadioGroup from '@/components/_common/RadioGroup/RadioGroup';
 import OptionModal from '@/components/NewChecklist/OptionModal/OptionModal';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 import { RoomInfo, RoomInfoName } from '@/types/room';

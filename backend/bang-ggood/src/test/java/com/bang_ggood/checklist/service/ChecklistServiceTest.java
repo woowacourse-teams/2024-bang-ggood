@@ -24,6 +24,8 @@ import com.bang_ggood.room.domain.Structure;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
+import com.bang_ggood.user.repository.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +60,17 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private ChecklistOptionRepository checklistOptionRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @BeforeEach()
+    public void setUp() {
+        userRepository.save(UserFixture.USER1);
+        roomRepository.save(RoomFixture.ROOM_1);
+        roomRepository.save(RoomFixture.ROOM_2);
+        roomRepository.save(RoomFixture.ROOM_3);
+    }
 
     @DisplayName("체크리스트 방 정보 작성 성공")
     @Test

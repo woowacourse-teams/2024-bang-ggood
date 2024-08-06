@@ -1,8 +1,8 @@
-package com.bang_ggood.user.controller;
+package com.bang_ggood.auth.controller;
 
 import com.bang_ggood.AcceptanceMockTestSupport;
-import com.bang_ggood.user.dto.request.OauthLoginRequest;
-import com.bang_ggood.user.service.UserService;
+import com.bang_ggood.auth.service.AuthService;
+import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -18,13 +18,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class LoginMockE2ETest extends AcceptanceMockTestSupport {
 
     @MockBean
-    UserService userService;
+    AuthService authService;
 
     @DisplayName("로그인 성공")
     @Test
     void login() throws Exception {
         String testToken = "testToken";
-        Mockito.when(userService.login(any(OauthLoginRequest.class))).thenReturn(testToken);
+        Mockito.when(authService.login(any(OauthLoginRequest.class))).thenReturn(testToken);
 
         mockMvc.perform(post("/oauth/login")
                         .contentType(MediaType.APPLICATION_JSON)

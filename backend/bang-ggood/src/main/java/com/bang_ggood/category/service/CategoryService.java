@@ -29,8 +29,7 @@ public class CategoryService {
     }
 
     @Transactional
-    public void createCategoriesPriority(CategoryPriorityCreateRequest request) {
-        User user = new User(1L, "방방이", "bang-ggood@gmail.com");
+    public void createCategoriesPriority(User user, CategoryPriorityCreateRequest request) {
         validate(request);
         List<CategoryPriority> categoryPriorities = request.categoryIds().stream()
                 .map(id -> new CategoryPriority(id, user))

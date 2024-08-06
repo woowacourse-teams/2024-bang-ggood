@@ -8,6 +8,7 @@ import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
+import com.bang_ggood.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,8 +28,12 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     @Autowired
     private RoomRepository roomRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @BeforeEach
     void setUp() {
+        userRepository.save(UserFixture.USER1);
         roomRepository.save(RoomFixture.ROOM_1);
     }
 

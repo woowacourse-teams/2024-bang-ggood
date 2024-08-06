@@ -11,20 +11,20 @@ import java.util.List;
 
 public interface ChecklistOptionRepository extends JpaRepository<ChecklistOption, Long> {
 
-    @Query("SELECT co FROM ChecklistOption co "
-            + "where co.checklist.id = :checklistId "
-            + "AND co.deleted = false")
-    List<ChecklistOption> findByChecklistId(@Param("checklistId") long checklistId);
+    @Query("SELECT co FROM ChecklistOption co " +
+            "WHERE co.checklist.id = :checklistId " +
+            "AND co.deleted = false")
+    List<ChecklistOption> findByChecklistId(@Param("checklistId") Long checklistId);
 
     @Query("SELECT COUNT(co) FROM ChecklistOption co " +
             "WHERE co.checklist = :checklist " +
             "AND co.deleted = false")
-    Integer countByChecklist(Checklist checklist);
+    Integer countByChecklist(@Param("checklist") Checklist checklist);
 
     @Modifying
     @Transactional
     @Query("UPDATE ChecklistOption co "
             + "SET co.deleted = true "
             + "WHERE co.checklist.id = :checklistId")
-    void deleteAllByChecklistId(Long checklistId);
+    void deleteAllByChecklistId(@Param("checklistId") Long checklistId);
 }

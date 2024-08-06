@@ -1,8 +1,8 @@
-package com.bang_ggood.user.service;
+package com.bang_ggood.auth.service;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.user.UserFixture;
-import com.bang_ggood.user.dto.request.OauthLoginRequest;
 import com.bang_ggood.user.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -13,18 +13,17 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import static com.bang_ggood.user.UserFixture.OAUTH_INFO_RESPONSE_USER1;
 import static com.bang_ggood.user.UserFixture.USER1;
 import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
-class UserServiceTest extends IntegrationTestSupport {
+class AuthServiceTest extends IntegrationTestSupport {
 
     @MockBean
     private OauthClient oauthClient;
 
     @Autowired
-    private UserService userService;
+    private AuthService authService;
 
     @Autowired
     private UserRepository userRepository;
@@ -39,7 +38,7 @@ class UserServiceTest extends IntegrationTestSupport {
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2);
 
         // when
-        String token = userService.login(oauthLoginRequest);
+        String token = authService.login(oauthLoginRequest);
 
         // then
         Assertions.assertThat(token).isNotBlank();
@@ -51,10 +50,10 @@ class UserServiceTest extends IntegrationTestSupport {
         // given
         userRepository.save(USER1);
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
-                .thenReturn(OAUTH_INFO_RESPONSE_USER1);
+                .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER1);
 
         // when
-        String token = userService.login(oauthLoginRequest);
+        String token = authService.login(oauthLoginRequest);
 
         // then
         Assertions.assertThat(token).isNotBlank();

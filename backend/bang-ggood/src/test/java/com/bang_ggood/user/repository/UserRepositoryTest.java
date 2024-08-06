@@ -1,33 +1,31 @@
-package com.bang_ggood.user.service;
+package com.bang_ggood.user.repository;
 
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.user.domain.User;
-import com.bang_ggood.user.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Optional;
 
 import static com.bang_ggood.user.UserFixture.USER1;
 
-class JwtTokenProviderTest extends IntegrationTestSupport {
+class UserRepositoryTest extends IntegrationTestSupport {
 
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
     @Autowired
     private UserRepository userRepository;
 
-    @DisplayName("토큰 생성 성공")
+    @DisplayName("유저 이메일 조회 성공 : 유저 삭제 후 유저를 조회하면(논리적 삭제) 조회되지 않는다.")
     @Test
-    void createToken() {
+    void findByEmail() {
         // given
         User user = userRepository.save(USER1);
-        String token = jwtTokenProvider.createToken(user);
+        userRepository.deleteByUser(user);
 
         // when
-        AuthUser authUser = jwtTokenProvider.resolveToken(token);
+        Optional<User> findUser = userRepository.findByEmail(user.getEmail());
 
         // then
-        Assertions.assertThat(authUser.id()).isEqualTo(user.getId());
+        Assertions.assertThat(findUser).isEmpty();
     }
 }

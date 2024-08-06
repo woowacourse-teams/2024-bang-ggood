@@ -1,7 +1,7 @@
-package com.bang_ggood.user.controller;
+package com.bang_ggood.auth.controller;
 
-import com.bang_ggood.user.dto.request.OauthLoginRequest;
-import com.bang_ggood.user.service.UserService;
+import com.bang_ggood.auth.service.AuthService;
+import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -11,24 +11,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UserController {
+public class AuthController {
 
-    public static final String TOKEN_COOKIE_NAME = "token";
-    private final UserService userService;
+    private final AuthService authService;
+    private final CookieProvider cookieProvider;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public AuthController(AuthService authService, CookieProvider cookieProvider) {
+        this.authService = authService;
+        this.cookieProvider = cookieProvider;
     }
 
     @PostMapping("/oauth/login")
     public ResponseEntity<Void> login(@Valid @RequestBody OauthLoginRequest request) {
-        String token = userService.login(request);
-
-        ResponseCookie cookie = ResponseCookie
-                .from(TOKEN_COOKIE_NAME, token)
-                .httpOnly(true)
-                .path("/")
-                .build();
+        String token = authService.login(request);
+        ResponseCookie cookie = cookieProvider.createCookie(token);
 
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).build();
     }

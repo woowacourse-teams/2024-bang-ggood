@@ -278,6 +278,7 @@ public class ChecklistService {
         return Arrays.stream(Category.values())
                 .map(category -> CategoryScoreReadResponse.of(category,
                         ChecklistScore.calculateCategoryScore(category, questions)))
+                .filter(response -> response.score() != 0)
                 .toList();
     }
 

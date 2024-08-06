@@ -54,71 +54,66 @@ Modal.body = ModalBody;
 
 export default Modal;
 
-const ModalWrapper = styled.div<{ open: boolean }>`
-  display: ${({ open }) => (open ? 'flex' : 'none')};
-  position: fixed;
-  z-index: ${({ theme }) => theme.zIndex.MODAL};
-  width: 100%;
-  height: 100vh;
-`;
+const S = {
+  ModalWrapper: styled.div<{ open: boolean }>`
+    display: ${({ open }) => (open ? 'flex' : 'none')};
+    position: fixed;
+    z-index: ${({ theme }) => theme.zIndex.MODAL};
 
-const ModalBackground = styled.div`
-  position: fixed;
-  inset: 0;
-  background: rgb(0 0 0 / 35%);
-`;
+    width: 100%;
+    height: 100vh;
+  `,
+  ModalBackground: styled.div`
+    position: fixed;
+    inset: 0;
+    background: rgb(0 0 0 / 35%);
+  `,
+  ModalOuter: styled.div<{
+    $position: ModalPosition;
+    $size: ModalSize;
+  }>`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 
-const positionMapper = (position: ModalPosition) => {
-  switch (position) {
-    case 'center':
-      return css({
-        top: '50%',
-        transform: 'translate(-50%, -50%)',
-        borderRadius: '8px',
-        width: '100%',
-        maxWidth: '85%',
-      });
-    case 'bottom':
-      return css({
-        bottom: '0px',
-        transform: 'translate(-50%, 0%)',
-        borderRadius: '16px 16px 0px 0px',
-        width: '100%',
-        boxSizing: 'border-box',
-      });
-  }
+    position: fixed;
+    left: 50%;
+    ${({ $position }) => positionStyles[$position]}
+
+    min-height: 150px;
+    padding: 12px;
+
+    background-color: ${({ theme }) => theme.palette.white};
+
+    color: ${({ theme }) => theme.palette.black};
+  `,
+  CloseButton: styled.button`
+    display: flex;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  `,
 };
 
-const ModalOuter = styled.div<{
-  $position: ModalPosition;
-  $size: ModalSize;
-}>`
-  display: flex;
-  flex-direction: column;
-
-  position: fixed;
-  left: 50%;
-  ${({ $position }) => positionMapper($position)}
-
-  min-height: 150px;
-  padding: 12px;
-
-  background-color: ${({ theme }) => theme.palette.white};
-
-  color: ${({ theme }) => theme.palette.black};
-`;
-
-const CloseButton = styled.button`
-  display: flex;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 30px;
-  height: 30px;
-  padding: 0;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-`;
-
-const S = { ModalWrapper, ModalBackground, ModalOuter, CloseButton };
+const positionStyles = {
+  center: css`
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 85%;
+  `,
+  bottom: css`
+    bottom: 0;
+    transform: translate(-50%, 0%);
+    border-radius: 16px 16px 0 0;
+    width: 100%;
+    box-sizing: border-box;
+  `,
+};

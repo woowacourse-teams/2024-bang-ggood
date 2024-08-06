@@ -1,12 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import App from '@/App';
 import { ROUTE_PATH } from '@/constants/routePath';
-import ErrorBoundary from '@/ErrorBoundary';
 import CategoryChoosePage from '@/pages/CategoryChoosePage';
 import ChecklistCustomPage from '@/pages/ChecklistCustomPage';
 import ChecklistDetailPage from '@/pages/ChecklistDetailPage';
 import ChecklistListPage from '@/pages/ChecklistListPage';
+import ErrorPage from '@/pages/ErrorPage';
 import LoginPage from '@/pages/LoginPage';
 import NewChecklistPage from '@/pages/NewChecklistPage/NewChecklistPage';
 import NotFound from '@/pages/NotFound';
@@ -15,13 +14,11 @@ import RoomCompareSelectPage from '@/pages/RoomCompareSelectPage';
 
 const router = createBrowserRouter([
   {
-    element: <App />,
-    path: ROUTE_PATH.root,
-    ErrorBoundary: ErrorBoundary,
+    errorElement: <ErrorPage />,
     children: [
       {
         element: <CategoryChoosePage />,
-        path: '',
+        path: ROUTE_PATH.root,
       },
       {
         element: <NewChecklistPage />,

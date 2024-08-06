@@ -1,10 +1,22 @@
 import styled from '@emotion/styled';
+import { isRouteErrorResponse, useNavigate, useRouteError } from 'react-router-dom';
 
 import { BangBangIcon } from '@/assets/assets';
 import Header from '@/components/common/Header/Header';
 import { flexColumn } from '@/styles/common';
 
-const Error = () => {
+const ErrorPage = () => {
+  const error = useRouteError();
+  const navigate = useNavigate();
+
+  const reset = () => {
+    navigate('/', { replace: true });
+  };
+
+  if (isRouteErrorResponse(error)) {
+    return <div onClick={reset}>라우터 에러: {error.statusText}</div>;
+  }
+
   return (
     <>
       <Header left={<Header.Logo />} />
@@ -13,13 +25,17 @@ const Error = () => {
         <S.TextWrapper>
           <S.Text> 에러가 발생했어요 ;)</S.Text>
           <S.Text> 재접속 해주세요~!! ☺️ </S.Text>
+          <S.Text>에러유형: {isRouteErrorResponse(error) ? `라우터 에러 - ${error.statusText}` : `일반 에러`} </S.Text>
+          <S.Text onClick={reset} $cursor>
+            홈페이지로 돌아가기
+          </S.Text>
         </S.TextWrapper>
       </S.Wrapper>
     </>
   );
 };
 
-export default Error;
+export default ErrorPage;
 
 const S = {
   Wrapper: styled.div`
@@ -31,9 +47,10 @@ const S = {
     justify-content: center;
     align-items: center;
   `,
-  Text: styled.div`
+  Text: styled.div<{ $cursor?: boolean }>`
     font-weight: ${({ theme }) => theme.text.weight.bold};
     font-size: ${({ theme }) => theme.text.size.large};
+    ${({ $cursor }) => $cursor && `cursor:pointer;`}
   `,
   TextWrapper: styled.div`
     ${flexColumn}

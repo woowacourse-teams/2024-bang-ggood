@@ -13,10 +13,6 @@ const ErrorPage = () => {
     navigate('/', { replace: true });
   };
 
-  if (isRouteErrorResponse(error)) {
-    return <div onClick={reset}>라우터 에러: {error.statusText}</div>;
-  }
-
   return (
     <>
       <Header left={<Header.Logo />} />

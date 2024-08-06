@@ -8,6 +8,7 @@ const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 
 // env
 const dotenv = require('dotenv');
+const { sentryWebpackPlugin } = require('@sentry/webpack-plugin');
 const env = dotenv.config().parsed;
 const isProduction = process.env.NODE_ENV == 'production';
 
@@ -108,6 +109,14 @@ module.exports = () => {
     config.plugins.push(new MiniCssExtractPlugin());
 
     config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
+    config.plugins.push(
+      sentryWebpackPlugin({
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        org: 'skiende74',
+        project: 'javascript-react',
+      }),
+    );
+    config.devtool = 'source-map';
   } else {
     config.mode = 'development';
   }

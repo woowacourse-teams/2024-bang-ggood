@@ -9,26 +9,23 @@ const LoginPage = () => {
   const handleLogin = () => {
     window.location.href = KAKAO_AUTH_URL;
   };
-
   return (
-    <>
-      <Layout>
-        <S.Wrapper>
-          <BangBangIcon width="350" height="150" />
-          <S.TextWrapper>
-            <S.Text isBold={true}>방끗</S.Text>
-            <S.Text>방 구하기 끗! 그래서 방긋 :)</S.Text>
-          </S.TextWrapper>
-          <S.ButtonWrapper>
-            <S.SubText>지금 가입하고 체크리스트 작성하기</S.SubText>
-            <S.KakaoLoginButton onClick={handleLogin}>
-              <KakaoLogo />
-              <span>카카오로 로그인</span>
-            </S.KakaoLoginButton>
-          </S.ButtonWrapper>
-        </S.Wrapper>
-      </Layout>
-    </>
+    <Layout>
+      <S.Wrapper>
+        <BangBangIcon width="350" height="150" />
+        <S.TextWrapper>
+          <S.Text isBold={true}>방끗</S.Text>
+          <S.Text>방 구하기 끗! 그래서 방긋 :)</S.Text>
+        </S.TextWrapper>
+        <S.ButtonWrapper>
+          <S.SubText>지금 가입하고 체크리스트 작성하기</S.SubText>
+          <S.KakaoLoginButton onClick={handleLogin}>
+            <KakaoLogo />
+            <span>카카오로 로그인</span>
+          </S.KakaoLoginButton>
+        </S.ButtonWrapper>
+      </S.Wrapper>
+    </Layout>
   );
 };
 

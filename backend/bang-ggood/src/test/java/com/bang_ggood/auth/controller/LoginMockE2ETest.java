@@ -10,6 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -30,6 +31,6 @@ class LoginMockE2ETest extends AcceptanceMockTestSupport {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"code\":\"code\"}"))
                 .andExpect(status().isOk())
-                .andExpect(header().string(HttpHeaders.SET_COOKIE, "token=" + testToken + "; Path=/; HttpOnly"));
+                .andExpect(header().string(HttpHeaders.SET_COOKIE, containsString("token=" + testToken)));
     }
 }

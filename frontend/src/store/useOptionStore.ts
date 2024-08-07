@@ -11,7 +11,7 @@ interface OptionState {
   isAllSelected: () => boolean;
   addAllOptions: () => void;
   removeAllOptions: () => void;
-  getSelectedOptionsName: () => string[];
+  getSelectedOptionsName: () => (string | undefined)[];
 }
 
 const useOptionStore = create<OptionState>((set, get) => ({
@@ -20,8 +20,8 @@ const useOptionStore = create<OptionState>((set, get) => ({
   getSelectedOptionsName: () => {
     const state = get();
     const optionsNames = state.selectedOptions.map(optionId => {
-      const target = OPTIONS.filter(option => option.id === optionId);
-      return target[0].displayName;
+      const target = OPTIONS.find(option => option.id === optionId);
+      return target?.displayName;
     });
     return optionsNames;
   },

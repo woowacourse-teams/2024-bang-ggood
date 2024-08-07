@@ -14,7 +14,7 @@ export default {
     size: {
       control: {
         type: 'select',
-        options: ['small', 'medium', 'large', 'full'],
+        options: ['small', 'large'],
       },
     },
     position: {
@@ -64,7 +64,7 @@ const Template: StoryFn<ModalProps> = (args: ModalProps) => {
 export const Default = Template.bind({});
 Default.args = {
   isOpen: false,
-  size: 'medium',
+  size: 'large',
   position: 'center',
   hasCloseButton: true,
 };
@@ -72,7 +72,6 @@ Default.args = {
 export const BottomModal = Template.bind({});
 BottomModal.args = {
   isOpen: false,
-  size: 'medium',
   position: 'bottom',
   hasCloseButton: true,
 };

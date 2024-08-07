@@ -1,27 +1,20 @@
-import { options } from '@/components/_common/OptionButton/OptionIcon';
 import useOptionStore from '@/store/useOptionStore';
+import { OptionWithIcon } from '@/types/option';
 
-interface Props {
-  optionId: number;
-}
-
-const OptionButton = ({ optionId }: Props) => {
-  const option = Object.values(options).find(opt => opt.id === optionId);
+const OptionButton = ({ option }: { option: OptionWithIcon }) => {
+  const { Filled, Unfilled, id } = option;
   const { isSelectedOption, addOption, removeOption } = useOptionStore();
 
   if (!option) {
     return null;
   }
 
-  const FilledIcon = option.filled;
-  const UnfilledIcon = option.unfilled;
-
   return (
     <div>
-      {isSelectedOption(optionId) ? (
-        <FilledIcon onClick={() => removeOption(optionId)} />
+      {isSelectedOption(id) ? (
+        <Filled width={70} height={70} onClick={() => removeOption(id)} />
       ) : (
-        <UnfilledIcon onClick={() => addOption(optionId)} />
+        <Unfilled width={70} height={70} onClick={() => addOption(id)} />
       )}
     </div>
   );

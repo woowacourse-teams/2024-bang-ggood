@@ -8,6 +8,7 @@ import Header from '@/components/_common/Header/Header';
 import { InputChangeEvent } from '@/components/_common/Input/Input';
 import RadioGroup from '@/components/_common/RadioGroup/RadioGroup';
 import OptionModal from '@/components/NewChecklist/OptionModal/OptionModal';
+import useOptionStore from '@/store/useOptionStore';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 import { RoomInfo, RoomInfoName } from '@/types/room';
 
@@ -20,6 +21,8 @@ const NewChecklistInfoTemplate = ({ roomInfo, onChange: onChangeForForm }: Props
 
   const [roomStructure, setRoomStructure] = useState('');
   const onClickOptionModalOpen = () => setIsOptionModalOpen(true);
+
+  const { getSelectedOptionsName } = useOptionStore();
 
   return (
     <S.ContentWrapper>
@@ -144,7 +147,7 @@ const NewChecklistInfoTemplate = ({ roomInfo, onChange: onChangeForForm }: Props
 
         {/* 가구옵션 */}
         <FormField.Label label="가구옵션" />
-        <S.FurnitureOptionContent value="TV, 냉장고, 신발, 에어컨" />
+        <S.FurnitureOptionContent value={getSelectedOptionsName().join(', ')} />
 
         {/* 가구옵션버튼 */}
         <S.AddOptionButton label="가구 옵션 추가하기" size="full" onClick={onClickOptionModalOpen} />

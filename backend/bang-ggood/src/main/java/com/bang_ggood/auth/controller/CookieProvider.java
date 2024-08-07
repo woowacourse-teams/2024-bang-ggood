@@ -15,7 +15,7 @@ public class CookieProvider {
                 .domain("localhost")
                 .httpOnly(true)
                 .secure(true)
-                .sameSite("none")
+                .sameSite("None")
                 .maxAge(Duration.ofHours(2))
                 .path("/")
                 .build();

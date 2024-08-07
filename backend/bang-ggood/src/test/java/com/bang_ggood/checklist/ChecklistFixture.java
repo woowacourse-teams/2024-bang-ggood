@@ -12,9 +12,15 @@ import java.util.List;
 
 public class ChecklistFixture {
 
-    public static final Checklist checklist = new Checklist(
+    public static final Checklist CHECKLIST1 = new Checklist(
             UserFixture.USER1,
             RoomFixture.ROOM_1,
+            1000, 50, 12, "방끗공인중개사"
+    );
+
+    public static final Checklist CHECKLIST2 = new Checklist(
+            UserFixture.USER1,
+            RoomFixture.ROOM_2,
             1000, 50, 12, "방끗공인중개사"
     );
 
@@ -149,10 +155,10 @@ public class ChecklistFixture {
 
 
     public static final ChecklistQuestion CHECKLIST_QUESTION_1 = new ChecklistQuestion(
-            checklist, Question.fromId(1), Grade.BAD, "메모"
+            CHECKLIST1, Question.fromId(1), Grade.BAD, "메모"
     );
 
     public static final ChecklistQuestion CHECKLIST_QUESTION_2 = new ChecklistQuestion(
-            checklist, Question.fromId(2), Grade.BAD, "메모"
+            CHECKLIST1, Question.fromId(2), Grade.BAD, "메모"
     );
 }

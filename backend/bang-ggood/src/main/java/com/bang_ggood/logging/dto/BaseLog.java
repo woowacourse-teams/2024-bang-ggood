@@ -4,10 +4,15 @@ import java.time.LocalDateTime;
 
 public abstract class BaseLog {
 
-    private LocalDateTime requestTime;
-    private String requestUrl;
-    private Long userId;
-    private boolean accessTokenExist;
+    private final LocalDateTime requestTime;
+    private final String requestUrl;
+    private final String uuid;
+
+    public BaseLog(LocalDateTime requestTime, String requestUrl, String uuid) {
+        this.requestTime = requestTime;
+        this.requestUrl = requestUrl;
+        this.uuid = uuid;
+    }
 
     public LocalDateTime getRequestTime() {
         return requestTime;
@@ -17,19 +22,14 @@ public abstract class BaseLog {
         return requestUrl;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public boolean isAccessTokenExist() {
-        return accessTokenExist;
+    public String getUuid() {
+        return uuid;
     }
 
     @Override
     public String toString() {
         return "requestTime=" + requestTime +
                 ", requestUrl='" + requestUrl +
-                ", userId=" + userId +
-                ", accessTokenExist=" + accessTokenExist;
+                ", uuid='" + uuid;
     }
 }

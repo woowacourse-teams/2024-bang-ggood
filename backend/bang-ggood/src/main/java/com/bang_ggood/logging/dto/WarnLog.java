@@ -1,10 +1,13 @@
 package com.bang_ggood.logging.dto;
 
+import java.time.LocalDateTime;
+
 public class WarnLog extends BaseLog {
 
     private final String warnMessage;
 
-    public WarnLog(String warnMessage) {
+    public WarnLog(LocalDateTime requestTime, String requestUrl, String uuid, String warnMessage) {
+        super(requestTime, requestUrl, uuid);
         this.warnMessage = warnMessage;
     }
 

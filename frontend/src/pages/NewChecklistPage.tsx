@@ -50,7 +50,6 @@ const NewChecklistPage = () => {
     return checklist.flatMap(category =>
       category.questions.map(question => {
         const { questionId, memo, grade } = question;
-
         return {
           questionId,
           memo,

@@ -19,7 +19,6 @@ type RouteParams = {
 
 const ChecklistDetailPage = () => {
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
-  // const [isOpen, setIsOpen] = useState(false);
   const { checklistId } = useParams() as RouteParams;
   const [checklist, setChecklist] = useState<ChecklistInfo>();
 

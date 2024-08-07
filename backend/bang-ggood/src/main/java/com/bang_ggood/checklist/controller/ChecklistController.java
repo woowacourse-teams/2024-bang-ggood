@@ -3,6 +3,7 @@ package com.bang_ggood.checklist.controller;
 import com.bang_ggood.auth.config.AuthPrincipal;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
+import com.bang_ggood.checklist.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsWithScoreReadResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
@@ -55,6 +56,11 @@ public class ChecklistController {
     @GetMapping("/checklists/comparison")
     public ResponseEntity<ChecklistsWithScoreReadResponse> readChecklistsComparison(@AuthPrincipal User user, @RequestParam("id") List<Long> checklistIds) {
         return ResponseEntity.ok(checklistService.readChecklistsComparison(user, checklistIds));
+    }
+
+    @GetMapping("/custom-checklist/all")
+    public ResponseEntity<CategoryCustomChecklistQuestionsResponse> readAllCustomChecklistQuestions(@AuthPrincipal User user) {
+        return ResponseEntity.ok(checklistService.readAllCustomChecklistQuestions(user));
     }
 
     @PutMapping("/checklists/{id}")

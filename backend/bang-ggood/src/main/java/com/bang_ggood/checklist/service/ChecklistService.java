@@ -18,10 +18,13 @@ import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.request.QuestionRequest;
 import com.bang_ggood.checklist.dto.response.BadgeResponse;
+import com.bang_ggood.checklist.dto.response.CategoryCustomChecklistQuestionResponse;
+import com.bang_ggood.checklist.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.CategoryScoreReadResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistWithScoreReadResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsWithScoreReadResponse;
+import com.bang_ggood.checklist.dto.response.CustomChecklistQuestionResponse;
 import com.bang_ggood.checklist.dto.response.QuestionResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.dto.response.SelectedOptionResponse;
@@ -40,6 +43,7 @@ import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -164,6 +168,28 @@ public class ChecklistService {
                 throw new BangggoodException(ExceptionCode.QUESTION_INVALID);
             }
         }
+    }
+
+    @Transactional
+    public CategoryCustomChecklistQuestionsResponse readAllCustomChecklistQuestions(User user) { // TODO custom-checklist 도메인 분리 및 리팩토링
+        List<CustomChecklistQuestion> customChecklistQuestions = customChecklistQuestionRepository.findAllByUser(user);
+        List<CategoryCustomChecklistQuestionResponse> allCategoryCustomChecklistQuestions = getAllCategoryCustomChecklistQuestions(customChecklistQuestions);
+
+        return new CategoryCustomChecklistQuestionsResponse(allCategoryCustomChecklistQuestions);
+    }
+
+    private List<CategoryCustomChecklistQuestionResponse> getAllCategoryCustomChecklistQuestions(List<CustomChecklistQuestion> customChecklistQuestions) {
+        List<CategoryCustomChecklistQuestionResponse> response = new ArrayList<>();
+
+        for (Category category : Category.values()) {
+            List<Question> categoryQuestions = Question.findQuestionsByCategory(category);
+            List<CustomChecklistQuestionResponse> questions = categoryQuestions.stream()
+                    .map(question -> CustomChecklistQuestionResponse.of(question, question.isSelected(customChecklistQuestions)))
+                    .toList();
+            response.add(new CategoryCustomChecklistQuestionResponse(category.getId(), category.getName(), questions));
+        }
+
+        return response;
     }
 
     @Transactional

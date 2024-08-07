@@ -22,7 +22,7 @@ const ChecklistQuestion = ({ question }: Props) => {
 
   const [isMemoOpen, setIsMemoOpen] = useState(false);
 
-  const { answer, memo } = findCategoryQuestion({ categoryId: currentTabId, questionId });
+  const { grade, memo } = findCategoryQuestion({ categoryId: currentTabId, questionId });
 
   const handleClick = (newAnswer: EmotionName) => {
     updateAnswer({ categoryId: currentTabId, questionId: questionId, newAnswer });

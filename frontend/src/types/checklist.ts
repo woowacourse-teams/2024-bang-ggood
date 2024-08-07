@@ -26,8 +26,9 @@ export interface ChecklistQuestion {
   subtitle: string | null;
 }
 
+// TODO: 인터페이스 리팩토링 필요
 export interface ChecklistQuestionWithAnswer extends ChecklistQuestion {
-  answer: EmotionNameWithNone;
+  grade: EmotionNameWithNone;
   memo: string | null;
 }
 

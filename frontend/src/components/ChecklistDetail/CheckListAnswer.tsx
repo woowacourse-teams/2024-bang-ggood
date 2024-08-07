@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { QuestionDot } from '@/assets/assets';
 import FaceMark from '@/components/_common/FaceMark/FaceMark';
-import { EMOTION_PHARSE } from '@/constants/emotion';
+import { EMOTION_PHRASE } from '@/constants/emotion';
 import { flexSpaceBetween } from '@/styles/common';
 import { ChecklistQuestionWithAnswer } from '@/types/checklist';
 
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const ChecklistAnswer = ({ QuestionAndAnswer }: Props) => {
-  const { title, subtitle, answer } = QuestionAndAnswer;
+  const { title, subtitle, grade } = QuestionAndAnswer;
 
   return (
     <S.Container>
@@ -22,12 +22,12 @@ const ChecklistAnswer = ({ QuestionAndAnswer }: Props) => {
         </S.Title>
         {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
       </S.TitleContainer>
-      <S.Answer>
+      <S.AnswerContainer>
         <FaceMark>
-          <FaceMark.FaceIcon emotion={answer} isFilled={true} />
-          <FaceMark.Footer>{EMOTION_PHARSE[answer]}</FaceMark.Footer>
+          <FaceMark.FaceIcon emotion={grade} isFilled={true} />
+          <FaceMark.Footer>{EMOTION_PHRASE[grade]}</FaceMark.Footer>
         </FaceMark>
-      </S.Answer>
+      </S.AnswerContainer>
     </S.Container>
   );
 };
@@ -38,7 +38,8 @@ const S = {
   Container: styled.div`
     ${flexSpaceBetween}
     width: 100%;
-    padding: 16px 24px;
+    padding: 16px;
+    gap: 10px;
 
     background-color: ${({ theme }) => theme.palette.white};
     flex-direction: row;
@@ -52,11 +53,11 @@ const S = {
 
     font-size: ${({ theme }) => theme.text.size.medium};
     line-height: 1.5rem;
-    align-items: center;
+    align-items: baseline;
+
     gap: 10px;
   `,
   Subtitle: styled.div`
-    width: 80%;
     margin-bottom: 10px;
     margin-left: 20px;
 
@@ -65,12 +66,13 @@ const S = {
     line-height: 1.5;
     word-break: keep-all;
   `,
-  Answer: styled.div`
-    width: 80px;
-  `,
   TitleContainer: styled.div`
     display: flex;
-    width: 400px;
+    width: 80%;
     flex-direction: column;
+    word-break: keep-all;
+  `,
+  AnswerContainer: styled.div`
+    box-sizing: border-box;
   `,
 };

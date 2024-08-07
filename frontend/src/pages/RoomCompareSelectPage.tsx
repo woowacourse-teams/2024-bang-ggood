@@ -39,18 +39,19 @@ const RoomCompareSelectPage = () => {
         center={<Header.Text>방 비교하기</Header.Text>}
         right={<Button label="비교" color="dark" size="small" onClick={handleSubmit} />}
       />
-      {Array.from(rooms).map(r => r.toString())}
       <Layout bgColor={theme.palette.background}>
         <S.Wrapper bgColor={theme.palette.background}>
           {checklistList.map(roomPreview => (
-            <CompareSelectCard
-              key={roomPreview.checklistId}
-              isSelected={hasRoom(roomPreview.checklistId)}
-              onClick={() => {
-                toggleRoom(roomPreview.checklistId);
-              }}
-              room={roomPreview}
-            />
+            <>
+              <CompareSelectCard
+                key={roomPreview.checklistId + Array.from(rooms)[0]}
+                isSelected={hasRoom(roomPreview.checklistId)}
+                onClick={() => {
+                  toggleRoom(roomPreview.checklistId);
+                }}
+                room={roomPreview}
+              />
+            </>
           ))}
         </S.Wrapper>
       </Layout>

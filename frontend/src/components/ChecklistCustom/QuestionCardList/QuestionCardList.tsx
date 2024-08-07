@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 
-import QuestionSelectCard from '@/components/ChecklistCustom/QuestionSelectCard/QuestionSelectCard';
 import Divider from '@/components/_common/Divider/Divider';
-import { ChecklistQuestionWithIsChecked } from '@/types/checklist';
+import QuestionSelectCard from '@/components/ChecklistCustom/QuestionSelectCard/QuestionSelectCard';
+import { ChecklistQuestionWithIsSelected } from '@/types/checklist';
 
 interface Props {
   currentTabId: number;
-  questions: ChecklistQuestionWithIsChecked[];
+  questions: ChecklistQuestionWithIsSelected[];
 }
 const QuestionCardList = ({ questions, currentTabId }: Props) => {
   return (

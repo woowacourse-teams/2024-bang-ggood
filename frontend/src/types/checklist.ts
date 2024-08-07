@@ -3,21 +3,32 @@ import { CategoryScore } from '@/types/category';
 import { EmotionNameWithNone } from '@/types/emotionAnswer';
 import { RoomInfo } from '@/types/room';
 
-export interface ChecklistCategoryBase {
+interface ChecklistCategoryBase {
   categoryId: number;
   categoryName: string;
-  questions: ChecklistQuestion[];
 }
+
 export interface ChecklistCategoryQuestions extends ChecklistCategoryBase {
   questions: ChecklistQuestion[];
 }
 
+/*체크리스트 작성에서 쓰는 인터페이스 */
 export interface ChecklistCategoryQnA extends ChecklistCategoryBase {
   questions: ChecklistQuestionWithAnswer[];
 }
 
-export interface ChecklistCategoryQnIsChecked extends ChecklistCategoryBase {
-  questions: ChecklistQuestionWithIsChecked[];
+export interface ChecklistQuestionWithAnswer extends ChecklistQuestion {
+  grade: EmotionNameWithNone;
+  memo: string | null;
+}
+
+/*체크리스트 커스텀에서 쓰는 인터페이스 */
+export interface ChecklistCategoryQnIsSelected extends ChecklistCategoryBase {
+  questions: ChecklistQuestionWithIsSelected[];
+}
+
+export interface ChecklistQuestionWithIsSelected extends ChecklistQuestion {
+  isSelected: boolean;
 }
 
 export interface ChecklistQuestion {
@@ -26,16 +37,7 @@ export interface ChecklistQuestion {
   subtitle: string | null;
 }
 
-// TODO: 인터페이스 리팩토링 필요
-export interface ChecklistQuestionWithAnswer extends ChecklistQuestion {
-  grade: EmotionNameWithNone;
-  memo: string | null;
-}
-
-export interface ChecklistQuestionWithIsChecked extends ChecklistQuestion {
-  isChecked: boolean;
-}
-
+/*체크리스트를 제공할 때 쓰는 인터페이스 */
 export interface ChecklistAnswer {
   questionId: number;
   grade: EmotionNameWithNone;

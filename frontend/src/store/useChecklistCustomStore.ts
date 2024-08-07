@@ -1,16 +1,16 @@
 import { create } from 'zustand';
 
 import { Category, CategoryName } from '@/types/category';
-import { CategoryAndQuestion, ChecklistCategoryQnIsChecked, ChecklistQuestionWithIsChecked } from '@/types/checklist';
+import { CategoryAndQuestion, ChecklistCategoryQnIsSelected, ChecklistQuestionWithIsSelected } from '@/types/checklist';
 
 interface ChecklistCustomState {
   selectedQuestions: number[];
-  checklistAllQuestionList: ChecklistCategoryQnIsChecked[];
+  checklistAllQuestionList: ChecklistCategoryQnIsSelected[];
   validCategory: Category[];
 
-  setChecklistAllQuestionList: (answers: ChecklistCategoryQnIsChecked[]) => void;
-  findCategoryQuestion: ({ categoryId, questionId }: CategoryAndQuestion) => ChecklistQuestionWithIsChecked | null;
-  categoryQnA: (categoryId: number) => ChecklistCategoryQnIsChecked;
+  setChecklistAllQuestionList: (answers: ChecklistCategoryQnIsSelected[]) => void;
+  findCategoryQuestion: ({ categoryId, questionId }: CategoryAndQuestion) => ChecklistQuestionWithIsSelected | null;
+  categoryQnA: (categoryId: number) => ChecklistCategoryQnIsSelected;
   setValidCategory: () => void;
 }
 
@@ -19,7 +19,7 @@ const useChecklistCustomStore = create<ChecklistCustomState>((set, get) => ({
   checklistAllQuestionList: [],
   validCategory: [],
 
-  setChecklistAllQuestionList: (questions: ChecklistCategoryQnIsChecked[]) => {
+  setChecklistAllQuestionList: (questions: ChecklistCategoryQnIsSelected[]) => {
     set({ checklistAllQuestionList: questions });
   },
 

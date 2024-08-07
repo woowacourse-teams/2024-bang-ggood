@@ -64,7 +64,7 @@ const NewChecklistInfoTemplate = ({ roomInfo, onChange: onChangeForForm }: Props
               value={roomInfo.deposit}
             />
             <S.CustomLabel label=" / " />
-            <S.CustomInput placeholder="" onChange={onChangeForForm} name="rent" value={roomInfo.rent} />
+            <S.CustomInput placeholder="" onChange={onChangeForForm} type="number" name="rent" value={roomInfo.rent} />
           </S.FlexHorizontal>
           <FormField.P value="" />
         </FormField>
@@ -122,20 +122,14 @@ const NewChecklistInfoTemplate = ({ roomInfo, onChange: onChangeForForm }: Props
           <S.FlexHorizontal>
             <S.CustomInput placeholder="" name="floor" value={roomInfo.floor} />
 
-            <S.RadioGroup
-              label=""
-              value={roomStructure}
-              onChangeChild={e => {
-                setRoomStructure(e.target.value);
-              }}
-            >
-              <RadioGroup.RadioButton value="지상" color="green">
+            <S.RadioGroup label="" value={roomInfo.floorLevel ?? ''} onChangeChild={onChangeForForm}>
+              <RadioGroup.RadioButton name="floorLevel" value="지상" color="green">
                 지상
               </RadioGroup.RadioButton>
-              <RadioGroup.RadioButton value="반지하/지하" color="green">
+              <RadioGroup.RadioButton name="floorLevel" value="반지하/지하" color="green">
                 반지하/지하
               </RadioGroup.RadioButton>
-              <RadioGroup.RadioButton value="옥탑" color="green">
+              <RadioGroup.RadioButton name="floorLevel" value="옥탑" color="green">
                 옥탑
               </RadioGroup.RadioButton>
             </S.RadioGroup>

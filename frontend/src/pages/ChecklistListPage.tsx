@@ -33,7 +33,7 @@ const ChecklistListPage = () => {
   const handleClick = () => {
     // TODO: 비교 방 선택 페이지 작업으로 이후 변경 필요 (3차 스프린트)
     const length = checklistList?.length - 1;
-    navigate(ROUTE_PATH.roomCompare, {
+    navigate(ROUTE_PATH.roomCompareSelect, {
       state: {
         id1: checklistList[length].checklistId,
         id2: checklistList[length - 1].checklistId,
@@ -60,13 +60,11 @@ const ChecklistListPage = () => {
       <Layout style={{ padding: '0 16px' }}>
         <S.ListBox>
           {checklistList.length ? (
-            <>
-              {checklistList?.map(checklist => (
-                <Link to={ROUTE_PATH.checklistOne(checklist.checklistId)} key={checklist.checklistId}>
-                  <ChecklistPreviewCard checklist={checklist} />
-                </Link>
-              ))}
-            </>
+            checklistList?.map(checklist => (
+              <Link to={ROUTE_PATH.checklistOne(checklist.checklistId)} key={checklist.checklistId}>
+                <ChecklistPreviewCard checklist={checklist} />
+              </Link>
+            ))
           ) : (
             <NoChecklistTemplate />
           )}

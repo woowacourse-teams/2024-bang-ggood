@@ -13,8 +13,8 @@ export interface RoomInfo {
   type?: string;
   size?: number;
   floorLevel?: string;
+  structure?: string;
 }
-
 export type RoomInfoName = keyof RoomInfo;
 
 export interface ChecklistForm {

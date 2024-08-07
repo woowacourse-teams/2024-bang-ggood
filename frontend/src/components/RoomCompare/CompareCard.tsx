@@ -104,7 +104,7 @@ const CompareCard = ({ room, compareNum }: Props) => {
         <Modal.body>
           <S.Box>
             {options.map(option => (
-              <Badge type="long" key={option.optionId} label={option.optionName} />
+              <Badge size="long" key={option.optionId} label={option.optionName} />
             ))}
           </S.Box>
         </Modal.body>

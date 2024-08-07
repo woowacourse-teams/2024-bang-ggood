@@ -22,14 +22,14 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     label: '✨ 청결해요',
-    type: 'long',
+    size: 'long',
   },
 };
 
 export const ClickableBadge: Story = {
   args: {
     label: '🏠 방 컨디션이 좋아요',
-    type: 'button',
+    size: 'button',
     onClick: () => alert('click'),
   },
 };

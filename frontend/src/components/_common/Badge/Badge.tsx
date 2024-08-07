@@ -3,24 +3,24 @@ import styled from '@emotion/styled';
 import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
 
-type BadgeType = 'short' | 'long' | 'button';
+type BadgeSize = 'short' | 'long' | 'button';
 
-interface Props extends React.HTMLAttributes<HTMLButtonElement> {
-  type?: BadgeType;
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  size?: BadgeSize;
   label: string;
   isSelected?: boolean;
-  onClick?: () => void;
+  name?: string;
 }
 
-const Badge = ({ type = 'short', label, isSelected = false, onClick }: Props) => {
-  const handleClick = () => {
+const Badge = ({ size = 'short', label, isSelected = false, onClick, name, ...rest }: Props) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (onClick) {
-      onClick();
+      onClick(event);
     }
   };
 
   return (
-    <S.Button size={type} onClick={handleClick} isSelected={isSelected}>
+    <S.Button size={size} onClick={handleClick} isSelected={isSelected} name={name} {...rest}>
       {label}
     </S.Button>
   );
@@ -29,7 +29,7 @@ const Badge = ({ type = 'short', label, isSelected = false, onClick }: Props) =>
 export default Badge;
 
 const S = {
-  Button: styled.button<{ size: BadgeType; isSelected: boolean }>`
+  Button: styled.button<{ size: BadgeSize; isSelected: boolean }>`
     ${flexCenter}
     border-radius: 20px;
     box-sizing: border-box;

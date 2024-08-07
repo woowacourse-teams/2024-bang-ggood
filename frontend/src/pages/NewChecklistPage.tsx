@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getChecklistQuestions, postChecklist } from '@/apis/checklist';
@@ -35,7 +35,7 @@ const NewChecklistPage = () => {
 
   //TODO:  방 기본 정보도 전역 상태로 관리 필요
   /*방 기본 정보 */
-  const { values: roomInfo, onChange: onChangeRoomInfo } = useInputs(DefaultRoomInfo);
+  const { values: roomInfo, onChange: onChangeRoomInfo, setValues: setRoomInfo } = useInputs(DefaultRoomInfo);
 
   /*선택된 옵션*/
   const { selectedOptions } = useOptionStore();
@@ -89,6 +89,13 @@ const NewChecklistPage = () => {
     fetchChecklist();
   }, []);
 
+  const handleClickTagButton = useCallback(
+    (name: string, value: string) => {
+      setRoomInfo({ ...roomInfo, [name]: value });
+    },
+    [roomInfo, setRoomInfo],
+  );
+
   return (
     <>
       <Header
@@ -100,7 +107,12 @@ const NewChecklistPage = () => {
         {/*체크리스트 작성의 탭*/}
         <NewChecklistTab />
         {/*체크리스트 콘텐츠 섹션*/}
-        <NewChecklistContent roomInfo={roomInfo} onChangeRoomInfo={onChangeRoomInfo} />
+        <NewChecklistContent
+          roomInfo={roomInfo}
+          onChangeRoomInfo={onChangeRoomInfo}
+          onClickTagButton={handleClickTagButton}
+          setRoomInfo={setRoomInfo}
+        />
       </TabProvider>
     </>
   );

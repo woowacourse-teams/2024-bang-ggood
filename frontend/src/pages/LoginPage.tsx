@@ -1,14 +1,34 @@
 import styled from '@emotion/styled';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import { postKakaoCode } from '@/apis/login';
 import { BangBangIcon, KakaoLogo } from '@/assets/assets';
 import Layout from '@/components/_common/layout/Layout';
 import { KAKAO_AUTH_URL } from '@/constants/OAuth';
+import { ROUTE_PATH } from '@/constants/routePath';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 
 const LoginPage = () => {
-  const handleLogin = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const code = new URL(window.location.href).searchParams.get('code');
+
+    const postLogin = async () => {
+      if (code) {
+        await postKakaoCode(code);
+        navigate(ROUTE_PATH.checklistList);
+      }
+    };
+
+    postLogin();
+  }, [navigate]);
+
+  const handleLogin = async () => {
     window.location.href = KAKAO_AUTH_URL;
   };
+
   return (
     <Layout>
       <S.Wrapper>

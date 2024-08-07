@@ -3,6 +3,7 @@ interface RequestProps {
   method: 'GET' | 'POST' | 'DELETE' | 'PATCH' | 'PUT';
   body?: object[] | object;
   headers?: Record<string, string>;
+  credentials?: string;
   errorMessage?: string;
 }
 type FetchProps = Omit<RequestProps, 'method'>;
@@ -10,9 +11,9 @@ type FetchProps = Omit<RequestProps, 'method'>;
 const request = async ({ url, method, body, headers = {}, errorMessage }: RequestProps) => {
   const response = await fetch(url, {
     method,
+    credentials: 'include',
     body: body ? JSON.stringify(body) : undefined,
     headers: {
-      // Authorization: process.env.
       ...headers,
     },
   });
@@ -38,7 +39,12 @@ const fetcher = {
   },
 
   post({ url, body, headers }: FetchProps) {
-    return networkRequest({ url, method: 'POST', body, headers: { ...headers, 'Content-Type': 'application/json' } });
+    return networkRequest({
+      url,
+      method: 'POST',
+      body,
+      headers: { ...headers, 'Content-Type': 'application/json' },
+    });
   },
 
   delete({ url, headers }: FetchProps) {
@@ -46,11 +52,20 @@ const fetcher = {
   },
 
   patch({ url, body, headers }: FetchProps) {
-    return networkRequest({ url, method: 'PATCH', body, headers: { ...headers, 'Content-Type': 'application/json' } });
+    return networkRequest({
+      url,
+      method: 'PATCH',
+      body,
+      headers: { ...headers, 'Content-Type': 'application/json' },
+    });
   },
 
   put({ url, headers }: FetchProps) {
-    return networkRequest({ url, method: 'PUT', headers: { ...headers, 'Content-Type': 'application/json' } });
+    return networkRequest({
+      url,
+      method: 'PUT',
+      headers: { ...headers, 'Content-Type': 'application/json' },
+    });
   },
 };
 

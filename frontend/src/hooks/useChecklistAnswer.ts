@@ -25,7 +25,7 @@ const useChecklistAnswer = () => {
         ...targetCategory,
         questions: targetCategory.questions.map(question => {
           if (question.questionId === questionId) {
-            return { ...question, answer: question.answer === newAnswer ? 'NONE' : newAnswer };
+            return { ...question, grade: question.grade === newAnswer ? 'NONE' : newAnswer };
           }
           return question;
         }),

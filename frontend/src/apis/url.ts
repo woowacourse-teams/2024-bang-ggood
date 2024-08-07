@@ -18,5 +18,5 @@ export const ENDPOINT = {
   CATEGORY: '/categories',
   CATEGORY_ADD: '/categories/priority',
   /* login */
-  OAUTH: 'oauth/login',
+  OAUTH: '/oauth/login',
 };

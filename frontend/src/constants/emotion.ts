@@ -1,6 +1,6 @@
 import { Emotion, EmotionName } from '@/types/emotionAnswer';
 
-export const EMOTION_PHARSE: Record<EmotionName | string, string> = {
+export const EMOTION_PHRASE: Record<EmotionName | string, string> = {
   BAD: '별로에요',
   SOSO: '평범해요',
   GOOD: '좋아요',

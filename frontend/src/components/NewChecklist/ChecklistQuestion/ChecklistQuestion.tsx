@@ -5,7 +5,7 @@ import { ArrowUpSmall, MemoEmpty, MemoFilled, QuestionDot } from '@/assets/asset
 import FaceMark from '@/components/_common/FaceMark/FaceMark';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import QuestionMemo from '@/components/NewChecklist/ChecklistQuestion/QuestionMemo';
-import { EMOTION_PHARSE, EMOTIONS } from '@/constants/emotion';
+import { EMOTION_PHRASE, EMOTIONS } from '@/constants/emotion';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';
 import { flexCenter, flexSpaceBetween } from '@/styles/common';
 import { ChecklistQuestion } from '@/types/checklist';
@@ -22,7 +22,7 @@ const ChecklistQuestion = ({ question }: Props) => {
 
   const [isMemoOpen, setIsMemoOpen] = useState(false);
 
-  const { answer, memo } = findCategoryQuestion({ categoryId: currentTabId, questionId });
+  const { grade, memo } = findCategoryQuestion({ categoryId: currentTabId, questionId });
 
   const handleClick = (newAnswer: EmotionName) => {
     updateAnswer({ categoryId: currentTabId, questionId: questionId, newAnswer });
@@ -59,8 +59,8 @@ const ChecklistQuestion = ({ question }: Props) => {
 
           return (
             <FaceMark onClick={() => handleClick(emotionName)} key={id}>
-              <FaceMark.FaceIcon emotion={emotionName} isFilled={answer === emotionName} />
-              <FaceMark.Footer>{EMOTION_PHARSE[emotionName]}</FaceMark.Footer>
+              <FaceMark.FaceIcon emotion={emotionName} isFilled={grade === emotionName} />
+              <FaceMark.Footer>{EMOTION_PHRASE[emotionName]}</FaceMark.Footer>
             </FaceMark>
           );
         })}

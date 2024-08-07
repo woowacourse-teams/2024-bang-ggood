@@ -89,6 +89,16 @@ class ChecklistE2ETest extends AcceptanceTest {
         assertThat(checklistQuestionsResponse.categories().size()).isEqualTo(Category.values().length - 1);
     }
 
+    @DisplayName("커스텀 체크리스트 전체 조회 성공")
+    @Test
+    void readAllCustomChecklistQuestion() {
+        // given
+
+        // when
+
+        // then
+    }
+
     @DisplayName("작성된 체크리스트 조회 성공")
     @Test
     void readChecklistById() {

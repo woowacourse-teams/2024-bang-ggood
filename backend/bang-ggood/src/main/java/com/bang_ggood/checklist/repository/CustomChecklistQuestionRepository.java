@@ -11,7 +11,7 @@ import java.util.List;
 public interface CustomChecklistQuestionRepository extends JpaRepository<CustomChecklistQuestion, Long> {
 
     @Query("SELECT c FROM CustomChecklistQuestion c WHERE c.user.id = :#{#user.id} AND c.deleted = false " )
-    List<CustomChecklistQuestion> findByUser(@Param("user") User user);
+    List<CustomChecklistQuestion> findAllByUser(@Param("user") User user);
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("UPDATE CustomChecklistQuestion SET deleted = true WHERE user.id = :#{#user.id}")

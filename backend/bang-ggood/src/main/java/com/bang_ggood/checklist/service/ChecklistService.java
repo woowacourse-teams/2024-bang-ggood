@@ -127,7 +127,7 @@ public class ChecklistService {
 
     @Transactional
     public ChecklistQuestionsResponse readChecklistQuestions(User user) {
-        List<CustomChecklistQuestion> customChecklistQuestions = customChecklistQuestionRepository.findByUser(user);
+        List<CustomChecklistQuestion> customChecklistQuestions = customChecklistQuestionRepository.findAllByUser(user);
 
         Map<Category, List<Question>> categoryQuestions = customChecklistQuestions.stream()
                 .map(CustomChecklistQuestion::getQuestion)

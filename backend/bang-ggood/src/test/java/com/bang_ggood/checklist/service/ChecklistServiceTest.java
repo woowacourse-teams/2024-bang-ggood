@@ -443,7 +443,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         checklistService.updateCustomChecklist(USER1, request);
 
         // then
-        assertThat(customChecklistQuestionRepository.findByUser(USER1))
+        assertThat(customChecklistQuestionRepository.findAllByUser(USER1))
                 .hasSize(request.questionIds().size());
     }
 

@@ -6,7 +6,7 @@ import FaceMark from '@/components/_common/FaceMark/FaceMark';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import QuestionMemo from '@/components/NewChecklist/ChecklistQuestion/QuestionMemo';
 import { EMOTION_PHARSE, EMOTIONS } from '@/constants/emotion';
-import useChecklistAnswer from '@/hooks/useChecklistAnswer';
+import useChecklistGrade from '@/hooks/useChecklistGrade';
 import { flexCenter, flexSpaceBetween } from '@/styles/common';
 import { ChecklistQuestion } from '@/types/checklist';
 import { EmotionName } from '@/types/emotionAnswer';
@@ -17,15 +17,15 @@ interface Props {
 
 const ChecklistQuestion = ({ question }: Props) => {
   const { questionId } = question;
-  const { updateAndToggleAnswer: updateAnswer, findCategoryQuestion } = useChecklistAnswer();
+  const { updateAndToggleGrade: updateAnswer, findCategoryQuestion } = useChecklistGrade();
   const { currentTabId } = useTabContext();
 
   const [isMemoOpen, setIsMemoOpen] = useState(false);
 
-  const { answer, memo } = findCategoryQuestion({ categoryId: currentTabId, questionId });
+  const { grade, memo } = findCategoryQuestion({ categoryId: currentTabId, questionId });
 
-  const handleClick = (newAnswer: EmotionName) => {
-    updateAnswer({ categoryId: currentTabId, questionId: questionId, newAnswer });
+  const handleClick = (newGrade: EmotionName) => {
+    updateAnswer({ categoryId: currentTabId, questionId: questionId, newGrade });
   };
 
   const handleCloseMemo = () => {
@@ -59,7 +59,7 @@ const ChecklistQuestion = ({ question }: Props) => {
 
           return (
             <FaceMark onClick={() => handleClick(emotionName)} key={id}>
-              <FaceMark.FaceIcon emotion={emotionName} isFilled={answer === emotionName} />
+              <FaceMark.FaceIcon emotion={emotionName} isFilled={grade === emotionName} />
               <FaceMark.Footer>{EMOTION_PHARSE[emotionName]}</FaceMark.Footer>
             </FaceMark>
           );

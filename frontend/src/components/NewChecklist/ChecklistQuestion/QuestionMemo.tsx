@@ -1,30 +1,49 @@
 import styled from '@emotion/styled';
+import { useRef } from 'react';
 
-import Button from '@/components/_common/Button/Button';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import Textarea from '@/components/_common/Textarea/Textarea';
-import useChecklistAnswer from '@/hooks/useChecklistAnswer';
+import useChecklistGrade from '@/hooks/useChecklistGrade';
 import useInput from '@/hooks/useInput';
 
 interface Props {
   questionId: number;
   text: string;
 }
+
 const QuestionMemo = ({ questionId, text }: Props) => {
   const { currentTabId } = useTabContext();
   const { onChange, value } = useInput(text);
-  const { updateMemo } = useChecklistAnswer();
+  const { updateMemo } = useChecklistGrade();
+  const intervalRef = useRef<number | undefined>(undefined);
 
   const handleUpdateMemo = () => {
     updateMemo({ categoryId: currentTabId, questionId, newMemo: value });
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(e);
+
+    if (intervalRef.current !== undefined) {
+      clearTimeout(intervalRef.current);
+    }
+
+    intervalRef.current = window.setTimeout(() => {
+      handleUpdateMemo();
+    }, 2000);
+  };
+
+  const handleBlur = () => {
+    if (intervalRef.current !== undefined) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = undefined;
+    }
+    handleUpdateMemo();
+  };
+
   return (
     <S.Container>
-      <Textarea height="medium" value={value || ''} onChange={onChange} />
-      <S.ButtonBox>
-        <Button label="저장" size="xSmall" isSquare={true} color="dark" onClick={handleUpdateMemo} />
-      </S.ButtonBox>
+      <Textarea height="medium" value={value || ''} onChange={handleInputChange} onBlur={handleBlur} />
     </S.Container>
   );
 };

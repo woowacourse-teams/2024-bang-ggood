@@ -27,7 +27,7 @@ export interface ChecklistQuestion {
 }
 
 export interface ChecklistQuestionWithAnswer extends ChecklistQuestion {
-  answer: EmotionNameWithNone;
+  grade: EmotionNameWithNone;
   memo: string | null;
 }
 

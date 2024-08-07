@@ -11,7 +11,7 @@ interface Props {
 }
 
 const ChecklistAnswer = ({ QuestionAndAnswer }: Props) => {
-  const { title, subtitle, answer } = QuestionAndAnswer;
+  const { title, subtitle, grade } = QuestionAndAnswer;
 
   return (
     <S.Container>
@@ -24,8 +24,8 @@ const ChecklistAnswer = ({ QuestionAndAnswer }: Props) => {
       </S.TitleContainer>
       <S.Answer>
         <FaceMark>
-          <FaceMark.FaceIcon emotion={answer} isFilled={true} />
-          <FaceMark.Footer>{EMOTION_PHARSE[answer]}</FaceMark.Footer>
+          <FaceMark.FaceIcon emotion={grade} isFilled={true} />
+          <FaceMark.Footer>{EMOTION_PHARSE[grade]}</FaceMark.Footer>
         </FaceMark>
       </S.Answer>
     </S.Container>

@@ -6,18 +6,18 @@ export interface Props {
   categoryId: number;
 }
 
-export interface UpdateAnswerProps extends Props {
-  newAnswer: EmotionNameWithNone;
+export interface UpdateGradeProps extends Props {
+  newGrade: EmotionNameWithNone;
 }
 
 export interface updateMemoProps extends Props {
   newMemo: string | null;
 }
 
-const useChecklistAnswer = () => {
+const useChecklistGrade = () => {
   const { setAnswers, checklistCategoryQnA, categoryQnA } = useChecklistStore();
 
-  const updateAnswer = ({ categoryId, questionId, newAnswer }: UpdateAnswerProps) => {
+  const updateAndToggleGrade = ({ categoryId, questionId, newGrade }: UpdateGradeProps) => {
     const targetCategory = categoryQnA(categoryId);
 
     if (targetCategory) {
@@ -25,7 +25,7 @@ const useChecklistAnswer = () => {
         ...targetCategory,
         questions: targetCategory.questions.map(question => {
           if (question.questionId === questionId) {
-            return { ...question, answer: question.answer === newAnswer ? 'NONE' : newAnswer };
+            return { ...question, grade: question.grade === newGrade ? 'NONE' : newGrade };
           }
           return question;
         }),
@@ -72,7 +72,7 @@ const useChecklistAnswer = () => {
     return targetQuestion;
   };
 
-  return { updateAndToggleAnswer: updateAnswer, updateMemo, findCategoryQuestion };
+  return { updateAndToggleGrade, updateMemo, findCategoryQuestion };
 };
 
-export default useChecklistAnswer;
+export default useChecklistGrade;

@@ -16,6 +16,7 @@ import FaceIconBadGray from '@/assets/icons/face-icon/face-icon-bad-gray.svg';
 import FaceIconBad from '@/assets/icons/face-icon/face-icon-bad.svg';
 import FaceIconGoodGray from '@/assets/icons/face-icon/face-icon-good-gray.svg';
 import FaceIconGood from '@/assets/icons/face-icon/face-icon-good.svg';
+import FaceIconNone from '@/assets/icons/face-icon/face-icon-none.svg';
 import FaceIconSosoGray from '@/assets/icons/face-icon/face-icon-soso-gray.svg';
 import FaceIconSoso from '@/assets/icons/face-icon/face-icon-soso.svg';
 
@@ -30,10 +31,13 @@ import MyPageLogoActive from '@/assets/icons/footer-icon/my-page-logo-active.svg
 import MyPageLogo from '@/assets/icons/footer-icon/my-page-logo.svg';
 
 /* etc */
+import BangBangCryIcon from '@/assets/icons/bang-bang-cry-icon.svg';
 import BangBangIcon from '@/assets/icons/bang-bang-icon.svg';
 import InputRequiredDot from '@/assets/icons/input-required-dot.svg';
+import KakaoLogo from '@/assets/icons/kakao-logo.svg';
 import LampIcon from '@/assets/icons/lamp-icon.svg';
 import BangGgoodTextIcon from '@/assets/icons/logo.svg';
+import PencilIcon from '@/assets/icons/pencil-icon.svg';
 import QuestionDot from '@/assets/icons/question-dot.svg';
 
 /*memo */
@@ -46,6 +50,7 @@ export {
   ArrowRightGreen,
   ArrowRightYellow,
   ArrowUpSmall,
+  BangBangCryIcon,
   BangBangIcon,
   BangGgoodTextIcon,
   CheckIcon,
@@ -56,11 +61,13 @@ export {
   FaceIconBadGray,
   FaceIconGood,
   FaceIconGoodGray,
+  FaceIconNone,
   FaceIconSoso,
   FaceIconSosoGray,
   HomeLogo,
   HomeLogoActive,
   InputRequiredDot,
+  KakaoLogo,
   LampIcon,
   LocationLineIcon,
   LocationLogo,
@@ -69,6 +76,7 @@ export {
   MemoFilled,
   MyPageLogo,
   MyPageLogoActive,
+  PencilIcon,
   Plus,
   QuestionDot,
 };

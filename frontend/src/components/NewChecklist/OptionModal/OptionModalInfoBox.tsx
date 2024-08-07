@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
-import Checkbox from '@/components/common/Checkbox/Checkbox';
-import { OPTION_COUNT } from '@/components/common/OptionButton/OptionIcon';
-import SelectionCounter from '@/components/common/SelectionCounter/SelectionCounter';
+import Checkbox from '@/components/_common/Checkbox/Checkbox';
+import SelectionCounter from '@/components/_common/SelectionCounter/SelectionCounter';
+import { OPTION_COUNT } from '@/constants/options';
 import useOptionStore from '@/store/useOptionStore';
 import { flexCenter, flexSpaceBetween, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
@@ -32,9 +32,9 @@ const OptionModalInfoBox = () => {
 };
 
 const ButtonContainer = styled.div`
+  width: 90%;
   ${flexSpaceBetween}
   height: 50px;
-
   align-items: center;
 `;
 

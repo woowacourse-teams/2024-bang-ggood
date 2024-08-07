@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { flexColumn, flexRow, title1, title2 } from '@/styles/common';
+import { flexColumn, flexRow, title1 } from '@/styles/common';
 import { RoomInfo } from '@/types/room';
 
 interface Props {
@@ -65,7 +65,7 @@ const S = {
   `,
   Row: styled.div`
     ${flexRow}
-    font-size: ${({ theme }) => theme.text.size.large};
+    font-size: ${({ theme }) => theme.text.size.medium};
   `,
   Title: styled.div`
     width: 100%;
@@ -81,7 +81,6 @@ const S = {
     ${title1}
   `,
   Rent: styled.div`
-    ${title2}
     ${flexRow}
     letter-spacing: 0.05rem;
   `,

@@ -1,5 +1,5 @@
 import useChecklistStore from '@/store/useChecklistStore';
-import { EmotionTypeWithNull } from '@/types/emotionAnswer';
+import { EmotionNameWithNone } from '@/types/emotionAnswer';
 
 export interface Props {
   questionId: number;
@@ -7,7 +7,7 @@ export interface Props {
 }
 
 export interface UpdateAnswerProps extends Props {
-  newAnswer: EmotionTypeWithNull;
+  newAnswer: EmotionNameWithNone;
 }
 
 export interface updateMemoProps extends Props {
@@ -15,17 +15,20 @@ export interface updateMemoProps extends Props {
 }
 
 const useChecklistAnswer = () => {
-  const { setAnswers, checklistCategoryQnA } = useChecklistStore();
+  const { setAnswers, checklistCategoryQnA, categoryQnA } = useChecklistStore();
 
   const updateAnswer = ({ categoryId, questionId, newAnswer }: UpdateAnswerProps) => {
-    const targetCategory = checklistCategoryQnA.find(category => category.categoryId === categoryId);
+    const targetCategory = categoryQnA(categoryId);
 
     if (targetCategory) {
       const updatedCategory = {
         ...targetCategory,
-        questions: targetCategory.questions.map(question =>
-          question.questionId === questionId ? { ...question, answer: newAnswer } : question,
-        ),
+        questions: targetCategory.questions.map(question => {
+          if (question.questionId === questionId) {
+            return { ...question, answer: question.answer === newAnswer ? 'NONE' : newAnswer };
+          }
+          return question;
+        }),
       };
 
       const newCategories = checklistCategoryQnA.map(category =>
@@ -69,7 +72,7 @@ const useChecklistAnswer = () => {
     return targetQuestion;
   };
 
-  return { updateAnswer, updateMemo, findCategoryQuestion };
+  return { updateAndToggleAnswer: updateAnswer, updateMemo, findCategoryQuestion };
 };
 
 export default useChecklistAnswer;

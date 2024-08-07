@@ -27,7 +27,7 @@ const useChecklistStore = create<ChecklistState>((set, get) => ({
       questions: category.questions.map(question => ({
         ...question,
         memo: null,
-        answer: null,
+        answer: 'NONE',
       })),
     }));
     set({ checklistCategoryQnA });
@@ -52,12 +52,12 @@ const useChecklistStore = create<ChecklistState>((set, get) => ({
   },
 
   isCategoryQuestionAllCompleted: (targetId: number) => {
-    const { checklistCategoryQnA } = get();
-    const targetCategory = checklistCategoryQnA.filter(category => category.categoryId === targetId)[0];
-    if (targetCategory?.questions) {
-      return !targetCategory?.questions?.find(question => question === null);
+    const { categoryQnA } = get();
+    const targetCategory = categoryQnA(targetId);
+    if (targetCategory) {
+      return targetCategory.questions.every(question => question.answer !== 'NONE');
     }
-    return true;
+    return false;
   },
 }));
 

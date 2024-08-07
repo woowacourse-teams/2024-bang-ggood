@@ -1,10 +1,10 @@
-import { Emotion, EmotionType } from '@/types/emotionAnswer';
+import { Emotion, EmotionName } from '@/types/emotionAnswer';
 
-export const EMOTION_PHARSE: Record<EmotionType | string, string> = {
+export const EMOTION_PHARSE: Record<EmotionName | string, string> = {
   BAD: '별로에요',
   SOSO: '평범해요',
   GOOD: '좋아요',
-  null: '-',
+  NONE: '-',
 };
 
 export const EMOTIONS: Emotion[] = [

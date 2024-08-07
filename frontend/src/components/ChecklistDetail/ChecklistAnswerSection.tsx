@@ -1,5 +1,6 @@
+import Accordion from '@/components/_common/Accordion/Accordion';
 import CategoryAccordion from '@/components/ChecklistDetail/CategoryAccordion';
-import Accordion from '@/components/common/Accordion/Accordion';
+import { CATEGORY_COUNT } from '@/constants/category';
 import { ChecklistCategoryQnA } from '@/types/checklist';
 
 interface Props {
@@ -8,7 +9,7 @@ interface Props {
 
 const ChecklistAnswerSection = ({ categories }: Props) => {
   return (
-    <Accordion>
+    <Accordion totalCount={CATEGORY_COUNT}>
       {categories?.map(category => (
         <div key={category.categoryId}>
           <Accordion.header text={category.categoryName} id={category.categoryId} />

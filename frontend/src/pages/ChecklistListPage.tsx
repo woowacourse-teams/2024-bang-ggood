@@ -4,25 +4,35 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { getChecklists } from '@/apis/checklist';
 import { Plus } from '@/assets/assets';
+import FloatingButton from '@/components/_common/Button/FloatingButton';
+import Header from '@/components/_common/Header/Header';
+import Layout from '@/components/_common/layout/Layout';
 import ChecklistPreviewCard from '@/components/ChecklistList/ChecklistPreviewCard';
 import CompareBanner from '@/components/ChecklistList/CompareBanner';
-import FloatingButton from '@/components/common/Button/FloatingButton';
-import Header from '@/components/common/Header/Header';
-import Layout from '@/components/common/layout/Layout';
+import EditBanner from '@/components/ChecklistList/EditBanner';
+import NoChecklistTemplate from '@/components/ChecklistList/NoChecklistTemplate';
 import FooterDefault from '@/components/FooterDefault';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { flexColumn } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
 
 const ChecklistListPage = () => {
+  // const code = new URL(window.location.href).searchParams.get('code');
   const [checklistList, setChecklistList] = useState<ChecklistPreview[]>([]);
 
   useEffect(() => {
+    // const postLogin = async () => {
+    //   // TODO: 로그인 인증 토큰 저장 작업 필요
+    //   await postKakaoCode(code);
+    // };
+
     const fetchChecklist = async () => {
       const checklistList = await getChecklists();
       setChecklistList(checklistList);
     };
 
+    // TODO: 백엔드 작업 이전
+    // postLogin();
     fetchChecklist();
   }, []);
 
@@ -40,6 +50,10 @@ const ChecklistListPage = () => {
     });
   };
 
+  const handleClickMoveEditPage = () => {
+    navigate(ROUTE_PATH.checklistCustom);
+  };
+
   const handleClickFloatingButton = () => {
     navigate(ROUTE_PATH.checklistNew);
   };
@@ -47,14 +61,23 @@ const ChecklistListPage = () => {
   return (
     <>
       <Header center={<Header.Text>체크리스트</Header.Text>} />
-      <CompareBanner onClick={handleClick} />
-      <Layout>
+      <S.FlexBox>
+        <EditBanner onClick={handleClickMoveEditPage} />
+        <CompareBanner onClick={handleClick} />
+      </S.FlexBox>
+      <Layout style={{ padding: '0 16px' }}>
         <S.ListBox>
-          {checklistList?.map(checklist => (
-            <Link to={ROUTE_PATH.checklistOne(checklist.checklistId)} key={checklist.checklistId}>
-              <ChecklistPreviewCard checklist={checklist} />
-            </Link>
-          ))}
+          {checklistList.length ? (
+            <>
+              {checklistList?.map(checklist => (
+                <Link to={ROUTE_PATH.checklistOne(checklist.checklistId)} key={checklist.checklistId}>
+                  <ChecklistPreviewCard checklist={checklist} />
+                </Link>
+              ))}
+            </>
+          ) : (
+            <NoChecklistTemplate />
+          )}
         </S.ListBox>
       </Layout>
       <FloatingButton onClick={handleClickFloatingButton}>
@@ -69,8 +92,12 @@ export default ChecklistListPage;
 
 const S = {
   ListBox: styled.div`
+    margin-top: 20px;
     ${flexColumn}
     gap: 8px;
     overflow-y: scroll;
+  `,
+  FlexBox: styled.div`
+    display: flex;
   `,
 };

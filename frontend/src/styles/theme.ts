@@ -13,6 +13,7 @@ const palette = {
   green300: '#92E2B2',
   green200: '#B6EBCC',
   green100: '#DBF5E5',
+  green50: '#E6F8ED',
   /*subGreen*/
   subGreen600: '#8BB26B',
   subGreen500: '#A6CF85',
@@ -31,6 +32,9 @@ const palette = {
   black: '#363636',
   white: '#FFFFFF',
   background: '#F5F4F2',
+
+  /* etc */
+  kakao: '#FEE500',
 };
 
 const text = {
@@ -49,6 +53,12 @@ const text = {
   },
 };
 
+const viewport = {
+  MOBILE: 576,
+  TABLET: 768,
+  DESKTOP: 769,
+};
+
 /*range: 10~50 */
 const zIndex = {
   FLOATING_BUTTON: 10,
@@ -62,6 +72,7 @@ const theme = {
   palette,
   text,
   zIndex,
+  viewport,
 };
 
 export default theme;

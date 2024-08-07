@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import Badge from '@/components/common/Badge/Badge';
-import FaceMark from '@/components/common/FaceMark/FaceMark';
-import Modal from '@/components/common/Modal/Modal';
+import Badge from '@/components/_common/Badge/Badge';
+import FaceMark from '@/components/_common/FaceMark/FaceMark';
+import Modal from '@/components/_common/Modal/Modal';
 import CompareItem from '@/components/RoomCompare/CompareItem';
 import { boxShadow, flexColumn, title1, title2, title3 } from '@/styles/common';
 import { ChecklistCompare } from '@/types/checklist';

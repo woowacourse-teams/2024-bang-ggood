@@ -1,12 +1,15 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { getChecklistDetail } from '@/apis/checklist';
+import Header from '@/components/_common/Header/Header';
+import Layout from '@/components/_common/layout/Layout';
 import ChecklistAnswerSection from '@/components/ChecklistDetail/ChecklistAnswerSection';
 import RoomInfoSection from '@/components/ChecklistDetail/RoomInfoSection';
-import Header from '@/components/common/Header/Header';
-import Layout from '@/components/common/layout/Layout';
+import DeleteModal from '@/components/DeleteModal';
+import { ROUTE_PATH } from '@/constants/routePath';
+import useModalOpen from '@/hooks/useModalOpen';
 import theme from '@/styles/theme';
 import { ChecklistInfo } from '@/types/checklist';
 
@@ -15,8 +18,12 @@ type RouteParams = {
 };
 
 const ChecklistDetailPage = () => {
+  const { isModalOpen, modalOpen, modalClose } = useModalOpen();
+  // const [isOpen, setIsOpen] = useState(false);
   const { checklistId } = useParams() as RouteParams;
   const [checklist, setChecklist] = useState<ChecklistInfo>();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchChecklist = async () => {
@@ -26,15 +33,32 @@ const ChecklistDetailPage = () => {
     fetchChecklist();
   }, [checklistId]);
 
+  // TODO: fetch 시 로딩 상태일 때 스켈레톤처리. 성공할 떄만 return 문 보여주는 로직이 필요
+  if (!checklist) {
+    return <div>체크리스트가 없어요</div>;
+  }
+
+  const handleDelete = async () => {
+    // await deleteChecklist(Number(checklistId));
+    modalClose();
+    navigate(ROUTE_PATH.checklistList);
+  };
+
   return (
+    // TODO: 아코디언 색상 없애기, 아이콘 삭제
     <>
-      <Header left={<Header.Backward />} center={<Header.Text>{checklist?.room.name}</Header.Text>} />
+      <Header
+        left={<Header.Backward />}
+        center={<Header.Text>{checklist?.room.roomName}</Header.Text>}
+        right={<Header.TextButton onClick={modalOpen}>삭제</Header.TextButton>}
+      />
       <Layout bgColor={theme.palette.grey100}>
         <S.Wrapper>
           <RoomInfoSection room={checklist?.room} score={checklist?.score} createdAt={checklist?.createdAt} />
           <ChecklistAnswerSection categories={checklist?.categories} />
         </S.Wrapper>
       </Layout>
+      {isModalOpen && <DeleteModal isOpen={isModalOpen} onClose={modalClose} handleDelete={handleDelete} />}
     </>
   );
 };

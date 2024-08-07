@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
 import { BangBangIcon } from '@/assets/assets';
-import Header from '@/components/common/Header/Header';
+import Header from '@/components/_common/Header/Header';
 
 const SaveCheckListPage = () => {
   return (

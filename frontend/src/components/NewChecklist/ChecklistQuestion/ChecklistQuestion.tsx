@@ -2,14 +2,14 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import { ArrowUpSmall, MemoEmpty, MemoFilled, QuestionDot } from '@/assets/assets';
-import FaceMark from '@/components/common/FaceMark/FaceMark';
-import { useTabContext } from '@/components/common/Tabs/TabContext';
+import FaceMark from '@/components/_common/FaceMark/FaceMark';
+import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import QuestionMemo from '@/components/NewChecklist/ChecklistQuestion/QuestionMemo';
 import { EMOTION_PHARSE, EMOTIONS } from '@/constants/emotion';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';
 import { flexCenter, flexSpaceBetween } from '@/styles/common';
 import { ChecklistQuestion } from '@/types/checklist';
-import { EmotionType } from '@/types/emotionAnswer';
+import { EmotionName } from '@/types/emotionAnswer';
 
 interface Props {
   question: ChecklistQuestion;
@@ -17,15 +17,14 @@ interface Props {
 
 const ChecklistQuestion = ({ question }: Props) => {
   const { questionId } = question;
-  const { updateAnswer, findCategoryQuestion } = useChecklistAnswer();
+  const { updateAndToggleAnswer: updateAnswer, findCategoryQuestion } = useChecklistAnswer();
   const { currentTabId } = useTabContext();
 
   const [isMemoOpen, setIsMemoOpen] = useState(false);
 
-  //TODO: 에러를 던지고 잇음/
   const { answer, memo } = findCategoryQuestion({ categoryId: currentTabId, questionId });
 
-  const handleClick = (newAnswer: EmotionType) => {
+  const handleClick = (newAnswer: EmotionName) => {
     updateAnswer({ categoryId: currentTabId, questionId: questionId, newAnswer });
   };
 
@@ -43,9 +42,7 @@ const ChecklistQuestion = ({ question }: Props) => {
         <QuestionDot />
         {question?.title}
       </S.Title>
-
       {question?.subtitle && <S.Subtitle>{question?.subtitle}</S.Subtitle>}
-
       <S.ButtonBox>
         {isMemoOpen ? (
           <ArrowUpSmall onClick={handleCloseMemo} />
@@ -59,6 +56,7 @@ const ChecklistQuestion = ({ question }: Props) => {
       <S.Options>
         {EMOTIONS.map(emotion => {
           const { name: emotionName, id } = emotion;
+
           return (
             <FaceMark onClick={() => handleClick(emotionName)} key={id}>
               <FaceMark.FaceIcon emotion={emotionName} isFilled={answer === emotionName} />
@@ -107,6 +105,7 @@ const S = {
     margin: 0 auto;
     margin-top: 10px;
   `,
+
   ButtonBox: styled.div`
     position: absolute;
     top: 10px;

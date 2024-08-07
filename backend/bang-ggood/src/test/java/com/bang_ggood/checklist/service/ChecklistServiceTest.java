@@ -174,6 +174,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
     }
 
+
 //    @DisplayName("체크리스트 리스트 조회 성공")
 //    @Test
 //    void readUserChecklistsPreview() {
@@ -442,7 +443,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         checklistService.updateCustomChecklist(USER1, request);
 
         // then
-        assertThat(customChecklistQuestionRepository.findByUser(USER1))
+        assertThat(customChecklistQuestionRepository.findAllByUser(USER1))
                 .hasSize(request.questionIds().size());
     }
 

@@ -5,12 +5,15 @@ import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
+import com.bang_ggood.checklist.domain.CustomChecklistQuestion;
 import com.bang_ggood.checklist.domain.Grade;
 import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
+import com.bang_ggood.checklist.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsWithScoreReadResponse;
+import com.bang_ggood.checklist.dto.response.CustomChecklistQuestionResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
@@ -25,6 +28,7 @@ import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -431,6 +435,27 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                         ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_DIFFERENT.getMessage());
+    }
+
+    @DisplayName("커스텀 체크리스트 조회 성공")
+    @Test
+    void readCustomChecklistQuestions() {
+        // given
+        CustomChecklistQuestion question1 = new CustomChecklistQuestion(USER1, Question.CLEAN_5);
+        CustomChecklistQuestion question2 = new CustomChecklistQuestion(USER1, Question.AMENITY_12);
+        List<CustomChecklistQuestion> questions = List.of(question1, question2);
+        customChecklistQuestionRepository.saveAll(questions);
+
+        // when
+        CategoryCustomChecklistQuestionsResponse response = checklistService.readAllCustomChecklistQuestions(USER1);
+
+        // then
+        long selectedCount = response.categories().stream()
+                .flatMap(category -> category.questions().stream())
+                .filter(CustomChecklistQuestionResponse::isSelected)
+                .count();
+
+        Assertions.assertThat(selectedCount).isEqualTo(questions.size());
     }
 
     @DisplayName("커스텀 체크리스트 업데이트 성공")

@@ -5,6 +5,7 @@ import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
+import com.bang_ggood.checklist.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
@@ -92,11 +93,14 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("커스텀 체크리스트 전체 조회 성공")
     @Test
     void readAllCustomChecklistQuestion() {
-        // given
-
-        // when
-
-        // then
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .when().get("/custom-checklist/all")
+                .then().log().all()
+                .statusCode(200)
+                .extract()
+                .as(CategoryCustomChecklistQuestionsResponse.class);
     }
 
     @DisplayName("작성된 체크리스트 조회 성공")

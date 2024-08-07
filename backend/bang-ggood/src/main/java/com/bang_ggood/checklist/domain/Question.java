@@ -98,6 +98,11 @@ public enum Question {
                 .anyMatch(question -> question.getId() == id);
     }
 
+    public boolean isSelected(List<CustomChecklistQuestion> questions) {
+        return questions.stream()
+                .anyMatch(question -> question.getQuestion().id == this.id);
+    }
+
     private boolean isCategory(Category category) {
         return this.category == category;
     }

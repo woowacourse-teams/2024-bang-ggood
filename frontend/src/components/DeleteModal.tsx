@@ -13,7 +13,7 @@ interface Props {
 
 const DeleteModal = ({ isOpen, onClose, handleDelete }: Props) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} hasCloseButton={false}>
+    <Modal size={'large'} isOpen={isOpen} onClose={onClose} hasCloseButton={false}>
       <Modal.body>
         <S.Container>
           <BangBangCryIcon width={100} height={150} />

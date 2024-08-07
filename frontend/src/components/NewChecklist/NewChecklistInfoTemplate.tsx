@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 
 import Badge from '@/components/_common/Badge/Badge';
 import Button from '@/components/_common/Button/Button';
@@ -15,14 +15,28 @@ import { RoomInfo, RoomInfoName } from '@/types/room';
 interface Props {
   roomInfo: RoomInfo;
   onChange: (event: InputChangeEvent) => void;
+  onClickTagButton: (name: string, value: string) => void;
+  setRoomInfo: Dispatch<SetStateAction<RoomInfo>>;
 }
-const NewChecklistInfoTemplate = ({ roomInfo, onChange: onChangeForForm }: Props) => {
+const NewChecklistInfoTemplate = ({ roomInfo, setRoomInfo, onChange: onChangeForForm, onClickTagButton }: Props) => {
   const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
-  const [roomStructure, setRoomStructure] = useState('');
+  const [roomSizeUnit, setRoomSizeUnit] = useState('');
 
   const onClickOptionModalOpen = () => setIsOptionModalOpen(true);
 
   const { getSelectedOptionsName } = useOptionStore();
+
+  const handleClickRoomSizeUnit = useCallback(
+    (newRoomSizeUnit: string) => {
+      if (roomSizeUnit === newRoomSizeUnit) return;
+      setRoomInfo({
+        ...roomInfo,
+        size: roomSizeUnit === 'm2' ? (roomInfo.size ?? 0) / 3.3 : (roomInfo.size ?? 0) * 3.3,
+      });
+      setRoomSizeUnit(newRoomSizeUnit);
+    },
+    [roomSizeUnit, setRoomSizeUnit, roomInfo, setRoomInfo],
+  );
 
   return (
     <S.ContentWrapper>
@@ -73,10 +87,30 @@ const NewChecklistInfoTemplate = ({ roomInfo, onChange: onChangeForForm }: Props
         <S.FlexVertical>
           <FormField.Label label="방 종류" />
           <S.OptionButtonContainer flexWrap="wrap">
-            <Badge label="빌라" type="button" />
-            <Badge label="오피스텔" type="button" />
-            <Badge label="아파트" type="button" />
-            <Badge label="기타" type="button" />
+            <Badge
+              label="빌라"
+              size="button"
+              isSelected={roomInfo.type === '빌라'}
+              onClick={() => onClickTagButton('type', '빌라')}
+            />
+            <Badge
+              label="오피스텔"
+              size="button"
+              isSelected={roomInfo.type === '오피스텔'}
+              onClick={() => onClickTagButton('type', '오피스텔')}
+            />
+            <Badge
+              label="아파트"
+              size="button"
+              isSelected={roomInfo.type === '아파트'}
+              onClick={() => onClickTagButton('type', '아파트')}
+            />
+            <Badge
+              label="기타"
+              size="button"
+              isSelected={roomInfo.type === '기타'}
+              onClick={() => onClickTagButton('type', '기타')}
+            />
           </S.OptionButtonContainer>
         </S.FlexVertical>
 
@@ -84,11 +118,38 @@ const NewChecklistInfoTemplate = ({ roomInfo, onChange: onChangeForForm }: Props
         <S.FlexVertical>
           <FormField.Label label="방 구조" />
           <S.OptionButtonContainer flexWrap="wrap">
-            <Badge label="오픈형 원룸" type="button" />
-            <Badge label="분리형 원룸" type="button" />
-            <Badge label="투룸" type="button" />
-            <Badge label="쓰리룸 이상" type="button" />
-            <Badge label="복층" type="button" />
+            <Badge
+              label="오픈형 원룸"
+              name="분리형 원룸"
+              size="button"
+              isSelected={roomInfo.structure === '빌라'}
+              onClick={() => onClickTagButton('structure', '빌라')}
+            />
+            <Badge
+              label="분리형 원룸"
+              name="structure"
+              size="button"
+              isSelected={roomInfo.structure === '분리형 원룸'}
+              onClick={() => onClickTagButton('structure', '분리형 원룸')}
+            />
+            <Badge
+              label="투룸"
+              size="button"
+              isSelected={roomInfo.structure === '투룸'}
+              onClick={() => onClickTagButton('structure', '투룸')}
+            />
+            <Badge
+              label="쓰리룸 이상"
+              size="button"
+              isSelected={roomInfo.structure === '쓰리룸 이상'}
+              onClick={() => onClickTagButton('structure', '쓰리룸 이상')}
+            />
+            <Badge
+              label="복층"
+              size="button"
+              isSelected={roomInfo.structure === '복층'}
+              onClick={() => onClickTagButton('structure', '복층')}
+            />
           </S.OptionButtonContainer>
         </S.FlexVertical>
 
@@ -98,17 +159,11 @@ const NewChecklistInfoTemplate = ({ roomInfo, onChange: onChangeForForm }: Props
           <S.FlexHorizontal>
             <S.CustomInput placeholder="" onChange={onChangeForForm} name="size" value={roomInfo.size} />
 
-            <S.RadioGroup
-              label=""
-              value={roomStructure}
-              onChangeChild={e => {
-                setRoomStructure(e.target.value);
-              }}
-            >
-              <RadioGroup.RadioButton value="m2" color="green">
+            <S.RadioGroup label="" value={roomSizeUnit} onChangeChild={() => {}}>
+              <RadioGroup.RadioButton value="m2" color="green" onClick={() => handleClickRoomSizeUnit('m2')}>
                 m2
               </RadioGroup.RadioButton>
-              <RadioGroup.RadioButton value="평" color="green">
+              <RadioGroup.RadioButton value="평" color="green" onClick={() => handleClickRoomSizeUnit('평')}>
                 평
               </RadioGroup.RadioButton>
             </S.RadioGroup>
@@ -120,7 +175,7 @@ const NewChecklistInfoTemplate = ({ roomInfo, onChange: onChangeForForm }: Props
         <FormField>
           <FormField.Label label="층수" />
           <S.FlexHorizontal>
-            <S.CustomInput placeholder="" name="floor" value={roomInfo.floor} />
+            <S.CustomInput placeholder="" name="floor" value={roomInfo.floor} onChange={onChangeForForm} />
 
             <S.RadioGroup label="" value={roomInfo.floorLevel ?? ''} onChangeChild={onChangeForForm}>
               <RadioGroup.RadioButton name="floorLevel" value="지상" color="green">
@@ -139,7 +194,13 @@ const NewChecklistInfoTemplate = ({ roomInfo, onChange: onChangeForForm }: Props
 
         {/* 계약 기간 */}
         <S.FlexHorizontal>
-          <CustomFormField label="계약 기간(개월)" values={roomInfo} name="contractTerm" onChange={onChangeForForm} />
+          <CustomFormField
+            label="계약 기간(개월)"
+            values={roomInfo}
+            name="contractTerm"
+            type="number"
+            onChange={onChangeForForm}
+          />
         </S.FlexHorizontal>
 
         {/* 부동산 이름 */}
@@ -159,10 +220,10 @@ const NewChecklistInfoTemplate = ({ roomInfo, onChange: onChangeForForm }: Props
   );
 };
 
-const CustomFormField = ({ label, name, values, required, onChange }: CustomFormFieldProps) => (
+const CustomFormField = ({ label, name, values, required, type = 'string', onChange }: CustomFormFieldProps) => (
   <S.CustomFormField key={label}>
     <FormField.Label label={label} required={required} />
-    <FormField.Input placeholder="" width="full" onChange={onChange} name={name} value={values[name]} />
+    <FormField.Input placeholder="" width="full" type={type} onChange={onChange} name={name} value={values[name]} />
     <FormField.P value={''} />
   </S.CustomFormField>
 );
@@ -174,6 +235,7 @@ export interface CustomFormFieldProps {
   placeholder?: string;
   required?: boolean;
   onChange: (event: InputChangeEvent) => void;
+  type?: string;
 }
 const S = {
   ContentWrapper: styled.div`

@@ -15,6 +15,7 @@ export const checklistDetail: ChecklistInfo = {
     walkingTime: 10,
     realEstate: '부동산A',
     type: '오피스텔',
+    structure: '오픈형 원룸',
     size: 25,
     floorLevel: '지상',
   },

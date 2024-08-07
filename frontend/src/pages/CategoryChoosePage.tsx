@@ -74,7 +74,7 @@ const CategoryChoosePage = () => {
                 <Badge
                   key={category.categoryId}
                   label={category.categoryName}
-                  type="button"
+                  size="button"
                   onClick={() => handleClick(category.categoryId)}
                   isSelected={selectedCategory.includes(category.categoryId)}
                 />

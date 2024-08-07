@@ -1,25 +1,21 @@
 import useChecklistCustomStore from '@/store/useChecklistCustomStore';
+import { CategoryAndQuestion } from '@/types/checklist';
 
-export interface Props {
-  questionId: number;
-  categoryId: number;
-}
-
-export interface UpdateCheckProps extends Props {
-  isChecked: boolean;
+export interface UpdateCheckProps extends CategoryAndQuestion {
+  isSelected: boolean;
 }
 
 const useChecklistQuestionUpdate = () => {
   const { setChecklistAllQuestionList, checklistAllQuestionList } = useChecklistCustomStore();
 
-  const updateCheckQuestion = ({ categoryId, questionId, isChecked }: UpdateCheckProps) => {
+  const updateCheckQuestion = ({ categoryId, questionId, isSelected }: UpdateCheckProps) => {
     const targetCategory = checklistAllQuestionList.find(category => category.categoryId === categoryId);
 
     if (targetCategory) {
       const updatedCategory = {
         ...targetCategory,
         questions: targetCategory.questions.map(question =>
-          question.questionId === questionId ? { ...question, isChecked } : question,
+          question.questionId === questionId ? { ...question, isSelected } : question,
         ),
       };
 

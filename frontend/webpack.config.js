@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
+const fs = require('fs');
 
 // env
 const dotenv = require('dotenv');
@@ -32,6 +33,13 @@ const config = {
     port: 3000,
     allowedHosts: 'all',
     historyApiFallback: true,
+    server: {
+      type: 'https',
+      options: {
+        key: fs.readFileSync('./private.key'),
+        cert: fs.readFileSync('./private.pem'),
+      },
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({

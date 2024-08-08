@@ -16,3 +16,6 @@ stories
 .*cache
 # Sentry Config File
 .env.sentry-build-plugin
+
+
+private*

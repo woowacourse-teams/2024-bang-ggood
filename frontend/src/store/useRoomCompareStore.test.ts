@@ -42,8 +42,8 @@ describe('useRoomCompareStore 테스트', () => {
   it('2개 추가후 기존 하나를 토글할 시, 토글한 id는 rooms에서 제거된다.', () => {
     const { result } = renderHook(() => useRoomCompareStore());
 
-    act(() => result.current.addRoom(3));
-    act(() => result.current.addRoom(4));
+    act(() => result.current.toggleRoom(3));
+    act(() => result.current.toggleRoom(4));
 
     expect(result.current.rooms).toEqual(new Set([3, 4]));
 

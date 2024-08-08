@@ -77,12 +77,12 @@ CREATE TABLE checklist_option
 
 CREATE TABLE category_priority
 (
-    id           BIGINT AUTO_INCREMENT PRIMARY KEY,
-    category_id  INTEGER NOT NULL,
-    user_id      BIGINT  NOT NULL,
-    created_at   TIMESTAMP(6),
-    modified_at  TIMESTAMP(6),
-    deleted      BOOLEAN,
+    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
+    category_id INTEGER NOT NULL,
+    user_id     BIGINT  NOT NULL,
+    created_at  TIMESTAMP(6),
+    modified_at TIMESTAMP(6),
+    deleted     BOOLEAN,
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
 

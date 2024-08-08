@@ -1,7 +1,7 @@
 package com.bang_ggood.auth.controller;
 
-import com.bang_ggood.auth.service.AuthService;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
+import com.bang_ggood.auth.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;

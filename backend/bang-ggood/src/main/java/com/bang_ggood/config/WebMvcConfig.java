@@ -1,7 +1,7 @@
 package com.bang_ggood.config;
 
-import com.bang_ggood.auth.service.AuthService;
 import com.bang_ggood.auth.config.AuthPrincipalArgumentResolver;
+import com.bang_ggood.auth.service.AuthService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

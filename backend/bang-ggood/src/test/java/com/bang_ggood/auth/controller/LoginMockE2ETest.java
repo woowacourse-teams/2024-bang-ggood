@@ -1,8 +1,8 @@
 package com.bang_ggood.auth.controller;
 
 import com.bang_ggood.AcceptanceMockTestSupport;
-import com.bang_ggood.auth.service.AuthService;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
+import com.bang_ggood.auth.service.AuthService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

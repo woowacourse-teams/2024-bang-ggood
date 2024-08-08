@@ -39,13 +39,13 @@ class JwtTokenProviderTest extends IntegrationTestSupport {
         // given
         String JWT_SECRET_KEY = "A".repeat(32);
         int JWT_ACCESS_TOKEN_EXPIRE_LENGTH = 1;
-        JwtTokenProvider  expiredJwtTokenProvider = new JwtTokenProvider(JWT_SECRET_KEY, JWT_ACCESS_TOKEN_EXPIRE_LENGTH);
+        JwtTokenProvider expiredJwtTokenProvider = new JwtTokenProvider(JWT_SECRET_KEY, JWT_ACCESS_TOKEN_EXPIRE_LENGTH);
 
         User user = userRepository.save(USER1);
-        String token =  expiredJwtTokenProvider.createToken(user);
+        String token = expiredJwtTokenProvider.createToken(user);
 
         // when & then
-        Assertions.assertThatCode(() ->  expiredJwtTokenProvider.resolveToken(token))
+        Assertions.assertThatCode(() -> expiredJwtTokenProvider.resolveToken(token))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.AUTHENTICATION_TOKEN_EXPIRED.getMessage());
     }
@@ -59,10 +59,10 @@ class JwtTokenProviderTest extends IntegrationTestSupport {
         JwtTokenProvider invalidJwtTokenProvider = new JwtTokenProvider(JWT_SECRET_KEY, JWT_ACCESS_TOKEN_EXPIRE_LENGTH);
 
         User user = userRepository.save(USER1);
-        String token =  jwtTokenProvider.createToken(user);
+        String token = jwtTokenProvider.createToken(user);
 
         // when & then
-        Assertions.assertThatCode(() ->  invalidJwtTokenProvider.resolveToken(token))
+        Assertions.assertThatCode(() -> invalidJwtTokenProvider.resolveToken(token))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.AUTHENTICATION_TOKEN_INVALID.getMessage());
     }
@@ -74,7 +74,7 @@ class JwtTokenProviderTest extends IntegrationTestSupport {
         String invalidToken = "malformed";
 
         // when & then
-        Assertions.assertThatCode(() ->  jwtTokenProvider.resolveToken(invalidToken))
+        Assertions.assertThatCode(() -> jwtTokenProvider.resolveToken(invalidToken))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.AUTHENTICATION_TOKEN_INVALID.getMessage());
     }

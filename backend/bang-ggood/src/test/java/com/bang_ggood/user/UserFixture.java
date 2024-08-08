@@ -11,9 +11,9 @@ public class UserFixture {
     public static final User USER2 = new User("빵빵이", "bbang-bbang@gmail.com");
     public static final OauthInfoApiResponse OAUTH_INFO_RESPONSE_USER1 = new OauthInfoApiResponse("", "",
             new KakaoAccountResponse(USER1.getEmail(), USER1.getName(),
-                    new ProfileResponse("", "","")));
+                    new ProfileResponse("", "", "")));
 
     public static final OauthInfoApiResponse OAUTH_INFO_RESPONSE_USER2 = new OauthInfoApiResponse("", "",
             new KakaoAccountResponse(USER2.getEmail(), USER2.getName(),
-                    new ProfileResponse("", "","")));
+                    new ProfileResponse("", "", "")));
 }

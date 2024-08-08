@@ -157,7 +157,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     void readChecklistById() {
         // given
         roomRepository.save(RoomFixture.ROOM_1);
-        checklistRepository.save(ChecklistFixture.checklist);
+        checklistRepository.save(ChecklistFixture.CHECKLIST1);
 
         // when
         SelectedChecklistResponse selectedChecklistResponse = checklistService.readChecklistById(UserFixture.USER1, 1L);
@@ -517,7 +517,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     void deleteChecklistById() {
         // given
         roomRepository.save(RoomFixture.ROOM_1);
-        Checklist checklist = checklistRepository.save(ChecklistFixture.checklist);
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1);
 
         // when
         checklistService.deleteChecklistById(checklist.getId());

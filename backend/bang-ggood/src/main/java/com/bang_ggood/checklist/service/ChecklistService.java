@@ -237,7 +237,7 @@ public class ChecklistService {
 
     @Transactional
     public UserChecklistsPreviewResponse readUserChecklistsPreview(User user) {
-        List<Checklist> checklists = checklistRepository.findByUser(user);
+        List<Checklist> checklists = checklistRepository.findAllByUser(user);
         List<UserChecklistPreviewResponse> responses = checklists.stream()
                 .map(this::getChecklistPreview)
                 .toList();

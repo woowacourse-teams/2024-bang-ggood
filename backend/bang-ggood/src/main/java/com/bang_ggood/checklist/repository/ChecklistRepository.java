@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +26,8 @@ public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
         return findById(id).orElseThrow(() -> new BangggoodException(ExceptionCode.CHECKLIST_NOT_FOUND));
     }
 
-    //TODO: 논리적 삭제 리팩토링
-    List<Checklist> findByUser(User user);
+    @Query("SELECT c FROM Checklist c WHERE c.deleted = false")
+    List<Checklist> findAllByUser(User user);
 
     @Query("SELECT c FROM Checklist c "
             + "JOIN FETCH c.user u "
@@ -42,6 +43,7 @@ public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
             + "AND c.deleted = false")
     boolean existsById(@Param("id") long id);
 
+    @Transactional
     @Modifying
     @Query("UPDATE Checklist c "
             + "SET c.deleted = true "

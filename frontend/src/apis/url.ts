@@ -11,7 +11,7 @@ export const ENDPOINT = {
   CHECKLIST_ID: (id: number) => `/checklists/${id}`,
   CHECKLIST_COMPARE: ({ id1, id2, id3 }: { id1: number; id2: number; id3?: number }) => {
     const url = `/checklists/comparison?id=${id1}&id=${id2}`;
-    if (id3 !== null) return `${url}&id=${id3}`;
+    if (id3 !== undefined) return `${url}&id=${id3}`;
     return url;
   },
   /* category */

@@ -10,25 +10,13 @@ import { ChecklistCompare } from '@/types/checklist';
 import calcEmotions from '@/utils/calcEmotions';
 
 interface Props {
-  room: ChecklistCompare;
+  roomInfo: ChecklistCompare;
   compareNum: number;
 }
 
-const CompareCard = ({ room, compareNum }: Props) => {
-  const {
-    roomName,
-    score,
-    rank,
-    address,
-    floor,
-    deposit,
-    rent,
-    contractTerm,
-    station,
-    walkingTime,
-    options,
-    categories,
-  } = room;
+const CompareCard = ({ roomInfo, compareNum }: Props) => {
+  const { score, rank, room, options, categories } = roomInfo;
+
   const isHightestRoom = rank === 1 || compareNum === 2 ? true : false;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,7 +32,7 @@ const CompareCard = ({ room, compareNum }: Props) => {
   return (
     <S.Container isHightLight={isHightestRoom && compareNum === 3}>
       {/* 방 이름 / 점수 */}
-      <S.Title>{roomName}</S.Title>
+      <S.Title>{room.roomName}</S.Title>
       <S.RankWrapper>
         <S.Rank>{rank}등</S.Rank>
         <S.Score>({score}점)</S.Score>
@@ -55,7 +43,7 @@ const CompareCard = ({ room, compareNum }: Props) => {
         isLabeled={isHightestRoom}
         item={
           <S.Item>
-            {address} / {floor}층
+            {room.address} / {room.floor}층
           </S.Item>
         }
       />
@@ -65,7 +53,7 @@ const CompareCard = ({ room, compareNum }: Props) => {
         isLabeled={isHightestRoom}
         item={
           <S.Item>
-            {deposit}/{rent}
+            {room.deposit} / {room.rent}
           </S.Item>
         }
       />
@@ -80,16 +68,16 @@ const CompareCard = ({ room, compareNum }: Props) => {
         }
       /> */}
       {/* 계약기간 */}
-      <CompareItem label={'계약기간'} isLabeled={isHightestRoom} item={<S.Item>{contractTerm}개월</S.Item>} />
+      <CompareItem label={'계약기간'} isLabeled={isHightestRoom} item={<S.Item>{room.contractTerm}개월</S.Item>} />
       {/* 교통편 */}
       <CompareItem
         label={'교통편'}
         isLabeled={isHightestRoom}
         item={
           <S.Item>
-            {station}/
+            {room.station}/
             <br />
-            도보 {walkingTime}분
+            도보 {room.walkingTime}분
           </S.Item>
         }
       />

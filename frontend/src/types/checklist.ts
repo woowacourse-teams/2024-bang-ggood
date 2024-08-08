@@ -55,7 +55,8 @@ export interface Option {
   optionName: string;
 }
 
-export interface ChecklistCompare extends RoomInfo {
+export interface ChecklistCompare {
+  room: RoomInfo;
   checklistId: number;
   rank: number;
   score: number;

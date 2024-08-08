@@ -1,7 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import { ROUTE_PATH } from '@/constants/routePath';
-import CategoryChoosePage from '@/pages/CategoryChoosePage';
 import ChecklistCustomPage from '@/pages/ChecklistCustomPage';
 import ChecklistDetailPage from '@/pages/ChecklistDetailPage';
 import ChecklistListPage from '@/pages/ChecklistListPage';
@@ -17,7 +16,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        element: <CategoryChoosePage />,
+        element: <LoginPage />,
         path: ROUTE_PATH.root,
       },
       {

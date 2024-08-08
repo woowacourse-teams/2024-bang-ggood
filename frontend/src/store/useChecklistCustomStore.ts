@@ -19,8 +19,11 @@ const useChecklistCustomStore = create<ChecklistCustomState>((set, get) => ({
   checklistAllQuestionList: [],
   validCategory: [],
 
-  setChecklistAllQuestionList: (questions: ChecklistCategoryQnIsSelected[]) => {
-    set({ checklistAllQuestionList: questions });
+  setChecklistAllQuestionList: (categoryQuestions: ChecklistCategoryQnIsSelected[]) => {
+    const defaultSelectedQuestions = categoryQuestions.flatMap(category =>
+      category.questions.filter(question => question.isSelected).map(question => question.questionId),
+    );
+    set({ selectedQuestions: defaultSelectedQuestions, checklistAllQuestionList: categoryQuestions });
   },
 
   categoryQnA: (categoryId: number) => {

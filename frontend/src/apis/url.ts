@@ -6,7 +6,7 @@ export const ENDPOINT = {
   /* checklist */
   CHECKLISTS: '/checklists',
   CHECKLIST_QUESTION: '/checklists/questions',
-  CHECKLIST_ALL_QUESTION: '/checklists/all-questions',
+  CHECKLIST_ALL_QUESTION: '/custom-checklist/all',
   CHECKLIST_CUSTOM: '/custom-checklist',
   CHECKLIST_ID: (id: number) => `/checklists/${id}`,
   CHECKLIST_COMPARE: ({ id1, id2, id3 }: { id1: number; id2: number; id3?: number }) => {

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getChecklistAllQuestions, putCustomChecklist } from '@/apis/checklist';
@@ -16,9 +16,9 @@ import { flexCenter, title2 } from '@/styles/common';
 const ChecklistCustomPage = () => {
   const { showToast } = useToast(3);
 
-  const { setValidCategory, setChecklistAllQuestionList } = useChecklistCustomStore();
+  const { setValidCategory, setChecklistAllQuestionList, selectedQuestions } = useChecklistCustomStore();
 
-  const [selectedQuestions] = useState<number[]>([]);
+  // const [selectedQuestions, setSelectedQuestions] = useState<number[]>([]);
 
   const navigate = useNavigate();
 

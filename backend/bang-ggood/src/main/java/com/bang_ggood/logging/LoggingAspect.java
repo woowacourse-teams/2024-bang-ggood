@@ -27,9 +27,8 @@ public class LoggingAspect {
         if (RequestContextHolder.getRequestAttributes() instanceof ServletRequestAttributes) {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             String methodName = joinPoint.getSignature().getName();
-            InfoLog infoLog = InfoLog.of(request, methodName);
 
-            log.info(infoLog.toString());
+            log.info(InfoLog.of(request, methodName).toString());
         }
     }
 

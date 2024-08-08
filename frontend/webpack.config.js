@@ -5,9 +5,11 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
+const fs = require('fs');
 
 // env
 const dotenv = require('dotenv');
+const { sentryWebpackPlugin } = require('@sentry/webpack-plugin');
 const env = dotenv.config().parsed;
 const isProduction = process.env.NODE_ENV == 'production';
 
@@ -31,6 +33,13 @@ const config = {
     port: 3000,
     allowedHosts: 'all',
     historyApiFallback: true,
+    // server: {
+    //   type: 'https',
+    //   options: {
+    //     key: fs.readFileSync('./private.key'),
+    //     cert: fs.readFileSync('./private.pem'),
+    //   },
+    // },
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -71,7 +80,26 @@ const config = {
       {
         test: /\.svg$/i,
         issuer: /\.[jt]sx?$/,
-        use: [{ loader: '@svgr/webpack', options: {} }],
+        use: [
+          {
+            loader: '@svgr/webpack',
+            options: {
+              svgoConfig: {
+                plugins: [
+                  {
+                    name: 'preset-default',
+                    params: {
+                      overrides: {
+                        removeViewBox: false,
+                      },
+                    },
+                  },
+                  'prefixIds',
+                ],
+              },
+            },
+          },
+        ],
       },
     ],
   },
@@ -90,6 +118,14 @@ module.exports = () => {
     config.plugins.push(new MiniCssExtractPlugin());
 
     config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
+    config.plugins.push(
+      sentryWebpackPlugin({
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        org: 'skiende74',
+        project: 'javascript-react',
+      }),
+    );
+    config.devtool = 'source-map';
   } else {
     config.mode = 'development';
   }

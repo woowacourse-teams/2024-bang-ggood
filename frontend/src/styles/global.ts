@@ -1,12 +1,9 @@
 import { css } from '@emotion/react';
 
-import { fonts } from '@/styles/font';
-
 import { normalize } from '../styles/reset';
 import theme from '../styles/theme';
 
 export const baseStyle = css`
-  ${fonts}
   ${normalize}
 
   body {

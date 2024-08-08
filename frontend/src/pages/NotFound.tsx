@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { BangBangIcon } from '@/assets/assets';
-import Header from '@/components/common/Header/Header';
+import Header from '@/components/_common/Header/Header';
 import { flexColumn } from '@/styles/common';
 
 const NotFound = () => {

@@ -1,17 +1,20 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import { getChecklists } from '@/apis/checklist';
-import Button from '@/components/common/Button/Button';
-import Header from '@/components/common/Header/Header';
-import Layout from '@/components/common/layout/Layout';
+import Button from '@/components/_common/Button/Button';
+import Header from '@/components/_common/Header/Header';
+import Layout from '@/components/_common/layout/Layout';
 import CompareSelectCard from '@/components/RoomCompare/CompareSelectCard';
+import { ROUTE_PATH } from '@/constants/routePath';
 import useRoomCompareStore from '@/store/useRoomCompareStore';
 import { flexRow } from '@/styles/common';
 import theme from '@/styles/theme';
 import { ChecklistPreview } from '@/types/checklist';
 
 const RoomCompareSelectPage = () => {
+  const navigate = useNavigate();
   const { rooms, toggleRoom } = useRoomCompareStore();
 
   const [checklistList, setChecklistList] = useState<ChecklistPreview[]>([]);
@@ -24,15 +27,19 @@ const RoomCompareSelectPage = () => {
     fetchChecklist();
   }, []);
 
+  const handleClick = () => {
+    navigate(ROUTE_PATH.roomCompare);
+  };
+
   return (
     <>
       <Header
         left={<Header.Backward />}
         center={<Header.Text>방 비교하기</Header.Text>}
-        right={<Button label="비교" color="dark" size="small" />}
+        right={<Button label="비교" color="dark" size="small" onClick={handleClick} />}
       />
-      <Layout bgColor={theme.palette.grey100}>
-        <S.Wrapper bgColor={theme.palette.grey100}>
+      <Layout bgColor={theme.palette.background}>
+        <S.Wrapper bgColor={theme.palette.background}>
           {checklistList.map(roomPreview => (
             <CompareSelectCard
               key={roomPreview.checklistId}

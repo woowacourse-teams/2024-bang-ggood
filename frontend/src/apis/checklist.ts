@@ -1,4 +1,5 @@
 import fetcher from '@/apis/fetcher';
+import { NullRoomInfo } from '@/apis/nullObjects';
 import { BASE_URL, ENDPOINT } from '@/apis/url';
 import { ChecklistCustom } from '@/types/checklist';
 import { ChecklistForm } from '@/types/room';
@@ -28,7 +29,8 @@ export const getChecklists = async () => {
 };
 
 export const postChecklist = async (answers: ChecklistForm) => {
-  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLISTS, body: answers });
+  const body = { ...NullRoomInfo, ...answers.room };
+  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLISTS, body });
   return response;
 };
 

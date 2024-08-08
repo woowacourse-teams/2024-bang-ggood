@@ -45,6 +45,10 @@ const router = createBrowserRouter([
         path: ROUTE_PATH.roomCompare,
       },
       {
+        element: <RoomCompareSelectPage />,
+        path: ROUTE_PATH.roomCompareSelect,
+      },
+      {
         element: <LoginPage />,
         path: ROUTE_PATH.login,
       },

@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { getChecklists } from '@/apis/checklist';
 import { Plus } from '@/assets/assets';
+import Button from '@/components/_common/Button/Button';
 import FloatingButton from '@/components/_common/Button/FloatingButton';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
@@ -17,6 +18,7 @@ import { flexColumn } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
 
 const ChecklistListPage = () => {
+  const navigate = useNavigate();
   const [checklistList, setChecklistList] = useState<ChecklistPreview[]>([]);
 
   useEffect(() => {
@@ -26,24 +28,14 @@ const ChecklistListPage = () => {
     };
 
     fetchChecklist();
-  }, []);
-
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    // TODO: 비교 방 선택 페이지 작업으로 이후 변경 필요 (3차 스프린트)
-    const length = checklistList?.length - 1;
-    navigate(ROUTE_PATH.roomCompare, {
-      state: {
-        id1: checklistList[length].checklistId,
-        id2: checklistList[length - 1].checklistId,
-        id3: checklistList[length - 2]?.checklistId,
-      },
-    });
-  };
+  }, [navigate]);
 
   const handleClickMoveEditPage = () => {
     navigate(ROUTE_PATH.checklistCustom);
+  };
+
+  const handleClickMoveCompareSelectPage = () => {
+    navigate(ROUTE_PATH.roomCompareSelect);
   };
 
   const handleClickFloatingButton = () => {
@@ -55,7 +47,7 @@ const ChecklistListPage = () => {
       <Header center={<Header.Text>체크리스트</Header.Text>} />
       <S.FlexBox>
         <EditBanner onClick={handleClickMoveEditPage} />
-        <CompareBanner onClick={handleClick} />
+        <CompareBanner onClick={handleClickMoveCompareSelectPage} />
       </S.FlexBox>
       <Layout style={{ padding: '0 16px' }}>
         <S.ListBox>
@@ -70,6 +62,7 @@ const ChecklistListPage = () => {
           ) : (
             <NoChecklistTemplate />
           )}
+          <Button color="dark" label="로그인 페이지" onClick={() => navigate(ROUTE_PATH.login)} size="small" />
         </S.ListBox>
       </Layout>
       <FloatingButton onClick={handleClickFloatingButton}>

@@ -27,6 +27,10 @@ const DefaultRoomInfo: RoomInfo = {
   station: '잠실',
   walkingTime: 10,
   realEstate: '방끗공인중개사',
+  type: undefined,
+  size: undefined,
+  floorLevel: undefined,
+  structure: undefined,
 };
 
 const NewChecklistPage = () => {

@@ -1,7 +1,5 @@
 import { ChecklistAnswer } from '@/types/checklist';
 
-
-
 export type RoomInfo = Partial<{
   roomName: string;
   address: string;

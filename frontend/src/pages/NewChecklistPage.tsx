@@ -72,9 +72,10 @@ const NewChecklistPage = () => {
     };
 
     try {
-      fetchNewChecklist();
-      showToast('체크리스트가 저장되었습니다.');
-      navigate(ROUTE_PATH.checklistList);
+      fetchNewChecklist().then(() => {
+        showToast('체크리스트가 저장되었습니다.');
+        navigate(ROUTE_PATH.checklistList);
+      });
     } catch (error) {
       console.error(error);
     }

@@ -29,8 +29,8 @@ export const getChecklists = async () => {
 };
 
 export const postChecklist = async (answers: ChecklistForm) => {
-  const body = mapObjUndefinedToNull(answers.room);
-  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLISTS, body });
+  answers.room = mapObjUndefinedToNull(answers.room);
+  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLISTS, body: answers });
   return response;
 };
 

@@ -16,7 +16,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAre
 }
 export type InputChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 
-const Input = ({ width = 'full', onChange, ...rest }: Props) => {
+const Input = ({ width = 'full', value, onChange, ...rest }: Props) => {
   const handleChange = useCallback(
     (event: InputChangeEvent) => {
       if (!onChange) return;
@@ -25,7 +25,7 @@ const Input = ({ width = 'full', onChange, ...rest }: Props) => {
     [onChange],
   );
 
-  return <S.Input width={widthSize[width]} {...rest} onChange={handleChange} />;
+  return <S.Input width={widthSize[width]} value={value} {...rest} onChange={handleChange} />;
 };
 const S = {
   Input: styled.input<StyledProps>`

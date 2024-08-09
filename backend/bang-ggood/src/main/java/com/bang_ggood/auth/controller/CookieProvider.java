@@ -22,7 +22,7 @@ public class CookieProvider {
                 .domain(domain)
                 .httpOnly(true)
                 .secure(true)
-                .sameSite("None")
+                .sameSite("strict")
                 .maxAge(Duration.ofHours(2))
                 .path("/")
                 .build();

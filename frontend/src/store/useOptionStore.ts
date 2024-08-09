@@ -15,7 +15,7 @@ interface OptionState {
 }
 
 const useOptionStore = create<OptionState>((set, get) => ({
-  selectedOptions: [],
+  selectedOptions: [1, 2, 3, 4, 5, 6],
 
   getSelectedOptionsName: () => {
     const state = get();

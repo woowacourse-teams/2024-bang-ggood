@@ -33,13 +33,13 @@ const config = {
     port: 3000,
     allowedHosts: 'all',
     historyApiFallback: true,
-    server: {
-      type: 'https',
-      options: {
-        key: fs.readFileSync('./private.key'),
-        cert: fs.readFileSync('./private.pem'),
-      },
-    },
+    // server: {
+    //   type: 'https',
+    //   options: {
+    //     key: fs.readFileSync('./private.key'),
+    //     cert: fs.readFileSync('./private.pem'),
+    //   },
+    // },
   },
   plugins: [
     new HtmlWebpackPlugin({

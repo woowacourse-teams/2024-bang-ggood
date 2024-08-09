@@ -1,3 +1,5 @@
+import styled from '@emotion/styled';
+
 import useOptionStore from '@/store/useOptionStore';
 import { OptionWithIcon } from '@/types/option';
 
@@ -10,14 +12,35 @@ const OptionButton = ({ option }: { option: OptionWithIcon }) => {
   }
 
   return (
-    <div>
+    <S.Box>
       {isSelectedOption(id) ? (
-        <Filled width={70} height={70} onClick={() => removeOption(id)} />
+        <S.Icon as={Filled} onClick={() => removeOption(id)} />
       ) : (
-        <Unfilled width={70} height={70} onClick={() => addOption(id)} />
+        <S.Icon as={Unfilled} onClick={() => addOption(id)} />
       )}
-    </div>
+    </S.Box>
   );
+};
+
+const Box = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Icon = styled.svg`
+  width: 78px;
+  height: 78px;
+
+  @media (width >= 700px) {
+    width: 70px;
+    height: 70px;
+  }
+`;
+
+const S = {
+  Box,
+  Icon,
 };
 
 export default OptionButton;

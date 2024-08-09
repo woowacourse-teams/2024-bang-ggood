@@ -76,11 +76,11 @@ const S = {
   Container: styled.div`
     display: flex;
     width: 100%;
-    min-height: calc(100vh - 120px);
     padding-top: 50px;
     padding-bottom: 30px;
 
     background-color: ${({ theme }) => theme.palette.background};
+    min-height: calc(100vh - 120px);
     justify-content: center;
   `,
 };

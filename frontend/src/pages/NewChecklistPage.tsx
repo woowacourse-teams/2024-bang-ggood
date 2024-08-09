@@ -17,7 +17,6 @@ import { flexCenter, title2 } from '@/styles/common';
 import { ChecklistCategoryQnA } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
 
-// TODO: roomName 이슈로 인해 데모 버전으로 변경
 const DefaultRoomInfo: RoomInfo = {
   roomName: '살기 좋은 방',
   address: '인천광역시 부평구',
@@ -28,6 +27,10 @@ const DefaultRoomInfo: RoomInfo = {
   station: '잠실',
   walkingTime: 10,
   realEstate: '방끗공인중개사',
+  type: undefined,
+  size: undefined,
+  floorLevel: undefined,
+  structure: undefined,
 };
 
 const NewChecklistPage = () => {

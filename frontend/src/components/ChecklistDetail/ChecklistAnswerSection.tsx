@@ -12,7 +12,7 @@ const ChecklistAnswerSection = ({ categories }: Props) => {
     <Accordion totalCount={CATEGORY_COUNT}>
       {categories?.map(category => (
         <div key={`accordion-${category.categoryId}`}>
-          <Accordion.header text={category.categoryName} id={category.categoryId} isMarked={false} />
+          <Accordion.header text={category.categoryName} id={category.categoryId} isMarked={true} />
           <Accordion.body id={category.categoryId}>
             <CategoryAccordion key={category.categoryId} category={category} />
           </Accordion.body>

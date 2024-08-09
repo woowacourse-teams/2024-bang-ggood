@@ -2,7 +2,7 @@ import fetcher from '@/apis/fetcher';
 import { BASE_URL, ENDPOINT } from '@/apis/url';
 import { ChecklistCustom } from '@/types/checklist';
 import { ChecklistForm } from '@/types/room';
-import { mapObjNullToUndefined } from '@/utils/typeFunctions';
+import { mapObjNullToUndefined, mapObjUndefinedToNull } from '@/utils/typeFunctions';
 
 export const getChecklistQuestions = async () => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_QUESTION });
@@ -29,6 +29,7 @@ export const getChecklists = async () => {
 };
 
 export const postChecklist = async (answers: ChecklistForm) => {
+  answers.room = mapObjUndefinedToNull(answers.room);
   const response = await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLISTS, body: answers });
   return response;
 };

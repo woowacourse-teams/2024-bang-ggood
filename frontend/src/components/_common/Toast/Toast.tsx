@@ -4,6 +4,7 @@ import useToast from '@/hooks/useToast';
 import { flexCenter, title4 } from '@/styles/common';
 
 export const DEFAULT_DURATION = 2;
+
 const Toast = () => {
   const { toast } = useToast(DEFAULT_DURATION);
 

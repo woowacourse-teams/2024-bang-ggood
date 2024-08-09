@@ -79,7 +79,7 @@ const S = {
     padding-bottom: 30px;
 
     background-color: ${({ theme }) => theme.palette.background};
-    min-height: calc(100vh - 120px);
+    min-height: calc(100vh - 150px);
     justify-content: center;
   `,
 };

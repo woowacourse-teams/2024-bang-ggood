@@ -1,17 +1,17 @@
 import styled from '@emotion/styled';
 
 import { QuestionDot } from '@/assets/assets';
-import FaceMark from '@/components/_common/FaceMark/FaceMark';
-import { EMOTION_PHRASE } from '@/constants/emotion';
+// import FaceMark from '@/components/_common/FaceMark/FaceMark';
 import { flexSpaceBetween } from '@/styles/common';
-import { ChecklistQuestionWithAnswer } from '@/types/checklist';
+import { OneQuestionWithAnswer } from '@/types/checklist';
 
 interface Props {
-  QuestionAndAnswer: ChecklistQuestionWithAnswer;
+  QuestionAndAnswer: OneQuestionWithAnswer;
 }
 
 const ChecklistAnswer = ({ QuestionAndAnswer }: Props) => {
-  const { title, subtitle, grade } = QuestionAndAnswer;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { title, subtitle, answer } = QuestionAndAnswer;
 
   return (
     <S.Container>
@@ -23,10 +23,10 @@ const ChecklistAnswer = ({ QuestionAndAnswer }: Props) => {
         {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
       </S.TitleContainer>
       <S.AnswerContainer>
-        <FaceMark>
+        {/* <FaceMark>
           <FaceMark.FaceIcon emotion={grade} isFilled={true} />
-          <FaceMark.Footer>{EMOTION_PHRASE[grade]}</FaceMark.Footer>
-        </FaceMark>
+          <FaceMark.Footer>{ANSWER_PHRASE[grade]}</FaceMark.Footer>
+        </FaceMark> */}
       </S.AnswerContainer>
     </S.Container>
   );

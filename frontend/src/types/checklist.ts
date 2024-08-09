@@ -1,6 +1,6 @@
+import { AnswerType } from '@/types/answer';
 import { Badge } from '@/types/badge';
 import { CategoryScore } from '@/types/category';
-import { EmotionNameWithNone } from '@/types/emotionAnswer';
 import { RoomInfo } from '@/types/room';
 
 interface ChecklistCategoryBase {
@@ -12,17 +12,17 @@ export interface ChecklistCategoryQuestions extends ChecklistCategoryBase {
   questions: ChecklistQuestion[];
 }
 
-/*체크리스트 작성에서 쓰는 인터페이스 */
+/* 체크리스트 작성: 모든 질문 인테페이스 */
 export interface ChecklistCategoryQnA extends ChecklistCategoryBase {
-  questions: ChecklistQuestionWithAnswer[];
+  questions: OneQuestionWithAnswer[];
 }
 
-export interface ChecklistQuestionWithAnswer extends ChecklistQuestion {
-  grade: EmotionNameWithNone;
-  memo: string | null;
+// 하나의 질문에 대한 인터페이스
+export interface OneQuestionWithAnswer extends ChecklistQuestion {
+  answer: AnswerType;
 }
 
-/*체크리스트 커스텀에서 쓰는 인터페이스 */
+/* 체크리스트 커스텀 */
 export interface ChecklistCategoryQnIsSelected extends ChecklistCategoryBase {
   questions: ChecklistQuestionWithIsSelected[];
 }
@@ -40,8 +40,7 @@ export interface ChecklistQuestion {
 /*체크리스트를 제공할 때 쓰는 인터페이스 */
 export interface ChecklistAnswer {
   questionId: number;
-  grade: EmotionNameWithNone;
-  memo: string | null;
+  answer: AnswerType;
 }
 
 export interface ChecklistPreview extends RoomInfo {

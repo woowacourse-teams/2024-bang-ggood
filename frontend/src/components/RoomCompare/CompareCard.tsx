@@ -2,12 +2,10 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import Badge from '@/components/_common/Badge/Badge';
-import FaceMark from '@/components/_common/FaceMark/FaceMark';
 import Modal from '@/components/_common/Modal/Modal';
 import CompareItem from '@/components/RoomCompare/CompareItem';
 import { boxShadow, flexColumn, title1, title2, title3 } from '@/styles/common';
 import { ChecklistCompare } from '@/types/checklist';
-import calcEmotions from '@/utils/calcEmotions';
 
 interface Props {
   roomInfo: ChecklistCompare;
@@ -15,6 +13,7 @@ interface Props {
 }
 
 const CompareCard = ({ roomInfo, compareNum }: Props) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { score, rank, room, options, categories } = roomInfo;
 
   const isHightestRoom = rank === 1 || compareNum === 2 ? true : false;
@@ -98,7 +97,7 @@ const CompareCard = ({ roomInfo, compareNum }: Props) => {
         </Modal.body>
       </Modal>
       {/* 체크리스트 카테고리별 모음 */}
-      <S.Subtitle isLabeled={isHightestRoom}>체크리스트</S.Subtitle>
+      {/* <S.Subtitle isLabeled={isHightestRoom}>체크리스트</S.Subtitle>
       {categories.map(category => {
         const { categoryId, categoryName, score } = category;
         return (
@@ -114,7 +113,7 @@ const CompareCard = ({ roomInfo, compareNum }: Props) => {
             }
           />
         );
-      })}
+      })} */}
     </S.Container>
   );
 };

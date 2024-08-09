@@ -4,14 +4,15 @@ import Layout from '@/components/_common/layout/Layout';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import ChecklistQuestion from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
 import theme from '@/styles/theme';
-import { ChecklistCategoryQnA, ChecklistQuestionWithAnswer } from '@/types/checklist';
+import { ChecklistCategoryQnA, OneQuestionWithAnswer } from '@/types/checklist';
 
 const NewChecklistTemplate = ({ questions }: { questions: ChecklistCategoryQnA }) => {
   const { currentTabId } = useTabContext();
+
   return (
     <Layout bgColor={theme.palette.background} style={{ minHeight: `calc(100vh - 100px)` }}>
       <S.ContentBox>
-        {questions.questions.map((question: ChecklistQuestionWithAnswer) => (
+        {questions.questions.map((question: OneQuestionWithAnswer) => (
           <ChecklistQuestion question={question} key={`${currentTabId}-${question.questionId}`} />
         ))}
       </S.ContentBox>

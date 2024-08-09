@@ -37,26 +37,26 @@ const NewChecklistPage = () => {
   const { showToast } = useToast(3);
 
   //TODO:  방 기본 정보도 전역 상태로 관리 필요
-  /*방 기본 정보 */
+
+  /* 방 기본 정보 */
   const { values: roomInfo, onChange: onChangeRoomInfo, setValues: setRoomInfo } = useInputs(DefaultRoomInfo);
 
-  /*선택된 옵션*/
+  /* 선택된 옵션 */
   const { selectedOptions } = useOptionStore();
 
-  /*체크리스트 답변*/
+  /* 체크리스트 답변 */
   const { setAnswerInQuestion, checklistCategoryQnA, setValidCategory } = useChecklistStore();
 
   const navigate = useNavigate();
 
-  /*현재 상태를 백엔드에 보내는 답안 포맷으로 바꾸는 함수*/
+  /* 현재 상태를 백엔드에 보내는 답안 포맷으로 바꾸는 함수 */
   const transformQuestions = (checklist: ChecklistCategoryQnA[]) => {
     return checklist.flatMap(category =>
       category.questions.map(question => {
-        const { questionId, memo, grade } = question;
+        const { questionId, answer } = question;
         return {
           questionId,
-          memo,
-          grade,
+          answer,
         };
       }),
     );
@@ -108,9 +108,10 @@ const NewChecklistPage = () => {
         right={<Button label={'저장'} size="small" color="dark" onClick={handleSubmitChecklist} />}
       />
       <TabProvider defaultTab={0}>
-        {/*체크리스트 작성의 탭*/}
+        {/* 체크리스트 작성의 탭 */}
         <NewChecklistTab />
-        {/*체크리스트 콘텐츠 섹션*/}
+
+        {/* 체크리스트 콘텐츠 섹션 */}
         <NewChecklistContent
           roomInfo={roomInfo}
           onChangeRoomInfo={onChangeRoomInfo}

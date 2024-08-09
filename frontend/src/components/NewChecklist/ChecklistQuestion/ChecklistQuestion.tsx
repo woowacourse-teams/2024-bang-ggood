@@ -1,15 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import styled from '@emotion/styled';
-import { useState } from 'react';
 
-import { ArrowUpSmall, MemoEmpty, MemoFilled, QuestionDot } from '@/assets/assets';
-import FaceMark from '@/components/_common/FaceMark/FaceMark';
+import { QuestionDot } from '@/assets/assets';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
-import QuestionMemo from '@/components/NewChecklist/ChecklistQuestion/QuestionMemo';
-import { EMOTION_PHRASE, EMOTIONS } from '@/constants/emotion';
-import useChecklistGrade from '@/hooks/useChecklistGrade';
+import useChecklistAnswer from '@/hooks/useChecklistAnswer';
 import { flexCenter, flexSpaceBetween } from '@/styles/common';
+import { AnswerType } from '@/types/answer';
 import { ChecklistQuestion } from '@/types/checklist';
-import { EmotionName } from '@/types/emotionAnswer';
 
 interface Props {
   question: ChecklistQuestion;
@@ -17,23 +14,13 @@ interface Props {
 
 const ChecklistQuestion = ({ question }: Props) => {
   const { questionId } = question;
-  const { updateAndToggleGrade: updateAnswer, findCategoryQuestion } = useChecklistGrade();
+  const { updateAndToggleAnswer: updateAnswer, findCategoryQuestion } = useChecklistAnswer();
   const { currentTabId } = useTabContext();
 
-  const [isMemoOpen, setIsMemoOpen] = useState(false);
+  const { answer } = findCategoryQuestion({ categoryId: currentTabId, questionId });
 
-  const { grade, memo } = findCategoryQuestion({ categoryId: currentTabId, questionId });
-
-  const handleClick = (newGrade: EmotionName) => {
-    updateAnswer({ categoryId: currentTabId, questionId: questionId, newGrade });
-  };
-
-  const handleCloseMemo = () => {
-    setIsMemoOpen(false);
-  };
-
-  const handleOpenMemo = () => {
-    setIsMemoOpen(true);
+  const handleClick = (newAnswer: AnswerType) => {
+    updateAnswer({ categoryId: currentTabId, questionId: questionId, newAnswer });
   };
 
   return (
@@ -43,7 +30,7 @@ const ChecklistQuestion = ({ question }: Props) => {
         {question?.title}
       </S.Title>
       {question?.subtitle && <S.Subtitle>{question?.subtitle}</S.Subtitle>}
-      <S.ButtonBox>
+      {/* <S.ButtonBox>
         {isMemoOpen ? (
           <ArrowUpSmall onClick={handleCloseMemo} />
         ) : memo?.length ? (
@@ -51,21 +38,21 @@ const ChecklistQuestion = ({ question }: Props) => {
         ) : (
           <MemoEmpty onClick={handleOpenMemo} />
         )}
-      </S.ButtonBox>
+      </S.ButtonBox> */}
 
-      <S.Options>
+      {/* <S.Options>
         {EMOTIONS.map(emotion => {
           const { name: emotionName, id } = emotion;
 
           return (
             <FaceMark onClick={() => handleClick(emotionName)} key={id}>
               <FaceMark.FaceIcon emotion={emotionName} isFilled={grade === emotionName} />
-              <FaceMark.Footer>{EMOTION_PHRASE[emotionName]}</FaceMark.Footer>
+              <FaceMark.Footer>{ANSWER_PHRASE[emotionName]}</FaceMark.Footer>
             </FaceMark>
           );
         })}
-      </S.Options>
-      {isMemoOpen && <QuestionMemo questionId={questionId} text={memo ?? ''} />}
+      </S.Options> */}
+      {/* {isMemoOpen && <QuestionMemo questionId={questionId} text={memo ?? ''} />} */}
     </S.Container>
   );
 };

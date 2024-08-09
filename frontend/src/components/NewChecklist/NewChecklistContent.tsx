@@ -23,7 +23,7 @@ const NewChecklistContent = ({
   const { categoryQnA } = useChecklistStore();
 
   return currentTabId === 0 ? (
-    /*방 기본정보 템플릿*/
+    /* 방 기본정보 템플릿 */
     <NewChecklistInfoTemplate
       roomInfo={roomInfo}
       onChange={onChangeRoomInfo}
@@ -31,7 +31,7 @@ const NewChecklistContent = ({
       onClickTagButton={onClickTagButton}
     />
   ) : (
-    /*체크리스트 템플릿*/
+    /* 체크리스트 템플릿 */
     <NewChecklistTemplate questions={categoryQnA(currentTabId)} />
   );
 };

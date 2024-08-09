@@ -60,10 +60,11 @@ const fetcher = {
     });
   },
 
-  put({ url, headers }: FetchProps) {
+  put({ url, body, headers }: FetchProps) {
     return networkRequest({
       url,
       method: 'PUT',
+      body,
       headers: { ...headers, 'Content-Type': 'application/json' },
     });
   },

@@ -10,14 +10,18 @@ interface Props {
 const ChecklistAnswerSection = ({ categories }: Props) => {
   return (
     <Accordion totalCount={CATEGORY_COUNT}>
-      {categories?.map(category => (
-        <div key={`accordion-${category.categoryId}`}>
-          <Accordion.header text={category.categoryName} id={category.categoryId} isMarked={false} />
-          <Accordion.body id={category.categoryId}>
-            <CategoryAccordion key={category.categoryId} category={category} />
-          </Accordion.body>
-        </div>
-      ))}
+      {categories?.map(category => {
+        if (category.questions.length <= 0) return;
+
+        return (
+          <div key={`accordion-${category.categoryId}`}>
+            <Accordion.header text={category.categoryName} id={category.categoryId} isMarked={true} />
+            <Accordion.body id={category.categoryId}>
+              <CategoryAccordion key={category.categoryId} category={category} />
+            </Accordion.body>
+          </div>
+        );
+      })}
     </Accordion>
   );
 };

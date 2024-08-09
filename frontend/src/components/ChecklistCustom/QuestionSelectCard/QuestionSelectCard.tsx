@@ -46,14 +46,15 @@ const S = {
   `,
   FlexColumn: styled.div`
     display: flex;
+    width: 90%;
     padding: 10px;
     padding-left: 20px;
     flex-direction: column;
-    justify-content: space-between;
   `,
   FlexRow: styled.div`
     ${flexCenter}
     gap: 8px;
+    justify-content: left;
   `,
   Title: styled.div`
     display: flex;

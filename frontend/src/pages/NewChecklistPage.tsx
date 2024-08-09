@@ -9,6 +9,7 @@ import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import NewChecklistTab from '@/components/NewChecklist/NewChecklistTab';
 import { ROUTE_PATH } from '@/constants/routePath';
+import { DEFAULT_TOAST_DURATION } from '@/constants/system';
 import useInputs from '@/hooks/useInputs';
 import useToast from '@/hooks/useToast';
 import useChecklistStore from '@/store/useChecklistStore';
@@ -17,7 +18,6 @@ import { flexCenter, title2 } from '@/styles/common';
 import { ChecklistCategoryQnA } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
 
-// TODO: roomName 이슈로 인해 데모 버전으로 변경
 const DefaultRoomInfo: RoomInfo = {
   roomName: '살기 좋은 방',
   address: '인천광역시 부평구',
@@ -28,10 +28,14 @@ const DefaultRoomInfo: RoomInfo = {
   station: '잠실',
   walkingTime: 10,
   realEstate: '방끗공인중개사',
+  type: undefined,
+  size: undefined,
+  floorLevel: undefined,
+  structure: undefined,
 };
 
 const NewChecklistPage = () => {
-  const { showToast } = useToast(3);
+  const { showToast } = useToast(DEFAULT_TOAST_DURATION);
 
   //TODO:  방 기본 정보도 전역 상태로 관리 필요
   /*방 기본 정보 */
@@ -69,9 +73,10 @@ const NewChecklistPage = () => {
     };
 
     try {
-      fetchNewChecklist();
-      showToast('체크리스트가 저장되었습니다.');
-      navigate(ROUTE_PATH.checklistList);
+      fetchNewChecklist().then(() => {
+        showToast('체크리스트가 저장되었습니다.');
+        navigate(ROUTE_PATH.checklistList);
+      });
     } catch (error) {
       console.error(error);
     }

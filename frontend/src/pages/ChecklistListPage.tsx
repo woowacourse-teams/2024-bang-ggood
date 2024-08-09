@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { getChecklists } from '@/apis/checklist';
 import { Plus } from '@/assets/assets';
-import Button from '@/components/_common/Button/Button';
 import FloatingButton from '@/components/_common/Button/FloatingButton';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
@@ -62,7 +61,6 @@ const ChecklistListPage = () => {
           ) : (
             <NoChecklistTemplate />
           )}
-          <Button color="dark" label="로그인 페이지" onClick={() => navigate(ROUTE_PATH.login)} size="small" />
         </S.ListBox>
       </Layout>
       <FloatingButton onClick={handleClickFloatingButton}>

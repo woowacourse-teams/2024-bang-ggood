@@ -17,8 +17,10 @@ const LoginPage = () => {
 
     const postLogin = async () => {
       if (code) {
-        await postKakaoCode(code);
-        navigate(ROUTE_PATH.checklistList);
+        await postKakaoCode(code).then(() => {
+          localStorage.setItem('isLogin', 'true');
+          navigate(ROUTE_PATH.checklistList);
+        });
       }
     };
 
@@ -57,13 +59,17 @@ const S = {
     ${flexColumn}
     width: 100%;
     height: calc(100vh - 32px);
-    justify-content: space-evenly;
+    gap: 70px;
   `,
   TextWrapper: styled.div`
-    ${flexColumn}
-    width: 80%;
+    width: 280px;
+
+    line-height: 1.4;
+
+    /* ${flexColumn} */
+    align-items: center;
+    justify-content: left;
     gap: 10px;
-    margin-top: 20px;
   `,
   Text: styled.div<{ isBold?: boolean }>`
     ${({ isBold, theme }) =>
@@ -78,13 +84,14 @@ const S = {
     ${flexColumn}
     gap: 10px;
     width: 100%;
+    margin-top: 20px;
   `,
   SubText: styled.div`
     font-size: ${({ theme }) => theme.text.size.small};
   `,
   KakaoLoginButton: styled.div`
-    width: 80%;
-    height: 64px;
+    width: 300px;
+    height: 50px;
     ${flexRow}
     justify-content: space-evenly;
     align-items: center;

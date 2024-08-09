@@ -14,10 +14,10 @@ const QuestionCardList = ({ questions, currentTabId }: Props) => {
       {questions?.map((question, index) => {
         const { questionId } = question;
         return (
-          <>
-            <QuestionSelectCard question={question} key={`${currentTabId}-${questionId}`} />
+          <S.Box key={`${currentTabId}-${questionId}-custom`}>
+            <QuestionSelectCard question={question} />
             {index !== questions.length - 1 && <Divider isBold={true} />}
-          </>
+          </S.Box>
         );
       })}
     </S.QuestionList>
@@ -28,12 +28,15 @@ export default QuestionCardList;
 
 const S = {
   QuestionList: styled.div`
-    width: 90%;
+    width: calc(100% - 32px);
     height: fit-content;
     margin-top: 10px;
 
     background-color: ${({ theme }) => theme.palette.white};
 
     border-radius: 10px;
+  `,
+  Box: styled.div`
+    width: 100%;
   `,
 };

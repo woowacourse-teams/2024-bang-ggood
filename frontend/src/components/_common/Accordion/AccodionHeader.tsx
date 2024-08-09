@@ -15,8 +15,8 @@ interface Props {
 }
 const AccordionHeader = ({
   id,
-  openButton = <ArrowDownSmall />,
-  closeButton = <ArrowUpSmall />,
+  openButton = <ArrowUpSmall />,
+  closeButton = <ArrowDownSmall />,
   text,
   isMarked = true,
   markColor = theme.palette.yellow500,
@@ -26,7 +26,11 @@ const AccordionHeader = ({
   return (
     <S.HeaderContainer onClick={() => handleAccordionOpenChange(id)}>
       <S.FlexBetween>
-        {!isAccordionOpen(id) && <S.HeaderMark isMarked={isMarked} markColor={markColor} />}
+        {!isAccordionOpen(id) ? (
+          <S.HeaderMark isMarked={isMarked} markColor={markColor} />
+        ) : (
+          <S.HeaderMark isMarked={false} />
+        )}
 
         <S.HeaderTitle>{text}</S.HeaderTitle>
         <S.OpenBox onClick={() => handleAccordionOpenChange}>
@@ -66,7 +70,7 @@ const HeaderTitle = styled.div`
   align-items: center;
 `;
 
-const HeaderMark = styled.div<{ isMarked: boolean; markColor: string }>`
+const HeaderMark = styled.div<{ isMarked: boolean; markColor?: string }>`
   opacity: ${({ isMarked }) => (isMarked ? 1 : 0)};
   width: 12px;
 

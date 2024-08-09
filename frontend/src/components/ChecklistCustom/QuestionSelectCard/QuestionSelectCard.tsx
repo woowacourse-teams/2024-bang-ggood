@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import { QuestionDot } from '@/assets/assets';
 import Checkbox from '@/components/_common/Checkbox/Checkbox';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import useChecklistQuestionUpdate from '@/hooks/useChecklistQuestionUpdate';
@@ -19,6 +20,7 @@ const QuestionSelectCard = ({ question }: { question: ChecklistQuestionWithIsSel
     <S.Container isChecked={isSelected} onClick={handleCheckQuestion}>
       <S.FlexColumn>
         <S.FlexRow>
+          <QuestionDot />
           <S.Title>{title}</S.Title>
         </S.FlexRow>
         {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}

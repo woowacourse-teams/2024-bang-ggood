@@ -17,8 +17,10 @@ const LoginPage = () => {
 
     const postLogin = async () => {
       if (code) {
-        await postKakaoCode(code);
-        navigate(ROUTE_PATH.checklistList);
+        await postKakaoCode(code).then(() => {
+          localStorage.setItem('isLogin', 'true');
+          navigate(ROUTE_PATH.checklistList);
+        });
       }
     };
 

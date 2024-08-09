@@ -77,7 +77,14 @@ export interface ChecklistCustom {
   questionIds: number[];
 }
 
-export interface CategoryAndQuestion {
-  categoryId: number;
+// 체크리스트 POST API 용
+interface AnswerPostForm {
   questionId: number;
+  answer: AnswerType;
+}
+
+export interface ChecklistPostForm {
+  room: RoomInfo;
+  options: number[];
+  questions: AnswerPostForm[];
 }

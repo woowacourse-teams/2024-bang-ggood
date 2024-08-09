@@ -1,7 +1,6 @@
 import fetcher from '@/apis/fetcher';
 import { BASE_URL, ENDPOINT } from '@/apis/url';
-import { ChecklistCustom } from '@/types/checklist';
-import { ChecklistForm } from '@/types/room';
+import { ChecklistCustom, ChecklistPostForm } from '@/types/checklist';
 import { mapObjNullToUndefined, mapObjUndefinedToNull } from '@/utils/typeFunctions';
 
 export const getChecklistQuestions = async () => {
@@ -28,9 +27,9 @@ export const getChecklists = async () => {
   return data.checklists.map(mapObjNullToUndefined);
 };
 
-export const postChecklist = async (answers: ChecklistForm) => {
-  answers.room = mapObjUndefinedToNull(answers.room);
-  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLISTS, body: answers });
+export const postChecklist = async (checklist: ChecklistPostForm) => {
+  checklist.room = mapObjUndefinedToNull(checklist.room);
+  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLISTS, body: checklist });
   return response;
 };
 

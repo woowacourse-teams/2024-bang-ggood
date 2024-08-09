@@ -9,6 +9,7 @@ import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import NewChecklistTab from '@/components/NewChecklist/NewChecklistTab';
 import { ROUTE_PATH } from '@/constants/routePath';
+import { DEFAULT_TOAST_DURATION } from '@/constants/system';
 import useInputs from '@/hooks/useInputs';
 import useToast from '@/hooks/useToast';
 import useChecklistStore from '@/store/useChecklistStore';
@@ -34,7 +35,7 @@ const DefaultRoomInfo: RoomInfo = {
 };
 
 const NewChecklistPage = () => {
-  const { showToast } = useToast(3);
+  const { showToast } = useToast(DEFAULT_TOAST_DURATION);
 
   //TODO:  방 기본 정보도 전역 상태로 관리 필요
   /*방 기본 정보 */

@@ -25,6 +25,7 @@ const NoChecklistTemplate = () => {
 const S = {
   Container: styled.div`
     width: 100%;
+    height: 50vh;
     ${flexCenter}
     flex-direction: column;
     gap: 10px;

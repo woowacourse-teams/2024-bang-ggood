@@ -7,10 +7,10 @@ interface UpdateAnswerProps extends CategoryAndQuestion {
 }
 
 const useChecklistAnswer = () => {
-  const { setAnswers, checklistCategoryQnA, categoryQnA } = useChecklistStore();
+  const { checklistCategoryQnA, setAnswers, getCategoryQnA } = useChecklistStore();
 
   const updateAndToggleAnswer = ({ categoryId, questionId, newAnswer }: UpdateAnswerProps) => {
-    const targetCategory = categoryQnA(categoryId);
+    const targetCategory = getCategoryQnA(categoryId);
 
     if (targetCategory) {
       const updatedCategory = {

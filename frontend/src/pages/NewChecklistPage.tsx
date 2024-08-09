@@ -17,6 +17,7 @@ import { flexCenter, title2 } from '@/styles/common';
 import { ChecklistCategoryQnA } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
 
+// TODO: 더미 데이터 삭제하기
 const DefaultRoomInfo: RoomInfo = {
   roomName: '살기 좋은 방',
   address: '인천광역시 부평구',
@@ -36,7 +37,7 @@ const DefaultRoomInfo: RoomInfo = {
 const NewChecklistPage = () => {
   const { showToast } = useToast(3);
 
-  //TODO:  방 기본 정보도 전역 상태로 관리 필요
+  // TODO:  방 기본 정보도 전역 상태로 관리 필요
 
   /* 방 기본 정보 */
   const { values: roomInfo, onChange: onChangeRoomInfo, setValues: setRoomInfo } = useInputs(DefaultRoomInfo);
@@ -45,7 +46,7 @@ const NewChecklistPage = () => {
   const { selectedOptions } = useOptionStore();
 
   /* 체크리스트 답변 */
-  const { setAnswerInQuestion, checklistCategoryQnA, setValidCategory } = useChecklistStore();
+  const { checklistCategoryQnA, setAnswerInQuestion, setValidCategory } = useChecklistStore();
 
   const navigate = useNavigate();
 
@@ -85,11 +86,13 @@ const NewChecklistPage = () => {
     const fetchChecklist = async () => {
       const checklist = await getChecklistQuestions();
 
-      /*체크리스트 질문에 대한 답안지 객체 생성 */
+      // 체크리스트 질문에 대한 답안지 객체 생성
       setAnswerInQuestion(checklist);
-      /*현재 질문이 있는 유효한 카테고리 생성*/
+
+      // 현재 질문이 있는 유효한 카테고리 생성
       setValidCategory();
     };
+
     fetchChecklist();
   }, []);
 

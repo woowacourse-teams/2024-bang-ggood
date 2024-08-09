@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import OptionButton from '@/components/_common/OptionButton/OptionButton';
-import OptionModalInfoBox from '@/components/NewChecklist/OptionModal/OptionModalInfoBox';
+import OptionModalInfoBox from '@/components/NewChecklist/Option/OptionModalInfoBox';
 import { OPTIONS } from '@/constants/options';
 import { title4 } from '@/styles/common';
 

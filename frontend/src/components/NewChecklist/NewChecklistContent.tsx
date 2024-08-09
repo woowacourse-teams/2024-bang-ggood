@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import NewChecklistInfoTemplate from '@/components/NewChecklist/NewChecklistInfoTemplate';
 import NewChecklistTemplate from '@/components/NewChecklist/NewChecklistTemplate';
-import OptionChecklistTemplate from '@/components/NewChecklist/OptionChecklistTemplate';
+import OptionChecklistTemplate from '@/components/NewChecklist/Option/OptionChecklistTemplate';
 import useChecklistStore from '@/store/useChecklistStore';
 import { RoomInfo } from '@/types/room';
 

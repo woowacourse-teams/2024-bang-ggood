@@ -29,10 +29,15 @@ const Box = styled.div`
 `;
 
 const Icon = styled.svg`
-  width: 78px;
-  height: 78px;
+  width: 65px;
+  height: 65px;
 
-  @media (width >= 700px) {
+  @media (width >= 400px) {
+    width: 75px;
+    height: 75px;
+  }
+
+  @media (width >= 600px) {
     width: 70px;
     height: 70px;
   }

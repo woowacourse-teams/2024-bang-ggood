@@ -6,6 +6,8 @@ import ClosetFilled from '@/assets/icons/options/closet-filled.svg';
 import ClosetUnfilled from '@/assets/icons/options/closet-unfilled.svg';
 import DeskFilled from '@/assets/icons/options/desk-filled.svg';
 import DeskUnfilled from '@/assets/icons/options/desk-unfilled.svg';
+import DoorLockFilled from '@/assets/icons/options/doorLock-filled.svg';
+import DoorLockUnFilled from '@/assets/icons/options/doorLock-unfilled.svg';
 import DryerFilled from '@/assets/icons/options/dryer-filled.svg';
 import DryerUnfilled from '@/assets/icons/options/dryer-unfilled.svg';
 import ElevatorFilled from '@/assets/icons/options/elevator-filled.svg';
@@ -128,9 +130,16 @@ const OPTIONS: OptionWithIcon[] = [
     Unfilled: ElevatorUnfilled,
     displayName: '엘리베이터',
   },
+  {
+    id: 15,
+    name: 'doorLock',
+    Filled: DoorLockFilled,
+    Unfilled: DoorLockUnFilled,
+    displayName: '엘리베이터',
+  },
 ];
 
-const OPTION_COUNT = 14;
+const OPTION_COUNT = OPTIONS.length;
 
 // eslint-disable-next-line simple-import-sort/exports
 export { OPTION_COUNT, OPTIONS };

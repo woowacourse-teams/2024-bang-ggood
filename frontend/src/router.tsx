@@ -11,9 +11,11 @@ import NewChecklistPage from '@/pages/NewChecklistPage';
 import NotFound from '@/pages/NotFound';
 import RoomComparePage from '@/pages/RoomComparePage';
 import RoomCompareSelectPage from '@/pages/RoomCompareSelectPage';
+import RootLayout from '@/RootLayout';
 
 const router = createBrowserRouter([
   {
+    element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
       {

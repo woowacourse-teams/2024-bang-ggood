@@ -15,7 +15,6 @@ const request = async ({ url, method, body, headers = {}, errorMessage }: Reques
     body: body ? JSON.stringify(body) : undefined,
     headers: {
       ...headers,
-      Cookie: `token=${process.env.COOKIE}`,
     },
   });
 

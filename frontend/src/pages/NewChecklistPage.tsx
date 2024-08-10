@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,7 +12,6 @@ import useInputs from '@/hooks/useInputs';
 import useToast from '@/hooks/useToast';
 import useChecklistStore from '@/store/useChecklistStore';
 import useOptionStore from '@/store/useOptionStore';
-import { flexCenter, title2 } from '@/styles/common';
 import { ChecklistCategoryQnA } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
 
@@ -36,10 +34,11 @@ const DefaultRoomInfo: RoomInfo = {
 
 const NewChecklistPage = () => {
   const { showToast } = useToast(3);
+  const navigate = useNavigate();
 
   // TODO:  방 기본 정보도 전역 상태로 관리 필요
 
-  /* 방 기본 정보 */
+  /* TODO: 더미 방 기본 정보 -> 이후 삭제 필요 */
   const { values: roomInfo, onChange: onChangeRoomInfo, setValues: setRoomInfo } = useInputs(DefaultRoomInfo);
 
   /* 선택된 옵션 */
@@ -48,7 +47,19 @@ const NewChecklistPage = () => {
   /* 체크리스트 답변 */
   const { checklistCategoryQnA, setAnswerInQuestion, setValidCategory } = useChecklistStore();
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    const fetchChecklist = async () => {
+      const checklist = await getChecklistQuestions();
+
+      // 체크리스트 질문에 대한 답안지 객체 생성
+      setAnswerInQuestion(checklist);
+
+      // 현재 질문이 있는 유효한 카테고리 생성
+      setValidCategory();
+    };
+
+    fetchChecklist();
+  }, []);
 
   /* 현재 상태를 백엔드에 보내는 답안 포맷으로 바꾸는 함수 */
   const transformQuestions = (checklist: ChecklistCategoryQnA[]) => {
@@ -72,29 +83,11 @@ const NewChecklistPage = () => {
       });
     };
 
-    try {
-      fetchNewChecklist().then(() => {
-        showToast('체크리스트가 저장되었습니다.');
-        navigate(ROUTE_PATH.checklistList);
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    fetchNewChecklist().then(() => {
+      showToast('체크리스트가 저장되었습니다.');
+      navigate(ROUTE_PATH.checklistList);
+    });
   };
-
-  useEffect(() => {
-    const fetchChecklist = async () => {
-      const checklist = await getChecklistQuestions();
-
-      // 체크리스트 질문에 대한 답안지 객체 생성
-      setAnswerInQuestion(checklist);
-
-      // 현재 질문이 있는 유효한 카테고리 생성
-      setValidCategory();
-    };
-
-    fetchChecklist();
-  }, []);
 
   const handleClickTagButton = useCallback(
     (name: string, value: string) => {
@@ -107,7 +100,7 @@ const NewChecklistPage = () => {
     <>
       <Header
         left={<Header.Backward />}
-        center={<S.Title>{'새 체크리스트'}</S.Title>}
+        center={<Header.Text>{'새 체크리스트'}</Header.Text>}
         right={<Button label={'저장'} size="small" color="dark" onClick={handleSubmitChecklist} />}
       />
       <TabProvider defaultTab={0}>
@@ -127,12 +120,3 @@ const NewChecklistPage = () => {
 };
 
 export default NewChecklistPage;
-
-const Title = styled.div`
-  ${title2}
-  ${flexCenter}
-`;
-
-const S = {
-  Title,
-};

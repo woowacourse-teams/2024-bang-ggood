@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import styled from '@emotion/styled';
 
-import { QuestionDot } from '@/assets/assets';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
+import AnswerIcon from '@/components/Answer/AnswerIcon';
+import { ANSWER_OPTIONS } from '@/constants/answer';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';
-import { flexCenter, flexSpaceBetween } from '@/styles/common';
+import { flexCenter, flexRow, flexSpaceBetween } from '@/styles/common';
 import { AnswerType } from '@/types/answer';
 import { ChecklistQuestion } from '@/types/checklist';
 
@@ -13,7 +14,8 @@ interface Props {
 }
 
 const ChecklistQuestion = ({ question }: Props) => {
-  const { questionId } = question;
+  const { questionId, title, subtitle } = question;
+
   const { updateAndToggleAnswer: updateAnswer, findCategoryQuestion } = useChecklistAnswer();
   const { currentTabId } = useTabContext();
 
@@ -25,34 +27,17 @@ const ChecklistQuestion = ({ question }: Props) => {
 
   return (
     <S.Container>
-      <S.Title>
-        <QuestionDot />
-        {question?.title}
-      </S.Title>
-      {question?.subtitle && <S.Subtitle>{question?.subtitle}</S.Subtitle>}
-      {/* <S.ButtonBox>
-        {isMemoOpen ? (
-          <ArrowUpSmall onClick={handleCloseMemo} />
-        ) : memo?.length ? (
-          <MemoFilled onClick={handleOpenMemo} />
-        ) : (
-          <MemoEmpty onClick={handleOpenMemo} />
-        )}
-      </S.ButtonBox> */}
-
-      {/* <S.Options>
-        {EMOTIONS.map(emotion => {
-          const { name: emotionName, id } = emotion;
-
-          return (
-            <FaceMark onClick={() => handleClick(emotionName)} key={id}>
-              <FaceMark.FaceIcon emotion={emotionName} isFilled={grade === emotionName} />
-              <FaceMark.Footer>{ANSWER_PHRASE[emotionName]}</FaceMark.Footer>
-            </FaceMark>
-          );
-        })}
-      </S.Options> */}
-      {/* {isMemoOpen && <QuestionMemo questionId={questionId} text={memo ?? ''} />} */}
+      <S.Question>
+        <S.Title>{title}</S.Title>
+        {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
+      </S.Question>
+      <S.Options>
+        {ANSWER_OPTIONS.map(option => (
+          <div key={option.id} onClick={() => handleClick(option.name)}>
+            <AnswerIcon answer={option.name} isSelected={answer === option.name} />
+          </div>
+        ))}
+      </S.Options>
     </S.Container>
   );
 };
@@ -62,24 +47,32 @@ export default ChecklistQuestion;
 const S = {
   Container: styled.div`
     position: relative;
+    width: 100%;
+    ${flexRow}
+    ${flexSpaceBetween}
     padding: 16px;
+    gap: 5px;
+
+    box-sizing: border-box;
 
     background-color: ${({ theme }) => theme.palette.white};
     border-radius: 8px;
   `,
+  Question: styled.div`
+    width: 80%;
+  `,
   Title: styled.div`
     display: flex;
-    width: 90%;
+    width: 100%;
     margin: 5px 0;
 
     font-size: ${({ theme }) => theme.text.size.medium};
     line-height: 1.5;
     gap: 10px;
+    align-items: baseline;
   `,
   Subtitle: styled.div`
-    width: 80vw;
-    margin-bottom: 10px;
-    margin-left: 20px;
+    width: 100%;
 
     color: ${({ theme }) => theme.palette.grey500};
     font-size: ${({ theme }) => theme.text.size.small};
@@ -87,10 +80,13 @@ const S = {
     word-break: keep-all;
   `,
   Options: styled.div`
+    width: 80px;
+
+    ${flexRow}
+    gap: 15px;
+
     ${flexSpaceBetween}
-    width: 80%;
-    margin: 0 auto;
-    margin-top: 10px;
+    align-items: center;
   `,
 
   ButtonBox: styled.div`

@@ -16,6 +16,10 @@ async function enableMocking() {
   if (process.env.NODE_ENV !== 'development') {
     return;
   }
+
+  if (process.env.NODE_ENV === 'development') {
+    document.cookie = `token=${process.env.COOKIE}`;
+  }
   const { worker } = await import('./mocks/browser');
 
   await worker.start({

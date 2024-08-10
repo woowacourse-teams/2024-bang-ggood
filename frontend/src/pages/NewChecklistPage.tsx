@@ -8,6 +8,7 @@ import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import NewChecklistTab from '@/components/NewChecklist/NewChecklistTab';
 import { ROUTE_PATH } from '@/constants/routePath';
+import { DEFAULT_TOAST_DURATION } from '@/constants/system';
 import useInputs from '@/hooks/useInputs';
 import useToast from '@/hooks/useToast';
 import useChecklistStore from '@/store/useChecklistStore';
@@ -33,10 +34,11 @@ const DefaultRoomInfo: RoomInfo = {
 };
 
 const NewChecklistPage = () => {
-  const { showToast } = useToast(3);
-  const navigate = useNavigate();
+  const { showToast } = useToast(DEFAULT_TOAST_DURATION);
 
-  // TODO:  방 기본 정보도 전역 상태로 관리 필요
+  //TODO:  방 기본 정보도 전역 상태로 관리 필요
+
+  const navigate = useNavigate();
 
   /* TODO: 더미 방 기본 정보 -> 이후 삭제 필요 */
   const { values: roomInfo, onChange: onChangeRoomInfo, setValues: setRoomInfo } = useInputs(DefaultRoomInfo);

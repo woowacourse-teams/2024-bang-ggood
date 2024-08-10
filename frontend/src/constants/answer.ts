@@ -6,7 +6,7 @@ export const ANSWER_PHRASE: Record<AnswerType | string, string> = {
   NONE: '-',
 };
 
-export const AnswerOption: Answer[] = [
+export const ANSWER_OPTIONS: Answer[] = [
   { id: 1, name: 'GOOD' },
   { id: 2, name: 'BAD' },
 ];

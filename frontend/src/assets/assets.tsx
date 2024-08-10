@@ -20,6 +20,13 @@ import FaceIconNone from '@/assets/icons/face-icon/face-icon-none.svg';
 import FaceIconSosoGray from '@/assets/icons/face-icon/face-icon-soso-gray.svg';
 import FaceIconSoso from '@/assets/icons/face-icon/face-icon-soso.svg';
 
+/* answer icon */
+import NOGREY from '@/assets/icons/answer/NO.svg';
+import NO from '@/assets/icons/answer/NO_isSelected.svg';
+import NONE from '@/assets/icons/answer/NONE.svg';
+import YESGREY from '@/assets/icons/answer/YES.svg';
+import YES from '@/assets/icons/answer/YES_isSelected.svg';
+
 /* logos */
 import ChecklistLogoActive from '@/assets/icons/footer-icon/checklist-logo-active.svg';
 import ChecklistLogo from '@/assets/icons/footer-icon/checklist-logo.svg';
@@ -76,7 +83,12 @@ export {
   MemoFilled,
   MyPageLogo,
   MyPageLogoActive,
+  NO,
+  NOGREY,
+  NONE,
   PencilIcon,
   Plus,
   QuestionDot,
+  YES,
+  YESGREY,
 };

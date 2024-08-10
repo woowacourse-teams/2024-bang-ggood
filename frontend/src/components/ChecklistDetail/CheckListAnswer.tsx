@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 
 import { QuestionDot } from '@/assets/assets';
-// import FaceMark from '@/components/_common/FaceMark/FaceMark';
 import { flexSpaceBetween } from '@/styles/common';
 import { OneQuestionWithAnswer } from '@/types/checklist';
 
@@ -22,12 +21,7 @@ const ChecklistAnswer = ({ QuestionAndAnswer }: Props) => {
         </S.Title>
         {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
       </S.TitleContainer>
-      <S.AnswerContainer>
-        {/* <FaceMark>
-          <FaceMark.FaceIcon emotion={grade} isFilled={true} />
-          <FaceMark.Footer>{ANSWER_PHRASE[grade]}</FaceMark.Footer>
-        </FaceMark> */}
-      </S.AnswerContainer>
+      <S.AnswerContainer>{/* TODO:  OX 답변 대체 필요  */}</S.AnswerContainer>
     </S.Container>
   );
 };

@@ -97,23 +97,8 @@ const CompareCard = ({ roomInfo, compareNum }: Props) => {
         </Modal.body>
       </Modal>
       {/* 체크리스트 카테고리별 모음 */}
-      {/* <S.Subtitle isLabeled={isHightestRoom}>체크리스트</S.Subtitle>
-      {categories.map(category => {
-        const { categoryId, categoryName, score } = category;
-        return (
-          <CompareItem
-            key={categoryId}
-            label={categoryName}
-            isLabeled={isHightestRoom}
-            item={
-              <FaceMark>
-                <FaceMark.FaceIcon emotion={calcEmotions(score)} isFilled={!!score} />
-                <FaceMark.Footer>{score ? `${Math.round(score / 10)}점` : `-`}</FaceMark.Footer>
-              </FaceMark>
-            }
-          />
-        );
-      })} */}
+      {/* <S.Subtitle isLabeled={isHightestRoom}>체크리스트</S.Subtitle> */}
+      {/* TODO: OX 답변 대체 필요 */}
     </S.Container>
   );
 };

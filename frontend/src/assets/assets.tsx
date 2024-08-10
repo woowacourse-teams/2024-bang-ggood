@@ -11,15 +11,6 @@ import CloseIcon from '@/assets/icons/close.svg';
 import LocationLineIcon from '@/assets/icons/location-lined.svg';
 import Plus from '@/assets/icons/plus.svg';
 
-/* face icon */
-import FaceIconBadGray from '@/assets/icons/face-icon/face-icon-bad-gray.svg';
-import FaceIconBad from '@/assets/icons/face-icon/face-icon-bad.svg';
-import FaceIconGoodGray from '@/assets/icons/face-icon/face-icon-good-gray.svg';
-import FaceIconGood from '@/assets/icons/face-icon/face-icon-good.svg';
-import FaceIconNone from '@/assets/icons/face-icon/face-icon-none.svg';
-import FaceIconSosoGray from '@/assets/icons/face-icon/face-icon-soso-gray.svg';
-import FaceIconSoso from '@/assets/icons/face-icon/face-icon-soso.svg';
-
 /* answer icon */
 import NOGREY from '@/assets/icons/answer/NO.svg';
 import NO from '@/assets/icons/answer/NO_isSelected.svg';
@@ -64,13 +55,6 @@ export {
   ChecklistLogo,
   ChecklistLogoActive,
   CloseIcon,
-  FaceIconBad,
-  FaceIconBadGray,
-  FaceIconGood,
-  FaceIconGoodGray,
-  FaceIconNone,
-  FaceIconSoso,
-  FaceIconSosoGray,
   HomeLogo,
   HomeLogoActive,
   InputRequiredDot,

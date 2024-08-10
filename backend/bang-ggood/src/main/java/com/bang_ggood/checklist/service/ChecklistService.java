@@ -1,6 +1,5 @@
 package com.bang_ggood.checklist.service;
 
-import com.bang_ggood.category.domain.Badge;
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.category.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.category.dto.response.SelectedCategoryQuestionsResponse;
@@ -17,7 +16,6 @@ import com.bang_ggood.checklist.dto.request.ChecklistInfo;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.request.QuestionRequest;
-import com.bang_ggood.checklist.dto.response.BadgeResponse;
 import com.bang_ggood.checklist.dto.response.CategoryCustomChecklistQuestionResponse;
 import com.bang_ggood.checklist.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.CategoryScoreReadResponse;
@@ -246,15 +244,7 @@ public class ChecklistService {
     }
 
     private UserChecklistPreviewResponse getChecklistPreview(Checklist checklist) {
-        return UserChecklistPreviewResponse.of(checklist, createBadges(checklist.getQuestions()));
-    }
-
-    private List<BadgeResponse> createBadges(List<ChecklistQuestion> questions) {
-        return Arrays.stream(Category.values())
-                .map(category -> category.provideBadge(questions))
-                .filter(badge -> badge != Badge.NONE)
-                .map(BadgeResponse::from)
-                .toList();
+        return UserChecklistPreviewResponse.of(checklist);
     }
 
     @Transactional

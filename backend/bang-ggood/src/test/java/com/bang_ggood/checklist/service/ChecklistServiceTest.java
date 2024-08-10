@@ -178,7 +178,6 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
     }
 
-
 //    @DisplayName("체크리스트 리스트 조회 성공")
 //    @Test
 //    void readUserChecklistsPreview() {
@@ -207,33 +206,6 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 //                .containsExactlyInAnyOrder(new BadgeResponse(
 //                        Badge.CLEAN.getShortNameWithEmoji(),
 //                        Badge.CLEAN.getLongNameWithEmoji()));
-//    }
-//
-//    @DisplayName("체크리스트 리스트 조회 성공 : 뱃지가 존재하지 않을 때")
-//    @Test
-//    void readUserChecklistsPreview_NoBadge() {
-//        // given
-//        User user = new User(1L, "방방이"); //TODO 리팩토링 필요
-//        Room room = RoomFixture.ROOM_1;
-//        Checklist checklist = createChecklist(user, room);
-//        List<ChecklistQuestion> questions = List.of(
-//                new ChecklistQuestion(checklist, Question.CLEAN_1, Grade.GOOD),
-//                new ChecklistQuestion(checklist, Question.CLEAN_2, Grade.BAD),
-//                new ChecklistQuestion(checklist, Question.CLEAN_3, Grade.BAD),
-//                new ChecklistQuestion(checklist, Question.CLEAN_4, null),
-//                new ChecklistQuestion(checklist, Question.CLEAN_5, null));
-//
-//        roomRepository.save(room);
-//        checklistRepository.save(checklist);
-//        checklistQuestionRepository.saveAll(questions);
-//
-//        // when
-//        UserChecklistsPreviewResponse response = checklistService.readUserChecklistsPreview(user);
-//
-//        // then
-//        UserChecklistPreviewResponse previewResponse1 = response.checklists().get(0);
-//        assertThat(previewResponse1.checklistId()).isEqualTo(checklist.getId());
-//        assertThat(previewResponse1.badge()).isEmpty();
 //    }
 
     @DisplayName("체크리스트 비교 성공")

@@ -116,8 +116,7 @@ public class ChecklistService {
                 .map(question -> new ChecklistQuestion(
                         checklist,
                         Question.fromId(question.questionId()),
-                        Grade.from(question.grade()),
-                        question.memo()))
+                        Grade.from(question.grade())))
                 .collect(Collectors.toList());
         checklistQuestionRepository.saveAll(checklistQuestions);
     }
@@ -272,8 +271,7 @@ public class ChecklistService {
                 .map(question -> new ChecklistQuestion(
                         checklist,
                         Question.fromId(question.questionId()),
-                        Grade.from(question.grade()),
-                        question.memo()))
+                        Grade.from(question.grade())))
                 .toList();
 
         validateSameQuestions(questions, updateQuestions);
@@ -322,7 +320,7 @@ public class ChecklistService {
 
     @Transactional
     public void deleteChecklistById(long id) {
-        // 사용자 검증 필요
+        // TODO: 사용자 검증 필요
         if (!checklistRepository.existsById(id)) {
             throw new BangggoodException(ExceptionCode.CHECKLIST_NOT_FOUND);
         }

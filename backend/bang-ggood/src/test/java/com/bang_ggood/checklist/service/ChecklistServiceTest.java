@@ -4,9 +4,7 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
-import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.CustomChecklistQuestion;
-import com.bang_ggood.checklist.domain.Grade;
 import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
@@ -40,7 +38,6 @@ import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_U
 import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_INVALID;
 import static com.bang_ggood.user.UserFixture.USER1;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -222,8 +219,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         assertAll(
                 () -> assertThat(checklist.getRoom().getStructure()).isEqualTo(Structure.OPEN_ONE_ROOM),
                 () -> assertThat(
-                        checklistOptionRepository.findByChecklistId(checklistId).get(3).getOptionId()).isEqualTo(4),
-                () -> assertThat(checklist.getQuestions().get(3).getMemo()).isEqualTo("메모")
+                        checklistOptionRepository.findByChecklistId(checklistId).get(3).getOptionId()).isEqualTo(4)
         );
     }
 

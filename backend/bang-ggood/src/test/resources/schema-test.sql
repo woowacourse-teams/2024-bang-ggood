@@ -68,7 +68,6 @@ CREATE TABLE checklist_question
     question     VARCHAR(255) NOT NULL,
     checklist_id BIGINT       NOT NULL,
     grade        VARCHAR(255),
-    memo         VARCHAR(255),
     created_at   TIMESTAMP(6),
     modified_at  TIMESTAMP(6),
     deleted      BOOLEAN,

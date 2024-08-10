@@ -47,6 +47,8 @@ const NewChecklistPage = () => {
   /*체크리스트 답변*/
   const { setAnswerInQuestion, checklistCategoryQnA, setValidCategory } = useChecklistStore();
 
+  const { resetToDefaultOptions } = useOptionStore();
+
   const navigate = useNavigate();
 
   /*현재 상태를 백엔드에 보내는 답안 포맷으로 바꾸는 함수*/
@@ -90,6 +92,8 @@ const NewChecklistPage = () => {
       setAnswerInQuestion(checklist);
       /*현재 질문이 있는 유효한 카테고리 생성*/
       setValidCategory();
+      /*옵션 선택지 리셋*/
+      resetToDefaultOptions();
     };
     fetchChecklist();
   }, []);

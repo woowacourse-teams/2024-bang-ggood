@@ -141,5 +141,6 @@ const OPTIONS: OptionWithIcon[] = [
 
 const OPTION_COUNT = OPTIONS.length;
 
+const DEFAULT_OPTIONS = [1, 2, 3, 4, 5, 6];
 // eslint-disable-next-line simple-import-sort/exports
-export { OPTION_COUNT, OPTIONS };
+export { DEFAULT_OPTIONS, OPTION_COUNT, OPTIONS };

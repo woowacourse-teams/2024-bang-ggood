@@ -39,11 +39,11 @@ const palette = {
 
 const text = {
   size: {
-    xSmall: '12px',
-    small: '14px',
-    medium: '16px',
-    large: '18px',
-    xLarge: '24px',
+    xSmall: '14px',
+    small: '16px',
+    medium: '18px',
+    large: '22px',
+    xLarge: '26px',
   },
   weight: {
     thin: 200,

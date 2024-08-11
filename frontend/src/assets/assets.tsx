@@ -9,8 +9,8 @@ import ArrowUpSmall from '@/assets/icons/arrow/arrow-up-small.svg';
 import CheckIcon from '@/assets/icons/check.svg';
 import CloseIcon from '@/assets/icons/close.svg';
 import LocationLineIcon from '@/assets/icons/location-lined.svg';
+import MiniFace from '@/assets/icons/miniface.svg';
 import Plus from '@/assets/icons/plus.svg';
-
 /* face icon */
 import FaceIconBadGray from '@/assets/icons/face-icon/face-icon-bad-gray.svg';
 import FaceIconBad from '@/assets/icons/face-icon/face-icon-bad.svg';
@@ -74,6 +74,7 @@ export {
   LocationLogoActive,
   MemoEmpty,
   MemoFilled,
+  MiniFace,
   MyPageLogo,
   MyPageLogoActive,
   PencilIcon,

@@ -1,0 +1,9 @@
+#info-title {
+  display: block;
+  text-align: center;
+  height: 24px;
+  font-size: 14px;
+  line-height: 22px;
+  border-radius: 4px;
+  padding: 0px 10px;
+}

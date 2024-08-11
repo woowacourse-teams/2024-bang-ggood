@@ -1,6 +1,6 @@
 import { SVGProps } from 'react';
 
-import { NO, NOGREY, NONE, YES, YESGREY } from '@/assets/assets';
+import { No, NoGrey, None, Yes, YesGrey } from '@/assets/assets';
 import { AnswerType } from '@/types/answer';
 
 interface Props extends SVGProps<SVGSVGElement> {
@@ -11,11 +11,11 @@ interface Props extends SVGProps<SVGSVGElement> {
 const AnswerIcon = ({ answer, isSelected = false, ...rest }: Props) => {
   return (
     <>
-      {answer === 'GOOD' && isSelected && <YES {...rest} />}
-      {answer === 'GOOD' && !isSelected && <YESGREY {...rest} />}
-      {answer === 'BAD' && isSelected && <NO {...rest} />}
-      {answer === 'BAD' && !isSelected && <NOGREY {...rest} />}
-      {answer === 'NONE' && <NONE {...rest} />}
+      {answer === 'GOOD' && isSelected && <Yes {...rest} />}
+      {answer === 'GOOD' && !isSelected && <YesGrey {...rest} />}
+      {answer === 'BAD' && isSelected && <No {...rest} />}
+      {answer === 'BAD' && !isSelected && <NoGrey {...rest} />}
+      {answer === 'NONE' && <None {...rest} />}
     </>
   );
 };

@@ -12,11 +12,11 @@ import LocationLineIcon from '@/assets/icons/location-lined.svg';
 import Plus from '@/assets/icons/plus.svg';
 
 /* answer icon */
-import NOGREY from '@/assets/icons/answer/NO.svg';
-import NO from '@/assets/icons/answer/NO_isSelected.svg';
-import NONE from '@/assets/icons/answer/NONE.svg';
-import YESGREY from '@/assets/icons/answer/YES.svg';
-import YES from '@/assets/icons/answer/YES_isSelected.svg';
+import No from '@/assets/icons/answer/no-isSelected.svg';
+import NoGrey from '@/assets/icons/answer/no.svg';
+import None from '@/assets/icons/answer/none.svg';
+import Yes from '@/assets/icons/answer/yes-isSelected.svg';
+import YesGrey from '@/assets/icons/answer/yes.svg';
 
 /* logos */
 import ChecklistLogoActive from '@/assets/icons/footer-icon/checklist-logo-active.svg';
@@ -67,12 +67,12 @@ export {
   MemoFilled,
   MyPageLogo,
   MyPageLogoActive,
-  NO,
-  NOGREY,
-  NONE,
+  No,
+  NoGrey,
+  None,
   PencilIcon,
   Plus,
   QuestionDot,
-  YES,
-  YESGREY,
+  Yes,
+  YesGrey,
 };

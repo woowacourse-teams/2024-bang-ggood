@@ -1,6 +1,7 @@
 package com.bang_ggood.checklist;
 
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.ChecklistLike;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.Grade;
 import com.bang_ggood.checklist.domain.Question;
@@ -161,4 +162,6 @@ public class ChecklistFixture {
     public static final ChecklistQuestion CHECKLIST_QUESTION_2 = new ChecklistQuestion(
             CHECKLIST1, Question.fromId(2), Grade.BAD, "메모"
     );
+
+    public static final ChecklistLike CHECKLIST_LIKE_1 = new ChecklistLike(CHECKLIST1);
 }

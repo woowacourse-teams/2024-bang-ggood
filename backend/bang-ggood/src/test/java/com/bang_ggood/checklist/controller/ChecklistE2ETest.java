@@ -8,6 +8,7 @@ import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.repository.ChecklistLikeRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.service.ChecklistService;
 import com.bang_ggood.room.RoomFixture;
@@ -36,6 +37,8 @@ class ChecklistE2ETest extends AcceptanceTest {
     private ChecklistRepository checklistRepository;
     @Autowired
     private RoomRepository roomRepository;
+    @Autowired
+    private ChecklistLikeRepository checklistLikeRepository;
 
     @DisplayName("체크리스트 방 정보 작성 성공")
     @Test
@@ -192,6 +195,21 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
                 .when().delete("/checklists/" + saved.getId())
+                .then().log().all()
+                .statusCode(204);
+    }
+
+    @DisplayName("체크리스트 좋아요 삭제 성공")
+    @Test
+    void deleteChecklistLikeByChecklistId() {
+        roomRepository.save(RoomFixture.ROOM_1);
+        Checklist saved = checklistRepository.save(ChecklistFixture.CHECKLIST1);
+        checklistLikeRepository.save(ChecklistFixture.CHECKLIST_LIKE_1);
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .when().delete("/checklists/" + saved.getId() + "/like")
                 .then().log().all()
                 .statusCode(204);
     }

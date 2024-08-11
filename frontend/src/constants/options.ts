@@ -6,8 +6,8 @@ import ClosetFilled from '@/assets/icons/options/closet-filled.svg';
 import ClosetUnfilled from '@/assets/icons/options/closet-unfilled.svg';
 import DeskFilled from '@/assets/icons/options/desk-filled.svg';
 import DeskUnfilled from '@/assets/icons/options/desk-unfilled.svg';
-import DoorLockFilled from '@/assets/icons/options/doorLock-filled.svg';
-import DoorLockUnFilled from '@/assets/icons/options/doorLock-unfilled.svg';
+import DoorLockFilled from '@/assets/icons/options/doorlock-filled.svg';
+import DoorLockUnFilled from '@/assets/icons/options/doorlock-unfilled.svg';
 import DryerFilled from '@/assets/icons/options/dryer-filled.svg';
 import DryerUnfilled from '@/assets/icons/options/dryer-unfilled.svg';
 import ElevatorFilled from '@/assets/icons/options/elevator-filled.svg';
@@ -131,7 +131,7 @@ const OPTIONS: OptionWithIcon[] = [
     displayName: 'TV',
   },
   {
-    id: 14,
+    id: 15,
     name: 'elevator',
     Filled: ElevatorFilled,
     Unfilled: ElevatorUnfilled,

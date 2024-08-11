@@ -4,7 +4,6 @@ DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS checklist CASCADE;
 DROP TABLE IF EXISTS checklist_question CASCADE;
 DROP TABLE IF EXISTS checklist_option CASCADE;
-DROP TABLE IF EXISTS category_priority CASCADE;
 DROP TABLE IF EXISTS custom_checklist_question CASCADE;
 
 -- Create tables
@@ -57,7 +56,6 @@ CREATE TABLE checklist_question
     question     VARCHAR(255) NOT NULL,
     checklist_id BIGINT       NOT NULL,
     grade        VARCHAR(255),
-    memo         VARCHAR(255),
     created_at   TIMESTAMP(6),
     modified_at  TIMESTAMP(6),
     deleted      BOOLEAN,
@@ -73,17 +71,6 @@ CREATE TABLE checklist_option
     modified_at  TIMESTAMP(6),
     deleted      BOOLEAN,
     FOREIGN KEY (checklist_id) REFERENCES checklist (id)
-);
-
-CREATE TABLE category_priority
-(
-    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-    category_id INTEGER NOT NULL,
-    user_id     BIGINT  NOT NULL,
-    created_at  TIMESTAMP(6),
-    modified_at TIMESTAMP(6),
-    deleted     BOOLEAN,
-    FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
 CREATE TABLE custom_checklist_question

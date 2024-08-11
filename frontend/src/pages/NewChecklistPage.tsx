@@ -44,7 +44,7 @@ const NewChecklistPage = () => {
   const { values: roomInfo, onChange: onChangeRoomInfo, setValues: setRoomInfo } = useInputs(DefaultRoomInfo);
 
   /* 선택된 옵션 */
-  const { selectedOptions } = useOptionStore();
+  const { resetToDefaultOptions } = useOptionStore();
 
   /* 체크리스트 답변 */
   const { checklistCategoryQnA, setAnswerInQuestion, setValidCategory } = useChecklistStore();
@@ -58,6 +58,9 @@ const NewChecklistPage = () => {
 
       // 현재 질문이 있는 유효한 카테고리 생성
       setValidCategory();
+      
+      // 옵션 선택지 리셋
+      resetToDefaultOptions();
     };
 
     fetchChecklist();

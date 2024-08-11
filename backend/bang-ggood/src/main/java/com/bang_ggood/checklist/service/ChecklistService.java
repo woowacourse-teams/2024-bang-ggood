@@ -149,7 +149,7 @@ public class ChecklistService {
     }
 
     private void validateChecklistOwnership(User user, Checklist checklist) {
-        if (!checklist.getUser().equals(user)) {
+        if (!checklist.isOwnedBy(user)) {
             throw new BangggoodException(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER);
         }
     }

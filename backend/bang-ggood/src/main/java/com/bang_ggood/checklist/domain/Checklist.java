@@ -57,6 +57,10 @@ public class Checklist extends BaseEntity {
     protected Checklist() {
     }
 
+    public boolean isOwnedBy(User user) {
+        return this.user.equals(user);
+    }
+
     public void change(Checklist updateChecklist) {
         this.user = updateChecklist.user;
         this.room = updateChecklist.room;

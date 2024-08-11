@@ -8,6 +8,10 @@
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-47E132R65H"></script>
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=<%= process.env.KAKAO_MAP_KEY %> "
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -20,6 +24,7 @@
   </head>
   <body>
     <div id="root"></div>
+
     <script src="src/index.tsx"></script>
 
     <div id="modal"></div>

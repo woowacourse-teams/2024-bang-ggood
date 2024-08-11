@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 class QuestionTest {
 
@@ -21,10 +20,7 @@ class QuestionTest {
         Question question = Question.fromId(questionId);
 
         //then
-        assertAll(
-                () -> assertThat(question.getId()).isEqualTo(questionId),
-                () -> assertThat(question.getCategory()).isEqualTo(Question.WINDOW_7.getCategory())
-        );
+        assertThat(question).isEqualTo(Question.WINDOW_7);
     }
 
     @DisplayName("질문 아이디를 통해 질문 찾기 실패 : 유효하지 않은 질문 아이디일 경우")

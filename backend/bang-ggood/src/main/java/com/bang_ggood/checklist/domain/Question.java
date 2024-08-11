@@ -23,7 +23,7 @@ public enum Question {
 
     SECURITY_11(11, Category.SECURITY, "출입구와 복도에 CCTV가 설치되어 있나요?", null, true),
     SECURITY_12(12, Category.SECURITY, "잠금장치가 된 공동 현관문이 있나요? ", null, true),
-    SECURITY_13(25, Category.SECURITY, "자취방의 보안 시설이 잘 갖추어져 있나요? (도어락, 창문 잠금장치 등)", null, true);
+    SECURITY_13(13, Category.SECURITY, "자취방의 보안 시설이 잘 갖추어져 있나요? (도어락, 창문 잠금장치 등)", null, true);
 
     private final int id;
     private final Category category;

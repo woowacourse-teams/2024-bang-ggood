@@ -1,6 +1,8 @@
 package com.bang_ggood.checklist.domain;
 
 import com.bang_ggood.BaseEntity;
+import com.bang_ggood.exception.BangggoodException;
+import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.domain.FloorLevel;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.domain.Structure;
@@ -55,6 +57,10 @@ public class Checklist extends BaseEntity {
     }
 
     protected Checklist() {
+    }
+
+    public boolean isOwnedBy(User user) {
+        return this.user.equals(user);
     }
 
     public void change(Checklist updateChecklist) {

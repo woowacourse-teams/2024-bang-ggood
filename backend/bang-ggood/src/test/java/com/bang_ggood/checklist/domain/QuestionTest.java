@@ -1,11 +1,9 @@
 package com.bang_ggood.checklist.domain;
 
-import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -13,27 +11,11 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class QuestionTest {
 
-    @DisplayName("특정 카테고리의 질문 찾기 성공")
-    @Test
-    void findQuestionsByCategory() {
-        //given
-        Category category = Category.CLEAN;
-
-        //when
-        List<Question> questions = Question.findQuestionsByCategory(category);
-
-        //then
-        assertAll(
-                () -> assertThat(questions.size()).isEqualTo(5),
-                () -> assertThat(questions.get(0).getId()).isEqualTo(1)
-        );
-    }
-
     @DisplayName("질문 아이디를 통해 질문 찾기 성공")
     @Test
     void fromId() {
         //given
-        int questionId = 1;
+        int questionId = Question.WINDOW_7.getId();
 
         //when
         Question question = Question.fromId(questionId);
@@ -41,7 +23,7 @@ class QuestionTest {
         //then
         assertAll(
                 () -> assertThat(question.getId()).isEqualTo(questionId),
-                () -> assertThat(question.getCategory()).isEqualTo(Category.CLEAN)
+                () -> assertThat(question.getCategory()).isEqualTo(Question.WINDOW_7.getCategory())
         );
     }
 
@@ -49,7 +31,7 @@ class QuestionTest {
     @Test
     void fromId_invalidQuestion_exception() {
         //given
-        int questionId = 999;
+        int questionId = Integer.MAX_VALUE;
 
         //when & then
         assertThatThrownBy(() -> Question.fromId(questionId))
@@ -61,7 +43,7 @@ class QuestionTest {
     @Test
     void contains_true() {
         //given
-        int questionId = 1;
+        int questionId = Question.ROOM_CONDITION_1.getId();
 
         //when & then
         assertThat(Question.contains(questionId)).isTrue();
@@ -71,7 +53,7 @@ class QuestionTest {
     @Test
     void contains_false() {
         //given
-        int questionId = 999;
+        int questionId = Integer.MAX_VALUE;
 
         //when & then
         assertThat(Question.contains(questionId)).isFalse();

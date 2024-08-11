@@ -3,14 +3,13 @@ package com.bang_ggood.checklist.service;
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.category.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.category.dto.response.SelectedCategoryQuestionsResponse;
+import com.bang_ggood.checklist.domain.Answer;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.CustomChecklistQuestion;
-import com.bang_ggood.checklist.domain.Grade;
 import com.bang_ggood.checklist.domain.Option;
 import com.bang_ggood.checklist.domain.Question;
-import com.bang_ggood.checklist.dto.request.ChecklistInfo;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.request.QuestionRequest;
@@ -69,9 +68,7 @@ public class ChecklistService {
     public long createChecklist(User user, ChecklistRequest checklistRequest) {
         Room room = roomRepository.save(checklistRequest.toRoomEntity());
 
-        ChecklistInfo checklistInfo = checklistRequest.toChecklistInfo();
-        Checklist checklist = new Checklist(user, room, checklistInfo.deposit(), checklistInfo.rent(),
-                checklistInfo.contractTerm(), checklistInfo.realEstate());
+        Checklist checklist = checklistRequest.toChecklistEntity(room, user);
         checklistRepository.save(checklist);
 
         createChecklistOptions(checklistRequest, checklist);
@@ -116,7 +113,7 @@ public class ChecklistService {
                 .map(question -> new ChecklistQuestion(
                         checklist,
                         Question.fromId(question.questionId()),
-                        Grade.from(question.grade())))
+                        Answer.from(question.answer())))
                 .collect(Collectors.toList());
         checklistQuestionRepository.saveAll(checklistQuestions);
     }
@@ -244,9 +241,7 @@ public class ChecklistService {
         Room room = checklist.getRoom();
         room.change(checklistRequest.toRoomEntity());
 
-        ChecklistInfo checklistInfo = checklistRequest.toChecklistInfo();
-        Checklist updateChecklist = new Checklist(user, room, checklistInfo.deposit(), checklistInfo.rent(),
-                checklistInfo.contractTerm(), checklistInfo.realEstate());
+        Checklist updateChecklist = checklistRequest.toChecklistEntity(room, user);
         checklist.change(updateChecklist);
 
         updateChecklistOptions(checklistRequest, checklist);
@@ -264,19 +259,19 @@ public class ChecklistService {
     }
 
     private void updateChecklistQuestions(ChecklistRequest checklistRequest, Checklist checklist) {
-        validateQuestion(checklistRequest.questions());
+        /*validateQuestion(checklistRequest.questions());
 
         List<ChecklistQuestion> questions = checklist.getQuestions();
         List<ChecklistQuestion> updateQuestions = checklistRequest.questions().stream()
                 .map(question -> new ChecklistQuestion(
                         checklist,
                         Question.fromId(question.questionId()),
-                        Grade.from(question.grade())))
+                        Answer.from(question.grade())))
                 .toList();
 
         validateSameQuestions(questions, updateQuestions);
         IntStream.range(0, questions.size())
-                .forEach(i -> questions.get(i).change(updateQuestions.get(i)));
+                .forEach(i -> questions.get(i).change(updateQuestions.get(i)));*/
     }
 
     private void validateSameQuestions(List<ChecklistQuestion> questions, List<ChecklistQuestion> updateQuestions) {

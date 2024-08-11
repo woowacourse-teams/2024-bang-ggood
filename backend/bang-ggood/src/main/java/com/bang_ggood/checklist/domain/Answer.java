@@ -4,12 +4,12 @@ import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import java.util.Arrays;
 
-public enum Grade {
+public enum Answer {
 
     GOOD, BAD, NONE;
 
-    public static Grade from(String grade) {
-        return Arrays.stream(Grade.values())
+    public static Answer from(String grade) {
+        return Arrays.stream(Answer.values())
                 .filter(value -> value.name().equals(grade))
                 .findFirst()
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.GRADE_INVALID));

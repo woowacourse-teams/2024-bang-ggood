@@ -294,10 +294,6 @@ const S = {
     font-size: ${({ theme }) => theme.text.size.xSmall};
     column-gap: 7px;
   `,
-  // FurnitureOptionContent: styled(FormField.P)`
-  //   color: ${({ theme }) => theme.palette.grey500};
-  //   font-weight: ${({ theme }) => theme.text.weight.semiBold};
-  // `,
 };
 
 export default NewChecklistInfoTemplate;

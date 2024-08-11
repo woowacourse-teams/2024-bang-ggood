@@ -33,24 +33,24 @@ import { OptionWithIcon } from '@/types/option';
 const OPTIONS: OptionWithIcon[] = [
   {
     id: 1,
+    name: 'doorLock',
+    Filled: DoorLockFilled,
+    Unfilled: DoorLockUnFilled,
+    displayName: '도어락',
+  },
+  {
+    id: 2,
     name: 'airConditioner',
     Filled: AirconditionerFilled,
     Unfilled: AirconditionerUnfilled,
     displayName: '에어컨',
   },
   {
-    id: 2,
+    id: 3,
     name: 'refrigerator',
     Filled: RefrigeratorFilled,
     Unfilled: RefrigeratorUnfilled,
     displayName: '냉장고',
-  },
-  {
-    id: 3,
-    name: 'microwaveOven',
-    Filled: MicrowaveFilled,
-    Unfilled: MicrowaveUnfilled,
-    displayName: '전자레인지',
   },
   {
     id: 4,
@@ -68,56 +68,63 @@ const OPTIONS: OptionWithIcon[] = [
   },
   {
     id: 6,
-    name: 'washingMachine',
-    Filled: WashingMachineFilled,
-    Unfilled: WashingMachineUnfilled,
-    displayName: '세탁기',
+    name: 'microwaveOven',
+    Filled: MicrowaveFilled,
+    Unfilled: MicrowaveUnfilled,
+    displayName: '전자레인지',
   },
   {
     id: 7,
-    name: 'dryer',
-    Filled: DryerFilled,
-    Unfilled: DryerUnfilled,
-    displayName: '건조기',
-  },
-  {
-    id: 8,
-    name: 'internet',
-    Filled: InternetFilled,
-    Unfilled: InternetUnfilled,
-    displayName: '인터넷',
-  },
-  {
-    id: 9,
-    name: 'bed',
-    Filled: BedFilled,
-    Unfilled: BedUnfilled,
-    displayName: '침대',
-  },
-  {
-    id: 10,
-    name: 'desk',
-    Filled: DeskFilled,
-    Unfilled: DeskUnfilled,
-    displayName: '책상',
-  },
-  {
-    id: 11,
     name: 'closet',
     Filled: ClosetFilled,
     Unfilled: ClosetUnfilled,
     displayName: '옷장',
   },
   {
-    id: 12,
+    id: 8,
     name: 'shoeRack',
     Filled: ShoesClosetFilled,
     Unfilled: ShoesClosetUnfilled,
     displayName: '신발장',
   },
-
+  {
+    id: 9,
+    name: 'washingMachine',
+    Filled: WashingMachineFilled,
+    Unfilled: WashingMachineUnfilled,
+    displayName: '세탁기',
+  },
+  {
+    id: 10,
+    name: 'dryer',
+    Filled: DryerFilled,
+    Unfilled: DryerUnfilled,
+    displayName: '건조기',
+  },
+  {
+    id: 11,
+    name: 'internet',
+    Filled: InternetFilled,
+    Unfilled: InternetUnfilled,
+    displayName: '인터넷',
+  },
+  {
+    id: 12,
+    name: 'bed',
+    Filled: BedFilled,
+    Unfilled: BedUnfilled,
+    displayName: '침대',
+  },
   {
     id: 13,
+    name: 'desk',
+    Filled: DeskFilled,
+    Unfilled: DeskUnfilled,
+    displayName: '책상',
+  },
+
+  {
+    id: 14,
     name: 'tv',
     Filled: TvFilled,
     Unfilled: TvUnfilled,
@@ -130,17 +137,11 @@ const OPTIONS: OptionWithIcon[] = [
     Unfilled: ElevatorUnfilled,
     displayName: '엘리베이터',
   },
-  {
-    id: 15,
-    name: 'doorLock',
-    Filled: DoorLockFilled,
-    Unfilled: DoorLockUnFilled,
-    displayName: '엘리베이터',
-  },
 ];
 
 const OPTION_COUNT = OPTIONS.length;
 
-const DEFAULT_OPTIONS = [1, 2, 3, 4, 5, 6];
+const DEFAULT_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
 // eslint-disable-next-line simple-import-sort/exports
 export { DEFAULT_OPTIONS, OPTION_COUNT, OPTIONS };

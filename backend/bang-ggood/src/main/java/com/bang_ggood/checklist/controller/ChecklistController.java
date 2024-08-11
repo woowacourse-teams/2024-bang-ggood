@@ -5,7 +5,6 @@ import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
-import com.bang_ggood.checklist.dto.response.ChecklistsWithScoreReadResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
 import com.bang_ggood.checklist.service.ChecklistService;
@@ -18,10 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.net.URI;
-import java.util.List;
 
 @RestController
 public class ChecklistController {
@@ -51,11 +48,6 @@ public class ChecklistController {
     @GetMapping("/checklists")
     public ResponseEntity<UserChecklistsPreviewResponse> readUserChecklistsPreview(@AuthPrincipal User user) {
         return ResponseEntity.ok(checklistService.readUserChecklistsPreview(user));
-    }
-
-    @GetMapping("/checklists/comparison")
-    public ResponseEntity<ChecklistsWithScoreReadResponse> readChecklistsComparison(@AuthPrincipal User user, @RequestParam("id") List<Long> checklistIds) {
-        return ResponseEntity.ok(checklistService.readChecklistsComparison(user, checklistIds));
     }
 
     @GetMapping("/custom-checklist/all")

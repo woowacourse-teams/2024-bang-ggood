@@ -27,13 +27,10 @@ public class ChecklistQuestion extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Grade grade;
 
-    private String memo;
-
-    public ChecklistQuestion(Checklist checklist, Question question, Grade grade, String memo) {
+    public ChecklistQuestion(Checklist checklist, Question question, Grade grade) {
         this.checklist = checklist;
         this.question = question;
         this.grade = grade;
-        this.memo = memo;
     }
 
     protected ChecklistQuestion() {
@@ -43,7 +40,6 @@ public class ChecklistQuestion extends BaseEntity {
         this.checklist = checklistQuestion.checklist;
         this.question = checklistQuestion.question;
         this.grade = checklistQuestion.grade;
-        this.memo = checklistQuestion.memo;
     }
 
     public boolean isDifferentQuestionId(ChecklistQuestion checklistQuestion) {
@@ -64,10 +60,6 @@ public class ChecklistQuestion extends BaseEntity {
 
     public Grade getGrade() {
         return grade;
-    }
-
-    public String getMemo() {
-        return memo;
     }
 
     @Override
@@ -94,7 +86,6 @@ public class ChecklistQuestion extends BaseEntity {
                 ", checklist=" + checklist +
                 ", question=" + question +
                 ", grade=" + grade +
-                ", memo='" + memo + '\'' +
                 '}';
     }
 }

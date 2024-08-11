@@ -7,13 +7,11 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistLike;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.CustomChecklistQuestion;
-import com.bang_ggood.checklist.domain.Grade;
 import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
-import com.bang_ggood.checklist.dto.response.ChecklistsWithScoreReadResponse;
 import com.bang_ggood.checklist.dto.response.CustomChecklistQuestionResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.repository.ChecklistLikeRepository;
@@ -43,7 +41,6 @@ import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_U
 import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_INVALID;
 import static com.bang_ggood.user.UserFixture.USER1;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -183,7 +180,6 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
     }
 
-
 //    @DisplayName("체크리스트 리스트 조회 성공")
 //    @Test
 //    void readUserChecklistsPreview() {
@@ -213,124 +209,6 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 //                        Badge.CLEAN.getShortNameWithEmoji(),
 //                        Badge.CLEAN.getLongNameWithEmoji()));
 //    }
-//
-//    @DisplayName("체크리스트 리스트 조회 성공 : 뱃지가 존재하지 않을 때")
-//    @Test
-//    void readUserChecklistsPreview_NoBadge() {
-//        // given
-//        User user = new User(1L, "방방이"); //TODO 리팩토링 필요
-//        Room room = RoomFixture.ROOM_1;
-//        Checklist checklist = createChecklist(user, room);
-//        List<ChecklistQuestion> questions = List.of(
-//                new ChecklistQuestion(checklist, Question.CLEAN_1, Grade.GOOD),
-//                new ChecklistQuestion(checklist, Question.CLEAN_2, Grade.BAD),
-//                new ChecklistQuestion(checklist, Question.CLEAN_3, Grade.BAD),
-//                new ChecklistQuestion(checklist, Question.CLEAN_4, null),
-//                new ChecklistQuestion(checklist, Question.CLEAN_5, null));
-//
-//        roomRepository.save(room);
-//        checklistRepository.save(checklist);
-//        checklistQuestionRepository.saveAll(questions);
-//
-//        // when
-//        UserChecklistsPreviewResponse response = checklistService.readUserChecklistsPreview(user);
-//
-//        // then
-//        UserChecklistPreviewResponse previewResponse1 = response.checklists().get(0);
-//        assertThat(previewResponse1.checklistId()).isEqualTo(checklist.getId());
-//        assertThat(previewResponse1.badge()).isEmpty();
-//    }
-
-    @DisplayName("체크리스트 비교 성공")
-    @Test
-    void readChecklistsComparison() {
-        // given
-        User user1 = UserFixture.USER1;
-        Room room1 = RoomFixture.ROOM_1;
-        Room room2 = RoomFixture.ROOM_2;
-        Room room3 = RoomFixture.ROOM_3;
-        Checklist checklist1 = createChecklist(user1, room1);
-        Checklist checklist2 = createChecklist(user1, room2);
-        Checklist checklist3 = createChecklist(user1, room3);
-
-        roomRepository.saveAll(List.of(room1, room2, room3));
-        List<Checklist> checklists = checklistRepository.saveAll(List.of(checklist1, checklist2, checklist3));
-        List<Long> checklistIds = List.of(checklists.get(0).getId(), checklists.get(1).getId(),
-                checklists.get(2).getId());
-
-        // when
-        ChecklistsWithScoreReadResponse response = checklistService.readChecklistsComparison(user1, checklistIds);
-
-        // then
-        assertThat(response.checklists()).hasSize(3);
-    }
-
-    @DisplayName("체크리스트 비교 성공 : 순위가 정상적으로 계산된 경우")
-    @Test
-    void readChecklistsComparison_compareRank() {
-        // given
-        User user1 = UserFixture.USER1;
-        Room room1 = RoomFixture.ROOM_1;
-        Room room2 = RoomFixture.ROOM_2;
-        Room room3 = RoomFixture.ROOM_3;
-        Checklist checklist1 = createChecklist(user1, room1);
-        Checklist checklist2 = createChecklist(user1, room2);
-        Checklist checklist3 = createChecklist(user1, room3);
-        ChecklistQuestion checklistQuestion1 = new ChecklistQuestion(checklist1, Question.CLEAN_1, Grade.GOOD, null);
-        ChecklistQuestion checklistQuestion2 = new ChecklistQuestion(checklist2, Question.CLEAN_2, Grade.SOSO, null);
-        ChecklistQuestion checklistQuestion3 = new ChecklistQuestion(checklist3, Question.CLEAN_3, Grade.BAD, null);
-
-        roomRepository.saveAll(List.of(room1, room2, room3));
-        List<Checklist> checklists = checklistRepository.saveAll(List.of(checklist1, checklist2, checklist3));
-        checklistQuestionRepository.saveAll(List.of(checklistQuestion1, checklistQuestion2, checklistQuestion3));
-        List<Long> checklistIds = List.of(checklists.get(0).getId(), checklists.get(1).getId(),
-                checklists.get(2).getId());
-
-        // when
-        ChecklistsWithScoreReadResponse response = checklistService.readChecklistsComparison(user1, checklistIds);
-
-        // then
-        assertAll(
-                () -> assertThat(response.checklists().get(0).getRank()).isEqualTo(1),
-                () -> assertThat(response.checklists().get(1).getRank()).isEqualTo(2),
-                () -> assertThat(response.checklists().get(2).getRank()).isEqualTo(3)
-        );
-    }
-
-    @DisplayName("체크리스트 비교 실패 : 아이디 개수가 유효하지 않을 때")
-    @Test
-    void readChecklistsComparison_invalidIdCount() {
-        // given
-        List<Long> invalidChecklistIds = List.of(1L, 2L, 3L, 4L);
-
-        // when & then
-        assertThatCode(() -> checklistService.readChecklistsComparison(USER1, invalidChecklistIds))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.CHECKLIST_COMPARISON_INVALID_COUNT.getMessage());
-    }
-
-    @DisplayName("체크리스트 비교 실패 : 유효하지 않은 체크리스트 id 존재")
-    @Test
-    void readChecklistsComparison_invalidId() {
-        // given
-        User user1 = UserFixture.USER1;
-        Room room1 = RoomFixture.ROOM_1;
-        Room room2 = RoomFixture.ROOM_2;
-        Room room3 = RoomFixture.ROOM_3;
-        Checklist checklist1 = createChecklist(user1, room1);
-        Checklist checklist2 = createChecklist(user1, room2);
-        Checklist checklist3 = createChecklist(user1, room3);
-
-        roomRepository.saveAll(List.of(room1, room2, room3));
-        List<Checklist> checklists = checklistRepository.saveAll(List.of(checklist1, checklist2, checklist3));
-        List<Long> invalidChecklistIds = List.of(checklists.get(0).getId(), checklists.get(1).getId(),
-                checklists.get(2).getId() + 1);
-
-        // when & then
-        assertThatCode(() -> checklistService.readChecklistsComparison(user1, invalidChecklistIds))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
-    }
 
     @DisplayName("체크리스트 수정 성공")
     @Test
@@ -347,8 +225,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         assertAll(
                 () -> assertThat(checklist.getRoom().getStructure()).isEqualTo(Structure.OPEN_ONE_ROOM),
                 () -> assertThat(
-                        checklistOptionRepository.findByChecklistId(checklistId).get(3).getOptionId()).isEqualTo(4),
-                () -> assertThat(checklist.getQuestions().get(3).getMemo()).isEqualTo("메모")
+                        checklistOptionRepository.findByChecklistId(checklistId).get(3).getOptionId()).isEqualTo(4)
         );
     }
 

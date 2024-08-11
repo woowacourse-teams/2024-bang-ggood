@@ -26,35 +26,35 @@ public class ChecklistFixture {
     );
 
     public static final QuestionRequest QUESTION_1_CREATE_REQUEST = new QuestionRequest(
-            1, "GOOD", "메모1"
+            1, "GOOD"
     );
 
     public static final QuestionRequest QUESTION_2_CREATE_REQUEST = new QuestionRequest(
-            2, "SOSO", null
+            2, "GOOD"
     );
 
     public static final QuestionRequest QUESTION_3_CREATE_REQUEST = new QuestionRequest(
-            3, "BAD", "메모3"
+            3, "BAD"
     );
 
     public static final QuestionRequest QUESTION_4_CREATE_REQUEST = new QuestionRequest(
-            4, "SOSO", null
+            4, "BAD"
     );
 
     public static final QuestionRequest QUESTION_5_CREATE_REQUEST = new QuestionRequest(
-            5, "GOOD", null
+            5, "GOOD"
     );
 
     public static final QuestionRequest QUESTION_5_UPDATE_REQUEST = new QuestionRequest(
-            5, "GOOD", "메모"
+            5, "GOOD"
     );
 
     public static final QuestionRequest QUESTION_CREATE_REQUEST_NO_ID = new QuestionRequest(
-            null, "NONE", "메모"
+            null, "NONE"
     );
 
     public static final QuestionRequest QUESTION_CREATE_REQUEST_INVALID_ID = new QuestionRequest(
-            9999, "SOSO", null
+            9999, "GOOD"
     );
 
 
@@ -156,11 +156,11 @@ public class ChecklistFixture {
 
 
     public static final ChecklistQuestion CHECKLIST_QUESTION_1 = new ChecklistQuestion(
-            CHECKLIST1, Question.fromId(1), Grade.BAD, "메모"
+            CHECKLIST1, Question.fromId(1), Grade.BAD
     );
 
     public static final ChecklistQuestion CHECKLIST_QUESTION_2 = new ChecklistQuestion(
-            CHECKLIST1, Question.fromId(2), Grade.BAD, "메모"
+            CHECKLIST1, Question.fromId(2), Grade.BAD
     );
 
     public static final ChecklistLike CHECKLIST_LIKE_1 = new ChecklistLike(CHECKLIST1);

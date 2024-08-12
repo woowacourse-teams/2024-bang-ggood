@@ -267,7 +267,8 @@ public class ChecklistService {
     }
 
     private UserChecklistPreviewResponse getChecklistPreview(Checklist checklist) {
-        return UserChecklistPreviewResponse.of(checklist);
+        boolean isLiked = checklistLikeRepository.existsByChecklist(checklist);
+        return UserChecklistPreviewResponse.of(checklist, isLiked);
     }
 
     @Transactional
@@ -356,5 +357,14 @@ public class ChecklistService {
             throw new BangggoodException(ExceptionCode.CHECKLIST_NOT_FOUND);
         }
         checklistRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void deleteChecklistLikeByChecklistId(User user, long checklistId) {
+        Checklist checklist = checklistRepository.getById(checklistId);
+        validateChecklistOwnership(user, checklist);
+        ChecklistLike checklistLike = checklistLikeRepository.getByChecklistId(checklistId);
+
+        checklistLikeRepository.deleteById(checklistLike.getId());
     }
 }

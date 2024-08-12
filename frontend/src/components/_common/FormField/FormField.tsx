@@ -15,9 +15,9 @@ const FormFieldWrapper = styled.div<{ rowGap?: string }>`
 
 const S = {
   MovedRequiredDot: styled(InputRequiredDot)`
-    position: absolute;
-    top: -5px;
-    left: 50px;
+    position: relative;
+    top: -15px;
+    left: 5px;
   `,
   P: styled.p`
     height: 10px;

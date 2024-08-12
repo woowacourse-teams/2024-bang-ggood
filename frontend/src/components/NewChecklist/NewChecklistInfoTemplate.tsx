@@ -12,6 +12,10 @@ import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 import { RoomInfo, RoomInfoName } from '@/types/room';
 
+const roomTypes = ['빌라', '오피스텔', '아파트', '기타'];
+const roomStructures = ['오픈형 원룸', '분리형 원룸', '투룸', '쓰리룸 이상'];
+const roomFloorLevels = ['지상', '반지하/지하', '옥탑'];
+
 const NewChecklistInfoTemplate = () => {
   const { actions, error, roomInfo } = useStore(checklistRoomInfoStore);
 
@@ -22,9 +26,6 @@ const NewChecklistInfoTemplate = () => {
     [actions],
   );
 
-  const roomTypes = ['빌라', '오피스텔', '아파트', '기타'];
-  const roomStructures = ['오픈형 원룸', '분리형 원룸', '투룸', '쓰리룸 이상'];
-  const roomFloorLevels = ['지상', '반지하/지하', '옥탑'];
   return (
     <S.ContentWrapper>
       <S.Container>

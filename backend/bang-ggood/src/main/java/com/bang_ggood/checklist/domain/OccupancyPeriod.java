@@ -7,7 +7,7 @@ import java.util.Arrays;
 public enum OccupancyPeriod {
 
     EARLY("초"),
-    MIDDLE("중"),
+    MIDDLE("중순"),
     LATE("말"),
     NONE(null);
 

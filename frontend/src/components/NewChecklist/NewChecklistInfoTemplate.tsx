@@ -17,7 +17,7 @@ const roomStructures = ['오픈형 원룸', '분리형 원룸', '투룸', '쓰�
 const roomFloorLevels = ['지상', '반지하/지하', '옥탑'];
 
 const NewChecklistInfoTemplate = () => {
-  const { actions, error, roomInfo } = useStore(checklistRoomInfoStore);
+  const { actions, errorMessage: error, roomInfo } = useStore(checklistRoomInfoStore);
 
   const handleClickTagButton = useCallback(
     (name: keyof RoomInfo, value: string) => {

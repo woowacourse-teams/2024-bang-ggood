@@ -49,17 +49,17 @@ const validatorSet = {
   realEstate: [],
 } satisfies Record<string, Validator<string>[] | Validator<number>[]>;
 
-const initialErrorMessages = Object.fromEntries(Object.entries(initialRoomInfo).map(([key]) => ['E_' + key, '']));
+const initialErrorMessages = Object.fromEntries(Object.entries(initialRoomInfo).map(([key]) => [key, '']));
 
 type StringValue<T> = {
   [K in keyof T]: string;
 };
 
 const checklistRoomInfoStore = createStore<
-  { roomInfo: RoomInfo } & { error: StringValue<RoomInfo> } & { actions: RoomInfoAction }
+  { roomInfo: RoomInfo } & { errorMessage: StringValue<RoomInfo> } & { actions: RoomInfoAction }
 >((set, get) => ({
   roomInfo: { ...initialRoomInfo },
-  error: { ...initialErrorMessages },
+  errorMessage: { ...initialErrorMessages },
   actions: {
     set: (name, value) => {
       if (typeof value === 'string') {
@@ -80,9 +80,9 @@ const checklistRoomInfoStore = createStore<
         event.target?.type === 'number' ? parseInt(event.target.value) : event.target.value,
       );
     },
-    reset: () => set({ roomInfo: { ...initialRoomInfo }, error: { ...initialErrorMessages } }),
+    reset: () => set({ roomInfo: { ...initialRoomInfo }, errorMessage: { ...initialErrorMessages } }),
     _update: (name, value) => set({ roomInfo: { ...get().roomInfo, [name]: value } }),
-    _updateErrorMsg: (name, value) => set({ error: { ...get().error, [name]: value } }),
+    _updateErrorMsg: (name, value) => set({ errorMessage: { ...get().errorMessage, [name]: value } }),
     _updateAfterValidation: (name, value, validators) => {
       const newErrorMessage = validators.reduce(
         (acc, { validate, errorMessage }) => (!validate(value) ? errorMessage : acc),

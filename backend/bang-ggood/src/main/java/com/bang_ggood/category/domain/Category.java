@@ -1,28 +1,21 @@
 package com.bang_ggood.category.domain;
 
-import java.util.Arrays;
-
 public enum Category {
 
-    CLEAN(1, "청결"),
-    ROOM_CONDITION(2, "방 컨디션"),
-    AMENITY(3, "편의시설"),
-    OPTION(4, "옵션"),
-    ENVIRONMENT(5, "주거환경"),
-    SECURITY(6, "보안"),
-    ECONOMIC(7, "경제적");
+    ROOM_CONDITION(1, "방 컨디션", "🏠"),
+    WINDOW(2, "창문", "🪟"),
+    BATHROOM(3, "화장실", "🛀"),
+    SECURITY(4, "보안", "🚨"),
+    OUTSIDE(5, "외부", "🌇");
 
     private final int id;
     private final String name;
+    private final String emoji;
 
-    Category(int id, String name) {
+    Category(int id, String name, String emoji) {
         this.id = id;
         this.name = name;
-    }
-
-    public static boolean contains(int id) {
-        return Arrays.stream(values())
-                .anyMatch(category -> category.id == id);
+        this.emoji = emoji;
     }
 
     public int getId() {
@@ -30,6 +23,7 @@ public enum Category {
     }
 
     public String getName() {
-        return name;
+        String nameWithEmojiPattern = "%s %s";
+        return String.format(nameWithEmojiPattern, emoji, name);
     }
 }

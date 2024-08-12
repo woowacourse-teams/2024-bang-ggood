@@ -9,7 +9,8 @@ public enum Type {
     VILLA("빌라"),
     OFFICETEL("오피스텔"),
     APARTMENT("아파트"),
-    OTHER("기타");
+    OTHER("기타"),
+    NONE(null);
 
     private final String name;
 
@@ -18,8 +19,11 @@ public enum Type {
     }
 
     public static Type from(String name) {
+        if (name == null) {
+            return NONE;
+        }
         return Arrays.stream(Type.values())
-                .filter(value -> value.name.equals(name))
+                .filter(value -> value.name != null && value.name.equals(name))
                 .findFirst()
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.TYPE_INVALID));
     }

@@ -19,12 +19,13 @@ public enum ExceptionCode {
     // User
     USER_NOT_FOUND(HttpStatus.BAD_REQUEST, "유저가 존재하지 않습니다."),
 
-    // Grade
-    GRADE_INVALID(HttpStatus.BAD_REQUEST, "점수가 유효하지 않습니다."),
+    // Answer
+    ANSWER_INVALID(HttpStatus.BAD_REQUEST, "점수가 유효하지 않습니다."),
 
     // Checklist
     CHECKLIST_COMPARISON_INVALID_COUNT(HttpStatus.BAD_REQUEST, "비교할 체크리스트 개수가 유효하지 않습니다."),
     CHECKLIST_NOT_FOUND(HttpStatus.BAD_REQUEST, "체크리스트가 존재하지 않습니다."),
+    CHECKLIST_MEMO_INVALID_LENGTH(HttpStatus.BAD_REQUEST, "체크리스트 메모는 1000자 이하여야 합니다."),
     CHECKLIST_NOT_OWNED_BY_USER(HttpStatus.BAD_REQUEST, "유저의 체크리스트가 아닙니다."),
 
     // CustomChecklist
@@ -42,10 +43,14 @@ public enum ExceptionCode {
     // Room
     ROOM_FLOOR_AND_LEVEL_INVALID(HttpStatus.BAD_REQUEST, "방이 지상층일 경우에만 층수를 입력할 수 있습니다."),
 
-    //Score
-    SCORE_NOT_DESCENDING_SORTED(HttpStatus.BAD_REQUEST, "정렬되지 않은 점수입니다."),
+    // OccupancyMonth
+    OCCUPANCY_MONTH_INVALID(HttpStatus.BAD_REQUEST, "입주 가능월은 1부터 12 사이 혹은 null 값만 가능합니다."),
+
+    // OccupancyPeriod
+    OCCUPANCY_PERIOD_INVALID(HttpStatus.BAD_REQUEST, "입주 가능 기간은 초, 중, 말 혹은 null 값만 가능합니다."),
 
     //like
+    LIKE_ALREADY_EXISTS(HttpStatus.CONFLICT, "체크리스트가 이미 좋아요 상태입니다"),
     LIKE_NOT_EXISTS(HttpStatus.BAD_REQUEST, "체크리스트 좋아요가 존재하지 않아 삭제할 수 없습니다."),
 
     // Auth

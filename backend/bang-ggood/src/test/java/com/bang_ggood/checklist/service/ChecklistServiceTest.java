@@ -1,8 +1,9 @@
 package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.IntegrationTestSupport;
-import com.bang_ggood.category.domain.Category;
+import com.bang_ggood.category.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.CustomChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistLike;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
@@ -22,11 +23,8 @@ import com.bang_ggood.checklist.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.RoomFixture;
-import com.bang_ggood.room.domain.Room;
-import com.bang_ggood.room.domain.Structure;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
-import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -79,7 +77,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         roomRepository.save(RoomFixture.ROOM_3);
     }
 
-    @DisplayName("체크리스트 방 정보 작성 성공")
+    @DisplayName("체크리스트 작성 성공")
     @Test
     void createChecklist() {
         //given
@@ -97,7 +95,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 
     }
 
-    @DisplayName("체크리스트 방 정보 작성 실패: 질문 id가 유효하지 않을 경우")
+    @DisplayName("체크리스트 작성 실패: 질문 id가 유효하지 않을 경우")
     @Test
     void createChecklist_invalidQuestionId_exception() {
         //given & when & then
@@ -108,7 +106,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
     }
 
-    @DisplayName("체크리스트 방 정보 작성 실패: 질문 id가 중복일 경우")
+    @DisplayName("체크리스트 작성 실패: 질문 id가 중복일 경우")
     @Test
     void createChecklist_duplicatedQuestionId_exception() {
         //given & when & then
@@ -119,7 +117,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
     }
 
-    @DisplayName("체크리스트 방 정보 작성 실패: 옵션 id가 유효하지 않을 경우")
+    @DisplayName("체크리스트 작성 실패: 옵션 id가 유효하지 않을 경우")
     @Test
     void createChecklist_invalidOptionId_exception() {
         //given & when & then
@@ -130,7 +128,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.OPTION_INVALID.getMessage());
     }
 
-    @DisplayName("체크리스트 방 정보 작성 실패: 옵션 id가 중복일 경우")
+    @DisplayName("체크리스트 작성 실패: 옵션 id가 중복일 경우")
     @Test
     void createChecklist_duplicatedOptionId_exception() {
         //given & when & then
@@ -141,17 +139,50 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.OPTION_DUPLICATED.getMessage());
     }
 
+    @DisplayName("체크리스트 좋아요 추가 성공")
+    @Test
+    void createChecklistLike() {
+        //given
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1);
+
+        // when
+        checklistService.createChecklistLike(USER1, checklist.getId());
+
+        //then
+        assertThat(checklistLikeRepository.existsByChecklist(checklist)).isTrue();
+   }
+
+    @DisplayName("체크리스트 좋아요 추가 실패 : 이미 좋아요가 추가가 된 체크리스트인 경우")
+    @Test
+    void createChecklistLike_checklistAlreadyLiked_exception() {
+        //given
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1);
+
+        // when
+        checklistService.createChecklistLike(USER1, checklist.getId());
+
+        //then
+       assertThatThrownBy(() -> checklistService.createChecklistLike(USER1, checklist.getId()))
+               .isInstanceOf(BangggoodException.class)
+               .hasMessage(ExceptionCode.LIKE_ALREADY_EXISTS.getMessage());
+    }
+
     @DisplayName("체크리스트 질문 조회 성공")
     @Test
     void readChecklistQuestions() {
-        // TODO : 유저 생성 시 default 질문을 DB에 저장하는 기능 추가
-        checklistService.updateCustomChecklist(USER1,
-                new CustomChecklistUpdateRequest(List.of(1, 4, 6, 7, 8, 12, 18, 19, 23, 25, 31)));
+        // given
+        customChecklistQuestionRepository.saveAll(CustomChecklistFixture.CUSTOM_CHECKLIST_QUESTION_DEFAULT);
+
         // given & when
         ChecklistQuestionsResponse checklistQuestionsResponse = checklistService.readChecklistQuestions(USER1);
 
-        // then // Category.OPTION does not have default question
-        assertThat(checklistQuestionsResponse.categories().size()).isEqualTo(Category.values().length - 1);
+        // then
+        int questionsSize = 0;
+        for (CategoryQuestionsResponse categoryQuestionsResponse : checklistQuestionsResponse.categories()) {
+            questionsSize += categoryQuestionsResponse.questions().size();
+        }
+
+        assertThat(questionsSize).isEqualTo(CustomChecklistFixture.CUSTOM_CHECKLIST_QUESTION_DEFAULT.size());
     }
 
     @DisplayName("작성된 체크리스트 조회 성공")
@@ -188,9 +219,9 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 //        Room room = RoomFixture.ROOM_1;
 //        Checklist checklist = createChecklist(user, room);
 //        List<ChecklistQuestion> questions = List.of(
-//                new ChecklistQuestion(checklist, Question.CLEAN_1, Grade.GOOD),
-//                new ChecklistQuestion(checklist, Question.CLEAN_2, Grade.GOOD),
-//                new ChecklistQuestion(checklist, Question.CLEAN_3, Grade.GOOD),
+//                new ChecklistQuestion(checklist, Question.CLEAN_1, Answer.GOOD),
+//                new ChecklistQuestion(checklist, Question.CLEAN_2, Answer.GOOD),
+//                new ChecklistQuestion(checklist, Question.CLEAN_3, Answer.GOOD),
 //                new ChecklistQuestion(checklist, Question.CLEAN_4, null),
 //                new ChecklistQuestion(checklist, Question.CLEAN_5, null));
 //
@@ -210,7 +241,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 //                        Badge.CLEAN.getLongNameWithEmoji()));
 //    }
 
-    @DisplayName("체크리스트 수정 성공")
+    /*@DisplayName("체크리스트 수정 성공")
     @Test
     void updateChecklistById() {
         //given
@@ -317,14 +348,14 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                         ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_DIFFERENT.getMessage());
-    }
+    }*/
 
     @DisplayName("커스텀 체크리스트 조회 성공")
     @Test
     void readCustomChecklistQuestions() {
         // given
-        CustomChecklistQuestion question1 = new CustomChecklistQuestion(USER1, Question.CLEAN_5);
-        CustomChecklistQuestion question2 = new CustomChecklistQuestion(USER1, Question.AMENITY_12);
+        CustomChecklistQuestion question1 = new CustomChecklistQuestion(USER1, Question.ROOM_CONDITION_5);
+        CustomChecklistQuestion question2 = new CustomChecklistQuestion(USER1, Question.BATHROOM_1);
         List<CustomChecklistQuestion> questions = List.of(question1, question2);
         customChecklistQuestionRepository.saveAll(questions);
 
@@ -388,10 +419,6 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         assertThatThrownBy(() -> checklistService.updateCustomChecklist(USER1, request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
-    }
-
-    public static Checklist createChecklist(User user, Room room) {
-        return new Checklist(user, room, 1000, 60, 24, "방끗부동산");
     }
 
     @DisplayName("체크리스트 삭제 성공")

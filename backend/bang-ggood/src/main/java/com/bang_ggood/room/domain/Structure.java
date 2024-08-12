@@ -10,7 +10,8 @@ public enum Structure {
     DIVIDED_ONE_ROOM("분리형 원룸"),
     TWO_ROOM("투룸"),
     THREE_ROOM_OR_MORE("쓰리룸 이상"),
-    DUPLEX("복층");
+    DUPLEX("복층"),
+    NONE(null);
 
     private final String name;
 
@@ -19,8 +20,11 @@ public enum Structure {
     }
 
     public static Structure from(String name) {
+        if (name == null) {
+            return NONE;
+        }
         return Arrays.stream(Structure.values())
-                .filter(value -> value.name.equals(name))
+                .filter(value -> value.name != null && value.name.equals(name))
                 .findFirst()
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.STRUCTURE_INVALID));
     }

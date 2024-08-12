@@ -9,7 +9,8 @@ import jakarta.validation.constraints.NotBlank;
 public record RoomRequest(@NotBlank(message = "방 이름이 존재하지 않습니다.") String roomName,
                           Integer deposit, Integer rent, Integer contractTerm, String address,
                           String station, Integer walkingTime, String realEstate,
-                          String type, String structure, Integer size, Integer floor, String floorLevel) {
+                          String type, String structure, Double size, Integer floor, String floorLevel,
+                          Integer occupancyMonth, String occupancyPeriod, String memo, String summary) {
 
     public Room toRoomEntity() {
         return new Room(roomName, station, walkingTime, address,

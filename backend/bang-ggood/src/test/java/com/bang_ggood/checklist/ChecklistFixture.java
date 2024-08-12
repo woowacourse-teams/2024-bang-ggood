@@ -1,9 +1,11 @@
 package com.bang_ggood.checklist;
 
+import com.bang_ggood.checklist.domain.Answer;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistLike;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
-import com.bang_ggood.checklist.domain.Grade;
+import com.bang_ggood.checklist.domain.OccupancyMonth;
+import com.bang_ggood.checklist.domain.OccupancyPeriod;
 import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.QuestionRequest;
@@ -14,15 +16,17 @@ import java.util.List;
 public class ChecklistFixture {
 
     public static final Checklist CHECKLIST1 = new Checklist(
-            UserFixture.USER1,
             RoomFixture.ROOM_1,
-            1000, 50, 12, "방끗공인중개사"
+            UserFixture.USER1,
+            1000, 50, 12, "방끗공인중개사", "메모", "한줄평",
+            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY
     );
 
     public static final Checklist CHECKLIST2 = new Checklist(
-            UserFixture.USER1,
             RoomFixture.ROOM_2,
-            1000, 50, 12, "방끗공인중개사"
+            UserFixture.USER1,
+            1000, 50, 12, "방끗공인중개사", "메모", "한줄평",
+            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY
     );
 
     public static final Checklist CHECKLIST1_WITH_USER1_ID = new Checklist(
@@ -162,11 +166,11 @@ public class ChecklistFixture {
 
 
     public static final ChecklistQuestion CHECKLIST_QUESTION_1 = new ChecklistQuestion(
-            CHECKLIST1, Question.fromId(1), Grade.BAD
+            CHECKLIST1, Question.fromId(1), Answer.BAD
     );
 
     public static final ChecklistQuestion CHECKLIST_QUESTION_2 = new ChecklistQuestion(
-            CHECKLIST1, Question.fromId(2), Grade.BAD
+            CHECKLIST1, Question.fromId(2), Answer.BAD
     );
 
     public static final ChecklistLike CHECKLIST_LIKE_1 = new ChecklistLike(CHECKLIST1);

@@ -3,15 +3,14 @@ package com.bang_ggood.checklist.service;
 import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.category.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.category.dto.response.SelectedCategoryQuestionsResponse;
+import com.bang_ggood.checklist.domain.Answer;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistLike;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.CustomChecklistQuestion;
-import com.bang_ggood.checklist.domain.Grade;
 import com.bang_ggood.checklist.domain.Option;
 import com.bang_ggood.checklist.domain.Question;
-import com.bang_ggood.checklist.dto.request.ChecklistInfo;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.request.QuestionRequest;
@@ -74,9 +73,7 @@ public class ChecklistService {
     public long createChecklist(User user, ChecklistRequest checklistRequest) {
         Room room = roomRepository.save(checklistRequest.toRoomEntity());
 
-        ChecklistInfo checklistInfo = checklistRequest.toChecklistInfo();
-        Checklist checklist = new Checklist(user, room, checklistInfo.deposit(), checklistInfo.rent(),
-                checklistInfo.contractTerm(), checklistInfo.realEstate());
+        Checklist checklist = checklistRequest.toChecklistEntity(room, user);
         checklistRepository.save(checklist);
 
         createChecklistOptions(checklistRequest, checklist);
@@ -121,9 +118,35 @@ public class ChecklistService {
                 .map(question -> new ChecklistQuestion(
                         checklist,
                         Question.fromId(question.questionId()),
-                        Grade.from(question.grade())))
+                        Answer.from(question.answer())))
                 .collect(Collectors.toList());
         checklistQuestionRepository.saveAll(checklistQuestions);
+    }
+
+    @Transactional
+    public void createChecklistLike(User user, long id) {
+        Checklist checklist = checklistRepository.getById(id);
+
+        validateChecklistLike(user, checklist);
+
+        checklistLikeRepository.save(new ChecklistLike(checklist));
+    }
+
+    private void validateChecklistLike(User user, Checklist checklist) {
+        validateChecklistOwnership(user, checklist);
+        validateChecklistAlreadyLiked(checklist);
+    }
+
+    private void validateChecklistOwnership(User user, Checklist checklist) {
+        if (!checklist.isOwnedBy(user)) {
+            throw new BangggoodException(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER);
+        }
+    }
+
+    private void validateChecklistAlreadyLiked(Checklist checklist) {
+        if (checklistLikeRepository.existsByChecklist(checklist)) {
+            throw new BangggoodException(ExceptionCode.LIKE_ALREADY_EXISTS);
+        }
     }
 
     @Transactional
@@ -134,6 +157,7 @@ public class ChecklistService {
                 .map(CustomChecklistQuestion::getQuestion)
                 .collect(Collectors.groupingBy(Question::getCategory));
 
+        // TODO entrySet 문제 해결
         List<CategoryQuestionsResponse> categoryQuestionsResponses = categoryQuestions.entrySet().stream()
                 .map(categoryQuestionEntry -> CategoryQuestionsResponse.of(
                         categoryQuestionEntry.getKey(),
@@ -168,20 +192,24 @@ public class ChecklistService {
     }
 
     @Transactional
-    public CategoryCustomChecklistQuestionsResponse readAllCustomChecklistQuestions(User user) { // TODO custom-checklist 도메인 분리 및 리팩토링
+    public CategoryCustomChecklistQuestionsResponse readAllCustomChecklistQuestions(
+            User user) { // TODO custom-checklist 도메인 분리 및 리팩토링
         List<CustomChecklistQuestion> customChecklistQuestions = customChecklistQuestionRepository.findAllByUser(user);
-        List<CategoryCustomChecklistQuestionResponse> allCategoryCustomChecklistQuestions = getAllCategoryCustomChecklistQuestions(customChecklistQuestions);
+        List<CategoryCustomChecklistQuestionResponse> allCategoryCustomChecklistQuestions = getAllCategoryCustomChecklistQuestions(
+                customChecklistQuestions);
 
         return new CategoryCustomChecklistQuestionsResponse(allCategoryCustomChecklistQuestions);
     }
 
-    private List<CategoryCustomChecklistQuestionResponse> getAllCategoryCustomChecklistQuestions(List<CustomChecklistQuestion> customChecklistQuestions) {
+    private List<CategoryCustomChecklistQuestionResponse> getAllCategoryCustomChecklistQuestions(
+            List<CustomChecklistQuestion> customChecklistQuestions) {
         List<CategoryCustomChecklistQuestionResponse> response = new ArrayList<>();
 
         for (Category category : Category.values()) {
             List<Question> categoryQuestions = Question.findQuestionsByCategory(category);
             List<CustomChecklistQuestionResponse> questions = categoryQuestions.stream()
-                    .map(question -> CustomChecklistQuestionResponse.of(question, question.isSelected(customChecklistQuestions)))
+                    .map(question -> CustomChecklistQuestionResponse.of(question,
+                            question.isSelected(customChecklistQuestions)))
                     .toList();
             response.add(new CategoryCustomChecklistQuestionResponse(category.getId(), category.getName(), questions));
         }
@@ -249,9 +277,7 @@ public class ChecklistService {
         Room room = checklist.getRoom();
         room.change(checklistRequest.toRoomEntity());
 
-        ChecklistInfo checklistInfo = checklistRequest.toChecklistInfo();
-        Checklist updateChecklist = new Checklist(user, room, checklistInfo.deposit(), checklistInfo.rent(),
-                checklistInfo.contractTerm(), checklistInfo.realEstate());
+        Checklist updateChecklist = checklistRequest.toChecklistEntity(room, user);
         checklist.change(updateChecklist);
 
         updateChecklistOptions(checklistRequest, checklist);
@@ -269,19 +295,19 @@ public class ChecklistService {
     }
 
     private void updateChecklistQuestions(ChecklistRequest checklistRequest, Checklist checklist) {
-        validateQuestion(checklistRequest.questions());
+        /*validateQuestion(checklistRequest.questions());
 
         List<ChecklistQuestion> questions = checklist.getQuestions();
         List<ChecklistQuestion> updateQuestions = checklistRequest.questions().stream()
                 .map(question -> new ChecklistQuestion(
                         checklist,
                         Question.fromId(question.questionId()),
-                        Grade.from(question.grade())))
+                        Answer.from(question.grade())))
                 .toList();
 
         validateSameQuestions(questions, updateQuestions);
         IntStream.range(0, questions.size())
-                .forEach(i -> questions.get(i).change(updateQuestions.get(i)));
+                .forEach(i -> questions.get(i).change(updateQuestions.get(i)));*/
     }
 
     private void validateSameQuestions(List<ChecklistQuestion> questions, List<ChecklistQuestion> updateQuestions) {

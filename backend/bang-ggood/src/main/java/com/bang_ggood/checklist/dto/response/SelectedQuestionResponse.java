@@ -9,7 +9,7 @@ public record SelectedQuestionResponse(Integer questionId, String title, String 
                 checklistQuestion.getQuestion().getId(),
                 checklistQuestion.getQuestion().getTitle(),
                 checklistQuestion.getQuestion().getSubtitle(),
-                checklistQuestion.getGrade().name()
+                checklistQuestion.getAnswer().name()
         );
     }
 }

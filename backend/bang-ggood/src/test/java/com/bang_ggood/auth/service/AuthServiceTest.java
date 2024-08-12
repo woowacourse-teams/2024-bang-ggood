@@ -19,16 +19,13 @@ import static org.mockito.ArgumentMatchers.any;
 @ExtendWith(MockitoExtension.class)
 class AuthServiceTest extends IntegrationTestSupport {
 
+    private static final OauthLoginRequest oauthLoginRequest = new OauthLoginRequest("testCode");
     @MockBean
     private OauthClient oauthClient;
-
     @Autowired
     private AuthService authService;
-
     @Autowired
     private UserRepository userRepository;
-
-    private static final OauthLoginRequest oauthLoginRequest = new OauthLoginRequest("testCode");
 
     @DisplayName("로그인 성공 : 존재하지 않는 회원이면 데이터베이스에 새로운 유저를 추가하고 토큰을 반환한다.")
     @Test

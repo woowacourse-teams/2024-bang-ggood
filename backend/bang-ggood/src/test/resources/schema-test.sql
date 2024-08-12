@@ -18,7 +18,7 @@ CREATE TABLE room
     walking_time INTEGER,
     address      VARCHAR(255),
     type         VARCHAR(255),
-    size DOUBLE,
+    size         DOUBLE,
     floor        INTEGER,
     floor_level  VARCHAR(255),
     structure    VARCHAR(255),
@@ -93,7 +93,7 @@ CREATE TABLE custom_checklist_question
 
 CREATE TABLE test_entity
 (
-    id          bigint id           BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     name        varchar(255) not null,
     created_at  TIMESTAMP    not null,
     modified_at TIMESTAMP    not null,
@@ -101,20 +101,9 @@ CREATE TABLE test_entity
     primary key (id)
 );
 
-CREATE TABLE custom_checklist_question
-(
-    id          id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id     BIGINT,
-    question    VARCHAR(255),
-    created_at  TIMESTAMP(6),
-    modified_at TIMESTAMP(6),
-    deleted     BOOLEAN,
-    FOREIGN KEY (user_id) references users
-);
-
 CREATE TABLE checklist_like
 (
-    id           id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id           BIGINT AUTO_INCREMENT PRIMARY KEY,
     checklist_id BIGINT,
     created_at   TIMESTAMP(6),
     modified_at  TIMESTAMP(6),

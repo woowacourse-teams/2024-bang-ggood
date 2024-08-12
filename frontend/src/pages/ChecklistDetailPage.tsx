@@ -9,6 +9,7 @@ import ChecklistAnswerSection from '@/components/ChecklistDetail/ChecklistAnswer
 import RoomInfoSection from '@/components/ChecklistDetail/RoomInfoSection';
 import DeleteModal from '@/components/DeleteModal';
 import { ROUTE_PATH } from '@/constants/routePath';
+import useDeleteChecklistQuery from '@/hooks/query/useDeleteChecklistQuery';
 import useModalOpen from '@/hooks/useModalOpen';
 import theme from '@/styles/theme';
 import { ChecklistInfo } from '@/types/checklist';
@@ -19,8 +20,11 @@ type RouteParams = {
 
 const ChecklistDetailPage = () => {
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
+
   const { checklistId } = useParams() as RouteParams;
   const [checklist, setChecklist] = useState<ChecklistInfo>();
+
+  const { mutate: deleteChecklist } = useDeleteChecklistQuery();
 
   const navigate = useNavigate();
 
@@ -38,13 +42,15 @@ const ChecklistDetailPage = () => {
   }
 
   const handleDelete = async () => {
-    // await deleteChecklist(Number(checklistId));
-    modalClose();
-    navigate(ROUTE_PATH.checklistList);
+    deleteChecklist(Number(checklistId), {
+      onSuccess: () => {
+        modalClose();
+        navigate(ROUTE_PATH.checklistList);
+      },
+    });
   };
 
   return (
-    // TODO: 아코디언 색상 없애기, 아이콘 삭제
     <>
       <Header
         left={<Header.Backward />}

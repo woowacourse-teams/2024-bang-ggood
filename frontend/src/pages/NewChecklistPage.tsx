@@ -1,5 +1,6 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useStore } from 'zustand';
 
 import { getChecklistQuestions } from '@/apis/checklist';
 import Button from '@/components/_common/Button/Button';
@@ -10,41 +11,21 @@ import NewChecklistTab from '@/components/NewChecklist/NewChecklistTab';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_TOAST_DURATION } from '@/constants/system';
 import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
-import useInputs from '@/hooks/useInputs';
 import useToast from '@/hooks/useToast';
+import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useOptionStore from '@/store/useOptionStore';
 import { ChecklistCategoryQnA } from '@/types/checklist';
-import { RoomInfo } from '@/types/room';
-
-// TODO: 더미 데이터 삭제하기
-const DefaultRoomInfo: RoomInfo = {
-  roomName: '살기 좋은 방',
-  address: '인천광역시 부평구',
-  deposit: 2000,
-  rent: 50,
-  contractTerm: 12,
-  floor: 3,
-  station: '잠실',
-  walkingTime: 10,
-  realEstate: '방끗공인중개사',
-  type: undefined,
-  size: undefined,
-  floorLevel: undefined,
-  structure: undefined,
-};
 
 const NewChecklistPage = () => {
   const { showToast } = useToast(DEFAULT_TOAST_DURATION);
 
   const { mutate: addChecklist } = useAddChecklistQuery();
 
-  //TODO:  방 기본 정보도 전역 상태로 관리 필요
+  /*방 기본 정보 */
+  const { roomInfo, actions } = useStore(checklistRoomInfoStore);
 
   const navigate = useNavigate();
-
-  /* TODO: 더미 방 기본 정보 -> 이후 삭제 필요 */
-  const { values: roomInfo, onChange: onChangeRoomInfo, setValues: setRoomInfo } = useInputs(DefaultRoomInfo);
 
   /* 선택된 옵션 */
   const { selectedOptions, resetToDefaultOptions } = useOptionStore();
@@ -93,6 +74,7 @@ const NewChecklistPage = () => {
         {
           onSuccess: () => {
             showToast('체크리스트가 저장되었습니다.');
+            actions.reset();
             navigate(ROUTE_PATH.checklistList);
           },
         },
@@ -101,13 +83,6 @@ const NewChecklistPage = () => {
 
     fetchNewChecklist();
   };
-
-  const handleClickTagButton = useCallback(
-    (name: string, value: string) => {
-      setRoomInfo({ ...roomInfo, [name]: value });
-    },
-    [roomInfo, setRoomInfo],
-  );
 
   return (
     <>
@@ -119,14 +94,8 @@ const NewChecklistPage = () => {
       <TabProvider defaultTab={0}>
         {/* 체크리스트 작성의 탭 */}
         <NewChecklistTab />
-
-        {/* 체크리스트 콘텐츠 섹션 */}
-        <NewChecklistContent
-          roomInfo={roomInfo}
-          onChangeRoomInfo={onChangeRoomInfo}
-          onClickTagButton={handleClickTagButton}
-          setRoomInfo={setRoomInfo}
-        />
+        {/*체크리스트 콘텐츠 섹션*/}
+        <NewChecklistContent />
       </TabProvider>
     </>
   );

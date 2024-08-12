@@ -13,24 +13,6 @@ const FormFieldWrapper = styled.div<{ rowGap?: string }>`
   row-gap: ${({ rowGap }) => (rowGap ? rowGap : '10px')};
 `;
 
-const S = {
-  MovedRequiredDot: styled(InputRequiredDot)`
-    position: absolute;
-    top: -5px;
-    left: 50px;
-  `,
-  P: styled.p`
-    height: 10px;
-
-    color: black;
-    font-size: ${({ theme }) => theme.text.size.small};
-  `,
-  LabelContainer: styled.label`
-    position: relative;
-    z-index: 0;
-  `,
-};
-
 type GetProps<T> = T extends React.FC<infer P> ? P : never;
 
 interface LabelProps extends HTMLAttributes<HTMLLabelElement> {
@@ -46,7 +28,26 @@ const FormField = Object.assign(FormFieldWrapper, {
     </S.LabelContainer>
   ),
   Input: ({ ...rest }: GetProps<typeof Input>) => <Input {...rest} />,
-  P: ({ value, ...rest }: { value: string } & HTMLAttributes<HTMLParagraphElement>) => <S.P {...rest}>{value}</S.P>,
+  ErrorMessage: ({ value, ...rest }: { value: string } & HTMLAttributes<HTMLParagraphElement>) => (
+    <S.P {...rest}>{value}</S.P>
+  ),
 });
 
+const S = {
+  MovedRequiredDot: styled(InputRequiredDot)`
+    position: relative;
+    top: -15px;
+    left: 5px;
+  `,
+  P: styled.p`
+    height: 10px;
+
+    color: black;
+    font-size: ${({ theme }) => theme.text.size.small};
+  `,
+  LabelContainer: styled.label`
+    position: relative;
+    z-index: 0;
+  `,
+};
 export default FormField;

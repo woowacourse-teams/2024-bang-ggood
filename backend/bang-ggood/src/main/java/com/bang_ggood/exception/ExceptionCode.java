@@ -46,7 +46,7 @@ public enum ExceptionCode {
     SCORE_NOT_DESCENDING_SORTED(HttpStatus.BAD_REQUEST, "정렬되지 않은 점수입니다."),
 
     //like
-    LIKE_NOT_EXISTS(HttpStatus.BAD_REQUEST, "체크리스트 좋아요가 없습니다."),
+    LIKE_NOT_EXISTS(HttpStatus.BAD_REQUEST, "체크리스트 좋아요가 존재하지 않아 삭제할 수 없습니다."),
 
     // Auth
     AUTHENTICATION_COOKIE_EMPTY(HttpStatus.UNAUTHORIZED, "인증 정보가 존재하지 않습니다."),

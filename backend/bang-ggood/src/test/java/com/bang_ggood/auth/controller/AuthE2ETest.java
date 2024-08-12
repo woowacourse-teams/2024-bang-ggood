@@ -31,7 +31,7 @@ class AuthE2ETest extends AcceptanceTest {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, null))
-                .when().post("/categories/priority")
+                .when().post("/checklists")
                 .then().log().all()
                 .statusCode(401)
                 .body("message", containsString(ExceptionCode.AUTHENTICATION_COOKIE_EMPTY.getMessage()));
@@ -46,7 +46,7 @@ class AuthE2ETest extends AcceptanceTest {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, expectedCookie))
-                .when().post("/categories/priority")
+                .when().post("/checklists")
                 .then().log().all()
                 .statusCode(401)
                 .body("message", containsString(ExceptionCode.AUTHENTICATION_COOKIE_INVALID.getMessage()));

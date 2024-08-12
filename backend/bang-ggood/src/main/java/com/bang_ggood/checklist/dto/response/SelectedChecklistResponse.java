@@ -5,7 +5,7 @@ import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record SelectedChecklistResponse(Integer score, LocalDateTime createdAt, SelectedRoomResponse room,
+public record SelectedChecklistResponse(LocalDateTime createdAt, SelectedRoomResponse room,
                                         List<SelectedOptionResponse> options,
                                         List<SelectedCategoryQuestionsResponse> categories) {
 }

@@ -1,13 +1,18 @@
 import { createStore } from 'zustand';
 
 import { RoomInfo } from '@/types/room';
+import { isNumericValidator, lengthValidator, Validator } from '@/utils/validators';
 
 interface RoomInfoAction {
-  update: (field: keyof RoomInfo | keyof PrefixWithE<RoomInfo>, value: string | number) => void;
-  updateErrorMsg: (field: keyof RoomInfo, value: string) => void;
   reset: () => void;
-  validation: <T extends number | string>(field: keyof RoomInfo, value: T, validators: Validator<T>[]) => void;
   set: (name: keyof typeof validatorSet, value: string | number) => void;
+  _update: (field: keyof RoomInfo | keyof PrefixWithE<RoomInfo>, value: string | number) => void;
+  _updateErrorMsg: (field: keyof RoomInfo, value: string) => void;
+  _updateAfterValidation: <T extends number | string>(
+    field: keyof RoomInfo,
+    value: T,
+    validators: Validator<T>[],
+  ) => void;
 }
 
 export const initialRoomInfo: RoomInfo = {
@@ -26,28 +31,6 @@ export const initialRoomInfo: RoomInfo = {
   structure: undefined,
 } as const;
 
-const initialErrorMessages = Object.fromEntries(Object.entries(initialRoomInfo).map(([key]) => ['E_' + key, '']));
-
-interface Validator<T> {
-  validate: (value: T) => boolean;
-  errorMessage: string;
-}
-
-const lengthValidator = (length: number): Validator<string> => ({
-  validate: value => value.length <= length,
-  errorMessage: `${length}자 이하로 입력해주세요.`,
-});
-const inRangeValidator = (from: number, to: number): Validator<number> => ({
-  validate: value => from <= value && value <= to,
-  errorMessage: `${from}이상 ${to}이하의 숫자만 입력해주세요.`,
-});
-
-const positiveValidator: Validator<number> = { validate: value => value > 0, errorMessage: '양수만 입력해주세요.' };
-const isNumericValidator: Validator<number> = {
-  validate: value => !isNaN(value),
-  errorMessage: '숫자만 입력해주세요.',
-};
-
 const validatorSet = {
   roomName: [lengthValidator(20)],
   address: [],
@@ -63,6 +46,7 @@ const validatorSet = {
   floorLevel: [],
   structure: [],
 } satisfies Record<string, Validator<string>[] | Validator<number>[]>;
+const initialErrorMessages = Object.fromEntries(Object.entries(initialRoomInfo).map(([key]) => ['E_' + key, '']));
 
 type PrefixWithE<T> = {
   [K in keyof T as `E_${string & K}`]: T[K];
@@ -73,27 +57,27 @@ const checklistRoomInfoStore = createStore<RoomInfo & PrefixWithE<RoomInfo> & { 
     ...initialRoomInfo,
     ...initialErrorMessages,
     actions: {
-      update: (field, value) => set({ [field]: value }),
-      updateErrorMsg: (field, value) => set({ [`E_${field}`]: value }),
+      set: (name: keyof typeof validatorSet, value: string | number) => {
+        if (typeof value === 'string') {
+          get().actions._updateAfterValidation(name, value, validatorSet[name] as Validator<string>[]);
+        } else if (typeof value === 'number') {
+          get().actions._updateAfterValidation(name, value, validatorSet[name] as Validator<number>[]);
+        }
+      },
       reset: () => set({ ...initialRoomInfo, ...initialErrorMessages }),
-      validation: (field, value, validators) => {
+      _update: (name, value) => set({ [name]: value }),
+      _updateErrorMsg: (name, value) => set({ [`E_${name}`]: value }),
+      _updateAfterValidation: (name, value, validators) => {
         const newErrorMessage = validators.reduce(
           (acc, { validate, errorMessage }) => (acc.length === 0 && !validate(value) ? errorMessage : acc),
           '',
         );
 
         if (newErrorMessage.length > 0) {
-          get().actions.updateErrorMsg(field, newErrorMessage);
+          get().actions._updateErrorMsg(name, newErrorMessage);
           return;
         }
-        get().actions.update(field, value);
-      },
-      set: (name: keyof typeof validatorSet, value: string | number) => {
-        if (typeof value === 'string') {
-          get().actions.validation(name, value, validatorSet[name] as Validator<string>[]);
-        } else if (typeof value === 'number') {
-          get().actions.validation(name, value, validatorSet[name] as Validator<number>[]);
-        }
+        get().actions._update(name, value);
       },
     },
   }),

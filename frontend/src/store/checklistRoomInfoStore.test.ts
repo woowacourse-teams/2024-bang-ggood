@@ -12,7 +12,7 @@ describe('useChecklistBasicInfoStore 테스트', () => {
 
   describe('roomName', () => {});
   it('', () => {
-    store.getState().actions.update('roomName', '3');
+    store.getState().actions.set('roomName', '3');
 
     expect(store.getState().roomName).toBe('3');
   });

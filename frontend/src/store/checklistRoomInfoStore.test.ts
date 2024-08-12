@@ -18,14 +18,14 @@ describe('useChecklistBasicInfoStore 테스트', () => {
   });
 
   it('20자 이하 입력 시 정상 입력된다.', () => {
-    store.getState().actions.setRoomName('3'.repeat(20));
+    store.getState().actions.set('roomName', '3'.repeat(20));
 
     expect(store.getState().roomName).toBe('3'.repeat(20));
     expect(store.getState().E_roomName).toBe('');
   });
 
   it('20자 초과 입력 시 오류메시지가 발생한다.', () => {
-    store.getState().actions.setRoomName('3'.repeat(25));
+    store.getState().actions.set('roomName', '3'.repeat(25));
 
     expect(store.getState().roomName).toBe(undefined);
     expect(store.getState().E_roomName).not.toBe('');

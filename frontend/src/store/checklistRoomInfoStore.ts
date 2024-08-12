@@ -4,22 +4,10 @@ import { RoomInfo } from '@/types/room';
 
 interface RoomInfoAction {
   update: (field: keyof RoomInfo | keyof PrefixWithE<RoomInfo>, value: string | number) => void;
-  updateErrMsg: (field: keyof RoomInfo, value: string) => void;
+  updateErrorMsg: (field: keyof RoomInfo, value: string) => void;
   reset: () => void;
   validation: <T extends number | string>(field: keyof RoomInfo, value: T, validators: Validator<T>[]) => void;
-  setRoomName: (newName: string) => void;
-  setAddress: (address: string) => void;
-  setDeposit: (deposit: number) => void;
-  setRent: (rent: number) => void;
-  setContractTerm: (term: number) => void;
-  setFloor: (floor: number) => void;
-  setStation: (station: string) => void;
-  setWalkingTime: (time: number) => void;
-  setRealEstate: (realEstate: string) => void;
-  setType: (type: string) => void;
-  setSize: (size: number) => void;
-  setFloorLevel: (floorLevel: string) => void;
-  setStructure: (structure: string) => void;
+  set: (name: keyof typeof validatorSet, value: string | number) => void;
 }
 
 export const initialRoomInfo: RoomInfo = {
@@ -46,26 +34,35 @@ interface Validator<T> {
 }
 
 const lengthValidator = (length: number): Validator<string> => ({
-  validate: (value: string) => value.length <= length,
-  errorMessage: `길이는 ${length}자를 초과할 수 없습니다.`,
+  validate: value => value.length <= length,
+  errorMessage: `${length}자 이하로 입력해주세요.`,
 });
-const positiveValidator = { validate: (value: number) => value > 0, errorMessage: '양수여야 합니다.' };
+const inRangeValidator = (from: number, to: number): Validator<number> => ({
+  validate: value => from <= value && value <= to,
+  errorMessage: `${from}이상 ${to}이하의 숫자만 입력해주세요.`,
+});
 
-const validatorSet: Record<string, Validator<string>[]> = {
+const positiveValidator: Validator<number> = { validate: value => value > 0, errorMessage: '양수만 입력해주세요.' };
+const isNumericValidator: Validator<number> = {
+  validate: value => !isNaN(value),
+  errorMessage: '숫자만 입력해주세요.',
+};
+
+const validatorSet = {
   roomName: [lengthValidator(20)],
   address: [],
-  deposit: [],
-  rent: [],
-  contractTerm: [],
+  deposit: [isNumericValidator],
+  rent: [isNumericValidator],
+  contractTerm: [isNumericValidator],
   station: [],
-  walkingTime: [],
+  walkingTime: [isNumericValidator],
   realEstate: [],
   type: [],
-  size: [],
-  floor: [],
+  size: [isNumericValidator],
+  floor: [isNumericValidator],
   floorLevel: [],
   structure: [],
-};
+} satisfies Record<string, Validator<string>[] | Validator<number>[]>;
 
 type PrefixWithE<T> = {
   [K in keyof T as `E_${string & K}`]: T[K];
@@ -77,7 +74,7 @@ const checklistRoomInfoStore = createStore<RoomInfo & PrefixWithE<RoomInfo> & { 
     ...initialErrorMessages,
     actions: {
       update: (field, value) => set({ [field]: value }),
-      updateErrMsg: (field, value) => set({ [`E_${field}`]: value }),
+      updateErrorMsg: (field, value) => set({ [`E_${field}`]: value }),
       reset: () => set({ ...initialRoomInfo, ...initialErrorMessages }),
       validation: (field, value, validators) => {
         const newErrorMessage = validators.reduce(
@@ -86,25 +83,18 @@ const checklistRoomInfoStore = createStore<RoomInfo & PrefixWithE<RoomInfo> & { 
         );
 
         if (newErrorMessage.length > 0) {
-          get().actions.updateErrMsg(field, newErrorMessage);
+          get().actions.updateErrorMsg(field, newErrorMessage);
           return;
         }
         get().actions.update(field, value);
       },
-
-      setRoomName: newName => get().actions.validation('roomName', newName, validatorSet.roomName),
-      setAddress: address => {},
-      setDeposit: deposit => {},
-      setRent: rent => {},
-      setContractTerm: term => {},
-      setFloor: floor => {},
-      setStation: station => {},
-      setWalkingTime: time => {},
-      setRealEstate: realEstate => {},
-      setType: type => {},
-      setSize: size => {},
-      setFloorLevel: floorLevel => {},
-      setStructure: structure => {},
+      set: (name: keyof typeof validatorSet, value: string | number) => {
+        if (typeof value === 'string') {
+          get().actions.validation(name, value, validatorSet[name] as Validator<string>[]);
+        } else if (typeof value === 'number') {
+          get().actions.validation(name, value, validatorSet[name] as Validator<number>[]);
+        }
+      },
     },
   }),
 );

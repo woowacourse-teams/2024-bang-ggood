@@ -20,6 +20,7 @@ import com.bang_ggood.checklist.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.RoomFixture;
+import com.bang_ggood.room.domain.Structure;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.repository.UserRepository;
@@ -233,7 +234,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 //                        Badge.CLEAN.getLongNameWithEmoji()));
 //    }
 
-    /*@DisplayName("체크리스트 수정 성공")
+    @DisplayName("체크리스트 수정 성공")
     @Test
     void updateChecklistById() {
         //given
@@ -340,7 +341,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                         ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_DIFFERENT.getMessage());
-    }*/
+    }
 
     @DisplayName("커스텀 체크리스트 조회 성공")
     @Test

@@ -58,11 +58,11 @@ const Icon = styled.svg`
   }
 
   @media (width <= 435px) {
-    width: 90px;
-    height: 90px;
+    width: 95px;
+    height: 95px;
   }
 
-  @media (width <= 397px) {
+  @media (width <= 406px) {
     width: 85px;
     height: 85px;
   }
@@ -85,6 +85,11 @@ const Icon = styled.svg`
   @media (width <= 332px) {
     width: 60px;
     height: 60px;
+  }
+
+  @media (width <= 298px) {
+    width: 50px;
+    height: 50px;
   }
 `;
 

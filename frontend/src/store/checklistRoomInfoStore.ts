@@ -68,6 +68,7 @@ const checklistRoomInfoStore = createStore<
         get().actions._updateAfterValidation(name, value, validatorSet[name] as Validator<number>[]);
       }
     },
+
     onChange: (event: InputChangeEvent) => {
       if (event.target.value === '') {
         get().actions._updateErrorMsg(event.target.name as keyof RoomInfo, '');
@@ -80,7 +81,9 @@ const checklistRoomInfoStore = createStore<
         event.target?.type === 'number' ? parseInt(event.target.value) : event.target.value,
       );
     },
+
     reset: () => set({ roomInfo: { ...initialRoomInfo }, errorMessage: { ...initialErrorMessages } }),
+
     _update: (name, value) => set({ roomInfo: { ...get().roomInfo, [name]: value } }),
     _updateErrorMsg: (name, value) => set({ errorMessage: { ...get().errorMessage, [name]: value } }),
     _updateAfterValidation: (name, value, validators) => {

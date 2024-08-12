@@ -72,6 +72,7 @@ public class Checklist extends BaseEntity {
         this.occupancyPeriod = occupancyPeriod;
         validateMemo();
     }
+
     public Checklist(Integer deposit, Integer rent, Integer contractTerm, String realEstate,
                      String memo, String summary, OccupancyMonth occupancyMonth, OccupancyPeriod occupancyPeriod) {
         this(null, null, deposit, rent, contractTerm, realEstate, memo, summary, occupancyMonth, occupancyPeriod);

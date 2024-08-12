@@ -2,7 +2,6 @@ package com.bang_ggood.checklist.domain;
 
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
-import com.bang_ggood.room.domain.Type;
 import java.util.Arrays;
 
 public enum OccupancyMonth {

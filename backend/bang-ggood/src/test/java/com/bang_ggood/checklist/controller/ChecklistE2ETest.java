@@ -76,7 +76,8 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 질문 조회 성공")
     @Test
     void readChecklistQuestions() {
-        checklistService.updateCustomChecklist(USER1, new CustomChecklistUpdateRequest(List.of(1, 4, 6, 7, 8, 12, 18, 19, 23, 25, 31)));
+        checklistService.updateCustomChecklist(USER1,
+                new CustomChecklistUpdateRequest(List.of(1, 4, 6, 7, 8, 12, 18, 19, 23, 25, 31)));
 
         ChecklistQuestionsResponse checklistQuestionsResponse = RestAssured.given().log().all()
                 .contentType(ContentType.JSON)

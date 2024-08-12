@@ -366,10 +366,4 @@ public class ChecklistService {
 
         checklistLikeRepository.deleteById(checklistLike.getId());
     }
-
-    private void validateChecklistOwnership(User user, Checklist checklist) {
-        if (!checklist.isOwnedBy(user)) {
-            throw new BangggoodException(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER);
-        }
-    }
 }

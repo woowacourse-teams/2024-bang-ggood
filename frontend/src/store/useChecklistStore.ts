@@ -9,7 +9,8 @@ interface ChecklistState {
   validCategory: Category[];
 
   isCategoryQuestionAllCompleted: (targetId: number) => boolean;
-  categoryQnA: (categoryId: number) => ChecklistCategoryQnA;
+  getCategoryQnA: (categoryId: number) => ChecklistCategoryQnA;
+
   setValidCategory: () => void;
   setAnswerInQuestion: (questions: ChecklistCategoryQuestions[]) => void;
   setAnswers: (answers: ChecklistCategoryQnA[]) => void;
@@ -26,10 +27,10 @@ const useChecklistStore = create<ChecklistState>((set, get) => ({
       categoryName: category.categoryName,
       questions: category.questions.map(question => ({
         ...question,
-        memo: null,
-        grade: 'NONE',
+        answer: 'NONE',
       })),
     }));
+
     set({ checklistCategoryQnA });
   },
 
@@ -39,10 +40,11 @@ const useChecklistStore = create<ChecklistState>((set, get) => ({
       categoryId: category.categoryId,
       categoryName: category.categoryName as CategoryName,
     }));
+
     set({ validCategory });
   },
 
-  categoryQnA: (categoryId: number) => {
+  getCategoryQnA: (categoryId: number) => {
     const { checklistCategoryQnA } = get();
     return checklistCategoryQnA.filter(category => category.categoryId === categoryId)[0];
   },
@@ -52,11 +54,13 @@ const useChecklistStore = create<ChecklistState>((set, get) => ({
   },
 
   isCategoryQuestionAllCompleted: (targetId: number) => {
-    const { categoryQnA } = get();
-    const targetCategory = categoryQnA(targetId);
+    const { getCategoryQnA } = get();
+    const targetCategory = getCategoryQnA(targetId);
+
     if (targetCategory) {
-      return targetCategory.questions.every(question => question.grade !== 'NONE');
+      return targetCategory.questions.every(question => question.answer !== 'NONE');
     }
+
     return false;
   },
 }));

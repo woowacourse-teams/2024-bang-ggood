@@ -10,11 +10,15 @@ const NewChecklistTab = () => {
     isCompleted: isCategoryQuestionAllCompleted(category.categoryId),
   }));
 
-  const tabsWithBasicInfo = [{ id: 0, name: '방 기본정보', isCompleted: false }, ...newChecklistTabsWithCompletion];
+  const tabsWithBasicInfoAndOptions = [
+    { id: -1, name: '기본정보', isCompleted: false },
+    { id: 0, name: '옵션', isCompleted: false },
+    ...newChecklistTabsWithCompletion,
+  ];
 
   return (
     <>
-      <Tabs tabList={tabsWithBasicInfo} />
+      <Tabs tabList={tabsWithBasicInfoAndOptions} />
     </>
   );
 };

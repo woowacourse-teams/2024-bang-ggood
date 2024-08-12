@@ -9,18 +9,16 @@ import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import { ChecklistCustomTabs } from '@/components/ChecklistCustom/CustomTabs';
 import QuestionListTemplate from '@/components/ChecklistCustom/QuestionListTemplate/QuestionListTemplate';
 import { ROUTE_PATH } from '@/constants/routePath';
+import { DEFAULT_TOAST_DURATION } from '@/constants/system';
 import useToast from '@/hooks/useToast';
 import useChecklistCustomStore from '@/store/useChecklistCustomStore';
 import { flexCenter, title2 } from '@/styles/common';
 
 const ChecklistCustomPage = () => {
-  const { showToast } = useToast(3);
+  const { showToast } = useToast(DEFAULT_TOAST_DURATION);
+  const navigate = useNavigate();
 
   const { setValidCategory, setChecklistAllQuestionList, selectedQuestions } = useChecklistCustomStore();
-
-  // const [selectedQuestions, setSelectedQuestions] = useState<number[]>([]);
-
-  const navigate = useNavigate();
 
   const handleSubmitChecklist = () => {
     const fetchNewChecklist = async () => {
@@ -28,9 +26,10 @@ const ChecklistCustomPage = () => {
     };
 
     try {
-      fetchNewChecklist();
-      showToast('체크리스트가 수정되었습니다.');
-      navigate(ROUTE_PATH.checklistList);
+      fetchNewChecklist().then(() => {
+        showToast('체크리스트가 수정되었습니다.');
+        navigate(ROUTE_PATH.checklistList);
+      });
     } catch (error) {
       console.error(error);
     }

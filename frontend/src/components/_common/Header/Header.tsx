@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { ArrowBack, BangGgoodTextIcon } from '@/assets/assets';
 import { linkDecorator } from '@/components/_common/Footer/Footer';
-import { flexCenter, title2 } from '@/styles/common';
+import { flexCenter, title3 } from '@/styles/common';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   left?: ReactNode;
@@ -66,11 +66,11 @@ const S = {
   `,
   TextButton: styled.button`
     color: ${({ theme }) => theme.palette.black};
-    ${title2}
+    ${title3}
   `,
   Text: styled.div`
     color: ${({ theme }) => theme.palette.black};
-    ${title2}
+    ${title3}
   `,
 };
 

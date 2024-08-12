@@ -8,6 +8,7 @@ import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
 import { InputChangeEvent } from '@/components/_common/Input/Input';
 import RadioGroup from '@/components/_common/RadioGroup/RadioGroup';
+<<<<<<< HEAD
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 import { RoomInfo, RoomInfoName } from '@/types/room';
@@ -18,6 +19,28 @@ const NewChecklistInfoTemplate = () => {
   const handleClickTagButton = useCallback(
     (name: keyof RoomInfo, value: string) => {
       actions.set(name, value);
+=======
+import { flexCenter, flexColumn, flexRow } from '@/styles/common';
+import { RoomInfo, RoomInfoName } from '@/types/room';
+
+interface Props {
+  roomInfo: RoomInfo;
+  onChange: (event: InputChangeEvent) => void;
+  onClickTagButton: (name: string, value: string) => void;
+  setRoomInfo: Dispatch<SetStateAction<RoomInfo>>;
+}
+const NewChecklistInfoTemplate = ({ roomInfo, setRoomInfo, onChange: onChangeForForm, onClickTagButton }: Props) => {
+  const [roomSizeUnit, setRoomSizeUnit] = useState('');
+
+  const handleClickRoomSizeUnit = useCallback(
+    (newRoomSizeUnit: string) => {
+      if (roomSizeUnit === newRoomSizeUnit) return;
+      setRoomInfo({
+        ...roomInfo,
+        size: roomSizeUnit === 'm2' ? (roomInfo.size ?? 0) / 3.3 : (roomInfo.size ?? 0) * 3.3,
+      });
+      setRoomSizeUnit(newRoomSizeUnit);
+>>>>>>> 76802faf0a753aabbb02f76acfaea0dd79cb5aec
     },
     [actions],
   );
@@ -34,7 +57,6 @@ const NewChecklistInfoTemplate = () => {
           <FormField.Input placeholder="" onChange={actions.onChange} name="roomName" value={roomInfo.roomName} />
           <FormField.P value={error.E_roomName ?? ''} />
         </FormField>
-
         {/* 주소 */}
         <FormField>
           <FormField.Label label="주소" />
@@ -44,13 +66,11 @@ const NewChecklistInfoTemplate = () => {
           </S.FlexHorizontal>
           <FormField.P value={error.E_address ?? ''} />
         </FormField>
-
         {/* 교통편 */}
         <S.FlexVertical gap="15px">
           <FormField.Label label="가까운 교통편" />
           <FormField.P value="주소를 추가하면 가까운 역을 찾아드려요!" />
         </S.FlexVertical>
-
         {/* 보증금 월세 */}
         <FormField>
           <FormField.Label label="보증금 / 월세 (만원)" />
@@ -61,7 +81,6 @@ const NewChecklistInfoTemplate = () => {
           </S.FlexHorizontal>
           <FormField.P value={error.E_deposit || error.E_rent || ''} />
         </FormField>
-
         {/* 방 종류 */}
         <S.FlexVertical>
           <FormField.Label label="방 종류" />
@@ -77,7 +96,6 @@ const NewChecklistInfoTemplate = () => {
             ))}
           </S.OptionButtonContainer>
         </S.FlexVertical>
-
         {/* 방 구조 */}
         <S.FlexVertical>
           <FormField.Label label="방 구조" />
@@ -94,7 +112,6 @@ const NewChecklistInfoTemplate = () => {
             ))}
           </S.OptionButtonContainer>
         </S.FlexVertical>
-
         {/* 방 크기 */}
         <FormField>
           <FormField.Label label="방 크기" />
@@ -103,7 +120,6 @@ const NewChecklistInfoTemplate = () => {
           </S.FlexHorizontal>
           <FormField.P value={error.E_size ?? ''} />
         </FormField>
-
         {/* 층수 */}
         <FormField>
           <FormField.Label label="층수" />
@@ -125,7 +141,6 @@ const NewChecklistInfoTemplate = () => {
           </S.FlexHorizontal>
           <FormField.P value={error.E_floor ?? ''} />
         </FormField>
-
         {/* 계약 기간 */}
         <S.FlexHorizontal>
           <CustomFormField
@@ -136,9 +151,12 @@ const NewChecklistInfoTemplate = () => {
             onChange={actions.onChange}
           />
         </S.FlexHorizontal>
-
         {/* 부동산 이름 */}
+<<<<<<< HEAD
         <CustomFormField label="부동산 이름" onChange={actions.onChange} values={roomInfo} name="realEstate" />
+=======
+        <CustomFormField label="부동산 이름" onChange={onChangeForForm} values={roomInfo} name="realEstate" />
+>>>>>>> 76802faf0a753aabbb02f76acfaea0dd79cb5aec
       </S.Container>
     </S.ContentWrapper>
   );
@@ -243,10 +261,6 @@ const S = {
     ${flexCenter}
     font-size: ${({ theme }) => theme.text.size.xSmall};
     column-gap: 7px;
-  `,
-  FurnitureOptionContent: styled(FormField.P)`
-    color: ${({ theme }) => theme.palette.grey500};
-    font-weight: ${({ theme }) => theme.text.weight.semiBold};
   `,
 };
 

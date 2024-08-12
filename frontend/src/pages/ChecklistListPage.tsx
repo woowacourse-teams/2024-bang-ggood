@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { getChecklists } from '@/apis/checklist';
 import { Plus } from '@/assets/assets';
 import FloatingButton from '@/components/_common/Button/FloatingButton';
 import Header from '@/components/_common/Header/Header';
@@ -13,21 +11,14 @@ import EditBanner from '@/components/ChecklistList/EditBanner';
 import NoChecklistTemplate from '@/components/ChecklistList/NoChecklistTemplate';
 import FooterDefault from '@/components/FooterDefault';
 import { ROUTE_PATH } from '@/constants/routePath';
+import useGetChecklistListQuery from '@/hooks/query/useGetChecklistListQuery';
 import { flexColumn } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
 
 const ChecklistListPage = () => {
   const navigate = useNavigate();
-  const [checklistList, setChecklistList] = useState<ChecklistPreview[]>([]);
 
-  useEffect(() => {
-    const fetchChecklist = async () => {
-      const checklistList = await getChecklists();
-      setChecklistList(checklistList);
-    };
-
-    fetchChecklist();
-  }, [navigate]);
+  const { data: checklistList, isLoading, error } = useGetChecklistListQuery();
 
   const handleClickMoveEditPage = () => {
     navigate(ROUTE_PATH.checklistCustom);
@@ -41,6 +32,14 @@ const ChecklistListPage = () => {
     navigate(ROUTE_PATH.checklistNew);
   };
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading checklists.</div>;
+  }
+
   return (
     <>
       <Header center={<Header.Text>체크리스트</Header.Text>} />
@@ -52,7 +51,7 @@ const ChecklistListPage = () => {
         <S.ListBox>
           {checklistList.length ? (
             <>
-              {checklistList?.map(checklist => (
+              {checklistList?.map((checklist: ChecklistPreview) => (
                 <Link to={ROUTE_PATH.checklistOne(checklist.checklistId)} key={checklist.checklistId}>
                   <ChecklistPreviewCard checklist={checklist} />
                 </Link>

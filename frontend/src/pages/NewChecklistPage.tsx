@@ -5,12 +5,14 @@ import { getChecklistQuestions } from '@/apis/checklist';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
+import Tabs from '@/components/_common/Tabs/Tabs';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
-import NewChecklistTab from '@/components/NewChecklist/NewChecklistTab';
+import { STORAGE_KEYS } from '@/constants/localStorage';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_TOAST_DURATION } from '@/constants/system';
 import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
 import useInputs from '@/hooks/useInputs';
+import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import useToast from '@/hooks/useToast';
 import useChecklistStore from '@/store/useChecklistStore';
 import useOptionStore from '@/store/useOptionStore';
@@ -36,7 +38,7 @@ const DefaultRoomInfo: RoomInfo = {
 
 const NewChecklistPage = () => {
   const { showToast } = useToast(DEFAULT_TOAST_DURATION);
-
+  const { tabs } = useNewChecklistTabs();
   const { mutate: addChecklist } = useAddChecklistQuery();
 
   //TODO:  방 기본 정보도 전역 상태로 관리 필요
@@ -64,6 +66,9 @@ const NewChecklistPage = () => {
 
       // 옵션 선택지 리셋
       resetToDefaultOptions();
+
+      //로컬 스토리지 팁 보이는 여부 리셋
+      localStorage.removeItem(STORAGE_KEYS.TIP);
     };
 
     fetchChecklist();
@@ -116,10 +121,9 @@ const NewChecklistPage = () => {
         center={<Header.Text>{'새 체크리스트'}</Header.Text>}
         right={<Button label={'저장'} size="small" color="dark" onClick={handleSubmitChecklist} />}
       />
-      <TabProvider defaultTab={0}>
+      <TabProvider defaultTab={-1}>
         {/* 체크리스트 작성의 탭 */}
-        <NewChecklistTab />
-
+        <Tabs tabList={tabs} />
         {/* 체크리스트 콘텐츠 섹션 */}
         <NewChecklistContent
           roomInfo={roomInfo}

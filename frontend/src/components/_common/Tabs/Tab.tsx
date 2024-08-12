@@ -7,14 +7,14 @@ interface TabProps {
   onMoveTab: (id: number) => void;
   name: string;
   active: boolean;
-  isCompleted: boolean | null;
+  hasIndicator: boolean | null;
 }
 
-const Tab = ({ id, onMoveTab, name, active, isCompleted }: TabProps) => {
+const Tab = ({ id, onMoveTab, name, active, hasIndicator }: TabProps) => {
   return (
     <S.Container key={id} onClick={() => onMoveTab(id)} active={active}>
       {name}
-      {!isCompleted && isCompleted !== null && <S.UncompletedIndicator />}
+      {hasIndicator && hasIndicator !== null && <S.UncompletedIndicator />}
     </S.Container>
   );
 };

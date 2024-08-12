@@ -7,10 +7,7 @@ interface ChecklistState {
   basicInfo: Record<string, unknown>;
   checklistCategoryQnA: ChecklistCategoryQnA[];
   validCategory: Category[];
-
-  isCategoryQuestionAllCompleted: (targetId: number) => boolean;
   getCategoryQnA: (categoryId: number) => ChecklistCategoryQnA;
-
   setValidCategory: () => void;
   setAnswerInQuestion: (questions: ChecklistCategoryQuestions[]) => void;
   setAnswers: (answers: ChecklistCategoryQnA[]) => void;
@@ -51,17 +48,6 @@ const useChecklistStore = create<ChecklistState>((set, get) => ({
 
   setAnswers: (answers: ChecklistCategoryQnA[]) => {
     set({ checklistCategoryQnA: answers });
-  },
-
-  isCategoryQuestionAllCompleted: (targetId: number) => {
-    const { getCategoryQnA } = get();
-    const targetCategory = getCategoryQnA(targetId);
-
-    if (targetCategory) {
-      return targetCategory.questions.every(question => question.answer !== 'NONE');
-    }
-
-    return false;
   },
 }));
 

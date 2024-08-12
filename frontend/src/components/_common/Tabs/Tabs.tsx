@@ -13,7 +13,7 @@ export interface Tab {
 }
 
 export interface TabWithCompletion extends Tab {
-  isCompleted: boolean;
+  hasIndicator: boolean;
 }
 
 const Tabs = ({ tabList }: Props) => {
@@ -29,7 +29,7 @@ const Tabs = ({ tabList }: Props) => {
         <FlexContainer>
           {tabList?.map(tab => {
             const { id, name } = tab;
-            const isCompleted = 'isCompleted' in tab ? tab.isCompleted : null;
+            const hasIndicator = 'hasIndicator' in tab ? tab.hasIndicator : null;
 
             return (
               <Tab
@@ -38,7 +38,7 @@ const Tabs = ({ tabList }: Props) => {
                 onMoveTab={onMoveTab}
                 key={id}
                 active={tab.id === currentTabId}
-                isCompleted={isCompleted}
+                hasIndicator={hasIndicator}
               />
             );
           })}

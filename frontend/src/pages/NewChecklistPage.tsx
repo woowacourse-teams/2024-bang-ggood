@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,10 +13,10 @@ import useInputs from '@/hooks/useInputs';
 import useToast from '@/hooks/useToast';
 import useChecklistStore from '@/store/useChecklistStore';
 import useOptionStore from '@/store/useOptionStore';
-import { flexCenter, title2 } from '@/styles/common';
 import { ChecklistCategoryQnA } from '@/types/checklist';
 import { RoomInfo } from '@/types/room';
 
+// TODO: 더미 데이터 삭제하기
 const DefaultRoomInfo: RoomInfo = {
   roomName: '살기 좋은 방',
   address: '인천광역시 부평구',
@@ -38,28 +37,43 @@ const NewChecklistPage = () => {
   const { showToast } = useToast(DEFAULT_TOAST_DURATION);
 
   //TODO:  방 기본 정보도 전역 상태로 관리 필요
-  /*방 기본 정보 */
-  const { values: roomInfo, onChange: onChangeRoomInfo, setValues: setRoomInfo } = useInputs(DefaultRoomInfo);
-
-  /*선택된 옵션*/
-  const { selectedOptions } = useOptionStore();
-
-  /*체크리스트 답변*/
-  const { setAnswerInQuestion, checklistCategoryQnA, setValidCategory } = useChecklistStore();
-
-  const { resetToDefaultOptions } = useOptionStore();
 
   const navigate = useNavigate();
 
-  /*현재 상태를 백엔드에 보내는 답안 포맷으로 바꾸는 함수*/
+  /* TODO: 더미 방 기본 정보 -> 이후 삭제 필요 */
+  const { values: roomInfo, onChange: onChangeRoomInfo, setValues: setRoomInfo } = useInputs(DefaultRoomInfo);
+
+  /* 선택된 옵션 */
+  const { selectedOptions, resetToDefaultOptions } = useOptionStore();
+
+  /* 체크리스트 답변 */
+  const { checklistCategoryQnA, setAnswerInQuestion, setValidCategory } = useChecklistStore();
+
+  useEffect(() => {
+    const fetchChecklist = async () => {
+      const checklist = await getChecklistQuestions();
+
+      // 체크리스트 질문에 대한 답안지 객체 생성
+      setAnswerInQuestion(checklist);
+
+      // 현재 질문이 있는 유효한 카테고리 생성
+      setValidCategory();
+
+      // 옵션 선택지 리셋
+      resetToDefaultOptions();
+    };
+
+    fetchChecklist();
+  }, []);
+
+  /* 현재 상태를 백엔드에 보내는 답안 포맷으로 바꾸는 함수 */
   const transformQuestions = (checklist: ChecklistCategoryQnA[]) => {
     return checklist.flatMap(category =>
       category.questions.map(question => {
-        const { questionId, memo, grade } = question;
+        const { questionId, answer } = question;
         return {
           questionId,
-          memo,
-          grade,
+          answer,
         };
       }),
     );
@@ -74,29 +88,11 @@ const NewChecklistPage = () => {
       });
     };
 
-    try {
-      fetchNewChecklist().then(() => {
-        showToast('체크리스트가 저장되었습니다.');
-        navigate(ROUTE_PATH.checklistList);
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    fetchNewChecklist().then(() => {
+      showToast('체크리스트가 저장되었습니다.');
+      navigate(ROUTE_PATH.checklistList);
+    });
   };
-
-  useEffect(() => {
-    const fetchChecklist = async () => {
-      const checklist = await getChecklistQuestions();
-
-      /*체크리스트 질문에 대한 답안지 객체 생성 */
-      setAnswerInQuestion(checklist);
-      /*현재 질문이 있는 유효한 카테고리 생성*/
-      setValidCategory();
-      /*옵션 선택지 리셋*/
-      resetToDefaultOptions();
-    };
-    fetchChecklist();
-  }, []);
 
   const handleClickTagButton = useCallback(
     (name: string, value: string) => {
@@ -109,13 +105,14 @@ const NewChecklistPage = () => {
     <>
       <Header
         left={<Header.Backward />}
-        center={<S.Title>{'새 체크리스트'}</S.Title>}
+        center={<Header.Text>{'새 체크리스트'}</Header.Text>}
         right={<Button label={'저장'} size="small" color="dark" onClick={handleSubmitChecklist} />}
       />
       <TabProvider defaultTab={0}>
-        {/*체크리스트 작성 탭*/}
+        {/* 체크리스트 작성의 탭 */}
         <NewChecklistTab />
-        {/*체크리스트 콘텐츠 섹션*/}
+
+        {/* 체크리스트 콘텐츠 섹션 */}
         <NewChecklistContent
           roomInfo={roomInfo}
           onChangeRoomInfo={onChangeRoomInfo}
@@ -128,12 +125,3 @@ const NewChecklistPage = () => {
 };
 
 export default NewChecklistPage;
-
-const Title = styled.div`
-  ${title2}
-  ${flexCenter}
-`;
-
-const S = {
-  Title,
-};

@@ -2,7 +2,7 @@ export const checklistQuestions = {
   categories: [
     {
       categoryId: 1,
-      categoryName: '청결도',
+      categoryName: '방 컨디션',
       questions: [
         {
           questionId: 1,
@@ -11,20 +11,65 @@ export const checklistQuestions = {
         },
         {
           questionId: 2,
-          title: '벽과 바닥이 깨끗한가요?',
+          title: '수압/배수를 확인해주세요.',
           subtitle: null,
+        },
+        {
+          questionId: 3,
+          title: '수압/배수를 확인해주세요.',
+          subtitle: '화장실과 주방을 확인해주세요',
+        },
+        {
+          questionId: 4,
+          title: '수압/배수를 확인해주세요.',
+          subtitle: '화장실과 주방을 확인해주세요',
+        },
+        {
+          questionId: 5,
+          title: '수압/배수를 확인해주세요.',
+          subtitle: null,
+        },
+        {
+          questionId: 6,
+          title: '벌레가 나온 흔적은 없나요?',
+          subtitle: '벌레 퇴치약이 부착되어있는지, 싱크대 하부장 경첩에 배설물이 있는지 확인하세요.',
+        },
+        {
+          questionId: 7,
+          title: '수압/배수를 확인해주세요.',
+          subtitle: '화장실과 주방을 확인해주세요',
+        },
+        {
+          questionId: 8,
+          title: '자취방의 보안 시설이 잘 갖추어져 있나요? (도어락, 창문 잠금장치 등)',
+          subtitle: null,
+        },
+        {
+          questionId: 9,
+          title: '수압/배수를 확인해주세요.',
+          subtitle: '화장실과 주방을 확인해주세요',
         },
       ],
     },
 
     {
       categoryId: 2,
-      categoryName: '내부시설',
+      categoryName: '창문',
       questions: [
         {
           questionId: 1,
-          title: '지하철 역이 가깝나요?',
-          subtitle: '주변 지도를 참고해 보세요.',
+          title: '수압/배수를 확인해주세요.',
+          subtitle: '화장실과 주방을 확인해주세요',
+        },
+        {
+          questionId: 2,
+          title: '수압/배수를 확인해주세요.',
+          subtitle: null,
+        },
+        {
+          questionId: 3,
+          title: '수압/배수를 확인해주세요.',
+          subtitle: '화장실과 주방을 확인해주세요',
         },
       ],
     },

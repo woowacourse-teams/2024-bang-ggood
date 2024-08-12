@@ -1,6 +1,6 @@
 package com.bang_ggood.article.controller;
 
-import com.bang_ggood.article.dto.ArticleResponseDto;
+import com.bang_ggood.article.dto.ArticleResponse;
 import com.bang_ggood.article.service.ArticleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,7 @@ public class ArticleController {
     }
 
     @GetMapping("/articles/{id}")
-    public ResponseEntity<ArticleResponseDto> readArticle(@PathVariable("id") Long id) {
+    public ResponseEntity<ArticleResponse> readArticle(@PathVariable("id") Long id) {
         return ResponseEntity.ok(articleService.readArticle(id));
     }
 }

@@ -60,7 +60,7 @@ public enum ExceptionCode {
     OAUTH_TOKEN_INTERNAL_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "카카오 서버와 통신하는 과정 중 예상치 못한 예외가 발생했습니다."),
 
     // Article
-    ARTICLE_INVALID(HttpStatus.BAD_REQUEST, "해당 아티클이 존재하지 않습니다.");
+    ARTICLE_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당 아티클이 존재하지 않습니다.");
 
     private final HttpStatus httpStatus;
     private final String message;

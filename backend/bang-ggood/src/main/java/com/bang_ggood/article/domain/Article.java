@@ -18,6 +18,14 @@ public class Article extends BaseEntity {
 
     private String content;
 
+    public Article(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    protected Article() {
+    }
+
     public Long getId() {
         return id;
     }

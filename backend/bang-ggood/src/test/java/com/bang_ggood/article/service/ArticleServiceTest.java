@@ -1,6 +1,8 @@
 package com.bang_ggood.article.service;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.article.domain.Article;
+import com.bang_ggood.article.repository.ArticleRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import org.junit.jupiter.api.DisplayName;
@@ -14,15 +16,18 @@ public class ArticleServiceTest extends IntegrationTestSupport {
 
     @Autowired
     ArticleService articleService;
+    @Autowired
+    ArticleRepository articleRepository;
 
     @DisplayName("아티클 조회 성공")
     @Test
     void readArticle() {
         // given
-        long articleId = 1L;
+        Article article = new Article("제목", "내용");
+        articleRepository.save(article);
 
         // when & then
-        assertThatCode(() -> articleService.readArticle(articleId))
+        assertThatCode(() -> articleService.readArticle(article.getId()))
                 .doesNotThrowAnyException();
     }
 
@@ -35,6 +40,6 @@ public class ArticleServiceTest extends IntegrationTestSupport {
         // when & then
         assertThatThrownBy(() -> articleService.readArticle(articleId))
                 .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.ARTICLE_INVALID.getMessage());
+                .hasMessage(ExceptionCode.ARTICLE_NOT_FOUND.getMessage());
     }
 }

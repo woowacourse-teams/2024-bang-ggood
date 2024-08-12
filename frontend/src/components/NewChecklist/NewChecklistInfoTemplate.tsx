@@ -13,7 +13,7 @@ import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 import { RoomInfo, RoomInfoName } from '@/types/room';
 
 const NewChecklistInfoTemplate = () => {
-  const { actions, ...roomInfo } = useStore(checklistRoomInfoStore);
+  const { actions, error, roomInfo } = useStore(checklistRoomInfoStore);
 
   const handleClickTagButton = useCallback(
     (name: keyof RoomInfo, value: string) => {
@@ -32,7 +32,7 @@ const NewChecklistInfoTemplate = () => {
         <FormField>
           <FormField.Label label="방 이름" required={true} />
           <FormField.Input placeholder="" onChange={actions.onChange} name="roomName" value={roomInfo.roomName} />
-          <FormField.P value={roomInfo.E_roomName ?? ''} />
+          <FormField.P value={error.E_roomName ?? ''} />
         </FormField>
 
         {/* 주소 */}
@@ -42,7 +42,7 @@ const NewChecklistInfoTemplate = () => {
             <S.CustomInput onChange={actions.onChange} name="address" value={roomInfo.address} />
             <S.AddressButton isSquare={true} label="주소찾기" size="medium" color="dark" />
           </S.FlexHorizontal>
-          <FormField.P value={roomInfo.E_address ?? ''} />
+          <FormField.P value={error.E_address ?? ''} />
         </FormField>
 
         {/* 교통편 */}
@@ -59,7 +59,7 @@ const NewChecklistInfoTemplate = () => {
             <S.CustomLabel label=" / " />
             <S.CustomInput placeholder="" onChange={actions.onChange} type="number" name="rent" value={roomInfo.rent} />
           </S.FlexHorizontal>
-          <FormField.P value={roomInfo.E_deposit || roomInfo.E_rent || ''} />
+          <FormField.P value={error.E_deposit || error.E_rent || ''} />
         </FormField>
 
         {/* 방 종류 */}
@@ -101,7 +101,7 @@ const NewChecklistInfoTemplate = () => {
           <S.FlexHorizontal>
             <S.CustomInput placeholder="" type="number" onChange={actions.onChange} name="size" value={roomInfo.size} />
           </S.FlexHorizontal>
-          <FormField.P value={roomInfo.E_size ?? ''} />
+          <FormField.P value={error.E_size ?? ''} />
         </FormField>
 
         {/* 층수 */}
@@ -123,7 +123,7 @@ const NewChecklistInfoTemplate = () => {
               ))}
             </S.RadioGroup>
           </S.FlexHorizontal>
-          <FormField.P value={roomInfo.E_floor ?? ''} />
+          <FormField.P value={error.E_floor ?? ''} />
         </FormField>
 
         {/* 계약 기간 */}

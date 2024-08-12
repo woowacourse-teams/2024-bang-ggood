@@ -55,47 +55,47 @@ type PrefixWithE<T> = {
   [K in keyof T as `E_${string & K}`]: string;
 };
 
-const checklistRoomInfoStore = createStore<RoomInfo & PrefixWithE<RoomInfo> & { actions: RoomInfoAction }>(
-  (set, get) => ({
-    ...initialRoomInfo,
-    ...initialErrorMessages,
-    actions: {
-      set: (name, value) => {
-        if (typeof value === 'string') {
-          get().actions._updateAfterValidation(name, value, validatorSet[name] as Validator<string>[]);
-        } else if (typeof value === 'number') {
-          get().actions._updateAfterValidation(name, value, validatorSet[name] as Validator<number>[]);
-        }
-      },
-      onChange: (event: InputChangeEvent) => {
-        if (event.target.value === '') {
-          get().actions._updateErrorMsg(event.target.name as keyof RoomInfo, '');
-          get().actions._update(event.target.name as keyof RoomInfo, '');
-          return;
-        }
-
-        get().actions.set(
-          event.target.name as keyof RoomInfo,
-          event.target?.type === 'number' ? parseInt(event.target.value) : event.target.value,
-        );
-      },
-      reset: () => set({ ...initialRoomInfo, ...initialErrorMessages }),
-      _update: (name, value) => set({ [name]: value }),
-      _updateErrorMsg: (name, value) => set({ [`E_${name}`]: value }),
-      _updateAfterValidation: (name, value, validators) => {
-        const newErrorMessage = validators.reduce(
-          (acc, { validate, errorMessage }) => (!validate(value) ? errorMessage : acc),
-          '',
-        );
-
-        get().actions._updateErrorMsg(name, newErrorMessage);
-
-        if (newErrorMessage.length === 0) {
-          get().actions._update(name, value);
-        }
-      },
+const checklistRoomInfoStore = createStore<
+  { roomInfo: RoomInfo } & { error: PrefixWithE<RoomInfo> } & { actions: RoomInfoAction }
+>((set, get) => ({
+  roomInfo: { ...initialRoomInfo },
+  error: { ...initialErrorMessages },
+  actions: {
+    set: (name, value) => {
+      if (typeof value === 'string') {
+        get().actions._updateAfterValidation(name, value, validatorSet[name] as Validator<string>[]);
+      } else if (typeof value === 'number') {
+        get().actions._updateAfterValidation(name, value, validatorSet[name] as Validator<number>[]);
+      }
     },
-  }),
-);
+    onChange: (event: InputChangeEvent) => {
+      if (event.target.value === '') {
+        get().actions._updateErrorMsg(event.target.name as keyof RoomInfo, '');
+        get().actions._update(event.target.name as keyof RoomInfo, '');
+        return;
+      }
+
+      get().actions.set(
+        event.target.name as keyof RoomInfo,
+        event.target?.type === 'number' ? parseInt(event.target.value) : event.target.value,
+      );
+    },
+    reset: () => set({ roomInfo: { ...initialRoomInfo }, error: { ...initialErrorMessages } }),
+    _update: (name, value) => set({ roomInfo: { ...get().roomInfo, [name]: value } }),
+    _updateErrorMsg: (name, value) => set({ error: { ...get().error, [`E_${name}`]: value } }),
+    _updateAfterValidation: (name, value, validators) => {
+      const newErrorMessage = validators.reduce(
+        (acc, { validate, errorMessage }) => (!validate(value) ? errorMessage : acc),
+        '',
+      );
+
+      get().actions._updateErrorMsg(name, newErrorMessage);
+
+      if (newErrorMessage.length === 0) {
+        get().actions._update(name, value);
+      }
+    },
+  },
+}));
 
 export default checklistRoomInfoStore;

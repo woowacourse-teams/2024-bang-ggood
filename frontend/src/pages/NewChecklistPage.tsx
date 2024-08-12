@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useStore } from 'zustand';
 
 import { getChecklistQuestions, postChecklist } from '@/apis/checklist';
 import Button from '@/components/_common/Button/Button';
@@ -9,36 +10,20 @@ import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import NewChecklistTab from '@/components/NewChecklist/NewChecklistTab';
 import { ROUTE_PATH } from '@/constants/routePath';
-import useInputs from '@/hooks/useInputs';
 import useToast from '@/hooks/useToast';
+import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useOptionStore from '@/store/useOptionStore';
 import { flexCenter, title2 } from '@/styles/common';
 import { ChecklistCategoryQnA } from '@/types/checklist';
-import { RoomInfo } from '@/types/room';
-
-const DefaultRoomInfo: RoomInfo = {
-  roomName: '살기 좋은 방',
-  address: '인천광역시 부평구',
-  deposit: 2000,
-  rent: 50,
-  contractTerm: 12,
-  floor: 3,
-  station: '잠실',
-  walkingTime: 10,
-  realEstate: '방끗공인중개사',
-  type: undefined,
-  size: undefined,
-  floorLevel: undefined,
-  structure: undefined,
-};
 
 const NewChecklistPage = () => {
   const { showToast } = useToast(3);
 
   //TODO:  방 기본 정보도 전역 상태로 관리 필요
   /*방 기본 정보 */
-  const { values: roomInfo, onChange: onChangeRoomInfo, setValues: setRoomInfo } = useInputs(DefaultRoomInfo);
+  const { roomInfo } = useStore(checklistRoomInfoStore);
+  // const { values: roomInfo, onChange: onChangeRoomInfo, setValues: setRoomInfo } = useInputs(DefaultRoomInfo);
 
   /*선택된 옵션*/
   const { selectedOptions } = useOptionStore();
@@ -92,13 +77,6 @@ const NewChecklistPage = () => {
     fetchChecklist();
   }, []);
 
-  const handleClickTagButton = useCallback(
-    (name: string, value: string) => {
-      setRoomInfo({ ...roomInfo, [name]: value });
-    },
-    [roomInfo, setRoomInfo],
-  );
-
   return (
     <>
       <Header
@@ -110,12 +88,7 @@ const NewChecklistPage = () => {
         {/*체크리스트 작성의 탭*/}
         <NewChecklistTab />
         {/*체크리스트 콘텐츠 섹션*/}
-        <NewChecklistContent
-          roomInfo={roomInfo}
-          onChangeRoomInfo={onChangeRoomInfo}
-          onClickTagButton={handleClickTagButton}
-          setRoomInfo={setRoomInfo}
-        />
+        <NewChecklistContent />
       </TabProvider>
     </>
   );

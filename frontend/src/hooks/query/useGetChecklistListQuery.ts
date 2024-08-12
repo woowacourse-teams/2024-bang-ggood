@@ -2,12 +2,13 @@ import { useQuery } from '@tanstack/react-query';
 
 import { getChecklists } from '@/apis/checklist';
 import { QUERY_KEYS } from '@/constants/queryKeys';
+import { STALE_TIME } from '@/constants/system';
 
 const useGetChecklistListQuery = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.CHECKLIST_LIST],
     queryFn: getChecklists,
-    staleTime: 5 * 60 * 1000,
+    staleTime: STALE_TIME,
   });
 };
 

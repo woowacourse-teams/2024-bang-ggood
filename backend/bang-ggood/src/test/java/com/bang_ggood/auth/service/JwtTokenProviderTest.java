@@ -23,7 +23,7 @@ class JwtTokenProviderTest extends IntegrationTestSupport {
     @Test
     void createToken() {
         // given
-        User user = userRepository.save(USER1);
+        User user = userRepository.getUserById(1L);
         String token = jwtTokenProvider.createToken(user);
 
         // when

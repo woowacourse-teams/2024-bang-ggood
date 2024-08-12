@@ -1,55 +1,51 @@
 package com.bang_ggood.checklist.domain;
 
-import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 class QuestionTest {
 
-    @DisplayName("특정 카테고리의 질문 찾기 성공")
+    @DisplayName("질문 ID가 고유한 값인 확인")
     @Test
-    void findQuestionsByCategory() {
-        //given
-        Category category = Category.CLEAN;
+    void questionId_unique() {
+        // given & when
+        List<Integer> questionIds = Arrays.stream(Question.values())
+                .map(Question::getId)
+                .toList();
 
-        //when
-        List<Question> questions = Question.findQuestionsByCategory(category);
+        Set<Integer> setQuestionIds = new HashSet<>(questionIds);
 
-        //then
-        assertAll(
-                () -> assertThat(questions.size()).isEqualTo(5),
-                () -> assertThat(questions.get(0).getId()).isEqualTo(1)
-        );
+        // then
+        assertThat(questionIds).hasSize(setQuestionIds.size());
     }
 
     @DisplayName("질문 아이디를 통해 질문 찾기 성공")
     @Test
     void fromId() {
         //given
-        int questionId = 1;
+        int questionId = Question.BATHROOM_1.getId();
 
         //when
         Question question = Question.fromId(questionId);
 
         //then
-        assertAll(
-                () -> assertThat(question.getId()).isEqualTo(questionId),
-                () -> assertThat(question.getCategory()).isEqualTo(Category.CLEAN)
-        );
+        assertThat(question).isEqualTo(Question.BATHROOM_1);
     }
 
     @DisplayName("질문 아이디를 통해 질문 찾기 실패 : 유효하지 않은 질문 아이디일 경우")
     @Test
     void fromId_invalidQuestion_exception() {
         //given
-        int questionId = 999;
+        int questionId = Integer.MAX_VALUE;
 
         //when & then
         assertThatThrownBy(() -> Question.fromId(questionId))
@@ -61,7 +57,7 @@ class QuestionTest {
     @Test
     void contains_true() {
         //given
-        int questionId = 1;
+        int questionId = Question.ROOM_CONDITION_1.getId();
 
         //when & then
         assertThat(Question.contains(questionId)).isTrue();
@@ -71,7 +67,7 @@ class QuestionTest {
     @Test
     void contains_false() {
         //given
-        int questionId = 999;
+        int questionId = Integer.MAX_VALUE;
 
         //when & then
         assertThat(Question.contains(questionId)).isFalse();

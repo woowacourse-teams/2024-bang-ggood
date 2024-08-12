@@ -1,7 +1,3 @@
-import { ChecklistAnswer } from '@/types/checklist';
-
-
-
 export type RoomInfo = Partial<{
   roomName: string;
   address: string;
@@ -19,9 +15,3 @@ export type RoomInfo = Partial<{
 }>;
 
 export type RoomInfoName = keyof RoomInfo;
-
-export interface ChecklistForm {
-  room: RoomInfo;
-  options: number[];
-  questions: ChecklistAnswer[];
-}

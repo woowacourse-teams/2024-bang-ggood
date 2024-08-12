@@ -21,7 +21,7 @@ const NewChecklistContent = ({
   setRoomInfo,
 }: Props) => {
   const { currentTabId } = useTabContext();
-  const { categoryQnA } = useChecklistStore();
+  const { getCategoryQnA } = useChecklistStore();
 
   return currentTabId === -1 ? (
     /*방 기본정보 템플릿*/
@@ -35,8 +35,8 @@ const NewChecklistContent = ({
     /*옵션 선택 템플릿*/
     <OptionChecklistTemplate />
   ) : (
-    /*체크리스트 템플릿*/
-    <NewChecklistTemplate questions={categoryQnA(currentTabId)} />
+    /* 체크리스트 템플릿 */
+    <NewChecklistTemplate questions={getCategoryQnA(currentTabId)} />
   );
 };
 

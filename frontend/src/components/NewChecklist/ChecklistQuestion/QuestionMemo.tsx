@@ -1,9 +1,7 @@
 import styled from '@emotion/styled';
 import { useRef } from 'react';
 
-import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import Textarea from '@/components/_common/Textarea/Textarea';
-import useChecklistGrade from '@/hooks/useChecklistGrade';
 import useInput from '@/hooks/useInput';
 
 interface Props {
@@ -11,15 +9,15 @@ interface Props {
   text: string;
 }
 
-const QuestionMemo = ({ questionId, text }: Props) => {
-  const { currentTabId } = useTabContext();
+const QuestionMemo = ({ text }: Props) => {
+  // const { currentTabId } = useTabContext();
   const { onChange, value } = useInput(text);
-  const { updateMemo } = useChecklistGrade();
+  // const { updateMemo } = useChecklistGrade();
   const intervalRef = useRef<number | undefined>(undefined);
 
-  const handleUpdateMemo = () => {
-    updateMemo({ categoryId: currentTabId, questionId, newMemo: value });
-  };
+  // const handleUpdateMemo = () => {
+  //   updateMemo({ categoryId: currentTabId, questionId, newMemo: value });
+  // };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e);
@@ -29,7 +27,7 @@ const QuestionMemo = ({ questionId, text }: Props) => {
     }
 
     intervalRef.current = window.setTimeout(() => {
-      handleUpdateMemo();
+      // handleUpdateMemo();
     }, 2000);
   };
 
@@ -38,7 +36,7 @@ const QuestionMemo = ({ questionId, text }: Props) => {
       clearInterval(intervalRef.current);
       intervalRef.current = undefined;
     }
-    handleUpdateMemo();
+    // handleUpdateMemo();
   };
 
   return (

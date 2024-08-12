@@ -3,15 +3,8 @@ import { HTMLAttributes } from 'react';
 
 import { InputRequiredDot } from '@/assets/assets';
 import Input from '@/components/_common/Input/Input';
+import { flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
-
-const FormFieldWrapper = styled.div<{ rowGap?: string }>`
-  display: flex;
-
-  flex: auto;
-  flex-direction: column;
-  row-gap: ${({ rowGap }) => (rowGap ? rowGap : '10px')};
-`;
 
 type GetProps<T> = T extends React.FC<infer P> ? P : never;
 
@@ -19,6 +12,13 @@ interface LabelProps extends HTMLAttributes<HTMLLabelElement> {
   label: string;
   required?: boolean;
 }
+
+const FormFieldWrapper = styled.div<{ rowGap?: string }>`
+  ${flexColumn}
+
+  flex: auto;
+  row-gap: ${({ rowGap }) => (rowGap ? rowGap : '10px')};
+`;
 
 const FormField = Object.assign(FormFieldWrapper, {
   Label: ({ label, required = false, ...rest }: LabelProps) => (
@@ -29,7 +29,7 @@ const FormField = Object.assign(FormFieldWrapper, {
   ),
   Input: ({ ...rest }: GetProps<typeof Input>) => <Input {...rest} />,
   ErrorMessage: ({ value, ...rest }: { value: string } & HTMLAttributes<HTMLParagraphElement>) => (
-    <S.P {...rest}>{value}</S.P>
+    <S.ErrorMessage {...rest}>{value}</S.ErrorMessage>
   ),
 });
 
@@ -39,15 +39,15 @@ const S = {
     top: -15px;
     left: 5px;
   `,
-  P: styled.p`
+  LabelContainer: styled.label`
+    position: relative;
+    z-index: 0;
+  `,
+  ErrorMessage: styled.p`
     height: 10px;
 
     color: black;
     font-size: ${({ theme }) => theme.text.size.small};
-  `,
-  LabelContainer: styled.label`
-    position: relative;
-    z-index: 0;
   `,
 };
 export default FormField;

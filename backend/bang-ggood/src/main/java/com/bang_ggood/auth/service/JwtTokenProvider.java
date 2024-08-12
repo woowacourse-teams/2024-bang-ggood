@@ -16,11 +16,11 @@ import java.util.Date;
 public class JwtTokenProvider {
 
     private final String secretKey;
-    private final int tokenExpirationMills;
+    private final long tokenExpirationMills;
 
     public JwtTokenProvider(
             @Value("${jwt.secret-key}") String secretKey,
-            @Value("${jwt.expiration-millis}") int tokenExpirationMills) {
+            @Value("${jwt.expiration-millis}") long tokenExpirationMills) {
         this.secretKey = secretKey;
         this.tokenExpirationMills = tokenExpirationMills;
     }

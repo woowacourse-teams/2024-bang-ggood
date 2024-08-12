@@ -1,35 +1,37 @@
-package com.bang_ggood.category.domain;
+package com.bang_ggood.checklist.domain;
 
 import com.bang_ggood.BaseEntity;
-import com.bang_ggood.user.domain.User;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import java.util.Objects;
 
 @Entity
-public class CategoryPriority extends BaseEntity {
+public class ChecklistLike extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Integer categoryId;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Checklist checklist;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
-
-    protected CategoryPriority() {
+    public ChecklistLike(Checklist checklist) {
+        this.checklist = checklist;
     }
 
-    public CategoryPriority(Integer categoryId, User user) {
-        this.categoryId = categoryId;
-        this.user = user;
+    protected ChecklistLike() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Checklist getChecklist() {
+        return checklist;
     }
 
     @Override
@@ -40,21 +42,20 @@ public class CategoryPriority extends BaseEntity {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        CategoryPriority that = (CategoryPriority) o;
+        ChecklistLike that = (ChecklistLike) o;
         return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hashCode(id);
     }
 
     @Override
     public String toString() {
-        return "CategoryPriority{" +
+        return "ChecklistLike{" +
                 "id=" + id +
-                ", categoryId=" + categoryId +
-                ", user=" + user +
+                ", checklist=" + checklist +
                 '}';
     }
 }

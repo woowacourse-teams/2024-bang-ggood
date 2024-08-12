@@ -1,8 +1,11 @@
 package com.bang_ggood.checklist;
 
+import com.bang_ggood.checklist.domain.Answer;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.ChecklistLike;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
-import com.bang_ggood.checklist.domain.Grade;
+import com.bang_ggood.checklist.domain.OccupancyMonth;
+import com.bang_ggood.checklist.domain.OccupancyPeriod;
 import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.QuestionRequest;
@@ -13,47 +16,56 @@ import java.util.List;
 public class ChecklistFixture {
 
     public static final Checklist CHECKLIST1 = new Checklist(
-            UserFixture.USER1,
             RoomFixture.ROOM_1,
-            1000, 50, 12, "방끗공인중개사"
+            UserFixture.USER1,
+            1000, 50, 12, "방끗공인중개사", "메모", "한줄평",
+            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY
     );
 
     public static final Checklist CHECKLIST2 = new Checklist(
-            UserFixture.USER1,
             RoomFixture.ROOM_2,
-            1000, 50, 12, "방끗공인중개사"
+            UserFixture.USER1,
+            1000, 50, 12, "방끗공인중개사", "메모", "한줄평",
+            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY
+    );
+
+    public static final Checklist CHECKLIST1_WITH_USER1_ID = new Checklist(
+            RoomFixture.ROOM_1,
+            UserFixture.USER1_WITH_ID,
+            1000, 50, 12, "방끗공인중개사", "메모", "한줄평",
+            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY
     );
 
     public static final QuestionRequest QUESTION_1_CREATE_REQUEST = new QuestionRequest(
-            1, "GOOD", "메모1"
+            1, "GOOD"
     );
 
     public static final QuestionRequest QUESTION_2_CREATE_REQUEST = new QuestionRequest(
-            2, "SOSO", null
+            2, "GOOD"
     );
 
     public static final QuestionRequest QUESTION_3_CREATE_REQUEST = new QuestionRequest(
-            3, "BAD", "메모3"
+            3, "BAD"
     );
 
     public static final QuestionRequest QUESTION_4_CREATE_REQUEST = new QuestionRequest(
-            4, "SOSO", null
+            4, "BAD"
     );
 
     public static final QuestionRequest QUESTION_5_CREATE_REQUEST = new QuestionRequest(
-            5, "GOOD", null
+            5, "GOOD"
     );
 
     public static final QuestionRequest QUESTION_5_UPDATE_REQUEST = new QuestionRequest(
-            5, "GOOD", "메모"
+            5, "GOOD"
     );
 
     public static final QuestionRequest QUESTION_CREATE_REQUEST_NO_ID = new QuestionRequest(
-            null, "NONE", "메모"
+            null, "NONE"
     );
 
     public static final QuestionRequest QUESTION_CREATE_REQUEST_INVALID_ID = new QuestionRequest(
-            9999, "SOSO", null
+            9999, "GOOD"
     );
 
 
@@ -155,10 +167,12 @@ public class ChecklistFixture {
 
 
     public static final ChecklistQuestion CHECKLIST_QUESTION_1 = new ChecklistQuestion(
-            CHECKLIST1, Question.fromId(1), Grade.BAD, "메모"
+            CHECKLIST1, Question.fromId(1), Answer.BAD
     );
 
     public static final ChecklistQuestion CHECKLIST_QUESTION_2 = new ChecklistQuestion(
-            CHECKLIST1, Question.fromId(2), Grade.BAD, "메모"
+            CHECKLIST1, Question.fromId(2), Answer.BAD
     );
+
+    public static final ChecklistLike CHECKLIST_LIKE_1 = new ChecklistLike(CHECKLIST1);
 }

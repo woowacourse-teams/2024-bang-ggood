@@ -15,21 +15,17 @@ public enum ExceptionCode {
     QUESTION_INVALID(HttpStatus.BAD_REQUEST, "잘못된 질문 ID입니다."),
     QUESTION_DUPLICATED(HttpStatus.BAD_REQUEST, "중복된 질문이 존재합니다."),
     QUESTION_DIFFERENT(HttpStatus.BAD_REQUEST, "수정할 질문 목록이 기존의 질문 목록과 동일하지 않습니다."),
-
     // User
     USER_NOT_FOUND(HttpStatus.BAD_REQUEST, "유저가 존재하지 않습니다."),
 
-    // Category
-    CATEGORY_PRIORITY_INVALID_COUNT(HttpStatus.BAD_REQUEST, "카테고리 개수가 유효하지 않습니다."),
-    CATEGORY_NOT_FOUND(HttpStatus.BAD_REQUEST, "카테코리가 존재하지 않습니다."),
-    CATEGORY_DUPLICATED(HttpStatus.BAD_REQUEST, "중복된 카테고리가 존재합니다."),
-
-    // Grade
-    GRADE_INVALID(HttpStatus.BAD_REQUEST, "점수가 유효하지 않습니다."),
+    // Answer
+    ANSWER_INVALID(HttpStatus.BAD_REQUEST, "점수가 유효하지 않습니다."),
 
     // Checklist
     CHECKLIST_COMPARISON_INVALID_COUNT(HttpStatus.BAD_REQUEST, "비교할 체크리스트 개수가 유효하지 않습니다."),
     CHECKLIST_NOT_FOUND(HttpStatus.BAD_REQUEST, "체크리스트가 존재하지 않습니다."),
+    CHECKLIST_MEMO_INVALID_LENGTH(HttpStatus.BAD_REQUEST, "체크리스트 메모는 1000자 이하여야 합니다."),
+    CHECKLIST_NOT_OWNED_BY_USER(HttpStatus.BAD_REQUEST, "유저의 체크리스트가 아닙니다."),
 
     // CustomChecklist
     CUSTOM_CHECKLIST_QUESTION_EMPTY(HttpStatus.BAD_REQUEST, "커스텀 질문 개수가 유효하지 않습니다."),
@@ -46,8 +42,15 @@ public enum ExceptionCode {
     // Room
     ROOM_FLOOR_AND_LEVEL_INVALID(HttpStatus.BAD_REQUEST, "방이 지상층일 경우에만 층수를 입력할 수 있습니다."),
 
-    //Score
-    SCORE_NOT_DESCENDING_SORTED(HttpStatus.BAD_REQUEST, "정렬되지 않은 점수입니다."),
+    // OccupancyMonth
+    OCCUPANCY_MONTH_INVALID(HttpStatus.BAD_REQUEST, "입주 가능월은 1부터 12 사이 혹은 null 값만 가능합니다."),
+
+    // OccupancyPeriod
+    OCCUPANCY_PERIOD_INVALID(HttpStatus.BAD_REQUEST, "입주 가능 기간은 초, 중, 말 혹은 null 값만 가능합니다."),
+
+    //like
+    LIKE_ALREADY_EXISTS(HttpStatus.CONFLICT, "체크리스트가 이미 좋아요 상태입니다"),
+    LIKE_NOT_EXISTS(HttpStatus.BAD_REQUEST, "체크리스트 좋아요가 존재하지 않아 삭제할 수 없습니다."),
 
     // Auth
     AUTHENTICATION_COOKIE_EMPTY(HttpStatus.UNAUTHORIZED, "인증 정보가 존재하지 않습니다."),

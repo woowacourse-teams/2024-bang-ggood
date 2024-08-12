@@ -2,14 +2,13 @@ package com.bang_ggood.checklist.dto.response;
 
 import com.bang_ggood.checklist.domain.Checklist;
 import java.time.LocalDateTime;
-import java.util.List;
 
 public record UserChecklistPreviewResponse(
         Long checklistId, String roomName, String address,
         Integer deposit, Integer rent, LocalDateTime createdAt,
-        List<BadgeResponse> badge) {
+        String summary, boolean isLiked) {
 
-    public static UserChecklistPreviewResponse of(Checklist checklist, List<BadgeResponse> badges) {
+    public static UserChecklistPreviewResponse of(Checklist checklist, boolean isLiked) {
         return new UserChecklistPreviewResponse(
                 checklist.getId(),
                 checklist.getRoomName(),
@@ -17,6 +16,7 @@ public record UserChecklistPreviewResponse(
                 checklist.getDeposit(),
                 checklist.getRent(),
                 checklist.getCreatedAt(),
-                badges);
+                checklist.getSummary(),
+                isLiked);
     }
 }

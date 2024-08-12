@@ -1,12 +1,16 @@
 package com.bang_ggood.checklist.domain;
 
 import com.bang_ggood.BaseEntity;
+import com.bang_ggood.exception.BangggoodException;
+import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.domain.FloorLevel;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.domain.Structure;
 import com.bang_ggood.room.domain.Type;
 import com.bang_ggood.user.domain.User;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,15 +24,17 @@ import java.util.Objects;
 @Entity
 public class Checklist extends BaseEntity {
 
+    private static final int MEMO_MAX_LENGTH = 1000;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
-
     @OneToOne(fetch = FetchType.LAZY)
     private Room room;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
     private Integer deposit;
 
@@ -38,23 +44,45 @@ public class Checklist extends BaseEntity {
 
     private String realEstate;
 
+    private String memo;
+
+    private String summary;
+
+    @Enumerated(EnumType.STRING)
+    private OccupancyMonth occupancyMonth;
+
+    @Enumerated(EnumType.STRING)
+    private OccupancyPeriod occupancyPeriod;
+
     @OneToMany(mappedBy = "checklist")
     private List<ChecklistQuestion> questions;
 
-    public Checklist(User user, Room room, Integer deposit, Integer rent, Integer contractTerm, String realEstate) {
-        this.user = user;
+
+    public Checklist(Room room, User user, Integer deposit, Integer rent, Integer contractTerm, String realEstate,
+                     String memo, String summary, OccupancyMonth occupancyMonth, OccupancyPeriod occupancyPeriod) {
         this.room = room;
+        this.user = user;
         this.deposit = deposit;
         this.rent = rent;
         this.contractTerm = contractTerm;
         this.realEstate = realEstate;
+        this.memo = memo;
+        this.summary = summary;
+        this.occupancyMonth = occupancyMonth;
+        this.occupancyPeriod = occupancyPeriod;
+        validateMemoLength();
     }
 
-    public Checklist(Integer deposit, Integer rent, Integer contractTerm, String realEstate) {
-        this(null, null, deposit, rent, contractTerm, realEstate);
+    public Checklist(Integer deposit, Integer rent, Integer contractTerm, String realEstate,
+                     String memo, String summary, OccupancyMonth occupancyMonth, OccupancyPeriod occupancyPeriod) {
+        this(null, null, deposit, rent, contractTerm, realEstate, memo, summary, occupancyMonth, occupancyPeriod);
     }
 
     protected Checklist() {
+    }
+
+    public boolean isOwnedBy(User user) {
+        return this.user.equals(user);
     }
 
     public void change(Checklist updateChecklist) {
@@ -64,6 +92,12 @@ public class Checklist extends BaseEntity {
         this.rent = updateChecklist.rent;
         this.contractTerm = updateChecklist.contractTerm;
         this.realEstate = updateChecklist.realEstate;
+    }
+
+    private void validateMemoLength() {
+        if (memo.length() > MEMO_MAX_LENGTH) {
+            throw new BangggoodException(ExceptionCode.CHECKLIST_MEMO_INVALID_LENGTH);
+        }
     }
 
     public Long getId() {
@@ -102,7 +136,7 @@ public class Checklist extends BaseEntity {
         return room.getType();
     }
 
-    public Integer getRoomSize() {
+    public Double getRoomSize() {
         return room.getSize();
     }
 
@@ -130,6 +164,22 @@ public class Checklist extends BaseEntity {
         return realEstate;
     }
 
+    public String getMemo() {
+        return memo;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public OccupancyMonth getOccupancyMonth() {
+        return occupancyMonth;
+    }
+
+    public OccupancyPeriod getOccupancyPeriod() {
+        return occupancyPeriod;
+    }
+
     public List<ChecklistQuestion> getQuestions() {
         return questions;
     }
@@ -155,12 +205,16 @@ public class Checklist extends BaseEntity {
     public String toString() {
         return "Checklist{" +
                 "id=" + id +
-                ", user=" + user +
                 ", room=" + room +
+                ", user=" + user +
                 ", deposit=" + deposit +
                 ", rent=" + rent +
                 ", contractTerm=" + contractTerm +
                 ", realEstate='" + realEstate + '\'' +
+                ", memo='" + memo + '\'' +
+                ", summary='" + summary + '\'' +
+                ", occupancyMonth=" + occupancyMonth +
+                ", occupancyPeriod=" + occupancyPeriod +
                 '}';
     }
 }

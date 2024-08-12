@@ -4,8 +4,8 @@ DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS checklist CASCADE;
 DROP TABLE IF EXISTS checklist_question CASCADE;
 DROP TABLE IF EXISTS checklist_option CASCADE;
-DROP TABLE IF EXISTS category_priority CASCADE;
 DROP TABLE IF EXISTS custom_checklist_question CASCADE;
+DROP TABLE IF EXISTS checklist_like CASCADE;
 
 -- Create tables
 CREATE TABLE room
@@ -16,7 +16,7 @@ CREATE TABLE room
     walking_time INTEGER,
     address      VARCHAR(255),
     type         VARCHAR(255),
-    size         INTEGER,
+    size         DOUBLE,
     floor        INTEGER,
     floor_level  VARCHAR(255),
     structure    VARCHAR(255),
@@ -37,16 +37,20 @@ CREATE TABLE users
 
 CREATE TABLE checklist
 (
-    id            BIGINT AUTO_INCREMENT PRIMARY KEY,
-    contract_term INTEGER,
-    deposit       INTEGER,
-    rent          INTEGER,
-    created_at    TIMESTAMP(6),
-    modified_at   TIMESTAMP(6),
-    room_id       BIGINT NOT NULL UNIQUE,
-    user_id       BIGINT NOT NULL,
-    real_estate   VARCHAR(255),
-    deleted       BOOLEAN,
+    id               BIGINT AUTO_INCREMENT PRIMARY KEY,
+    room_id          BIGINT NOT NULL UNIQUE,
+    user_id          BIGINT NOT NULL,
+    deposit          INTEGER,
+    rent             INTEGER,
+    contract_term    INTEGER,
+    real_estate      VARCHAR(255),
+    memo             VARCHAR(1000),
+    summary          VARCHAR(255),
+    occupancy_month  VARCHAR(255),
+    occupancy_period VARCHAR(255),
+    created_at       TIMESTAMP(6),
+    modified_at      TIMESTAMP(6),
+    deleted          BOOLEAN,
     FOREIGN KEY (room_id) REFERENCES room (id),
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
@@ -56,8 +60,7 @@ CREATE TABLE checklist_question
     id           BIGINT AUTO_INCREMENT PRIMARY KEY,
     question     VARCHAR(255) NOT NULL,
     checklist_id BIGINT       NOT NULL,
-    grade        VARCHAR(255),
-    memo         VARCHAR(255),
+    answer       VARCHAR(255),
     created_at   TIMESTAMP(6),
     modified_at  TIMESTAMP(6),
     deleted      BOOLEAN,
@@ -75,17 +78,6 @@ CREATE TABLE checklist_option
     FOREIGN KEY (checklist_id) REFERENCES checklist (id)
 );
 
-CREATE TABLE category_priority
-(
-    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-    category_id INTEGER NOT NULL,
-    user_id     BIGINT  NOT NULL,
-    created_at  TIMESTAMP(6),
-    modified_at TIMESTAMP(6),
-    deleted     BOOLEAN,
-    FOREIGN KEY (user_id) REFERENCES users (id)
-);
-
 CREATE TABLE custom_checklist_question
 (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -95,4 +87,14 @@ CREATE TABLE custom_checklist_question
     modified_at TIMESTAMP(6),
     deleted     BOOLEAN,
     FOREIGN KEY (user_id) references users (id)
+);
+
+CREATE TABLE checklist_like
+(
+    id           BIGINT AUTO_INCREMENT PRIMARY KEY,
+    checklist_id BIGINT,
+    created_at   TIMESTAMP(6),
+    modified_at  TIMESTAMP(6),
+    deleted      BOOLEAN,
+    FOREIGN KEY (checklist_id) REFERENCES checklist (id)
 );

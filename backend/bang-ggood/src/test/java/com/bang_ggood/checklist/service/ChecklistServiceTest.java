@@ -12,6 +12,7 @@ import com.bang_ggood.checklist.dto.response.CategoryCustomChecklistQuestionsRes
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.CustomChecklistQuestionResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.repository.ChecklistLikeRepository;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
@@ -61,6 +62,9 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ChecklistLikeRepository checklistLikeRepository;
 
     @BeforeEach()
     public void setUp() {
@@ -130,6 +134,34 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                         ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_OPTION_ID))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.OPTION_DUPLICATED.getMessage());
+    }
+
+    @DisplayName("체크리스트 좋아요 추가 성공")
+    @Test
+    void createChecklistLike() {
+        //given
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1);
+
+        // when
+        checklistService.createChecklistLike(USER1, checklist.getId());
+
+        //then
+        assertThat(checklistLikeRepository.existsByChecklist(checklist)).isTrue();
+   }
+
+    @DisplayName("체크리스트 좋아요 추가 실패 : 이미 좋아요가 추가가 된 체크리스트인 경우")
+    @Test
+    void createChecklistLike_checklistAlreadyLiked_exception() {
+        //given
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1);
+
+        // when
+        checklistService.createChecklistLike(USER1, checklist.getId());
+
+        //then
+       assertThatThrownBy(() -> checklistService.createChecklistLike(USER1, checklist.getId()))
+               .isInstanceOf(BangggoodException.class)
+               .hasMessage(ExceptionCode.LIKE_ALREADY_EXISTS.getMessage());
     }
 
     @DisplayName("체크리스트 질문 조회 성공")

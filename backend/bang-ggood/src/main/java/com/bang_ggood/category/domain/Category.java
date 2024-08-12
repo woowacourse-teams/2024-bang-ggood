@@ -23,10 +23,7 @@ public enum Category {
     }
 
     public String getName() {
-        return name;
-    }
-
-    public String getEmoji() {
-        return emoji;
+        String nameWithEmojiPattern = "%s %s";
+        return String.format(nameWithEmojiPattern, emoji, name);
     }
 }

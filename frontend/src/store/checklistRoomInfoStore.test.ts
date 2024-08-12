@@ -25,4 +25,13 @@ describe('useChecklistBasicInfoStore 테스트', () => {
       expect(store.getState().E_roomName).not.toBe('');
     });
   });
+  describe('보증금', () => {
+    it('숫자 입력 후 빈 문자열을 설정할 경우(모두 지울 경우), 빈 문자열로 설정된다.', () => {
+      store.getState().actions.set('deposit', 112);
+      expect(store.getState().deposit).toBe(112);
+
+      store.getState().actions.set('deposit', '');
+      expect(store.getState().deposit).toBe('');
+    });
+  });
 });

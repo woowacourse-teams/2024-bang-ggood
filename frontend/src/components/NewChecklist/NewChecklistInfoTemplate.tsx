@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import { useCallback } from 'react';
+import { useStore } from 'zustand';
 
 import Badge from '@/components/_common/Badge/Badge';
 import Button from '@/components/_common/Button/Button';
@@ -7,35 +8,18 @@ import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
 import { InputChangeEvent } from '@/components/_common/Input/Input';
 import RadioGroup from '@/components/_common/RadioGroup/RadioGroup';
-import OptionModal from '@/components/NewChecklist/OptionModal/OptionModal';
-import useOptionStore from '@/store/useOptionStore';
+import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 import { RoomInfo, RoomInfoName } from '@/types/room';
 
-interface Props {
-  roomInfo: RoomInfo;
-  onChange: (event: InputChangeEvent) => void;
-  onClickTagButton: (name: string, value: string) => void;
-  setRoomInfo: Dispatch<SetStateAction<RoomInfo>>;
-}
-const NewChecklistInfoTemplate = ({ roomInfo, setRoomInfo, onChange: onChangeForForm, onClickTagButton }: Props) => {
-  const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
-  const [roomSizeUnit, setRoomSizeUnit] = useState('평');
+const NewChecklistInfoTemplate = () => {
+  const { actions, ...roomInfo } = useStore(checklistRoomInfoStore);
 
-  const onClickOptionModalOpen = () => setIsOptionModalOpen(true);
-
-  const { getSelectedOptionsName } = useOptionStore();
-
-  const handleClickRoomSizeUnit = useCallback(
-    (newRoomSizeUnit: string) => {
-      if (roomSizeUnit === newRoomSizeUnit) return;
-      setRoomInfo({
-        ...roomInfo,
-        size: roomSizeUnit === 'm2' ? (roomInfo.size ?? 0) / 3.3 : (roomInfo.size ?? 0) * 3.3,
-      });
-      setRoomSizeUnit(newRoomSizeUnit);
+  const handleClickTagButton = useCallback(
+    (name: keyof RoomInfo, value: string) => {
+      actions.set(name, value);
     },
-    [roomSizeUnit, setRoomSizeUnit, roomInfo, setRoomInfo],
+    [actions],
   );
 
   const roomTypes = ['빌라', '오피스텔', '아파트', '기타'];
@@ -47,18 +31,18 @@ const NewChecklistInfoTemplate = ({ roomInfo, setRoomInfo, onChange: onChangeFor
         {/* 방이름 */}
         <FormField>
           <FormField.Label label="방 이름" required={true} />
-          <FormField.Input placeholder="" onChange={onChangeForForm} name="roomName" value={roomInfo.roomName} />
-          <FormField.P value="" />
+          <FormField.Input placeholder="" onChange={actions.onChange} name="roomName" value={roomInfo.roomName} />
+          <FormField.P value={roomInfo.E_roomName ?? ''} />
         </FormField>
 
         {/* 주소 */}
         <FormField>
           <FormField.Label label="주소" />
           <S.FlexHorizontal gap="3%">
-            <S.CustomInput onChange={onChangeForForm} name="address" value={roomInfo.address} />
+            <S.CustomInput onChange={actions.onChange} name="address" value={roomInfo.address} />
             <S.AddressButton isSquare={true} label="주소찾기" size="medium" color="dark" />
           </S.FlexHorizontal>
-          <FormField.P value="" />
+          <FormField.P value={roomInfo.E_address ?? ''} />
         </FormField>
 
         {/* 교통편 */}
@@ -71,17 +55,11 @@ const NewChecklistInfoTemplate = ({ roomInfo, setRoomInfo, onChange: onChangeFor
         <FormField>
           <FormField.Label label="보증금 / 월세 (만원)" />
           <S.FlexHorizontal gap={0}>
-            <S.CustomInput
-              placeholder=""
-              onChange={onChangeForForm}
-              type="number"
-              name="deposit"
-              value={roomInfo.deposit}
-            />
+            <S.CustomInput onChange={actions.onChange} type="number" name="deposit" value={roomInfo.deposit} />
             <S.CustomLabel label=" / " />
-            <S.CustomInput placeholder="" onChange={onChangeForForm} type="number" name="rent" value={roomInfo.rent} />
+            <S.CustomInput placeholder="" onChange={actions.onChange} type="number" name="rent" value={roomInfo.rent} />
           </S.FlexHorizontal>
-          <FormField.P value="" />
+          <FormField.P value={roomInfo.E_deposit || roomInfo.E_rent || ''} />
         </FormField>
 
         {/* 방 종류 */}
@@ -94,7 +72,7 @@ const NewChecklistInfoTemplate = ({ roomInfo, setRoomInfo, onChange: onChangeFor
                 label={type}
                 size="button"
                 isSelected={roomInfo.type === type}
-                onClick={() => onClickTagButton('type', type)}
+                onClick={() => handleClickTagButton('type', type)}
               />
             ))}
           </S.OptionButtonContainer>
@@ -111,7 +89,7 @@ const NewChecklistInfoTemplate = ({ roomInfo, setRoomInfo, onChange: onChangeFor
                 name={structure}
                 size="button"
                 isSelected={roomInfo.structure === structure}
-                onClick={() => onClickTagButton('structure', structure)}
+                onClick={() => handleClickTagButton('structure', structure)}
               />
             ))}
           </S.OptionButtonContainer>
@@ -121,26 +99,23 @@ const NewChecklistInfoTemplate = ({ roomInfo, setRoomInfo, onChange: onChangeFor
         <FormField>
           <FormField.Label label="방 크기" />
           <S.FlexHorizontal>
-            <S.CustomInput placeholder="" onChange={onChangeForForm} name="size" value={roomInfo.size} />
-
-            <S.RadioGroup label="" value={roomSizeUnit} onChangeChild={() => {}}>
-              <RadioGroup.RadioButton value="m2" color="green" onClick={() => handleClickRoomSizeUnit('m2')}>
-                m2
-              </RadioGroup.RadioButton>
-              <RadioGroup.RadioButton value="평" color="green" onClick={() => handleClickRoomSizeUnit('평')}>
-                평
-              </RadioGroup.RadioButton>
-            </S.RadioGroup>
+            <S.CustomInput placeholder="" type="number" onChange={actions.onChange} name="size" value={roomInfo.size} />
           </S.FlexHorizontal>
-          <FormField.P value="" />
+          <FormField.P value={roomInfo.E_size ?? ''} />
         </FormField>
 
         {/* 층수 */}
         <FormField>
           <FormField.Label label="층수" />
           <S.FlexHorizontal>
-            <S.CustomInput placeholder="" name="floor" value={roomInfo.floor} onChange={onChangeForForm} />
-            <S.RadioGroup label="" value={roomInfo.floorLevel ?? ''} onChangeChild={onChangeForForm}>
+            <S.CustomInput
+              placeholder=""
+              name="floor"
+              type="number"
+              value={roomInfo.floor}
+              onChange={actions.onChange}
+            />
+            <S.RadioGroup label="" value={roomInfo.floorLevel ?? ''} onChangeChild={actions.onChange}>
               {roomFloorLevels.map(floorLevel => (
                 <RadioGroup.RadioButton key={floorLevel} name="floorLevel" value={floorLevel} color="green">
                   {floorLevel}
@@ -148,7 +123,7 @@ const NewChecklistInfoTemplate = ({ roomInfo, setRoomInfo, onChange: onChangeFor
               ))}
             </S.RadioGroup>
           </S.FlexHorizontal>
-          <FormField.P value="" />
+          <FormField.P value={roomInfo.E_floor ?? ''} />
         </FormField>
 
         {/* 계약 기간 */}
@@ -158,22 +133,12 @@ const NewChecklistInfoTemplate = ({ roomInfo, setRoomInfo, onChange: onChangeFor
             values={roomInfo}
             name="contractTerm"
             type="number"
-            onChange={onChangeForForm}
+            onChange={actions.onChange}
           />
         </S.FlexHorizontal>
 
         {/* 부동산 이름 */}
-        <CustomFormField label="부동산 이름" onChange={onChangeForForm} values={roomInfo} name="realEstate" />
-
-        {/* 가구옵션 */}
-        <FormField.Label label="가구옵션" />
-        <S.FurnitureOptionContent value={getSelectedOptionsName().join(', ')} />
-
-        {/* 가구옵션버튼 */}
-        <S.AddOptionButton label="가구 옵션 추가하기" size="full" onClick={onClickOptionModalOpen} />
-
-        {/*옵션 선택 모달*/}
-        {isOptionModalOpen && <OptionModal isOpen={isOptionModalOpen} setIsOpen={setIsOptionModalOpen} />}
+        <CustomFormField label="부동산 이름" onChange={actions.onChange} values={roomInfo} name="realEstate" />
       </S.Container>
     </S.ContentWrapper>
   );
@@ -183,7 +148,7 @@ const CustomFormField = ({ label, name, values, required, type = 'string', onCha
   <S.CustomFormField key={label}>
     <FormField.Label label={label} required={required} />
     <FormField.Input placeholder="" width="full" type={type} onChange={onChange} name={name} value={values[name]} />
-    <FormField.P value={''} />
+    <FormField.P value={values[('E_' + name) as keyof RoomInfo] as string} />
   </S.CustomFormField>
 );
 

@@ -357,4 +357,13 @@ public class ChecklistService {
         }
         checklistRepository.deleteById(id);
     }
+
+    @Transactional
+    public void deleteChecklistLikeByChecklistId(User user, long checklistId) {
+        Checklist checklist = checklistRepository.getById(checklistId);
+        validateChecklistOwnership(user, checklist);
+        ChecklistLike checklistLike = checklistLikeRepository.getByChecklistId(checklistId);
+
+        checklistLikeRepository.deleteById(checklistLike.getId());
+    }
 }

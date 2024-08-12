@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS checklist CASCADE;
 DROP TABLE IF EXISTS checklist_question CASCADE;
 DROP TABLE IF EXISTS checklist_option CASCADE;
 DROP TABLE IF EXISTS custom_checklist_question CASCADE;
+DROP TABLE IF EXISTS checklist_like CASCADE;
 
 -- Create tables
 CREATE TABLE room
@@ -15,7 +16,7 @@ CREATE TABLE room
     walking_time INTEGER,
     address      VARCHAR(255),
     type         VARCHAR(255),
-    size DOUBLE,
+    size         DOUBLE,
     floor        INTEGER,
     floor_level  VARCHAR(255),
     structure    VARCHAR(255),
@@ -86,4 +87,14 @@ CREATE TABLE custom_checklist_question
     modified_at TIMESTAMP(6),
     deleted     BOOLEAN,
     FOREIGN KEY (user_id) references users (id)
+);
+
+CREATE TABLE checklist_like
+(
+    id           BIGINT AUTO_INCREMENT PRIMARY KEY,
+    checklist_id BIGINT,
+    created_at   TIMESTAMP(6),
+    modified_at  TIMESTAMP(6),
+    deleted      BOOLEAN,
+    FOREIGN KEY (checklist_id) REFERENCES checklist (id)
 );

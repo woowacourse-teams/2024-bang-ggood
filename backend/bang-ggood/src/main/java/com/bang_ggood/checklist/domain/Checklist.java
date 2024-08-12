@@ -70,7 +70,7 @@ public class Checklist extends BaseEntity {
         this.summary = summary;
         this.occupancyMonth = occupancyMonth;
         this.occupancyPeriod = occupancyPeriod;
-        validateMemo();
+        validateMemoLength();
     }
 
     public Checklist(Integer deposit, Integer rent, Integer contractTerm, String realEstate,
@@ -90,7 +90,7 @@ public class Checklist extends BaseEntity {
         this.realEstate = updateChecklist.realEstate;
     }
 
-    private void validateMemo() {
+    private void validateMemoLength() {
         if (memo.length() > MEMO_MAX_LENGTH) {
             throw new BangggoodException(ExceptionCode.CHECKLIST_MEMO_INVALID_LENGTH);
         }

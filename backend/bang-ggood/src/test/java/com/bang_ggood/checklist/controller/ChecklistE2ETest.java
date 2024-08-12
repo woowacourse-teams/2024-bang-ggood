@@ -8,6 +8,7 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.repository.ChecklistLikeRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.checklist.service.ChecklistService;
@@ -36,6 +37,8 @@ class ChecklistE2ETest extends AcceptanceTest {
     private RoomRepository roomRepository;
     @Autowired
     private CustomChecklistQuestionRepository customChecklistQuestionRepository;
+    @Autowired
+    private ChecklistLikeRepository checklistLikeRepository;
 
     @DisplayName("체크리스트 방 정보 작성 성공")
     @Test
@@ -205,6 +208,9 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("커스텀 체크리스트 업데이트 성공")
     @Test
     void updateCustomChecklist() {
+        Map<String, List<Integer>> params = new HashMap<>();
+        params.put("questionIds", List.of(1, 3, 5, 7, 9, 14, 21, 30));
+
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
@@ -224,6 +230,21 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
                 .when().delete("/checklists/" + saved.getId())
+                .then().log().all()
+                .statusCode(204);
+    }
+
+    @DisplayName("체크리스트 좋아요 삭제 성공")
+    @Test
+    void deleteChecklistLikeByChecklistId() {
+        roomRepository.save(RoomFixture.ROOM_1);
+        Checklist saved = checklistRepository.save(ChecklistFixture.CHECKLIST1);
+        checklistLikeRepository.save(ChecklistFixture.CHECKLIST_LIKE_1);
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .when().delete("/checklists/" + saved.getId() + "/like")
                 .then().log().all()
                 .statusCode(204);
     }

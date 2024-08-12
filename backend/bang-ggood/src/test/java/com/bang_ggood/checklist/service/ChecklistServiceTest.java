@@ -5,6 +5,8 @@ import com.bang_ggood.category.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.CustomChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.ChecklistLike;
+import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.CustomChecklistQuestion;
 import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
@@ -440,5 +442,31 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         assertThatThrownBy(() -> checklistService.deleteChecklistById(-1))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
+    }
+
+    @DisplayName("체크리스트 좋아요 삭제 성공")
+    @Test
+    void deleteChecklistLikeByChecklistId() {
+        // given
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1);
+        ChecklistLike checklistLike = checklistLikeRepository.save(ChecklistFixture.CHECKLIST_LIKE_1);
+
+        // when
+        checklistService.deleteChecklistLikeByChecklistId(USER1, checklist.getId());
+
+        // then
+        assertThat(checklistLikeRepository.existsById(checklistLike.getId())).isFalse();
+    }
+
+    @DisplayName("체크리스트 좋아요 삭제 실패 : 체크리스트 좋아요가 없는 경우")
+    @Test
+    void deleteChecklistLikeByChecklistId_notFound_exception() {
+        // given
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1);
+
+        // when & then
+        assertThatThrownBy(() -> checklistService.deleteChecklistLikeByChecklistId(USER1, checklist.getId()))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.LIKE_NOT_EXISTS.getMessage());
     }
 }

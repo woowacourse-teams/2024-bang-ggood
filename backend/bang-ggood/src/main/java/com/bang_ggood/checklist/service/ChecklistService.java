@@ -336,7 +336,7 @@ public class ChecklistService {
     public void deleteChecklistLikeByChecklistId(User user, long checklistId) {
         Checklist checklist = checklistRepository.getById(checklistId);
         validateChecklistOwnership(user, checklist);
-        ChecklistLike checklistLike = checklistLikeRepository.getByChecklist(checklist);
+        ChecklistLike checklistLike = checklistLikeRepository.getByChecklistId(checklistId);
 
         checklistLikeRepository.deleteById(checklistLike.getId());
     }

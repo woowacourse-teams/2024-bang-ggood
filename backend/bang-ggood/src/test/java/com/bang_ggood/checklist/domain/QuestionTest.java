@@ -4,23 +4,41 @@ import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class QuestionTest {
 
+    @DisplayName("질문 ID가 고유한 값인 확인")
+    @Test
+    void questionId_unique() {
+        // given & when
+        List<Integer> questionIds = Arrays.stream(Question.values())
+                .map(Question::getId)
+                .toList();
+
+        Set<Integer> setQuestionIds = new HashSet<>(questionIds);
+
+        // then
+        assertThat(questionIds).hasSize(setQuestionIds.size());
+    }
+
     @DisplayName("질문 아이디를 통해 질문 찾기 성공")
     @Test
     void fromId() {
         //given
-        int questionId = Question.WINDOW_7.getId();
+        int questionId = Question.BATHROOM_1.getId();
 
         //when
         Question question = Question.fromId(questionId);
 
         //then
-        assertThat(question).isEqualTo(Question.WINDOW_7);
+        assertThat(question).isEqualTo(Question.BATHROOM_1);
     }
 
     @DisplayName("질문 아이디를 통해 질문 찾기 실패 : 유효하지 않은 질문 아이디일 경우")

@@ -1,7 +1,7 @@
 import { createStore } from 'zustand';
 
 import { RoomInfo } from '@/types/room';
-import { isNumericValidator, lengthValidator, Validator } from '@/utils/validators';
+import { isNumericValidator, lengthValidator, nonNegativeValidator, Validator } from '@/utils/validators';
 
 interface RoomInfoAction {
   reset: () => void;
@@ -18,34 +18,35 @@ interface RoomInfoAction {
 export const initialRoomInfo: RoomInfo = {
   roomName: undefined,
   address: undefined,
+  station: undefined,
   deposit: undefined,
   rent: undefined,
-  contractTerm: undefined,
-  floor: undefined,
-  station: undefined,
   walkingTime: undefined,
-  realEstate: undefined,
-  type: undefined,
   size: undefined,
+  floor: undefined,
   floorLevel: undefined,
+  type: undefined,
   structure: undefined,
+  contractTerm: undefined,
+  realEstate: undefined,
 } as const;
 
 const validatorSet = {
   roomName: [lengthValidator(20)],
   address: [],
-  deposit: [isNumericValidator],
-  rent: [isNumericValidator],
-  contractTerm: [isNumericValidator],
+  deposit: [isNumericValidator, nonNegativeValidator],
+  rent: [isNumericValidator, nonNegativeValidator],
+  contractTerm: [isNumericValidator, nonNegativeValidator],
   station: [],
   walkingTime: [isNumericValidator],
-  realEstate: [],
   type: [],
   size: [isNumericValidator],
   floor: [isNumericValidator],
   floorLevel: [],
   structure: [],
+  realEstate: [],
 } satisfies Record<string, Validator<string>[] | Validator<number>[]>;
+
 const initialErrorMessages = Object.fromEntries(Object.entries(initialRoomInfo).map(([key]) => ['E_' + key, '']));
 
 type PrefixWithE<T> = {

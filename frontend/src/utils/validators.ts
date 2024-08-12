@@ -13,9 +13,9 @@ export const inRangeValidator = (from: number, to: number): Validator<number> =>
   errorMessage: `${from}이상 ${to}이하의 숫자만 입력해주세요.`,
 });
 
-export const positiveValidator: Validator<number> = {
-  validate: value => value > 0,
-  errorMessage: '양수만 입력해주세요.',
+export const nonNegativeValidator: Validator<number> = {
+  validate: value => value >= 0,
+  errorMessage: '음수가 아닌 수를 입력해주세요.',
 };
 
 export const isNumericValidator: Validator<number> = {

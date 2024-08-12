@@ -24,7 +24,7 @@ import java.util.Objects;
 @Entity
 public class Checklist extends BaseEntity {
 
-    public static final int MEMO_MAX_LENGTH = 1000;
+    private static final int MEMO_MAX_LENGTH = 1000;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -29,7 +29,7 @@ public class Room extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    private Integer size;
+    private Double size;
 
     private Integer floor;
 
@@ -42,7 +42,7 @@ public class Room extends BaseEntity {
     protected Room() {
     }
 
-    public Room(String name, String station, Integer walkingTime, String address, Type type, Integer size,
+    public Room(String name, String station, Integer walkingTime, String address, Type type, Double size,
                 Integer floor, FloorLevel floorLevel, Structure structure) {
         this.name = name;
         this.station = station;
@@ -76,14 +76,6 @@ public class Room extends BaseEntity {
         return name;
     }
 
-    public Integer getFloor() {
-        return floor;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
     public String getStation() {
         return station;
     }
@@ -92,12 +84,20 @@ public class Room extends BaseEntity {
         return walkingTime;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
     public Type getType() {
         return type;
     }
 
-    public Integer getSize() {
+    public Double getSize() {
         return size;
+    }
+
+    public Integer getFloor() {
+        return floor;
     }
 
     public FloorLevel getFloorLevel() {
@@ -107,7 +107,6 @@ public class Room extends BaseEntity {
     public Structure getStructure() {
         return structure;
     }
-
 
     private void validateFloorAndLevel() {
         if (floorLevel != FloorLevel.GROUND && floor != null) {

@@ -4,7 +4,7 @@ import com.bang_ggood.checklist.domain.Checklist;
 
 public record SelectedRoomResponse(String roomName, Integer deposit, Integer rent, Integer contractTerm, Integer floor,
                                    String address, String station, Integer walkingTime, String realEstate,
-                                   String type, Integer size, String floorLevel, String structure) {
+                                   String type, Double size, String floorLevel, String structure) {
 
     public static SelectedRoomResponse of(Checklist checklist) {
         return new SelectedRoomResponse(checklist.getRoomName(), checklist.getDeposit(), checklist.getRent(),

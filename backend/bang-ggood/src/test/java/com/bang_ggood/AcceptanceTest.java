@@ -20,15 +20,13 @@ import static com.bang_ggood.user.UserFixture.USER1;
 @Sql(scripts = {"/schema-test.sql", "/data-test.sql"})
 public abstract class AcceptanceTest {
 
+    protected ResponseCookie responseCookie;
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
     @Autowired
     private CookieProvider cookieProvider;
     @Autowired
     private UserRepository userRepository;
-
-    protected ResponseCookie responseCookie;
-
     @LocalServerPort
     private int port;
 

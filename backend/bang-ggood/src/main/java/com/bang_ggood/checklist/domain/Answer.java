@@ -12,6 +12,6 @@ public enum Answer {
         return Arrays.stream(Answer.values())
                 .filter(value -> value.name().equals(grade))
                 .findFirst()
-                .orElseThrow(() -> new BangggoodException(ExceptionCode.GRADE_INVALID));
+                .orElseThrow(() -> new BangggoodException(ExceptionCode.ANSWER_INVALID));
     }
 }

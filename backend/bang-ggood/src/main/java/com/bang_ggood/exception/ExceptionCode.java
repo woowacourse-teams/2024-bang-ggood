@@ -20,7 +20,7 @@ public enum ExceptionCode {
     USER_NOT_FOUND(HttpStatus.BAD_REQUEST, "유저가 존재하지 않습니다."),
 
     // Answer
-    GRADE_INVALID(HttpStatus.BAD_REQUEST, "점수가 유효하지 않습니다."),
+    ANSWER_INVALID(HttpStatus.BAD_REQUEST, "점수가 유효하지 않습니다."),
 
     // Checklist
     CHECKLIST_COMPARISON_INVALID_COUNT(HttpStatus.BAD_REQUEST, "비교할 체크리스트 개수가 유효하지 않습니다."),

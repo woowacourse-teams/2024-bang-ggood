@@ -1,8 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import styled from '@emotion/styled';
+import { useCallback, useEffect, useRef } from 'react';
 
 import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
 import loadPostcode from '@/components/NewChecklist/AddressModal/loadPostcode';
+import useModalOpen from '@/hooks/useModalOpen';
 import { Address, Postcode, PostcodeOptions } from '@/types/address';
 
 declare global {
@@ -15,7 +17,12 @@ declare global {
 
 const scriptUrl = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
 
-const DaumAddressModal = () => {
+interface Props {
+  setAddress: (address: string) => void;
+}
+
+const DaumAddressModal = ({ setAddress }: Props) => {
+  const { isModalOpen, modalOpen, modalClose } = useModalOpen();
   const postcodeContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -25,14 +32,15 @@ const DaumAddressModal = () => {
   }, []);
 
   const openPostcodeEmbed = useCallback(() => {
-    setIsOpen(true);
+    modalOpen();
     if (window.daum?.Postcode && postcodeContainerRef.current) {
       new window.daum.Postcode({
         width: '100%',
         height: '600px',
         oncomplete: (data: Address) => {
           // TODO: 위도, 경도까지 보내주기
-          console.log(data); // 검색 결과 데이터 출력
+          setAddress(data.address);
+          modalClose();
         },
       }).embed(postcodeContainerRef.current, { q: '' });
     } else {
@@ -40,14 +48,12 @@ const DaumAddressModal = () => {
     }
   }, []);
 
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
     <>
-      <Button size="small" color="dark" label="주소찾기" isSquare={true} onClick={openPostcodeEmbed} />
-      <Modal position="bottom" isOpen={isOpen} onClose={() => setIsOpen(false)}>
+      <S.AddressButton size="xSmall" color="dark" label="주소찾기" isSquare={true} onClick={openPostcodeEmbed} />
+      <Modal position="bottom" isOpen={isModalOpen} onClose={modalClose}>
         <Modal.body>
-          <div ref={postcodeContainerRef} style={{ width: '100%' }} />
+          <div ref={postcodeContainerRef} style={{ width: '100%', marginTop: '10px' }} />
         </Modal.body>
       </Modal>
     </>
@@ -55,3 +61,12 @@ const DaumAddressModal = () => {
 };
 
 export default DaumAddressModal;
+
+const S = {
+  AddressButton: styled(Button)`
+    width: 90px;
+    padding: 5px;
+
+    font-size: ${({ theme }) => theme.text.size.xSmall};
+  `,
+};

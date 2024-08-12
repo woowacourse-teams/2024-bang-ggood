@@ -8,13 +8,10 @@ import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
 import { InputChangeEvent } from '@/components/_common/Input/Input';
 import RadioGroup from '@/components/_common/RadioGroup/RadioGroup';
+import { roomFloorLevels, roomStructures, roomTypes } from '@/constants/roomInfo';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 import { RoomInfo, RoomInfoName } from '@/types/room';
-
-const roomTypes = ['빌라', '오피스텔', '아파트', '기타'];
-const roomStructures = ['오픈형 원룸', '분리형 원룸', '투룸', '쓰리룸 이상'];
-const roomFloorLevels = ['지상', '반지하/지하', '옥탑'];
 
 const NewChecklistInfoTemplate = () => {
   const { actions, errorMessage, roomInfo } = useStore(checklistRoomInfoStore);
@@ -33,7 +30,7 @@ const NewChecklistInfoTemplate = () => {
         <FormField>
           <FormField.Label label="방 이름" required={true} />
           <FormField.Input placeholder="" onChange={actions.onChange} name="roomName" value={roomInfo.roomName} />
-          <FormField.P value={errorMessage.roomName ?? ''} />
+          <FormField.ErrorMessage value={errorMessage.roomName ?? ''} />
         </FormField>
         {/* 주소 */}
         <FormField>
@@ -42,12 +39,12 @@ const NewChecklistInfoTemplate = () => {
             <S.CustomInput onChange={actions.onChange} name="address" value={roomInfo.address} />
             <S.AddressButton isSquare={true} label="주소찾기" size="medium" color="dark" />
           </S.FlexHorizontal>
-          <FormField.P value={errorMessage.address ?? ''} />
+          <FormField.ErrorMessage value={errorMessage.address ?? ''} />
         </FormField>
         {/* 교통편 */}
         <S.FlexVertical gap="15px">
           <FormField.Label label="가까운 교통편" />
-          <FormField.P value="주소를 추가하면 가까운 역을 찾아드려요!" />
+          <FormField.ErrorMessage value="주소를 추가하면 가까운 역을 찾아드려요!" />
         </S.FlexVertical>
         {/* 보증금 월세 */}
         <FormField>
@@ -57,7 +54,7 @@ const NewChecklistInfoTemplate = () => {
             <S.CustomLabel label=" / " />
             <S.CustomInput placeholder="" onChange={actions.onChange} type="number" name="rent" value={roomInfo.rent} />
           </S.FlexHorizontal>
-          <FormField.P value={errorMessage.deposit || errorMessage.rent || ''} />
+          <FormField.ErrorMessage value={errorMessage.deposit || errorMessage.rent || ''} />
         </FormField>
         {/* 방 종류 */}
         <S.FlexVertical>
@@ -96,7 +93,7 @@ const NewChecklistInfoTemplate = () => {
           <S.FlexHorizontal>
             <S.CustomInput placeholder="" type="number" onChange={actions.onChange} name="size" value={roomInfo.size} />
           </S.FlexHorizontal>
-          <FormField.P value={errorMessage.size ?? ''} />
+          <FormField.ErrorMessage value={errorMessage.size ?? ''} />
         </FormField>
         {/* 층수 */}
         <FormField>
@@ -117,7 +114,7 @@ const NewChecklistInfoTemplate = () => {
               ))}
             </S.RadioGroup>
           </S.FlexHorizontal>
-          <FormField.P value={errorMessage.floor ?? ''} />
+          <FormField.ErrorMessage value={errorMessage.floor ?? ''} />
         </FormField>
         {/* 계약 기간 */}
         <S.FlexHorizontal>
@@ -140,7 +137,7 @@ const CustomFormField = ({ label, name, values, required, type = 'string', onCha
   <S.CustomFormField key={label}>
     <FormField.Label label={label} required={required} />
     <FormField.Input placeholder="" width="full" type={type} onChange={onChange} name={name} value={values[name]} />
-    <FormField.P value={values[('E_' + name) as keyof RoomInfo] as string} />
+    <FormField.ErrorMessage value={values[name as keyof RoomInfo] as string} />
   </S.CustomFormField>
 );
 

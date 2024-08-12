@@ -46,8 +46,8 @@ const S = {
   ErrorMessage: styled.p`
     height: 10px;
 
-    color: black;
-    font-size: ${({ theme }) => theme.text.size.small};
+    color: ${({ theme }) => theme.palette.red500};
+    font-size: ${({ theme }) => theme.text.size.xSmall};
   `,
 };
 export default FormField;

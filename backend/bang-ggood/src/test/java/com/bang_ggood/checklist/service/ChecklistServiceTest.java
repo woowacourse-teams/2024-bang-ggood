@@ -343,6 +343,21 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.QUESTION_DIFFERENT.getMessage());
     }
 
+    @DisplayName("체크리스트 수정 실패 : 해당 유저의 체크리스트가 아닐 경우")
+    @Test
+    void createChecklist_notOwnedBy_exception() {
+        //given
+        long checklistId = checklistService.createChecklist(UserFixture.USER1,
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+
+        //when & then
+        assertThatThrownBy(
+                () -> checklistService.updateChecklistById(UserFixture.USER2, checklistId,
+                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER.getMessage());
+    }
+
     @DisplayName("커스텀 체크리스트 조회 성공")
     @Test
     void readCustomChecklistQuestions() {

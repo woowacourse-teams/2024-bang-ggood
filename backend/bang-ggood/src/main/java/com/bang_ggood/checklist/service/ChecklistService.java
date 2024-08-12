@@ -272,6 +272,7 @@ public class ChecklistService {
     @Transactional
     public void updateChecklistById(User user, long id, ChecklistRequest checklistRequest) {
         Checklist checklist = checklistRepository.getById(id);
+        validateChecklistOwnership(user, checklist);
 
         Room room = checklist.getRoom();
         room.change(checklistRequest.toRoomEntity());

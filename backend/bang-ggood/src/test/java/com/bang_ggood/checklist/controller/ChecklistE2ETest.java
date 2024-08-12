@@ -37,7 +37,7 @@ class ChecklistE2ETest extends AcceptanceTest {
     @Autowired
     private RoomRepository roomRepository;
 
-    @DisplayName("체크리스트 방 정보 작성 성공")
+    @DisplayName("체크리스트 작성 성공")
     @Test
     void createChecklist() {
         RestAssured.given().log().all()
@@ -49,7 +49,7 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .statusCode(201);
     }
 
-    @DisplayName("체크리스트 방 정보 작성 실패: 방 이름을 넣지 않은 경우")
+    @DisplayName("체크리스트 작성 실패: 방 이름을 넣지 않은 경우")
     @Test
     void createChecklist_noRoomName_exception() {
         RestAssured.given().log().all()
@@ -61,7 +61,7 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .statusCode(400);
     }
 
-    @DisplayName("체크리스트 방 정보 작성 실패: 질문 ID를 넣지 않은 경우")
+    @DisplayName("체크리스트 작성 실패: 질문 ID를 넣지 않은 경우")
     @Test
     void createChecklist_noQuestionId_exception() {
         RestAssured.given().log().all()

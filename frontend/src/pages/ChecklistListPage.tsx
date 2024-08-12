@@ -1,13 +1,12 @@
 import styled from '@emotion/styled';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Plus } from '@/assets/assets';
 import FloatingButton from '@/components/_common/Button/FloatingButton';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import ChecklistPreviewCard from '@/components/ChecklistList/ChecklistPreviewCard';
-import CompareBanner from '@/components/ChecklistList/CompareBanner';
-import EditBanner from '@/components/ChecklistList/EditBanner';
+import CustomBanner from '@/components/ChecklistList/CustomBanner';
 import NoChecklistTemplate from '@/components/ChecklistList/NoChecklistTemplate';
 import FooterDefault from '@/components/FooterDefault';
 import { ROUTE_PATH } from '@/constants/routePath';
@@ -20,12 +19,8 @@ const ChecklistListPage = () => {
 
   const { data: checklistList, isLoading, error } = useGetChecklistListQuery();
 
-  const handleClickMoveEditPage = () => {
+  const handleClickMoveCustomPage = () => {
     navigate(ROUTE_PATH.checklistCustom);
-  };
-
-  const handleClickMoveCompareSelectPage = () => {
-    navigate(ROUTE_PATH.roomCompareSelect);
   };
 
   const handleClickFloatingButton = () => {
@@ -44,17 +39,14 @@ const ChecklistListPage = () => {
     <>
       <Header center={<Header.Text>체크리스트</Header.Text>} />
       <S.FlexBox>
-        <EditBanner onClick={handleClickMoveEditPage} />
-        <CompareBanner onClick={handleClickMoveCompareSelectPage} />
+        <CustomBanner onClick={handleClickMoveCustomPage} />
       </S.FlexBox>
-      <Layout style={{ padding: '0 16px' }}>
+      <Layout>
         <S.ListBox>
           {checklistList.length ? (
             <>
               {checklistList?.map((checklist: ChecklistPreview) => (
-                <Link to={ROUTE_PATH.checklistOne(checklist.checklistId)} key={checklist.checklistId}>
-                  <ChecklistPreviewCard checklist={checklist} />
-                </Link>
+                <ChecklistPreviewCard key={checklist.checklistId} checklist={checklist} />
               ))}
             </>
           ) : (
@@ -73,13 +65,12 @@ const ChecklistListPage = () => {
 export default ChecklistListPage;
 
 const S = {
+  FlexBox: styled.div`
+    padding: 0 16px;
+  `,
   ListBox: styled.div`
-    margin-top: 20px;
     ${flexColumn}
     gap: 8px;
     overflow-y: scroll;
-  `,
-  FlexBox: styled.div`
-    display: flex;
   `,
 };

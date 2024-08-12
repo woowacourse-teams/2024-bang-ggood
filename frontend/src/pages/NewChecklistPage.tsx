@@ -22,10 +22,8 @@ const NewChecklistPage = () => {
 
   const { mutate: addChecklist } = useAddChecklistQuery();
 
-  //TODO:  방 기본 정보도 전역 상태로 관리 필요
   /*방 기본 정보 */
-  const { roomInfo } = useStore(checklistRoomInfoStore);
-  // const { values: roomInfo, onChange: onChangeRoomInfo, setValues: setRoomInfo } = useInputs(DefaultRoomInfo);
+  const { roomInfo, actions } = useStore(checklistRoomInfoStore);
 
   const navigate = useNavigate();
 
@@ -76,6 +74,7 @@ const NewChecklistPage = () => {
         {
           onSuccess: () => {
             showToast('체크리스트가 저장되었습니다.');
+            actions.reset();
             navigate(ROUTE_PATH.checklistList);
           },
         },

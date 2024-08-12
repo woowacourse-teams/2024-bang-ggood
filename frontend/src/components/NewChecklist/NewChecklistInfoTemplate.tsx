@@ -8,7 +8,6 @@ import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
 import { InputChangeEvent } from '@/components/_common/Input/Input';
 import RadioGroup from '@/components/_common/RadioGroup/RadioGroup';
-<<<<<<< HEAD
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 import { RoomInfo, RoomInfoName } from '@/types/room';
@@ -19,28 +18,6 @@ const NewChecklistInfoTemplate = () => {
   const handleClickTagButton = useCallback(
     (name: keyof RoomInfo, value: string) => {
       actions.set(name, value);
-=======
-import { flexCenter, flexColumn, flexRow } from '@/styles/common';
-import { RoomInfo, RoomInfoName } from '@/types/room';
-
-interface Props {
-  roomInfo: RoomInfo;
-  onChange: (event: InputChangeEvent) => void;
-  onClickTagButton: (name: string, value: string) => void;
-  setRoomInfo: Dispatch<SetStateAction<RoomInfo>>;
-}
-const NewChecklistInfoTemplate = ({ roomInfo, setRoomInfo, onChange: onChangeForForm, onClickTagButton }: Props) => {
-  const [roomSizeUnit, setRoomSizeUnit] = useState('');
-
-  const handleClickRoomSizeUnit = useCallback(
-    (newRoomSizeUnit: string) => {
-      if (roomSizeUnit === newRoomSizeUnit) return;
-      setRoomInfo({
-        ...roomInfo,
-        size: roomSizeUnit === 'm2' ? (roomInfo.size ?? 0) / 3.3 : (roomInfo.size ?? 0) * 3.3,
-      });
-      setRoomSizeUnit(newRoomSizeUnit);
->>>>>>> 76802faf0a753aabbb02f76acfaea0dd79cb5aec
     },
     [actions],
   );
@@ -152,11 +129,7 @@ const NewChecklistInfoTemplate = ({ roomInfo, setRoomInfo, onChange: onChangeFor
           />
         </S.FlexHorizontal>
         {/* 부동산 이름 */}
-<<<<<<< HEAD
         <CustomFormField label="부동산 이름" onChange={actions.onChange} values={roomInfo} name="realEstate" />
-=======
-        <CustomFormField label="부동산 이름" onChange={onChangeForForm} values={roomInfo} name="realEstate" />
->>>>>>> 76802faf0a753aabbb02f76acfaea0dd79cb5aec
       </S.Container>
     </S.ContentWrapper>
   );

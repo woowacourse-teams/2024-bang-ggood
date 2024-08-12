@@ -73,6 +73,34 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .statusCode(400);
     }
 
+
+    @DisplayName("체크리스트 좋아요 추가 성공")
+    @Test
+    void createChecklistLike() {
+        long checklistId = checklistService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .when().post("/checklists/" + checklistId + "/like")
+                .then().log().all()
+                .statusCode(204);
+    }
+
+    @DisplayName("체크리스트 좋아요 추가 실패 : 이미 좋아요가 추가가 된 체크리스트인 경우")
+    @Test
+    void createChecklistLike_checklistAlreadyLiked_exception() {
+        long checklistId = checklistService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        checklistService.createChecklistLike(USER1, checklistId);
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .when().post("/checklists/" + checklistId + "/like")
+                .then().log().all()
+                .statusCode(409);
+    }
+
     @DisplayName("체크리스트 질문 조회 성공")
     @Test
     void readChecklistQuestions() {

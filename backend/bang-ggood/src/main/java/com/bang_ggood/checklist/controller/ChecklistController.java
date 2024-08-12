@@ -30,9 +30,16 @@ public class ChecklistController {
     }
 
     @PostMapping("/checklists")
-    public ResponseEntity<Void> createChecklist(@AuthPrincipal User user, @Valid @RequestBody ChecklistRequest checklistRequest) {
+    public ResponseEntity<Void> createChecklist(@AuthPrincipal User user,
+                                                @Valid @RequestBody ChecklistRequest checklistRequest) {
         long checklistId = checklistService.createChecklist(user, checklistRequest);
         return ResponseEntity.created(URI.create("/checklists/" + checklistId)).build();
+    }
+
+    @PostMapping("/checklists/{id}/like")
+    public ResponseEntity<Void> createChecklistLike(@AuthPrincipal User user, @PathVariable("id") long id) {
+        checklistService.createChecklistLike(user, id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/checklists/questions")
@@ -41,7 +48,8 @@ public class ChecklistController {
     }
 
     @GetMapping("/checklists/{id}")
-    public ResponseEntity<SelectedChecklistResponse> readChecklistById(@AuthPrincipal User user, @PathVariable("id") long id) {
+    public ResponseEntity<SelectedChecklistResponse> readChecklistById(@AuthPrincipal User user,
+                                                                       @PathVariable("id") long id) {
         return ResponseEntity.ok(checklistService.readChecklistById(user, id));
     }
 
@@ -51,7 +59,8 @@ public class ChecklistController {
     }
 
     @GetMapping("/custom-checklist/all")
-    public ResponseEntity<CategoryCustomChecklistQuestionsResponse> readAllCustomChecklistQuestions(@AuthPrincipal User user) {
+    public ResponseEntity<CategoryCustomChecklistQuestionsResponse> readAllCustomChecklistQuestions(
+            @AuthPrincipal User user) {
         return ResponseEntity.ok(checklistService.readAllCustomChecklistQuestions(user));
     }
 
@@ -65,7 +74,8 @@ public class ChecklistController {
     }
 
     @PutMapping("/custom-checklist")
-    public ResponseEntity<Void> updateCustomChecklist(@AuthPrincipal User user, @RequestBody CustomChecklistUpdateRequest request) {
+    public ResponseEntity<Void> updateCustomChecklist(@AuthPrincipal User user,
+                                                      @RequestBody CustomChecklistUpdateRequest request) {
         checklistService.updateCustomChecklist(user, request);
         return ResponseEntity.noContent().build();
     }

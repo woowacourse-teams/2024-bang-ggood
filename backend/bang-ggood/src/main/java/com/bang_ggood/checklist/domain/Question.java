@@ -67,7 +67,7 @@ public enum Question {
 
     public static List<ChecklistQuestion> filter(Category category, List<ChecklistQuestion> questions) {
         return questions.stream()
-                .filter(question -> question.getQuestion().isCategory(category) && question.getGrade() != null)
+                .filter(question -> question.getQuestion().isCategory(category) && question.getAnswer() != null)
                 .toList();
     }
 

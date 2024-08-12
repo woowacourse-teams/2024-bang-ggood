@@ -208,9 +208,6 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("커스텀 체크리스트 업데이트 성공")
     @Test
     void updateCustomChecklist() {
-        Map<String, List<Integer>> params = new HashMap<>();
-        params.put("questionIds", List.of(1, 3, 5, 7, 9, 14, 21, 30));
-
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))

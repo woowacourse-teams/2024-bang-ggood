@@ -16,7 +16,7 @@ CREATE TABLE room
     walking_time INTEGER,
     address      VARCHAR(255),
     type         VARCHAR(255),
-    size DOUBLE,
+    size         DOUBLE,
     floor        INTEGER,
     floor_level  VARCHAR(255),
     structure    VARCHAR(255),

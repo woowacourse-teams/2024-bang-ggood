@@ -129,6 +129,7 @@ public class ChecklistService {
                 .map(CustomChecklistQuestion::getQuestion)
                 .collect(Collectors.groupingBy(Question::getCategory));
 
+        // TODO entrySet 문제 해결
         List<CategoryQuestionsResponse> categoryQuestionsResponses = categoryQuestions.entrySet().stream()
                 .map(categoryQuestionEntry -> CategoryQuestionsResponse.of(
                         categoryQuestionEntry.getKey(),

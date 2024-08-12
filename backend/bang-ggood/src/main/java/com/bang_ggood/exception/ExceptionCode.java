@@ -26,6 +26,7 @@ public enum ExceptionCode {
     CHECKLIST_COMPARISON_INVALID_COUNT(HttpStatus.BAD_REQUEST, "비교할 체크리스트 개수가 유효하지 않습니다."),
     CHECKLIST_NOT_FOUND(HttpStatus.BAD_REQUEST, "체크리스트가 존재하지 않습니다."),
     CHECKLIST_MEMO_INVALID_LENGTH(HttpStatus.BAD_REQUEST, "체크리스트 메모는 1000자 이하여야 합니다."),
+    CHECKLIST_NOT_OWNED_BY_USER(HttpStatus.BAD_REQUEST, "유저의 체크리스트가 아닙니다."),
 
     // CustomChecklist
     CUSTOM_CHECKLIST_QUESTION_EMPTY(HttpStatus.BAD_REQUEST, "커스텀 질문 개수가 유효하지 않습니다."),
@@ -47,6 +48,9 @@ public enum ExceptionCode {
 
     // OccupancyPeriod
     OCCUPANCY_PERIOD_INVALID(HttpStatus.BAD_REQUEST, "입주 가능 기간은 초, 중, 말 혹은 null 값만 가능합니다."),
+
+    //like
+    LIKE_ALREADY_EXISTS(HttpStatus.CONFLICT, "체크리스트가 이미 좋아요 상태입니다"),
 
     // Auth
     AUTHENTICATION_COOKIE_EMPTY(HttpStatus.UNAUTHORIZED, "인증 정보가 존재하지 않습니다."),

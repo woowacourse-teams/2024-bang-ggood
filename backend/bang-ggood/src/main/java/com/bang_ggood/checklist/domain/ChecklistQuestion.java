@@ -58,7 +58,7 @@ public class ChecklistQuestion extends BaseEntity {
         return question;
     }
 
-    public Answer getGrade() {
+    public Answer getAnswer() {
         return answer;
     }
 

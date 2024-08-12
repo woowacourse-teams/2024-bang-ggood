@@ -1,8 +1,9 @@
 package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.IntegrationTestSupport;
-import com.bang_ggood.category.domain.Category;
+import com.bang_ggood.category.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.CustomChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.CustomChecklistQuestion;
 import com.bang_ggood.checklist.domain.Question;
@@ -167,14 +168,19 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @DisplayName("체크리스트 질문 조회 성공")
     @Test
     void readChecklistQuestions() {
-        // TODO : 유저 생성 시 default 질문을 DB에 저장하는 기능 추가
-        checklistService.updateCustomChecklist(USER1,
-                new CustomChecklistUpdateRequest(List.of(1, 4, 6, 7, 8, 12, 18, 19, 23, 25, 31)));
+        // given
+        customChecklistQuestionRepository.saveAll(CustomChecklistFixture.CUSTOM_CHECKLIST_QUESTION_DEFAULT);
+
         // given & when
         ChecklistQuestionsResponse checklistQuestionsResponse = checklistService.readChecklistQuestions(USER1);
 
-        // then // Category.OPTION does not have default question
-        assertThat(checklistQuestionsResponse.categories().size()).isEqualTo(Category.values().length - 1);
+        // then
+        int questionsSize = 0;
+        for (CategoryQuestionsResponse categoryQuestionsResponse : checklistQuestionsResponse.categories()) {
+            questionsSize += categoryQuestionsResponse.questions().size();
+        }
+
+        assertThat(questionsSize).isEqualTo(CustomChecklistFixture.CUSTOM_CHECKLIST_QUESTION_DEFAULT.size());
     }
 
     @DisplayName("작성된 체크리스트 조회 성공")
@@ -346,8 +352,8 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void readCustomChecklistQuestions() {
         // given
-        CustomChecklistQuestion question1 = new CustomChecklistQuestion(USER1, Question.CLEAN_5);
-        CustomChecklistQuestion question2 = new CustomChecklistQuestion(USER1, Question.AMENITY_12);
+        CustomChecklistQuestion question1 = new CustomChecklistQuestion(USER1, Question.ROOM_CONDITION_5);
+        CustomChecklistQuestion question2 = new CustomChecklistQuestion(USER1, Question.BATHROOM_1);
         List<CustomChecklistQuestion> questions = List.of(question1, question2);
         customChecklistQuestionRepository.saveAll(questions);
 

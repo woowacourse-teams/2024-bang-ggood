@@ -25,6 +25,12 @@ public class ChecklistFixture {
             1000, 50, 12, "방끗공인중개사"
     );
 
+    public static final Checklist CHECKLIST1_WITH_USER1_ID = new Checklist(
+            UserFixture.USER1_WITH_ID,
+            RoomFixture.ROOM_1,
+            1000, 50, 12, "방끗공인중개사"
+    );
+
     public static final QuestionRequest QUESTION_1_CREATE_REQUEST = new QuestionRequest(
             1, "GOOD"
     );

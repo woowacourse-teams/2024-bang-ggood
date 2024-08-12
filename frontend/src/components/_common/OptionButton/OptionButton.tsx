@@ -29,17 +29,62 @@ const Box = styled.div`
 `;
 
 const Icon = styled.svg`
-  width: 65px;
-  height: 65px;
+  width: 85px;
+  height: 85px;
 
-  @media (width >= 400px) {
+  @media (width <= 596px) {
+    width: 80px;
+    height: 80px;
+  }
+
+  @media (width <= 570px) {
+    width: 70px;
+    height: 70px;
+  }
+
+  @media (width <= 514px) {
+    width: 85px;
+    height: 85px;
+  }
+
+  @media (width <= 488px) {
     width: 75px;
     height: 75px;
   }
 
-  @media (width >= 600px) {
+  @media (width <= 445px) {
     width: 70px;
     height: 70px;
+  }
+
+  @media (width <= 435px) {
+    width: 90px;
+    height: 90px;
+  }
+
+  @media (width <= 397px) {
+    width: 85px;
+    height: 85px;
+  }
+
+  @media (width <= 380px) {
+    width: 80px;
+    height: 80px;
+  }
+
+  @media (width <= 364px) {
+    width: 75px;
+    height: 75px;
+  }
+
+  @media (width <= 347px) {
+    width: 70px;
+    height: 70px;
+  }
+
+  @media (width <= 332px) {
+    width: 60px;
+    height: 60px;
   }
 `;
 

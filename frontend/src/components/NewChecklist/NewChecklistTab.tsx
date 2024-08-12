@@ -11,7 +11,7 @@ const NewChecklistTab = () => {
   }));
 
   const tabsWithBasicInfoAndOptions = [
-    { id: -1, name: '방 기본정보', isCompleted: false },
+    { id: -1, name: '기본정보', isCompleted: false },
     { id: 0, name: '옵션', isCompleted: false },
     ...newChecklistTabsWithCompletion,
   ];

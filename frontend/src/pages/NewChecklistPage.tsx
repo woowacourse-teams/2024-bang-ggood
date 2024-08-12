@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getChecklistQuestions, postChecklist } from '@/apis/checklist';
+import { getChecklistQuestions } from '@/apis/checklist';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
@@ -9,6 +9,7 @@ import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import NewChecklistTab from '@/components/NewChecklist/NewChecklistTab';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_TOAST_DURATION } from '@/constants/system';
+import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
 import useInputs from '@/hooks/useInputs';
 import useToast from '@/hooks/useToast';
 import useChecklistStore from '@/store/useChecklistStore';
@@ -35,6 +36,8 @@ const DefaultRoomInfo: RoomInfo = {
 
 const NewChecklistPage = () => {
   const { showToast } = useToast(DEFAULT_TOAST_DURATION);
+
+  const { mutate: addChecklist } = useAddChecklistQuery();
 
   //TODO:  방 기본 정보도 전역 상태로 관리 필요
 
@@ -80,18 +83,23 @@ const NewChecklistPage = () => {
   };
 
   const handleSubmitChecklist = () => {
-    const fetchNewChecklist = async () => {
-      await postChecklist({
-        room: roomInfo,
-        options: selectedOptions,
-        questions: transformQuestions(checklistCategoryQnA),
-      });
+    const fetchNewChecklist = () => {
+      addChecklist(
+        {
+          room: roomInfo,
+          options: selectedOptions,
+          questions: transformQuestions(checklistCategoryQnA),
+        },
+        {
+          onSuccess: () => {
+            showToast('체크리스트가 저장되었습니다.');
+            navigate(ROUTE_PATH.checklistList);
+          },
+        },
+      );
     };
 
-    fetchNewChecklist().then(() => {
-      showToast('체크리스트가 저장되었습니다.');
-      navigate(ROUTE_PATH.checklistList);
-    });
+    fetchNewChecklist();
   };
 
   const handleClickTagButton = useCallback(

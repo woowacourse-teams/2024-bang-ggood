@@ -3,7 +3,7 @@ import { API_URL } from '@/apis/config';
 export const BASE_URL = API_URL;
 
 export const ENDPOINT = {
-  /* checklist */
+  // checklist
   CHECKLISTS: '/checklists',
   CHECKLIST_QUESTION: '/checklists/questions',
   CHECKLIST_ALL_QUESTION: '/custom-checklist/all',
@@ -14,9 +14,11 @@ export const ENDPOINT = {
     if (id3 !== undefined) return `${url}&id=${id3}`;
     return url;
   },
-  /* category */
+  // like
+  LIKE: (id: number) => `/checklists/${id}/like`,
+  // category
   CATEGORY: '/categories',
   CATEGORY_ADD: '/categories/priority',
-  /* login */
+  // login
   OAUTH: '/oauth/login',
 };

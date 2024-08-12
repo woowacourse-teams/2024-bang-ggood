@@ -1,5 +1,4 @@
 import { AnswerType } from '@/types/answer';
-import { Badge } from '@/types/badge';
 import { CategoryScore } from '@/types/category';
 import { RoomInfo } from '@/types/room';
 
@@ -45,8 +44,10 @@ export interface ChecklistQuestionWithIsSelected extends ChecklistQuestion {
 
 export interface ChecklistPreview extends RoomInfo {
   checklistId: number;
-  badge: Badge[];
   createdAt: string;
+  // TODO: summary roomInfo 에 들어가는지 확인
+  summary: string;
+  isLiked: boolean;
 }
 
 export interface Option {

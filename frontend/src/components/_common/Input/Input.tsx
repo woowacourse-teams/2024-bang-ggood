@@ -14,7 +14,6 @@ const widthSize = {
 interface Props extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   width?: keyof typeof widthSize;
 }
-export type InputChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 
 const Input = ({ width = 'full', value, onChange, ...rest }: Props) => {
   const handleChange = useCallback(

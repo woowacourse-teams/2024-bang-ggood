@@ -1,6 +1,6 @@
 import { createStore } from 'zustand';
 
-import { InputChangeEvent } from '@/components/_common/Input/Input';
+import { InputChangeEvent } from '@/types/event';
 import { RoomInfo } from '@/types/room';
 import { isNumericValidator, lengthValidator, nonNegativeValidator, Validator } from '@/utils/validators';
 

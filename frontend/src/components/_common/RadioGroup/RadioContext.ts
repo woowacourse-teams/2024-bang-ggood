@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { InputChangeEvent } from '@/components/_common/Input/Input';
+import { InputChangeEvent } from '@/types/event';
 
 interface RadioState {
   value: string;

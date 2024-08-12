@@ -6,11 +6,11 @@ import Badge from '@/components/_common/Badge/Badge';
 import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
-import { InputChangeEvent } from '@/components/_common/Input/Input';
 import RadioGroup from '@/components/_common/RadioGroup/RadioGroup';
 import { roomFloorLevels, roomStructures, roomTypes } from '@/constants/roomInfo';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
+import { InputChangeEvent } from '@/types/event';
 import { RoomInfo, RoomInfoName } from '@/types/room';
 
 const NewChecklistInfoTemplate = () => {

@@ -267,7 +267,8 @@ public class ChecklistService {
     }
 
     private UserChecklistPreviewResponse getChecklistPreview(Checklist checklist) {
-        return UserChecklistPreviewResponse.of(checklist);
+        boolean isLiked = checklistLikeRepository.existsByChecklist(checklist);
+        return UserChecklistPreviewResponse.of(checklist, isLiked);
     }
 
     @Transactional

@@ -7,7 +7,7 @@ import { isNumericValidator, lengthValidator, nonNegativeValidator, Validator } 
 interface RoomInfoAction {
   reset: () => void;
   set: (name: keyof typeof validatorSet, value: string | number | undefined) => void;
-  _update: (field: keyof RoomInfo | keyof PrefixWithE<RoomInfo>, value: string | number | undefined) => void;
+  _update: (field: keyof RoomInfo | keyof StringValue<RoomInfo>, value: string | number | undefined) => void;
   _updateErrorMsg: (field: keyof RoomInfo, value: string) => void;
   _updateAfterValidation: <T extends number | string>(
     field: keyof RoomInfo,
@@ -51,12 +51,12 @@ const validatorSet = {
 
 const initialErrorMessages = Object.fromEntries(Object.entries(initialRoomInfo).map(([key]) => ['E_' + key, '']));
 
-type PrefixWithE<T> = {
-  [K in keyof T as `E_${string & K}`]: string;
+type StringValue<T> = {
+  [K in keyof T]: string;
 };
 
 const checklistRoomInfoStore = createStore<
-  { roomInfo: RoomInfo } & { error: PrefixWithE<RoomInfo> } & { actions: RoomInfoAction }
+  { roomInfo: RoomInfo } & { error: StringValue<RoomInfo> } & { actions: RoomInfoAction }
 >((set, get) => ({
   roomInfo: { ...initialRoomInfo },
   error: { ...initialErrorMessages },
@@ -82,7 +82,7 @@ const checklistRoomInfoStore = createStore<
     },
     reset: () => set({ roomInfo: { ...initialRoomInfo }, error: { ...initialErrorMessages } }),
     _update: (name, value) => set({ roomInfo: { ...get().roomInfo, [name]: value } }),
-    _updateErrorMsg: (name, value) => set({ error: { ...get().error, [`E_${name}`]: value } }),
+    _updateErrorMsg: (name, value) => set({ error: { ...get().error, [name]: value } }),
     _updateAfterValidation: (name, value, validators) => {
       const newErrorMessage = validators.reduce(
         (acc, { validate, errorMessage }) => (!validate(value) ? errorMessage : acc),

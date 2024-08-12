@@ -33,7 +33,7 @@ const NewChecklistInfoTemplate = () => {
         <FormField>
           <FormField.Label label="방 이름" required={true} />
           <FormField.Input placeholder="" onChange={actions.onChange} name="roomName" value={roomInfo.roomName} />
-          <FormField.P value={error.E_roomName ?? ''} />
+          <FormField.P value={error.roomName ?? ''} />
         </FormField>
         {/* 주소 */}
         <FormField>
@@ -42,7 +42,7 @@ const NewChecklistInfoTemplate = () => {
             <S.CustomInput onChange={actions.onChange} name="address" value={roomInfo.address} />
             <S.AddressButton isSquare={true} label="주소찾기" size="medium" color="dark" />
           </S.FlexHorizontal>
-          <FormField.P value={error.E_address ?? ''} />
+          <FormField.P value={error.address ?? ''} />
         </FormField>
         {/* 교통편 */}
         <S.FlexVertical gap="15px">
@@ -57,7 +57,7 @@ const NewChecklistInfoTemplate = () => {
             <S.CustomLabel label=" / " />
             <S.CustomInput placeholder="" onChange={actions.onChange} type="number" name="rent" value={roomInfo.rent} />
           </S.FlexHorizontal>
-          <FormField.P value={error.E_deposit || error.E_rent || ''} />
+          <FormField.P value={error.deposit || error.rent || ''} />
         </FormField>
         {/* 방 종류 */}
         <S.FlexVertical>
@@ -96,7 +96,7 @@ const NewChecklistInfoTemplate = () => {
           <S.FlexHorizontal>
             <S.CustomInput placeholder="" type="number" onChange={actions.onChange} name="size" value={roomInfo.size} />
           </S.FlexHorizontal>
-          <FormField.P value={error.E_size ?? ''} />
+          <FormField.P value={error.size ?? ''} />
         </FormField>
         {/* 층수 */}
         <FormField>
@@ -117,7 +117,7 @@ const NewChecklistInfoTemplate = () => {
               ))}
             </S.RadioGroup>
           </S.FlexHorizontal>
-          <FormField.P value={error.E_floor ?? ''} />
+          <FormField.P value={error.floor ?? ''} />
         </FormField>
         {/* 계약 기간 */}
         <S.FlexHorizontal>

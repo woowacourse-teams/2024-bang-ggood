@@ -15,7 +15,7 @@ const widthSize: Record<string, string> = {
 const heightSize: Record<string, string> = {
   small: '32px',
   medium: '100px',
-  large: '180px',
+  large: '400px',
   full: '100%',
 };
 
@@ -51,9 +51,9 @@ const S = {
     ${({ width }) => width && `width: ${width};`};
     ${({ height }) => height && `height: ${height};`};
     padding: 6px 11px;
-    border: 1px solid ${({ $color, theme }) => ($color ? $color : theme.palette.grey100)};
+    border: 2px solid ${({ $color, theme }) => ($color ? $color : theme.palette.grey100)};
 
-    background-color: ${({ theme }) => theme.palette.grey100};
+    background-color: ${({ theme }) => theme.palette.white};
 
     color: ${({ $color, theme }) => ($color ? $color : theme.palette.grey600)};
     font-weight: ${({ theme }) => theme.text.weight.medium};

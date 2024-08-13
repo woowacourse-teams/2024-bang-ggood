@@ -3,12 +3,14 @@ import styled from '@emotion/styled';
 import Layout from '@/components/_common/layout/Layout';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import ChecklistQuestion from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
+import useChecklistStore from '@/store/useChecklistStore';
 import theme from '@/styles/theme';
-import { ChecklistCategoryQnA } from '@/types/checklist';
 
-const NewChecklistTemplate = ({ questions }: { questions: ChecklistCategoryQnA }) => {
+const NewChecklistTemplate = () => {
   const { currentTabId } = useTabContext();
+  const { getCategoryQnA } = useChecklistStore();
 
+  const questions = getCategoryQnA(currentTabId);
   return (
     <Layout bgColor={theme.palette.background} style={{ minHeight: `calc(100vh - 64px)` }}>
       <S.ContentBox>

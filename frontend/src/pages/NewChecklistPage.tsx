@@ -6,11 +6,13 @@ import { getChecklistQuestions } from '@/apis/checklist';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
+import Tabs from '@/components/_common/Tabs/Tabs';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
-import NewChecklistTab from '@/components/NewChecklist/NewChecklistTab';
+import { STORAGE_KEYS } from '@/constants/localStorage';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_TOAST_DURATION } from '@/constants/system';
 import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
+import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import useToast from '@/hooks/useToast';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
@@ -19,7 +21,7 @@ import { ChecklistCategoryQnA } from '@/types/checklist';
 
 const NewChecklistPage = () => {
   const { showToast } = useToast(DEFAULT_TOAST_DURATION);
-
+  const { tabs } = useNewChecklistTabs();
   const { mutate: addChecklist } = useAddChecklistQuery();
 
   /*방 기본 정보 */
@@ -45,6 +47,9 @@ const NewChecklistPage = () => {
 
       // 옵션 선택지 리셋
       resetToDefaultOptions();
+
+      //로컬 스토리지 팁 보이는 여부 리셋
+      localStorage.removeItem(STORAGE_KEYS.TIP);
     };
 
     fetchChecklist();
@@ -92,9 +97,9 @@ const NewChecklistPage = () => {
         right={<Button label={'저장'} size="small" color="dark" onClick={handleSubmitChecklist} />}
       />
       <TabProvider defaultTab={-1}>
-        {/* 카테고리 탭 */}
-        <NewChecklistTab />
-        {/* 체크리스트 작성 */}
+        {/* 체크리스트 작성의 탭 */}
+        <Tabs tabList={tabs} />
+        {/*체크리스트 콘텐츠 섹션*/}
         <NewChecklistContent />
       </TabProvider>
     </>

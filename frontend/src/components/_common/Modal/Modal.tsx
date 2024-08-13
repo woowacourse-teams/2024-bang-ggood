@@ -59,16 +59,27 @@ const Modal = ({
   hasDim = true,
   color,
 }: ModalProps) => {
-  {
-    /*모달 뒤 스크롤 막기*/
-  }
   useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
+    const originalMarginBottom = document.body.style.marginBottom;
+
     if (isOpen && hasDim) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'visible';
     }
-  });
+
+    if (!hasDim && isOpen) {
+      document.body.style.marginBottom = '450px';
+    } else {
+      document.body.style.marginBottom = '0px';
+    }
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.marginBottom = originalMarginBottom;
+    };
+  }, [isOpen, hasDim]);
 
   if (!modalRoot) return null;
 
@@ -119,12 +130,11 @@ const S = {
     align-items: flex-start;
 
     position: fixed;
-
     ${({ $position, $size }) => positionStyles[$position]($size)}
   `,
   ModalInner: styled.div<{ isOpen: boolean }>`
-    width: 100%;
-    padding-top: 12px;
+    width: calc(100% - 24px);
+    padding: 12px;
 
     background-color: ${({ color }) => color ?? 'white'};
 

@@ -14,6 +14,7 @@ import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.checklist.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.CustomChecklistQuestionResponse;
+import com.bang_ggood.checklist.dto.response.QuestionResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.repository.ChecklistLikeRepository;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
@@ -31,8 +32,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Collection;
 import java.util.List;
 
+import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_QUESTION_DEFAULT;
 import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST;
 import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED;
 import static com.bang_ggood.checklist.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_EMPTY;
@@ -177,12 +180,17 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         ChecklistQuestionsResponse checklistQuestionsResponse = checklistService.readChecklistQuestions(USER1);
 
         // then
-        int questionsSize = 0;
-        for (CategoryQuestionsResponse categoryQuestionsResponse : checklistQuestionsResponse.categories()) {
-            questionsSize += categoryQuestionsResponse.questions().size();
-        }
+        List<Integer> defaultQuestionsIds = CUSTOM_CHECKLIST_QUESTION_DEFAULT.stream()
+                .map(CustomChecklistQuestion::getQuestion)
+                .map(Question::getId)
+                .toList();
+        List<Integer> responseQuestionsIds = checklistQuestionsResponse.categories().stream()
+                .map(CategoryQuestionsResponse::questions)
+                .flatMap(Collection::stream)
+                .map(QuestionResponse::questionId)
+                .toList();
 
-        assertThat(questionsSize).isEqualTo(CustomChecklistFixture.CUSTOM_CHECKLIST_QUESTION_DEFAULT.size());
+        assertThat(responseQuestionsIds).containsExactlyElementsOf(defaultQuestionsIds);
     }
 
     @DisplayName("작성된 체크리스트 조회 성공")

@@ -40,6 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -155,9 +156,8 @@ public class ChecklistService {
 
         Map<Category, List<Question>> categoryQuestions = customChecklistQuestions.stream()
                 .map(CustomChecklistQuestion::getQuestion)
-                .collect(Collectors.groupingBy(Question::getCategory));
+                .collect(Collectors.groupingBy(Question::getCategory, LinkedHashMap::new, Collectors.toList()));
 
-        // TODO entrySet 문제 해결
         List<CategoryQuestionsResponse> categoryQuestionsResponses = categoryQuestions.entrySet().stream()
                 .map(categoryQuestionEntry -> CategoryQuestionsResponse.of(
                         categoryQuestionEntry.getKey(),

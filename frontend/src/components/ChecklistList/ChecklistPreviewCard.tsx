@@ -44,13 +44,13 @@ const ChecklistPreviewCard = ({ checklist }: Props) => {
       <S.Column>
         <S.Title>{roomName}</S.Title>
         <S.Deposit>
-          {deposit}/{rent}
+          {deposit ? deposit : '00'} / {rent ? rent : '00'}
         </S.Deposit>
       </S.Column>
       <S.Row>
         <S.SummaryWrapper>
           <SmileMessageIcon />
-          <S.SummaryBox>{summary}</S.SummaryBox>
+          <S.SummaryBox>{summary ? summary : '한줄평이 없어요'}</S.SummaryBox>
         </S.SummaryWrapper>
         <S.Date>{formattedDate(createdAt)}</S.Date>
       </S.Row>

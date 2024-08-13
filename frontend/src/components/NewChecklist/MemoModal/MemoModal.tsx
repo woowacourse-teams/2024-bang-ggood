@@ -11,6 +11,7 @@ import useInput from '@/hooks/useInput';
 import useToast from '@/hooks/useToast';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { title3 } from '@/styles/common';
+import theme from '@/styles/theme';
 
 interface Props {
   isModalOpen: boolean;
@@ -49,7 +50,13 @@ const MemoModal = ({ isModalOpen, modalClose }: Props) => {
   };
 
   return (
-    <Modal isOpen={isModalOpen} onClose={modalClose}>
+    <Modal
+      isOpen={isModalOpen}
+      onClose={modalClose}
+      hasDim={false}
+      position="bottom"
+      style={{ backgroundColor: theme.palette.background }}
+    >
       <Modal.header>
         <S.Title> 메모 작성</S.Title>
       </Modal.header>

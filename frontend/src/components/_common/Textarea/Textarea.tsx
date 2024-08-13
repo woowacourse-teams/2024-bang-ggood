@@ -15,7 +15,7 @@ const widthSize: Record<string, string> = {
 const heightSize: Record<string, string> = {
   small: '32px',
   medium: '100px',
-  large: '400px',
+  large: '300px',
   full: '100%',
 };
 

@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { ComponentPropsWithRef } from 'react';
+import { ComponentPropsWithRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 import { CloseIcon } from '@/assets/assets';
@@ -19,6 +19,7 @@ export interface ModalProps extends ComponentPropsWithRef<'dialog'> {
   size?: ModalSize;
   position?: ModalPosition;
   hasCloseButton?: boolean;
+  hasDim?: boolean;
 }
 
 const modalRoot = document.getElementById('modal');
@@ -30,12 +31,24 @@ const Modal = ({
   size = 'large',
   position = 'center',
   hasCloseButton = true,
+  hasDim = true,
 }: ModalProps) => {
+  {
+    /*모달 뒤 스크롤 막기*/
+  }
+  useEffect(() => {
+    if (isOpen && hasDim) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'visible';
+    }
+  });
+
   if (!modalRoot) return null;
 
   return createPortal(
     <S.ModalWrapper open={isOpen}>
-      <S.ModalBackground onClick={onClose} />
+      <S.ModalBackground onClick={hasDim ? onClose : () => {}} hasDim={hasDim} />
       <S.ModalOuter $position={position} $size={size}>
         {children}
         {hasCloseButton && (
@@ -64,10 +77,10 @@ const S = {
     width: 100%;
     height: 100vh;
   `,
-  ModalBackground: styled.div`
+  ModalBackground: styled.div<{ hasDim: boolean }>`
     position: fixed;
     inset: 0;
-    background: rgb(0 0 0 / 35%);
+    background: ${({ hasDim }) => (hasDim ? 'rgb(0 0 0 / 35%)' : 'transparent')};
   `,
   ModalOuter: styled.div<{
     $position: ModalPosition;

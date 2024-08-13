@@ -8,11 +8,9 @@ import NewChecklistInfoTemplate from '@/components/NewChecklist/NewChecklistInfo
 import NewChecklistTemplate from '@/components/NewChecklist/NewChecklistTemplate';
 import OptionChecklistTemplate from '@/components/NewChecklist/Option/OptionChecklistTemplate';
 import useModalOpen from '@/hooks/useModalOpen';
-import useChecklistStore from '@/store/useChecklistStore';
 
 const NewChecklistContent = () => {
   const { currentTabId } = useTabContext();
-  const { getCategoryQnA } = useChecklistStore();
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
 
   return (
@@ -25,7 +23,7 @@ const NewChecklistContent = () => {
         <OptionChecklistTemplate />
       ) : (
         /* 체크리스트 템플릿 */
-        <NewChecklistTemplate questions={getCategoryQnA(currentTabId)} />
+        <NewChecklistTemplate />
       )}
 
       {/*메모 모달*/}
@@ -43,8 +41,6 @@ const S = {
     position: relative;
     width: 100%;
     height: 100%;
-
-    background-color: pink;
   `,
 };
 

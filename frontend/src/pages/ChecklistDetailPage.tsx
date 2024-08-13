@@ -59,7 +59,7 @@ const ChecklistDetailPage = () => {
       />
       <Layout bgColor={theme.palette.grey100}>
         <S.Wrapper>
-          <RoomInfoSection room={checklist?.room} score={checklist?.score} createdAt={checklist?.createdAt} />
+          <RoomInfoSection room={checklist?.room} createdAt={checklist?.createdAt} />
           <ChecklistAnswerSection categories={checklist?.categories} />
         </S.Wrapper>
       </Layout>

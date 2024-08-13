@@ -1,14 +1,13 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { Plus } from '@/assets/assets';
+import { PlusBlack } from '@/assets/assets';
 import FloatingButton from '@/components/_common/Button/FloatingButton';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import ChecklistPreviewCard from '@/components/ChecklistList/ChecklistPreviewCard';
 import CustomBanner from '@/components/ChecklistList/CustomBanner';
 import NoChecklistTemplate from '@/components/ChecklistList/NoChecklistTemplate';
-import FooterDefault from '@/components/FooterDefault';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useGetChecklistListQuery from '@/hooks/query/useGetChecklistListQuery';
 import { flexColumn } from '@/styles/common';
@@ -54,10 +53,9 @@ const ChecklistListPage = () => {
           )}
         </S.ListBox>
       </Layout>
-      <FloatingButton onClick={handleClickFloatingButton}>
-        <Plus />
+      <FloatingButton size="extends" onClick={handleClickFloatingButton}>
+        <PlusBlack /> 작성하기
       </FloatingButton>
-      <FooterDefault />
     </>
   );
 };

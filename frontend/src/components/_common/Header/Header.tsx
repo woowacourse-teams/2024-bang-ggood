@@ -53,7 +53,6 @@ const S = {
   Left: styled.div`
     display: flex;
     justify-content: flex-start;
-    flex: 1;
   `,
   Center: styled.div`
     ${flexCenter}
@@ -62,13 +61,14 @@ const S = {
   Right: styled.div`
     display: flex;
     justify-content: flex-end;
-    flex: 1;
   `,
   TextButton: styled.button`
     color: ${({ theme }) => theme.palette.black};
     ${title3}
   `,
   Text: styled.div`
+    box-sizing: content-box;
+
     color: ${({ theme }) => theme.palette.black};
     ${title3}
   `,

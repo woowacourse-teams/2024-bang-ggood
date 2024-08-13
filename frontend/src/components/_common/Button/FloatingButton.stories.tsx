@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Plus } from '@/assets/assets';
+import { PlusBlack, PlusWhite } from '@/assets/assets';
 import FloatingButton from '@/components/_common/Button/FloatingButton';
 
 const meta: Meta<typeof FloatingButton> = {
@@ -41,7 +41,7 @@ export const TextButton: Story = {
 
 export const IconButton: Story = {
   args: {
-    children: <Plus />,
+    children: <PlusWhite />,
     size: 'medium',
     color: 'green',
     'aria-label': 'icon button',
@@ -52,7 +52,7 @@ export const TextIconButton: Story = {
   args: {
     children: (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
-        <Plus /> 추가
+        <PlusBlack /> 추가
       </div>
     ),
     size: 'extends',

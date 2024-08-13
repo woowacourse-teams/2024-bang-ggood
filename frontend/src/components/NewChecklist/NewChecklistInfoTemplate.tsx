@@ -6,15 +6,16 @@ import Badge from '@/components/_common/Badge/Badge';
 import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
-import { InputChangeEvent } from '@/components/_common/Input/Input';
 import RadioGroup from '@/components/_common/RadioGroup/RadioGroup';
+import DaumAddressModal from '@/components/NewChecklist/AddressModal/DaumAddressModal';
 import { roomFloorLevels, roomStructures, roomTypes } from '@/constants/roomInfo';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
+import { InputChangeEvent } from '@/types/event';
 import { RoomInfo, RoomInfoName } from '@/types/room';
 
 const NewChecklistInfoTemplate = () => {
-  const { actions, errorMessage, roomInfo } = useStore(checklistRoomInfoStore);
+  const { actions, roomInfo, errorMessage } = useStore(checklistRoomInfoStore);
 
   const handleClickTagButton = useCallback(
     (name: keyof RoomInfo, value: string) => {
@@ -22,6 +23,10 @@ const NewChecklistInfoTemplate = () => {
     },
     [actions],
   );
+
+  const handleSetAddress = (address: string) => {
+    actions.set('address', address);
+  };
 
   return (
     <S.ContentWrapper>
@@ -37,13 +42,14 @@ const NewChecklistInfoTemplate = () => {
           <FormField.Label label="주소" />
           <S.FlexHorizontal gap="3%">
             <S.CustomInput onChange={actions.onChange} name="address" value={roomInfo.address} />
-            <S.AddressButton isSquare={true} label="주소찾기" size="medium" color="dark" />
+            <DaumAddressModal setAddress={handleSetAddress} />
           </S.FlexHorizontal>
           <FormField.ErrorMessage value={errorMessage.address ?? ''} />
         </FormField>
         {/* 교통편 */}
         <S.FlexVertical gap="15px">
           <FormField.Label label="가까운 교통편" />
+          {/* TODO: ErrorMessage 로 의도한 건지 확인 필요 */}
           <FormField.ErrorMessage value="주소를 추가하면 가까운 역을 찾아드려요!" />
         </S.FlexVertical>
         {/* 보증금 월세 */}

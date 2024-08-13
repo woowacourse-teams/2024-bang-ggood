@@ -91,10 +91,10 @@ const NewChecklistPage = () => {
         center={<Header.Text>{'새 체크리스트'}</Header.Text>}
         right={<Button label={'저장'} size="small" color="dark" onClick={handleSubmitChecklist} />}
       />
-      <TabProvider defaultTab={0}>
-        {/* 체크리스트 작성의 탭 */}
+      <TabProvider defaultTab={-1}>
+        {/* 카테고리 탭 */}
         <NewChecklistTab />
-        {/*체크리스트 콘텐츠 섹션*/}
+        {/* 체크리스트 작성 */}
         <NewChecklistContent />
       </TabProvider>
     </>

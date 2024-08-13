@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
-import { ChangeEvent, useCallback } from 'react';
+import { useCallback } from 'react';
 
-interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  $color?: 'string';
-}
+import { flexCenter } from '@/styles/common';
+import { InputChangeEvent } from '@/types/event';
+
 const widthSize = {
   small: '45px',
   medium: '110px',
@@ -14,7 +14,6 @@ const widthSize = {
 interface Props extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   width?: keyof typeof widthSize;
 }
-export type InputChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 
 const Input = ({ width = 'full', value, onChange, ...rest }: Props) => {
   const handleChange = useCallback(
@@ -27,22 +26,27 @@ const Input = ({ width = 'full', value, onChange, ...rest }: Props) => {
 
   return <S.Input width={widthSize[width]} value={value} {...rest} onChange={handleChange} />;
 };
+
+export default Input;
+
+interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  $color?: 'string';
+}
+
 const S = {
   Input: styled.input<StyledProps>`
     ${({ width }) => width && `width: ${width};`};
     height: 32px;
     padding: 6px 11px;
-    border: 1px solid ${({ $color, theme }) => ($color ? $color : theme.palette.grey100)};
-
-    background-color: ${({ theme }) => theme.palette.grey100};
+    border: 1px solid ${({ $color, theme }) => ($color ? $color : theme.palette.grey300)};
+    border-radius: 4px;
 
     color: ${({ $color, theme }) => ($color ? $color : theme.palette.grey600)};
     font-weight: ${({ theme }) => theme.text.weight.medium};
     font-size: ${({ theme }) => theme.text.size.small};
     outline-color: ${({ theme }) => theme.palette.grey300};
-    justify-content: center;
-    align-items: center;
+
+    ${flexCenter}
     box-sizing: border-box;
   `,
 };
-export default Input;

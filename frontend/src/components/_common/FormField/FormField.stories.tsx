@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 
 import FormField from '@/components/_common/FormField/FormField';
-import { InputChangeEvent } from '@/components/_common/Input/Input';
+import { InputChangeEvent } from '@/types/event';
 
 const meta = {
   title: 'components/FormField',

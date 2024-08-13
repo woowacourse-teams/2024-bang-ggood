@@ -10,18 +10,14 @@ const useNewChecklistTabs = () => {
 
   const isCategoryQuestionAllCompleted = (targetId: number) => {
     const targetCategory = getCategoryQnA(targetId);
-
-    if (targetCategory && targetCategory.questions.every(question => question.answer !== 'NONE')) {
-      return false;
-    }
-    return true;
+    return targetCategory.questions.every(question => question.answer !== 'NONE');
   };
 
   useEffect(() => {
     const newChecklistTabsWithCompletion = validCategory.map(category => ({
       id: category.categoryId,
       name: category.categoryName,
-      hasIndicator: isCategoryQuestionAllCompleted(category.categoryId),
+      hasIndicator: !isCategoryQuestionAllCompleted(category.categoryId),
     }));
 
     const tabsWithBasicInfoAndOptions = [
@@ -33,7 +29,7 @@ const useNewChecklistTabs = () => {
     setTabs(tabsWithBasicInfoAndOptions);
   }, [validCategory, checklistCategoryQnA]);
 
-  return { isCategoryQuestionAllCompleted, tabs };
+  return { tabs };
 };
 
 export default useNewChecklistTabs;

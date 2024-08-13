@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { CloseIcon } from '@/assets/assets';
 import OptionButton from '@/components/_common/OptionButton/OptionButton';
-import OptionModalInfoBox from '@/components/NewChecklist/Option/OptionModalInfoBox';
+import OptionModalInfoBox from '@/components/NewChecklist/Option/OptionBox';
 import { STORAGE_KEYS } from '@/constants/localStorage';
 import { OPTIONS } from '@/constants/options';
 import { flexCenter, flexColumn, title4 } from '@/styles/common';
@@ -44,15 +44,14 @@ export default OptionChecklistTemplate;
 
 const S = {
   Container: styled.div`
-    display: flex;
+    ${flexColumn}
     margin-top: 30px;
     padding: 16px;
 
     background-color: ${({ theme }) => theme.palette.background};
-    min-height: calc(100vh - 140px);
+    min-height: calc(100vh - 64px);
     gap: 10px;
     align-items: center;
-    flex-direction: column;
   `,
 
   InnerBox: styled.div<{ isTipOpen: boolean }>`

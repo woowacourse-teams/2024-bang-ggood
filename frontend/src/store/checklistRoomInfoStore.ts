@@ -2,22 +2,26 @@ import { createStore } from 'zustand';
 
 import { InputChangeEvent } from '@/types/event';
 import { RoomInfo } from '@/types/room';
-import { isNumericValidator, lengthValidator, nonNegativeValidator, Validator } from '@/utils/validators';
+import { AllString } from '@/utils/utilityTypes';
+import {
+  isIntegerValidator,
+  isNumericValidator,
+  lengthValidator,
+  nonNegativeValidator,
+  positiveValidator,
+  Validator,
+} from '@/utils/validators';
 
 interface RoomInfoAction {
   reset: () => void;
-  set: (name: keyof typeof validatorSet, value: string | number | undefined) => void;
-  _update: (field: keyof RoomInfo | keyof StringValue<RoomInfo>, value: string | number | undefined) => void;
+  set: (name: keyof typeof validatorSet, value: string | undefined) => void;
+  _update: (field: keyof AllString<RoomInfo> | keyof AllString<RoomInfo>, value: string | undefined) => void;
   _updateErrorMsg: (field: keyof RoomInfo, value: string) => void;
-  _updateAfterValidation: <T extends number | string>(
-    field: keyof RoomInfo,
-    value: T,
-    validators: Validator<T>[],
-  ) => void;
+  _updateAfterValidation: (field: keyof RoomInfo, value: string, validators: Validator<string>[]) => void;
   onChange: (event: InputChangeEvent) => void;
 }
 
-export const initialRoomInfo: RoomInfo = {
+export const initialRoomInfo: AllString<RoomInfo> = {
   roomName: undefined,
   address: undefined,
   station: undefined,
@@ -26,7 +30,7 @@ export const initialRoomInfo: RoomInfo = {
   walkingTime: undefined,
   size: undefined,
   floor: undefined,
-  floorLevel: undefined,
+  floorLevel: '지상',
   type: undefined,
   structure: undefined,
   contractTerm: undefined,
@@ -42,10 +46,10 @@ const validatorSet = {
   rent: [isNumericValidator, nonNegativeValidator],
   contractTerm: [isNumericValidator, nonNegativeValidator],
   station: [],
-  walkingTime: [isNumericValidator],
+  walkingTime: [isIntegerValidator],
   type: [],
   size: [isNumericValidator],
-  floor: [isNumericValidator],
+  floor: [isIntegerValidator, positiveValidator],
   floorLevel: [],
   structure: [],
   realEstate: [],
@@ -55,22 +59,14 @@ const validatorSet = {
 
 const initialErrorMessages = Object.fromEntries(Object.entries(initialRoomInfo).map(([key]) => [key, '']));
 
-type StringValue<T> = {
-  [K in keyof T]: string;
-};
-
 const checklistRoomInfoStore = createStore<
-  { roomInfo: RoomInfo } & { errorMessage: StringValue<RoomInfo> } & { actions: RoomInfoAction }
+  { roomInfo: AllString<RoomInfo> } & { errorMessage: AllString<RoomInfo> } & { actions: RoomInfoAction }
 >((set, get) => ({
   roomInfo: { ...initialRoomInfo },
   errorMessage: { ...initialErrorMessages },
   actions: {
     set: (name, value) => {
-      if (typeof value === 'string') {
-        get().actions._updateAfterValidation(name, value, validatorSet[name] as Validator<string>[]);
-      } else if (typeof value === 'number') {
-        get().actions._updateAfterValidation(name, value, validatorSet[name] as Validator<number>[]);
-      }
+      get().actions._updateAfterValidation(name, value ?? '', validatorSet[name] as Validator<string>[]);
     },
 
     onChange: (event: InputChangeEvent) => {
@@ -80,10 +76,7 @@ const checklistRoomInfoStore = createStore<
         return;
       }
 
-      get().actions.set(
-        event.target.name as keyof RoomInfo,
-        event.target?.type === 'number' ? parseInt(event.target.value) : event.target.value,
-      );
+      get().actions.set(event.target.name as keyof RoomInfo, event.target.value);
     },
 
     reset: () => set({ roomInfo: { ...initialRoomInfo }, errorMessage: { ...initialErrorMessages } }),

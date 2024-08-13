@@ -95,7 +95,7 @@ public class Checklist extends BaseEntity {
     }
 
     private void validateMemoLength() {
-        if (memo.length() > MEMO_MAX_LENGTH) {
+        if (memo != null && memo.length() > MEMO_MAX_LENGTH) {
             throw new BangggoodException(ExceptionCode.CHECKLIST_MEMO_INVALID_LENGTH);
         }
     }

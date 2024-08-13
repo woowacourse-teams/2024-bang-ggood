@@ -12,6 +12,7 @@ export type RoomInfo = Partial<{
   size: number;
   floorLevel: string;
   structure: string;
+  memo: string;
 }>;
 
 export type RoomInfoName = keyof RoomInfo;

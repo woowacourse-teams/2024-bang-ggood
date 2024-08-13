@@ -31,6 +31,7 @@ export const initialRoomInfo: RoomInfo = {
   structure: undefined,
   contractTerm: undefined,
   realEstate: undefined,
+  memo: undefined,
 } as const;
 
 const validatorSet = {
@@ -47,6 +48,7 @@ const validatorSet = {
   floorLevel: [],
   structure: [],
   realEstate: [],
+  memo: [],
 } satisfies Record<string, Validator<string>[] | Validator<number>[]>;
 
 const initialErrorMessages = Object.fromEntries(Object.entries(initialRoomInfo).map(([key]) => [key, '']));

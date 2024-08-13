@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ComponentPropsWithRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
@@ -20,9 +20,34 @@ export interface ModalProps extends ComponentPropsWithRef<'dialog'> {
   position?: ModalPosition;
   hasCloseButton?: boolean;
   hasDim?: boolean;
+  color?: string;
 }
 
 const modalRoot = document.getElementById('modal');
+
+// 나타나는 애니메이션
+export const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+// 사라지는 애니메이션
+export const fadeOut = keyframes`
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+`;
 
 const Modal = ({
   children,
@@ -32,6 +57,7 @@ const Modal = ({
   position = 'center',
   hasCloseButton = true,
   hasDim = true,
+  color,
 }: ModalProps) => {
   {
     /*모달 뒤 스크롤 막기*/
@@ -48,14 +74,16 @@ const Modal = ({
 
   return createPortal(
     <S.ModalWrapper open={isOpen}>
-      <S.ModalBackground onClick={hasDim ? onClose : () => {}} hasDim={hasDim} />
-      <S.ModalOuter $position={position} $size={size}>
-        {children}
-        {hasCloseButton && (
-          <S.CloseButton>
-            <CloseIcon onClick={onClose} />
-          </S.CloseButton>
-        )}
+      {hasDim && <S.ModalBackground onClick={hasDim ? onClose : () => {}} hasDim={hasDim} />}
+      <S.ModalOuter $position={position} $size={size} color={color} isOpen={isOpen}>
+        <S.ModalInner isOpen={isOpen}>
+          {children}
+          {hasCloseButton && (
+            <S.CloseButton>
+              <CloseIcon onClick={onClose} />
+            </S.CloseButton>
+          )}
+        </S.ModalInner>
       </S.ModalOuter>
     </S.ModalWrapper>,
     modalRoot,
@@ -85,20 +113,27 @@ const S = {
   ModalOuter: styled.div<{
     $position: ModalPosition;
     $size: ModalSize;
+    isOpen: boolean;
   }>`
     ${flexColumn}
     align-items: flex-start;
 
     position: fixed;
-    left: 50%;
+
     ${({ $position, $size }) => positionStyles[$position]($size)}
+  `,
+  ModalInner: styled.div<{ isOpen: boolean }>`
+    width: 100%;
+    padding-top: 12px;
 
-    min-height: 150px;
-    padding: 12px;
-
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ color }) => color ?? 'white'};
 
     color: ${({ theme }) => theme.palette.black};
+
+    animation: ${({ isOpen }) => (isOpen ? fadeIn : fadeOut)} 0.3s forwards;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 40%);
+    min-height: 150px;
   `,
   CloseButton: styled.button`
     display: flex;
@@ -117,6 +152,7 @@ const S = {
 const positionStyles = {
   center: ($size: ModalSize) => css`
     top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 8px;
     width: ${$size === 'small' ? '60%' : '85%'};
@@ -124,6 +160,7 @@ const positionStyles = {
   `,
   bottom: ($size: ModalSize) => css`
     bottom: 0;
+    left: 50%;
     transform: translate(-50%, 0%);
     border-radius: 16px 16px 0 0;
     width: ${$size && '100%'};

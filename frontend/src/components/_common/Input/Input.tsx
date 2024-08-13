@@ -38,14 +38,13 @@ const S = {
     ${({ width }) => width && `width: ${width};`};
     height: 40px;
     padding: 6px 11px;
-    border: 1px solid ${({ $color, theme }) => ($color ? $color : theme.palette.grey300)};
+    border: 2px solid ${({ $color, theme }) => ($color ? $color : theme.palette.grey200)};
     border-radius: 4px;
 
     color: ${({ $color, theme }) => ($color ? $color : theme.palette.grey600)};
     font-weight: ${({ theme }) => theme.text.weight.medium};
     font-size: ${({ theme }) => theme.text.size.medium};
-    outline-color: ${({ theme }) => theme.palette.grey300};
-
+    outline-color: ${({ theme }) => theme.palette.grey400};
     ${flexCenter}
     box-sizing: border-box;
   `,

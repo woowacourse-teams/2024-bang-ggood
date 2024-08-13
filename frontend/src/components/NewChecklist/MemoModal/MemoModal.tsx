@@ -10,7 +10,7 @@ import { DEFAULT_TOAST_DURATION } from '@/constants/system';
 import useInput from '@/hooks/useInput';
 import useToast from '@/hooks/useToast';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
-import { title3 } from '@/styles/common';
+import { flexCenter, title3 } from '@/styles/common';
 import theme from '@/styles/theme';
 
 interface Props {
@@ -50,13 +50,10 @@ const MemoModal = ({ isModalOpen, modalClose }: Props) => {
   };
 
   return (
-    <Modal
-      isOpen={isModalOpen}
-      onClose={modalClose}
-      hasDim={false}
-      position="bottom"
-      style={{ backgroundColor: theme.palette.background }}
-    >
+    <Modal isOpen={isModalOpen} onClose={modalClose} hasDim={false} position="bottom" color={theme.palette.white}>
+      <S.OpenBarBox onClick={modalClose}>
+        <S.OpenBar />
+      </S.OpenBarBox>
       <Modal.header>
         <S.Title> 메모 작성</S.Title>
       </Modal.header>
@@ -77,6 +74,19 @@ const S = {
   Title: styled.div`
     ${title3}
     margin-top:10px;
+  `,
+  OpenBarBox: styled.div`
+    ${flexCenter}
+    width:100%;
+    flex-direction: column;
+    margin-bottom: 10px;
+  `,
+  OpenBar: styled.div`
+    width: 100px;
+    height: 5px;
+    border-radius: 2.5px;
+
+    background-color: ${({ theme }) => theme.palette.grey400};
   `,
   TextareaBox: styled.div`
     position: relative;

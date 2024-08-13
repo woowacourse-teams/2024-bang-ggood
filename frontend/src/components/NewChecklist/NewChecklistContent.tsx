@@ -10,11 +10,7 @@ import OptionChecklistTemplate from '@/components/NewChecklist/Option/OptionChec
 import useModalOpen from '@/hooks/useModalOpen';
 import useChecklistStore from '@/store/useChecklistStore';
 
-interface Props {
-  memo: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-}
-const NewChecklistContent = ({ memo, onChange }: Props) => {
+const NewChecklistContent = () => {
   const { currentTabId } = useTabContext();
   const { getCategoryQnA } = useChecklistStore();
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
@@ -33,7 +29,7 @@ const NewChecklistContent = ({ memo, onChange }: Props) => {
       )}
 
       {/*메모 모달*/}
-      {isModalOpen && <MemoModal isModalOpen={isModalOpen} modalClose={modalClose} memo={memo} onChange={onChange} />}
+      {isModalOpen && <MemoModal isModalOpen={isModalOpen} modalClose={modalClose} />}
       {/*메모 작성 버튼*/}
       <FloatingButton onClick={modalOpen}>
         <MemoFilled />

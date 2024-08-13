@@ -7,6 +7,7 @@ import Modal from '@/components/_common/Modal/Modal';
 import SelectionCounter from '@/components/_common/SelectionCounter/SelectionCounter';
 import Textarea from '@/components/_common/Textarea/Textarea';
 import { DEFAULT_TOAST_DURATION } from '@/constants/system';
+import useInput from '@/hooks/useInput';
 import useToast from '@/hooks/useToast';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { title3 } from '@/styles/common';
@@ -14,14 +15,13 @@ import { title3 } from '@/styles/common';
 interface Props {
   isModalOpen: boolean;
   modalClose: () => void;
-  memo: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
-const MemoModal = ({ isModalOpen, modalClose, memo, onChange }: Props) => {
+const MemoModal = ({ isModalOpen, modalClose }: Props) => {
   const intervalRef = useRef<number | undefined>(undefined);
   const { actions } = useStore(checklistRoomInfoStore);
   const { showToast } = useToast(DEFAULT_TOAST_DURATION);
+  const { value: memo, onChange } = useInput<string>('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e);

@@ -12,7 +12,6 @@ import { STORAGE_KEYS } from '@/constants/localStorage';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_TOAST_DURATION } from '@/constants/system';
 import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
-import useInput from '@/hooks/useInput';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import useToast from '@/hooks/useToast';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
@@ -24,7 +23,6 @@ const NewChecklistPage = () => {
   const { showToast } = useToast(DEFAULT_TOAST_DURATION);
   const { tabs } = useNewChecklistTabs();
   const { mutate: addChecklist } = useAddChecklistQuery();
-  const { value: memo, onChange } = useInput<string>('');
 
   /*방 기본 정보 */
   const { roomInfo, actions } = useStore(checklistRoomInfoStore);
@@ -102,7 +100,7 @@ const NewChecklistPage = () => {
         {/* 체크리스트 작성의 탭 */}
         <Tabs tabList={tabs} />
         {/*체크리스트 콘텐츠 섹션*/}
-        <NewChecklistContent memo={memo} onChange={onChange} />
+        <NewChecklistContent />
       </TabProvider>
     </>
   );

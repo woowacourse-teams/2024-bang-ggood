@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { title2, title3, title4 } from '@/styles/common';
+import { title3, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
 
 type ButtonSize = 'xSmall' | 'small' | 'medium' | 'full';
@@ -85,6 +85,6 @@ const sizeStyles = {
   full: css`
     width: 100%;
     padding: 14px 48px;
-    ${title2}
+    ${title3}
   `,
 };

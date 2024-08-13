@@ -45,8 +45,6 @@ export interface ChecklistQuestionWithIsSelected extends ChecklistQuestion {
 export interface ChecklistPreview extends RoomInfo {
   checklistId: number;
   createdAt: string;
-  // TODO: summary roomInfo 에 들어가는지 확인
-  summary: string;
   isLiked: boolean;
 }
 

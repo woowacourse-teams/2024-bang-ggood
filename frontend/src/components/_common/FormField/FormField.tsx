@@ -3,33 +3,8 @@ import { HTMLAttributes } from 'react';
 
 import { InputRequiredDot } from '@/assets/assets';
 import Input from '@/components/_common/Input/Input';
+import { flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
-
-const FormFieldWrapper = styled.div<{ rowGap?: string }>`
-  display: flex;
-
-  flex: auto;
-  flex-direction: column;
-  row-gap: ${({ rowGap }) => (rowGap ? rowGap : '10px')};
-`;
-
-const S = {
-  MovedRequiredDot: styled(InputRequiredDot)`
-    position: absolute;
-    top: -5px;
-    left: 50px;
-  `,
-  P: styled.p`
-    height: 10px;
-
-    color: black;
-    font-size: ${({ theme }) => theme.text.size.small};
-  `,
-  LabelContainer: styled.label`
-    position: relative;
-    z-index: 0;
-  `,
-};
 
 type GetProps<T> = T extends React.FC<infer P> ? P : never;
 
@@ -37,6 +12,13 @@ interface LabelProps extends HTMLAttributes<HTMLLabelElement> {
   label: string;
   required?: boolean;
 }
+
+const FormFieldWrapper = styled.div<{ rowGap?: string }>`
+  ${flexColumn}
+
+  flex: auto;
+  row-gap: ${({ rowGap }) => (rowGap ? rowGap : '10px')};
+`;
 
 const FormField = Object.assign(FormFieldWrapper, {
   Label: ({ label, required = false, ...rest }: LabelProps) => (
@@ -46,7 +28,26 @@ const FormField = Object.assign(FormFieldWrapper, {
     </S.LabelContainer>
   ),
   Input: ({ ...rest }: GetProps<typeof Input>) => <Input {...rest} />,
-  P: ({ value, ...rest }: { value: string } & HTMLAttributes<HTMLParagraphElement>) => <S.P {...rest}>{value}</S.P>,
+  ErrorMessage: ({ value, ...rest }: { value: string } & HTMLAttributes<HTMLParagraphElement>) => (
+    <S.ErrorMessage {...rest}>{value}</S.ErrorMessage>
+  ),
 });
 
+const S = {
+  MovedRequiredDot: styled(InputRequiredDot)`
+    position: relative;
+    top: -15px;
+    left: 5px;
+  `,
+  LabelContainer: styled.label`
+    position: relative;
+    z-index: 0;
+  `,
+  ErrorMessage: styled.p`
+    height: 10px;
+
+    color: ${({ theme }) => theme.palette.red500};
+    font-size: ${({ theme }) => theme.text.size.xSmall};
+  `,
+};
 export default FormField;

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { title4 } from '@/styles/common';
+import { title3 } from '@/styles/common';
 import theme from '@/styles/theme';
 
 interface Props {
@@ -34,7 +34,7 @@ const Container = styled.div<{ $color: string; $gap: number }>`
 
   color: ${({ $color }) => $color};
   gap: ${({ $gap }) => $gap}px;
-  ${title4}
+  ${title3}
 `;
 
 const S = {

@@ -7,21 +7,11 @@ import { CloseIcon } from '@/assets/assets';
 import ModalBody from '@/components/_common/Modal/ModalBody';
 import ModalFooter from '@/components/_common/Modal/ModalFooter';
 import ModalHeader from '@/components/_common/Modal/ModalHeader';
+import { flexColumn } from '@/styles/common';
 
 type ModalPosition = 'center' | 'bottom';
 
 type ModalSize = 'small' | 'large';
-
-const SIZE_MAP = {
-  small: css`
-    max-width: 300px;
-    width: 75%;
-  `,
-  large: css`
-    max-width: 400px;
-    width: 85%;
-  `,
-};
 
 export interface ModalProps extends ComponentPropsWithRef<'dialog'> {
   isOpen: boolean;
@@ -83,18 +73,15 @@ const S = {
     $position: ModalPosition;
     $size: ModalSize;
   }>`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
     align-items: flex-start;
 
     position: fixed;
     left: 50%;
-    ${({ $position }) => positionStyles[$position]}
+    ${({ $position, $size }) => positionStyles[$position]($size)}
 
     min-height: 150px;
     padding: 12px;
-
-    ${({ $size }) => $size && SIZE_MAP[$size]}
 
     background-color: ${({ theme }) => theme.palette.white};
 
@@ -115,18 +102,19 @@ const S = {
 };
 
 const positionStyles = {
-  center: css`
+  center: ($size: ModalSize) => css`
     top: 50%;
     transform: translate(-50%, -50%);
     border-radius: 8px;
-    width: 85%;
+    width: ${$size === 'small' ? '60%' : '85%'};
     max-width: 500px;
   `,
-  bottom: css`
+  bottom: ($size: ModalSize) => css`
     bottom: 0;
     transform: translate(-50%, 0%);
     border-radius: 16px 16px 0 0;
-    width: 100%;
+    width: ${$size && '100%'};
+    max-width: 600px;
     box-sizing: border-box;
   `,
 };

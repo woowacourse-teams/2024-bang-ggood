@@ -1,12 +1,12 @@
 const palette = {
-  /*yellow*/
+  /* yellow */
   yellow600: '#FFC107',
   yellow500: '#FFDB5D',
   yellow400: '#FFE27D',
   yellow300: '#FFEA9E',
   yellow200: '#FFF1BE',
   yellow100: '#FFF8DF',
-  /*green*/
+  /* green */
   green600: '#22BD6A',
   green500: '#49CE7F',
   green400: '#6DD899',
@@ -14,13 +14,17 @@ const palette = {
   green200: '#B6EBCC',
   green100: '#DBF5E5',
   green50: '#E6F8ED',
-  /*subGreen*/
+  /* subGreen */
   subGreen600: '#8BB26B',
   subGreen500: '#A6CF85',
   subGreen400: '#B8D99E',
   subGreen300: '#CAE2B6',
   subGreen200: '#D3ECAD',
   subGreen100: '#EDF5E7',
+  /* red */
+  red600: '#D9593E',
+  red500: '#FC6A4B',
+  red300: '#FFC7AF',
   /* grey */
   grey600: '#484947',
   grey500: '#7C7C7C',

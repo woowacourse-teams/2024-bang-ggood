@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { HTMLAttributes, useContext } from 'react';
 
-import { InputChangeEvent } from '@/components/_common/Input/Input';
 import RadioContext from '@/components/_common/RadioGroup/RadioContext';
 import { flexCenter, flexRow } from '@/styles/common';
+import { InputChangeEvent } from '@/types/event';
 
 interface Props extends HTMLAttributes<HTMLFieldSetElement> {
   label: string;

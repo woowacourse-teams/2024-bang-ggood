@@ -9,7 +9,8 @@ import ArrowUpSmall from '@/assets/icons/arrow/arrow-up-small.svg';
 import CheckIcon from '@/assets/icons/check.svg';
 import CloseIcon from '@/assets/icons/close.svg';
 import LocationLineIcon from '@/assets/icons/location-lined.svg';
-import Plus from '@/assets/icons/plus.svg';
+import PlusBlack from '@/assets/icons/plus/plus-black.svg';
+import PlusWhite from '@/assets/icons/plus/plus-white.svg';
 
 // answer icon
 import No from '@/assets/icons/answer/no-isSelected.svg';
@@ -78,7 +79,8 @@ export {
   NoGrey,
   None,
   PencilIcon,
-  Plus,
+  PlusBlack,
+  PlusWhite,
   QuestionDot,
   SmileMessageIcon,
   Yes,

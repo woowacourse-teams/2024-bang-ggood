@@ -126,30 +126,46 @@ const NewChecklistInfoTemplate = () => {
         <S.FlexHorizontal>
           <CustomFormField
             label="계약 기간(개월)"
-            values={roomInfo}
+            value={roomInfo.contractTerm}
             name="contractTerm"
             type="number"
+            errorMessage={errorMessage.contractTerm}
             onChange={actions.onChange}
           />
         </S.FlexHorizontal>
         {/* 부동산 이름 */}
-        <CustomFormField label="부동산 이름" onChange={actions.onChange} values={roomInfo} name="realEstate" />
+        <CustomFormField
+          label="부동산 이름"
+          onChange={actions.onChange}
+          value={roomInfo.realEstate}
+          errorMessage={errorMessage.realEstate}
+          name="realEstate"
+        />
       </S.Container>
     </S.ContentWrapper>
   );
 };
 
-const CustomFormField = ({ label, name, values, required, type = 'string', onChange }: CustomFormFieldProps) => (
+const CustomFormField = ({
+  label,
+  name,
+  value,
+  errorMessage,
+  required,
+  type = 'string',
+  onChange,
+}: CustomFormFieldProps) => (
   <S.CustomFormField key={label}>
     <FormField.Label label={label} required={required} />
-    <FormField.Input placeholder="" width="full" type={type} onChange={onChange} name={name} value={values[name]} />
-    <FormField.ErrorMessage value={values[name as keyof RoomInfo] as string} />
+    <FormField.Input placeholder="" width="full" type={type} onChange={onChange} name={name} value={value} />
+    <FormField.ErrorMessage value={errorMessage ?? ''} />
   </S.CustomFormField>
 );
 
 export interface CustomFormFieldProps {
   name: RoomInfoName;
-  values: RoomInfo;
+  value: string | number | undefined;
+  errorMessage: string | undefined;
   label: string;
   placeholder?: string;
   required?: boolean;

@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { boxShadow } from '@/styles/common';
+import { boxShadow, flexRow, title3 } from '@/styles/common';
 import theme from '@/styles/theme';
 
 type Size = 'small' | 'medium' | 'extends';
@@ -49,16 +49,21 @@ const sizeStyle = {
     font-size: 16px;
   `,
   extends: css`
-    width: 100px;
-    height: 40px;
+    width: 130px;
+    height: 50px;
 
     font-size: 16px;
+
+    ${flexRow}
+    gap: 10px;
   `,
 };
 
 const colorStyle = {
   yellow: css`
     background-color: ${theme.palette.yellow500};
+
+    color: ${theme.palette.black};
 
     &:hover,
     &:active {
@@ -68,6 +73,8 @@ const colorStyle = {
   green: css`
     background-color: ${theme.palette.green500};
 
+    color: ${theme.palette.white};
+
     &:hover,
     &:active {
       background-color: ${theme.palette.green600};
@@ -75,6 +82,8 @@ const colorStyle = {
   `,
   subGreen: css`
     background-color: ${theme.palette.subGreen500};
+
+    color: ${theme.palette.white};
 
     &:hover,
     &:active {
@@ -109,8 +118,7 @@ const S = {
 
     ${({ size }) => sizeStyle[size]}
     ${({ color }) => colorStyle[color]}
-
-    color: ${({ theme }) => theme.palette.white};
+    ${title3}
     ${boxShadow};
     outline: none;
     cursor: pointer;

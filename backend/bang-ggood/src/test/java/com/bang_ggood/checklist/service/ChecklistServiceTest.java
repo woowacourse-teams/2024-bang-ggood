@@ -6,7 +6,6 @@ import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.CustomChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistLike;
-import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.CustomChecklistQuestion;
 import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
@@ -146,7 +145,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void createChecklistLike() {
         //given
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1);
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
 
         // when
         checklistService.createChecklistLike(USER1, checklist.getId());
@@ -159,7 +158,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void createChecklistLike_checklistAlreadyLiked_exception() {
         //given
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1);
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
 
         // when
         checklistService.createChecklistLike(USER1, checklist.getId());
@@ -198,7 +197,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     void readChecklistById() {
         // given
         roomRepository.save(RoomFixture.ROOM_1);
-        checklistRepository.save(ChecklistFixture.CHECKLIST1);
+        checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
 
         // when
         SelectedChecklistResponse selectedChecklistResponse = checklistService.readChecklistById(UserFixture.USER1, 1L);
@@ -434,7 +433,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     void deleteChecklistById() {
         // given
         roomRepository.save(RoomFixture.ROOM_1);
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1);
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
 
         // when
         checklistService.deleteChecklistById(checklist.getId());
@@ -456,7 +455,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void deleteChecklistLikeByChecklistId() {
         // given
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1);
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
         ChecklistLike checklistLike = checklistLikeRepository.save(ChecklistFixture.CHECKLIST_LIKE_1);
 
         // when
@@ -470,7 +469,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void deleteChecklistLikeByChecklistId_notFound_exception() {
         // given
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1);
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
 
         // when & then
         assertThatThrownBy(() -> checklistService.deleteChecklistLikeByChecklistId(USER1, checklist.getId()))

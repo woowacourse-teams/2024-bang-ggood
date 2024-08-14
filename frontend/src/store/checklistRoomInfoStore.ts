@@ -91,17 +91,17 @@ const checklistRoomInfoStore = createStore<RoomInfoStore>((set, get) => ({
   errorMessage: initialErrorMessages,
   actions: {
     set: (name, value) => {
+      // 다 지우기할 시 다 지워주고, 에러메시지도 지우기
+      if (value === '') {
+        get().actions._updateErrorMsg(name as keyof RoomInfo, '');
+        get().actions._update(name as keyof RoomInfo, '');
+        return;
+      }
+
       get().actions._updateAfterValidation(name as keyof RoomInfo, value ?? '', validatorSet[name]);
     },
 
     onChange: (event: InputChangeEvent) => {
-      // 다 지우기할 시 다 지워주고, 에러메시지도 지우기
-      if (event.target.value === '') {
-        get().actions._updateErrorMsg(event.target.name as keyof RoomInfo, '');
-        get().actions._update(event.target.name as keyof RoomInfo, '');
-        return;
-      }
-
       get().actions.set(event.target.name as keyof RoomInfo, event.target.value);
     },
 

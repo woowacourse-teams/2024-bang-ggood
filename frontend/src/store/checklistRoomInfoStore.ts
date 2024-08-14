@@ -27,7 +27,7 @@ export const initialRoomInfo: RoomInfo = {
   walkingTime: undefined,
   size: undefined,
   floor: undefined,
-  floorLevel: undefined,
+  floorLevel: '지상',
   type: undefined,
   structure: undefined,
   contractTerm: undefined,

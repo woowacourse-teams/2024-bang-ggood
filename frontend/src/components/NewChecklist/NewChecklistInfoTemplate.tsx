@@ -11,9 +11,9 @@ import DepositAndRent from '@/components/NewChecklist/NewRoomInfoForm/DepositAnd
 import NearTransportation from '@/components/NewChecklist/NewRoomInfoForm/NearTransportation';
 import RoomName from '@/components/NewChecklist/NewRoomInfoForm/RoomName';
 import RoomSize from '@/components/NewChecklist/NewRoomInfoForm/RoomSize';
+import RoomFloor from '@/components/NewChecklist/NewRoomInfoForm/RoomSize copy';
 import RoomStructure from '@/components/NewChecklist/NewRoomInfoForm/RoomStructure';
 import RoomType from '@/components/NewChecklist/NewRoomInfoForm/RoomType';
-import { roomFloorLevels } from '@/constants/roomInfo';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { flexCenter, flexColumn } from '@/styles/common';
 import { FlexHorizontal } from '@/styles/styled';
@@ -31,21 +31,7 @@ const NewChecklistInfoTemplate = () => {
         <RoomType />
         <RoomStructure />
         <RoomSize />
-        {/* 층수 */}
-        <FormField>
-          <FormField.Label label="층수" />
-          <FlexHorizontal>
-            <S.CustomInput placeholder="" name="floor" value={roomInfo.floor} onChange={actions.onChange} />
-            <S.RadioGroup label="" value={roomInfo.floorLevel ?? ''} onChangeChild={actions.onChange}>
-              {roomFloorLevels.map(floorLevel => (
-                <RadioGroup.RadioButton key={floorLevel} name="floorLevel" value={floorLevel} color="green">
-                  {floorLevel}
-                </RadioGroup.RadioButton>
-              ))}
-            </S.RadioGroup>
-          </FlexHorizontal>
-          <FormField.ErrorMessage value={errorMessage.floor ?? ''} />
-        </FormField>
+        <RoomFloor />
         {/* 계약 기간 */}
         <FlexHorizontal>
           <NewChecklistFormField

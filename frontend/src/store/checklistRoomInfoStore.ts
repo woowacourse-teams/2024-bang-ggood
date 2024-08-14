@@ -55,7 +55,7 @@ const validatorSet = {
   realEstate: [],
   summary: [],
   memo: [],
-} satisfies Record<string, Validator<string>[] | Validator<number>[]>;
+} satisfies Record<string, Validator<string>[]>;
 
 const initialErrorMessages = Object.fromEntries(Object.entries(initialRoomInfo).map(([key]) => [key, '']));
 

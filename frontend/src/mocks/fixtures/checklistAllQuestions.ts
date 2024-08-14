@@ -8,7 +8,7 @@ export const checklistAllQuestions = {
           questionId: 1,
           title: '수압/배수를 확인해주세요.',
           subtitle: '화장실과 주방을 확인해주세요',
-          isSelected: false,
+          isSelected: true,
         },
         {
           questionId: 2,
@@ -20,7 +20,7 @@ export const checklistAllQuestions = {
           questionId: 3,
           title: '수압/배수를 확인해주세요.',
           subtitle: '화장실과 주방을 확인해주세요',
-          isSelected: false,
+          isSelected: true,
         },
         {
           questionId: 4,
@@ -38,7 +38,7 @@ export const checklistAllQuestions = {
           questionId: 6,
           title: '벽과 바닥이 깨끗한가요?',
           subtitle: null,
-          isSelected: true,
+          isSelected: false,
         },
         {
           questionId: 7,
@@ -50,7 +50,7 @@ export const checklistAllQuestions = {
           questionId: 8,
           title: '벽과 바닥이 깨끗한가요?',
           subtitle: null,
-          isSelected: true,
+          isSelected: false,
         },
         {
           questionId: 9,
@@ -62,19 +62,7 @@ export const checklistAllQuestions = {
           questionId: 10,
           title: '벽과 바닥이 깨끗한가요?',
           subtitle: null,
-          isSelected: true,
-        },
-        {
-          questionId: 11,
-          title: '수압/배수를 확인해주세요.',
-          subtitle: '화장실과 주방을 확인해주세요',
           isSelected: false,
-        },
-        {
-          questionId: 12,
-          title: '벽과 바닥이 깨끗한가요?',
-          subtitle: null,
-          isSelected: true,
         },
       ],
     },

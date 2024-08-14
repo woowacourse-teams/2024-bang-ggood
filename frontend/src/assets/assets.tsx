@@ -9,8 +9,9 @@ import ArrowUpSmall from '@/assets/icons/arrow/arrow-up-small.svg';
 import CheckIcon from '@/assets/icons/check.svg';
 import CloseIcon from '@/assets/icons/close.svg';
 import LocationLineIcon from '@/assets/icons/location-lined.svg';
-import PlusBlack from '@/assets/icons/plus/plus-black.svg';
-import PlusWhite from '@/assets/icons/plus/plus-white.svg';
+import PlusBlack from '@/assets/icons/plusMinus/plus-black.svg';
+import PlusSmall from '@/assets/icons/plusMinus/plus-small.svg';
+import PlusWhite from '@/assets/icons/plusMinus/plus-white.svg';
 
 // footer logos
 import ChecklistLogoActive from '@/assets/icons/footer-icon/checklist-logo-active.svg';
@@ -47,6 +48,7 @@ import RoomCondition from '@/assets/icons/category/room-conditon.svg';
 import Security from '@/assets/icons/category/security.svg';
 import Toilet from '@/assets/icons/category/toilet.svg';
 import Window from '@/assets/icons/category/window.svg';
+
 export {
   ArrowBack,
   ArrowDownSmall,
@@ -78,6 +80,7 @@ export {
   Outdoor,
   PencilIcon,
   PlusBlack,
+  PlusSmall,
   PlusWhite,
   QuestionDot,
   RoomCondition,

@@ -172,12 +172,12 @@ public class Checklist extends BaseEntity {
         return summary;
     }
 
-    public OccupancyMonth getOccupancyMonth() {
-        return occupancyMonth;
+    public Integer getOccupancyMonth() {
+        return occupancyMonth.getMonth();
     }
 
-    public OccupancyPeriod getOccupancyPeriod() {
-        return occupancyPeriod;
+    public String getOccupancyPeriod() {
+        return occupancyPeriod.getPeriod();
     }
 
     public List<ChecklistQuestion> getQuestions() {

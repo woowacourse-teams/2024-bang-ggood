@@ -219,16 +219,14 @@ public class ChecklistService {
 
     @Transactional
     public SelectedChecklistResponse readChecklistById(User user, long id) {
-        Checklist checklist = checklistRepository.getById(id); // TODO : 해당 유저의 체크리스트인지 확인 필요
+        Checklist checklist = checklistRepository.getById(id);
+        validateChecklistOwnership(user, checklist);
+
         SelectedRoomResponse selectedRoomResponse = SelectedRoomResponse.of(checklist);
-
         List<SelectedOptionResponse> options = readOptionsByChecklistId(id);
+        List<SelectedCategoryQuestionsResponse> selectedCategoryQuestionsResponse = readCategoryQuestionsByChecklistId(id);
 
-        List<SelectedCategoryQuestionsResponse> selectedCategoryQuestionsResponse =
-                readCategoryQuestionsByChecklistId(id);
-
-        return new SelectedChecklistResponse(checklist.getCreatedAt(), selectedRoomResponse,
-                options, selectedCategoryQuestionsResponse);
+        return new SelectedChecklistResponse(selectedRoomResponse, options, selectedCategoryQuestionsResponse);
     }
 
     private List<SelectedOptionResponse> readOptionsByChecklistId(long checklistId) {

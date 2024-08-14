@@ -43,10 +43,10 @@ const S = {
     ${({ flexWrap }) => (flexWrap ? 'flex-wrap:' + flexWrap + ';' : '')}
   `,
 
-  CustomInput: styled(FormField.Input)`
+  FlexInput: styled(FormField.Input)`
     flex: auto;
   `,
-  CustomLabel: styled(FormField.Label)`
+  FlexLabel: styled(FormField.Label)`
     display: flex;
     justify-content: center;
     align-items: center;

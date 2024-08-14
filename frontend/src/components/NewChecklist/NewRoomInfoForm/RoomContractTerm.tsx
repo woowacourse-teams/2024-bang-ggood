@@ -1,8 +1,8 @@
 import { useStore } from 'zustand';
 
+import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import { NewChecklistFormField } from '@/components/NewChecklist/NewChecklistFormField';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
-import { FlexHorizontal } from '@/styles/styled';
 
 const RoomContractTerm = () => {
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
@@ -10,7 +10,7 @@ const RoomContractTerm = () => {
   const errorMessage = useStore(checklistRoomInfoStore, state => state.errorMessage.contractTerm);
 
   return (
-    <FlexHorizontal>
+    <FlexBox.Horizontal>
       <NewChecklistFormField
         label="계약 기간 (개월)"
         value={contractTerm}
@@ -18,7 +18,7 @@ const RoomContractTerm = () => {
         errorMessage={errorMessage}
         onChange={actions.onChange}
       />
-    </FlexHorizontal>
+    </FlexBox.Horizontal>
   );
 };
 

@@ -2,11 +2,11 @@ import { useCallback } from 'react';
 import { useStore } from 'zustand';
 
 import Badge from '@/components/_common/Badge/Badge';
+import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import S from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import { roomTypes } from '@/constants/roomInfo';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
-import { FlexVertical } from '@/styles/styled';
 import { RoomInfo } from '@/types/room';
 
 const RoomType = () => {
@@ -21,7 +21,7 @@ const RoomType = () => {
   );
 
   return (
-    <FlexVertical>
+    <FlexBox.Vertical>
       <FormField.Label label="방 종류" />
       <S.OptionButtonContainer flexWrap="wrap">
         {roomTypes.map(type => (
@@ -34,7 +34,7 @@ const RoomType = () => {
           />
         ))}
       </S.OptionButtonContainer>
-    </FlexVertical>
+    </FlexBox.Vertical>
   );
 };
 

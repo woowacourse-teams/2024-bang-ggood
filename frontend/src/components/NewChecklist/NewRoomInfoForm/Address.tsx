@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 import { useStore } from 'zustand';
 
+import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import DaumAddressModal from '@/components/NewChecklist/AddressModal/DaumAddressModal';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
-import { FlexHorizontal } from '@/styles/styled';
 
 const Address = () => {
   const address = useStore(checklistRoomInfoStore, state => state.rawValue.address);
@@ -19,10 +19,10 @@ const Address = () => {
   return (
     <FormField>
       <FormField.Label label="주소" />
-      <FlexHorizontal gap="3%">
+      <FlexBox.Horizontal gap="3%">
         <FormField.Input onChange={actions.onChange} name="address" value={address} />
         <DaumAddressModal setAddress={handleSetAddress} />
-      </FlexHorizontal>
+      </FlexBox.Horizontal>
       <FormField.ErrorMessage value={errorMessage ?? ''} />
     </FormField>
   );

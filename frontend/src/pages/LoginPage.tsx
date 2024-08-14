@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { postDummyData } from '@/apis/checklist';
 import { postKakaoCode } from '@/apis/login';
 import { BangBangIcon, KakaoLogo } from '@/assets/assets';
 import Layout from '@/components/_common/layout/Layout';
@@ -18,7 +19,8 @@ const LoginPage = () => {
 
     const postLogin = async () => {
       if (code) {
-        await postKakaoCode(code).then(() => {
+        await postKakaoCode(code).then(async () => {
+          await postDummyData();
           localStorage.setItem(STORAGE_KEYS.LOGIN, 'true');
           navigate(ROUTE_PATH.checklistList);
         });

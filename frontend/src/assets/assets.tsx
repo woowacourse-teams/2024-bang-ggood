@@ -41,6 +41,12 @@ import PencilIcon from '@/assets/icons/pencil-icon.svg';
 import QuestionDot from '@/assets/icons/question-dot.svg';
 import SmileMessageIcon from '@/assets/icons/smile-message-icon.svg';
 
+//category
+import Outdoor from '@/assets/icons/category/outdoor.svg';
+import RoomCondition from '@/assets/icons/category/room-conditon.svg';
+import Security from '@/assets/icons/category/security.svg';
+import Toilet from '@/assets/icons/category/toilet.svg';
+import Window from '@/assets/icons/category/window.svg';
 export {
   ArrowBack,
   ArrowDownSmall,
@@ -69,9 +75,14 @@ export {
   MemoFilled,
   MyPageLogo,
   MyPageLogoActive,
+  Outdoor,
   PencilIcon,
   PlusBlack,
   PlusWhite,
   QuestionDot,
+  RoomCondition,
+  Security,
   SmileMessageIcon,
+  Toilet,
+  Window,
 };

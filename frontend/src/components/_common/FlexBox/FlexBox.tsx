@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { flexColumn, flexRow } from '@/styles/common';
+import { flexColumn, flexRow, flexSpaceBetween } from '@/styles/common';
 
 const FlexBox = {
   Vertical: styled.div<{ gap?: string }>`
@@ -10,7 +10,7 @@ const FlexBox = {
   `,
   Horizontal: styled.div<{ gap?: number | string; flexWrap?: string }>`
     ${flexRow}
-    justify-content: space-between;
+    ${flexSpaceBetween}
     gap: 8px ${({ gap: gap }) => gap ?? '6%'};
     ${({ flexWrap }) => (flexWrap ? 'flex-wrap:' + flexWrap + ';' : '')}
   `,

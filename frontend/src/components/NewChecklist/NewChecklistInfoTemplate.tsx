@@ -148,6 +148,7 @@ const NewChecklistInfoTemplate = () => {
 
 const S = {
   ContentWrapper: styled.div`
+    margin-bottom: 20px;
     padding-top: 40px;
 
     background-color: white;

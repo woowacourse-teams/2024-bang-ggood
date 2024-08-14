@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
-import { MemoFilled } from '@/assets/assets';
-import FloatingButton from '@/components/_common/Button/FloatingButton';
+import { Memo } from '@/assets/assets';
+import FloatingButton from '@/components/_common/FloatingButton/FloatingButton';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import NewChecklistInfoTemplate from '@/components/NewChecklist/NewChecklistInfoTemplate';
@@ -28,9 +28,10 @@ const NewChecklistContent = () => {
 
       {/* 메모 모달*/}
       {isModalOpen && <MemoModal isModalOpen={isModalOpen} modalClose={modalClose} />}
-      {/* 메모 작성 버튼*/}
-      <FloatingButton onClick={modalOpen}>
-        <MemoFilled />
+      {/*메모 작성 버튼*/}
+      <FloatingButton position="bottom" onClick={modalOpen} size="extends">
+        <Memo />
+        <span>메모</span>
       </FloatingButton>
     </S.Container>
   );

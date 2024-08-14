@@ -43,11 +43,11 @@ const S = {
       isSelected
         ? `
         background-color: ${theme.palette.yellow200};
-        border: 1px solid ${theme.palette.yellow600};
+        border: 2px solid ${theme.palette.yellow500};
     `
         : `
         background-color: ${theme.palette.white};
-        border: 1px solid ${theme.palette.grey300};
+        border: 2px solid ${theme.palette.grey200};
     `}
   `,
 };

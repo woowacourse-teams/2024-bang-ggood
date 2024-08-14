@@ -8,12 +8,14 @@ type Size = 'small' | 'medium' | 'extends';
 
 type Color = 'yellow' | 'green' | 'subGreen';
 
+type Position = 'right' | 'bottom';
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   onClick: () => void;
   size?: Size;
   color?: Color;
   'aria-label'?: string;
+  position?: Position;
 }
 
 const FloatingButton = ({
@@ -21,12 +23,13 @@ const FloatingButton = ({
   onClick,
   size = 'medium',
   color = 'yellow',
+  position = 'right',
   'aria-label': ariaLabel = 'add',
   ...rest
 }: Props) => {
   return (
-    <S.Wrapper>
-      <S.Button size={size} color={color} aria-label={ariaLabel} onClick={onClick} {...rest}>
+    <S.Wrapper position={position}>
+      <S.Button position={position} size={size} color={color} aria-label={ariaLabel} onClick={onClick} {...rest}>
         {children}
       </S.Button>
     </S.Wrapper>
@@ -50,7 +53,7 @@ const sizeStyle = {
   `,
   extends: css`
     width: 130px;
-    height: 50px;
+    height: 45px;
 
     font-size: 16px;
 
@@ -93,28 +96,32 @@ const colorStyle = {
 };
 
 const S = {
-  Wrapper: styled.div`
+  Wrapper: styled.div<{ position: Position }>`
     display: flex;
     position: fixed;
-    bottom: 10%;
-    left: 45%;
+    right: ${({ position }) => (position === 'bottom' ? 0 : '10px;')};
+    bottom: ${({ position }) => (position === 'bottom' ? 0 : '20px')};
     z-index: ${({ theme }) => theme.zIndex.FLOATING_BUTTON};
-    width: 100%;
-    padding-right: 10%;
-    transform: translateX(-45%);
-    max-width: 600px;
-    justify-content: flex-end;
+    width: ${({ position }) => (position === 'bottom' ? '100%' : 'auto')};
+
+    justify-content: ${({ position }) => (position === 'bottom' ? 'center' : 'flex-end')};
 
     @media (min-width: ${({ theme }) => theme.viewport.MOBILE}px) {
-      padding-right: 20px;
+      padding-right: ${({ position }) => (position === 'bottom' ? 0 : '20px')};
+    }
+
+    @media (width >= 600px) {
+      left: ${({ position }) => (position === 'bottom' ? '50%' : 'auto')};
+      max-width: 600px;
+      transform: ${({ position }) => (position === 'bottom' ? 'translateX(-50%)' : 'none')};
     }
   `,
-  Button: styled.button<{ size: Size; color: Color }>`
+  Button: styled.button<{ size: Size; color: Color; position: Position }>`
     display: flex;
     align-items: center;
     justify-content: center;
     border: none;
-    border-radius: 50px;
+    border-radius: ${({ position }) => (position === 'bottom' ? '20px 20px 0 0 ' : '50px')};
 
     ${({ size }) => sizeStyle[size]}
     ${({ color }) => colorStyle[color]}

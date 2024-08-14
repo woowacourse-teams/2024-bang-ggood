@@ -90,7 +90,7 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     }
 
     @Transactional
-    @DisplayName("체크리스트 리스트 조회 성공 : 사용자의 체크리스만 조회한다.")
+    @DisplayName("체크리스트 리스트 조회 성공 : 사용자의 체크리스트만 조회한다.")
     @Test
     void findAllByUser_OnlyUserChecklists() {
         // given

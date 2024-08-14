@@ -7,6 +7,11 @@ import RadioGroup from '@/components/_common/RadioGroup/RadioGroup';
 import { flexCenter } from '@/styles/common';
 
 const S = {
+  Center: styled.div`
+    ${flexCenter}
+    font-weight: ${({ theme }) => theme.text.weight.bold};
+    font-size: ${({ theme }) => theme.text.size.large};
+  `,
   SaveTextButton: styled(Header.TextButton)`
     font-weight: ${({ theme }) => theme.text.weight.bold};
     font-size: ${({ theme }) => theme.text.size.large};

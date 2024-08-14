@@ -4,14 +4,14 @@ import { useStore } from 'zustand';
 import Badge from '@/components/_common/Badge/Badge';
 import FormField from '@/components/_common/FormField/FormField';
 import S from '@/components/NewChecklist/NewRoomInfoForm/styled';
-import { roomTypes } from '@/constants/roomInfo';
+import { roomStructures } from '@/constants/roomInfo';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { FlexVertical } from '@/styles/styled';
 import { RoomInfo } from '@/types/room';
 
-const RoomType = () => {
+const RoomStructure = () => {
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const roomType = useStore(checklistRoomInfoStore, state => state.rawValue.type);
+  const roomStructure = useStore(checklistRoomInfoStore, state => state.rawValue.structure);
 
   const handleClickTagButton = useCallback(
     (name: keyof RoomInfo, value: string) => {
@@ -22,15 +22,16 @@ const RoomType = () => {
 
   return (
     <FlexVertical>
-      <FormField.Label label="방 종류" />
+      <FormField.Label label="방 구조" />
       <S.OptionButtonContainer flexWrap="wrap">
-        {roomTypes.map(type => (
+        {roomStructures.map(structure => (
           <Badge
-            key={type}
-            label={type}
+            key={structure}
+            label={structure}
+            name={structure}
             size="button"
-            isSelected={roomType === type}
-            onClick={() => handleClickTagButton('type', type)}
+            isSelected={structure === roomStructure}
+            onClick={() => handleClickTagButton('structure', structure)}
           />
         ))}
       </S.OptionButtonContainer>
@@ -38,4 +39,4 @@ const RoomType = () => {
   );
 };
 
-export default RoomType;
+export default RoomStructure;

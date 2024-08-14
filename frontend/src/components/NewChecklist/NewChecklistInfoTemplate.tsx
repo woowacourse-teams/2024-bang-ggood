@@ -10,6 +10,7 @@ import Address from '@/components/NewChecklist/NewRoomInfoForm/Address';
 import DepositAndRent from '@/components/NewChecklist/NewRoomInfoForm/DepositAndRent';
 import NearTransportation from '@/components/NewChecklist/NewRoomInfoForm/NearTransportation';
 import RoomName from '@/components/NewChecklist/NewRoomInfoForm/RoomName';
+import RoomSize from '@/components/NewChecklist/NewRoomInfoForm/RoomSize';
 import RoomStructure from '@/components/NewChecklist/NewRoomInfoForm/RoomStructure';
 import RoomType from '@/components/NewChecklist/NewRoomInfoForm/RoomType';
 import { roomFloorLevels } from '@/constants/roomInfo';
@@ -29,15 +30,7 @@ const NewChecklistInfoTemplate = () => {
         <DepositAndRent />
         <RoomType />
         <RoomStructure />
-        {/* 방 크기 */}
-        <FormField>
-          <FormField.Label label="방 크기" />
-          <FlexHorizontal>
-            <S.CustomInput placeholder="" onChange={actions.onChange} name="size" value={roomInfo.size} />
-            <S.CustomLabel label="평"></S.CustomLabel>
-          </FlexHorizontal>
-          <FormField.ErrorMessage value={errorMessage.size ?? ''} />
-        </FormField>
+        <RoomSize />
         {/* 층수 */}
         <FormField>
           <FormField.Label label="층수" />

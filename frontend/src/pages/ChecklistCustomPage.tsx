@@ -6,6 +6,7 @@ import { getChecklistAllQuestions, putCustomChecklist } from '@/apis/checklist';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
+import TipBox from '@/components/_common/TipBox/TipBox';
 import { ChecklistCustomTabs } from '@/components/ChecklistCustom/CustomTabs';
 import QuestionListTemplate from '@/components/ChecklistCustom/QuestionListTemplate/QuestionListTemplate';
 import { ROUTE_PATH } from '@/constants/routePath';
@@ -53,11 +54,13 @@ const ChecklistCustomPage = () => {
         center={<Header.Text>{'체크리스트 편집'}</Header.Text>}
         right={<Button label={'저장'} size="small" color="dark" onClick={handleSubmitChecklist} />}
       />
+
       <TabProvider defaultTab={1}>
         {/*체크리스트 작성의 탭*/}
         <ChecklistCustomTabs />
         {/*체크리스트 콘텐츠 섹션*/}
         <S.Container>
+          <TipBox tipText="하나의 집을 보러가는 시간을 10분으로 가정했을 때, 적당한 질문의 갯수는 10개 내외입니다!" />
           <QuestionListTemplate />
         </S.Container>
       </TabProvider>
@@ -74,12 +77,13 @@ const S = {
   `,
   Container: styled.div`
     display: flex;
-    width: 100%;
+    width: calc(100% - 24px);
+    padding: 12px;
     padding-top: 50px;
     padding-bottom: 30px;
 
     background-color: ${({ theme }) => theme.palette.background};
+    flex-direction: column;
     min-height: calc(100vh - 120px);
-    justify-content: center;
   `,
 };

@@ -1,19 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import SelectionCounter from '@/components/_common/SelectionCounter/SelectionCounter';
+import LengthCounter from '@/components/_common/LengthCounter/LengthCounter';
 
 /**
- * SelectionCounter는 전체 선택지 중 현재 몇개가 선택되었는지를 알려주는 컴포넌트입니다.
+ * LengthCounter 전체 (개수/글자) 중 현재 (몇 개인지/글자수)를 알려주는 컴포넌트 입니다..
  */
 const meta = {
   title: 'components/SelectionCounter',
-  component: SelectionCounter,
+  component: LengthCounter,
   parameters: {
     args: {
       size: '400px',
     },
   },
-} satisfies Meta<typeof SelectionCounter>;
+} satisfies Meta<typeof LengthCounter>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;

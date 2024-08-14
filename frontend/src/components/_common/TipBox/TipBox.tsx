@@ -22,7 +22,7 @@ const TipBox = ({ tipText }: Props) => {
   return (
     <S.TipBox>
       <S.TipText>
-        💡 <S.Bold>TIP</S.Bold> : ${tipText}
+        💡 <S.Bold>TIP</S.Bold> : {tipText}
       </S.TipText>
       <CloseIcon onClick={() => setIsTipOpen(false)} style={{ paddingRight: 10 }} />
     </S.TipBox>

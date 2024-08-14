@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { PlusBlack, PlusWhite } from '@/assets/assets';
-import FloatingButton from '@/components/_common/Button/FloatingButton';
+import FloatingButton from '@/components/_common/FloatingButton/FloatingButton';
 
 const meta: Meta<typeof FloatingButton> = {
   title: 'components/FloatingButton',

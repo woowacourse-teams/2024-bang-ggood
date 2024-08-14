@@ -26,6 +26,7 @@ export default NewChecklistTemplate;
 
 const ContentBox = styled.div`
   display: flex;
+  margin-bottom: 40px;
   padding-top: 40px;
 
   background-color: ${({ theme }) => theme.palette.background};

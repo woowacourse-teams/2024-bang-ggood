@@ -1,4 +1,4 @@
-import { css, keyframes } from '@emotion/react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ComponentPropsWithRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
@@ -8,6 +8,7 @@ import ModalBody from '@/components/_common/Modal/ModalBody';
 import ModalFooter from '@/components/_common/Modal/ModalFooter';
 import ModalHeader from '@/components/_common/Modal/ModalHeader';
 import { flexColumn } from '@/styles/common';
+import { fadeIn, fadeOut } from '@/utils/animation';
 
 type ModalPosition = 'center' | 'bottom';
 
@@ -24,30 +25,6 @@ export interface ModalProps extends ComponentPropsWithRef<'dialog'> {
 }
 
 const modalRoot = document.getElementById('modal');
-
-// 나타나는 애니메이션
-export const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-// 사라지는 애니메이션
-export const fadeOut = keyframes`
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(100%);
-  }
-`;
 
 const Modal = ({
   children,
@@ -67,12 +44,6 @@ const Modal = ({
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'visible';
-    }
-
-    if (!hasDim && isOpen) {
-      document.body.style.marginBottom = '450px';
-    } else {
-      document.body.style.marginBottom = '0px';
     }
 
     return () => {
@@ -133,8 +104,7 @@ const S = {
     ${({ $position, $size }) => positionStyles[$position]($size)}
   `,
   ModalInner: styled.div<{ isOpen: boolean }>`
-    width: calc(100% - 24px);
-    padding: 12px;
+    width: 100%;
 
     background-color: ${({ color }) => color ?? 'white'};
 

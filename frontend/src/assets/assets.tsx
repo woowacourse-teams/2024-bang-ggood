@@ -36,7 +36,7 @@ import Heart from '@/assets/icons/heart/heart.svg';
 // memo
 import MemoEmpty from '@/assets/icons/memo-empty.svg';
 import MemoFilled from '@/assets/icons/memo-filled.svg';
-
+import Memo from '@/assets/icons/memo.svg';
 // etc
 import BangBangCryIcon from '@/assets/icons/bang-bang-cry-icon.svg';
 import BangBangIcon from '@/assets/icons/bang-bang-icon.svg';
@@ -71,6 +71,7 @@ export {
   LocationLineIcon,
   LocationLogo,
   LocationLogoActive,
+  Memo,
   MemoEmpty,
   MemoFilled,
   MyPageLogo,

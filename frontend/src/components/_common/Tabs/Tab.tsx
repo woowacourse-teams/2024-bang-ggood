@@ -29,7 +29,7 @@ const Container = styled.div<{ active: boolean }>`
   padding: 10px 16px;
 
   color: ${({ theme, active }) => (active ? theme.palette.yellow600 : theme.palette.black)};
-  font-weight: ${({ active, theme }) => (active ? theme.text.weight.bold : theme.text.weight.medium)};
+  font-weight: ${({ theme }) => theme.text.weight.bold};
   cursor: pointer;
   border-bottom: ${({ active, theme }) =>
     active ? `3px solid ${theme.palette.yellow400}` : `3px solid ${theme.palette.yellow100}`};

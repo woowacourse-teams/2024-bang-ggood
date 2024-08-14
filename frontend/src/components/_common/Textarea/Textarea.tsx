@@ -51,7 +51,6 @@ const S = {
     ${({ width }) => width && `width: ${width};`};
     ${({ height }) => height && `height: ${height};`};
     padding: 6px 11px;
-    border: 2px solid ${({ $color, theme }) => ($color ? $color : theme.palette.grey100)};
 
     background-color: ${({ theme }) => theme.palette.white};
 

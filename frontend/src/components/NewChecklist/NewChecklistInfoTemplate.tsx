@@ -15,7 +15,7 @@ import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 import { RoomInfo } from '@/types/room';
 
 const NewChecklistInfoTemplate = () => {
-  const { actions, roomInfo, errorMessage } = useStore(checklistRoomInfoStore);
+  const { actions, rawValue: roomInfo, errorMessage } = useStore(checklistRoomInfoStore);
 
   const handleClickTagButton = useCallback(
     (name: keyof RoomInfo, value: string) => {

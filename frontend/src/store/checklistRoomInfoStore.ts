@@ -17,11 +17,12 @@ interface RoomInfoAction {
   set: (name: keyof typeof validatorSet, value: string | undefined) => void;
   _update: (field: keyof AllString<RoomInfo> | keyof AllString<RoomInfo>, value: string | undefined) => void;
   _updateErrorMsg: (field: keyof RoomInfo, value: string) => void;
-  _updateAfterValidation: (field: keyof RoomInfo, value: string, validators: Validator<string>[]) => void;
+  _updateAfterValidation: (field: keyof RoomInfo, value: string, validators: Validator[]) => void;
+  _transform: (name: string, value: string) => void;
   onChange: (event: InputChangeEvent) => void;
 }
 
-export const initialRoomInfo: AllString<RoomInfo> = {
+export const initialRoomInfo = {
   roomName: undefined,
   address: undefined,
   station: undefined,
@@ -39,7 +40,25 @@ export const initialRoomInfo: AllString<RoomInfo> = {
   memo: undefined,
 } as const;
 
-const validatorSet = {
+const roomInfoType = {
+  roomName: 'string',
+  address: 'string',
+  station: 'string',
+  deposit: 'number',
+  rent: 'number',
+  walkingTime: 'number',
+  size: 'number',
+  floor: 'number',
+  floorLevel: 'string',
+  type: 'string',
+  structure: 'string',
+  contractTerm: 'number',
+  realEstate: 'string',
+  summary: 'string',
+  memo: 'string',
+} as const;
+
+const validatorSet: Record<string, Validator[]> = {
   roomName: [lengthValidator(20)],
   address: [],
   deposit: [isNumericValidator, nonNegativeValidator],
@@ -55,21 +74,27 @@ const validatorSet = {
   realEstate: [],
   summary: [],
   memo: [],
-} satisfies Record<string, Validator<string>[]>;
+};
 
 const initialErrorMessages = Object.fromEntries(Object.entries(initialRoomInfo).map(([key]) => [key, '']));
 
-const checklistRoomInfoStore = createStore<
-  { roomInfo: AllString<RoomInfo> } & { errorMessage: AllString<RoomInfo> } & { actions: RoomInfoAction }
->((set, get) => ({
-  roomInfo: { ...initialRoomInfo },
-  errorMessage: { ...initialErrorMessages },
+type RoomInfoStore = { rawValue: AllString<RoomInfo> } & { value: RoomInfo } & { errorMessage: AllString<RoomInfo> } & {
+  actions: RoomInfoAction;
+};
+
+const transform = (name: string, value: string) =>
+  roomInfoType[name as keyof RoomInfo] === 'number' ? Number(value) : value;
+const checklistRoomInfoStore = createStore<RoomInfoStore>((set, get) => ({
+  rawValue: initialRoomInfo,
+  value: initialRoomInfo,
+  errorMessage: initialErrorMessages,
   actions: {
     set: (name, value) => {
-      get().actions._updateAfterValidation(name, value ?? '', validatorSet[name] as Validator<string>[]);
+      get().actions._updateAfterValidation(name as keyof RoomInfo, value ?? '', validatorSet[name]);
     },
 
     onChange: (event: InputChangeEvent) => {
+      // 다 지우기할 시 다 지워주고, 에러메시지도 지우기
       if (event.target.value === '') {
         get().actions._updateErrorMsg(event.target.name as keyof RoomInfo, '');
         get().actions._update(event.target.name as keyof RoomInfo, '');
@@ -79,22 +104,26 @@ const checklistRoomInfoStore = createStore<
       get().actions.set(event.target.name as keyof RoomInfo, event.target.value);
     },
 
-    reset: () => set({ roomInfo: { ...initialRoomInfo }, errorMessage: { ...initialErrorMessages } }),
-
-    _update: (name, value) => set({ roomInfo: { ...get().roomInfo, [name]: value } }),
+    reset: () => set({ rawValue: initialRoomInfo, errorMessage: initialErrorMessages }),
+    _update: (name, value) => set({ rawValue: { ...get().rawValue, [name]: value } }),
     _updateErrorMsg: (name, value) => set({ errorMessage: { ...get().errorMessage, [name]: value } }),
     _updateAfterValidation: (name, value, validators) => {
+      // 에러 검증
       const newErrorMessage = validators.reduce(
         (acc, { validate, errorMessage }) => (!validate(value) ? errorMessage : acc),
         '',
       );
 
+      // 에러메시지 업데이트
       get().actions._updateErrorMsg(name, newErrorMessage);
 
+      // 검증 통과시 입력
       if (newErrorMessage.length === 0) {
         get().actions._update(name, value);
+        get().actions._transform(name, value);
       }
     },
+    _transform: (name, value) => set({ value: { ...get().value, [name]: transform(name, value) } }),
   },
 }));
 

@@ -15,16 +15,23 @@ import java.util.List;
 
 public class ChecklistFixture {
 
-    public static final Checklist CHECKLIST1 = new Checklist(
+    public static final Checklist CHECKLIST1_USER1 = new Checklist(
             RoomFixture.ROOM_1,
             UserFixture.USER1,
             1000, 50, 12, "방끗공인중개사", "메모", "한줄평",
             OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY
     );
 
-    public static final Checklist CHECKLIST2 = new Checklist(
+    public static final Checklist CHECKLIST2_USER1 = new Checklist(
             RoomFixture.ROOM_2,
             UserFixture.USER1,
+            1000, 50, 12, "방끗공인중개사", "메모", "한줄평",
+            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY
+    );
+
+    public static final Checklist CHECKLIST3_USER2 = new Checklist(
+            RoomFixture.ROOM_3,
+            UserFixture.USER2,
             1000, 50, 12, "방끗공인중개사", "메모", "한줄평",
             OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY
     );
@@ -167,12 +174,12 @@ public class ChecklistFixture {
 
 
     public static final ChecklistQuestion CHECKLIST_QUESTION_1 = new ChecklistQuestion(
-            CHECKLIST1, Question.fromId(1), Answer.BAD
+            CHECKLIST1_USER1, Question.fromId(1), Answer.BAD
     );
 
     public static final ChecklistQuestion CHECKLIST_QUESTION_2 = new ChecklistQuestion(
-            CHECKLIST1, Question.fromId(2), Answer.BAD
+            CHECKLIST1_USER1, Question.fromId(2), Answer.BAD
     );
 
-    public static final ChecklistLike CHECKLIST_LIKE_1 = new ChecklistLike(CHECKLIST1);
+    public static final ChecklistLike CHECKLIST_LIKE_1 = new ChecklistLike(CHECKLIST1_USER1);
 }

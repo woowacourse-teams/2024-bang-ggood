@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS checklist_question CASCADE;
 DROP TABLE IF EXISTS checklist_option CASCADE;
 DROP TABLE IF EXISTS custom_checklist_question CASCADE;
 DROP TABLE IF EXISTS checklist_like CASCADE;
+DROP TABLE IF EXISTS article CASCADE;
 
 -- Create tables
 CREATE TABLE room
@@ -97,4 +98,14 @@ CREATE TABLE checklist_like
     modified_at  TIMESTAMP(6),
     deleted      BOOLEAN,
     FOREIGN KEY (checklist_id) REFERENCES checklist (id)
+);
+
+CREATE TABLE article
+(
+    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title       VARCHAR(255),
+    content     VARCHAR(255),
+    created_at  TIMESTAMP(6),
+    modified_at TIMESTAMP(6),
+    deleted     BOOLEAN
 );

@@ -26,8 +26,8 @@ public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
         return findById(id).orElseThrow(() -> new BangggoodException(ExceptionCode.CHECKLIST_NOT_FOUND));
     }
 
-    @Query("SELECT c FROM Checklist c WHERE c.deleted = false")
-    List<Checklist> findAllByUser(User user);
+    @Query("SELECT c FROM Checklist c WHERE c.user = :user AND c.deleted = false")
+    List<Checklist> findAllByUser(@Param("user") User user);
 
     @Query("SELECT c FROM Checklist c "
             + "JOIN FETCH c.user u "

@@ -7,11 +7,15 @@ import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
 import RadioGroup from '@/components/_common/RadioGroup/RadioGroup';
-import DaumAddressModal from '@/components/NewChecklist/AddressModal/DaumAddressModal';
 import { NewChecklistFormField } from '@/components/NewChecklist/NewChecklistFormField';
+import Address from '@/components/NewChecklist/NewRoomInfoForm/Address';
+import DepositAndRent from '@/components/NewChecklist/NewRoomInfoForm/DepositAndRent';
+import NearTransportation from '@/components/NewChecklist/NewRoomInfoForm/NearTransportation';
+import RoomName from '@/components/NewChecklist/NewRoomInfoForm/RoomName';
 import { roomFloorLevels, roomStructures, roomTypes } from '@/constants/roomInfo';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
-import { flexCenter, flexColumn, flexRow } from '@/styles/common';
+import { flexCenter, flexColumn } from '@/styles/common';
+import { FlexHorizontal, FlexVertical } from '@/styles/styled';
 import { RoomInfo } from '@/types/room';
 
 const NewChecklistInfoTemplate = () => {
@@ -24,46 +28,15 @@ const NewChecklistInfoTemplate = () => {
     [actions],
   );
 
-  const handleSetAddress = (address: string) => {
-    actions.set('address', address);
-  };
-
   return (
     <S.ContentWrapper>
       <S.Container>
-        {/* 방이름 */}
-        <FormField>
-          <FormField.Label label="방 이름" required={true} />
-          <FormField.Input placeholder="" onChange={actions.onChange} name="roomName" value={roomInfo.roomName} />
-          <FormField.ErrorMessage value={errorMessage.roomName ?? ''} />
-        </FormField>
-        {/* 주소 */}
-        <FormField>
-          <FormField.Label label="주소" />
-          <S.FlexHorizontal gap="3%">
-            <S.CustomInput onChange={actions.onChange} name="address" value={roomInfo.address} />
-            <DaumAddressModal setAddress={handleSetAddress} />
-          </S.FlexHorizontal>
-          <FormField.ErrorMessage value={errorMessage.address ?? ''} />
-        </FormField>
-        {/* 교통편 */}
-        <S.FlexVertical gap="15px">
-          <FormField.Label label="가까운 교통편" />
-          {/* TODO: ErrorMessage 로 의도한 건지 확인 필요 */}
-          <FormField.ErrorMessage value="주소를 추가하면 가까운 역을 찾아드려요!" />
-        </S.FlexVertical>
-        {/* 보증금 월세 */}
-        <FormField>
-          <FormField.Label label="보증금 / 월세 (만원)" />
-          <S.FlexHorizontal gap={0}>
-            <S.CustomInput onChange={actions.onChange} name="deposit" value={roomInfo.deposit} />
-            <S.CustomLabel label=" / " />
-            <S.CustomInput placeholder="" onChange={actions.onChange} name="rent" value={roomInfo.rent} />
-          </S.FlexHorizontal>
-          <FormField.ErrorMessage value={errorMessage.deposit || errorMessage.rent || ''} />
-        </FormField>
+        <RoomName />
+        <Address />
+        <NearTransportation />
+        <DepositAndRent />
         {/* 방 종류 */}
-        <S.FlexVertical>
+        <FlexVertical>
           <FormField.Label label="방 종류" />
           <S.OptionButtonContainer flexWrap="wrap">
             {roomTypes.map(type => (
@@ -76,9 +49,9 @@ const NewChecklistInfoTemplate = () => {
               />
             ))}
           </S.OptionButtonContainer>
-        </S.FlexVertical>
+        </FlexVertical>
         {/* 방 구조 */}
-        <S.FlexVertical>
+        <FlexVertical>
           <FormField.Label label="방 구조" />
           <S.OptionButtonContainer flexWrap="wrap">
             {roomStructures.map(structure => (
@@ -92,19 +65,20 @@ const NewChecklistInfoTemplate = () => {
               />
             ))}
           </S.OptionButtonContainer>
-        </S.FlexVertical>
+        </FlexVertical>
         {/* 방 크기 */}
         <FormField>
-          <FormField.Label label="방 크기 (평)" />
-          <S.FlexHorizontal>
+          <FormField.Label label="방 크기" />
+          <FlexHorizontal>
             <S.CustomInput placeholder="" onChange={actions.onChange} name="size" value={roomInfo.size} />
-          </S.FlexHorizontal>
+            <S.CustomLabel label="평"></S.CustomLabel>
+          </FlexHorizontal>
           <FormField.ErrorMessage value={errorMessage.size ?? ''} />
         </FormField>
         {/* 층수 */}
         <FormField>
           <FormField.Label label="층수" />
-          <S.FlexHorizontal>
+          <FlexHorizontal>
             <S.CustomInput placeholder="" name="floor" value={roomInfo.floor} onChange={actions.onChange} />
             <S.RadioGroup label="" value={roomInfo.floorLevel ?? ''} onChangeChild={actions.onChange}>
               {roomFloorLevels.map(floorLevel => (
@@ -113,11 +87,11 @@ const NewChecklistInfoTemplate = () => {
                 </RadioGroup.RadioButton>
               ))}
             </S.RadioGroup>
-          </S.FlexHorizontal>
+          </FlexHorizontal>
           <FormField.ErrorMessage value={errorMessage.floor ?? ''} />
         </FormField>
         {/* 계약 기간 */}
-        <S.FlexHorizontal>
+        <FlexHorizontal>
           <NewChecklistFormField
             label="계약 기간 (개월)"
             value={roomInfo.contractTerm}
@@ -125,7 +99,7 @@ const NewChecklistInfoTemplate = () => {
             errorMessage={errorMessage.contractTerm}
             onChange={actions.onChange}
           />
-        </S.FlexHorizontal>
+        </FlexHorizontal>
         {/* 부동산 이름 */}
         <NewChecklistFormField
           label="부동산 이름"
@@ -180,23 +154,14 @@ const S = {
 
     color: black;
   `,
-  FlexHorizontal: styled.div<{ gap?: number | string; flexWrap?: string }>`
-    ${flexRow}
-    justify-content: space-between;
-    gap: 8px ${({ gap: gap }) => gap ?? '6%'};
-    ${({ flexWrap }) => (flexWrap ? 'flex-wrap:' + flexWrap + ';' : '')}
-  `,
+
   OptionButtonContainer: styled.div<{ gap?: number | string; flexWrap?: string }>`
     display: flex;
     justify-content: flex-start;
     gap: 4px ${({ gap: gap }) => gap ?? '10px'};
     ${({ flexWrap }) => (flexWrap ? 'flex-wrap:' + flexWrap + ';' : '')}
   `,
-  FlexVertical: styled.div<{ gap?: string }>`
-    ${flexColumn}
-    row-gap: ${({ gap }) => gap ?? '10px'};
-    flex: auto;
-  `,
+
   CustomInput: styled(FormField.Input)`
     flex: auto;
   `,

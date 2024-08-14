@@ -9,14 +9,14 @@ import { NewChecklistFormField } from '@/components/NewChecklist/NewChecklistFor
 import Address from '@/components/NewChecklist/NewRoomInfoForm/Address';
 import DepositAndRent from '@/components/NewChecklist/NewRoomInfoForm/DepositAndRent';
 import NearTransportation from '@/components/NewChecklist/NewRoomInfoForm/NearTransportation';
+import RoomContractTerm from '@/components/NewChecklist/NewRoomInfoForm/RoomContractTerm';
+import RoomFloor from '@/components/NewChecklist/NewRoomInfoForm/RoomFloor';
 import RoomName from '@/components/NewChecklist/NewRoomInfoForm/RoomName';
 import RoomSize from '@/components/NewChecklist/NewRoomInfoForm/RoomSize';
-import RoomFloor from '@/components/NewChecklist/NewRoomInfoForm/RoomSize copy';
 import RoomStructure from '@/components/NewChecklist/NewRoomInfoForm/RoomStructure';
 import RoomType from '@/components/NewChecklist/NewRoomInfoForm/RoomType';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { flexCenter, flexColumn } from '@/styles/common';
-import { FlexHorizontal } from '@/styles/styled';
 
 const NewChecklistInfoTemplate = () => {
   const { actions, rawValue: roomInfo, errorMessage } = useStore(checklistRoomInfoStore);
@@ -32,16 +32,7 @@ const NewChecklistInfoTemplate = () => {
         <RoomStructure />
         <RoomSize />
         <RoomFloor />
-        {/* 계약 기간 */}
-        <FlexHorizontal>
-          <NewChecklistFormField
-            label="계약 기간 (개월)"
-            value={roomInfo.contractTerm}
-            name="contractTerm"
-            errorMessage={errorMessage.contractTerm}
-            onChange={actions.onChange}
-          />
-        </FlexHorizontal>
+        <RoomContractTerm />
         {/* 부동산 이름 */}
         <NewChecklistFormField
           label="부동산 이름"

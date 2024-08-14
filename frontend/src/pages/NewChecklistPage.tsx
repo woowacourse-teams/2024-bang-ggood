@@ -25,7 +25,7 @@ const NewChecklistPage = () => {
   const { mutate: addChecklist } = useAddChecklistQuery();
 
   /*방 기본 정보 */
-  const { rawValue: roomInfo, value: roomInfoAnswer, actions } = useStore(checklistRoomInfoStore);
+  const { value: roomInfoAnswer, actions } = useStore(checklistRoomInfoStore);
 
   const navigate = useNavigate();
 

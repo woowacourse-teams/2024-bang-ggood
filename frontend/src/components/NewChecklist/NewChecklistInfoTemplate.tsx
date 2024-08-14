@@ -56,9 +56,9 @@ const NewChecklistInfoTemplate = () => {
         <FormField>
           <FormField.Label label="보증금 / 월세 (만원)" />
           <S.FlexHorizontal gap={0}>
-            <S.CustomInput onChange={actions.onChange} type="number" name="deposit" value={roomInfo.deposit} />
+            <S.CustomInput onChange={actions.onChange} name="deposit" value={roomInfo.deposit} />
             <S.CustomLabel label=" / " />
-            <S.CustomInput placeholder="" onChange={actions.onChange} type="number" name="rent" value={roomInfo.rent} />
+            <S.CustomInput placeholder="" onChange={actions.onChange} name="rent" value={roomInfo.rent} />
           </S.FlexHorizontal>
           <FormField.ErrorMessage value={errorMessage.deposit || errorMessage.rent || ''} />
         </FormField>
@@ -97,7 +97,7 @@ const NewChecklistInfoTemplate = () => {
         <FormField>
           <FormField.Label label="방 크기 (평)" />
           <S.FlexHorizontal>
-            <S.CustomInput placeholder="" type="number" onChange={actions.onChange} name="size" value={roomInfo.size} />
+            <S.CustomInput placeholder="" onChange={actions.onChange} name="size" value={roomInfo.size} />
           </S.FlexHorizontal>
           <FormField.ErrorMessage value={errorMessage.size ?? ''} />
         </FormField>
@@ -105,13 +105,7 @@ const NewChecklistInfoTemplate = () => {
         <FormField>
           <FormField.Label label="층수" />
           <S.FlexHorizontal>
-            <S.CustomInput
-              placeholder=""
-              name="floor"
-              type="number"
-              value={roomInfo.floor}
-              onChange={actions.onChange}
-            />
+            <S.CustomInput placeholder="" name="floor" value={roomInfo.floor} onChange={actions.onChange} />
             <S.RadioGroup label="" value={roomInfo.floorLevel ?? ''} onChangeChild={actions.onChange}>
               {roomFloorLevels.map(floorLevel => (
                 <RadioGroup.RadioButton key={floorLevel} name="floorLevel" value={floorLevel} color="green">
@@ -128,7 +122,6 @@ const NewChecklistInfoTemplate = () => {
             label="계약 기간 (개월)"
             value={roomInfo.contractTerm}
             name="contractTerm"
-            type="number"
             errorMessage={errorMessage.contractTerm}
             onChange={actions.onChange}
           />

@@ -69,5 +69,14 @@ describe('useChecklistBasicInfoStore 테스트', () => {
       expect(store.getState().value.size).toBe(4.1);
       expect(store.getState().errorMessage.size).toBe('');
     });
+
+    it('문자를 입력했을 때, 에러메시지가 발생하고 입력되지 않는다.', () => {
+      store.getState().actions.onChange(makeEvent('size', '4.1'));
+      store.getState().actions.onChange(makeEvent('size', '4.1e'));
+
+      expect(store.getState().rawValue.size).toBe('4.1');
+      expect(store.getState().value.size).toBe(4.1);
+      expect(store.getState().errorMessage.size).not.toBe('');
+    });
   });
 });

@@ -19,7 +19,7 @@ export const nonNegativeValidator: Validator = {
 };
 
 export const isNumericValidator: Validator = {
-  validate: value => !isNaN(Number(value)),
+  validate: value => !isNaN(Number(value)) && !(value !== '0' && Number(value) === 0), // ' '을 Number()에 넣으면 0이라서 엣지케이스 처리했음
   errorMessage: '숫자만 입력해주세요.',
 };
 export const isIntegerValidator: Validator = {

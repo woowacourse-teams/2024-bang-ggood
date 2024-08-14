@@ -109,10 +109,10 @@ const checklistRoomInfoStore = createStore<RoomInfoStore>((set, get) => ({
     _updateErrorMsg: (name, value) => set({ errorMessage: { ...get().errorMessage, [name]: value } }),
     _updateAfterValidation: (name, value, validators) => {
       // 에러 검증
-      const newErrorMessage = validators.reduce(
-        (acc, { validate, errorMessage }) => (!validate(value) ? errorMessage : acc),
-        '',
-      );
+      const newErrorMessage = validators
+        .slice()
+        .reverse()
+        .reduce((acc, { validate, errorMessage }) => (!validate(value) ? errorMessage : acc), '');
 
       // 에러메시지 업데이트
       get().actions._updateErrorMsg(name, newErrorMessage);

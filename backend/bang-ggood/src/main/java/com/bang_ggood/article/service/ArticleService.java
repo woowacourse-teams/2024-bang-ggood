@@ -1,9 +1,9 @@
 package com.bang_ggood.article.service;
 
 import com.bang_ggood.article.domain.Article;
-import com.bang_ggood.article.dto.ArticleBriefResponse;
+import com.bang_ggood.article.dto.ArticlePreviewResponse;
 import com.bang_ggood.article.dto.ArticleResponse;
-import com.bang_ggood.article.dto.ArticlesBriefResponse;
+import com.bang_ggood.article.dto.ArticlesPreviewResponse;
 import com.bang_ggood.article.repository.ArticleRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -22,10 +22,10 @@ public class ArticleService {
         return ArticleResponse.from(article);
     }
 
-    public ArticlesBriefResponse readArticles() {
-        List<ArticleBriefResponse> articles = articleRepository.findAll().stream()
-                .map(ArticleBriefResponse::from)
+    public ArticlesPreviewResponse readArticles() {
+        List<ArticlePreviewResponse> articles = articleRepository.findAll().stream()
+                .map(ArticlePreviewResponse::from)
                 .toList();
-        return new ArticlesBriefResponse(articles);
+        return new ArticlesPreviewResponse(articles);
     }
 }

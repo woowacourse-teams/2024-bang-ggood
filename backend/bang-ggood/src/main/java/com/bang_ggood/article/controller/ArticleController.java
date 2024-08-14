@@ -1,7 +1,7 @@
 package com.bang_ggood.article.controller;
 
 import com.bang_ggood.article.dto.ArticleResponse;
-import com.bang_ggood.article.dto.ArticlesBriefResponse;
+import com.bang_ggood.article.dto.ArticlesPreviewResponse;
 import com.bang_ggood.article.service.ArticleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +23,7 @@ public class ArticleController {
     }
 
     @GetMapping("/articles")
-    public ResponseEntity<ArticlesBriefResponse> readArticles() {
+    public ResponseEntity<ArticlesPreviewResponse> readArticles() {
         return ResponseEntity.ok(articleService.readArticles());
     }
 }

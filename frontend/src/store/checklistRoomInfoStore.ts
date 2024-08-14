@@ -23,7 +23,8 @@ interface RoomInfoAction {
 }
 
 export const initialRoomInfo = {
-  roomName: undefined,
+  // TODO: UT 를 위한 기본 더미 이름
+  roomName: '8월 14일 1번째 방',
   address: undefined,
   station: undefined,
   deposit: undefined,

@@ -15,7 +15,7 @@ const widthSize: Record<string, string> = {
 const heightSize: Record<string, string> = {
   small: '32px',
   medium: '100px',
-  large: '400px',
+  large: '200px',
   full: '100%',
 };
 
@@ -57,7 +57,7 @@ const S = {
 
     color: ${({ $color, theme }) => ($color ? $color : theme.palette.grey600)};
     font-weight: ${({ theme }) => theme.text.weight.medium};
-    font-size: ${({ theme }) => theme.text.size.small};
+    font-size: ${({ theme }) => theme.text.size.medium};
     outline-color: ${({ theme }) => theme.palette.grey300};
     justify-content: center;
     align-items: center;

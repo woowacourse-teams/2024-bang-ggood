@@ -2,27 +2,29 @@ import styled from '@emotion/styled';
 
 import { flexCenter, flexSpaceBetween, title2 } from '@/styles/common';
 
+type Position = 'left' | 'center';
 interface TitleProps
   extends React.PropsWithChildren<{
     title?: string;
+    position?: Position;
   }> {}
 
-const ModalHeader = ({ title, children }: TitleProps) => {
+const ModalHeader = ({ title, children, position = 'left' }: TitleProps) => {
   return (
-    <S.Container>
+    <S.Container position={position}>
       {title && <S.Title>{title}</S.Title>}
       {children}
     </S.Container>
   );
 };
 
-const Container = styled.div`
+const Container = styled.div<{ position: Position }>`
   ${flexSpaceBetween}
-
-  ${flexCenter}
-  align-items: flex-start;
+  display: flex;
+  align-items: ${({ position }) => (position === 'center' ? 'center' : 'flex-start')};
+  flex-direction: ${({ position }) => position === 'center' && 'column'};
   width: calc(100% - 32px);
-  height: 60px;
+  height: 40px;
   padding: 0 16px;
 `;
 

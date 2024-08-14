@@ -15,7 +15,7 @@ describe('useChecklistBasicInfoStore 테스트', () => {
 
   describe('roomName', () => {
     it('20자 이하 입력 시 정상 입력된다.', () => {
-      store.getState().actions.set('roomName', '3'.repeat(20));
+      store.getState().actions.onChange(makeEvent('roomName', '3'.repeat(20)));
 
       expect(store.getState().rawValue.roomName).toBe('3'.repeat(20));
       expect(store.getState().value.roomName).toBe('3'.repeat(20));
@@ -23,8 +23,8 @@ describe('useChecklistBasicInfoStore 테스트', () => {
     });
 
     it('20자 초과 입력 시 오류메시지가 발생한다.', () => {
-      store.getState().actions.set('roomName', '3'.repeat(20));
-      store.getState().actions.set('roomName', '3'.repeat(21));
+      store.getState().actions.onChange(makeEvent('roomName', '3'.repeat(20)));
+      store.getState().actions.onChange(makeEvent('roomName', '3'.repeat(21)));
 
       expect(store.getState().rawValue.roomName).toBe('3'.repeat(20));
       expect(store.getState().errorMessage.roomName).not.toBe('');
@@ -32,10 +32,10 @@ describe('useChecklistBasicInfoStore 테스트', () => {
   });
   describe('보증금', () => {
     it('숫자 입력 후 빈 문자열을 설정할 경우(모두 지울 경우), 빈 문자열로 설정된다.', () => {
-      store.getState().actions.set('deposit', '112');
+      store.getState().actions.onChange(makeEvent('deposit', '112'));
       expect(store.getState().rawValue.deposit).toBe('112');
 
-      store.getState().actions.set('deposit', '');
+      store.getState().actions.onChange(makeEvent('deposit', ''));
       expect(store.getState().rawValue.deposit).toBe('');
     });
   });

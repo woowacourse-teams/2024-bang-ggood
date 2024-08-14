@@ -1,5 +1,6 @@
 import fetcher from '@/apis/fetcher';
 import { BASE_URL, ENDPOINT } from '@/apis/url';
+import { dummyChecklist } from '@/mocks/fixtures/dummyChecklist';
 import { ChecklistCustom, ChecklistPostForm } from '@/types/checklist';
 import { mapObjNullToUndefined, mapObjUndefinedToNull } from '@/utils/typeFunctions';
 
@@ -30,6 +31,11 @@ export const getChecklists = async () => {
 export const postChecklist = async (checklist: ChecklistPostForm) => {
   checklist.room = mapObjUndefinedToNull(checklist.room);
   const response = await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLISTS, body: checklist });
+  return response;
+};
+
+export const postDummyData = async () => {
+  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLISTS, body: dummyChecklist });
   return response;
 };
 

@@ -8,10 +8,12 @@ import Header from '@/components/_common/Header/Header';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import Tabs from '@/components/_common/Tabs/Tabs';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
+import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
 import { STORAGE_KEYS } from '@/constants/localStorage';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_TOAST_DURATION } from '@/constants/system';
 import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
+import useModalOpen from '@/hooks/useModalOpen';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import useToast from '@/hooks/useToast';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
@@ -34,6 +36,9 @@ const NewChecklistPage = () => {
 
   /* 체크리스트 답변 */
   const { checklistCategoryQnA, setAnswerInQuestion, setValidCategory } = useChecklistStore();
+
+  // 한줄평 모달
+  const { isModalOpen, modalOpen, modalClose } = useModalOpen();
 
   useEffect(() => {
     const fetchChecklist = async () => {
@@ -78,6 +83,7 @@ const NewChecklistPage = () => {
         },
         {
           onSuccess: () => {
+            modalClose();
             showToast('체크리스트가 저장되었습니다.');
             actions.reset();
             navigate(ROUTE_PATH.checklistList);
@@ -94,7 +100,7 @@ const NewChecklistPage = () => {
       <Header
         left={<Header.Backward />}
         center={<Header.Text>{'새 체크리스트'}</Header.Text>}
-        right={<Button label={'저장'} size="small" color="dark" onClick={handleSubmitChecklist} />}
+        right={<Button label={'저장'} size="small" color="dark" onClick={modalOpen} />}
       />
       <TabProvider defaultTab={-1}>
         {/* 체크리스트 작성의 탭 */}
@@ -102,6 +108,11 @@ const NewChecklistPage = () => {
         {/*체크리스트 콘텐츠 섹션*/}
         <NewChecklistContent />
       </TabProvider>
+
+      {/* 한줄평 모달*/}
+      {isModalOpen && (
+        <SummaryModal isModalOpen={isModalOpen} modalClose={modalClose} submitChecklist={handleSubmitChecklist} />
+      )}
     </>
   );
 };

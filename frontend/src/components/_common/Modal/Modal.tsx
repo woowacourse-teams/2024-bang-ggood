@@ -1,6 +1,6 @@
-import { css } from '@emotion/react';
+import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
-import { ComponentPropsWithRef } from 'react';
+import { ComponentPropsWithRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 import { CloseIcon } from '@/assets/assets';
@@ -19,9 +19,35 @@ export interface ModalProps extends ComponentPropsWithRef<'dialog'> {
   size?: ModalSize;
   position?: ModalPosition;
   hasCloseButton?: boolean;
+  hasDim?: boolean;
+  color?: string;
 }
 
 const modalRoot = document.getElementById('modal');
+
+// 나타나는 애니메이션
+export const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+// 사라지는 애니메이션
+export const fadeOut = keyframes`
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+`;
 
 const Modal = ({
   children,
@@ -30,19 +56,45 @@ const Modal = ({
   size = 'large',
   position = 'center',
   hasCloseButton = true,
+  hasDim = true,
+  color,
 }: ModalProps) => {
+  useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
+    const originalMarginBottom = document.body.style.marginBottom;
+
+    if (isOpen && hasDim) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'visible';
+    }
+
+    if (!hasDim && isOpen) {
+      document.body.style.marginBottom = '220px';
+    } else {
+      document.body.style.marginBottom = '0px';
+    }
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.marginBottom = originalMarginBottom;
+    };
+  }, [isOpen, hasDim]);
+
   if (!modalRoot) return null;
 
   return createPortal(
     <S.ModalWrapper open={isOpen}>
-      <S.ModalBackground onClick={onClose} />
-      <S.ModalOuter $position={position} $size={size}>
-        {children}
-        {hasCloseButton && (
-          <S.CloseButton>
-            <CloseIcon onClick={onClose} />
-          </S.CloseButton>
-        )}
+      {hasDim && <S.ModalBackground onClick={hasDim ? onClose : () => {}} hasDim={hasDim} />}
+      <S.ModalOuter $position={position} $size={size} color={color} isOpen={isOpen}>
+        <S.ModalInner isOpen={isOpen}>
+          {children}
+          {hasCloseButton && (
+            <S.CloseButton>
+              <CloseIcon onClick={onClose} />
+            </S.CloseButton>
+          )}
+        </S.ModalInner>
       </S.ModalOuter>
     </S.ModalWrapper>,
     modalRoot,
@@ -64,28 +116,34 @@ const S = {
     width: 100%;
     height: 100vh;
   `,
-  ModalBackground: styled.div`
+  ModalBackground: styled.div<{ hasDim: boolean }>`
     position: fixed;
     inset: 0;
-    background: rgb(0 0 0 / 35%);
+    background: ${({ hasDim }) => (hasDim ? 'rgb(0 0 0 / 35%)' : 'transparent')};
   `,
   ModalOuter: styled.div<{
     $position: ModalPosition;
     $size: ModalSize;
+    isOpen: boolean;
   }>`
     ${flexColumn}
     align-items: flex-start;
 
     position: fixed;
-    left: 50%;
     ${({ $position, $size }) => positionStyles[$position]($size)}
-
-    min-height: 150px;
+  `,
+  ModalInner: styled.div<{ isOpen: boolean }>`
+    width: calc(100% - 24px);
     padding: 12px;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ color }) => color ?? 'white'};
 
     color: ${({ theme }) => theme.palette.black};
+
+    animation: ${({ isOpen }) => (isOpen ? fadeIn : fadeOut)} 0.3s forwards;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 40%);
+    min-height: 150px;
   `,
   CloseButton: styled.button`
     display: flex;
@@ -104,6 +162,7 @@ const S = {
 const positionStyles = {
   center: ($size: ModalSize) => css`
     top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 8px;
     width: ${$size === 'small' ? '60%' : '85%'};
@@ -111,6 +170,7 @@ const positionStyles = {
   `,
   bottom: ($size: ModalSize) => css`
     bottom: 0;
+    left: 50%;
     transform: translate(-50%, 0%);
     border-radius: 16px 16px 0 0;
     width: ${$size && '100%'};

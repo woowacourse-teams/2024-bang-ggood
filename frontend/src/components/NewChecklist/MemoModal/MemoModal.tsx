@@ -17,7 +17,7 @@ interface Props {
 
 const MemoModal = ({ isModalOpen, modalClose }: Props) => {
   const intervalRef = useRef<number | undefined>(undefined);
-  const { actions, roomInfo } = useStore(checklistRoomInfoStore);
+  const { actions, value: roomInfo } = useStore(checklistRoomInfoStore);
   const { value: memo, onChange } = useInput<string>(roomInfo.memo || '');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

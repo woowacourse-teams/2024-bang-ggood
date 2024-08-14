@@ -70,7 +70,7 @@ const Modal = ({
     }
 
     if (!hasDim && isOpen) {
-      document.body.style.marginBottom = '450px';
+      document.body.style.marginBottom = '220px';
     } else {
       document.body.style.marginBottom = '0px';
     }

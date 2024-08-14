@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import { PlusBlack } from '@/assets/assets';
-import FloatingButton from '@/components/_common/Button/FloatingButton';
+import FloatingButton from '@/components/_common/FloatingButton/FloatingButton';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import ChecklistPreviewCard from '@/components/ChecklistList/ChecklistPreviewCard';

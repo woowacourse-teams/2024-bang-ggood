@@ -71,4 +71,10 @@ const S = {
     gap: 8px;
     overflow-y: scroll;
   `,
+  DefaultButton: styled.div`
+    position: fixed;
+    top: 20px;
+    right: 40px;
+    z-index: 1000;
+  `,
 };

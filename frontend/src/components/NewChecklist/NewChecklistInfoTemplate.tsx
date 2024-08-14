@@ -8,11 +8,11 @@ import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
 import RadioGroup from '@/components/_common/RadioGroup/RadioGroup';
 import DaumAddressModal from '@/components/NewChecklist/AddressModal/DaumAddressModal';
+import { NewChecklistFormField } from '@/components/NewChecklist/NewChecklistFormField';
 import { roomFloorLevels, roomStructures, roomTypes } from '@/constants/roomInfo';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
-import { InputChangeEvent } from '@/types/event';
-import { RoomInfo, RoomInfoName } from '@/types/room';
+import { RoomInfo } from '@/types/room';
 
 const NewChecklistInfoTemplate = () => {
   const { actions, roomInfo, errorMessage } = useStore(checklistRoomInfoStore);
@@ -95,7 +95,7 @@ const NewChecklistInfoTemplate = () => {
         </S.FlexVertical>
         {/* 방 크기 */}
         <FormField>
-          <FormField.Label label="방 크기" />
+          <FormField.Label label="방 크기 (평)" />
           <S.FlexHorizontal>
             <S.CustomInput placeholder="" type="number" onChange={actions.onChange} name="size" value={roomInfo.size} />
           </S.FlexHorizontal>
@@ -124,8 +124,8 @@ const NewChecklistInfoTemplate = () => {
         </FormField>
         {/* 계약 기간 */}
         <S.FlexHorizontal>
-          <CustomFormField
-            label="계약 기간(개월)"
+          <NewChecklistFormField
+            label="계약 기간 (개월)"
             value={roomInfo.contractTerm}
             name="contractTerm"
             type="number"
@@ -134,7 +134,7 @@ const NewChecklistInfoTemplate = () => {
           />
         </S.FlexHorizontal>
         {/* 부동산 이름 */}
-        <CustomFormField
+        <NewChecklistFormField
           label="부동산 이름"
           onChange={actions.onChange}
           value={roomInfo.realEstate}
@@ -146,32 +146,6 @@ const NewChecklistInfoTemplate = () => {
   );
 };
 
-const CustomFormField = ({
-  label,
-  name,
-  value,
-  errorMessage,
-  required,
-  type = 'string',
-  onChange,
-}: CustomFormFieldProps) => (
-  <S.CustomFormField key={label}>
-    <FormField.Label label={label} required={required} />
-    <FormField.Input placeholder="" width="full" type={type} onChange={onChange} name={name} value={value} />
-    <FormField.ErrorMessage value={errorMessage ?? ''} />
-  </S.CustomFormField>
-);
-
-export interface CustomFormFieldProps {
-  name: RoomInfoName;
-  value: string | number | undefined;
-  errorMessage: string | undefined;
-  label: string;
-  placeholder?: string;
-  required?: boolean;
-  onChange: (event: InputChangeEvent) => void;
-  type?: string;
-}
 const S = {
   ContentWrapper: styled.div`
     margin-bottom: 20px;
@@ -242,12 +216,7 @@ const S = {
     font-weight: ${({ theme }) => theme.text.weight.bold};
     white-space: pre;
   `,
-  CustomFormField: styled(FormField)`
-    flex: auto;
-    display: flex;
-    flex-direction: column;
-    row-gap: 10px;
-  `,
+
   RadioGroup: styled(RadioGroup)<{ width?: string }>`
     ${({ width }) => (width ? `width:${width};` : '')}
     flex: 1 0 auto;

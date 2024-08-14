@@ -21,7 +21,7 @@ describe('useChecklistBasicInfoStore 테스트', () => {
     it('20자 초과 입력 시 오류메시지가 발생한다.', () => {
       store.getState().actions.set('roomName', '3'.repeat(25));
 
-      expect(store.getState().roomInfo.roomName).toBe(undefined);
+      expect(store.getState().roomInfo.roomName).toBe('8월 14일 1번째 방');
       expect(store.getState().errorMessage.roomName).not.toBe('');
     });
   });

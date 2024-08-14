@@ -26,7 +26,7 @@ const NewChecklistContent = () => {
         <NewChecklistTemplate />
       )}
 
-      {/*메모 모달*/}
+      {/* 메모 모달*/}
       {isModalOpen && <MemoModal isModalOpen={isModalOpen} modalClose={modalClose} />}
       {/*메모 작성 버튼*/}
       <FloatingButton position="bottom" onClick={modalOpen} size="extends">

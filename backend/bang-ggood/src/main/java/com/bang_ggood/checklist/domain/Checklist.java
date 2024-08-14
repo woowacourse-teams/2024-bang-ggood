@@ -86,12 +86,16 @@ public class Checklist extends BaseEntity {
     }
 
     public void change(Checklist updateChecklist) {
-        this.user = updateChecklist.user;
         this.room = updateChecklist.room;
         this.deposit = updateChecklist.deposit;
         this.rent = updateChecklist.rent;
         this.contractTerm = updateChecklist.contractTerm;
         this.realEstate = updateChecklist.realEstate;
+        this.memo = updateChecklist.memo;
+        this.summary = updateChecklist.summary;
+        this.occupancyMonth = updateChecklist.occupancyMonth;
+        this.occupancyPeriod = updateChecklist.occupancyPeriod;
+        validateMemoLength();
     }
 
     private void validateMemoLength() {

@@ -272,6 +272,7 @@ public class ChecklistService {
     @Transactional
     public void updateChecklistById(User user, long id, ChecklistRequest checklistRequest) {
         Checklist checklist = checklistRepository.getById(id);
+        validateChecklistOwnership(user, checklist);
 
         Room room = checklist.getRoom();
         room.change(checklistRequest.toRoomEntity());
@@ -294,19 +295,19 @@ public class ChecklistService {
     }
 
     private void updateChecklistQuestions(ChecklistRequest checklistRequest, Checklist checklist) {
-        /*validateQuestion(checklistRequest.questions());
+        validateQuestion(checklistRequest.questions());
 
         List<ChecklistQuestion> questions = checklist.getQuestions();
         List<ChecklistQuestion> updateQuestions = checklistRequest.questions().stream()
                 .map(question -> new ChecklistQuestion(
                         checklist,
                         Question.fromId(question.questionId()),
-                        Answer.from(question.grade())))
+                        Answer.from(question.answer())))
                 .toList();
 
         validateSameQuestions(questions, updateQuestions);
         IntStream.range(0, questions.size())
-                .forEach(i -> questions.get(i).change(updateQuestions.get(i)));*/
+                .forEach(i -> questions.get(i).change(updateQuestions.get(i)));
     }
 
     private void validateSameQuestions(List<ChecklistQuestion> questions, List<ChecklistQuestion> updateQuestions) {

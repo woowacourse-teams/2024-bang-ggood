@@ -40,7 +40,7 @@ class ChecklistE2ETest extends AcceptanceTest {
     @Autowired
     private ChecklistLikeRepository checklistLikeRepository;
 
-    @DisplayName("체크리스트 방 정보 작성 성공")
+    @DisplayName("체크리스트 작성 성공")
     @Test
     void createChecklist() {
         RestAssured.given().log().all()
@@ -52,7 +52,7 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .statusCode(201);
     }
 
-    @DisplayName("체크리스트 방 정보 작성 실패: 방 이름을 넣지 않은 경우")
+    @DisplayName("체크리스트 작성 실패: 방 이름을 넣지 않은 경우")
     @Test
     void createChecklist_noRoomName_exception() {
         RestAssured.given().log().all()
@@ -61,10 +61,11 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_ROOM_NAME)
                 .when().post("/checklists")
                 .then().log().all()
-                .statusCode(400);
+                .statusCode(400)
+                .body("message", containsString("방 이름이 존재하지 않습니다."));
     }
 
-    @DisplayName("체크리스트 방 정보 작성 실패: 질문 ID를 넣지 않은 경우")
+    @DisplayName("체크리스트 작성 실패: 질문 ID를 넣지 않은 경우")
     @Test
     void createChecklist_noQuestionId_exception() {
         RestAssured.given().log().all()
@@ -73,7 +74,8 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_QUESTION_ID)
                 .when().post("/checklists")
                 .then().log().all()
-                .statusCode(400);
+                .statusCode(400)
+                .body("message", containsString("질문 아이디가 존재하지 않습니다."));
     }
 
 

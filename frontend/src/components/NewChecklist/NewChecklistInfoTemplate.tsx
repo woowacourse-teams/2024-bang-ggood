@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
-import { useCallback } from 'react';
 import { useStore } from 'zustand';
 
-import Badge from '@/components/_common/Badge/Badge';
 import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
@@ -12,21 +10,15 @@ import Address from '@/components/NewChecklist/NewRoomInfoForm/Address';
 import DepositAndRent from '@/components/NewChecklist/NewRoomInfoForm/DepositAndRent';
 import NearTransportation from '@/components/NewChecklist/NewRoomInfoForm/NearTransportation';
 import RoomName from '@/components/NewChecklist/NewRoomInfoForm/RoomName';
-import { roomFloorLevels, roomStructures, roomTypes } from '@/constants/roomInfo';
+import RoomStructure from '@/components/NewChecklist/NewRoomInfoForm/RoomStructure';
+import RoomType from '@/components/NewChecklist/NewRoomInfoForm/RoomType';
+import { roomFloorLevels } from '@/constants/roomInfo';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { flexCenter, flexColumn } from '@/styles/common';
-import { FlexHorizontal, FlexVertical } from '@/styles/styled';
-import { RoomInfo } from '@/types/room';
+import { FlexHorizontal } from '@/styles/styled';
 
 const NewChecklistInfoTemplate = () => {
   const { actions, rawValue: roomInfo, errorMessage } = useStore(checklistRoomInfoStore);
-
-  const handleClickTagButton = useCallback(
-    (name: keyof RoomInfo, value: string) => {
-      actions.set(name, value);
-    },
-    [actions],
-  );
 
   return (
     <S.ContentWrapper>
@@ -35,37 +27,8 @@ const NewChecklistInfoTemplate = () => {
         <Address />
         <NearTransportation />
         <DepositAndRent />
-        {/* 방 종류 */}
-        <FlexVertical>
-          <FormField.Label label="방 종류" />
-          <S.OptionButtonContainer flexWrap="wrap">
-            {roomTypes.map(type => (
-              <Badge
-                key={type}
-                label={type}
-                size="button"
-                isSelected={roomInfo.type === type}
-                onClick={() => handleClickTagButton('type', type)}
-              />
-            ))}
-          </S.OptionButtonContainer>
-        </FlexVertical>
-        {/* 방 구조 */}
-        <FlexVertical>
-          <FormField.Label label="방 구조" />
-          <S.OptionButtonContainer flexWrap="wrap">
-            {roomStructures.map(structure => (
-              <Badge
-                key={structure}
-                label={structure}
-                name={structure}
-                size="button"
-                isSelected={roomInfo.structure === structure}
-                onClick={() => handleClickTagButton('structure', structure)}
-              />
-            ))}
-          </S.OptionButtonContainer>
-        </FlexVertical>
+        <RoomType />
+        <RoomStructure />
         {/* 방 크기 */}
         <FormField>
           <FormField.Label label="방 크기" />

@@ -34,6 +34,9 @@ public class ArticleE2ETest extends AcceptanceTest {
     @DisplayName("아티클 조회 실패 : 유효하지 않은 아이디인 경우")
     @Test
     void readArticle_invalidId_exception() {
+        Article article = new Article("제목", "내용");
+        articleRepository.save(article);
+
         long articleId = Long.MAX_VALUE;
 
         ExceptionResponse response = RestAssured.given().log().all()
@@ -45,5 +48,18 @@ public class ArticleE2ETest extends AcceptanceTest {
                 .as(ExceptionResponse.class);
 
         assertThat(response.message()).isEqualTo(ExceptionCode.ARTICLE_NOT_FOUND.getMessage());
+    }
+
+    @DisplayName("아티클 목록 조회 성공")
+    @Test
+    void readArticles() {
+        Article article = new Article("제목", "내용");
+        articleRepository.save(article);
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .when().get("/articles")
+                .then().log().all()
+                .statusCode(200);
     }
 }

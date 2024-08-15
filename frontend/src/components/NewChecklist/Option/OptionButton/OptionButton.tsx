@@ -15,7 +15,7 @@ const OptionButton = ({ option }: { option: OptionWithIcon }) => {
 
   const BUTTON_COLOR = {
     unSelected: {
-      border: theme.palette.grey400,
+      border: theme.palette.grey300,
       text: theme.palette.grey500,
       fill: theme.palette.white,
     },
@@ -69,12 +69,21 @@ const S = {
 
     ${flexCenter}
   `,
-  TextBox: styled.span<{ color: string }>`
+  TextBox: styled.span`
     position: absolute;
     bottom: 15%;
 
-    color: ${({ color }) => color};
+    color: ${({ theme }) => theme.palette.grey500};
     font-weight: bold;
+    font-size: 14px;
+
+    @media (width <= 344px) {
+      font-size: 12px;
+    }
+
+    @media (width >= 580px) {
+      font-size: 12px;
+    }
   `,
 };
 

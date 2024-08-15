@@ -26,7 +26,7 @@ const AccordionHeader = ({
   return (
     <S.HeaderContainer onClick={() => handleAccordionOpenChange(id)}>
       <S.FlexBetween>
-        {!isAccordionOpen(id) ? (
+        {isAccordionOpen(id) ? (
           <S.HeaderMark isMarked={isMarked} markColor={markColor} />
         ) : (
           <S.HeaderMark isMarked={false} />

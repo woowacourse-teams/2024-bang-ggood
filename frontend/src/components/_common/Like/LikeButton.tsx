@@ -21,10 +21,11 @@ const LikeButton = ({ isLiked = false, checklistId }: Props) => {
   };
 
   return (
-    <>
-      {isSelected && <Like onClick={handleClickLike} fill={theme.palette.red500} stroke={theme.palette.red500} />}
-      {!isSelected && <Like onClick={handleClickLike} fill={'NONE'} stroke={theme.palette.grey500} />}
-    </>
+    <Like
+      onClick={handleClickLike}
+      fill={isSelected ? theme.palette.red500 : 'NONE'}
+      stroke={isSelected ? theme.palette.red500 : theme.palette.grey500}
+    />
   );
 };
 

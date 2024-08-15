@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import OptionButton from '@/components/NewChecklist/Option/OptionButton/OptionButton';
@@ -13,7 +14,7 @@ const meta = {
       },
     },
     args: {
-      size: '400px',
+      size: '80px',
     },
   },
 } satisfies Meta<typeof OptionButton>;
@@ -21,6 +22,21 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const Wrapper = styled.div`
+  display: flex;
+  width: 80px;
+  height: 80px;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const Default: Story = {
   args: { option: OPTIONS[0] },
+  decorators: [
+    Story => (
+      <Wrapper>
+        <Story />
+      </Wrapper>
+    ),
+  ],
 };

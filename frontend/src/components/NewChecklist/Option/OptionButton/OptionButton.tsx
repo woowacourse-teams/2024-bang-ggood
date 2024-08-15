@@ -69,11 +69,11 @@ const S = {
 
     ${flexCenter}
   `,
-  TextBox: styled.span`
+  TextBox: styled.span<{ color: string }>`
     position: absolute;
     bottom: 15%;
 
-    color: ${({ theme }) => theme.palette.grey500};
+    color: ${({ color }) => color};
     font-weight: bold;
     font-size: 14px;
 

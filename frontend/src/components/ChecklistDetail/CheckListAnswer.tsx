@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 
-import { QuestionDot } from '@/assets/assets';
-// import AnswerIcon from '@/components/Answer/AnswerIcon';
+import AnswerIcon from '@/components/Answer/AnswerIcon';
 import { flexSpaceBetween } from '@/styles/common';
 import { OneQuestionWithAnswer } from '@/types/checklist';
 
@@ -10,21 +9,16 @@ interface Props {
 }
 
 const ChecklistAnswer = ({ QuestionAndAnswer }: Props) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { title, subtitle, answer } = QuestionAndAnswer;
 
   return (
     <S.Container>
       <S.TitleContainer>
-        <S.Title>
-          <QuestionDot />
-          {title}
-        </S.Title>
+        <S.Title>{title}</S.Title>
         {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
       </S.TitleContainer>
       <S.AnswerContainer>
-        {/* TODO:  OX 답변 대체 필요  */}
-        {/* <AnswerIcon answer={answer} /> */}
+        <AnswerIcon answer={answer} isSelected />
       </S.AnswerContainer>
     </S.Container>
   );
@@ -57,7 +51,6 @@ const S = {
   `,
   Subtitle: styled.div`
     margin-bottom: 10px;
-    margin-left: 20px;
 
     color: ${({ theme }) => theme.palette.grey500};
     font-size: ${({ theme }) => theme.text.size.small};

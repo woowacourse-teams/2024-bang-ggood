@@ -82,7 +82,7 @@ public class ChecklistController {
 
     @DeleteMapping("/checklists/{id}")
     public ResponseEntity<Void> deleteChecklistById(@AuthPrincipal User user, @PathVariable("id") long id) {
-        checklistService.deleteChecklistById(id);
+        checklistService.deleteChecklistById(user, id);
         return ResponseEntity.noContent().build();
     }
 

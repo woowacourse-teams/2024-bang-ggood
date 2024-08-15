@@ -15,6 +15,7 @@ import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.CustomChecklistQuestionResponse;
 import com.bang_ggood.checklist.dto.response.QuestionResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.dto.response.UserChecklistPreviewResponse;
 import com.bang_ggood.checklist.repository.ChecklistLikeRepository;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
@@ -152,7 +153,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 
         //then
         assertThat(checklistLikeRepository.existsByChecklist(checklist)).isTrue();
-   }
+    }
 
     @DisplayName("체크리스트 좋아요 추가 실패 : 이미 좋아요가 추가가 된 체크리스트인 경우")
     @Test
@@ -164,9 +165,9 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         checklistService.createChecklistLike(USER1, checklist.getId());
 
         //then
-       assertThatThrownBy(() -> checklistService.createChecklistLike(USER1, checklist.getId()))
-               .isInstanceOf(BangggoodException.class)
-               .hasMessage(ExceptionCode.LIKE_ALREADY_EXISTS.getMessage());
+        assertThatThrownBy(() -> checklistService.createChecklistLike(USER1, checklist.getId()))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.LIKE_ALREADY_EXISTS.getMessage());
     }
 
     @DisplayName("체크리스트 질문 조회 성공")
@@ -376,6 +377,32 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 .count();
 
         Assertions.assertThat(selectedCount).isEqualTo(questions.size());
+    }
+
+    @DisplayName("좋아요된 체크리스트 리스트 조회 성공")
+    @Test
+    void readLikedUserChecklistsPreview() {
+        //given
+        checklistRepository.saveAll(
+                List.of(ChecklistFixture.CHECKLIST1_USER1,
+                        ChecklistFixture.CHECKLIST2_USER1,
+                        ChecklistFixture.CHECKLIST3_USER1)
+        );
+        checklistLikeRepository.saveAll(
+                List.of(ChecklistFixture.CHECKLIST_LIKE_1,
+                        ChecklistFixture.CHECKLIST_LIKE_2)
+        );
+
+        //when
+        List<UserChecklistPreviewResponse> checklists =
+                checklistService.readLikedUserChecklistsPreview(USER1).checklists();
+
+        //then
+        assertAll(
+                () -> assertThat(checklists.size()).isEqualTo(2),
+                () -> assertThat(checklists.get(0).checklistId()).isEqualTo(1),
+                () -> assertThat(checklists.get(1).checklistId()).isEqualTo(2)
+        );
     }
 
     @DisplayName("커스텀 체크리스트 업데이트 성공")

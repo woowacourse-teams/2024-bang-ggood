@@ -19,6 +19,8 @@ export const checklistDetail: ChecklistInfo = {
     structure: '오픈형 원룸',
     size: 25,
     floorLevel: '지상',
+    occupancyMonth: 9,
+    occupancyPeriod: '중순',
     createdAt: '2024-02-01T10:00:00Z',
   },
   options: [

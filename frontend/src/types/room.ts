@@ -1,3 +1,5 @@
+export type OccupancyPeriod = '초' | '중순' | '말';
+
 export type RoomInfo = Partial<{
   roomName: string;
   address: string;
@@ -14,6 +16,8 @@ export type RoomInfo = Partial<{
   size: number;
   floorLevel: string;
   structure: string;
+  occupancyMonth: number;
+  occupancyPeriod: OccupancyPeriod;
   summary: string;
   memo: string;
   createdAt?: string;

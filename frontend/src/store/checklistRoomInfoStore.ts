@@ -57,6 +57,8 @@ const roomInfoType = {
   structure: 'string',
   contractTerm: 'number',
   realEstate: 'string',
+  occupancyMonth: 'number',
+  occupancyPeriod: 'string',
   summary: 'string',
   memo: 'string',
   createdAt: 'string',
@@ -77,6 +79,8 @@ const validatorSet: Record<string, Validator[]> = {
   floorLevel: [],
   structure: [],
   realEstate: [],
+  occupancyMonth: [],
+  occupancyPeriod: [],
   summary: [],
   memo: [],
 };

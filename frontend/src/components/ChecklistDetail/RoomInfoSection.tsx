@@ -14,8 +14,21 @@ interface Props {
 const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
   // TODO: 로딩 중일 때 스켈레톤표시
   if (!room) return null;
-  const { roomName, deposit, rent, fee, address, contractTerm, floor, floorLevel, station, walkingTime, realEstate } =
-    room;
+  const {
+    roomName,
+    deposit,
+    rent,
+    fee,
+    address,
+    contractTerm,
+    floor,
+    floorLevel,
+    station,
+    walkingTime,
+    realEstate,
+    occupancyMonth,
+    occupancyPeriod,
+  } = room;
 
   return (
     <S.Container>
@@ -40,7 +53,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
       </S.SpaceBetween>
       <S.Row>
         <Calendar />
-        {contractTerm ?? '00'}개월 계약 / 입주 가능일 : 9월 말
+        {contractTerm ?? '00'}개월 계약 / 입주 가능일 : {occupancyMonth}월 {occupancyPeriod}
       </S.Row>
       <S.Row>
         <LocationLineIcon height={20} width={20} />

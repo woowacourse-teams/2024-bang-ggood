@@ -5,7 +5,6 @@ import { RoomInfo } from '@/types/room';
 
 interface Props {
   room: RoomInfo;
-  createdAt: string;
 }
 
 const RoomInfoSection = ({ room }: Props) => {

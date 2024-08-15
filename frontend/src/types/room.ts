@@ -14,6 +14,7 @@ export type RoomInfo = Partial<{
   structure: string;
   summary: string;
   memo: string;
+  createdAt?: string;
 }>;
 
 export type RoomInfoName = keyof RoomInfo;

@@ -52,7 +52,7 @@ const ChecklistPreviewCard = ({ checklist }: Props) => {
           <SmileMessageIcon />
           <S.SummaryBox>{summary ?? '한줄평이 없어요'}</S.SummaryBox>
         </S.SummaryWrapper>
-        <S.Date>{formattedDate(createdAt)}</S.Date>
+        <S.Date>{formattedDate(createdAt ?? '')}</S.Date>
       </S.Row>
     </S.Container>
   );

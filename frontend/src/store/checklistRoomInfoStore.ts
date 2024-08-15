@@ -57,6 +57,7 @@ const roomInfoType = {
   realEstate: 'string',
   summary: 'string',
   memo: 'string',
+  createdAt: 'string',
 } as const;
 
 const validatorSet: Record<string, Validator[]> = {

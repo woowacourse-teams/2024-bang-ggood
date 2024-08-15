@@ -3,7 +3,6 @@ import { ChecklistInfo } from '@/types/checklist';
 export const checklistDetail: ChecklistInfo = {
   checklistId: 1,
   score: 88,
-  createdAt: '2024-02-01T10:00:00Z',
   room: {
     roomName: '아름다운 방',
     address: '서울시 강남구 테헤란로 123',
@@ -18,6 +17,7 @@ export const checklistDetail: ChecklistInfo = {
     structure: '오픈형 원룸',
     size: 25,
     floorLevel: '지상',
+    createdAt: '2024-02-01T10:00:00Z',
   },
   options: [
     { optionId: 1, optionName: '에어컨' },

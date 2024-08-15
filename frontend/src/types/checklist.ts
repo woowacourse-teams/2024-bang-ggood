@@ -44,7 +44,6 @@ export interface ChecklistQuestionWithIsSelected extends ChecklistQuestion {
 
 export interface ChecklistPreview extends RoomInfo {
   checklistId: number;
-  createdAt: string;
   isLiked: boolean;
 }
 
@@ -66,7 +65,6 @@ export interface ChecklistCompare {
 export interface ChecklistInfo {
   checklistId: number;
   score: number;
-  createdAt: string;
   room: RoomInfo;
   options: Option[];
   categories: ChecklistCategoryQnA[];

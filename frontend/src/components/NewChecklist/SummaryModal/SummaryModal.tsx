@@ -14,7 +14,7 @@ interface Props {
 }
 
 const SummaryModal = ({ isModalOpen, modalClose, submitChecklist }: Props) => {
-  const { roomInfo, actions } = useStore(checklistRoomInfoStore);
+  const { value: roomInfo, actions } = useStore(checklistRoomInfoStore);
 
   return (
     <Modal isOpen={isModalOpen} onClose={modalClose}>

@@ -27,7 +27,7 @@ const NewChecklistPage = () => {
   const { mutate: addChecklist } = useAddChecklistQuery();
 
   /*방 기본 정보 */
-  const { roomInfo, actions } = useStore(checklistRoomInfoStore);
+  const { value: roomInfoAnswer, actions } = useStore(checklistRoomInfoStore);
 
   const navigate = useNavigate();
 
@@ -79,7 +79,7 @@ const NewChecklistPage = () => {
     const fetchNewChecklist = () => {
       addChecklist(
         {
-          room: roomInfo,
+          room: roomInfoAnswer,
           options: selectedOptions,
           questions: transformQuestions(checklistCategoryQnA),
         },

@@ -11,6 +11,7 @@ import { ChecklistCustomTabs } from '@/components/ChecklistCustom/CustomTabs';
 import QuestionListTemplate from '@/components/ChecklistCustom/QuestionListTemplate/QuestionListTemplate';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_TOAST_DURATION } from '@/constants/system';
+import useHandleTipBox from '@/hooks/useHandleTipBox';
 import useToast from '@/hooks/useToast';
 import useChecklistCustomStore from '@/store/useChecklistCustomStore';
 import { flexCenter, title2 } from '@/styles/common';
@@ -20,6 +21,8 @@ const ChecklistCustomPage = () => {
   const navigate = useNavigate();
 
   const { setValidCategory, setChecklistAllQuestionList, selectedQuestions } = useChecklistCustomStore();
+
+  const { resetShowTipBox } = useHandleTipBox('CUSTOM_QUESTION');
 
   const handleSubmitChecklist = () => {
     const fetchNewChecklist = async () => {
@@ -45,6 +48,8 @@ const ChecklistCustomPage = () => {
       setValidCategory();
     };
     fetchChecklist();
+    /*팁 박스를 다시 보이도록 리셋*/
+    resetShowTipBox();
   }, []);
 
   return (
@@ -60,7 +65,7 @@ const ChecklistCustomPage = () => {
         <ChecklistCustomTabs />
         {/*체크리스트 콘텐츠 섹션*/}
         <S.Container>
-          <TipBox tipText="하나의 집을 보러가는 시간을 10분으로 가정했을 때, 적당한 질문의 갯수는 10개 내외입니다!" />
+          <TipBox tipType={'CUSTOM_QUESTION'} />
           <QuestionListTemplate />
         </S.Container>
       </TabProvider>

@@ -9,9 +9,10 @@ import { flexCenter, flexColumn, title4 } from '@/styles/common';
 const OptionChecklistTemplate = () => {
   return (
     <S.Container>
-      <TipBox tipText="수리가 필요한 시설이 있다면, 관리자에게 수리 가능 여부를 미리 물어보세요!" />
-      <S.InnerBox isTipOpen={true}>
+      <TipBox tipType={'OPTION'} />
+      <S.InnerBox>
         <OptionModalInfoBox />
+
         <S.OptionBox>
           {OPTIONS.map(option => (
             <OptionButton option={option} key={option.id} />
@@ -32,14 +33,13 @@ const S = {
 
     background-color: ${({ theme }) => theme.palette.background};
     min-height: calc(100vh - 64px);
-    gap: 10px;
     align-items: center;
   `,
 
-  InnerBox: styled.div<{ isTipOpen: boolean }>`
+  InnerBox: styled.div`
     width: 100%;
     ${flexColumn}
-    margin-top: ${({ isTipOpen }) => !isTipOpen && 15}px;
+    margin-top: 10px;
 
     background-color: white;
 

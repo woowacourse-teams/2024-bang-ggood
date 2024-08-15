@@ -1,30 +1,25 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
 
 import { CloseIcon } from '@/assets/assets';
-import { STORAGE_KEYS } from '@/constants/localStorage';
+import { TIP_MESSAGE } from '@/constants/message';
+import useHandleTipBox, { TipType } from '@/hooks/useHandleTipBox';
 import { flexCenter, title4 } from '@/styles/common';
 
 interface Props {
-  tipText: string;
+  tipType: TipType;
 }
 
-const TipBox = ({ tipText }: Props) => {
-  const [isTipOpen, setIsTipOpen] = useState(() => {
-    const savedTipState = localStorage.getItem(STORAGE_KEYS.TIP);
-    return savedTipState !== null ? JSON.parse(savedTipState) : true;
-  });
+const TipBox = ({ tipType }: Props) => {
+  const { isTipOpen, closeTipBox } = useHandleTipBox(tipType);
 
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.TIP, JSON.stringify(isTipOpen));
-  }, [isTipOpen]);
+  if (!isTipOpen) return;
 
   return (
     <S.TipBox>
       <S.TipText>
-        💡 <S.Bold>TIP</S.Bold> : {tipText}
+        💡 <S.Bold>TIP</S.Bold> : {TIP_MESSAGE[tipType]}
       </S.TipText>
-      <CloseIcon onClick={() => setIsTipOpen(false)} style={{ paddingRight: 10 }} />
+      <CloseIcon onClick={closeTipBox} style={{ paddingRight: 10 }} />
     </S.TipBox>
   );
 };

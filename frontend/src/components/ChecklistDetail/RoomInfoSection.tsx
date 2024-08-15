@@ -1,29 +1,37 @@
 import styled from '@emotion/styled';
 
+import LikeButton from '@/components/_common/Like/LikeButton';
 import { flexColumn, flexRow, title1 } from '@/styles/common';
 import { RoomInfo } from '@/types/room';
 
 interface Props {
   room: RoomInfo;
+  checklistId: number;
+  isLiked: boolean;
 }
 
-const RoomInfoSection = ({ room }: Props) => {
+const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
   // TODO: 로딩 중일 때 스켈레톤표시
   if (!room) return null;
-  const { roomName, deposit, rent, address, contractTerm, floor, floorLevel, station, walkingTime, realEstate } = room;
+  const { roomName, deposit, rent, fee, address, contractTerm, floor, floorLevel, station, walkingTime, realEstate } =
+    room;
 
   return (
     <S.Container>
-      <S.Row>
-        <S.Title>{roomName}</S.Title>
-      </S.Row>
+      <S.GreenWrapper>
+        <S.Row>
+          <S.Title>{roomName}</S.Title>
+          <LikeButton isLiked={isLiked} checklistId={checklistId} />
+        </S.Row>
+        <S.Row>
+          <S.Rent>
+            {deposit ?? '00'} / {rent ?? '00'} + {fee ?? '00'}
+          </S.Rent>
+        </S.Row>
+      </S.GreenWrapper>
+
       <S.Row>{address}</S.Row>
-      <S.Row>
-        <S.Rent>
-          <S.Label>월세 :</S.Label>
-          {deposit ?? '00'}/{rent ?? '00'}
-        </S.Rent>
-      </S.Row>
+
       <S.Row>
         <S.Box>
           <S.Label>계약 기간 :</S.Label>
@@ -52,13 +60,25 @@ export default RoomInfoSection;
 
 const S = {
   Container: styled.div`
+    box-sizing: border-box;
+    width: 100%;
     ${flexColumn}
     gap: 20px;
     margin-bottom: 10px;
-    padding: 24px 16px;
+    padding: 16px;
 
     background-color: ${({ theme }) => theme.palette.white};
     border-radius: 8px;
+  `,
+  GreenWrapper: styled.div`
+    width: 100%;
+    padding: 16px;
+
+    background-color: ${({ theme }) => theme.palette.green500};
+
+    color: ${({ theme }) => theme.palette.white};
+    box-sizing: border-box;
+    border-radius: 16px;
   `,
   Row: styled.div`
     ${flexRow}
@@ -79,6 +99,7 @@ const S = {
   `,
   Rent: styled.div`
     ${flexRow}
+    font-size: ${({ theme }) => theme.text.size.large};
     letter-spacing: 0.05rem;
   `,
   Floor: styled.div`

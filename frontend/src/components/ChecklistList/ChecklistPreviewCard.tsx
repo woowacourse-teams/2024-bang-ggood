@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import { LocationLineIcon, SmileMessageIcon } from '@/assets/assets';
-import LikeIcon from '@/components/_common/Like/LikeButton';
+import LikeButton from '@/components/_common/Like/LikeButton';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { boxShadow, flexCenter, flexColumn, flexRow, flexSpaceBetween, title3 } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
@@ -27,7 +27,7 @@ const ChecklistPreviewCard = ({ checklist }: Props) => {
           <LocationLineIcon />
           {address}
         </S.LocationWrapper>
-        <LikeIcon isLiked={isLiked} checklistId={checklistId} />
+        <LikeButton isLiked={isLiked} checklistId={checklistId} />
       </S.Row>
       <S.Column>
         <S.Title>{roomName}</S.Title>

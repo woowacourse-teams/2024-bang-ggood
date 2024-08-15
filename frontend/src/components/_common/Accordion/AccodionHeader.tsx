@@ -64,7 +64,6 @@ const FlexBetween = styled.div`
 `;
 
 const HeaderTitle = styled.div`
-  ${title2};
   display: flex;
   padding-left: 15px;
   align-items: center;
@@ -73,6 +72,7 @@ const HeaderTitle = styled.div`
 const HeaderMark = styled.div<{ isMarked: boolean; markColor?: string }>`
   opacity: ${({ isMarked }) => (isMarked ? 1 : 0)};
   width: 12px;
+    ${title3};
 
   background-color: ${({ markColor }) => markColor};
   border-radius: 8px 0 0 8px;

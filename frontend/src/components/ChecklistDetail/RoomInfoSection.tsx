@@ -73,10 +73,6 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
 
 export default RoomInfoSection;
 
-const Row = styled.div`
-  ${flexRow}
-`;
-
 const S = {
   Container: styled.div`
     box-sizing: border-box;
@@ -110,7 +106,7 @@ const S = {
   SpaceBetween: styled.div`
     ${flexSpaceBetween}
   `,
-  Title: styled(Row)`
+  Title: styled.div`
     width: 100%;
     ${title1}
     min-height: 40px;

@@ -1,5 +1,6 @@
 import { AnswerType } from '@/types/answer';
 import { CategoryScore } from '@/types/category';
+import { Option } from '@/types/option';
 import { RoomInfo } from '@/types/room';
 
 export interface CategoryAndQuestion {
@@ -42,16 +43,13 @@ export interface ChecklistQuestionWithIsSelected extends ChecklistQuestion {
   isSelected: boolean;
 }
 
+// 체크리스트 카드
 export interface ChecklistPreview extends RoomInfo {
   checklistId: number;
   isLiked: boolean;
 }
 
-export interface Option {
-  optionId: number;
-  optionName: string;
-}
-
+// 체크릿트 비교
 export interface ChecklistCompare {
   room: RoomInfo;
   checklistId: number;
@@ -62,8 +60,11 @@ export interface ChecklistCompare {
   categories: CategoryScore[];
 }
 
+// 체크리스트 디테일
 export interface ChecklistInfo {
   checklistId: number;
+  isLiked: boolean;
+  // TODO: score 삭제 필요
   score: number;
   room: RoomInfo;
   options: Option[];

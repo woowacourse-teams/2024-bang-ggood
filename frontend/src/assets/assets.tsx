@@ -29,10 +29,6 @@ import LocationLogo from '@/assets/icons/footer-icon/location-logo.svg';
 import MyPageLogoActive from '@/assets/icons/footer-icon/my-page-logo-active.svg';
 import MyPageLogo from '@/assets/icons/footer-icon/my-page-logo.svg';
 
-// heart
-import HeartEmpty from '@/assets/icons/heart/heart-empty.svg';
-import Heart from '@/assets/icons/heart/heart.svg';
-
 // memo
 import MemoEmpty from '@/assets/icons/memo-empty.svg';
 import MemoFilled from '@/assets/icons/memo-filled.svg';
@@ -61,8 +57,6 @@ export {
   ChecklistLogo,
   ChecklistLogoActive,
   CloseIcon,
-  Heart,
-  HeartEmpty,
   HomeLogo,
   HomeLogoActive,
   InputRequiredDot,

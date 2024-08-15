@@ -49,7 +49,7 @@ export interface ChecklistPreview extends RoomInfo {
   isLiked: boolean;
 }
 
-// 체크릿트 비교
+// 체크리스트 비교
 export interface ChecklistCompare {
   room: RoomInfo;
   checklistId: number;

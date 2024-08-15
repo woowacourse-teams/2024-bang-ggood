@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import TipBox from '@/components/_common/TipBox/TipBox';
 import OptionAllSelectBox from '@/components/NewChecklist/Option/OptionAllSelectBox';
-import { OptionContainer } from '@/components/NewChecklist/Option/OptionsContainer';
+import { OptionList } from '@/components/NewChecklist/Option/OptionList';
 import { flexCenter, flexColumn, title4 } from '@/styles/common';
 
 const OptionChecklistTemplate = () => {
@@ -12,7 +12,7 @@ const OptionChecklistTemplate = () => {
       <S.InnerBox>
         <OptionAllSelectBox />
         <S.OptionBox>
-          <OptionContainer />
+          <OptionList />
         </S.OptionBox>
       </S.InnerBox>
     </S.Container>

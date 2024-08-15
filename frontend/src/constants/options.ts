@@ -1,68 +1,85 @@
-import AirConditioner from '@/assets/icons/option/airconditioner.svg';
-import Closet from '@/assets/icons/option/closet.svg';
-import Desk from '@/assets/icons/option/desk.svg';
-import ElectronicStove from '@/assets/icons/option/eletronic-stove.svg';
-import Microwave from '@/assets/icons/option/microwave.svg';
-import Refrigerator from '@/assets/icons/option/refrigerator.svg';
-import ShoesRack from '@/assets/icons/option/shoesRack.svg';
-import Sink from '@/assets/icons/option/sink.svg';
-import WashingMachine from '@/assets/icons/option/washingmachine.svg';
+import AirConditionerFilled from '@/assets/icons/option/airconditioner-filled.svg';
+import AirConditionerUnfilled from '@/assets/icons/option/airconditioner-unfilled.svg';
+import ClosetFilled from '@/assets/icons/option/closet-filled.svg';
+import ClosetUnfilled from '@/assets/icons/option/closet-unfilled.svg';
+import DeskFilled from '@/assets/icons/option/desk-filled.svg';
+import DeskUnfilled from '@/assets/icons/option/desk-unfilled.svg';
+import ElectronicStoveFilled from '@/assets/icons/option/electronic-stove-filled.svg';
+import ElectronicStoveUnfilled from '@/assets/icons/option/electronic-stove-unfilled.svg';
+import MicrowaveFilled from '@/assets/icons/option/microwave-filled.svg';
+import MicrowaveUnfilled from '@/assets/icons/option/microwave-unfilled.svg';
+import RefrigeratorFilled from '@/assets/icons/option/refrigerator-filled.svg';
+import RefrigeratorUnfilled from '@/assets/icons/option/refrigerator-unfilled.svg';
+import ShoesRackFilled from '@/assets/icons/option/shoesrack-filled.svg';
+import ShoesRackUnfilled from '@/assets/icons/option/shoesrack-unfilled.svg';
+import SinkFilled from '@/assets/icons/option/sink-filled.svg';
+import SinkUnfilled from '@/assets/icons/option/sink-unfilled.svg';
+import WashingMachineFilled from '@/assets/icons/option/washingmachine-filled.svg';
+import WashingMachineUnfilled from '@/assets/icons/option/washingmachine-unfilled.svg';
 import { OptionWithIcon } from '@/types/option';
 
 const OPTIONS: OptionWithIcon[] = [
   {
     id: 1,
     name: 'airConditioner',
-    Icon: AirConditioner,
+    UnFilledIcon: AirConditionerUnfilled,
+    FilledIcon: AirConditionerFilled,
     displayName: '에어컨',
   },
   {
     id: 2,
     name: 'closet',
-    Icon: Closet,
+    UnFilledIcon: ClosetUnfilled,
+    FilledIcon: ClosetFilled,
     displayName: '옷장',
   },
   {
     id: 3,
     name: 'desk',
-    Icon: Desk,
+    UnFilledIcon: DeskUnfilled,
+    FilledIcon: DeskFilled,
     displayName: '책상',
   },
   {
     id: 4,
     name: 'microwaveOven',
-    Icon: Microwave,
+    UnFilledIcon: MicrowaveUnfilled,
+    FilledIcon: MicrowaveFilled,
     displayName: '전자레인지',
   },
-
   {
     id: 5,
     name: 'shoeRack',
-    Icon: ShoesRack,
+    UnFilledIcon: ShoesRackUnfilled,
+    FilledIcon: ShoesRackFilled,
     displayName: '신발장',
   },
   {
     id: 6,
     name: 'washingMachine',
-    Icon: WashingMachine,
+    UnFilledIcon: WashingMachineUnfilled,
+    FilledIcon: WashingMachineFilled,
     displayName: '세탁기',
   },
   {
     id: 7,
     name: 'electronicStove',
-    Icon: ElectronicStove,
+    UnFilledIcon: ElectronicStoveUnfilled,
+    FilledIcon: ElectronicStoveFilled,
     displayName: '인덕션',
   },
   {
     id: 8,
     name: 'sink',
-    Icon: Sink,
+    UnFilledIcon: SinkUnfilled,
+    FilledIcon: SinkFilled,
     displayName: '싱크대',
   },
   {
     id: 9,
     name: 'refrigerator',
-    Icon: Refrigerator,
+    UnFilledIcon: RefrigeratorUnfilled,
+    FilledIcon: RefrigeratorFilled,
     displayName: '냉장고',
   },
 ];

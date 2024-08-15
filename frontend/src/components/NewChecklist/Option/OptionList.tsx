@@ -4,15 +4,15 @@ import OptionButton from '@/components/NewChecklist/Option/OptionButton/OptionBu
 import { OPTIONS } from '@/constants/options';
 import { flexCenter } from '@/styles/common';
 
-export const OptionContainer = () => {
-  //const [isSelected, setIsSelected] = useState(false);
-
+export const OptionList = () => {
   const icons = OPTIONS.map(option => {
     return <OptionButton option={option} key={option.id} />;
   });
 
   return <S.GridContainer>{icons}</S.GridContainer>;
 };
+
+export default OptionList;
 
 const S = {
   GridContainer: styled.div`

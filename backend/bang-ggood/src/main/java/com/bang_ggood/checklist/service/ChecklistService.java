@@ -272,6 +272,15 @@ public class ChecklistService {
     }
 
     @Transactional
+    public UserChecklistsPreviewResponse readLikedUserChecklistsPreview(User user) {
+        List<Checklist> likedChecklists = checklistRepository.findAllByUserAndIsLiked(user);
+        List<UserChecklistPreviewResponse> responses = likedChecklists.stream()
+                .map(checklist -> UserChecklistPreviewResponse.of(checklist, true))
+                .toList();
+        return new UserChecklistsPreviewResponse(responses);
+    }
+
+    @Transactional
     public void updateChecklistById(User user, long id, ChecklistRequest checklistRequest) {
         Checklist checklist = checklistRepository.getById(id);
 

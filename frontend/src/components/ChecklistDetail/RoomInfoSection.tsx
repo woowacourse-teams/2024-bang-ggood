@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 
+import { Building, Calendar, LocationLineIcon, Room, Stairs, Subway } from '@/assets/assets';
 import LikeButton from '@/components/_common/Like/LikeButton';
-import { flexColumn, flexRow, title1 } from '@/styles/common';
+import { flexColumn, flexRow, flexSpaceBetween, title1 } from '@/styles/common';
 import { RoomInfo } from '@/types/room';
 
 interface Props {
@@ -24,32 +25,33 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
           <LikeButton isLiked={isLiked} checklistId={checklistId} />
         </S.Row>
         <S.Row>
-          <S.Rent>
-            {deposit ?? '00'} / {rent ?? '00'} + {fee ?? '00'}
-          </S.Rent>
+          {deposit ?? '00'} / {rent ?? '00'} + {fee ?? '00'}
         </S.Row>
       </S.GreenWrapper>
-
-      <S.Row>{address}</S.Row>
-
-      <S.Row>
-        <S.Box>
-          <S.Label>계약 기간 :</S.Label>
-          {contractTerm ?? '00'}개월
-        </S.Box>
-        {/* TODO: 방 종류, 방 구조 추가 */}
-        <S.Box>
-          <S.Label>층 :</S.Label>
+      <S.SpaceBetween>
+        <S.Row>
+          <Room />
+          {room.type} / {room.structure}
+        </S.Row>
+        <S.Row>
+          <Stairs />
           {floorLevel === '지상' ? `${floor ?? '00'}층` : floorLevel}
-        </S.Box>
+        </S.Row>
+      </S.SpaceBetween>
+      <S.Row>
+        <Calendar />
+        {contractTerm ?? '00'}개월 계약 / 입주 가능일 : 9월 말
       </S.Row>
       <S.Row>
-        <S.Label>교통편 :</S.Label>
-        {station ?? '역'}까지 도보
-        {walkingTime ?? '00'}분
+        <LocationLineIcon height={20} width={20} />
+        {address}
       </S.Row>
       <S.Row>
-        <S.Label>부동산 :</S.Label>
+        <Subway />
+        {station ?? '역'}까지 도보 {walkingTime ?? '00'}분
+      </S.Row>
+      <S.Row>
+        <Building />
         {realEstate ?? '00부동산'}
       </S.Row>
     </S.Container>
@@ -58,17 +60,24 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
 
 export default RoomInfoSection;
 
+const Row = styled.div`
+  ${flexRow}
+`;
+
 const S = {
   Container: styled.div`
     box-sizing: border-box;
     width: 100%;
     ${flexColumn}
-    gap: 20px;
+    gap: 25px;
     margin-bottom: 10px;
     padding: 16px;
 
     background-color: ${({ theme }) => theme.palette.white};
     border-radius: 8px;
+
+    font-size: ${({ theme }) => theme.text.size.medium};
+    letter-spacing: 0.05rem;
   `,
   GreenWrapper: styled.div`
     width: 100%;
@@ -77,41 +86,21 @@ const S = {
     background-color: ${({ theme }) => theme.palette.green500};
 
     color: ${({ theme }) => theme.palette.white};
+    font-size: ${({ theme }) => theme.text.size.large};
     box-sizing: border-box;
     border-radius: 16px;
   `,
   Row: styled.div`
     ${flexRow}
-    font-size: ${({ theme }) => theme.text.size.medium};
+    gap: 10px;
   `,
-  Title: styled.div`
+  SpaceBetween: styled.div`
+    ${flexSpaceBetween}
+  `,
+  Title: styled(Row)`
     width: 100%;
     ${title1}
     min-height: 40px;
     word-break: keep-all;
-  `,
-  Score: styled.div`
-    width: 100%;
-
-    color: ${({ theme }) => theme.palette.green500};
-    text-align: end;
-    ${title1}
-  `,
-  Rent: styled.div`
-    ${flexRow}
-    font-size: ${({ theme }) => theme.text.size.large};
-    letter-spacing: 0.05rem;
-  `,
-  Floor: styled.div`
-    display: flex;
-  `,
-  Box: styled.div`
-    ${flexRow}
-    width: 100%;
-  `,
-  Label: styled.p`
-    margin-right: 10px;
-
-    color: ${({ theme }) => theme.palette.grey500};
   `,
 };

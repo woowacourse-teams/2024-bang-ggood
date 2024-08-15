@@ -18,17 +18,15 @@ const AccordionBody = ({ children, id }: { children: React.ReactNode; id: number
 
 export default AccordionBody;
 
-const Container = styled.div<{ isOpen: boolean }>`
-  visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
-  overflow: hidden;
-  margin-top: 10px;
-
-  background-color: ${({ theme }) => theme.palette.white};
-  max-height: ${({ isOpen }) => (isOpen ? '1000px' : '0')};
-  transition: max-height 0.2s cubic-bezier(0.15, 0.1, 0.25, 1);
-  border-radius: 12px;
-`;
-
 const S = {
-  Container,
+  Container: styled.div<{ isOpen: boolean }>`
+    visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
+    overflow: hidden;
+    margin-top: 10px;
+
+    background-color: ${({ theme }) => theme.palette.white};
+    max-height: ${({ isOpen }) => (isOpen ? '1000px' : '0')};
+    transition: max-height 0.2s cubic-bezier(0.15, 0.1, 0.25, 1);
+    border-radius: 12px;
+  `,
 };

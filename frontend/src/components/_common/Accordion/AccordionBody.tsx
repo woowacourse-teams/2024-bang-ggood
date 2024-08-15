@@ -20,7 +20,7 @@ export default AccordionBody;
 
 const S = {
   Container: styled.div<{ isOpen: boolean }>`
-    visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
+    display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
     overflow: hidden;
     margin-top: 10px;
 

@@ -7,7 +7,7 @@ import useOptionStore from '@/store/useOptionStore';
 import { flexCenter, flexSpaceBetween, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
 
-const OptionModalInfoBox = () => {
+const OptionAllSelectBox = () => {
   const { selectedOptions, isAllSelected, addAllOptions, removeAllOptions } = useOptionStore();
 
   const handleToggleAllSelect = isAllSelected() ? removeAllOptions : addAllOptions;
@@ -53,4 +53,4 @@ const S = {
   TotalSelectBox,
 };
 
-export default OptionModalInfoBox;
+export default OptionAllSelectBox;

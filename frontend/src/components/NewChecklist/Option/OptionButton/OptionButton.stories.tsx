@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import OptionButton from '@/components/_common/OptionButton/OptionButton';
+import OptionButton from '@/components/NewChecklist/Option/OptionButton/OptionButton';
 import { OPTIONS } from '@/constants/options';
 
 const meta = {

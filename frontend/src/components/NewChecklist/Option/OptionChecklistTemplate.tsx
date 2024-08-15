@@ -1,9 +1,8 @@
 import styled from '@emotion/styled';
 
-import OptionButton from '@/components/_common/OptionButton/OptionButton';
 import TipBox from '@/components/_common/TipBox/TipBox';
-import OptionModalInfoBox from '@/components/NewChecklist/Option/OptionBox';
-import { OPTIONS } from '@/constants/options';
+import OptionAllSelectBox from '@/components/NewChecklist/Option/OptionAllSelectBox';
+import { OptionContainer } from '@/components/NewChecklist/Option/OptionsContainer';
 import { flexCenter, flexColumn, title4 } from '@/styles/common';
 
 const OptionChecklistTemplate = () => {
@@ -11,12 +10,9 @@ const OptionChecklistTemplate = () => {
     <S.Container>
       <TipBox tipType={'OPTION'} />
       <S.InnerBox>
-        <OptionModalInfoBox />
-
+        <OptionAllSelectBox />
         <S.OptionBox>
-          {OPTIONS.map(option => (
-            <OptionButton option={option} key={option.id} />
-          ))}
+          <OptionContainer />
         </S.OptionBox>
       </S.InnerBox>
     </S.Container>

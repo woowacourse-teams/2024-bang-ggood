@@ -9,15 +9,9 @@ import ArrowUpSmall from '@/assets/icons/arrow/arrow-up-small.svg';
 import CheckIcon from '@/assets/icons/check.svg';
 import CloseIcon from '@/assets/icons/close.svg';
 import LocationLineIcon from '@/assets/icons/location-lined.svg';
-import PlusBlack from '@/assets/icons/plus/plus-black.svg';
-import PlusWhite from '@/assets/icons/plus/plus-white.svg';
-
-// answer icon
-import No from '@/assets/icons/answer/no-isSelected.svg';
-import NoGrey from '@/assets/icons/answer/no.svg';
-import None from '@/assets/icons/answer/none.svg';
-import Yes from '@/assets/icons/answer/yes-isSelected.svg';
-import YesGrey from '@/assets/icons/answer/yes.svg';
+import PlusBlack from '@/assets/icons/plusMinus/plus-black.svg';
+import PlusSmall from '@/assets/icons/plusMinus/plus-small.svg';
+import PlusWhite from '@/assets/icons/plusMinus/plus-white.svg';
 
 // footer logos
 import ChecklistLogoActive from '@/assets/icons/footer-icon/checklist-logo-active.svg';
@@ -76,14 +70,10 @@ export {
   MemoFilled,
   MyPageLogo,
   MyPageLogoActive,
-  No,
-  NoGrey,
-  None,
   PencilIcon,
   PlusBlack,
+  PlusSmall,
   PlusWhite,
   QuestionDot,
   SmileMessageIcon,
-  Yes,
-  YesGrey,
 };

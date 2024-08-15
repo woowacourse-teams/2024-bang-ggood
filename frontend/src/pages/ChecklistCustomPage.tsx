@@ -6,10 +6,12 @@ import { getChecklistAllQuestions, putCustomChecklist } from '@/apis/checklist';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
+import TipBox from '@/components/_common/TipBox/TipBox';
 import { ChecklistCustomTabs } from '@/components/ChecklistCustom/CustomTabs';
 import QuestionListTemplate from '@/components/ChecklistCustom/QuestionListTemplate/QuestionListTemplate';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_TOAST_DURATION } from '@/constants/system';
+import useHandleTipBox from '@/hooks/useHandleTipBox';
 import useToast from '@/hooks/useToast';
 import useChecklistCustomStore from '@/store/useChecklistCustomStore';
 import { flexCenter, title2 } from '@/styles/common';
@@ -19,6 +21,8 @@ const ChecklistCustomPage = () => {
   const navigate = useNavigate();
 
   const { setValidCategory, setChecklistAllQuestionList, selectedQuestions } = useChecklistCustomStore();
+
+  const { resetShowTipBox } = useHandleTipBox('CUSTOM_QUESTION');
 
   const handleSubmitChecklist = () => {
     const fetchNewChecklist = async () => {
@@ -44,6 +48,8 @@ const ChecklistCustomPage = () => {
       setValidCategory();
     };
     fetchChecklist();
+    /*팁 박스를 다시 보이도록 리셋*/
+    resetShowTipBox();
   }, []);
 
   return (
@@ -53,11 +59,13 @@ const ChecklistCustomPage = () => {
         center={<Header.Text>{'체크리스트 편집'}</Header.Text>}
         right={<Button label={'저장'} size="small" color="dark" onClick={handleSubmitChecklist} />}
       />
+
       <TabProvider defaultTab={1}>
         {/*체크리스트 작성의 탭*/}
         <ChecklistCustomTabs />
         {/*체크리스트 콘텐츠 섹션*/}
         <S.Container>
+          <TipBox tipType={'CUSTOM_QUESTION'} />
           <QuestionListTemplate />
         </S.Container>
       </TabProvider>
@@ -74,12 +82,13 @@ const S = {
   `,
   Container: styled.div`
     display: flex;
-    width: 100%;
+    width: calc(100% - 24px);
+    padding: 12px;
     padding-top: 50px;
     padding-bottom: 30px;
 
     background-color: ${({ theme }) => theme.palette.background};
+    flex-direction: column;
     min-height: calc(100vh - 120px);
-    justify-content: center;
   `,
 };

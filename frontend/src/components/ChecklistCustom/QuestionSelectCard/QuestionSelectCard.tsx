@@ -26,7 +26,12 @@ const QuestionSelectCard = ({ question }: { question: ChecklistQuestionWithIsSel
         {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
       </S.FlexColumn>
       <S.CheckBoxContainer>
-        <Checkbox isChecked={isSelected} setIsChecked={handleCheckQuestion} onClick={handleCheckQuestion} />
+        <Checkbox
+          iconType="plus"
+          isChecked={isSelected}
+          setIsChecked={handleCheckQuestion}
+          onClick={handleCheckQuestion}
+        />
       </S.CheckBoxContainer>
     </S.Container>
   );

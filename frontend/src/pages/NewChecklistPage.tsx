@@ -9,10 +9,10 @@ import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import Tabs from '@/components/_common/Tabs/Tabs';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
-import { STORAGE_KEYS } from '@/constants/localStorage';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_TOAST_DURATION } from '@/constants/system';
 import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
+import useHandleTipBox from '@/hooks/useHandleTipBox';
 import useModalOpen from '@/hooks/useModalOpen';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import useToast from '@/hooks/useToast';
@@ -40,6 +40,8 @@ const NewChecklistPage = () => {
   // 한줄평 모달
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
 
+  const { resetShowTipBox } = useHandleTipBox('OPTION');
+
   useEffect(() => {
     const fetchChecklist = async () => {
       const checklist = await getChecklistQuestions();
@@ -54,7 +56,7 @@ const NewChecklistPage = () => {
       resetToDefaultOptions();
 
       //로컬 스토리지 팁 보이는 여부 리셋
-      localStorage.removeItem(STORAGE_KEYS.TIP);
+      resetShowTipBox();
     };
 
     fetchChecklist();
@@ -108,7 +110,6 @@ const NewChecklistPage = () => {
         {/*체크리스트 콘텐츠 섹션*/}
         <NewChecklistContent />
       </TabProvider>
-
       {/* 한줄평 모달*/}
       {isModalOpen && (
         <SummaryModal isModalOpen={isModalOpen} modalClose={modalClose} submitChecklist={handleSubmitChecklist} />

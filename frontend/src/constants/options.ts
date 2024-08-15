@@ -6,8 +6,6 @@ import ClosetFilled from '@/assets/icons/options/closet-filled.svg';
 import ClosetUnfilled from '@/assets/icons/options/closet-unfilled.svg';
 import DeskFilled from '@/assets/icons/options/desk-filled.svg';
 import DeskUnfilled from '@/assets/icons/options/desk-unfilled.svg';
-import DoorLockFilled from '@/assets/icons/options/doorlock-filled.svg';
-import DoorLockUnFilled from '@/assets/icons/options/doorlock-unfilled.svg';
 import DryerFilled from '@/assets/icons/options/dryer-filled.svg';
 import DryerUnfilled from '@/assets/icons/options/dryer-unfilled.svg';
 import ElevatorFilled from '@/assets/icons/options/elevator-filled.svg';
@@ -22,8 +20,6 @@ import RefrigeratorFilled from '@/assets/icons/options/refrigerator-filled.svg';
 import RefrigeratorUnfilled from '@/assets/icons/options/refrigerator-unfillled.svg';
 import ShoesClosetFilled from '@/assets/icons/options/shoescloset-filled.svg';
 import ShoesClosetUnfilled from '@/assets/icons/options/shoescloset-unfilled.svg';
-import SinkFilled from '@/assets/icons/options/sink-filled.svg';
-import SinkUnfilled from '@/assets/icons/options/sink-unfilled.svg';
 import TvFilled from '@/assets/icons/options/tv-filled.svg';
 import TvUnfilled from '@/assets/icons/options/tv-unfilled.svg';
 import WashingMachineFilled from '@/assets/icons/options/washingmachine-filled.svg';
@@ -31,13 +27,6 @@ import WashingMachineUnfilled from '@/assets/icons/options/washingmachine-unfill
 import { OptionWithIcon } from '@/types/option';
 
 const OPTIONS: OptionWithIcon[] = [
-  {
-    id: 1,
-    name: 'doorLock',
-    Filled: DoorLockFilled,
-    Unfilled: DoorLockUnFilled,
-    displayName: '도어락',
-  },
   {
     id: 2,
     name: 'airConditioner',
@@ -51,13 +40,6 @@ const OPTIONS: OptionWithIcon[] = [
     Filled: RefrigeratorFilled,
     Unfilled: RefrigeratorUnfilled,
     displayName: '냉장고',
-  },
-  {
-    id: 4,
-    name: 'sink',
-    Filled: SinkFilled,
-    Unfilled: SinkUnfilled,
-    displayName: '싱크대',
   },
   {
     id: 5,
@@ -141,7 +123,7 @@ const OPTIONS: OptionWithIcon[] = [
 
 const OPTION_COUNT = OPTIONS.length;
 
-const DEFAULT_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const DEFAULT_OPTIONS: number[] = [];
 
 // eslint-disable-next-line simple-import-sort/exports
 export { DEFAULT_OPTIONS, OPTION_COUNT, OPTIONS };

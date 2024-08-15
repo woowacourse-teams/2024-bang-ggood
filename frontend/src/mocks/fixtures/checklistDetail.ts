@@ -3,11 +3,13 @@ import { ChecklistInfo } from '@/types/checklist';
 export const checklistDetail: ChecklistInfo = {
   checklistId: 1,
   score: 88,
+  isLiked: true,
   room: {
     roomName: '아름다운 방',
     address: '서울시 강남구 테헤란로 123',
     deposit: 1000,
     rent: 50,
+    fee: 5,
     contractTerm: 12,
     floor: 5,
     station: '강남역',

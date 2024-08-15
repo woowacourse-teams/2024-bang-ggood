@@ -479,19 +479,25 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
 
         // when
-        checklistService.deleteChecklistById(checklist.getId());
+        checklistService.deleteChecklistById(UserFixture.USER1, checklist.getId());
 
         // then
         assertThat(checklistRepository.existsById(checklist.getId().longValue())).isFalse();
     }
 
-    @DisplayName("체크리스트 삭제 실패")
+    @DisplayName("체크리스트 삭제 실패 : 체크리스트 작성 유저와 삭제하려는 유저가 다른 경우")
     @Test
-    void deleteChecklistById_notFound_exception() {
-        // given & when & then
-        assertThatThrownBy(() -> checklistService.deleteChecklistById(-1))
+    void deleteChecklistById_notOwnedByUser_exception() {
+        // given
+        roomRepository.save(RoomFixture.ROOM_1);
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
+
+        // when & then
+        assertThatThrownBy(
+                () -> checklistService.deleteChecklistById(UserFixture.USER2, checklist.getId())
+        )
                 .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
+                .hasMessage(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER.getMessage());
     }
 
     @DisplayName("체크리스트 좋아요 삭제 성공")

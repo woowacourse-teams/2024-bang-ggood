@@ -1,4 +1,4 @@
-name: backend-cd
+name: backend-dev-cd
 
 on:
   pull_request:
@@ -33,9 +33,11 @@ jobs:
     - name: Write application.yml
       env:
         APPLICATION_YML: ${{ secrets.APPLICATION_YML }}
+        APPLICATION_DEV_YML: ${{ secrets.APPLICATION_DEV_YML }}
         APPLICATION_TEST_YML: ${{ secrets.APPLICATION_TEST_YML }}
       run: |
         echo "${APPLICATION_YML}" > backend/bang-ggood/src/main/resources/application.yml
+        echo "${APPLICATION_DEV_YML}" > backend/bang-ggood/src/main/resources/application-dev.yml
         echo "${APPLICATION_TEST_YML}" > backend/bang-ggood/src/test/resources/application-test.yml
 
     - name: Build with Gradle
@@ -51,7 +53,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: bang-ggood
+    runs-on: bang-ggood-dev
     steps:
       - name: change permission
         run: sudo chown -R ubuntu:ubuntu /home/ubuntu/actions-runner/_work/2024-bang-ggood
@@ -65,4 +67,4 @@ jobs:
         run: sudo fuser -k -n tcp 8080 || true
 
       - name: Start server
-        run: sudo nohup java -jar -Duser.timezone=Asia/Seoul ./backend/bang-ggood/build/libs/*SNAPSHOT.jar > /home/ubuntu/actions-runner/server.log 2>&1 &
+        run: sudo nohup java -jar -Dspring.profiles.active=dev -Duser.timezone=Asia/Seoul ./backend/bang-ggood/build/libs/*SNAPSHOT.jar > /home/ubuntu/actions-runner/server.log 2>&1 &

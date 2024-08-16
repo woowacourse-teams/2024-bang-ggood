@@ -19,6 +19,7 @@ import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useOptionStore from '@/store/useOptionStore';
 import { ChecklistCategoryQnA } from '@/types/checklist';
+import { objectOmit } from '@/utils/typeFunctions';
 
 type RouteParams = {
   checklistId: string;
@@ -34,7 +35,7 @@ const EditChecklistPage = () => {
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
   const roomName = useStore(checklistRoomInfoStore, state => state.value.roomName);
   const { selectedOptions, setSelectedOptions } = useOptionStore();
-  const { checklistCategoryQnA, setAnswers } = useChecklistStore();
+  const { checklistCategoryQnA, setAnswers, validCategory } = useChecklistStore();
   const navigate = useNavigate();
 
   const { tabs } = useNewChecklistTabs();
@@ -42,8 +43,9 @@ const EditChecklistPage = () => {
   useEffect(() => {
     const fetchChecklistAndSetToStore = async () => {
       const checklist = await getChecklistDetail(Number(checklistId));
-      actions.setAll({ value: checklist.room });
+      actions.setAll({ rawValue: objectOmit(checklist.room, new Set('includedUtilities')) });
       setSelectedOptions(checklist.options.flatMap(option => option.optionId));
+
       setAnswers(checklist.categories);
     };
     fetchChecklistAndSetToStore();
@@ -93,7 +95,7 @@ const EditChecklistPage = () => {
         center={<Header.Text>{'새 체크리스트'}</Header.Text>}
         right={<Button label={'저장'} size="small" color="dark" onClick={modalOpen} />}
       />
-      <TabProvider defaultTab={-1}>
+      <TabProvider defaultTab={0}>
         {/* 체크리스트 작성의 탭 */}
         <Tabs tabList={tabs} />
         {/*체크리스트 콘텐츠 섹션*/}

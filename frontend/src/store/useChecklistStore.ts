@@ -49,6 +49,7 @@ const useChecklistStore = create<ChecklistState>((set, get) => ({
 
   setAnswers: (answers: ChecklistCategoryQnA[]) => {
     set({ checklistCategoryQnA: answers });
+    get()._setValidCategory();
   },
 }));
 

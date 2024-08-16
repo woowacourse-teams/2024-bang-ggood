@@ -2,7 +2,8 @@ name: Discord PR
 
 on:
   pull_request:
-    branches: ["dev"]
+    branches: ["dev-be"]
+    paths: 'backend/**'
 
 jobs:
   create-issue:

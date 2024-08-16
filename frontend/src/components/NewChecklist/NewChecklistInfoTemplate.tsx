@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import Address from '@/components/NewChecklist/NewRoomInfoForm/Address';
 import DepositAndRent from '@/components/NewChecklist/NewRoomInfoForm/DepositAndRent';
 import NearTransportation from '@/components/NewChecklist/NewRoomInfoForm/NearTransportation';
+import OccupancyMonth from '@/components/NewChecklist/NewRoomInfoForm/OccupancyMonth';
 import RealEstate from '@/components/NewChecklist/NewRoomInfoForm/RealEstate';
 import RoomContractTerm from '@/components/NewChecklist/NewRoomInfoForm/RoomContractTerm';
 import RoomFloor from '@/components/NewChecklist/NewRoomInfoForm/RoomFloor';
@@ -23,6 +24,7 @@ const NewChecklistInfoTemplate = () => {
         <RoomStructure />
         <RoomSize />
         <RoomContractTerm />
+        <OccupancyMonth />
         <RealEstate />
       </S.Container>
     </S.ContentWrapper>

@@ -1,12 +1,16 @@
+import styled from '@emotion/styled';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from 'zustand';
 
 import { getChecklistQuestions } from '@/apis/checklist';
+import { Memo } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
+import FloatingButton from '@/components/_common/FloatingButton/FloatingButton';
 import Header from '@/components/_common/Header/Header';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import Tabs from '@/components/_common/Tabs/Tabs';
+import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
 import { ROUTE_PATH } from '@/constants/routePath';
@@ -31,14 +35,21 @@ const NewChecklistPage = () => {
 
   const navigate = useNavigate();
 
-  /* 선택된 옵션 */
+  /*선택된 옵션*/
   const { selectedOptions, resetToDefaultOptions } = useOptionStore();
 
-  /* 체크리스트 답변 */
+  /*체크리스트 답변*/
   const { checklistCategoryQnA, setAnswerInQuestion, setValidCategory } = useChecklistStore();
 
-  // 한줄평 모달
-  const { isModalOpen, modalOpen, modalClose } = useModalOpen();
+  /*한줄평 모달*/
+  const {
+    isModalOpen: isSummaryModalOpen,
+    modalOpen: summaryModalOpen,
+    modalClose: summaryModalClose,
+  } = useModalOpen();
+
+  /*메모 모달*/
+  const { isModalOpen: isMemoModalOpen, modalOpen: memoModalOpen, modalClose: memoModalClose } = useModalOpen();
 
   const { resetShowTipBox } = useHandleTipBox('OPTION');
 
@@ -85,7 +96,7 @@ const NewChecklistPage = () => {
         },
         {
           onSuccess: () => {
-            modalClose();
+            summaryModalClose();
             showToast('체크리스트가 저장되었습니다.');
             actions.reset();
             navigate(ROUTE_PATH.checklistList);
@@ -102,20 +113,46 @@ const NewChecklistPage = () => {
       <Header
         left={<Header.Backward />}
         center={<Header.Text>{'새 체크리스트'}</Header.Text>}
-        right={<Button label={'저장'} size="small" color="dark" onClick={modalOpen} />}
+        right={<Button label={'저장'} size="small" color="dark" onClick={summaryModalOpen} />}
       />
       <TabProvider defaultTab={-1}>
         {/* 체크리스트 작성의 탭 */}
         <Tabs tabList={tabs} />
-        {/*체크리스트 콘텐츠 섹션*/}
+        {/* 체크리스트 콘텐츠 섹션 */}
         <NewChecklistContent />
+        {/* 메모 모달 */}
+        {isMemoModalOpen && (
+          <>
+            {/* 모달이 열렸을 때 컨텐츠를 다 보이게 하려는 빈 박스 */}
+            <S.EmptyBox />
+            <MemoModal isModalOpen={isMemoModalOpen} modalClose={memoModalClose} />
+            {/* 메모 작성 버튼 */}
+            <FloatingButton position="bottom" onClick={memoModalOpen} size="extends">
+              <Memo />
+              <span>메모</span>
+            </FloatingButton>
+          </>
+        )}
       </TabProvider>
-      {/* 한줄평 모달*/}
-      {isModalOpen && (
-        <SummaryModal isModalOpen={isModalOpen} modalClose={modalClose} submitChecklist={handleSubmitChecklist} />
+      {/* 한줄평 모달 */}
+      {isSummaryModalOpen && (
+        <SummaryModal
+          isModalOpen={isSummaryModalOpen}
+          modalClose={summaryModalClose}
+          submitChecklist={handleSubmitChecklist}
+        />
       )}
     </>
   );
+};
+
+const S = {
+  EmptyBox: styled.div`
+    width: 100%;
+    height: 50px;
+
+    background-color: pink;
+  `,
 };
 
 export default NewChecklistPage;

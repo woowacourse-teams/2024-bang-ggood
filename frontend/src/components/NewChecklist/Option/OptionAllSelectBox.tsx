@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import Checkbox from '@/components/_common/Checkbox/Checkbox';
-import LengthCounter from '@/components/_common/LengthCounter/LengthCounter';
+import CounterBox from '@/components/_common/CounterBox/CounterBox';
 import { OPTION_COUNT } from '@/constants/options';
 import useOptionStore from '@/store/useOptionStore';
 import { flexCenter, flexSpaceBetween, title4 } from '@/styles/common';
@@ -26,7 +26,7 @@ const OptionAllSelectBox = () => {
 
         <span>전체선택</span>
       </S.TotalSelectBox>
-      <LengthCounter currentCount={selectedOptions.length} totalCount={OPTION_COUNT} />
+      <CounterBox currentCount={selectedOptions.length} totalCount={OPTION_COUNT} />
     </S.ButtonContainer>
   );
 };

@@ -14,7 +14,7 @@ const widthSize: Record<string, string> = {
 
 const heightSize: Record<string, string> = {
   small: '32px',
-  medium: '100px',
+  medium: '64px',
   large: '300px',
   full: '100%',
 };
@@ -23,11 +23,19 @@ interface Props extends React.TextareaHTMLAttributes<HTMLInputElement | HTMLText
   width?: keyof typeof widthSize;
   height?: keyof typeof heightSize;
   borderRadius?: string;
+  hasBorder?: boolean;
 }
 
 export type TextareaChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 
-const Textarea = ({ width = 'full', height = 'small', onChange, borderRadius = '5px', ...rest }: Props) => {
+const Textarea = ({
+  width = 'full',
+  height = 'small',
+  onChange,
+  borderRadius = '5px',
+  hasBorder = false,
+  ...rest
+}: Props) => {
   const handleChange = useCallback(
     (event: TextareaChangeEvent) => {
       if (!onChange) return;
@@ -37,16 +45,22 @@ const Textarea = ({ width = 'full', height = 'small', onChange, borderRadius = '
   );
 
   return (
-    <S.Textarea
-      width={widthSize[width]}
-      height={heightSize[height]}
-      {...rest}
-      onChange={handleChange}
-      $borderRadius={borderRadius}
-    />
+    <S.Box hasBorder={hasBorder}>
+      <S.Textarea
+        width={widthSize[width]}
+        height={heightSize[height]}
+        {...rest}
+        onChange={handleChange}
+        $borderRadius={borderRadius}
+      />
+    </S.Box>
   );
 };
 const S = {
+  Box: styled.div<{ hasBorder: boolean }>`
+    border: ${({ hasBorder, theme }) => hasBorder && `2px solid ${theme.palette.grey200}`};
+    border-radius: 5px;
+  `,
   Textarea: styled.textarea<StyledProps>`
     ${({ width }) => width && `width: ${width};`};
     ${({ height }) => height && `height: ${height};`};

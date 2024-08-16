@@ -16,12 +16,12 @@ export type ModalContentPosition = 'center' | 'left';
 const Container = styled.div<{ contentPosition: ModalContentPosition }>`
   display: flex;
   width: 100%;
-  box-sizing: border-box;
   margin-bottom: 10px;
   padding: 0 16px;
 
   line-height: 1.5;
   text-align: left;
+  box-sizing: border-box;
   align-items: center;
   justify-content: ${({ contentPosition }) => (contentPosition === 'center' ? 'center' : 'flex-start')};
 `;

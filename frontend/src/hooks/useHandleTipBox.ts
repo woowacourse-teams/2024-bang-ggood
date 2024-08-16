@@ -16,13 +16,11 @@ export type TipType = 'OPTION' | 'CUSTOM_QUESTION';
 const useHandleTipBox = (tipType: TipType) => {
   const [closedTips, setClosedTips] = useState<Set<TipType>>(() => {
     const savedTipState = localStorage.getItem(STORAGE_KEYS.TIP);
-    return savedTipState !== null ? new Set(JSON.parse(savedTipState)) : new Set();
+    return new Set(JSON.parse(savedTipState ?? '[]'));
   });
 
   const closeTipBox = () => {
-    setClosedTips(prev => {
-      return new Set(prev).add(tipType);
-    });
+    setClosedTips(prev => new Set(prev).add(tipType));
   };
 
   const getCurrentTipIsOpen = () => {

@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { ComponentPropsWithRef, useEffect } from 'react';
+import { ComponentPropsWithRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import { CloseIcon } from '@/assets/assets';
@@ -36,22 +36,6 @@ const Modal = ({
   hasDim = true,
   color,
 }: ModalProps) => {
-  useEffect(() => {
-    const originalOverflow = document.body.style.overflow;
-    const originalMarginBottom = document.body.style.marginBottom;
-
-    if (isOpen && hasDim) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'visible';
-    }
-
-    return () => {
-      document.body.style.overflow = originalOverflow;
-      document.body.style.marginBottom = originalMarginBottom;
-    };
-  }, [isOpen, hasDim]);
-
   if (!modalRoot) return null;
 
   return createPortal(

@@ -11,7 +11,7 @@ interface Props {
   gap?: number;
 }
 
-const LengthCounter = ({
+const CounterBox = ({
   color = theme.palette.grey500,
   hasBracket = false,
   currentCount,
@@ -41,4 +41,4 @@ const S = {
   Container,
 };
 
-export default LengthCounter;
+export default CounterBox;

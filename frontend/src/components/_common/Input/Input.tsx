@@ -5,9 +5,9 @@ import { flexCenter } from '@/styles/common';
 import { InputChangeEvent } from '@/types/event';
 
 const widthSize = {
-  small: '45px',
-  medium: '110px',
-  large: '140px',
+  small: '100px',
+  medium: '200px',
+  large: '300px',
   full: '100%',
 };
 

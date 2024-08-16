@@ -1,8 +1,7 @@
 import { useStore } from 'zustand';
 
-import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
-import S from '@/components/NewChecklist/NewRoomInfoForm/styled';
+import Styled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
 const DepositAndRent = () => {
@@ -15,11 +14,11 @@ const DepositAndRent = () => {
   return (
     <FormField>
       <FormField.Label label="보증금 / 월세 (만원)" />
-      <FlexBox.Horizontal gap="10px">
-        <FormField.Input onChange={actions.onChange} name="deposit" value={deposit} />
-        <S.FlexLabel label=" / " />
-        <FormField.Input placeholder="" onChange={actions.onChange} name="rent" value={rent} />
-      </FlexBox.Horizontal>
+      <Styled.FieldBox>
+        <FormField.Input width="medium" onChange={actions.onChange} name="deposit" value={deposit} />
+        <Styled.FlexLabel label=" / " />
+        <FormField.Input width="medium" placeholder="" onChange={actions.onChange} name="rent" value={rent} />
+      </Styled.FieldBox>
       <FormField.ErrorMessage value={errorMessageDeposit || errorMessageRent || ''} />
     </FormField>
   );

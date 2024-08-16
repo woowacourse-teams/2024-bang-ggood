@@ -2,7 +2,7 @@ import { useStore } from 'zustand';
 
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
-import S from '@/components/NewChecklist/NewRoomInfoForm/styled';
+import Styled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
 const NearTransportation = () => {
@@ -15,12 +15,12 @@ const NearTransportation = () => {
   return (
     <FlexBox.Vertical gap="15px">
       <FormField.Label label="가까운 교통편" />
-      <FlexBox.Horizontal gap="10px">
-        <FormField.Input onChange={actions.onChange} name="station" value={station} />
-        <S.FlexLabel label=" 역  " />
-        <FormField.Input placeholder="" onChange={actions.onChange} name="rent" value={walkingTime} />
-        <S.FlexLabel label=" 분 거리  " />
-      </FlexBox.Horizontal>
+      <Styled.FieldBox>
+        <FormField.Input width="medium" onChange={actions.onChange} name="station" value={station} />
+        <Styled.FlexLabel label=" 역  " />
+        <FormField.Input width="medium" placeholder="" onChange={actions.onChange} name="rent" value={walkingTime} />
+        <Styled.FlexLabel label=" 분 거리  " />
+      </Styled.FieldBox>
       <FormField.ErrorMessage value={errorMessageStation || errorMessageWalkingTime || ''} />
     </FlexBox.Vertical>
   );

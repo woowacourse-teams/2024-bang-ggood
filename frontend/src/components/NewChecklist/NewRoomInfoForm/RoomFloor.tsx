@@ -1,8 +1,8 @@
 import { useStore } from 'zustand';
 
-import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
-import S from '@/components/NewChecklist/NewRoomInfoForm/styled';
+import Input from '@/components/_common/Input/Input';
+import Styled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import { roomFloorLevels } from '@/constants/roomInfo';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { InputChangeEvent } from '@/types/event';
@@ -16,7 +16,7 @@ const RoomFloor = () => {
   return (
     <FormField>
       <FormField.Label label="층수" />
-      <FlexBox.Horizontal>
+      <Styled.FieldBox>
         <select name="floorLevel" value={floorLevel} onChange={e => actions.onChange(e as unknown as InputChangeEvent)}>
           {roomFloorLevels.map(value => (
             <option key={value} value={value}>
@@ -24,8 +24,9 @@ const RoomFloor = () => {
             </option>
           ))}
         </select>
-        <S.FlexInput placeholder="" name="floor" value={floor} onChange={actions.onChange} />
-      </FlexBox.Horizontal>
+        <Input width="medium" placeholder="" name="floor" value={floor} onChange={actions.onChange} />
+        <Styled.FlexLabel label="층"></Styled.FlexLabel>
+      </Styled.FieldBox>
       <FormField.ErrorMessage value={errorMessageFloor ?? ''} />
     </FormField>
   );

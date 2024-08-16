@@ -4,7 +4,7 @@ import { useStore } from 'zustand';
 import Badge from '@/components/_common/Badge/Badge';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
-import S from '@/components/NewChecklist/NewRoomInfoForm/styled';
+import Styled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import { roomStructures } from '@/constants/roomInfo';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { RoomInfo } from '@/types/room';
@@ -23,7 +23,7 @@ const RoomStructure = () => {
   return (
     <FlexBox.Vertical>
       <FormField.Label label="방 구조" />
-      <S.OptionButtonContainer flexWrap="wrap">
+      <Styled.OptionButtonContainer flexWrap="wrap">
         {roomStructures.map(structure => (
           <Badge
             key={structure}
@@ -34,7 +34,7 @@ const RoomStructure = () => {
             onClick={() => handleClickTagButton('structure', structure)}
           />
         ))}
-      </S.OptionButtonContainer>
+      </Styled.OptionButtonContainer>
     </FlexBox.Vertical>
   );
 };

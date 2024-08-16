@@ -1,8 +1,9 @@
+import styled from '@emotion/styled';
 import { useStore } from 'zustand';
 
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
-import S from '@/components/NewChecklist/NewRoomInfoForm/styled';
+import Styled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { InputChangeEvent } from '@/types/event';
 
@@ -16,10 +17,10 @@ const OccupancyMonth = () => {
   return (
     <FlexBox.Vertical gap="15px">
       <FormField.Label label="입주 가능 기간" />
-      <FlexBox.Horizontal gap="10px">
-        <FormField.Input onChange={actions.onChange} name="occupancyMonth" value={occupancyMonth} />
-        <S.FlexLabel label=" 월 " />
-        <select
+      <Styled.FieldBox>
+        <FormField.Input width="medium" onChange={actions.onChange} name="occupancyMonth" value={occupancyMonth} />
+        <Styled.FlexLabel label="월  " />
+        <S.SelectOccupancyPeriod
           name="occupancyPeriod"
           value={occupancyPeriod}
           onChange={e => actions.onChange(e as unknown as InputChangeEvent)}
@@ -27,11 +28,16 @@ const OccupancyMonth = () => {
           <option value="초">초</option>
           <option value="중순">중순</option>
           <option value="말">말</option>
-        </select>
-      </FlexBox.Horizontal>
+        </S.SelectOccupancyPeriod>
+      </Styled.FieldBox>
       <FormField.ErrorMessage value={errorMessageOccupancyMonth || errorMessageOccupancyPeriod || ''} />
     </FlexBox.Vertical>
   );
 };
 
+const S = {
+  SelectOccupancyPeriod: styled.select`
+    width: 30%;
+  `,
+};
 export default OccupancyMonth;

@@ -64,6 +64,7 @@ const roomInfoType = {
   memo: 'string',
   createdAt: 'string',
   maintenanceFee: 'string',
+  includedUtilities: '',
 } as const;
 
 const validatorSet: Record<string, Validator[]> = {
@@ -72,6 +73,7 @@ const validatorSet: Record<string, Validator[]> = {
   deposit: [isNumericValidator, nonNegativeValidator],
   rent: [isNumericValidator, nonNegativeValidator],
   maintenanceFee: [isNumericValidator, nonNegativeValidator],
+  includedUtilities: [],
   contractTerm: [isNumericValidator, nonNegativeValidator],
   station: [],
   walkingTime: [isIntegerValidator],
@@ -102,7 +104,6 @@ const checklistRoomInfoStore = createStore<RoomInfoStore>((set, get) => ({
   actions: {
     set: (name, value) => {
       // 다 지우기할 시 다 지워주고, 에러메시지도 지우기
-      console.log(name, value);
       if (value === '') {
         get().actions._updateErrorMsg(name as keyof RoomInfo, '');
         get().actions._update(name as keyof RoomInfo, '');

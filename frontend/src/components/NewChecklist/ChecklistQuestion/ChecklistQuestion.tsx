@@ -34,7 +34,7 @@ const ChecklistQuestion = ({ question }: Props) => {
       <S.Options>
         {ANSWER_OPTIONS.map(option => (
           <div key={option.id} onClick={() => handleClick(option.name)}>
-            <AnswerIcon color={'yellow'} answer={option.name} isSelected={answer === option.name} />
+            <AnswerIcon answer={option.name} isSelected={answer === option.name} />
           </div>
         ))}
       </S.Options>

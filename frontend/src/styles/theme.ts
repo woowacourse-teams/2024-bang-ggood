@@ -1,5 +1,6 @@
 const palette = {
   /* yellow */
+  yellow700: '#D09808',
   yellow600: '#FFC107',
   yellow500: '#FFDB5D',
   yellow400: '#FFE27D',

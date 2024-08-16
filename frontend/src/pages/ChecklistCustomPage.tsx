@@ -14,7 +14,7 @@ import { DEFAULT_TOAST_DURATION } from '@/constants/system';
 import useHandleTipBox from '@/hooks/useHandleTipBox';
 import useToast from '@/hooks/useToast';
 import useChecklistCustomStore from '@/store/useChecklistCustomStore';
-import { flexCenter, title2 } from '@/styles/common';
+import { flexCenter, flexColumn, title2 } from '@/styles/common';
 
 const ChecklistCustomPage = () => {
   const { showToast } = useToast(DEFAULT_TOAST_DURATION);
@@ -81,14 +81,12 @@ const S = {
     ${flexCenter}
   `,
   Container: styled.div`
-    display: flex;
     width: calc(100% - 24px);
-    padding: 12px;
-    padding-top: 50px;
-    padding-bottom: 30px;
+    ${flexColumn}
+    padding: 50px 12px 30px;
 
     background-color: ${({ theme }) => theme.palette.background};
-    flex-direction: column;
+
     min-height: calc(100vh - 120px);
   `,
 };

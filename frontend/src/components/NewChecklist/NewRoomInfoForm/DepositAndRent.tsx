@@ -1,8 +1,7 @@
 import { useStore } from 'zustand';
 
-import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
-import S from '@/components/NewChecklist/NewRoomInfoForm/styled';
+import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
 const DepositAndRent = () => {
@@ -15,26 +14,14 @@ const DepositAndRent = () => {
   return (
     <FormField>
       <FormField.Label label="보증금 / 월세 (만원)" />
-      <FlexBox.Horizontal gap={0}>
-        <FormField.Input onChange={actions.onChange} name="deposit" value={deposit} />
-        <S.FlexLabel label=" / " />
-        <FormField.Input placeholder="" onChange={actions.onChange} name="rent" value={rent} />
-      </FlexBox.Horizontal>
+      <FormStyled.FieldBox>
+        <FormField.Input width="medium" onChange={actions.onChange} name="deposit" value={deposit} />
+        <FormStyled.FlexLabel label=" / " />
+        <FormField.Input width="medium" placeholder="" onChange={actions.onChange} name="rent" value={rent} />
+      </FormStyled.FieldBox>
       <FormField.ErrorMessage value={errorMessageDeposit || errorMessageRent || ''} />
     </FormField>
   );
 };
 
 export default DepositAndRent;
-
-{
-  /* <FormField>
-          <FormField.Label label="보증금 / 월세 (만원)" />
-          <FlexHorizontal gap={0}>
-            <S.CustomInput onChange={actions.onChange} name="deposit" value={roomInfo.deposit} />
-            <S.CustomLabel label=" / " />
-            <S.CustomInput placeholder="" onChange={actions.onChange} name="rent" value={roomInfo.rent} />
-          </FlexHorizontal>
-          <FormField.ErrorMessage value={errorMessage.deposit || errorMessage.rent || ''} />
-        </FormField> */
-}

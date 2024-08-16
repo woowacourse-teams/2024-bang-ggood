@@ -7,14 +7,14 @@ export type RoomInfo = Partial<{
   address: AddressWithPosition;
   deposit: number;
   rent: number;
-  // TODO: 관리비 항목 :  백엔드 작업 프로퍼티 확인하기
-  fee: number;
+  // includedUtilities : 관리비 포함항목 (전기, 수도 등).
+  includedUtilities: string[]; // 지금 string[] 되어있지만 객체로바뀔예정
+  maintenanceFee: number;
   contractTerm: number;
   floor: number;
   station: string;
   walkingTime: number;
   realEstate: string;
-  type: string;
   size: number;
   floorLevel: string;
   structure: string;

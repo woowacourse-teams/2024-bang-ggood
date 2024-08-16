@@ -3,7 +3,7 @@ import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
 import Input from '@/components/_common/Input/Input';
-import Map from '@/components/_common/Map/Map';
+import RealTimeMap from '@/components/_common/Map/RealTimeMap';
 import Modal from '@/components/_common/Modal/Modal';
 import useModalOpen from '@/hooks/useModalOpen';
 import checklistAddressStore from '@/store/checklistAddressStore';
@@ -23,14 +23,14 @@ const RealTimeAddressModal = () => {
             <S.InputBox>
               <Input
                 width={'full'}
-                style={{ width: '100%' }}
+                style={{ width: '100%', fontSize: '14px' }}
                 placeholder={'지도를 클릭하면 현재 위치를 움직일 수 있어요.'}
                 value={`${address} ${buildingName}`}
               />
               <Button label="확인" size="xSmall" isSquare={true} onClick={modalClose} />
             </S.InputBox>
             {/* 지도 */}
-            <Map />
+            <RealTimeMap />
           </Modal.body>
         </Modal>
       )}

@@ -33,7 +33,7 @@ const AnswerIcon = ({ answer, isSelected = false, ...rest }: Props) => {
     <>
       {answer === 'GOOD' && <Good color={color} {...rest} />}
       {answer === 'BAD' && <Bad color={color} {...rest} />}
-      {<None color={color} {...rest} />}
+      {answer === 'NONE' && <None color={color} {...rest} />}
     </>
   );
 };

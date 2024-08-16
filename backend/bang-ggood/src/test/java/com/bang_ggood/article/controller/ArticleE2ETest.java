@@ -1,8 +1,6 @@
 package com.bang_ggood.article.controller;
 
 import com.bang_ggood.AcceptanceTest;
-import com.bang_ggood.article.domain.Article;
-import com.bang_ggood.article.dto.ArticleCreateRequest;
 import com.bang_ggood.article.repository.ArticleRepository;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.exception.dto.ExceptionResponse;
@@ -14,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 
+import static com.bang_ggood.article.ArticleFixture.ARTICLE;
+import static com.bang_ggood.article.ArticleFixture.ARTICLE_CREATE_REQUEST;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ArticleE2ETest extends AcceptanceTest {
@@ -24,12 +24,10 @@ public class ArticleE2ETest extends AcceptanceTest {
     @DisplayName("아티클 생성 성공")
     @Test
     void createArticle() {
-        ArticleCreateRequest request = new ArticleCreateRequest("제목1", "내용");
-
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
-                .body(request)
+                .body(ARTICLE_CREATE_REQUEST)
                 .when().post("/articles")
                 .then().log().all()
                 .statusCode(201);
@@ -38,11 +36,9 @@ public class ArticleE2ETest extends AcceptanceTest {
     @DisplayName("아티클 생성 실패: 유저가 아닌 경우")
     @Test
     void createArticle_notUser_exception() {
-        ArticleCreateRequest request = new ArticleCreateRequest("제목1", "내용");
-
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .body(request)
+                .body(ARTICLE_CREATE_REQUEST)
                 .when().post("/articles")
                 .then().log().all()
                 .statusCode(401);
@@ -51,12 +47,11 @@ public class ArticleE2ETest extends AcceptanceTest {
     @DisplayName("아티클 조회 성공")
     @Test
     void readArticle() {
-        Article article = new Article("제목", "내용");
-        articleRepository.save(article);
+        articleRepository.save(ARTICLE);
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .when().get("/articles/" + article.getId())
+                .when().get("/articles/" + ARTICLE.getId())
                 .then().log().all()
                 .statusCode(200);
     }
@@ -64,8 +59,7 @@ public class ArticleE2ETest extends AcceptanceTest {
     @DisplayName("아티클 조회 실패 : 유효하지 않은 아이디인 경우")
     @Test
     void readArticle_invalidId_exception() {
-        Article article = new Article("제목", "내용");
-        articleRepository.save(article);
+        articleRepository.save(ARTICLE);
 
         long articleId = Long.MAX_VALUE;
 
@@ -83,8 +77,7 @@ public class ArticleE2ETest extends AcceptanceTest {
     @DisplayName("아티클 목록 조회 성공")
     @Test
     void readArticles() {
-        Article article = new Article("제목", "내용");
-        articleRepository.save(article);
+        articleRepository.save(ARTICLE);
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
@@ -96,13 +89,12 @@ public class ArticleE2ETest extends AcceptanceTest {
     @DisplayName("아티클 삭제 성공")
     @Test
     void deleteArticle() {
-        Article article = new Article("제목", "내용");
-        articleRepository.save(article);
+        articleRepository.save(ARTICLE);
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
-                .when().delete("/articles/" + article.getId())
+                .when().delete("/articles/" + ARTICLE.getId())
                 .then().log().all()
                 .statusCode(204);
     }
@@ -110,12 +102,11 @@ public class ArticleE2ETest extends AcceptanceTest {
     @DisplayName("아티클 삭제 실패: 유저가 아닌 경우")
     @Test
     void deleteArticle_notUser_exception() {
-        Article article = new Article("제목", "내용");
-        articleRepository.save(article);
+        articleRepository.save(ARTICLE);
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .when().delete("/articles/" + article.getId())
+                .when().delete("/articles/" + ARTICLE.getId())
                 .then().log().all()
                 .statusCode(401);
     }

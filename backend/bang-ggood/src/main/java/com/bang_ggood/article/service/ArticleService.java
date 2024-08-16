@@ -1,10 +1,10 @@
 package com.bang_ggood.article.service;
 
 import com.bang_ggood.article.domain.Article;
-import com.bang_ggood.article.dto.ArticleCreateRequest;
-import com.bang_ggood.article.dto.ArticlePreviewResponse;
-import com.bang_ggood.article.dto.ArticleResponse;
-import com.bang_ggood.article.dto.ArticlesPreviewResponse;
+import com.bang_ggood.article.dto.request.ArticleCreateRequest;
+import com.bang_ggood.article.dto.response.ArticlePreviewResponse;
+import com.bang_ggood.article.dto.response.ArticleResponse;
+import com.bang_ggood.article.dto.response.ArticlesPreviewResponse;
 import com.bang_ggood.article.repository.ArticleRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;

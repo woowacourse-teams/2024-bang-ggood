@@ -1,8 +1,7 @@
 package com.bang_ggood.article.service;
 
 import com.bang_ggood.IntegrationTestSupport;
-import com.bang_ggood.article.domain.Article;
-import com.bang_ggood.article.dto.ArticleCreateRequest;
+import com.bang_ggood.article.dto.request.ArticleCreateRequest;
 import com.bang_ggood.article.repository.ArticleRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
@@ -10,6 +9,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static com.bang_ggood.article.ArticleFixture.ARTICLE;
+import static com.bang_ggood.article.ArticleFixture.ARTICLE_CREATE_REQUEST;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -25,7 +26,7 @@ public class ArticleServiceTest extends IntegrationTestSupport {
     @Test
     void createArticle() {
         // given
-        ArticleCreateRequest request = new ArticleCreateRequest("제목", "내용");
+        ArticleCreateRequest request = ARTICLE_CREATE_REQUEST;
 
         // when
         Long articleId = articleService.createArticle(request);
@@ -39,11 +40,10 @@ public class ArticleServiceTest extends IntegrationTestSupport {
     @Test
     void readArticle() {
         // given
-        Article article = new Article("제목", "내용");
-        articleRepository.save(article);
+        articleRepository.save(ARTICLE);
 
         // when & then
-        assertThatCode(() -> articleService.readArticle(article.getId()))
+        assertThatCode(() -> articleService.readArticle(ARTICLE.getId()))
                 .doesNotThrowAnyException();
     }
 
@@ -63,14 +63,13 @@ public class ArticleServiceTest extends IntegrationTestSupport {
     @Test
     void deleteArticle() {
         // given
-        Article article = new Article("제목", "내용");
-        articleRepository.save(article);
+        articleRepository.save(ARTICLE);
 
         // when
-        articleService.deleteArticle(article.getId());
+        articleService.deleteArticle(ARTICLE.getId());
 
         //then
-        assertThatThrownBy(() -> articleService.readArticle(article.getId()))
+        assertThatThrownBy(() -> articleService.readArticle(ARTICLE.getId()))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.ARTICLE_NOT_FOUND.getMessage());
     }

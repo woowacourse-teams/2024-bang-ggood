@@ -1,8 +1,8 @@
 package com.bang_ggood.article.controller;
 
-import com.bang_ggood.article.dto.ArticleCreateRequest;
-import com.bang_ggood.article.dto.ArticleResponse;
-import com.bang_ggood.article.dto.ArticlesPreviewResponse;
+import com.bang_ggood.article.dto.request.ArticleCreateRequest;
+import com.bang_ggood.article.dto.response.ArticleResponse;
+import com.bang_ggood.article.dto.response.ArticlesPreviewResponse;
 import com.bang_ggood.article.service.ArticleService;
 import com.bang_ggood.auth.config.AuthPrincipal;
 import com.bang_ggood.user.domain.User;

@@ -9,7 +9,7 @@ export const checklistDetail: ChecklistInfo = {
     address: '서울시 강남구 테헤란로 123',
     deposit: undefined,
     rent: 50,
-    fee: 5,
+    maintenanceFee: 5,
     contractTerm: 12,
     floor: 5,
     station: '강남역',

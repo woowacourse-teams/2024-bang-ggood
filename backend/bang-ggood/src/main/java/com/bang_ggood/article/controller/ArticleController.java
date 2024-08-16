@@ -2,6 +2,7 @@ package com.bang_ggood.article.controller;
 
 import com.bang_ggood.article.dto.request.ArticleCreateRequest;
 import com.bang_ggood.article.dto.response.ArticleResponse;
+import com.bang_ggood.article.dto.response.ArticlesDetailPreviewResponse;
 import com.bang_ggood.article.dto.response.ArticlesPreviewResponse;
 import com.bang_ggood.article.service.ArticleService;
 import com.bang_ggood.auth.config.AuthPrincipal;
@@ -38,8 +39,13 @@ public class ArticleController {
     }
 
     @GetMapping("/articles")
-    public ResponseEntity<ArticlesPreviewResponse> readArticles() {
+    public ResponseEntity<ArticlesDetailPreviewResponse> readArticles() {
         return ResponseEntity.ok(articleService.readArticles());
+    }
+
+    @GetMapping("/articles/latest")
+    public ResponseEntity<ArticlesPreviewResponse> readLatestArticles() {
+        return ResponseEntity.ok(articleService.readLatestArticles());
     }
 
     @DeleteMapping("/articles/{id}")

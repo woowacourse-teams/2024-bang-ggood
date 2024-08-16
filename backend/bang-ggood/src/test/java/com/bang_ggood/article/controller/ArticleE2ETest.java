@@ -86,6 +86,18 @@ public class ArticleE2ETest extends AcceptanceTest {
                 .statusCode(200);
     }
 
+    @DisplayName("최신 아티클 조회 성공")
+    @Test
+    void readLatestArticles() {
+        articleRepository.save(ARTICLE);
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .when().get("/articles/latest")
+                .then().log().all()
+                .statusCode(200);
+    }
+
     @DisplayName("아티클 삭제 성공")
     @Test
     void deleteArticle() {

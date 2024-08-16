@@ -22,6 +22,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query("SELECT a FROM Article a WHERE a.deleted = false")
     List<Article> findAll();
 
+    @Query("SELECT a FROM Article a WHERE a.deleted = false ORDER BY a.createdAt DESC LIMIT 3")
+    List<Article> findLatestTop3();
+
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("UPDATE Article a SET a.deleted = true WHERE a.id = :id")
     void deleteById(@Param("id") Long id);

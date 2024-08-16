@@ -75,7 +75,7 @@ public class AuthService {
                 "집을 둘러보며 필요한 메모를 작성해보세요.", "한줄평 작성하는 곳");
 
         List<Integer> options = List.of(
-                Option.TV.getId(),
+                Option.INDUCTION.getId(),
                 Option.AIR_CONDITIONER.getId(),
                 Option.SINK.getId(),
                 Option.BED.getId());

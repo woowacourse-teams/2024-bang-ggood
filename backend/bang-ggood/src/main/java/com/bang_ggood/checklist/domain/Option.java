@@ -6,21 +6,17 @@ import java.util.Arrays;
 
 public enum Option {
 
-    DOOR_LOCK(1, "도어락"),
-    AIR_CONDITIONER(2, "에어컨"),
-    REFRIGERATOR(3, "냉장고"),
-    SINK(4, "싱크대"),
-    GAS_STOVE(5, "가스레인지"),
-    MICROWAVE_OVEN(6, "전자레인지"),
+    REFRIGERATOR(1, "냉장고"),
+    SINK(2, "싱크대"),
+    INDUCTION(3, "인덕션"),
+    MICROWAVE_OVEN(4, "전자레인지"),
+    AIR_CONDITIONER(5, "에어컨"),
+    WASHING_MACHINE(6, "세탁기"),
     CLOSET(7, "옷장"),
-    SHOE_RACK(8, "신발장"),
-    WASHING_MACHINE(9, "세탁기"),
-    DRYER(10, "건조기"),
-    INTERNET(11, "인터넷"),
-    BED(12, "침대"),
-    DESK(13, "책상"),
-    TV(14, "TV"),
-    ELEVATOR(15, "엘리베이터");
+    DESK(8, "책상"),
+    BED(9, "침대"),
+    SHOE_RACK(10, "신발장"),
+    ELEVATOR(11, "엘리베이터");
 
     private final int id;
     private final String name;

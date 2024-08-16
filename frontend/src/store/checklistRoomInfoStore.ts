@@ -118,6 +118,7 @@ const checklistRoomInfoStore = createStore<RoomInfoStore>((set, get) => ({
     },
 
     reset: () => set({ rawValue: initialRoomInfo, value: initialRoomInfo, errorMessage: initialErrorMessages }),
+    setAll: set,
     _update: (name, value) => set({ rawValue: { ...get().rawValue, [name]: value } }),
     _updateErrorMsg: (name, value) => set({ errorMessage: { ...get().errorMessage, [name]: value } }),
     _updateAfterValidation: (name, value, validators) => {

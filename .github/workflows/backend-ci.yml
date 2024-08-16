@@ -38,6 +38,7 @@ jobs:
       run: |
         echo "${APPLICATION_TEST_YML}" > src/test/resources/application-test.yml
       
-    - name: Build with Gradle
-      run: ./gradlew clean build
+    - name: Test Build with Gradle
+      run: ./gradlew :test
+
     

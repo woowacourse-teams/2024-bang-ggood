@@ -28,13 +28,10 @@ export default QuestionCardList;
 
 const S = {
   QuestionList: styled.div`
-    width: calc(100% - 32px);
+    width: 100%;
     height: fit-content;
-    margin-top: 10px;
 
     background-color: ${({ theme }) => theme.palette.white};
-
-    border-radius: 10px;
   `,
   Box: styled.div`
     width: 100%;

@@ -3,17 +3,17 @@ import { useNavigate } from 'react-router-dom';
 
 import ArrowRight from '@/assets/icons/arrow/ArrowRight';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { title3 } from '@/styles/common';
+import { boxShadowSpread, title3 } from '@/styles/common';
 import theme from '@/styles/theme';
 import { Article } from '@/types/article';
 import getSeqColor from '@/utils/getSeqColor';
 
 interface Props {
-  article: Article;
   index: number;
+  article: Article;
 }
 
-const ArticleCard = ({ article, index }: Props) => {
+const ArticleCard = ({ index, article }: Props) => {
   const navigate = useNavigate();
   const { articleId, keyword, title } = article;
 
@@ -48,6 +48,7 @@ const S = {
     color: ${theme.palette.white};
     box-sizing: border-box;
     border-radius: 24px;
+    ${boxShadowSpread}
   `,
   Keyword: styled.div<{ bgColor: string }>`
     display: inline-block;

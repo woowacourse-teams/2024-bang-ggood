@@ -26,7 +26,7 @@ const ArticleSection = () => {
       <S.CardList>
         {articles.map((article: Article, index: number) => (
           <S.CardWrapper key={article.articleId}>
-            <ArticleCard article={article} index={index} />
+            <ArticleCard index={index} article={article} />
           </S.CardWrapper>
         ))}
       </S.CardList>
@@ -38,8 +38,9 @@ export default ArticleSection;
 
 const S = {
   Row: styled.div`
-    box-sizing: border-box;
     width: 100%;
+    box-sizing: border-box;
+
     padding: 16px 16px 0;
     ${flexRow};
     ${flexSpaceBetween};

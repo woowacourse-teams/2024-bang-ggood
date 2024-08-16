@@ -8,9 +8,11 @@ import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.exception.dto.ExceptionResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.http.Header;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,10 +28,24 @@ public class ArticleE2ETest extends AcceptanceTest {
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
                 .body(request)
                 .when().post("/articles")
                 .then().log().all()
                 .statusCode(201);
+    }
+
+    @DisplayName("아티클 생성 실패: 유저가 아닌 경우")
+    @Test
+    void createArticle_notUser_exception() {
+        ArticleCreateRequest request = new ArticleCreateRequest("제목1", "내용");
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(request)
+                .when().post("/articles")
+                .then().log().all()
+                .statusCode(401);
     }
 
     @DisplayName("아티클 조회 성공")
@@ -75,5 +91,32 @@ public class ArticleE2ETest extends AcceptanceTest {
                 .when().get("/articles")
                 .then().log().all()
                 .statusCode(200);
+    }
+
+    @DisplayName("아티클 삭제 성공")
+    @Test
+    void deleteArticle() {
+        Article article = new Article("제목", "내용");
+        articleRepository.save(article);
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .when().delete("/articles/" + article.getId())
+                .then().log().all()
+                .statusCode(204);
+    }
+
+    @DisplayName("아티클 삭제 실패: 유저가 아닌 경우")
+    @Test
+    void deleteArticle_notUser_exception() {
+        Article article = new Article("제목", "내용");
+        articleRepository.save(article);
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .when().delete("/articles/" + article.getId())
+                .then().log().all()
+                .statusCode(401);
     }
 }

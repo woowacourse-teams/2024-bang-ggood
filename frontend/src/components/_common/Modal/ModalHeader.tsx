@@ -20,12 +20,16 @@ const ModalHeader = ({ title, children, position = 'left' }: TitleProps) => {
 
 const Container = styled.div<{ position: Position }>`
   ${flexSpaceBetween}
-  display: flex;
   align-items: ${({ position }) => (position === 'center' ? 'center' : 'flex-start')};
   flex-direction: ${({ position }) => position === 'center' && 'column'};
-  width: calc(100% - 32px);
-  height: 40px;
+  width: calc(100% - 64px);
+  margin-top: 5px;
+  margin-bottom: 10px;
   padding: 0 16px;
+
+  line-height: normal;
+  ${flexCenter}
+  min-height: 45px;
 `;
 
 const Title = styled.span`

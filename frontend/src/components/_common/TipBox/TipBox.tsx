@@ -33,7 +33,7 @@ const S = {
 
     background-color: white;
 
-    font-size: 14px;
+    font-size: ${({ theme }) => theme.text.size.xSmall};
     line-height: 1.3;
     border-radius: 10px;
   `,

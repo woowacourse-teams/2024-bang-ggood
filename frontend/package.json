@@ -33,6 +33,7 @@
     "dotenv": "^16.4.5",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-simple-import-sort": "^12.1.1",
+    "file-loader": "^6.2.0",
     "init": "^0.1.2",
     "jest-environment-jsdom": "^29.7.0",
     "jest-transformer-svg": "^2.0.2",

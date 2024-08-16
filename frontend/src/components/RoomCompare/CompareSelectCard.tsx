@@ -27,7 +27,7 @@ const CompareSelectCard = ({ isSelected, onClick, room }: Props) => {
               <LocationLineIcon />
               <p>{address}</p>
             </S.FlexRow>
-            <label>{`${formattedDate(createdAt, '.')}`}</label>
+            <label>{`${formattedDate(createdAt ?? '', '.')}`}</label>
           </S.HeaderContainer>
           <S.Title>{roomName}</S.Title>
           <S.RentPrice>{`${deposit}/${rent}`}</S.RentPrice>

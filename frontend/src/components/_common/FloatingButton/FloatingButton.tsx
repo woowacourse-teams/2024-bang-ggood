@@ -1,21 +1,18 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { boxShadow, flexRow, title3 } from '@/styles/common';
+import { boxShadow, title3 } from '@/styles/common';
 import theme from '@/styles/theme';
 
 type Size = 'small' | 'medium' | 'extends';
-
 type Color = 'yellow' | 'green' | 'subGreen';
 
-type Position = 'right' | 'bottom';
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   onClick: () => void;
   size?: Size;
   color?: Color;
   'aria-label'?: string;
-  position?: Position;
 }
 
 const FloatingButton = ({
@@ -23,13 +20,12 @@ const FloatingButton = ({
   onClick,
   size = 'medium',
   color = 'yellow',
-  position = 'right',
   'aria-label': ariaLabel = 'add',
   ...rest
 }: Props) => {
   return (
-    <S.Wrapper position={position}>
-      <S.Button position={position} size={size} color={color} aria-label={ariaLabel} onClick={onClick} {...rest}>
+    <S.Wrapper>
+      <S.Button size={size} color={color} aria-label={ariaLabel} onClick={onClick} {...rest}>
         {children}
       </S.Button>
     </S.Wrapper>
@@ -52,12 +48,11 @@ const sizeStyle = {
     font-size: 16px;
   `,
   extends: css`
+    display: flex;
     width: 130px;
-    height: 45px;
+    height: 50px;
 
     font-size: 16px;
-
-    ${flexRow}
     gap: 10px;
   `,
 };
@@ -96,36 +91,31 @@ const colorStyle = {
 };
 
 const S = {
-  Wrapper: styled.div<{ position: Position }>`
+  Wrapper: styled.div`
     display: flex;
     position: fixed;
-    right: ${({ position }) => (position === 'bottom' ? 0 : '10px;')};
-    bottom: ${({ position }) => (position === 'bottom' ? 0 : '20px')};
-    z-index: ${({ theme }) => theme.zIndex.FLOATING_BUTTON};
-    width: ${({ position }) => (position === 'bottom' ? '100%' : 'auto')};
+    bottom: 10%;
+    left: 50%;
+    z-index: ${theme.zIndex.FLOATING_BUTTON};
+    transform: translateX(-50%);
+    max-width: 600px;
+    justify-content: flex-end;
+    width: 100%;
+    padding-right: 10%;
 
-    justify-content: ${({ position }) => (position === 'bottom' ? 'center' : 'flex-end')};
-
-    @media (min-width: ${({ theme }) => theme.viewport.MOBILE}px) {
-      padding-right: ${({ position }) => (position === 'bottom' ? 0 : '20px')};
-    }
-
-    @media (width >= 600px) {
-      left: ${({ position }) => (position === 'bottom' ? '50%' : 'auto')};
-      max-width: 600px;
-      transform: ${({ position }) => (position === 'bottom' ? 'translateX(-50%)' : 'none')};
+    @media (min-width: ${theme.viewport.MOBILE}px) {
+      padding-right: 20px;
     }
   `,
-  Button: styled.button<{ size: Size; color: Color; position: Position }>`
+  Button: styled.button<{ size: Size; color: Color }>`
     display: flex;
     align-items: center;
     justify-content: center;
     border: none;
-    border-radius: ${({ position }) => (position === 'bottom' ? '20px 20px 0 0 ' : '50px')};
-
-    ${({ size }) => sizeStyle[size]}
-    ${({ color }) => colorStyle[color]}
-    ${title3}
+    border-radius: 50px;
+    ${({ size }) => sizeStyle[size]};
+    ${({ color }) => colorStyle[color]};
+    ${title3};
     ${boxShadow};
     outline: none;
     cursor: pointer;

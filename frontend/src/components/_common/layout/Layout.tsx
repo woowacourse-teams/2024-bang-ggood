@@ -19,11 +19,12 @@ export default Layout;
 
 const S = {
   Wrapper: styled.div<{ bgColor: string }>`
-    min-height: calc(100vh - 64px);
-    box-sizing: border-box;
     overflow: hidden auto;
+
     padding: 16px;
 
     background-color: ${({ bgColor }) => bgColor};
+    min-height: calc(100vh - 64px);
+    box-sizing: border-box;
   `,
 };

@@ -23,14 +23,18 @@ import LocationLogo from '@/assets/icons/footer-icon/location-logo.svg';
 import MyPageLogoActive from '@/assets/icons/footer-icon/my-page-logo-active.svg';
 import MyPageLogo from '@/assets/icons/footer-icon/my-page-logo.svg';
 
-// heart
-import HeartEmpty from '@/assets/icons/heart/heart-empty.svg';
-import Heart from '@/assets/icons/heart/heart.svg';
-
 // memo
 import MemoEmpty from '@/assets/icons/memo-empty.svg';
 import MemoFilled from '@/assets/icons/memo-filled.svg';
 import Memo from '@/assets/icons/memo.svg';
+
+// room
+import Building from '@/assets/icons/room/building.svg';
+import Calendar from '@/assets/icons/room/calendar.svg';
+import Room from '@/assets/icons/room/house.svg';
+import Stairs from '@/assets/icons/room/stairs.svg';
+import Subway from '@/assets/icons/room/subway.svg';
+
 // etc
 import BangBangCryIcon from '@/assets/icons/bang-bang-cry-icon.svg';
 import BangBangIcon from '@/assets/icons/bang-bang-icon.svg';
@@ -42,13 +46,6 @@ import PencilIcon from '@/assets/icons/pencil-icon.svg';
 import QuestionDot from '@/assets/icons/question-dot.svg';
 import SmileMessageIcon from '@/assets/icons/smile-message-icon.svg';
 
-//category
-import Outdoor from '@/assets/icons/category/outdoor.svg';
-import RoomCondition from '@/assets/icons/category/room-conditon.svg';
-import Security from '@/assets/icons/category/security.svg';
-import Toilet from '@/assets/icons/category/toilet.svg';
-import Window from '@/assets/icons/category/window.svg';
-
 export {
   ArrowBack,
   ArrowDownSmall,
@@ -58,12 +55,12 @@ export {
   BangBangCryIcon,
   BangBangIcon,
   BangGgoodTextIcon,
+  Building,
+  Calendar,
   CheckIcon,
   ChecklistLogo,
   ChecklistLogoActive,
   CloseIcon,
-  Heart,
-  HeartEmpty,
   HomeLogo,
   HomeLogoActive,
   InputRequiredDot,
@@ -77,15 +74,13 @@ export {
   MemoFilled,
   MyPageLogo,
   MyPageLogoActive,
-  Outdoor,
   PencilIcon,
   PlusBlack,
   PlusSmall,
   PlusWhite,
   QuestionDot,
-  RoomCondition,
-  Security,
+  Room,
   SmileMessageIcon,
-  Toilet,
-  Window,
+  Stairs,
+  Subway,
 };

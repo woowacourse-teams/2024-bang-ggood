@@ -13,6 +13,7 @@ import useDeleteChecklistQuery from '@/hooks/query/useDeleteChecklistQuery';
 import useModalOpen from '@/hooks/useModalOpen';
 import theme from '@/styles/theme';
 import { ChecklistInfo } from '@/types/checklist';
+import formattedDate from '@/utils/formattedDate';
 
 type RouteParams = {
   checklistId: string;
@@ -54,12 +55,12 @@ const ChecklistDetailPage = () => {
     <>
       <Header
         left={<Header.Backward />}
-        center={<Header.Text>{checklist?.room.roomName}</Header.Text>}
+        center={<Header.Text>{formattedDate(checklist?.room?.createdAt ?? '')}</Header.Text>}
         right={<Header.TextButton onClick={modalOpen}>삭제</Header.TextButton>}
       />
       <Layout bgColor={theme.palette.grey100}>
         <S.Wrapper>
-          <RoomInfoSection room={checklist?.room} createdAt={checklist?.createdAt} />
+          <RoomInfoSection room={checklist?.room} isLiked={checklist?.isLiked} checklistId={checklist?.checklistId} />
           <ChecklistAnswerSection categories={checklist?.categories} />
         </S.Wrapper>
       </Layout>

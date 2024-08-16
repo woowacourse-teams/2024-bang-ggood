@@ -257,7 +257,7 @@ public class ChecklistService {
     }
 
     @Transactional
-    public UserChecklistsPreviewResponse readUserChecklistsPreview(User user) {
+    public UserChecklistsPreviewResponse readChecklistsPreview(User user) {
         List<Checklist> checklists = checklistRepository.findAllByUser(user);
         List<UserChecklistPreviewResponse> responses = checklists.stream()
                 .map(this::getChecklistPreview)
@@ -272,7 +272,7 @@ public class ChecklistService {
     }
 
     @Transactional
-    public UserChecklistsPreviewResponse readLikedUserChecklistsPreview(User user) {
+    public UserChecklistsPreviewResponse readLikedChecklistsPreview(User user) {
         List<Checklist> likedChecklists = checklistRepository.findAllByUserAndIsLiked(user);
         List<UserChecklistPreviewResponse> responses = likedChecklists.stream()
                 .map(checklist -> UserChecklistPreviewResponse.of(checklist, true))

@@ -54,8 +54,8 @@ public class ChecklistController {
     }
 
     @GetMapping("/checklists")
-    public ResponseEntity<UserChecklistsPreviewResponse> readUserChecklistsPreview(@AuthPrincipal User user) {
-        return ResponseEntity.ok(checklistService.readUserChecklistsPreview(user));
+    public ResponseEntity<UserChecklistsPreviewResponse> readChecklistsPreview(@AuthPrincipal User user) {
+        return ResponseEntity.ok(checklistService.readChecklistsPreview(user));
     }
 
     @GetMapping("/custom-checklist/all")
@@ -65,8 +65,8 @@ public class ChecklistController {
     }
 
     @GetMapping("/checklists/like")
-    public ResponseEntity<UserChecklistsPreviewResponse> readLikedUserChecklistsPreview(@AuthPrincipal User user) {
-        return ResponseEntity.ok(checklistService.readLikedUserChecklistsPreview(user));
+    public ResponseEntity<UserChecklistsPreviewResponse> readLikedChecklistsPreview(@AuthPrincipal User user) {
+        return ResponseEntity.ok(checklistService.readLikedChecklistsPreview(user));
     }
 
     @PutMapping("/checklists/{id}")

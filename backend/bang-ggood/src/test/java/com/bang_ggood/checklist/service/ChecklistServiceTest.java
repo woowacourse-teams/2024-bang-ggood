@@ -381,7 +381,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 
     @DisplayName("좋아요된 체크리스트 리스트 조회 성공")
     @Test
-    void readLikedUserChecklistsPreview() {
+    void readLikedChecklistsPreview() {
         //given
         checklistRepository.saveAll(
                 List.of(ChecklistFixture.CHECKLIST1_USER1,
@@ -395,7 +395,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 
         //when
         List<UserChecklistPreviewResponse> checklists =
-                checklistService.readLikedUserChecklistsPreview(USER1).checklists();
+                checklistService.readLikedChecklistsPreview(USER1).checklists();
 
         //then
         assertAll(

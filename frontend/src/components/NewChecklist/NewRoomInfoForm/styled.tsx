@@ -44,7 +44,7 @@ const Styled = {
   OptionButtonContainer: styled.div<{ gap?: number | string; flexWrap?: string }>`
     display: flex;
     justify-content: flex-start;
-    gap: 4px ${({ gap: gap }) => gap ?? '10px'};
+    gap: 8px ${({ gap: gap }) => gap ?? '8px'};
     ${({ flexWrap }) => (flexWrap ? 'flex-wrap:' + flexWrap + ';' : '')}
   `,
 

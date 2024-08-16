@@ -5,13 +5,13 @@ import Badge from '@/components/_common/Badge/Badge';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import Styled from '@/components/NewChecklist/NewRoomInfoForm/styled';
-import { roomStructures } from '@/constants/roomInfo';
+import { roomIncludedUtilites } from '@/constants/roomInfo';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { RoomInfo } from '@/types/room';
 
-const RoomStructure = () => {
+const IncludedUtilities = () => {
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const roomStructure = useStore(checklistRoomInfoStore, state => state.rawValue.structure);
+  // const includedUtilities = useStore(checklistRoomInfoStore, state => state.rawValue.includedUtilities);
 
   const handleClickTagButton = useCallback(
     (name: keyof RoomInfo, value: string) => {
@@ -24,14 +24,15 @@ const RoomStructure = () => {
     <FlexBox.Vertical>
       <FormField.Label label="방 구조" />
       <Styled.OptionButtonContainer flexWrap="wrap">
-        {roomStructures.map(structure => (
+        {roomIncludedUtilites.map(utility => (
           <Badge
-            key={structure}
-            label={structure}
-            name={structure}
+            key={utility}
+            label={utility}
+            name={utility}
             size="button"
-            isSelected={structure === roomStructure}
-            onClick={() => handleClickTagButton('structure', structure)}
+            /* TODO : 제대로 동작하게만들기 */
+            isSelected={false}
+            onClick={() => handleClickTagButton('includedUtilities', utility)}
           />
         ))}
       </Styled.OptionButtonContainer>
@@ -39,4 +40,4 @@ const RoomStructure = () => {
   );
 };
 
-export default RoomStructure;
+export default IncludedUtilities;

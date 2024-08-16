@@ -1,20 +1,19 @@
 import styled from '@emotion/styled';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+
+import { Address, Position } from '@/types/address';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const { kakao } = window as any;
 
-type Position = {
-  lat: number;
-  lon: number;
-};
+interface Props {
+  currentAddress: Address;
+  setCurrentAddress: React.Dispatch<React.SetStateAction<Address>>;
+  position: Position;
+  setPosition: React.Dispatch<React.SetStateAction<Position>>;
+}
 
-const Map = () => {
-  const [position, setPosition] = useState<Position>({ lat: 30.5151763, lon: 127.1031642 });
-  const [detailAddress, setDetailAddress] = useState('');
-  const [buildingName, setBuildingName] = useState('');
-  const [address, setAddress] = useState('');
-
+const Map = ({ position, setPosition, currentAddress, setCurrentAddress }: Props) => {
   const mapRef = useRef<any | null>(null);
   const markerRef = useRef<any | null>(null);
   const infoWindowRef = useRef<any | null>(null);
@@ -62,31 +61,19 @@ const Map = () => {
     displayMarker(locPosition, message);
   };
 
-  /*좌표로 행정동 주소 정보를 요청합니다*/
-  const searchAddrFromCoords = (coords: any, callback: any) => {
-    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
-  };
-
   /* 좌표로 법정동 상세 주소 정보를 요청합니다*/
   const searchDetailAddrFromCoords = (coords: any, callback: any) => {
     geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
   };
 
-  const getAddress = (result: any, status: any) => {
-    if (status === kakao.maps.services.Status.OK) {
-      for (let i = 0; i < result.length; i++) {
-        if (result[i].region_type === 'H') {
-          setAddress(result[i].address_name);
-        }
-      }
-    }
-  };
-
   const getDetailAddress = (result: any, status: any) => {
     if (status === kakao.maps.services.Status.OK) {
+      if (result[0].address) {
+        setCurrentAddress(prev => ({ ...prev, jibunAddress: result[0].address.address_name }));
+      }
       if (result[0].road_address) {
-        setDetailAddress(result[0].road_address.address_name);
-        setBuildingName(result[0].road_address.building_name);
+        setCurrentAddress(prev => ({ ...prev, address: result[0].road_address.address_name }));
+        setCurrentAddress(prev => ({ ...prev, buildingName: result[0].road_address.building_name }));
         //TODO: 빌딩 주소가 없을 때도 있음.
       }
     }
@@ -157,26 +144,25 @@ const Map = () => {
       markerRef.current.setPosition(locPosition);
       mapRef.current.setCenter(locPosition);
       infoWindowRef.current.open(mapRef.current, markerRef.current);
-      searchAddrFromCoords(mapRef.current.getCenter(), getAddress);
       searchDetailAddrFromCoords(mapRef.current.getCenter(), getDetailAddress);
     }
   }, [position]);
 
   return (
-    <div>
-      <S.Container id="map"></S.Container>
+    <S.Container>
+      <S.MapBox id="map"></S.MapBox>
       <div id="message"></div>
-      <div>{address}</div>
-      <div>{detailAddress}</div>
-      <div>{buildingName}</div>
-    </div>
+    </S.Container>
   );
 };
 
 const S = {
   Container: styled.div`
-    width: 400px;
-    height: 400px;
+    width: 100%;
+  `,
+  MapBox: styled.div`
+    width: 100%;
+    min-height: 400px;
   `,
   Message: styled.div`
     z-index: 100;

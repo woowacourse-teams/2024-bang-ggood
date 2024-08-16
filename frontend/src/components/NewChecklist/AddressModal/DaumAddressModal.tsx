@@ -50,7 +50,7 @@ const DaumAddressModal = ({ setAddress }: Props) => {
 
   return (
     <>
-      <S.AddressButton size="xSmall" color="dark" label="주소찾기" isSquare={true} onClick={openPostcodeEmbed} />
+      <S.AddressButton size="xSmall" color="dark" label="주소 검색" isSquare={true} onClick={openPostcodeEmbed} />
       <Modal position="bottom" isOpen={isModalOpen} onClose={modalClose}>
         <Modal.body>
           <div ref={postcodeContainerRef} style={{ width: '100%', marginTop: '10px' }} />
@@ -64,8 +64,8 @@ export default DaumAddressModal;
 
 const S = {
   AddressButton: styled(Button)`
-    width: 90px;
-    padding: 5px;
+    width: calc(50% - 10px);
+    padding: 10px;
 
     font-size: ${({ theme }) => theme.text.size.xSmall};
   `,

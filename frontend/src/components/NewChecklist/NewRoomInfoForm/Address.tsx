@@ -4,6 +4,7 @@ import { useStore } from 'zustand';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import DaumAddressModal from '@/components/NewChecklist/AddressModal/DaumAddressModal';
+import RealTimeAddressModal from '@/components/NewChecklist/AddressModal/RealTimeAddressModal';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
 const Address = () => {
@@ -16,11 +17,13 @@ const Address = () => {
     },
     [actions],
   );
+
   return (
     <FormField>
       <FormField.Label label="주소" />
-      <FlexBox.Horizontal gap="3%">
-        <FormField.Input onChange={actions.onChange} name="address" value={address} />
+      <FormField.Input onChange={actions.onChange} name="address" value={address} />
+      <FlexBox.Horizontal>
+        <RealTimeAddressModal />
         <DaumAddressModal setAddress={handleSetAddress} />
       </FlexBox.Horizontal>
       <FormField.ErrorMessage value={errorMessage ?? ''} />

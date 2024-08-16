@@ -1,35 +1,18 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
 
-import { CloseIcon } from '@/assets/assets';
 import OptionButton from '@/components/_common/OptionButton/OptionButton';
+import TipBox from '@/components/_common/TipBox/TipBox';
 import OptionModalInfoBox from '@/components/NewChecklist/Option/OptionBox';
-import { STORAGE_KEYS } from '@/constants/localStorage';
 import { OPTIONS } from '@/constants/options';
 import { flexCenter, flexColumn, title4 } from '@/styles/common';
 
 const OptionChecklistTemplate = () => {
-  const [isTipOpen, setIsTipOpen] = useState(() => {
-    const savedTipState = localStorage.getItem(STORAGE_KEYS.TIP);
-    return savedTipState !== null ? JSON.parse(savedTipState) : true;
-  });
-
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.TIP, JSON.stringify(isTipOpen));
-  }, [isTipOpen]);
-
   return (
     <S.Container>
-      {isTipOpen && (
-        <S.TipBox>
-          <S.TipText>
-            💡 <S.Bold>TIP</S.Bold> : 수리가 필요한 시설이 있다면, 관리자에게 수리 가능 여부를 미리 물어보세요!
-          </S.TipText>
-          <CloseIcon onClick={() => setIsTipOpen(false)} style={{ paddingRight: 10 }} />
-        </S.TipBox>
-      )}
-      <S.InnerBox isTipOpen={isTipOpen}>
+      <TipBox tipType={'OPTION'} />
+      <S.InnerBox>
         <OptionModalInfoBox />
+
         <S.OptionBox>
           {OPTIONS.map(option => (
             <OptionButton option={option} key={option.id} />
@@ -50,14 +33,13 @@ const S = {
 
     background-color: ${({ theme }) => theme.palette.background};
     min-height: calc(100vh - 64px);
-    gap: 10px;
     align-items: center;
   `,
 
-  InnerBox: styled.div<{ isTipOpen: boolean }>`
+  InnerBox: styled.div`
     width: 100%;
     ${flexColumn}
-    margin-top: ${({ isTipOpen }) => !isTipOpen && 15}px;
+    margin-top: 10px;
 
     background-color: white;
 

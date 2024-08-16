@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import Checkbox from '@/components/_common/Checkbox/Checkbox';
-import SelectionCounter from '@/components/_common/SelectionCounter/SelectionCounter';
+import LengthCounter from '@/components/_common/LengthCounter/LengthCounter';
 import { OPTION_COUNT } from '@/constants/options';
 import useOptionStore from '@/store/useOptionStore';
 import { flexCenter, flexSpaceBetween, title4 } from '@/styles/common';
@@ -26,7 +26,7 @@ const OptionModalInfoBox = () => {
 
         <span>전체선택</span>
       </S.TotalSelectBox>
-      <SelectionCounter currentCount={selectedOptions.length} totalCount={OPTION_COUNT} />
+      <LengthCounter currentCount={selectedOptions.length} totalCount={OPTION_COUNT} />
     </S.ButtonContainer>
   );
 };

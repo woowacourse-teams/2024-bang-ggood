@@ -31,6 +31,6 @@ export const checklistHandlers = [
     return HttpResponse.json(threeRoomsForCompare, { status: 200 });
   }),
   http.get(BASE_URL + ENDPOINT.CHECKLIST_ALL_QUESTION, () => {
-    return HttpResponse.json(checklistAllQuestions.categories, { status: 200 });
+    return HttpResponse.json(checklistAllQuestions, { status: 200 });
   }),
 ];

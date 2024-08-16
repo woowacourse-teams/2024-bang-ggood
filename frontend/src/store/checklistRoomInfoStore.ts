@@ -115,7 +115,7 @@ const checklistRoomInfoStore = createStore<RoomInfoStore>((set, get) => ({
       get().actions.set(event.target.name as keyof RoomInfo, event.target.value);
     },
 
-    reset: () => set({ rawValue: initialRoomInfo, errorMessage: initialErrorMessages }),
+    reset: () => set({ rawValue: initialRoomInfo, value: initialRoomInfo, errorMessage: initialErrorMessages }),
     _update: (name, value) => set({ rawValue: { ...get().rawValue, [name]: value } }),
     _updateErrorMsg: (name, value) => set({ errorMessage: { ...get().errorMessage, [name]: value } }),
     _updateAfterValidation: (name, value, validators) => {

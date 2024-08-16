@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useCallback } from 'react';
 
-import { CheckIcon } from '@/assets/assets';
+import { CheckIcon, PlusSmall } from '@/assets/assets';
 import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
 
@@ -11,12 +11,14 @@ interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
   color?: string;
   hoverColor?: string;
   onClick?: () => void;
+  iconType?: 'check' | 'plus';
 }
 
 const Checkbox = ({
   isChecked = false,
   color = theme.palette.green500,
   hoverColor = theme.palette.green300,
+  iconType = 'check',
   setIsChecked,
   onClick,
 }: StyledProps) => {
@@ -28,9 +30,7 @@ const Checkbox = ({
 
   return (
     <S.Checkbox $color={checkedColor} $hoverColor={hoverColor} onClick={onClick}>
-      <S.FlexBox>
-        <CheckIcon />
-      </S.FlexBox>
+      <S.FlexBox>{iconType === 'check' ? <CheckIcon /> : <PlusSmall />}</S.FlexBox>
       <S.CheckboxInput type="checkbox" onChange={handleClick} checked={isChecked} />
     </S.Checkbox>
   );

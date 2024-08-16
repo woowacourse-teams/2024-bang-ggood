@@ -25,32 +25,34 @@ type RouteParams = {
   checklistId: string;
 };
 const EditChecklistPage = () => {
-  const { checklistId } = useParams() as RouteParams;
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
-
-  const { mutate: addChecklist } = useAddChecklistQuery();
   const { showToast } = useToast(DEFAULT_TOAST_DURATION);
 
+  const { checklistId } = useParams() as RouteParams;
+  const navigate = useNavigate();
+
+  const { mutate: addChecklist } = useAddChecklistQuery();
+  /* roomInfo */
   const roomInfoAnswer = useStore(checklistRoomInfoStore, state => state.value);
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
   const roomName = useStore(checklistRoomInfoStore, state => state.value.roomName);
+  /* option */
   const { selectedOptions, setSelectedOptions } = useOptionStore();
-  const { checklistCategoryQnA, setAnswers, validCategory } = useChecklistStore();
-  const navigate = useNavigate();
+  /* checklist */
+  const { checklistCategoryQnA, setAnswers } = useChecklistStore();
 
   const { tabs } = useNewChecklistTabs();
 
   useEffect(() => {
     const fetchChecklistAndSetToStore = async () => {
       const checklist = await getChecklistDetail(Number(checklistId));
-      actions.setAll({ rawValue: objectOmit(checklist.room, new Set('includedUtilities')) });
+      actions.setAll({ rawValue: objectOmit(checklist.room, new Set('includedUtilities')), value: checklist.room });
       setSelectedOptions(checklist.options.flatMap(option => option.optionId));
 
       setAnswers(checklist.categories);
     };
     fetchChecklistAndSetToStore();
   }, [checklistId, actions, setAnswers, setSelectedOptions]);
-
   // TODO: fetch 시 로딩 상태일 때 스켈레톤처리. 성공할 떄만 return 문 보여주는 로직이 필요
   if (!roomName) {
     return <div>체크리스트가 없어요</div>;
@@ -92,8 +94,8 @@ const EditChecklistPage = () => {
     <>
       <Header
         left={<Header.Backward />}
-        center={<Header.Text>{'새 체크리스트'}</Header.Text>}
-        right={<Button label={'저장'} size="small" color="dark" onClick={modalOpen} />}
+        center={<Header.Text>새 체크리스트</Header.Text>}
+        right={<Button label="저장" size="small" color="dark" onClick={modalOpen} />}
       />
       <TabProvider defaultTab={0}>
         {/* 체크리스트 작성의 탭 */}

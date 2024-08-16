@@ -4,7 +4,6 @@ import LengthCounter from '@/components/_common/LengthCounter/LengthCounter';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import QuestionCardList from '@/components/ChecklistCustom/QuestionCardList/QuestionCardList';
 import useChecklistCustomStore from '@/store/useChecklistCustomStore';
-import { title4 } from '@/styles/common';
 
 const QuestionListTemplate = () => {
   const { categoryQnA } = useChecklistCustomStore();
@@ -15,7 +14,7 @@ const QuestionListTemplate = () => {
   return (
     <S.Container>
       <S.CounterBox>
-        <S.Span>질문 선택 개수 : </S.Span>
+        <S.Span>선택 개수 : </S.Span>
         <LengthCounter currentCount={12} totalCount={13} />
       </S.CounterBox>
       <QuestionCardList
@@ -36,8 +35,7 @@ const S = {
     background-color: white;
   `,
   Span: styled.div`
-    ${title4}
-    color: ${({ theme }) => theme.palette.grey500}
+    color: ${({ theme }) => theme.palette.grey500};
   `,
   CounterBox: styled.div`
     display: flex;

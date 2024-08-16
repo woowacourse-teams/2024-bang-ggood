@@ -1,10 +1,9 @@
 import styled from '@emotion/styled';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
-import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import Textarea from '@/components/_common/Textarea/Textarea';
 import useInput from '@/hooks/useInput';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
@@ -20,7 +19,6 @@ const MemoModal = ({ isModalOpen, modalClose }: Props) => {
   const intervalRef = useRef<number | undefined>(undefined);
   const { actions, value: roomInfo } = useStore(checklistRoomInfoStore);
   const { value: memo, onChange } = useInput<string>(roomInfo.memo || '');
-  const { currentTabId } = useTabContext();
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e);
 
@@ -46,14 +44,6 @@ const MemoModal = ({ isModalOpen, modalClose }: Props) => {
     }
   };
 
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.marginBottom = '300px';
-    } else {
-      document.body.style.marginBottom = '0px';
-    }
-  }, [isModalOpen, currentTabId]);
-
   return (
     <Modal
       hasCloseButton={false}
@@ -67,7 +57,14 @@ const MemoModal = ({ isModalOpen, modalClose }: Props) => {
         <S.OpenBar />
       </S.OpenBarBox>
       <S.TextareaBox>
-        <Textarea autoFocus height={'large'} value={memo} onChange={handleInputChange} onBlur={handleBlur} />
+        <Textarea
+          placeholder="메모를 입력하세요."
+          autoFocus
+          height={'large'}
+          value={memo}
+          onChange={handleInputChange}
+          onBlur={handleBlur}
+        />
         <S.ButtonBox>
           <Button label="닫기" size="small" isSquare={true} color={'light'} onClick={() => handleSubmit(true)} />
         </S.ButtonBox>
@@ -92,7 +89,7 @@ const S = {
     height: 20px;
     border-radius: 5px;
 
-    background-color: ${({ theme }) => theme.palette.yellow300};
+    background-color: ${({ theme }) => theme.palette.yellow200};
   `,
   TextareaBox: styled.div`
     position: relative;

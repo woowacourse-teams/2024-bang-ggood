@@ -121,11 +121,14 @@ const NewChecklistPage = () => {
         {/* 체크리스트 콘텐츠 섹션 */}
         <NewChecklistContent />
         {/* 메모 모달 */}
-        {isMemoModalOpen && (
+        {isMemoModalOpen ? (
           <>
             {/* 모달이 열렸을 때 컨텐츠를 다 보이게 하려는 빈 박스 */}
             <S.EmptyBox />
             <MemoModal isModalOpen={isMemoModalOpen} modalClose={memoModalClose} />
+          </>
+        ) : (
+          <>
             {/* 메모 작성 버튼 */}
             <FloatingButton position="bottom" onClick={memoModalOpen} size="extends">
               <Memo />
@@ -149,9 +152,9 @@ const NewChecklistPage = () => {
 const S = {
   EmptyBox: styled.div`
     width: 100%;
-    height: 50px;
+    height: 300px;
 
-    background-color: pink;
+    background-color: ${({ theme }) => theme.palette.background};
   `,
 };
 

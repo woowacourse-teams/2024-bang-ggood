@@ -26,7 +26,7 @@ const SummaryModal = ({ isModalOpen, modalClose, submitChecklist }: Props) => {
       <Modal.body>
         <S.Wrapper>
           <FormField.Input
-            placeholder="바쁘시면 스킵도 돼요!"
+            placeholder="바쁘시면 스킵도 괜찮아요!"
             autoFocus
             onChange={actions.onChange}
             name="summary"

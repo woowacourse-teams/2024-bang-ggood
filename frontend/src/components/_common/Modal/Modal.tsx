@@ -7,8 +7,8 @@ import { CloseIcon } from '@/assets/assets';
 import ModalBody from '@/components/_common/Modal/ModalBody';
 import ModalFooter from '@/components/_common/Modal/ModalFooter';
 import ModalHeader from '@/components/_common/Modal/ModalHeader';
+import { fadeIn, fadeOut } from '@/styles/animation';
 import { flexColumn } from '@/styles/common';
-import { fadeIn, fadeOut } from '@/utils/animation';
 
 type ModalPosition = 'center' | 'bottom';
 

@@ -11,7 +11,7 @@ const useNewChecklistTabs = () => {
   const isCategoryQuestionAllCompleted = useCallback(
     (targetId: number) => {
       const targetCategory = getCategoryQnA(targetId);
-      return targetCategory.questions.every(question => question.answer !== 'NONE');
+      return targetCategory?.questions.every(question => question.answer !== 'NONE');
     },
     [getCategoryQnA],
   );

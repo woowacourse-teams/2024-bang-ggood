@@ -15,6 +15,7 @@ import {
 interface RoomInfoAction {
   reset: () => void;
   set: (name: keyof typeof validatorSet, value: string | undefined) => void;
+  setAll: (state: Partial<RoomInfoState>) => void;
   _update: (field: keyof AllString<RoomInfo> | keyof AllString<RoomInfo>, value: string | undefined) => void;
   _updateErrorMsg: (field: keyof RoomInfo, value: string) => void;
   _updateAfterValidation: (field: keyof RoomInfo, value: string, validators: Validator[]) => void;
@@ -91,13 +92,15 @@ const validatorSet: Record<string, Validator[]> = {
 
 const initialErrorMessages = Object.fromEntries(Object.entries(initialRoomInfo).map(([key]) => [key, '']));
 
-type RoomInfoStore = { rawValue: AllString<RoomInfo> } & { value: RoomInfo } & { errorMessage: AllString<RoomInfo> } & {
-  actions: RoomInfoAction;
-};
+type RoomInfoState = { rawValue: AllString<RoomInfo> } & { value: RoomInfo } & { errorMessage: AllString<RoomInfo> };
 
 const transform = (name: string, value: string) =>
   roomInfoType[name as keyof RoomInfo] === 'number' ? Number(value) : value;
-const checklistRoomInfoStore = createStore<RoomInfoStore>((set, get) => ({
+const checklistRoomInfoStore = createStore<
+  RoomInfoState & {
+    actions: RoomInfoAction;
+  }
+>((set, get) => ({
   rawValue: initialRoomInfo,
   value: initialRoomInfo,
   errorMessage: initialErrorMessages,
@@ -118,6 +121,7 @@ const checklistRoomInfoStore = createStore<RoomInfoStore>((set, get) => ({
     },
 
     reset: () => set({ rawValue: initialRoomInfo, value: initialRoomInfo, errorMessage: initialErrorMessages }),
+    setAll: set,
     _update: (name, value) => set({ rawValue: { ...get().rawValue, [name]: value } }),
     _updateErrorMsg: (name, value) => set({ errorMessage: { ...get().errorMessage, [name]: value } }),
     _updateAfterValidation: (name, value, validators) => {

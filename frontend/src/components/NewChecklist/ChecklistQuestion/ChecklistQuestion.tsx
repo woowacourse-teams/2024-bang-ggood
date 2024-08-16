@@ -41,7 +41,6 @@ const ChecklistQuestion = ({ question }: Props) => {
     </S.Container>
   );
 };
-
 export default ChecklistQuestion;
 
 const S = {

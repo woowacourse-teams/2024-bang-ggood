@@ -15,7 +15,6 @@ export const checklistDetail: ChecklistInfo = {
     station: '강남역',
     walkingTime: 10,
     realEstate: undefined,
-    type: '오피스텔',
     structure: '오픈형 원룸',
     size: 25,
     floorLevel: '지상',

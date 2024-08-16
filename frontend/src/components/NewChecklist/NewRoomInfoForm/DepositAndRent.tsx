@@ -15,7 +15,7 @@ const DepositAndRent = () => {
   return (
     <FormField>
       <FormField.Label label="보증금 / 월세 (만원)" />
-      <FlexBox.Horizontal gap={0}>
+      <FlexBox.Horizontal gap="10px">
         <FormField.Input onChange={actions.onChange} name="deposit" value={deposit} />
         <S.FlexLabel label=" / " />
         <FormField.Input placeholder="" onChange={actions.onChange} name="rent" value={rent} />
@@ -26,15 +26,3 @@ const DepositAndRent = () => {
 };
 
 export default DepositAndRent;
-
-{
-  /* <FormField>
-          <FormField.Label label="보증금 / 월세 (만원)" />
-          <FlexHorizontal gap={0}>
-            <S.CustomInput onChange={actions.onChange} name="deposit" value={roomInfo.deposit} />
-            <S.CustomLabel label=" / " />
-            <S.CustomInput placeholder="" onChange={actions.onChange} name="rent" value={roomInfo.rent} />
-          </FlexHorizontal>
-          <FormField.ErrorMessage value={errorMessage.deposit || errorMessage.rent || ''} />
-        </FormField> */
-}

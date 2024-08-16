@@ -6,13 +6,13 @@ export type RoomInfo = Partial<{
   deposit: number;
   rent: number;
   // TODO: 관리비 항목 :  백엔드 작업 프로퍼티 확인하기
+  maintenanceFee: number;
   fee: number;
   contractTerm: number;
   floor: number;
   station: string;
   walkingTime: number;
   realEstate: string;
-  type: string;
   size: number;
   floorLevel: string;
   structure: string;

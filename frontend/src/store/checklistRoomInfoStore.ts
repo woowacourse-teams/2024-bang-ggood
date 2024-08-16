@@ -42,6 +42,7 @@ export const initialRoomInfo = {
   occupancyPeriod: '초',
   summary: undefined,
   memo: undefined,
+  maintenanceFee: undefined,
 } as const;
 
 const roomInfoType = {
@@ -64,6 +65,7 @@ const roomInfoType = {
   summary: 'string',
   memo: 'string',
   createdAt: 'string',
+  maintenanceFee: 'string',
 } as const;
 
 const validatorSet: Record<string, Validator[]> = {

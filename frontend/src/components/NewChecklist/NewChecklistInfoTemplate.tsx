@@ -9,7 +9,6 @@ import RoomFloor from '@/components/NewChecklist/NewRoomInfoForm/RoomFloor';
 import RoomName from '@/components/NewChecklist/NewRoomInfoForm/RoomName';
 import RoomSize from '@/components/NewChecklist/NewRoomInfoForm/RoomSize';
 import RoomStructure from '@/components/NewChecklist/NewRoomInfoForm/RoomStructure';
-import RoomType from '@/components/NewChecklist/NewRoomInfoForm/RoomType';
 import { flexColumn } from '@/styles/common';
 
 const NewChecklistInfoTemplate = () => {
@@ -20,10 +19,9 @@ const NewChecklistInfoTemplate = () => {
         <Address />
         <NearTransportation />
         <DepositAndRent />
-        <RoomType />
+        <RoomFloor />
         <RoomStructure />
         <RoomSize />
-        <RoomFloor />
         <RoomContractTerm />
         <RealEstate />
       </S.Container>
@@ -33,8 +31,7 @@ const NewChecklistInfoTemplate = () => {
 
 const S = {
   ContentWrapper: styled.div`
-    margin-bottom: 20px;
-    padding-top: 40px;
+    padding: 60px 10px 30px;
 
     background-color: white;
   `,

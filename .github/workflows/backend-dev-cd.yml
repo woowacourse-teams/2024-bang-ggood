@@ -53,7 +53,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: bang-ggood
+    runs-on: bang-ggood-dev
     steps:
       - name: change permission
         run: sudo chown -R ubuntu:ubuntu /home/ubuntu/actions-runner/_work/2024-bang-ggood

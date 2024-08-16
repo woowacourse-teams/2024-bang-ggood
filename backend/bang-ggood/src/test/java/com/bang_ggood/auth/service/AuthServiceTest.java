@@ -98,7 +98,7 @@ class AuthServiceTest extends IntegrationTestSupport {
 
         // then
         User user = authService.extractUser(token);
-        UserChecklistsPreviewResponse response = checklistService.readUserChecklistsPreview(user);
+        UserChecklistsPreviewResponse response = checklistService.readChecklistsPreview(user);
         Assertions.assertThat(response.checklists()).hasSize(1);
     }
 }

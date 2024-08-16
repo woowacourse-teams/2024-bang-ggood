@@ -54,14 +54,19 @@ public class ChecklistController {
     }
 
     @GetMapping("/checklists")
-    public ResponseEntity<UserChecklistsPreviewResponse> readUserChecklistsPreview(@AuthPrincipal User user) {
-        return ResponseEntity.ok(checklistService.readUserChecklistsPreview(user));
+    public ResponseEntity<UserChecklistsPreviewResponse> readChecklistsPreview(@AuthPrincipal User user) {
+        return ResponseEntity.ok(checklistService.readChecklistsPreview(user));
     }
 
     @GetMapping("/custom-checklist/all")
     public ResponseEntity<CategoryCustomChecklistQuestionsResponse> readAllCustomChecklistQuestions(
             @AuthPrincipal User user) {
         return ResponseEntity.ok(checklistService.readAllCustomChecklistQuestions(user));
+    }
+
+    @GetMapping("/checklists/like")
+    public ResponseEntity<UserChecklistsPreviewResponse> readLikedChecklistsPreview(@AuthPrincipal User user) {
+        return ResponseEntity.ok(checklistService.readLikedChecklistsPreview(user));
     }
 
     @PutMapping("/checklists/{id}")

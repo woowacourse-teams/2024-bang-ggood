@@ -163,6 +163,17 @@ class ChecklistE2ETest extends AcceptanceTest {
         );
     }
 
+    @DisplayName("좋아요된 체크리스트 리스트 조회 성공")
+    @Test
+    void readLikedUserChecklistsPreview() {
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .when().get("/checklists/like")
+                .then().log().all()
+                .statusCode(200);
+    }
+
     @DisplayName("체크리스트 수정 성공")
     @Test
     void updateChecklist() {
@@ -238,7 +249,7 @@ class ChecklistE2ETest extends AcceptanceTest {
     void deleteChecklistLikeByChecklistId() {
         roomRepository.save(RoomFixture.ROOM_1);
         Checklist saved = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
-        checklistLikeRepository.save(ChecklistFixture.CHECKLIST_LIKE_1);
+        checklistLikeRepository.save(ChecklistFixture.CHECKLIST1_LIKE);
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)

@@ -29,6 +29,13 @@ public class ChecklistFixture {
             OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY
     );
 
+    public static final Checklist CHECKLIST3_USER1 = new Checklist(
+            RoomFixture.ROOM_3,
+            UserFixture.USER1,
+            1000, 50, 12, "방끗공인중개사", "메모", "한줄평",
+            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY
+    );
+
     public static final Checklist CHECKLIST3_USER2 = new Checklist(
             RoomFixture.ROOM_3,
             UserFixture.USER2,
@@ -181,5 +188,7 @@ public class ChecklistFixture {
             CHECKLIST1_USER1, Question.fromId(2), Answer.BAD
     );
 
-    public static final ChecklistLike CHECKLIST_LIKE_1 = new ChecklistLike(CHECKLIST1_USER1);
+    public static final ChecklistLike CHECKLIST1_LIKE = new ChecklistLike(CHECKLIST1_USER1);
+
+    public static final ChecklistLike CHECKLIST2_LIKE = new ChecklistLike(CHECKLIST2_USER1);
 }

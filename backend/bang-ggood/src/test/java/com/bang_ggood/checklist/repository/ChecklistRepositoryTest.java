@@ -33,11 +33,15 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ChecklistLikeRepository checklistLikeRepository;
+
     @BeforeEach
     void setUp() {
         userRepository.save(UserFixture.USER1);
         roomRepository.save(RoomFixture.ROOM_1);
         roomRepository.save(RoomFixture.ROOM_2);
+        roomRepository.save(RoomFixture.ROOM_3);
     }
 
     @DisplayName("아이디를 통해 체크리스트 갖고 오기 성공")
@@ -108,6 +112,29 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
 
         // then
         Assertions.assertThat(checklists).containsOnly(checklist1, checklist2);
+    }
+
+    @Transactional
+    @DisplayName("체크리스트 좋아요 필터링 조회 성공")
+    @Test
+    void findAllByUserAndIsLiked() {
+        // given
+        checklistRepository.saveAll(
+                List.of(ChecklistFixture.CHECKLIST1_USER1,
+                        ChecklistFixture.CHECKLIST2_USER1,
+                        ChecklistFixture.CHECKLIST3_USER1)
+        );
+        checklistLikeRepository.saveAll(
+                List.of(ChecklistFixture.CHECKLIST1_LIKE,
+                        ChecklistFixture.CHECKLIST2_LIKE)
+        );
+
+        // when
+        List<Checklist> checklists = checklistRepository.findAllByUserAndIsLiked(UserFixture.USER1);
+
+        // then
+        Assertions.assertThat(checklists)
+                .containsOnly(ChecklistFixture.CHECKLIST1_USER1, ChecklistFixture.CHECKLIST2_USER1);
     }
 
     @DisplayName("아이디를 통해 체크리스트 존재 확인 성공 : 존재하는 경우")

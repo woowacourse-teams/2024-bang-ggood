@@ -400,8 +400,8 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         //then
         assertAll(
                 () -> assertThat(checklists.size()).isEqualTo(2),
-                () -> assertThat(checklists.get(0).checklistId()).isEqualTo(1),
-                () -> assertThat(checklists.get(1).checklistId()).isEqualTo(2)
+                () -> assertThat(checklists.get(0).checklistId()).isEqualTo(ChecklistFixture.CHECKLIST1_USER1.getId()),
+                () -> assertThat(checklists.get(1).checklistId()).isEqualTo(ChecklistFixture.CHECKLIST2_USER1.getId())
         );
     }
 

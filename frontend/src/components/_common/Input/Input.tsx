@@ -6,7 +6,7 @@ import { InputChangeEvent } from '@/types/event';
 
 const widthSize = {
   small: '100px',
-  medium: '200px',
+  medium: '160px',
   large: '300px',
   full: '100%',
 };

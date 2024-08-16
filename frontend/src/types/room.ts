@@ -5,6 +5,7 @@ export type RoomInfo = Partial<{
   address: string;
   deposit: number;
   rent: number;
+  // includedUtilities : 관리비 포함항목 (전기, 수도 등)
   includedUtilities: string[];
   maintenanceFee: number;
   contractTerm: number;

@@ -1,0 +1,41 @@
+name: Discord PR
+
+on:
+  pull_request:
+    branches: ["dev"]
+
+jobs:
+  create-issue:
+    name: Discord notification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send PR
+        uses: Ilshidur/action-discord@0.3.2
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_USERNAME: Bang_GGood_Master
+          DISCORD_EMBEDS: >
+            [
+              { 
+                "title": "똑똑~ 방 리모델링 요청이 왔어요!🏠\n${{ github.event.pull_request.title }}",
+                "color": 16777123,
+                "description": "${{ github.event.pull_request.html_url }}",
+                "fields": [
+                  {
+                    "name": "Pull Request Number",
+                    "value": "#${{ github.event.pull_request.number }}",
+                    "inline": true
+                  },
+                  {
+                    "name": "Author",
+                    "value": "${{ github.event.pull_request.user.login }}",
+                    "inline": true
+                  },
+                  {
+                    "name": "Reviewers",
+                    "value": "${{ join(github.event.pull_request.requested_reviewers.*.login, ', ') }}",
+                    "inline": false
+                  }
+                ]
+              }
+            ]

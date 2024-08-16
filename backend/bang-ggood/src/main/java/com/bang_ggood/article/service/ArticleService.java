@@ -1,6 +1,7 @@
 package com.bang_ggood.article.service;
 
 import com.bang_ggood.article.domain.Article;
+import com.bang_ggood.article.dto.ArticleCreateRequest;
 import com.bang_ggood.article.dto.ArticlePreviewResponse;
 import com.bang_ggood.article.dto.ArticleResponse;
 import com.bang_ggood.article.dto.ArticlesPreviewResponse;
@@ -17,6 +18,12 @@ public class ArticleService {
         this.articleRepository = articleRepository;
     }
 
+    public Long createArticle(ArticleCreateRequest request) {
+        Article article = request.toEntity();
+        articleRepository.save(article);
+        return article.getId();
+    }
+
     public ArticleResponse readArticle(Long id) {
         Article article = articleRepository.getById(id);
         return ArticleResponse.from(article);
@@ -27,5 +34,9 @@ public class ArticleService {
                 .map(ArticlePreviewResponse::from)
                 .toList();
         return new ArticlesPreviewResponse(articles);
+    }
+
+    public void deleteArticle(Long id) {
+        articleRepository.deleteById(id);
     }
 }

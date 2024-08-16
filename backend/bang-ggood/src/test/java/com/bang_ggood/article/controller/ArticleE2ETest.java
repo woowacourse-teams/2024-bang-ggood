@@ -2,6 +2,7 @@ package com.bang_ggood.article.controller;
 
 import com.bang_ggood.AcceptanceTest;
 import com.bang_ggood.article.domain.Article;
+import com.bang_ggood.article.dto.ArticleCreateRequest;
 import com.bang_ggood.article.repository.ArticleRepository;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.exception.dto.ExceptionResponse;
@@ -17,6 +18,19 @@ public class ArticleE2ETest extends AcceptanceTest {
 
     @Autowired
     ArticleRepository articleRepository;
+
+    @DisplayName("아티클 생성 성공")
+    @Test
+    void createArticle() {
+        ArticleCreateRequest request = new ArticleCreateRequest("제목1", "내용");
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(request)
+                .when().post("/articles")
+                .then().log().all()
+                .statusCode(201);
+    }
 
     @DisplayName("아티클 조회 성공")
     @Test

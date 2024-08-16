@@ -85,6 +85,8 @@ const S = {
     ${flexColumn}
     padding: 50px 12px 30px;
 
+    background-color: ${({ theme }) => theme.palette.background};
+
     min-height: calc(100vh - 120px);
   `,
 };

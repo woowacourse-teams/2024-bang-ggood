@@ -29,6 +29,7 @@ export const initialRoomInfo = {
   station: undefined,
   deposit: undefined,
   rent: undefined,
+  fee: undefined,
   walkingTime: undefined,
   size: undefined,
   floor: undefined,
@@ -37,6 +38,8 @@ export const initialRoomInfo = {
   structure: undefined,
   contractTerm: undefined,
   realEstate: undefined,
+  occupancyMonth: undefined,
+  occupancyPeriod: '초',
   summary: undefined,
   memo: undefined,
 } as const;
@@ -47,6 +50,7 @@ const roomInfoType = {
   station: 'string',
   deposit: 'number',
   rent: 'number',
+  fee: 'number',
   walkingTime: 'number',
   size: 'number',
   floor: 'number',
@@ -55,8 +59,11 @@ const roomInfoType = {
   structure: 'string',
   contractTerm: 'number',
   realEstate: 'string',
+  occupancyMonth: 'number',
+  occupancyPeriod: 'string',
   summary: 'string',
   memo: 'string',
+  createdAt: 'string',
 } as const;
 
 const validatorSet: Record<string, Validator[]> = {
@@ -64,6 +71,7 @@ const validatorSet: Record<string, Validator[]> = {
   address: [],
   deposit: [isNumericValidator, nonNegativeValidator],
   rent: [isNumericValidator, nonNegativeValidator],
+  fee: [isNumericValidator, nonNegativeValidator],
   contractTerm: [isNumericValidator, nonNegativeValidator],
   station: [],
   walkingTime: [isIntegerValidator],
@@ -73,6 +81,8 @@ const validatorSet: Record<string, Validator[]> = {
   floorLevel: [],
   structure: [],
   realEstate: [],
+  occupancyMonth: [],
+  occupancyPeriod: [],
   summary: [],
   memo: [],
 };

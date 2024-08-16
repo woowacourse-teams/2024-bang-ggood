@@ -24,9 +24,9 @@ const ArticleSection = () => {
         <S.ShowMore onClick={handleClickShowMore}>더보기</S.ShowMore>
       </S.Row>
       <S.CardList>
-        {articles.map((article: Article) => (
+        {articles.map((article: Article, index: number) => (
           <S.CardWrapper key={article.articleId}>
-            <ArticleCard article={article} />
+            <ArticleCard article={article} index={index} />
           </S.CardWrapper>
         ))}
       </S.CardList>

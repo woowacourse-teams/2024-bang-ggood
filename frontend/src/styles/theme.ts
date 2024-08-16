@@ -25,6 +25,10 @@ const palette = {
   red600: '#D9593E',
   red500: '#FC6A4B',
   red300: '#FFC7AF',
+  /* blue */
+  blue600: '#4F66E0',
+  blue500: '#5F79FF',
+  blue300: '#B4D6FD',
   /* grey */
   grey600: '#484947',
   grey500: '#7C7C7C',
@@ -39,7 +43,7 @@ const palette = {
 
   /* etc */
   kakao: '#FEE500',
-};
+} as const;
 
 const text = {
   size: {

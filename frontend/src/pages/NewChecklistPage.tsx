@@ -4,12 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from 'zustand';
 
 import { getChecklistQuestions } from '@/apis/checklist';
-import { Memo } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
-import FloatingButton from '@/components/_common/FloatingButton/FloatingButton';
 import Header from '@/components/_common/Header/Header';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import Tabs from '@/components/_common/Tabs/Tabs';
+import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
 import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
@@ -128,13 +127,7 @@ const NewChecklistPage = () => {
             <MemoModal isModalOpen={isMemoModalOpen} modalClose={memoModalClose} />
           </>
         ) : (
-          <>
-            {/* 메모 작성 버튼 */}
-            <FloatingButton position="bottom" onClick={memoModalOpen} size="extends">
-              <Memo />
-              <span>메모</span>
-            </FloatingButton>
-          </>
+          <MemoButton onClick={memoModalOpen} />
         )}
       </TabProvider>
       {/* 한줄평 모달 */}

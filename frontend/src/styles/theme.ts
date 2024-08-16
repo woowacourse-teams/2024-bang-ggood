@@ -43,6 +43,7 @@ const palette = {
 
 const text = {
   size: {
+    xxSmall: '12px',
     xSmall: '14px',
     small: '16px',
     medium: '18px',

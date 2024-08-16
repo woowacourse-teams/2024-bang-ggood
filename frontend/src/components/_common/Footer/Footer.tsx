@@ -2,16 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { Link, LinkProps, useLocation } from 'react-router-dom';
 
-import {
-  ChecklistLogo,
-  ChecklistLogoActive,
-  HomeLogo,
-  HomeLogoActive,
-  LocationLogo,
-  LocationLogoActive,
-  MyPageLogo,
-  MyPageLogoActive,
-} from '@/assets/assets';
+import FooterButton from '@/components/_common/Footer/FooterButton';
 import { ROUTE_PATH } from '@/constants/routePath';
 
 interface Props {
@@ -29,19 +20,19 @@ const FooterWrapper = ({ children, ...rest }: Props) => {
   );
 };
 
-const compare = (path1: string, path2: string) =>
+const isSameURL = (path1: string, path2: string) =>
   new URL(path1, 'https://abc.com').pathname === new URL(path2, 'https://abc.com').pathname;
 
 type MakeOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
-const FooterButton = (Logo: React.FC, LogoActive: React.FC, path: string) => {
+const FooterLinkButton = (Logo: JSX.Element, LogoActive: JSX.Element, path: string) => {
   const LogoLinked = (props: MakeOptional<LinkProps, 'to'>) => {
     const location = useLocation();
     const currentPath = location.pathname;
 
     return (
       <Link to={path} {...props}>
-        {compare(path, currentPath) ? <LogoActive /> : <Logo />}
+        {isSameURL(path, currentPath) ? LogoActive : Logo}
       </Link>
     );
   };
@@ -49,10 +40,22 @@ const FooterButton = (Logo: React.FC, LogoActive: React.FC, path: string) => {
 };
 
 const Footer = Object.assign(FooterWrapper, {
-  HomeLogo: FooterButton(HomeLogo, HomeLogoActive, ROUTE_PATH.home),
-  LocationLogo: FooterButton(LocationLogo, LocationLogoActive, ROUTE_PATH.location),
-  ChecklistLogo: FooterButton(ChecklistLogo, ChecklistLogoActive, ROUTE_PATH.checklistList),
-  MyPageLogo: FooterButton(MyPageLogo, MyPageLogoActive, ROUTE_PATH.myPage),
+  Home: FooterLinkButton(<FooterButton logo="home" />, <FooterButton logo="home" isActive />, ROUTE_PATH.home),
+  Checklist: FooterLinkButton(
+    <FooterButton logo="checklist" />,
+    <FooterButton logo="checklist" isActive />,
+    ROUTE_PATH.checklistList,
+  ),
+  Article: FooterLinkButton(
+    <FooterButton logo="article" />,
+    <FooterButton logo="article" isActive />,
+    ROUTE_PATH.article,
+  ),
+  Profile: FooterLinkButton(
+    <FooterButton logo="profile" />,
+    <FooterButton logo="profile" isActive />,
+    ROUTE_PATH.myPage,
+  ),
 });
 
 export default Footer;
@@ -67,12 +70,14 @@ const S = {
     bottom: 0%;
     width: 100%;
     height: 64px;
-    padding: 16px 32px;
+    padding: 8px 16px 16px;
 
     background-color: ${({ theme }) => theme.palette.white};
     max-width: 600px;
     align-items: flex-start;
     box-sizing: border-box;
+
+    box-shadow: 0 -4px 10px 0 rgb(0 0 0 / 3%);
   `,
   FlexBox: styled.div`
     display: flex;

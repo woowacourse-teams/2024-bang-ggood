@@ -30,10 +30,10 @@ type Story = StoryObj<typeof meta>;
 export const InLocationPage: Story = {
   render: () => (
     <Footer>
-      <Footer.HomeLogo />
-      <Footer.LocationLogo />
-      <Footer.ChecklistLogo />
-      <Footer.MyPageLogo />
+      <Footer.Home />
+      <Footer.Checklist />
+      <Footer.Article />
+      <Footer.Profile />
     </Footer>
   ),
 };

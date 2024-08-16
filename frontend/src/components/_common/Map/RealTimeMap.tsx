@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useStore } from 'zustand';
 
 import checklistAddressStore from '@/store/checklistAddressStore';
@@ -13,7 +13,12 @@ const RealTimeMap = () => {
   const markerRef = useRef<any | null>(null);
   const infoWindowRef = useRef<any | null>(null);
 
-  const { setAddress, setJibunAddress, setBuildingName, setPosition, position } = useStore(checklistAddressStore);
+  const [position, setPosition] = useState({
+    lat: 37.51524850249633,
+    lon: 127.10305696808169,
+  });
+
+  const { setAddress, setJibunAddress, setBuildingName } = useStore(checklistAddressStore);
 
   const geocoder = new kakao.maps.services.Geocoder();
 
@@ -49,6 +54,7 @@ const RealTimeMap = () => {
     const message = `<span id="info-title">이 위치가 맞나요?</span>`;
 
     displayMarker(locPosition, message);
+    searchDetailAddrFromCoords(mapRef.current.getCenter(), getDetailAddress);
   };
 
   const errorGeolocation = () => {
@@ -135,7 +141,7 @@ const RealTimeMap = () => {
       infoWindowRef.current.open(mapRef.current, markerRef.current);
       searchDetailAddrFromCoords(mapRef.current.getCenter(), getDetailAddress);
     }
-  }, [position]);
+  }, [position, markerRef]);
 
   return (
     <S.Container>

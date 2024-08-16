@@ -249,7 +249,7 @@ class ChecklistE2ETest extends AcceptanceTest {
     void deleteChecklistLikeByChecklistId() {
         roomRepository.save(RoomFixture.ROOM_1);
         Checklist saved = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
-        checklistLikeRepository.save(ChecklistFixture.CHECKLIST1_LIKE_1);
+        checklistLikeRepository.save(ChecklistFixture.CHECKLIST1_LIKE);
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)

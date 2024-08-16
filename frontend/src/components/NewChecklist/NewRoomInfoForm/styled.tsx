@@ -6,7 +6,7 @@ import Header from '@/components/_common/Header/Header';
 import RadioGroup from '@/components/_common/RadioGroup/RadioGroup';
 import { flexCenter } from '@/styles/common';
 
-const S = {
+const FormStyled = {
   Center: styled.div`
     ${flexCenter}
     font-weight: ${({ theme }) => theme.text.weight.bold};
@@ -35,22 +35,28 @@ const S = {
 
     color: black;
   `,
-
+  FieldBox: styled.div`
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 15px;
+  `,
   OptionButtonContainer: styled.div<{ gap?: number | string; flexWrap?: string }>`
     display: flex;
     justify-content: flex-start;
-    gap: 4px ${({ gap: gap }) => gap ?? '10px'};
+    gap: 8px ${({ gap: gap }) => gap ?? '8px'};
     ${({ flexWrap }) => (flexWrap ? 'flex-wrap:' + flexWrap + ';' : '')}
   `,
 
   FlexInput: styled(FormField.Input)`
-    flex: auto;
+    flex: 1 1 auto;
   `,
   FlexLabel: styled(FormField.Label)`
     display: flex;
     justify-content: center;
     align-items: center;
-    flex: 1 0 auto;
+
+    /* flex: 1 1 auto; */
 
     font-weight: ${({ theme }) => theme.text.weight.bold};
     white-space: pre;
@@ -65,4 +71,4 @@ const S = {
     column-gap: 7px;
   `,
 };
-export default S;
+export default FormStyled;

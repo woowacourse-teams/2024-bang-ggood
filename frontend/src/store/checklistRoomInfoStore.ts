@@ -29,7 +29,6 @@ export const initialRoomInfo = {
   station: undefined,
   deposit: undefined,
   rent: undefined,
-  fee: undefined,
   walkingTime: undefined,
   size: undefined,
   floor: undefined,
@@ -42,6 +41,7 @@ export const initialRoomInfo = {
   occupancyPeriod: '초',
   summary: undefined,
   memo: undefined,
+  maintenanceFee: undefined,
 } as const;
 
 const roomInfoType = {
@@ -50,7 +50,6 @@ const roomInfoType = {
   station: 'string',
   deposit: 'number',
   rent: 'number',
-  fee: 'number',
   walkingTime: 'number',
   size: 'number',
   floor: 'number',
@@ -64,6 +63,8 @@ const roomInfoType = {
   summary: 'string',
   memo: 'string',
   createdAt: 'string',
+  maintenanceFee: 'string',
+  includedUtilities: '',
 } as const;
 
 const validatorSet: Record<string, Validator[]> = {
@@ -71,7 +72,8 @@ const validatorSet: Record<string, Validator[]> = {
   address: [],
   deposit: [isNumericValidator, nonNegativeValidator],
   rent: [isNumericValidator, nonNegativeValidator],
-  fee: [isNumericValidator, nonNegativeValidator],
+  maintenanceFee: [isNumericValidator, nonNegativeValidator],
+  includedUtilities: [],
   contractTerm: [isNumericValidator, nonNegativeValidator],
   station: [],
   walkingTime: [isIntegerValidator],

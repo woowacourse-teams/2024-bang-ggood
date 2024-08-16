@@ -5,21 +5,21 @@ import Input from '@/components/_common/Input/Input';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
-const RoomSize = () => {
+const MaintenanceFee = () => {
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const roomSize = useStore(checklistRoomInfoStore, state => state.rawValue.size);
-  const errorMessage = useStore(checklistRoomInfoStore, state => state.errorMessage.size);
+  const maintenanceFee = useStore(checklistRoomInfoStore, state => state.rawValue.maintenanceFee);
+  const errorMessage = useStore(checklistRoomInfoStore, state => state.errorMessage.maintenanceFee);
 
   return (
     <FormField>
-      <FormField.Label label="방 크기" />
+      <FormField.Label label="관리비" />
       <FormStyled.FieldBox>
-        <Input width="medium" placeholder="" onChange={actions.onChange} name="size" value={roomSize} />
-        <FormStyled.FlexLabel label="평"></FormStyled.FlexLabel>
+        <Input width="medium" placeholder="" onChange={actions.onChange} name="size" value={maintenanceFee} />
+        <FormStyled.FlexLabel label="만원"></FormStyled.FlexLabel>
       </FormStyled.FieldBox>
       <FormField.ErrorMessage value={errorMessage ?? ''} />
     </FormField>
   );
 };
 
-export default RoomSize;
+export default MaintenanceFee;

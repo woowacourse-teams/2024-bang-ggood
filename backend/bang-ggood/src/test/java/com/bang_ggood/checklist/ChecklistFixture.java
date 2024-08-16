@@ -188,6 +188,7 @@ public class ChecklistFixture {
             CHECKLIST1_USER1, Question.fromId(2), Answer.BAD
     );
 
-    public static final ChecklistLike CHECKLIST_LIKE_1 = new ChecklistLike(CHECKLIST1_USER1);
-    public static final ChecklistLike CHECKLIST_LIKE_2 = new ChecklistLike(CHECKLIST2_USER1);
+    public static final ChecklistLike CHECKLIST1_LIKE = new ChecklistLike(CHECKLIST1_USER1);
+
+    public static final ChecklistLike CHECKLIST2_LIKE = new ChecklistLike(CHECKLIST2_USER1);
 }

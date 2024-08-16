@@ -389,8 +389,8 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                         ChecklistFixture.CHECKLIST3_USER1)
         );
         checklistLikeRepository.saveAll(
-                List.of(ChecklistFixture.CHECKLIST_LIKE_1,
-                        ChecklistFixture.CHECKLIST_LIKE_2)
+                List.of(ChecklistFixture.CHECKLIST1_LIKE,
+                        ChecklistFixture.CHECKLIST2_LIKE)
         );
 
         //when
@@ -483,7 +483,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     void deleteChecklistLikeByChecklistId() {
         // given
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
-        ChecklistLike checklistLike = checklistLikeRepository.save(ChecklistFixture.CHECKLIST_LIKE_1);
+        ChecklistLike checklistLike = checklistLikeRepository.save(ChecklistFixture.CHECKLIST1_LIKE);
 
         // when
         checklistService.deleteChecklistLikeByChecklistId(USER1, checklist.getId());

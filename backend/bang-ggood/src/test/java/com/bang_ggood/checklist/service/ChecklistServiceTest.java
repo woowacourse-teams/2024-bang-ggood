@@ -505,7 +505,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     void deleteChecklistLikeByChecklistId() {
         // given
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
-        ChecklistLike checklistLike = checklistLikeRepository.save(ChecklistFixture.CHECKLIST1_LIKE);
+        ChecklistLike checklistLike = checklistLikeRepository.save(ChecklistFixture.CHECKLIST_LIKE_1);
 
         // when
         checklistService.deleteChecklistLikeByChecklistId(USER1, checklist.getId());

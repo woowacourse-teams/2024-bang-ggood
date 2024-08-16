@@ -1,14 +1,13 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { LocationLineIcon, SmileMessageIcon } from '@/assets/assets';
-import HeartIcon from '@/components/ChecklistList/HeartIcon';
+import LikeButton from '@/components/_common/Like/LikeButton';
 import { ROUTE_PATH } from '@/constants/routePath';
-import useToggleLikeQuery from '@/hooks/query/useToggleLikeQuery';
 import { boxShadow, flexCenter, flexColumn, flexRow, flexSpaceBetween, title3 } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
 import formattedDate from '@/utils/formattedDate';
+import formattedUndefined from '@/utils/formattedUndefined';
 
 interface Props {
   checklist: ChecklistPreview;
@@ -18,18 +17,8 @@ const ChecklistPreviewCard = ({ checklist }: Props) => {
   const navigate = useNavigate();
   const { checklistId, roomName, address, createdAt, deposit, rent, summary, isLiked } = checklist;
 
-  const { mutate: toggleLike } = useToggleLikeQuery();
-
-  const [isLike, setIsLike] = useState(isLiked);
-
   const handleMoveToDetail = () => {
     navigate(ROUTE_PATH.checklistOne(checklist.checklistId));
-  };
-
-  const handleClickLike = (e: React.MouseEvent<SVGSVGElement>) => {
-    e.stopPropagation();
-    setIsLike(prev => !prev);
-    toggleLike({ checklistId, isLiked });
   };
 
   return (
@@ -39,20 +28,20 @@ const ChecklistPreviewCard = ({ checklist }: Props) => {
           <LocationLineIcon />
           {address}
         </S.LocationWrapper>
-        <HeartIcon isSelected={isLike} onClick={handleClickLike} />
+        <LikeButton isLiked={isLiked} checklistId={checklistId} />
       </S.Row>
       <S.Column>
         <S.Title>{roomName}</S.Title>
         <S.Deposit>
-          {deposit ?? '00'} / {rent ?? '00'}
+          {formattedUndefined(deposit)} / {formattedUndefined(rent)}
         </S.Deposit>
       </S.Column>
       <S.Row>
         <S.SummaryWrapper>
           <SmileMessageIcon />
-          <S.SummaryBox>{summary ?? '한줄평이 없어요'}</S.SummaryBox>
+          <S.SummaryBox>{formattedUndefined(summary)}</S.SummaryBox>
         </S.SummaryWrapper>
-        <S.Date>{formattedDate(createdAt)}</S.Date>
+        <S.Date>{formattedDate(createdAt ?? '')}</S.Date>
       </S.Row>
     </S.Container>
   );

@@ -23,14 +23,18 @@ import LocationLogo from '@/assets/icons/footer-icon/location-logo.svg';
 import MyPageLogoActive from '@/assets/icons/footer-icon/my-page-logo-active.svg';
 import MyPageLogo from '@/assets/icons/footer-icon/my-page-logo.svg';
 
-// heart
-import HeartEmpty from '@/assets/icons/heart/heart-empty.svg';
-import Heart from '@/assets/icons/heart/heart.svg';
-
 // memo
 import MemoEmpty from '@/assets/icons/memo-empty.svg';
 import MemoFilled from '@/assets/icons/memo-filled.svg';
 import Memo from '@/assets/icons/memo.svg';
+
+// room
+import Building from '@/assets/icons/room/building.svg';
+import Calendar from '@/assets/icons/room/calendar.svg';
+import Room from '@/assets/icons/room/house.svg';
+import Stairs from '@/assets/icons/room/stairs.svg';
+import Subway from '@/assets/icons/room/subway.svg';
+
 // etc
 import BangBangCryIcon from '@/assets/icons/bang-bang-cry-icon.svg';
 import BangBangIcon from '@/assets/icons/bang-bang-icon.svg';
@@ -51,12 +55,12 @@ export {
   BangBangCryIcon,
   BangBangIcon,
   BangGgoodTextIcon,
+  Building,
+  Calendar,
   CheckIcon,
   ChecklistLogo,
   ChecklistLogoActive,
   CloseIcon,
-  Heart,
-  HeartEmpty,
   HomeLogo,
   HomeLogoActive,
   InputRequiredDot,
@@ -75,5 +79,8 @@ export {
   PlusSmall,
   PlusWhite,
   QuestionDot,
+  Room,
   SmileMessageIcon,
+  Stairs,
+  Subway,
 };

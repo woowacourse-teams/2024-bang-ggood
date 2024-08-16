@@ -1,7 +1,7 @@
 import { useStore } from 'zustand';
 
 import FormField from '@/components/_common/FormField/FormField';
-import Styled from '@/components/NewChecklist/NewRoomInfoForm/styled';
+import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
 const DepositAndRent = () => {
@@ -14,11 +14,11 @@ const DepositAndRent = () => {
   return (
     <FormField>
       <FormField.Label label="보증금 / 월세 (만원)" />
-      <Styled.FieldBox>
+      <FormStyled.FieldBox>
         <FormField.Input width="medium" onChange={actions.onChange} name="deposit" value={deposit} />
-        <Styled.FlexLabel label=" / " />
+        <FormStyled.FlexLabel label=" / " />
         <FormField.Input width="medium" placeholder="" onChange={actions.onChange} name="rent" value={rent} />
-      </Styled.FieldBox>
+      </FormStyled.FieldBox>
       <FormField.ErrorMessage value={errorMessageDeposit || errorMessageRent || ''} />
     </FormField>
   );

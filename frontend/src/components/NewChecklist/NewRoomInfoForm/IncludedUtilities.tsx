@@ -4,7 +4,7 @@ import { useStore } from 'zustand';
 import Badge from '@/components/_common/Badge/Badge';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
-import Styled from '@/components/NewChecklist/NewRoomInfoForm/styled';
+import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import { roomIncludedUtilites } from '@/constants/roomInfo';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { RoomInfo } from '@/types/room';
@@ -23,7 +23,7 @@ const IncludedUtilities = () => {
   return (
     <FlexBox.Vertical>
       <FormField.Label label="방 구조" />
-      <Styled.OptionButtonContainer flexWrap="wrap">
+      <FormStyled.OptionButtonContainer flexWrap="wrap">
         {roomIncludedUtilites.map(utility => (
           <Badge
             key={utility}
@@ -35,7 +35,7 @@ const IncludedUtilities = () => {
             onClick={() => handleClickTagButton('includedUtilities', utility)}
           />
         ))}
-      </Styled.OptionButtonContainer>
+      </FormStyled.OptionButtonContainer>
     </FlexBox.Vertical>
   );
 };

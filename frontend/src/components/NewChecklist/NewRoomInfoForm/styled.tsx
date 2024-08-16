@@ -6,7 +6,7 @@ import Header from '@/components/_common/Header/Header';
 import RadioGroup from '@/components/_common/RadioGroup/RadioGroup';
 import { flexCenter } from '@/styles/common';
 
-const Styled = {
+const FormStyled = {
   Center: styled.div`
     ${flexCenter}
     font-weight: ${({ theme }) => theme.text.weight.bold};
@@ -71,4 +71,4 @@ const Styled = {
     column-gap: 7px;
   `,
 };
-export default Styled;
+export default FormStyled;

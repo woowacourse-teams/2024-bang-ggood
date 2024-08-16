@@ -3,7 +3,7 @@ import { useStore } from 'zustand';
 
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
-import Styled from '@/components/NewChecklist/NewRoomInfoForm/styled';
+import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { InputChangeEvent } from '@/types/event';
 
@@ -17,9 +17,9 @@ const OccupancyMonth = () => {
   return (
     <FlexBox.Vertical gap="15px">
       <FormField.Label label="입주 가능 기간" />
-      <Styled.FieldBox>
+      <FormStyled.FieldBox>
         <FormField.Input width="medium" onChange={actions.onChange} name="occupancyMonth" value={occupancyMonth} />
-        <Styled.FlexLabel label="월  " />
+        <FormStyled.FlexLabel label="월  " />
         <S.SelectOccupancyPeriod
           name="occupancyPeriod"
           value={occupancyPeriod}
@@ -29,7 +29,7 @@ const OccupancyMonth = () => {
           <option value="중순">중순</option>
           <option value="말">말</option>
         </S.SelectOccupancyPeriod>
-      </Styled.FieldBox>
+      </FormStyled.FieldBox>
       <FormField.ErrorMessage value={errorMessageOccupancyMonth || errorMessageOccupancyPeriod || ''} />
     </FlexBox.Vertical>
   );

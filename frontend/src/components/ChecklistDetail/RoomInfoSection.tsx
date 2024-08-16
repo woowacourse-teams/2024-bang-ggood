@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { Building, Calendar, LocationLineIcon, Stairs, Subway } from '@/assets/assets';
+import { Building, Calendar, LocationLineIcon, Room, Stairs, Subway } from '@/assets/assets';
 import LikeButton from '@/components/_common/Like/LikeButton';
 import { flexColumn, flexRow, flexSpaceBetween, title1 } from '@/styles/common';
 import { RoomInfo } from '@/types/room';
@@ -43,6 +43,10 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
         </S.Row>
       </S.GreenWrapper>
       <S.SpaceBetween>
+        <S.Row>
+          <Room />
+          {room.structure}
+        </S.Row>
         <S.Row>
           <Stairs />
           {floorLevel === '지상' ? `${formattedUndefined(floor)}층` : floorLevel}

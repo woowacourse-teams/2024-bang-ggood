@@ -44,6 +44,10 @@ public enum Option {
         throw new BangggoodException(ExceptionCode.OPTION_INVALID);
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }

@@ -37,15 +37,8 @@ const CompareCard = ({ roomInfo, compareNum }: Props) => {
         <S.Score>({score}점)</S.Score>
       </S.RankWrapper>
       {/* 주소 / 층수 */}
-      <CompareItem
-        label={'주소 / 층수'}
-        isLabeled={isHightestRoom}
-        item={
-          <S.Item>
-            {room.address} / {room.floor}층
-          </S.Item>
-        }
-      />
+      {/*TODO: 나중에 살리면 주소 수정 필요*/}
+      <CompareItem label={'주소 / 층수'} isLabeled={isHightestRoom} item={<S.Item>주소/ {room.floor}층</S.Item>} />
       {/* 보증금 / 월세 */}
       <CompareItem
         label={'보증금 / 월세'}

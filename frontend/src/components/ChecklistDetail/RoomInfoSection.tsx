@@ -20,7 +20,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
     deposit,
     rent,
     fee,
-    address,
+    //address,
     contractTerm,
     floor,
     floorLevel,
@@ -58,7 +58,8 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
       </S.Row>
       <S.Row>
         <LocationLineIcon height={20} width={20} />
-        {address}
+        {/*TODO: 백엔드가 보내주는 주소 형태 확정되면 수정 필요*/}
+        {/* {address} */}
       </S.Row>
       <S.Row>
         <Subway />

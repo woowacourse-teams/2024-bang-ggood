@@ -44,8 +44,14 @@ export interface ChecklistQuestionWithIsSelected extends ChecklistQuestion {
 }
 
 // 체크리스트 카드
-export interface ChecklistPreview extends RoomInfo {
+export interface ChecklistPreview {
   checklistId: number;
+  roomName: string;
+  address: string;
+  deposit: number;
+  rent: number;
+  createdAt: string;
+  summary: string;
   isLiked: boolean;
 }
 

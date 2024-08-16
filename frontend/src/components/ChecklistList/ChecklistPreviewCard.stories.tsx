@@ -23,14 +23,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    checklist: checklistList.checklists[0],
+    checklist: { ...checklistList.checklists[0], isLiked: true },
   },
   decorators: [mobileDecorator],
 };
 
 export const HadMoreThan4Badge: Story = {
   args: {
-    checklist: checklistList.checklists[2],
+    checklist: { ...checklistList.checklists[2], isLiked: false },
   },
   decorators: [mobileDecorator],
 };

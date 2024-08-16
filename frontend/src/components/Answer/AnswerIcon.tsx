@@ -29,13 +29,12 @@ const AnswerColor: Record<AnswerType, { selected?: string; notSelected: string }
 const AnswerIcon = ({ answer, isSelected = false, ...rest }: Props) => {
   const color = isSelected ? AnswerColor[answer].selected : AnswerColor[answer].notSelected;
 
-  if (answer === 'GOOD') {
-    return <Good color={color} {...rest} />;
-  }
-
-  if (answer === 'BAD') {
-    return <Bad color={color} {...rest} />;
-  }
-  return <None color={color} {...rest} />;
+  return (
+    <>
+      {answer === 'GOOD' && <Good color={color} {...rest} />}
+      {answer === 'BAD' && <Bad color={color} {...rest} />}
+      {answer === 'NONE' && <None color={color} {...rest} />}
+    </>
+  );
 };
 export default AnswerIcon;

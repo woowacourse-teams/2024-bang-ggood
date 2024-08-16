@@ -10,9 +10,10 @@ interface AddressState {
   setAddress: (add: string) => void;
   setJibunAddress: (add: string) => void;
   setBuildingName: (add: string) => void;
+  setPosition: (newPosition: Position) => void;
 }
 
-const useOptionStore = createStore<AddressState>(set => ({
+const checklistAddressStore = createStore<AddressState>(set => ({
   address: '',
   buildingName: '',
   jibunAddress: '',
@@ -26,6 +27,9 @@ const useOptionStore = createStore<AddressState>(set => ({
   setBuildingName: (newAddress: string) => {
     set({ buildingName: newAddress });
   },
+  setPosition: (newPosition: Position) => {
+    set({ position: newPosition });
+  },
 }));
 
-export default useOptionStore;
+export default checklistAddressStore;

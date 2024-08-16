@@ -6,7 +6,13 @@ export const checklistDetail: ChecklistInfo = {
   isLiked: true,
   room: {
     roomName: '아름다운 방',
-    address: '서울시 강남구 테헤란로 123',
+    address: {
+      address: '서울시 강남구 테헤란로 123',
+      jibunAddress: '',
+      lat: 1,
+      lon: 1,
+      buildingName: '',
+    },
     deposit: undefined,
     rent: 50,
     fee: 5,

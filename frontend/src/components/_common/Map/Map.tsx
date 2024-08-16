@@ -1,22 +1,19 @@
 import styled from '@emotion/styled';
 import { useEffect, useRef } from 'react';
+import { useStore } from 'zustand';
 
-import { Address, Position } from '@/types/address';
+import checklistAddressStore from '@/store/checklistAddressStore';
+import { flexCenter } from '@/styles/common';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const { kakao } = window as any;
 
-interface Props {
-  currentAddress: Address;
-  setCurrentAddress: React.Dispatch<React.SetStateAction<Address>>;
-  position: Position;
-  setPosition: React.Dispatch<React.SetStateAction<Position>>;
-}
-
-const Map = ({ position, setPosition, currentAddress, setCurrentAddress }: Props) => {
+const RealTimeMap = () => {
   const mapRef = useRef<any | null>(null);
   const markerRef = useRef<any | null>(null);
   const infoWindowRef = useRef<any | null>(null);
+
+  const { setAddress, setJibunAddress, setBuildingName, setPosition, position } = useStore(checklistAddressStore);
 
   const geocoder = new kakao.maps.services.Geocoder();
 
@@ -69,11 +66,11 @@ const Map = ({ position, setPosition, currentAddress, setCurrentAddress }: Props
   const getDetailAddress = (result: any, status: any) => {
     if (status === kakao.maps.services.Status.OK) {
       if (result[0].address) {
-        setCurrentAddress(prev => ({ ...prev, jibunAddress: result[0].address.address_name }));
+        setJibunAddress(result[0].address.address_name);
       }
       if (result[0].road_address) {
-        setCurrentAddress(prev => ({ ...prev, address: result[0].road_address.address_name }));
-        setCurrentAddress(prev => ({ ...prev, buildingName: result[0].road_address.building_name }));
+        setAddress(result[0].road_address.address_name);
+        setBuildingName(result[0].road_address.building_name);
         //TODO: 빌딩 주소가 없을 때도 있음.
       }
     }
@@ -126,14 +123,6 @@ const Map = ({ position, setPosition, currentAddress, setCurrentAddress }: Props
         lat: latlng.getLat(),
         lon: latlng.getLng(),
       });
-
-      let message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-      message += '경도는 ' + latlng.getLng() + ' 입니다';
-
-      const resultDiv = document.getElementById('message');
-      if (resultDiv) {
-        resultDiv.innerHTML = message;
-      }
     });
   }, []);
 
@@ -150,7 +139,9 @@ const Map = ({ position, setPosition, currentAddress, setCurrentAddress }: Props
 
   return (
     <S.Container>
-      <S.MapBox id="map"></S.MapBox>
+      <S.MapBox id="map">
+        <S.MapEmptyBox>지도 준비 중</S.MapEmptyBox>
+      </S.MapBox>
       <div id="message"></div>
     </S.Container>
   );
@@ -169,6 +160,13 @@ const S = {
     width: 100px;
     height: 50px;
   `,
+  MapEmptyBox: styled.div`
+    width: 100%;
+    min-height: 400px;
+
+    background-color: ${({ theme }) => theme.palette.background};
+    ${flexCenter}
+  `,
 };
 
-export default Map;
+export default RealTimeMap;

@@ -1,21 +1,16 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
 import Input from '@/components/_common/Input/Input';
 import Map from '@/components/_common/Map/Map';
 import Modal from '@/components/_common/Modal/Modal';
 import useModalOpen from '@/hooks/useModalOpen';
-import { Address, Position } from '@/types/address';
+import checklistAddressStore from '@/store/checklistAddressStore';
 
 const RealTimeAddressModal = () => {
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
-  const [position, setPosition] = useState<Position>({ lat: 30.5151763, lon: 127.1031642 });
-  const [currentAddress, setCurrentAddress] = useState<Address>({
-    address: '',
-    buildingName: '',
-    jibunAddress: '',
-  });
+  const { address, buildingName } = useStore(checklistAddressStore);
 
   return (
     <>
@@ -30,16 +25,12 @@ const RealTimeAddressModal = () => {
                 width={'full'}
                 style={{ width: '100%' }}
                 placeholder={'지도를 클릭하면 현재 위치를 움직일 수 있어요.'}
-                value={`${currentAddress.address} ${currentAddress.buildingName}`}
+                value={`${address} ${buildingName}`}
               />
-              <Button label="확인" size="xSmall" isSquare={true} />
+              <Button label="확인" size="xSmall" isSquare={true} onClick={modalClose} />
             </S.InputBox>
-            <Map
-              position={position}
-              setPosition={setPosition}
-              currentAddress={currentAddress}
-              setCurrentAddress={setCurrentAddress}
-            />
+            {/* 지도 */}
+            <Map />
           </Modal.body>
         </Modal>
       )}

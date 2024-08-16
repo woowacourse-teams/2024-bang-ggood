@@ -104,6 +104,7 @@ const checklistRoomInfoStore = createStore<RoomInfoStore>((set, get) => ({
   actions: {
     set: (name, value) => {
       // 다 지우기할 시 다 지워주고, 에러메시지도 지우기
+      console.log(name, value);
       if (value === '') {
         get().actions._updateErrorMsg(name as keyof RoomInfo, '');
         get().actions._update(name as keyof RoomInfo, '');

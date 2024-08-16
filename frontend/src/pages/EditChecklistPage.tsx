@@ -16,31 +16,38 @@ import useModalOpen from '@/hooks/useModalOpen';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import useToast from '@/hooks/useToast';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import useChecklistStore from '@/store/useChecklistStore';
+import useOptionStore from '@/store/useOptionStore';
 import { ChecklistCategoryQnA } from '@/types/checklist';
 
 type RouteParams = {
   checklistId: string;
 };
 const EditChecklistPage = () => {
+  const { checklistId } = useParams() as RouteParams;
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
 
   const { mutate: addChecklist } = useAddChecklistQuery();
   const { showToast } = useToast(DEFAULT_TOAST_DURATION);
-  const { checklistId } = useParams() as RouteParams;
+
+  const roomInfoAnswer = useStore(checklistRoomInfoStore, state => state.value);
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
   const roomName = useStore(checklistRoomInfoStore, state => state.value.roomName);
-
+  const { selectedOptions, setSelectedOptions } = useOptionStore();
+  const { checklistCategoryQnA, setAnswers } = useChecklistStore();
   const navigate = useNavigate();
 
   const { tabs } = useNewChecklistTabs();
 
   useEffect(() => {
-    const fetchChecklist = async () => {
+    const fetchChecklistAndSetToStore = async () => {
       const checklist = await getChecklistDetail(Number(checklistId));
       actions.setAll({ value: checklist.room });
+      setSelectedOptions(checklist.options.flatMap(option => option.optionId));
+      setAnswers(checklist.categories);
     };
-    fetchChecklist();
-  }, [checklistId, actions]);
+    fetchChecklistAndSetToStore();
+  }, [checklistId, actions, setAnswers, setSelectedOptions]);
 
   // TODO: fetch 시 로딩 상태일 때 스켈레톤처리. 성공할 떄만 return 문 보여주는 로직이 필요
   if (!roomName) {
@@ -50,13 +57,10 @@ const EditChecklistPage = () => {
   /* 현재 상태를 백엔드에 보내는 답안 포맷으로 바꾸는 함수 */
   const transformQuestions = (checklist: ChecklistCategoryQnA[]) => {
     return checklist.flatMap(category =>
-      category.questions.map(question => {
-        const { questionId, answer } = question;
-        return {
-          questionId,
-          answer,
-        };
-      }),
+      category.questions.map(question => ({
+        questionId: question.questionId,
+        answer: question.answer,
+      })),
     );
   };
 

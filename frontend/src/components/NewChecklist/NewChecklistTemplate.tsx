@@ -14,7 +14,7 @@ const NewChecklistTemplate = () => {
   return (
     <Layout bgColor={theme.palette.background} style={{ minHeight: `calc(100vh - 64px)` }}>
       <S.ContentBox>
-        {questions.questions.map((question: ChecklistQuestion) => (
+        {questions!.questions.map((question: ChecklistQuestion) => (
           <ChecklistQuestion key={`${currentTabId}-${question.questionId}`} question={question} />
         ))}
       </S.ContentBox>

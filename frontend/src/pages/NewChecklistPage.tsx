@@ -38,7 +38,7 @@ const NewChecklistPage = () => {
   const { selectedOptions, resetToDefaultOptions } = useOptionStore();
 
   /*체크리스트 답변*/
-  const { checklistCategoryQnA, setAnswerInQuestion, setValidCategory } = useChecklistStore();
+  const { checklistCategoryQnA, setAnswerInQuestion } = useChecklistStore();
 
   /*한줄평 모달*/
   const {
@@ -58,13 +58,8 @@ const NewChecklistPage = () => {
 
       // 체크리스트 질문에 대한 답안지 객체 생성
       setAnswerInQuestion(checklist);
-
-      // 현재 질문이 있는 유효한 카테고리 생성
-      setValidCategory();
-
       // 옵션 선택지 리셋
       resetToDefaultOptions();
-
       //로컬 스토리지 팁 보이는 여부 리셋
       resetShowTipBox();
     };
@@ -75,13 +70,10 @@ const NewChecklistPage = () => {
   /* 현재 상태를 백엔드에 보내는 답안 포맷으로 바꾸는 함수 */
   const transformQuestions = (checklist: ChecklistCategoryQnA[]) => {
     return checklist.flatMap(category =>
-      category.questions.map(question => {
-        const { questionId, answer } = question;
-        return {
-          questionId,
-          answer,
-        };
-      }),
+      category.questions.map(question => ({
+        questionId: question.questionId,
+        answer: question.answer,
+      })),
     );
   };
 

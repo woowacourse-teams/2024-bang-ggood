@@ -7,6 +7,7 @@ import { ROUTE_PATH } from '@/constants/routePath';
 import { boxShadow, flexCenter, flexColumn, flexRow, flexSpaceBetween, title3 } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
 import formattedDate from '@/utils/formattedDate';
+import formattedUndefined from '@/utils/formattedUndefined';
 
 interface Props {
   checklist: ChecklistPreview;
@@ -32,13 +33,13 @@ const ChecklistPreviewCard = ({ checklist }: Props) => {
       <S.Column>
         <S.Title>{roomName}</S.Title>
         <S.Deposit>
-          {deposit ?? '00'} / {rent ?? '00'}
+          {formattedUndefined(deposit)} / {formattedUndefined(rent)}
         </S.Deposit>
       </S.Column>
       <S.Row>
         <S.SummaryWrapper>
           <SmileMessageIcon />
-          <S.SummaryBox>{summary ?? '한줄평이 없어요'}</S.SummaryBox>
+          <S.SummaryBox>{formattedUndefined(summary)}</S.SummaryBox>
         </S.SummaryWrapper>
         <S.Date>{formattedDate(createdAt ?? '')}</S.Date>
       </S.Row>

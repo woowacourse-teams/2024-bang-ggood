@@ -4,6 +4,7 @@ import { Building, Calendar, LocationLineIcon, Room, Stairs, Subway } from '@/as
 import LikeButton from '@/components/_common/Like/LikeButton';
 import { flexColumn, flexRow, flexSpaceBetween, title1 } from '@/styles/common';
 import { RoomInfo } from '@/types/room';
+import formattedUndefined from '@/utils/formattedUndefined';
 
 interface Props {
   room: RoomInfo;
@@ -38,7 +39,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
           <LikeButton isLiked={isLiked} checklistId={checklistId} />
         </S.Row>
         <S.Row>
-          {deposit ?? '00'} / {rent ?? '00'} + {fee ?? '00'}
+          {formattedUndefined(deposit)} / {formattedUndefined(rent)} + {formattedUndefined(fee)}
         </S.Row>
       </S.GreenWrapper>
       <S.SpaceBetween>
@@ -48,12 +49,12 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
         </S.Row>
         <S.Row>
           <Stairs />
-          {floorLevel === '지상' ? `${floor ?? '00'}층` : floorLevel}
+          {floorLevel === '지상' ? `${formattedUndefined(floor)}층` : floorLevel}
         </S.Row>
       </S.SpaceBetween>
       <S.Row>
         <Calendar />
-        {contractTerm ?? '00'}개월 계약 / 입주 가능일 : {occupancyMonth}월 {occupancyPeriod}
+        {formattedUndefined(contractTerm)}개월 계약 / 입주 가능일 : {occupancyMonth}월 {occupancyPeriod}
       </S.Row>
       <S.Row>
         <LocationLineIcon height={20} width={20} />
@@ -61,11 +62,11 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
       </S.Row>
       <S.Row>
         <Subway />
-        {station ?? '역'}까지 도보 {walkingTime ?? '00'}분
+        {formattedUndefined(station)}까지 도보 {formattedUndefined(walkingTime)}분
       </S.Row>
       <S.Row>
         <Building />
-        {realEstate ?? '00부동산'}
+        {formattedUndefined(realEstate, 'string', '부동산')}
       </S.Row>
     </S.Container>
   );

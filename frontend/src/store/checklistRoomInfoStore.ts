@@ -38,6 +38,8 @@ export const initialRoomInfo = {
   structure: undefined,
   contractTerm: undefined,
   realEstate: undefined,
+  occupancyMonth: undefined,
+  occupancyPeriod: '초',
   summary: undefined,
   memo: undefined,
 } as const;

@@ -13,8 +13,8 @@ const widthSize: Record<string, string> = {
 };
 
 const heightSize: Record<string, string> = {
-  small: '32px',
-  medium: '64px',
+  small: '64px',
+  medium: '120px',
   large: '300px',
   full: '100%',
 };

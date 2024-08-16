@@ -19,7 +19,7 @@ const OptionButton = ({ option }: { option: OptionWithIcon }) => {
       text: theme.palette.grey500,
       fill: theme.palette.white,
     },
-    selected: { border: '#EFBA1A', fill: '#FEF7D4', text: '#D09808' },
+    selected: { border: theme.palette.yellow600, fill: theme.palette.yellow100, text: theme.palette.yellow700 },
   };
 
   const currentColor = isSelectedOption(id) ? BUTTON_COLOR.selected : BUTTON_COLOR.unSelected;

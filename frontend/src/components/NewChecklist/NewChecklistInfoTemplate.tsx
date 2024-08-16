@@ -16,28 +16,34 @@ import { flexColumn } from '@/styles/common';
 
 const NewChecklistInfoTemplate = () => {
   return (
-    <S.ContentWrapper>
-      <S.Container>
-        <RoomName />
-        <Address />
-        <NearTransportation />
-        <DepositAndRent />
-        <MaintenanceFee />
-        <IncludedUtilities />
-        <RoomFloor />
-        <RoomStructure />
-        <RoomSize />
-        <RoomContractTerm />
-        <OccupancyMonth />
-        <RealEstate />
-      </S.Container>
-    </S.ContentWrapper>
+    <>
+      <S.EmptyBox />
+      <S.ContentWrapper>
+        <S.Container>
+          <RoomName />
+          <Address />
+          <NearTransportation />
+          <DepositAndRent />
+          <MaintenanceFee />
+          <IncludedUtilities />
+          <RoomFloor />
+          <RoomStructure />
+          <RoomSize />
+          <RoomContractTerm />
+          <OccupancyMonth />
+          <RealEstate />
+        </S.Container>
+      </S.ContentWrapper>
+    </>
   );
 };
 
 const S = {
+  EmptyBox: styled.div`
+    height: 64px;
+  `,
   ContentWrapper: styled.div`
-    padding: 60px 10px 30px;
+    padding: 0 10px 30px;
 
     background-color: white;
   `,

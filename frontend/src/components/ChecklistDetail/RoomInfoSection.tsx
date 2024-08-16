@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 import { Building, Calendar, LocationLineIcon, Room, Stairs, Subway } from '@/assets/assets';
 import LikeButton from '@/components/_common/Like/LikeButton';
+import AddressMap from '@/components/_common/Map/AddressMap';
 import { flexColumn, flexRow, flexSpaceBetween, title1 } from '@/styles/common';
 import { RoomInfo } from '@/types/room';
 import formattedUndefined from '@/utils/formattedUndefined';
@@ -20,7 +21,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
     deposit,
     rent,
     maintenanceFee,
-    //address,
+    address,
     contractTerm,
     floor,
     floorLevel,
@@ -39,7 +40,8 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
           <LikeButton isLiked={isLiked} checklistId={checklistId} />
         </S.Row>
         <S.Row>
-          {formattedUndefined(deposit)} / {formattedUndefined(rent)} + {formattedUndefined(maintenanceFee)}
+          보증금 {formattedUndefined(deposit)} / 월세 {formattedUndefined(rent)} + 관리비{' '}
+          {formattedUndefined(maintenanceFee)}
         </S.Row>
       </S.GreenWrapper>
       <S.SpaceBetween>
@@ -58,8 +60,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
       </S.Row>
       <S.Row>
         <LocationLineIcon height={20} width={20} />
-        {/*TODO: 백엔드가 보내주는 주소 형태 확정되면 수정 필요*/}
-        {/* {address} */}
+        {`${address?.address} ${address?.buildingName}`}
       </S.Row>
       <S.Row>
         <Subway />
@@ -69,6 +70,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
         <Building />
         {formattedUndefined(realEstate, 'string', '부동산')}
       </S.Row>
+      <AddressMap location={address?.address || ''} />
     </S.Container>
   );
 };

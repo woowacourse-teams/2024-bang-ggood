@@ -7,11 +7,9 @@ export const checklistDetail: ChecklistInfo = {
   room: {
     roomName: '아름다운 방',
     address: {
-      address: '서울시 강남구 테헤란로 123',
-      jibunAddress: '',
-      lat: 1,
-      lon: 1,
-      buildingName: '',
+      address: '서울 송파구 올림픽로35다길 42',
+      jibunAddress: '서울 송파구 신천동 7-20',
+      buildingName: '한국루터회관',
     },
     deposit: undefined,
     rent: 50,

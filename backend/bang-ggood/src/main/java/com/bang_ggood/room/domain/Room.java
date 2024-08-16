@@ -66,6 +66,7 @@ public class Room extends BaseEntity {
         this.floor = room.floor;
         this.floorLevel = room.floorLevel;
         this.structure = room.structure;
+        validateFloorAndLevel();
     }
 
     public Long getId() {

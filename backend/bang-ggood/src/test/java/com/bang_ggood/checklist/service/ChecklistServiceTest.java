@@ -15,6 +15,7 @@ import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.CustomChecklistQuestionResponse;
 import com.bang_ggood.checklist.dto.response.QuestionResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.dto.response.UserChecklistPreviewResponse;
 import com.bang_ggood.checklist.repository.ChecklistLikeRepository;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
@@ -23,6 +24,7 @@ import com.bang_ggood.checklist.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.RoomFixture;
+import com.bang_ggood.room.domain.Structure;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.repository.UserRepository;
@@ -152,7 +154,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 
         //then
         assertThat(checklistLikeRepository.existsByChecklist(checklist)).isTrue();
-   }
+    }
 
     @DisplayName("체크리스트 좋아요 추가 실패 : 이미 좋아요가 추가가 된 체크리스트인 경우")
     @Test
@@ -164,9 +166,9 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         checklistService.createChecklistLike(USER1, checklist.getId());
 
         //then
-       assertThatThrownBy(() -> checklistService.createChecklistLike(USER1, checklist.getId()))
-               .isInstanceOf(BangggoodException.class)
-               .hasMessage(ExceptionCode.LIKE_ALREADY_EXISTS.getMessage());
+        assertThatThrownBy(() -> checklistService.createChecklistLike(USER1, checklist.getId()))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.LIKE_ALREADY_EXISTS.getMessage());
     }
 
     @DisplayName("체크리스트 질문 조회 성공")
@@ -248,7 +250,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 //                        Badge.CLEAN.getLongNameWithEmoji()));
 //    }
 
-    /*@DisplayName("체크리스트 수정 성공")
+    @DisplayName("체크리스트 수정 성공")
     @Test
     void updateChecklistById() {
         //given
@@ -355,7 +357,22 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                         ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_DIFFERENT.getMessage());
-    }*/
+    }
+
+    @DisplayName("체크리스트 수정 실패 : 해당 유저의 체크리스트가 아닐 경우")
+    @Test
+    void createChecklist_notOwnedBy_exception() {
+        //given
+        long checklistId = checklistService.createChecklist(UserFixture.USER1,
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+
+        //when & then
+        assertThatThrownBy(
+                () -> checklistService.updateChecklistById(UserFixture.USER2, checklistId,
+                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER.getMessage());
+    }
 
     @DisplayName("커스텀 체크리스트 조회 성공")
     @Test
@@ -376,6 +393,32 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 .count();
 
         Assertions.assertThat(selectedCount).isEqualTo(questions.size());
+    }
+
+    @DisplayName("좋아요된 체크리스트 리스트 조회 성공")
+    @Test
+    void readLikedChecklistsPreview() {
+        //given
+        checklistRepository.saveAll(
+                List.of(ChecklistFixture.CHECKLIST1_USER1,
+                        ChecklistFixture.CHECKLIST2_USER1,
+                        ChecklistFixture.CHECKLIST3_USER1)
+        );
+        checklistLikeRepository.saveAll(
+                List.of(ChecklistFixture.CHECKLIST1_LIKE,
+                        ChecklistFixture.CHECKLIST2_LIKE)
+        );
+
+        //when
+        List<UserChecklistPreviewResponse> checklists =
+                checklistService.readLikedChecklistsPreview(USER1).checklists();
+
+        //then
+        assertAll(
+                () -> assertThat(checklists.size()).isEqualTo(2),
+                () -> assertThat(checklists.get(0).checklistId()).isEqualTo(ChecklistFixture.CHECKLIST1_USER1.getId()),
+                () -> assertThat(checklists.get(1).checklistId()).isEqualTo(ChecklistFixture.CHECKLIST2_USER1.getId())
+        );
     }
 
     @DisplayName("커스텀 체크리스트 업데이트 성공")
@@ -436,19 +479,25 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
 
         // when
-        checklistService.deleteChecklistById(checklist.getId());
+        checklistService.deleteChecklistById(UserFixture.USER1, checklist.getId());
 
         // then
         assertThat(checklistRepository.existsById(checklist.getId().longValue())).isFalse();
     }
 
-    @DisplayName("체크리스트 삭제 실패")
+    @DisplayName("체크리스트 삭제 실패 : 체크리스트 작성 유저와 삭제하려는 유저가 다른 경우")
     @Test
-    void deleteChecklistById_notFound_exception() {
-        // given & when & then
-        assertThatThrownBy(() -> checklistService.deleteChecklistById(-1))
+    void deleteChecklistById_notOwnedByUser_exception() {
+        // given
+        roomRepository.save(RoomFixture.ROOM_1);
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
+
+        // when & then
+        assertThatThrownBy(
+                () -> checklistService.deleteChecklistById(UserFixture.USER2, checklist.getId())
+        )
                 .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
+                .hasMessage(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER.getMessage());
     }
 
     @DisplayName("체크리스트 좋아요 삭제 성공")
@@ -456,7 +505,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     void deleteChecklistLikeByChecklistId() {
         // given
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
-        ChecklistLike checklistLike = checklistLikeRepository.save(ChecklistFixture.CHECKLIST_LIKE_1);
+        ChecklistLike checklistLike = checklistLikeRepository.save(ChecklistFixture.CHECKLIST1_LIKE);
 
         // when
         checklistService.deleteChecklistLikeByChecklistId(USER1, checklist.getId());

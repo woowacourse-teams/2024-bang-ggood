@@ -86,12 +86,16 @@ public class Checklist extends BaseEntity {
     }
 
     public void change(Checklist updateChecklist) {
-        this.user = updateChecklist.user;
         this.room = updateChecklist.room;
         this.deposit = updateChecklist.deposit;
         this.rent = updateChecklist.rent;
         this.contractTerm = updateChecklist.contractTerm;
         this.realEstate = updateChecklist.realEstate;
+        this.memo = updateChecklist.memo;
+        this.summary = updateChecklist.summary;
+        this.occupancyMonth = updateChecklist.occupancyMonth;
+        this.occupancyPeriod = updateChecklist.occupancyPeriod;
+        validateMemoLength();
     }
 
     private void validateMemoLength() {
@@ -172,12 +176,12 @@ public class Checklist extends BaseEntity {
         return summary;
     }
 
-    public OccupancyMonth getOccupancyMonth() {
-        return occupancyMonth;
+    public Integer getOccupancyMonth() {
+        return occupancyMonth.getMonth();
     }
 
-    public OccupancyPeriod getOccupancyPeriod() {
-        return occupancyPeriod;
+    public String getOccupancyPeriod() {
+        return occupancyPeriod.getPeriod();
     }
 
     public List<ChecklistQuestion> getQuestions() {

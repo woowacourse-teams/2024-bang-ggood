@@ -6,20 +6,21 @@ import java.util.Arrays;
 
 public enum Option {
 
-    AIR_CONDITIONER(1, "에어컨"),
-    REFRIGERATOR(2, "냉장고"),
-    MICROWAVE_OVEN(3, "전자레인지"),
-    WASHING_MACHINE(4, "세탁기"),
-    SINK(5, "싱크대"),
-    GAS_STOVE(6, "가스레인지/인덕션"),
-    INTERNET(7, "인터넷"),
-    BED(8, "침대"),
-    DESK(9, "책상"),
-    CLOSET(10, "옷장"),
-    SHOE_RACK(11, "신발장"),
-    ELEVATOR(12, "엘리베이터"),
-    DRYER(13, "건조기"),
-    TV(14, "TV");
+    DOOR_LOCK(1, "도어락"),
+    AIR_CONDITIONER(2, "에어컨"),
+    REFRIGERATOR(3, "냉장고"),
+    SINK(4, "싱크대"),
+    GAS_STOVE(5, "가스레인지"),
+    MICROWAVE_OVEN(6, "전자레인지"),
+    CLOSET(7, "옷장"),
+    SHOE_RACK(8, "신발장"),
+    WASHING_MACHINE(9, "세탁기"),
+    DRYER(10, "건조기"),
+    INTERNET(11, "인터넷"),
+    BED(12, "침대"),
+    DESK(13, "책상"),
+    TV(14, "TV"),
+    ELEVATOR(15, "엘리베이터");
 
     private final int id;
     private final String name;
@@ -41,6 +42,10 @@ public enum Option {
             }
         }
         throw new BangggoodException(ExceptionCode.OPTION_INVALID);
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {

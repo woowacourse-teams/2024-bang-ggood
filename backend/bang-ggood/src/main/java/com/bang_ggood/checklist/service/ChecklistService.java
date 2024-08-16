@@ -219,16 +219,14 @@ public class ChecklistService {
 
     @Transactional
     public SelectedChecklistResponse readChecklistById(User user, long id) {
-        Checklist checklist = checklistRepository.getById(id); // TODO : 해당 유저의 체크리스트인지 확인 필요
+        Checklist checklist = checklistRepository.getById(id);
+        validateChecklistOwnership(user, checklist);
+
         SelectedRoomResponse selectedRoomResponse = SelectedRoomResponse.of(checklist);
-
         List<SelectedOptionResponse> options = readOptionsByChecklistId(id);
+        List<SelectedCategoryQuestionsResponse> selectedCategoryQuestionsResponse = readCategoryQuestionsByChecklistId(id);
 
-        List<SelectedCategoryQuestionsResponse> selectedCategoryQuestionsResponse =
-                readCategoryQuestionsByChecklistId(id);
-
-        return new SelectedChecklistResponse(checklist.getCreatedAt(), selectedRoomResponse,
-                options, selectedCategoryQuestionsResponse);
+        return new SelectedChecklistResponse(selectedRoomResponse, options, selectedCategoryQuestionsResponse);
     }
 
     private List<SelectedOptionResponse> readOptionsByChecklistId(long checklistId) {
@@ -257,7 +255,7 @@ public class ChecklistService {
     }
 
     @Transactional
-    public UserChecklistsPreviewResponse readUserChecklistsPreview(User user) {
+    public UserChecklistsPreviewResponse readChecklistsPreview(User user) {
         List<Checklist> checklists = checklistRepository.findAllByUser(user);
         List<UserChecklistPreviewResponse> responses = checklists.stream()
                 .map(this::getChecklistPreview)
@@ -272,8 +270,18 @@ public class ChecklistService {
     }
 
     @Transactional
+    public UserChecklistsPreviewResponse readLikedChecklistsPreview(User user) {
+        List<Checklist> likedChecklists = checklistRepository.findAllByUserAndIsLiked(user);
+        List<UserChecklistPreviewResponse> responses = likedChecklists.stream()
+                .map(checklist -> UserChecklistPreviewResponse.of(checklist, true))
+                .toList();
+        return new UserChecklistsPreviewResponse(responses);
+    }
+
+    @Transactional
     public void updateChecklistById(User user, long id, ChecklistRequest checklistRequest) {
         Checklist checklist = checklistRepository.getById(id);
+        validateChecklistOwnership(user, checklist);
 
         Room room = checklist.getRoom();
         room.change(checklistRequest.toRoomEntity());
@@ -296,19 +304,19 @@ public class ChecklistService {
     }
 
     private void updateChecklistQuestions(ChecklistRequest checklistRequest, Checklist checklist) {
-        /*validateQuestion(checklistRequest.questions());
+        validateQuestion(checklistRequest.questions());
 
         List<ChecklistQuestion> questions = checklist.getQuestions();
         List<ChecklistQuestion> updateQuestions = checklistRequest.questions().stream()
                 .map(question -> new ChecklistQuestion(
                         checklist,
                         Question.fromId(question.questionId()),
-                        Answer.from(question.grade())))
+                        Answer.from(question.answer())))
                 .toList();
 
         validateSameQuestions(questions, updateQuestions);
         IntStream.range(0, questions.size())
-                .forEach(i -> questions.get(i).change(updateQuestions.get(i)));*/
+                .forEach(i -> questions.get(i).change(updateQuestions.get(i)));
     }
 
     private void validateSameQuestions(List<ChecklistQuestion> questions, List<ChecklistQuestion> updateQuestions) {
@@ -351,11 +359,8 @@ public class ChecklistService {
     }
 
     @Transactional
-    public void deleteChecklistById(long id) {
-        // TODO: 사용자 검증 필요
-        if (!checklistRepository.existsById(id)) {
-            throw new BangggoodException(ExceptionCode.CHECKLIST_NOT_FOUND);
-        }
+    public void deleteChecklistById(User user, long id) {
+        validateChecklistOwnership(user, checklistRepository.getById(id));
         checklistRepository.deleteById(id);
     }
 

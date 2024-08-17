@@ -7,6 +7,7 @@ import com.bang_ggood.exception.dto.ExceptionResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Header;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,11 @@ public class ArticleE2ETest extends AcceptanceTest {
 
     @Autowired
     ArticleRepository articleRepository;
+
+    @BeforeEach
+    void saveArticle() {
+        articleRepository.save(ARTICLE);
+    }
 
     @DisplayName("아티클 생성 성공")
     @Test
@@ -47,8 +53,6 @@ public class ArticleE2ETest extends AcceptanceTest {
     @DisplayName("아티클 조회 성공")
     @Test
     void readArticle() {
-        articleRepository.save(ARTICLE);
-
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .when().get("/articles/" + ARTICLE.getId())
@@ -59,8 +63,6 @@ public class ArticleE2ETest extends AcceptanceTest {
     @DisplayName("아티클 조회 실패 : 유효하지 않은 아이디인 경우")
     @Test
     void readArticle_invalidId_exception() {
-        articleRepository.save(ARTICLE);
-
         long articleId = Long.MAX_VALUE;
 
         ExceptionResponse response = RestAssured.given().log().all()
@@ -77,8 +79,6 @@ public class ArticleE2ETest extends AcceptanceTest {
     @DisplayName("아티클 목록 조회 성공")
     @Test
     void readArticles() {
-        articleRepository.save(ARTICLE);
-
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .when().get("/articles")
@@ -89,8 +89,6 @@ public class ArticleE2ETest extends AcceptanceTest {
     @DisplayName("최신 아티클 조회 성공")
     @Test
     void readLatestArticles() {
-        articleRepository.save(ARTICLE);
-
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .when().get("/articles/latest")
@@ -101,8 +99,6 @@ public class ArticleE2ETest extends AcceptanceTest {
     @DisplayName("아티클 삭제 성공")
     @Test
     void deleteArticle() {
-        articleRepository.save(ARTICLE);
-
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
@@ -114,8 +110,6 @@ public class ArticleE2ETest extends AcceptanceTest {
     @DisplayName("아티클 삭제 실패: 유저가 아닌 경우")
     @Test
     void deleteArticle_notUser_exception() {
-        articleRepository.save(ARTICLE);
-
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .when().delete("/articles/" + ARTICLE.getId())

@@ -28,11 +28,13 @@ public class ArticleService {
         return article.getId();
     }
 
+    @Transactional(readOnly = true)
     public ArticleResponse readArticle(Long id) {
         Article article = articleRepository.getById(id);
         return ArticleResponse.from(article);
     }
 
+    @Transactional(readOnly = true)
     public ArticlesDetailPreviewResponse readArticles() {
         List<ArticleDetailPreviewResponse> articles = articleRepository.findAll().stream()
                 .map(ArticleDetailPreviewResponse::from)
@@ -40,6 +42,7 @@ public class ArticleService {
         return new ArticlesDetailPreviewResponse(articles);
     }
 
+    @Transactional(readOnly = true)
     public ArticlesPreviewResponse readLatestArticles() {
         List<ArticlePreviewResponse> articles = articleRepository.findLatestTop3().stream()
                 .map(ArticlePreviewResponse::from)
@@ -47,6 +50,7 @@ public class ArticleService {
         return new ArticlesPreviewResponse(articles);
     }
 
+    @Transactional
     public void deleteArticle(Long id) {
         articleRepository.deleteById(id);
     }

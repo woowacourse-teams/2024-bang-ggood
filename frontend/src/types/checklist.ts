@@ -53,6 +53,8 @@ export interface ChecklistPreview {
   createdAt: string;
   summary: string;
   isLiked: boolean;
+  station: string;
+  walkingTime: number;
 }
 
 // 체크리스트 비교

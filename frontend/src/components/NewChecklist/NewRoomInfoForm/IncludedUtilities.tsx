@@ -22,7 +22,7 @@ const IncludedUtilities = () => {
 
   return (
     <FlexBox.Vertical>
-      <FormField.Label label="방 구조" />
+      <FormField.Label label="관리비 포함 항목" />
       <FormStyled.OptionButtonContainer flexWrap="wrap">
         {roomIncludedUtilites.map(utility => (
           <Badge

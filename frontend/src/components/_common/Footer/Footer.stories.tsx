@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { reactRouterParameters } from 'storybook-addon-remix-react-router';
 
 import Footer from '@/components/_common/Footer/Footer';
-import { ROUTE_PATH } from '@/constants/routePath';
 
 const meta: Meta<typeof Footer> = {
   title: 'components/Footer',
@@ -31,12 +30,10 @@ type Story = StoryObj<typeof meta>;
 export const InLocationPage: Story = {
   render: () => (
     <Footer>
-      {[
-        { node: <Footer.HomeLogo />, nodeActive: <Footer.HomeLogoActive />, path: ROUTE_PATH.root },
-        { node: <Footer.LocationLogo />, nodeActive: <Footer.LocationLogoActive />, path: ROUTE_PATH.location },
-        { node: <Footer.ChecklistLogo />, nodeActive: <Footer.ChecklistLogoActive />, path: ROUTE_PATH.checklistList },
-        { node: <Footer.MyPageLogo />, nodeActive: <Footer.MyPageLogoActive />, path: ROUTE_PATH.myPage },
-      ]}
+      <Footer.Home />
+      <Footer.Checklist />
+      <Footer.Article />
+      <Footer.Profile />
     </Footer>
   ),
 };

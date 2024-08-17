@@ -1,64 +1,64 @@
 import styled from '@emotion/styled';
-import { ReactNode } from 'react';
+import React from 'react';
 import { Link, LinkProps, useLocation } from 'react-router-dom';
 
-import {
-  ChecklistLogo,
-  ChecklistLogoActive,
-  HomeLogo,
-  HomeLogoActive,
-  LocationLogo,
-  LocationLogoActive,
-  MyPageLogo,
-  MyPageLogoActive,
-} from '@/assets/assets';
+import FooterButton from '@/components/_common/Footer/FooterButton';
 import { ROUTE_PATH } from '@/constants/routePath';
 
 interface Props {
-  children: { node: ReactNode; nodeActive: ReactNode; path: string }[];
+  children: React.ReactNode;
 }
 
 const FooterWrapper = ({ children, ...rest }: Props) => {
-  const location = useLocation();
-  const currentPath = location.pathname;
-
   return (
     <>
       <S.EmptyBox />
       <S.Wrapper {...rest}>
-        <S.FlexBox>
-          {children.map(logo => (
-            <div key={logo.path}>{compare(logo.path, currentPath) ? logo.nodeActive : logo.node}</div>
-          ))}
-        </S.FlexBox>
+        <S.FlexBox>{children}</S.FlexBox>
       </S.Wrapper>
     </>
   );
 };
-const compare = (path1: string, path2: string) =>
+
+const isSameURL = (path1: string, path2: string) =>
   new URL(path1, 'https://abc.com').pathname === new URL(path2, 'https://abc.com').pathname;
 
 type MakeOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
-export const linkDecorator = (Logo: React.FC, path: string) => {
-  const LogoLinked = (props: MakeOptional<LinkProps, 'to'>) => (
-    <Link to={path} {...props}>
-      <Logo />
-    </Link>
-  );
+const FooterLinkButton = (Logo: JSX.Element, LogoActive: JSX.Element, path: string) => {
+  const LogoLinked = (props: MakeOptional<LinkProps, 'to'>) => {
+    const location = useLocation();
+    const currentPath = location.pathname;
+
+    return (
+      <Link to={path} {...props}>
+        {isSameURL(path, currentPath) ? LogoActive : Logo}
+      </Link>
+    );
+  };
   return LogoLinked;
 };
 
 const Footer = Object.assign(FooterWrapper, {
-  HomeLogo: linkDecorator(HomeLogo, ROUTE_PATH.root),
-  LocationLogo: linkDecorator(LocationLogo, ROUTE_PATH.location),
-  ChecklistLogo: linkDecorator(ChecklistLogo, ROUTE_PATH.checklistList),
-  MyPageLogo: linkDecorator(MyPageLogo, ROUTE_PATH.myPage),
-  HomeLogoActive: linkDecorator(HomeLogoActive, ROUTE_PATH.root),
-  LocationLogoActive: linkDecorator(LocationLogoActive, ROUTE_PATH.location),
-  ChecklistLogoActive: linkDecorator(ChecklistLogoActive, ROUTE_PATH.checklistList),
-  MyPageLogoActive: linkDecorator(MyPageLogoActive, ROUTE_PATH.myPage),
+  Home: FooterLinkButton(<FooterButton logo="home" />, <FooterButton logo="home" isActive />, ROUTE_PATH.home),
+  Checklist: FooterLinkButton(
+    <FooterButton logo="checklist" />,
+    <FooterButton logo="checklist" isActive />,
+    ROUTE_PATH.checklistList,
+  ),
+  Article: FooterLinkButton(
+    <FooterButton logo="article" />,
+    <FooterButton logo="article" isActive />,
+    ROUTE_PATH.article,
+  ),
+  Profile: FooterLinkButton(
+    <FooterButton logo="profile" />,
+    <FooterButton logo="profile" isActive />,
+    ROUTE_PATH.myPage,
+  ),
 });
+
+export default Footer;
 
 const S = {
   EmptyBox: styled.div`
@@ -70,12 +70,14 @@ const S = {
     bottom: 0%;
     width: 100%;
     height: 64px;
-    padding: 16px 32px;
+    padding: 8px 16px 16px;
 
     background-color: ${({ theme }) => theme.palette.white};
     max-width: 600px;
     align-items: flex-start;
     box-sizing: border-box;
+
+    box-shadow: 0 -4px 10px 0 rgb(0 0 0 / 3%);
   `,
   FlexBox: styled.div`
     display: flex;
@@ -89,5 +91,3 @@ const S = {
     font-size: ${({ theme }) => theme.text.size.medium};
   `,
 };
-
-export default Footer;

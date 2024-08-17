@@ -1,12 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import Map from '@/components/_common/Map/Map';
 import { ROUTE_PATH } from '@/constants/routePath';
 import ChecklistCustomPage from '@/pages/ChecklistCustomPage';
 import ChecklistDetailPage from '@/pages/ChecklistDetailPage';
 import ChecklistListPage from '@/pages/ChecklistListPage';
+import EditChecklistPage from '@/pages/EditChecklistPage';
 import ErrorPage from '@/pages/ErrorPage';
 import LoginPage from '@/pages/LoginPage';
+import MainPage from '@/pages/MainPage';
 import NewChecklistPage from '@/pages/NewChecklistPage';
 import NotFound from '@/pages/NotFound';
 import RoomComparePage from '@/pages/RoomComparePage';
@@ -19,12 +20,20 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
+        element: <MainPage />,
+        path: ROUTE_PATH.home,
+      },
+      {
         element: <ChecklistListPage />,
         path: ROUTE_PATH.checklistList,
       },
       {
         element: <NewChecklistPage />,
         path: ROUTE_PATH.checklistNew,
+      },
+      {
+        element: <EditChecklistPage />,
+        path: ROUTE_PATH.checklistEdit,
       },
       {
         element: <ChecklistDetailPage />,
@@ -45,10 +54,6 @@ const router = createBrowserRouter([
       {
         element: <LoginPage />,
         path: ROUTE_PATH.login,
-      },
-      {
-        element: <Map />,
-        path: '/map',
       },
       {
         element: <NotFound />,

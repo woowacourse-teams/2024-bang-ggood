@@ -24,7 +24,7 @@ export default OptionChecklistTemplate;
 const S = {
   Container: styled.div`
     ${flexColumn}
-    margin-top: 30px;
+    margin-top: 40px;
     padding: 16px;
 
     background-color: ${({ theme }) => theme.palette.background};

@@ -2,7 +2,8 @@ import styled from '@emotion/styled';
 
 import { Building, Calendar, LocationLineIcon, Room, Stairs, Subway } from '@/assets/assets';
 import LikeButton from '@/components/_common/Like/LikeButton';
-import { flexColumn, flexRow, flexSpaceBetween, title1 } from '@/styles/common';
+import AddressMap from '@/components/_common/Map/AddressMap';
+import { flexColumn, flexRow, title1 } from '@/styles/common';
 import { RoomInfo } from '@/types/room';
 import formattedUndefined from '@/utils/formattedUndefined';
 
@@ -19,7 +20,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
     roomName,
     deposit,
     rent,
-    fee,
+    maintenanceFee,
     address,
     contractTerm,
     floor,
@@ -39,26 +40,30 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
           <LikeButton isLiked={isLiked} checklistId={checklistId} />
         </S.Row>
         <S.Row>
-          {formattedUndefined(deposit)} / {formattedUndefined(rent)} + {formattedUndefined(fee)}
+          <S.MoneyText>
+            보증금 {formattedUndefined(deposit)} / 월세 {formattedUndefined(rent)} + 관리비{' '}
+            {formattedUndefined(maintenanceFee)}
+          </S.MoneyText>
         </S.Row>
       </S.GreenWrapper>
-      <S.SpaceBetween>
+      <S.GapBox>
         <S.Row>
           <Room />
-          {room.type} / {room.structure}
+          {room.structure}
         </S.Row>
         <S.Row>
           <Stairs />
           {floorLevel === '지상' ? `${formattedUndefined(floor)}층` : floorLevel}
         </S.Row>
-      </S.SpaceBetween>
+      </S.GapBox>
       <S.Row>
         <Calendar />
-        {formattedUndefined(contractTerm)}개월 계약 / 입주 가능일 : {occupancyMonth}월 {occupancyPeriod}
+        {formattedUndefined(contractTerm)}개월 계약 <br />
+        입주 가능일 : {occupancyMonth}월 {occupancyPeriod}
       </S.Row>
       <S.Row>
         <LocationLineIcon height={20} width={20} />
-        {address}
+        {address?.address} <br /> {address?.buildingName}
       </S.Row>
       <S.Row>
         <Subway />
@@ -68,6 +73,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
         <Building />
         {formattedUndefined(realEstate, 'string', '부동산')}
       </S.Row>
+      <AddressMap location={address?.address || ''} />
     </S.Container>
   );
 };
@@ -79,7 +85,7 @@ const S = {
     box-sizing: border-box;
     width: 100%;
     ${flexColumn}
-    gap: 25px;
+    gap: 16px;
     margin-bottom: 10px;
     padding: 16px;
 
@@ -87,7 +93,11 @@ const S = {
     border-radius: 8px;
 
     font-size: ${({ theme }) => theme.text.size.medium};
+    line-height: 1.5;
     letter-spacing: 0.05rem;
+  `,
+  MoneyText: styled.div`
+    font-size: ${({ theme }) => theme.text.size.medium};
   `,
   GreenWrapper: styled.div`
     width: 100%;
@@ -104,8 +114,13 @@ const S = {
     ${flexRow}
     gap: 10px;
   `,
-  SpaceBetween: styled.div`
-    ${flexSpaceBetween}
+  GapBox: styled.div`
+    display: flex;
+    gap: 30%;
+
+    @media (width <= 440px) {
+      gap: 60px;
+    }
   `,
   Title: styled.div`
     width: 100%;

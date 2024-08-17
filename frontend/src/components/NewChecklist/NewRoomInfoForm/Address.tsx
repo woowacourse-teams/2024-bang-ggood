@@ -1,27 +1,25 @@
-import { useCallback } from 'react';
 import { useStore } from 'zustand';
 
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import DaumAddressModal from '@/components/NewChecklist/AddressModal/DaumAddressModal';
+import RealTimeAddressModal from '@/components/NewChecklist/AddressModal/RealTimeAddressModal';
+import checklistAddressStore from '@/store/checklistAddressStore';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
 const Address = () => {
-  const address = useStore(checklistRoomInfoStore, state => state.rawValue.address);
   const errorMessage = useStore(checklistRoomInfoStore, state => state.errorMessage.address);
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const handleSetAddress = useCallback(
-    (address: string) => {
-      actions.set('address', address);
-    },
-    [actions],
-  );
+  const { address } = useStore(checklistAddressStore);
+
   return (
     <FormField>
       <FormField.Label label="주소" />
-      <FlexBox.Horizontal gap="3%">
-        <FormField.Input onChange={actions.onChange} name="address" value={address} />
-        <DaumAddressModal setAddress={handleSetAddress} />
+      <FormField.Input name="address" value={address} />
+      <FlexBox.Horizontal>
+        {/*실시간 위치 모달*/}
+        <RealTimeAddressModal />
+        {/*주소 찾기 모달*/}
+        <DaumAddressModal />
       </FlexBox.Horizontal>
       <FormField.ErrorMessage value={errorMessage ?? ''} />
     </FormField>

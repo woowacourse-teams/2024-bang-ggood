@@ -1,8 +1,10 @@
+import { Address } from '@/types/address';
+
 export type OccupancyPeriod = '초' | '중순' | '말';
 
 export type RoomInfo = Partial<{
   roomName: string;
-  address: string;
+  address: Address;
   deposit: number;
   rent: number;
   // includedUtilities : 관리비 포함항목 (전기, 수도 등).

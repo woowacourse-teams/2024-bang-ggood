@@ -1,10 +1,12 @@
 import styled from '@emotion/styled';
 import { useCallback, useEffect, useRef } from 'react';
+import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
 import loadPostcode from '@/components/NewChecklist/AddressModal/loadPostcode';
 import useModalOpen from '@/hooks/useModalOpen';
+import checklistAddressStore from '@/store/checklistAddressStore';
 import { Address, Postcode, PostcodeOptions } from '@/types/address';
 
 declare global {
@@ -17,13 +19,10 @@ declare global {
 
 const scriptUrl = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
 
-interface Props {
-  setAddress: (address: string) => void;
-}
-
-const DaumAddressModal = ({ setAddress }: Props) => {
+const DaumAddressModal = () => {
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
   const postcodeContainerRef = useRef<HTMLDivElement | null>(null);
+  const { setAddress, setBuildingName, setJibunAddress } = useStore(checklistAddressStore);
 
   useEffect(() => {
     loadPostcode(scriptUrl).catch(error => {
@@ -40,6 +39,8 @@ const DaumAddressModal = ({ setAddress }: Props) => {
         oncomplete: (data: Address) => {
           // TODO: 위도, 경도까지 보내주기
           setAddress(data.address);
+          setBuildingName(data.buildingName);
+          setJibunAddress(data.jibunAddress);
           modalClose();
         },
       }).embed(postcodeContainerRef.current, { q: '' });
@@ -50,7 +51,7 @@ const DaumAddressModal = ({ setAddress }: Props) => {
 
   return (
     <>
-      <S.AddressButton size="xSmall" color="dark" label="주소찾기" isSquare={true} onClick={openPostcodeEmbed} />
+      <S.AddressButton size="xSmall" color="dark" label="주소 검색" isSquare={true} onClick={openPostcodeEmbed} />
       <Modal position="bottom" isOpen={isModalOpen} onClose={modalClose}>
         <Modal.body>
           <div ref={postcodeContainerRef} style={{ width: '100%', marginTop: '10px' }} />
@@ -64,8 +65,7 @@ export default DaumAddressModal;
 
 const S = {
   AddressButton: styled(Button)`
-    width: 90px;
-    padding: 5px;
+    width: 50%;
 
     font-size: ${({ theme }) => theme.text.size.xSmall};
   `,

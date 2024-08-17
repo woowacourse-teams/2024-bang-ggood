@@ -29,10 +29,13 @@ const NewChecklistPage = () => {
   const { tabs } = useNewChecklistTabs();
   const { mutate: addChecklist } = useAddChecklistQuery();
 
+  const navigate = useNavigate();
+
   /*방 기본 정보 */
   const { value: roomInfoAnswer, actions } = useStore(checklistRoomInfoStore);
-
-  const navigate = useNavigate();
+  /* 주소 */
+  //TODO: 백엔드 상의후에 post에 추가
+  //const { address, jibunAddress, buildingName } = useStore(checklistAddressStore);
 
   /*선택된 옵션*/
   const { selectedOptions, resetToDefaultOptions } = useOptionStore();
@@ -122,6 +125,7 @@ const NewChecklistPage = () => {
           <MemoButton onClick={memoModalOpen} />
         )}
       </TabProvider>
+
       {/* 한줄평 모달 */}
       {isSummaryModalOpen && (
         <SummaryModal

@@ -7,6 +7,7 @@ export const baseStyle = css`
   ${normalize}
 
   body {
+    line-height: normal;
     font-family: 'SUITE Variable';
     max-width: 600px;
     min-height: 100vh;

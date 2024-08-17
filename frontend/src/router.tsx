@@ -1,6 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import Map from '@/components/_common/Map/Map';
 import { ROUTE_PATH } from '@/constants/routePath';
 import ChecklistCustomPage from '@/pages/ChecklistCustomPage';
 import ChecklistDetailPage from '@/pages/ChecklistDetailPage';
@@ -55,10 +54,6 @@ const router = createBrowserRouter([
       {
         element: <LoginPage />,
         path: ROUTE_PATH.login,
-      },
-      {
-        element: <Map />,
-        path: '/map',
       },
       {
         element: <NotFound />,

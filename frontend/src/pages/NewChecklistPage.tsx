@@ -19,7 +19,6 @@ import useHandleTipBox from '@/hooks/useHandleTipBox';
 import useModalOpen from '@/hooks/useModalOpen';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import useToast from '@/hooks/useToast';
-import checklistAddressStore from '@/store/checklistAddressStore';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useOptionStore from '@/store/useOptionStore';
@@ -35,7 +34,8 @@ const NewChecklistPage = () => {
   /*방 기본 정보 */
   const { value: roomInfoAnswer, actions } = useStore(checklistRoomInfoStore);
   /* 주소 */
-  const { address, jibunAddress, buildingName } = useStore(checklistAddressStore);
+  //TODO: 백엔드 상의후에 post에 추가
+  //const { address, jibunAddress, buildingName } = useStore(checklistAddressStore);
 
   /*선택된 옵션*/
   const { selectedOptions, resetToDefaultOptions } = useOptionStore();

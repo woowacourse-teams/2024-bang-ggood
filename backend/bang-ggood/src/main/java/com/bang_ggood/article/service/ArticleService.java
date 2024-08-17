@@ -15,6 +15,7 @@ import java.util.List;
 @Service
 public class ArticleService {
 
+    public static final int MAX_ARTICLE_CARDS = 3;
     private final ArticleRepository articleRepository;
 
     public ArticleService(ArticleRepository articleRepository) {
@@ -44,7 +45,7 @@ public class ArticleService {
 
     @Transactional(readOnly = true)
     public ArticlesPreviewResponse readLatestArticles() {
-        List<ArticlePreviewResponse> articles = articleRepository.findLatestTop3().stream()
+        List<ArticlePreviewResponse> articles = articleRepository.findLatest(MAX_ARTICLE_CARDS).stream()
                 .map(ArticlePreviewResponse::from)
                 .toList();
         return new ArticlesPreviewResponse(articles);

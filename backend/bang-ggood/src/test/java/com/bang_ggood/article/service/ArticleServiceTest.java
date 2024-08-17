@@ -36,7 +36,7 @@ public class ArticleServiceTest extends IntegrationTestSupport {
 
         // then
         assertThat(articleRepository.getById(articleId).getTitle())
-                .isEqualTo("제목");
+                .isEqualTo(ARTICLE_CREATE_REQUEST.title());
     }
 
     @DisplayName("아티클 조회 성공")

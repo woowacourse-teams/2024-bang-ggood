@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import ChecklistPreviewCard from '@/components/ChecklistList/ChecklistPreviewCard';
+import ChecklistPreviewCard from '@/components/ChecklistList/ChecklistCard';
 import { checklistList } from '@/mocks/fixtures/checklistList';
 
 import mobileDecorator from '../../../.storybook/common';

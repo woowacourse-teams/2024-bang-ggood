@@ -5,7 +5,7 @@ import { PlusBlack } from '@/assets/assets';
 import FloatingButton from '@/components/_common/FloatingButton/FloatingButton';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
-import ChecklistPreviewCard from '@/components/ChecklistList/ChecklistPreviewCard';
+import ChecklistPreviewCard from '@/components/ChecklistList/ChecklistCard';
 import CustomBanner from '@/components/ChecklistList/CustomBanner';
 import NoChecklistTemplate from '@/components/ChecklistList/NoChecklistTemplate';
 import { ROUTE_PATH } from '@/constants/routePath';

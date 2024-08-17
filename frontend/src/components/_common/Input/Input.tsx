@@ -5,9 +5,9 @@ import { flexCenter } from '@/styles/common';
 import { InputChangeEvent } from '@/types/event';
 
 const widthSize = {
-  small: '45px',
-  medium: '110px',
-  large: '140px',
+  small: '100px',
+  medium: '160px',
+  large: '300px',
   full: '100%',
 };
 
@@ -35,7 +35,6 @@ interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const S = {
   Input: styled.input<StyledProps>`
-    ${({ width }) => width && `width: ${width};`};
     height: 40px;
     padding: 6px 11px;
     border: 2px solid ${({ $color, theme }) => ($color ? $color : theme.palette.grey200)};

@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { getChecklistDetail } from '@/apis/checklist';
+import DeleteModal from '@/components/_common/DeleteModal/DeleteModal';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import ChecklistAnswerSection from '@/components/ChecklistDetail/ChecklistAnswerSection';
 import RoomInfoSection from '@/components/ChecklistDetail/RoomInfoSection';
-import DeleteModal from '@/components/DeleteModal';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useDeleteChecklistQuery from '@/hooks/query/useDeleteChecklistQuery';
 import useModalOpen from '@/hooks/useModalOpen';

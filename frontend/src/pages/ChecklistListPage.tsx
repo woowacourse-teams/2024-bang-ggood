@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { PlusBlack } from '@/assets/assets';
 import FloatingButton from '@/components/_common/FloatingButton/FloatingButton';
+import FooterDefault from '@/components/_common/Footer/FooterDefault';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import ChecklistPreviewCard from '@/components/ChecklistList/ChecklistPreviewCard';
@@ -34,6 +35,10 @@ const ChecklistListPage = () => {
     return <div>Error loading checklists.</div>;
   }
 
+  if (checklistList) {
+    throw new Error('Checklist data is undefined');
+  }
+
   return (
     <>
       <Header center={<Header.Text>체크리스트</Header.Text>} />
@@ -56,6 +61,7 @@ const ChecklistListPage = () => {
       <FloatingButton size="extends" onClick={handleClickFloatingButton}>
         <PlusBlack /> 작성하기
       </FloatingButton>
+      <FooterDefault />
     </>
   );
 };

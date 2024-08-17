@@ -25,7 +25,11 @@ const palette = {
   /* red */
   red600: '#D9593E',
   red500: '#FC6A4B',
-  red300: '#FFC7AF',
+  red200: '#FFC7AF',
+  /* blue */
+  blue600: '#4F66E0',
+  blue500: '#5F79FF',
+  blue200: '#B4D6FD',
   /* grey */
   grey600: '#484947',
   grey500: '#7C7C7C',
@@ -33,6 +37,7 @@ const palette = {
   grey300: '#C7C7C7',
   grey200: '#E5E5E5',
   grey100: '#F1F1F1',
+  grey50: '#F5F5F5',
   /* original */
   black: '#363636',
   white: '#FFFFFF',
@@ -40,10 +45,11 @@ const palette = {
 
   /* etc */
   kakao: '#FEE500',
-};
+} as const;
 
 const text = {
   size: {
+    xxSmall: '12px',
     xSmall: '14px',
     small: '16px',
     medium: '18px',

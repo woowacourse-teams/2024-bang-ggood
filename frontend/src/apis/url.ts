@@ -19,6 +19,9 @@ export const ENDPOINT = {
   // category
   CATEGORY: '/categories',
   CATEGORY_ADD: '/categories/priority',
+  // article
+  ARTICLES: '/articles',
+  ARTICLE_ID: (id: number) => `/articles/${id}`,
   // login
   OAUTH: '/oauth/login',
 };

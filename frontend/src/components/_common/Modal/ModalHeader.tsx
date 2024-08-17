@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { flexCenter, flexSpaceBetween, title2 } from '@/styles/common';
+import { flexCenter, flexSpaceBetween, title2, title3 } from '@/styles/common';
 
 type Position = 'left' | 'center';
 interface TitleProps
@@ -20,7 +20,6 @@ const ModalHeader = ({ title, children, position = 'left' }: TitleProps) => {
 
 const Container = styled.div<{ position: Position }>`
   ${flexSpaceBetween}
-  align-items: ${({ position }) => (position === 'center' ? 'center' : 'flex-start')};
   flex-direction: ${({ position }) => position === 'center' && 'column'};
   width: calc(100% - 64px);
   margin-top: 5px;
@@ -28,8 +27,9 @@ const Container = styled.div<{ position: Position }>`
   padding: 0 16px;
 
   line-height: normal;
-  ${flexCenter}
   min-height: 45px;
+  align-items: center;
+  ${title3}
 `;
 
 const Title = styled.span`

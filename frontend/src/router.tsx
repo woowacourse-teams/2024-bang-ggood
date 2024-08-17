@@ -17,7 +17,7 @@ import RootLayout from '@/RootLayout';
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
-    errorElement: <ErrorPage title={'에러'} />,
+    errorElement: <ErrorPage />,
     children: [
       {
         element: <MainPage />,

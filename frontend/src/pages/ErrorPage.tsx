@@ -4,17 +4,19 @@ import { useNavigate, useRouteError } from 'react-router-dom';
 import { BangBangCryIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
+import HttpError from '@/error/HttpError';
 import { flexColumn } from '@/styles/common';
 
 const ErrorPage = () => {
-  const error = useRouteError();
-  const { message } = error as Error;
+  const error = useRouteError() as Error;
 
   const navigate = useNavigate();
 
   const reset = () => {
     navigate('/', { replace: true });
   };
+
+  const { message, name } = error as HttpError;
 
   return (
     <>
@@ -24,6 +26,7 @@ const ErrorPage = () => {
         <S.TextWrapper>
           <S.Text>에러가 발생했습니다!</S.Text>
           <S.Text>{message}</S.Text>
+          <S.Text>{name}</S.Text>
           <Button onClick={reset} label="홈페이지로 돌아가기" />
         </S.TextWrapper>
       </S.Wrapper>

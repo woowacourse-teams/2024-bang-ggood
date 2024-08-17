@@ -1,3 +1,6 @@
+import { HTTP_STATUS_CODE } from '@/error/constants';
+import HttpError from '@/error/HttpError';
+
 interface RequestProps {
   url: string;
   method: 'GET' | 'POST' | 'DELETE' | 'PATCH' | 'PUT';
@@ -25,21 +28,26 @@ const request = async ({ url, method, body, headers = {}, errorMessage }: Reques
   return response;
 };
 
-const networkRequest = async ({ url, method, body, headers = {}, errorMessage }: RequestProps) => {
+const requestWithHandlingError = async ({ url, method, body, headers = {}, errorMessage }: RequestProps) => {
   const response = await request({ url, method, body, headers, errorMessage });
   if (!response) {
-    throw new Error('네트워크 에러입니다.');
+    throw new HttpError(HTTP_STATUS_CODE.NETWORK_ERROR);
   }
+
+  if (!response.ok) {
+    throw new HttpError(response.status);
+  }
+
   return response;
 };
 
 const fetcher = {
   get({ url, headers }: FetchProps) {
-    return networkRequest({ url, method: 'GET', headers });
+    return requestWithHandlingError({ url, method: 'GET', headers });
   },
 
   post({ url, body, headers }: FetchProps) {
-    return networkRequest({
+    return requestWithHandlingError({
       url,
       method: 'POST',
       body,
@@ -48,11 +56,11 @@ const fetcher = {
   },
 
   delete({ url, headers }: FetchProps) {
-    return networkRequest({ url, method: 'DELETE', headers });
+    return requestWithHandlingError({ url, method: 'DELETE', headers });
   },
 
   patch({ url, body, headers }: FetchProps) {
-    return networkRequest({
+    return requestWithHandlingError({
       url,
       method: 'PATCH',
       body,
@@ -61,7 +69,7 @@ const fetcher = {
   },
 
   put({ url, body, headers }: FetchProps) {
-    return networkRequest({
+    return requestWithHandlingError({
       url,
       method: 'PUT',
       body,

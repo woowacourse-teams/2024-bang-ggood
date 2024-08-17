@@ -22,7 +22,7 @@ const ArticleListPage = () => {
           집 구하기 전 꼭 필요한 이야기 <S.Count>{articles?.length}</S.Count>
         </S.Title>
         <S.ListContainer>
-          {articles?.slice(0, 2).map((article: Article) => <ArticleCard key={article.articleId} article={article} />)}
+          {articles?.map((article: Article) => <ArticleCard key={article.articleId} article={article} />)}
         </S.ListContainer>
       </Layout>
       <FooterDefault />

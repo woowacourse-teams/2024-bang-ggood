@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import ArticleCard from '@/components/Article/ArticleCard';
+import ArticlePreviewCard from '@/components/Main/ArticlePreviewCard';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useGetArticleQuery from '@/hooks/query/useGetArticleQuery';
 import { flexRow, flexSpaceBetween, title4 } from '@/styles/common';
@@ -26,7 +26,7 @@ const ArticleSection = () => {
       <S.CardList>
         {articles.map((article: Article, index: number) => (
           <S.CardWrapper key={article.articleId}>
-            <ArticleCard index={index} article={article} />
+            <ArticlePreviewCard index={index} article={article} />
           </S.CardWrapper>
         ))}
       </S.CardList>

@@ -13,7 +13,7 @@ interface Props {
   article: Article;
 }
 
-const ArticleCard = ({ index, article }: Props) => {
+const ArticlePreviewCard = ({ index, article }: Props) => {
   const navigate = useNavigate();
   const { articleId, keyword, title } = article;
 
@@ -34,7 +34,7 @@ const ArticleCard = ({ index, article }: Props) => {
   );
 };
 
-export default ArticleCard;
+export default ArticlePreviewCard;
 
 const S = {
   Container: styled.div<{ bgColor: string }>`

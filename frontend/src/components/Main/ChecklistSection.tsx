@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/_common/Button/Button';
-import ChecklistMiniCard from '@/components/ChecklistList/ChecklistMiniCard';
+import ChecklistPreviewCard from '@/components/Main/ChecklistPreviewCard';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useGetChecklistListQuery from '@/hooks/query/useGetChecklistListQuery';
 import { boxShadow, boxShadowSpread, flexColumn, flexRow, flexSpaceBetween, title3, title4 } from '@/styles/common';
@@ -33,7 +33,7 @@ const ChecklistSection = () => {
           <Button size="xSmall" label="전체 보기" onClick={handleClickList} />
         </S.Row>
         {checklists.map((checklist: ChecklistPreview, index: number) => (
-          <ChecklistMiniCard key={checklist.checklistId} index={index} checklist={checklist} />
+          <ChecklistPreviewCard key={checklist.checklistId} index={index} checklist={checklist} />
         ))}
         <S.NewButton label="+ 새로운 체크리스트 생성하기" isSquare size="full" onClick={handleNewChecklist} />
       </S.Container>

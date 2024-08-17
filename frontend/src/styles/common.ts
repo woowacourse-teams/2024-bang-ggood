@@ -46,7 +46,7 @@ export const title4 = css`
 
 /* style */
 export const boxShadow = css`
-  box-shadow: 0 4px 8px rgb(0 0 0 / 5%);
+  box-shadow: 0 4px 4px rgb(0 0 0 / 5%);
 `;
 
 export const boxShadowSpread = css`

@@ -19,6 +19,7 @@ import useHandleTipBox from '@/hooks/useHandleTipBox';
 import useModalOpen from '@/hooks/useModalOpen';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import useToast from '@/hooks/useToast';
+import checklistAddressStore from '@/store/checklistAddressStore';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useOptionStore from '@/store/useOptionStore';
@@ -29,10 +30,12 @@ const NewChecklistPage = () => {
   const { tabs } = useNewChecklistTabs();
   const { mutate: addChecklist } = useAddChecklistQuery();
 
+  const navigate = useNavigate();
+
   /*방 기본 정보 */
   const { value: roomInfoAnswer, actions } = useStore(checklistRoomInfoStore);
-
-  const navigate = useNavigate();
+  /* 주소 */
+  const { address, jibunAddress, buildingName } = useStore(checklistAddressStore);
 
   /*선택된 옵션*/
   const { selectedOptions, resetToDefaultOptions } = useOptionStore();

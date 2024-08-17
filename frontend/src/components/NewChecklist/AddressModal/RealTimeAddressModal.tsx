@@ -42,8 +42,7 @@ export default RealTimeAddressModal;
 
 const S = {
   AddressButton: styled(Button)`
-    width: calc(50% - 10px);
-    padding: 10px;
+    width: 50%;
 
     font-size: ${({ theme }) => theme.text.size.xSmall};
   `,

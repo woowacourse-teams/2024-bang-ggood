@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import { useEffect, useRef } from 'react';
 
+import { DEFAULT_POSITION } from '@/constants/map';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const { kakao } = window as any;
 
@@ -12,7 +14,7 @@ const AddressMap = ({ location }: { location: string }) => {
     if (!mapContainerRef.current) return;
 
     const mapOption = {
-      center: new kakao.maps.LatLng(33.450701, 126.570667),
+      center: new kakao.maps.LatLng(DEFAULT_POSITION.lat, DEFAULT_POSITION.lon),
       level: 3,
     };
 

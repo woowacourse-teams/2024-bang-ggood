@@ -46,7 +46,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
           </S.MoneyText>
         </S.Row>
       </S.GreenWrapper>
-      <S.SpaceBetween>
+      <S.GapBox>
         <S.Row>
           <Room />
           {room.structure}
@@ -55,7 +55,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
           <Stairs />
           {floorLevel === '지상' ? `${formattedUndefined(floor)}층` : floorLevel}
         </S.Row>
-      </S.SpaceBetween>
+      </S.GapBox>
       <S.Row>
         <Calendar />
         {formattedUndefined(contractTerm)}개월 계약 <br />
@@ -97,7 +97,7 @@ const S = {
     letter-spacing: 0.05rem;
   `,
   MoneyText: styled.div`
-    font-size: large;
+    font-size: ${({ theme }) => theme.text.size.medium};
   `,
   GreenWrapper: styled.div`
     width: 100%;
@@ -114,7 +114,7 @@ const S = {
     ${flexRow}
     gap: 10px;
   `,
-  SpaceBetween: styled.div`
+  GapBox: styled.div`
     display: flex;
     gap: 30%;
 

@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
 import { useStore } from 'zustand';
 
+import { DEFAULT_POSITION } from '@/constants/map';
 import checklistAddressStore from '@/store/checklistAddressStore';
 import { flexCenter } from '@/styles/common';
 
@@ -13,10 +14,7 @@ const RealTimeMap = () => {
   const markerRef = useRef<any | null>(null);
   const infoWindowRef = useRef<any | null>(null);
 
-  const [position, setPosition] = useState({
-    lat: 37.51524850249633,
-    lon: 127.10305696808169,
-  });
+  const [position, setPosition] = useState(DEFAULT_POSITION);
 
   const { setAddress, setJibunAddress, setBuildingName } = useStore(checklistAddressStore);
 

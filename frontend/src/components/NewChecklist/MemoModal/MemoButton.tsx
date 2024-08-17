@@ -44,7 +44,7 @@ const S = {
     align-items: center;
     justify-content: center;
     border: none;
-
+    gap: 10px;
     border-radius: 15px 15px 0 0;
     ${title3};
     ${boxShadow};

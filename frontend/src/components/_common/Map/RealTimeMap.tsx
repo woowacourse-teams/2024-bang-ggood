@@ -1,23 +1,22 @@
 import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
+import { useStore } from 'zustand';
+
+import { DEFAULT_POSITION } from '@/constants/map';
+import checklistAddressStore from '@/store/checklistAddressStore';
+import { flexCenter } from '@/styles/common';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const { kakao } = window as any;
 
-type Position = {
-  lat: number;
-  lon: number;
-};
-
-const Map = () => {
-  const [position, setPosition] = useState<Position>({ lat: 30.5151763, lon: 127.1031642 });
-  const [detailAddress, setDetailAddress] = useState('');
-  const [buildingName, setBuildingName] = useState('');
-  const [address, setAddress] = useState('');
-
+const RealTimeMap = () => {
   const mapRef = useRef<any | null>(null);
   const markerRef = useRef<any | null>(null);
   const infoWindowRef = useRef<any | null>(null);
+
+  const [position, setPosition] = useState(DEFAULT_POSITION);
+
+  const { setAddress, setJibunAddress, setBuildingName } = useStore(checklistAddressStore);
 
   const geocoder = new kakao.maps.services.Geocoder();
 
@@ -53,6 +52,7 @@ const Map = () => {
     const message = `<span id="info-title">이 위치가 맞나요?</span>`;
 
     displayMarker(locPosition, message);
+    searchDetailAddrFromCoords(mapRef.current.getCenter(), getDetailAddress);
   };
 
   const errorGeolocation = () => {
@@ -62,30 +62,18 @@ const Map = () => {
     displayMarker(locPosition, message);
   };
 
-  /*좌표로 행정동 주소 정보를 요청합니다*/
-  const searchAddrFromCoords = (coords: any, callback: any) => {
-    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
-  };
-
   /* 좌표로 법정동 상세 주소 정보를 요청합니다*/
   const searchDetailAddrFromCoords = (coords: any, callback: any) => {
     geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
   };
 
-  const getAddress = (result: any, status: any) => {
-    if (status === kakao.maps.services.Status.OK) {
-      for (let i = 0; i < result.length; i++) {
-        if (result[i].region_type === 'H') {
-          setAddress(result[i].address_name);
-        }
-      }
-    }
-  };
-
   const getDetailAddress = (result: any, status: any) => {
     if (status === kakao.maps.services.Status.OK) {
+      if (result[0].address) {
+        setJibunAddress(result[0].address.address_name);
+      }
       if (result[0].road_address) {
-        setDetailAddress(result[0].road_address.address_name);
+        setAddress(result[0].road_address.address_name);
         setBuildingName(result[0].road_address.building_name);
         //TODO: 빌딩 주소가 없을 때도 있음.
       }
@@ -139,14 +127,6 @@ const Map = () => {
         lat: latlng.getLat(),
         lon: latlng.getLng(),
       });
-
-      let message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-      message += '경도는 ' + latlng.getLng() + ' 입니다';
-
-      const resultDiv = document.getElementById('message');
-      if (resultDiv) {
-        resultDiv.innerHTML = message;
-      }
     });
   }, []);
 
@@ -157,32 +137,40 @@ const Map = () => {
       markerRef.current.setPosition(locPosition);
       mapRef.current.setCenter(locPosition);
       infoWindowRef.current.open(mapRef.current, markerRef.current);
-      searchAddrFromCoords(mapRef.current.getCenter(), getAddress);
       searchDetailAddrFromCoords(mapRef.current.getCenter(), getDetailAddress);
     }
-  }, [position]);
+  }, [position, markerRef]);
 
   return (
-    <div>
-      <S.Container id="map"></S.Container>
+    <S.Container>
+      <S.MapBox id="map">
+        <S.MapEmptyBox>지도 준비 중</S.MapEmptyBox>
+      </S.MapBox>
       <div id="message"></div>
-      <div>{address}</div>
-      <div>{detailAddress}</div>
-      <div>{buildingName}</div>
-    </div>
+    </S.Container>
   );
 };
 
 const S = {
   Container: styled.div`
-    width: 400px;
-    height: 400px;
+    width: 100%;
+  `,
+  MapBox: styled.div`
+    width: 100%;
+    min-height: 400px;
   `,
   Message: styled.div`
     z-index: 100;
     width: 100px;
     height: 50px;
   `,
+  MapEmptyBox: styled.div`
+    width: 100%;
+    min-height: 400px;
+
+    background-color: ${({ theme }) => theme.palette.background};
+    ${flexCenter}
+  `,
 };
 
-export default Map;
+export default RealTimeMap;

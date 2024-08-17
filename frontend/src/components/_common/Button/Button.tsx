@@ -73,6 +73,7 @@ const sizeStyles = {
   xSmall: css`
     padding: 8px 15px;
     ${title4}
+    min-width:70px;
   `,
   small: css`
     padding: 10px 24px;

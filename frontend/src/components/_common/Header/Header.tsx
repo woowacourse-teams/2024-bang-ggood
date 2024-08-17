@@ -75,7 +75,6 @@ const S = {
 };
 
 const Header = Object.assign(HeaderWrapper, {
-  // Logo: linkDecorator(BangGgoodTextIcon, '/'),
   Logo: () => {
     return (
       <Link to={ROUTE_PATH.home}>

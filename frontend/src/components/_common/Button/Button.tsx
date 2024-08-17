@@ -84,7 +84,7 @@ const sizeStyles = {
   `,
   full: css`
     width: 100%;
-    padding: 14px 48px;
+    padding: 10px 48px;
     ${title3}
   `,
 };

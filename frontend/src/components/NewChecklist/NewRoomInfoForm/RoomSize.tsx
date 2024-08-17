@@ -1,8 +1,8 @@
 import { useStore } from 'zustand';
 
-import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
-import S from '@/components/NewChecklist/NewRoomInfoForm/styled';
+import Input from '@/components/_common/Input/Input';
+import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
 const RoomSize = () => {
@@ -13,10 +13,10 @@ const RoomSize = () => {
   return (
     <FormField>
       <FormField.Label label="방 크기" />
-      <FlexBox.Horizontal>
-        <S.FlexInput placeholder="" onChange={actions.onChange} name="size" value={roomSize} />
-        <S.FlexLabel label="평"></S.FlexLabel>
-      </FlexBox.Horizontal>
+      <FormStyled.FieldBox>
+        <Input width="medium" placeholder="" onChange={actions.onChange} name="size" value={roomSize} />
+        <FormStyled.FlexLabel label="평"></FormStyled.FlexLabel>
+      </FormStyled.FieldBox>
       <FormField.ErrorMessage value={errorMessage ?? ''} />
     </FormField>
   );

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { TabWithCompletion } from '@/components/_common/Tabs/Tabs';
 import useChecklistStore from '@/store/useChecklistStore';
@@ -8,10 +8,13 @@ const useNewChecklistTabs = () => {
 
   const [tabs, setTabs] = useState<TabWithCompletion[]>([]);
 
-  const isCategoryQuestionAllCompleted = (targetId: number) => {
-    const targetCategory = getCategoryQnA(targetId);
-    return targetCategory.questions.every(question => question.answer !== 'NONE');
-  };
+  const isCategoryQuestionAllCompleted = useCallback(
+    (targetId: number) => {
+      const targetCategory = getCategoryQnA(targetId);
+      return targetCategory?.questions.every(question => question.answer !== 'NONE');
+    },
+    [getCategoryQnA],
+  );
 
   useEffect(() => {
     const newChecklistTabsWithCompletion = validCategory.map(category => ({
@@ -26,8 +29,12 @@ const useNewChecklistTabs = () => {
       ...newChecklistTabsWithCompletion,
     ];
 
-    setTabs(tabsWithBasicInfoAndOptions);
-  }, [validCategory, checklistCategoryQnA]);
+    const newTabsString = JSON.stringify(tabsWithBasicInfoAndOptions);
+    const prevTabsString = JSON.stringify(tabs);
+    if (newTabsString !== prevTabsString) {
+      setTabs(tabsWithBasicInfoAndOptions);
+    }
+  }, [validCategory, checklistCategoryQnA, isCategoryQuestionAllCompleted]);
 
   return { tabs };
 };

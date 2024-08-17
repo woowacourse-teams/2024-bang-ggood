@@ -1,7 +1,7 @@
 import fetcher from '@/apis/fetcher';
 import { BASE_URL, ENDPOINT } from '@/apis/url';
 import { dummyChecklist } from '@/mocks/fixtures/dummyChecklist';
-import { ChecklistCustom, ChecklistPostForm } from '@/types/checklist';
+import { ChecklistCustom, ChecklistInfo, ChecklistPostForm } from '@/types/checklist';
 import { mapObjNullToUndefined, mapObjUndefinedToNull } from '@/utils/typeFunctions';
 
 export const getChecklistQuestions = async () => {
@@ -19,7 +19,7 @@ export const getChecklistAllQuestions = async () => {
 export const getChecklistDetail = async (id: number) => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_ID(id) });
   const data = await response.json();
-  return data;
+  return data as ChecklistInfo;
 };
 
 export const getChecklists = async () => {

@@ -19,7 +19,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
     roomName,
     deposit,
     rent,
-    fee,
+    maintenanceFee,
     address,
     contractTerm,
     floor,
@@ -39,13 +39,13 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
           <LikeButton isLiked={isLiked} checklistId={checklistId} />
         </S.Row>
         <S.Row>
-          {formattedUndefined(deposit)} / {formattedUndefined(rent)} + {formattedUndefined(fee)}
+          {formattedUndefined(deposit)} / {formattedUndefined(rent)} + {formattedUndefined(maintenanceFee)}
         </S.Row>
       </S.GreenWrapper>
       <S.SpaceBetween>
         <S.Row>
           <Room />
-          {room.type} / {room.structure}
+          {room.structure}
         </S.Row>
         <S.Row>
           <Stairs />

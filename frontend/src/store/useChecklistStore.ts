@@ -7,8 +7,8 @@ interface ChecklistState {
   basicInfo: Record<string, unknown>;
   checklistCategoryQnA: ChecklistCategoryQnA[];
   validCategory: Category[];
-  getCategoryQnA: (categoryId: number) => ChecklistCategoryQnA;
-  setValidCategory: () => void;
+  getCategoryQnA: (categoryId: number) => ChecklistCategoryQnA | undefined;
+  _setValidCategory: () => void;
   setAnswerInQuestion: (questions: ChecklistCategoryQuestions[]) => void;
   setAnswers: (answers: ChecklistCategoryQnA[]) => void;
 }
@@ -29,9 +29,10 @@ const useChecklistStore = create<ChecklistState>((set, get) => ({
     }));
 
     set({ checklistCategoryQnA });
+    get()._setValidCategory();
   },
 
-  setValidCategory: () => {
+  _setValidCategory: () => {
     const { checklistCategoryQnA } = get();
     const validCategory = checklistCategoryQnA.map(category => ({
       categoryId: category.categoryId,
@@ -43,11 +44,12 @@ const useChecklistStore = create<ChecklistState>((set, get) => ({
 
   getCategoryQnA: (categoryId: number) => {
     const { checklistCategoryQnA } = get();
-    return checklistCategoryQnA.filter(category => category.categoryId === categoryId)[0];
+    return checklistCategoryQnA.find(category => category.categoryId === categoryId);
   },
 
   setAnswers: (answers: ChecklistCategoryQnA[]) => {
     set({ checklistCategoryQnA: answers });
+    get()._setValidCategory();
   },
 }));
 

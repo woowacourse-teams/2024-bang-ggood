@@ -1,11 +1,11 @@
 import { useStore } from 'zustand';
 
-import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
-import RadioGroup from '@/components/_common/RadioGroup/RadioGroup';
-import S from '@/components/NewChecklist/NewRoomInfoForm/styled';
+import Input from '@/components/_common/Input/Input';
+import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import { roomFloorLevels } from '@/constants/roomInfo';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import { InputChangeEvent } from '@/types/event';
 
 const RoomFloor = () => {
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
@@ -16,16 +16,17 @@ const RoomFloor = () => {
   return (
     <FormField>
       <FormField.Label label="층수" />
-      <FlexBox.Horizontal>
-        <S.FlexInput placeholder="" name="floor" value={floor} onChange={actions.onChange} />
-        <S.RadioGroup label="" value={floorLevel ?? ''} onChangeChild={actions.onChange}>
-          {roomFloorLevels.map(floorLevel => (
-            <RadioGroup.RadioButton key={floorLevel} name="floorLevel" value={floorLevel} color="green">
-              {floorLevel}
-            </RadioGroup.RadioButton>
+      <FormStyled.FieldBox>
+        <select name="floorLevel" value={floorLevel} onChange={e => actions.onChange(e as unknown as InputChangeEvent)}>
+          {roomFloorLevels.map(value => (
+            <option key={value} value={value}>
+              {value}
+            </option>
           ))}
-        </S.RadioGroup>
-      </FlexBox.Horizontal>
+        </select>
+        <Input width="medium" placeholder="" name="floor" value={floor} onChange={actions.onChange} />
+        <FormStyled.FlexLabel label="층"></FormStyled.FlexLabel>
+      </FormStyled.FieldBox>
       <FormField.ErrorMessage value={errorMessageFloor ?? ''} />
     </FormField>
   );

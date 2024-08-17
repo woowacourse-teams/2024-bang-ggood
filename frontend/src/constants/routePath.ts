@@ -1,7 +1,7 @@
 export const ROUTE_PATH = {
-  root: '/',
+  home: '/',
   /*checklist */
-  checklistList: '/',
+  checklistList: '/checklist',
   checklistNew: '/checklist/new',
   checklistEdit: '/checklist/edit/:checklistId',
   checklistCustom: `/checklist/custom`,
@@ -12,7 +12,10 @@ export const ROUTE_PATH = {
   /*room*/
   roomCompareSelect: '/room-compare/select',
   roomCompare: '/room-compare',
-  /* TODO : 추후 추가될 페이지들의 라우트패스 */
+  /* article */
+  article: '/article',
+  articleOne: (id: number) => `/article/${id}`,
+  /* TODO: 추후 추가될 페이지들의 라우트패스 */
   location: '/location',
   myPage: '/my-page',
   login: '/login',

@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { ArrowBack, BangGgoodTextIcon } from '@/assets/assets';
-import { linkDecorator } from '@/components/_common/Footer/Footer';
+import { ROUTE_PATH } from '@/constants/routePath';
 import { flexCenter, title3 } from '@/styles/common';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
@@ -75,7 +75,13 @@ const S = {
 };
 
 const Header = Object.assign(HeaderWrapper, {
-  Logo: linkDecorator(BangGgoodTextIcon, '/'),
+  Logo: () => {
+    return (
+      <Link to={ROUTE_PATH.home}>
+        <BangGgoodTextIcon />
+      </Link>
+    );
+  },
   Backward: (props: React.SVGProps<SVGSVGElement>) => {
     const navigate = useNavigate();
     const handleClick = () => navigate(-1);

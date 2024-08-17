@@ -7,7 +7,7 @@ import { postKakaoCode } from '@/apis/login';
 import { BangBangIcon, KakaoLogo } from '@/assets/assets';
 import Layout from '@/components/_common/layout/Layout';
 import { STORAGE_KEYS } from '@/constants/localStorage';
-import { KAKAO_AUTH_URL } from '@/constants/OAuth';
+import { KAKAO_AUTH_URL } from '@/constants/oAuth';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 

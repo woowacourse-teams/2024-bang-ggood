@@ -10,7 +10,7 @@ interface Props {
   checklist: ChecklistPreview;
 }
 
-const ChecklistMiniCard = ({ index, checklist }: Props) => {
+const ChecklistPreviewCard = ({ index, checklist }: Props) => {
   const colorList = ['green', 'blue', 'red'];
   const { color200, color500 } = getSeqColor(index, colorList);
 
@@ -32,7 +32,7 @@ const ChecklistMiniCard = ({ index, checklist }: Props) => {
   );
 };
 
-export default ChecklistMiniCard;
+export default ChecklistPreviewCard;
 
 const S = {
   Container: styled.div`

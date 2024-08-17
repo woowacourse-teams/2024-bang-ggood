@@ -42,12 +42,16 @@ public class ArticleE2ETest extends AcceptanceTest {
     @DisplayName("아티클 생성 실패: 유저가 아닌 경우")
     @Test
     void createArticle_notUser_exception() {
-        RestAssured.given().log().all()
+        ExceptionResponse response = RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .body(ARTICLE_CREATE_REQUEST)
                 .when().post("/articles")
                 .then().log().all()
-                .statusCode(401);
+                .statusCode(401)
+                .extract()
+                .as(ExceptionResponse.class);
+
+        assertThat(response.message()).isEqualTo(ExceptionCode.AUTHENTICATION_COOKIE_EMPTY.getMessage());
     }
 
     @DisplayName("아티클 조회 성공")

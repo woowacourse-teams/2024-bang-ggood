@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import ArticleCard from '@/components/Article/ArticleCard';
+import SkArticleSection from '@/components/skeleton/Main/SkArticleSection';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useGetArticleQuery from '@/hooks/query/useGetArticleQuery';
 import { flexRow, flexSpaceBetween, title4 } from '@/styles/common';
@@ -14,7 +15,7 @@ const ArticleSection = () => {
     navigate(ROUTE_PATH.article);
   };
 
-  if (isLoading) return <div>Article Loading</div>;
+  if (isLoading) return <SkArticleSection />;
 
   return (
     <>

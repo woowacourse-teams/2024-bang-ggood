@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/_common/Button/Button';
 import ChecklistMiniCard from '@/components/ChecklistList/ChecklistMiniCard';
+import SkChecklistSection from '@/components/skeleton/Main/SkChecklistSection';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useGetChecklistListQuery from '@/hooks/query/useGetChecklistListQuery';
 import { boxShadow, boxShadowSpread, flexColumn, flexRow, flexSpaceBetween, title3, title4 } from '@/styles/common';
@@ -20,7 +21,7 @@ const ChecklistSection = () => {
     navigate(ROUTE_PATH.checklistNew);
   };
 
-  if (isLoading) return <div>Article Loading</div>;
+  if (isLoading) return <SkChecklistSection />;
 
   if (!checklists) throw error;
 

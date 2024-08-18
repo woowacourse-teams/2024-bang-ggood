@@ -16,7 +16,8 @@ import { ChecklistPreview } from '@/types/checklist';
 
 const ChecklistListPage = () => {
   const navigate = useNavigate();
-  const { data: checklistList, isLoading, error } = useGetChecklistListQuery();
+  const { data: checklistList, isLoading } = useGetChecklistListQuery();
+
   const handleClickMoveCustomPage = () => {
     navigate(ROUTE_PATH.checklistCustom);
   };
@@ -24,34 +25,35 @@ const ChecklistListPage = () => {
     navigate(ROUTE_PATH.checklistNew);
   };
 
-  if (isLoading) {
-    return <SkChecklistList />;
-  }
-
-  if (!checklistList) throw error;
-
   return (
     <>
       <Header center={<Header.Text>체크리스트</Header.Text>} />
-      <S.FlexBox>
-        <CustomBanner onClick={handleClickMoveCustomPage} />
-      </S.FlexBox>
-      <Layout>
-        <S.ListBox>
-          {checklistList.length ? (
-            <>
-              {checklistList?.map((checklist: ChecklistPreview) => (
-                <ChecklistPreviewCard key={checklist.checklistId} checklist={checklist} />
-              ))}
-            </>
-          ) : (
-            <NoChecklistTemplate />
-          )}
-        </S.ListBox>
-      </Layout>
-      <FloatingButton size="extends" onClick={handleClickFloatingButton}>
-        <PlusBlack /> 작성하기
-      </FloatingButton>
+
+      {isLoading ? (
+        <SkChecklistList />
+      ) : (
+        <>
+          <S.FlexBox>
+            <CustomBanner onClick={handleClickMoveCustomPage} />
+          </S.FlexBox>
+          <Layout>
+            <S.ListBox>
+              {checklistList.length ? (
+                <>
+                  {checklistList?.map((checklist: ChecklistPreview) => (
+                    <ChecklistPreviewCard key={checklist.checklistId} checklist={checklist} />
+                  ))}
+                </>
+              ) : (
+                <NoChecklistTemplate />
+              )}
+            </S.ListBox>
+          </Layout>
+          <FloatingButton size="extends" onClick={handleClickFloatingButton}>
+            <PlusBlack /> 작성하기
+          </FloatingButton>
+        </>
+      )}
     </>
   );
 };

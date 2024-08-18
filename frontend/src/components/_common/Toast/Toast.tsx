@@ -1,18 +1,17 @@
 import styled from '@emotion/styled';
 
 import useToast from '@/hooks/useToast';
+import { ToastType } from '@/store/useToastStore';
 import { flexCenter, title4 } from '@/styles/common';
 
-export const DEFAULT_DURATION = 2;
-
 const Toast = () => {
-  const { toast } = useToast(DEFAULT_DURATION);
+  const { toast, colorType } = useToast();
 
   if (!toast) return;
 
   return (
     <S.Container>
-      <S.InnerBox>{toast}</S.InnerBox>
+      <S.InnerBox colorType={colorType}>{toast}</S.InnerBox>
     </S.Container>
   );
 };
@@ -28,11 +27,12 @@ const Container = styled.div`
   transform: translateX(-50%);
 `;
 
-const InnerBox = styled.div`
+const InnerBox = styled.div<{ colorType: ToastType }>`
   width: 314px;
   height: 40px;
 
-  background-color: ${({ theme }) => theme.palette.green500};
+  background-color: ${({ theme, colorType }) =>
+    colorType === 'positive' ? theme.palette.green500 : theme.palette.red500};
 
   color: white;
   border-radius: 8px;

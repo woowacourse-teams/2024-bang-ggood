@@ -31,9 +31,7 @@ const ChecklistListPage = () => {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>Error loading checklists.</div>;
-  }
+  if (!checklistList) throw error;
 
   return (
     <>

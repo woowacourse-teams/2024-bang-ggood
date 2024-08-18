@@ -24,7 +24,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => {
-    const { showToast } = useToast(3);
+    const { showToast } = useToast();
 
     return (
       <>

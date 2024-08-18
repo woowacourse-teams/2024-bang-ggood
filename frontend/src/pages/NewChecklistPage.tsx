@@ -13,7 +13,6 @@ import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { DEFAULT_TOAST_DURATION } from '@/constants/system';
 import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
 import useHandleTipBox from '@/hooks/useHandleTipBox';
 import useModalOpen from '@/hooks/useModalOpen';
@@ -25,7 +24,7 @@ import useOptionStore from '@/store/useOptionStore';
 import { ChecklistCategoryQnA } from '@/types/checklist';
 
 const NewChecklistPage = () => {
-  const { showToast } = useToast(DEFAULT_TOAST_DURATION);
+  const { showToast } = useToast();
   const { tabs } = useNewChecklistTabs();
   const { mutate: addChecklist } = useAddChecklistQuery();
 

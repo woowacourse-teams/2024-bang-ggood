@@ -1,5 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
 
+import FooterDefault from '@/components/_common/Footer/FooterDefault';
+import Header from '@/components/_common/Header/Header';
+import FooterLayout from '@/components/_common/layout/FooterLayout';
+import SkChecklistList from '@/components/skeleton/ChecklistList/SkChecklistLst';
 import { ROUTE_PATH } from '@/constants/routePath';
 import ChecklistCustomPage from '@/pages/ChecklistCustomPage';
 import ChecklistDetailPage from '@/pages/ChecklistDetailPage';
@@ -20,13 +24,16 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        element: <MainPage />,
-        path: ROUTE_PATH.home,
+        element: <FooterLayout />,
+        children: [
+          { element: <MainPage />, path: ROUTE_PATH.home },
+          {
+            element: <ChecklistListPage />,
+            path: ROUTE_PATH.checklistList,
+          },
+        ],
       },
-      {
-        element: <ChecklistListPage />,
-        path: ROUTE_PATH.checklistList,
-      },
+
       {
         element: <NewChecklistPage />,
         path: ROUTE_PATH.checklistNew,
@@ -54,6 +61,16 @@ const router = createBrowserRouter([
       {
         element: <LoginPage />,
         path: ROUTE_PATH.login,
+      },
+      {
+        element: (
+          <>
+            <Header center={<Header.Text>체크리스트</Header.Text>} />
+            <SkChecklistList />,
+            <FooterDefault />
+          </>
+        ),
+        path: '/sk',
       },
       {
         element: <NotFound />,

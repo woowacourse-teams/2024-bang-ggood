@@ -37,7 +37,7 @@ const ChecklistSection = () => {
         {checklists?.map((checklist: ChecklistPreview, index: number) => (
           <ChecklistMiniCard key={checklist.checklistId} index={index} checklist={checklist} />
         ))}
-        <S.NewButton label="+ 새로운 체크리스트 생성하기" isSquare size="full" onClick={handleNewChecklist} />
+        <S.NewButton label="+ 체크리스트 생성하기" isSquare size="full" onClick={handleNewChecklist} />
       </S.Container>
     </>
   );

@@ -1,6 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import Header from '@/components/_common/Header/Header';
 import FooterLayout from '@/components/_common/layout/FooterLayout';
 import { ROUTE_PATH } from '@/constants/routePath';
 import ChecklistCustomPage from '@/pages/ChecklistCustomPage';
@@ -59,14 +58,6 @@ const router = createBrowserRouter([
       {
         element: <LoginPage />,
         path: ROUTE_PATH.login,
-      },
-      {
-        element: (
-          <>
-            <Header center={<Header.Text>체크리스트</Header.Text>} />
-          </>
-        ),
-        path: '/sk',
       },
       {
         element: <NotFound />,

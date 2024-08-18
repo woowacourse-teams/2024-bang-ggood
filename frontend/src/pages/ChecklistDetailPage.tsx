@@ -6,6 +6,7 @@ import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import ChecklistAnswerSection from '@/components/ChecklistDetail/ChecklistAnswerSection';
 import RoomInfoSection from '@/components/ChecklistDetail/RoomInfoSection';
+import SkChecklistDetail from '@/components/skeleton/ChecklistDetail/SkChecklistDetail';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useDeleteChecklistQuery from '@/hooks/query/useDeleteChecklistQuery';
 import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery';
@@ -23,12 +24,12 @@ const ChecklistDetailPage = () => {
   const { checklistId } = useParams() as RouteParams;
 
   const { mutate: deleteChecklist } = useDeleteChecklistQuery();
-  const { data: checklist, isError } = useGetChecklistDetailQuery(Number(checklistId));
+  const { data: checklist, isError, isLoading } = useGetChecklistDetailQuery(Number(checklistId));
 
   const navigate = useNavigate();
 
   if (isError) {
-    navigate(-1);
+    navigate(ROUTE_PATH.checklistList);
   }
 
   const handleDelete = async () => {
@@ -39,6 +40,10 @@ const ChecklistDetailPage = () => {
       },
     });
   };
+
+  if (isLoading) {
+    return <SkChecklistDetail />;
+  }
 
   return (
     <>

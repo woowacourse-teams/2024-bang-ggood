@@ -14,6 +14,7 @@ export const ROUTE_PATH = {
   roomCompare: '/room-compare',
   /* article */
   article: '/article',
+  articleId: '/article/:articleId',
   articleOne: (id: number) => `/article/${id}`,
   /* TODO: 추후 추가될 페이지들의 라우트패스 */
   location: '/location',

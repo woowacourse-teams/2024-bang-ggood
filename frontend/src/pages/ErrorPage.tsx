@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { useNavigate, useRouteError } from 'react-router-dom';
 
+import HttpError from '@/apis/error/HttpError';
 import { BangBangCryIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
-import HttpError from '@/error/HttpError';
 import { flexColumn } from '@/styles/common';
 
 const ErrorPage = () => {
@@ -15,7 +15,7 @@ const ErrorPage = () => {
     navigate('/', { replace: true });
   };
 
-  const { message, name } = error as HttpError;
+  const { message } = error as HttpError;
 
   return (
     <>
@@ -25,8 +25,7 @@ const ErrorPage = () => {
         <S.TextWrapper>
           <S.Text>에러가 발생했습니다!</S.Text>
           <S.Text>{message}</S.Text>
-          <S.Text>{name}</S.Text>
-          <Button onClick={reset} label="홈페이지로 돌아가기" />
+          <S.HomeButton onClick={reset} label="홈페이지로 돌아가기" />
         </S.TextWrapper>
       </S.Wrapper>
     </>
@@ -47,7 +46,7 @@ const S = {
   `,
   Text: styled.div<{ $cursor?: boolean }>`
     font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: ${({ theme }) => theme.text.size.large};
+    font-size: ${({ theme }) => theme.text.size.medium};
     ${({ $cursor }) => $cursor && `cursor:pointer;`}
   `,
   TextWrapper: styled.div`
@@ -55,5 +54,8 @@ const S = {
     align-items: center;
     gap: 10px;
     margin-top: 20px;
+  `,
+  HomeButton: styled(Button)`
+    margin-top: 30px;
   `,
 };

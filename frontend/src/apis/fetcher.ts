@@ -1,4 +1,5 @@
-import HTTPError from '@/error/HttpError';
+import { HTTP_STATUS_CODE } from '@/apis/error/constants';
+import HTTPError from '@/apis/error/HttpError';
 
 interface RequestProps {
   url: string;
@@ -10,21 +11,27 @@ interface RequestProps {
 type FetchProps = Omit<RequestProps, 'method'>;
 
 const request = async ({ url, method, body, headers = {} }: RequestProps) => {
-  const response = await fetch(url, {
-    method,
-    credentials: 'include',
-    body: body ? JSON.stringify(body) : undefined,
-    headers: {
-      ...headers,
-    },
-  });
+  try {
+    const response = await fetch(url, {
+      method,
+      credentials: 'include',
+      body: body ? JSON.stringify(body) : undefined,
+      headers: {
+        ...headers,
+      },
+    });
 
-  if (!response.ok) {
-    throw new HTTPError(response.status);
+    if (!response.ok || !response) {
+      throw new HTTPError(response.status);
+    }
+    return response;
+  } catch (error) {
+    if (error instanceof HTTPError) {
+      throw error;
+    } else {
+      throw new HTTPError(HTTP_STATUS_CODE.NETWORK_ERROR);
+    }
   }
-
-  const responseJson = await response.json();
-  return responseJson;
 };
 
 const fetcher = {

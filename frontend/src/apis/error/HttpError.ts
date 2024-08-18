@@ -1,4 +1,4 @@
-import { HTTP_ERROR_MESSAGE, HTTP_STATUS_CODE } from '@/error/constants';
+import { HTTP_ERROR_MESSAGE, HTTP_STATUS_CODE } from '@/apis/error/constants';
 
 class HTTPError extends Error {
   statusCode: number;
@@ -8,7 +8,7 @@ class HTTPError extends Error {
     this.statusCode = statusCode;
 
     switch (true) {
-      case statusCode >= HTTP_STATUS_CODE.FETCH_FAILED:
+      case statusCode >= HTTP_STATUS_CODE.SERVER_ERROR:
         this.name = 'SERVER_ERROR';
         this.message = HTTP_ERROR_MESSAGE.SERVER_ERROR;
         break;
@@ -25,6 +25,8 @@ class HTTPError extends Error {
         this.message = HTTP_ERROR_MESSAGE.FETCH_FAILED;
         break;
     }
+
+    Object.setPrototypeOf(this, HTTPError.prototype);
   }
 }
 

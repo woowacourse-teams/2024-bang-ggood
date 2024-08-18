@@ -10,7 +10,7 @@ import { ChecklistPreview } from '@/types/checklist';
 
 const ChecklistSection = () => {
   const navigate = useNavigate();
-  const { data: checklists, isLoading } = useGetChecklistListQuery();
+  const { data: checklists, isLoading, error } = useGetChecklistListQuery();
 
   const handleClickList = () => {
     navigate(ROUTE_PATH.checklistList);
@@ -21,6 +21,8 @@ const ChecklistSection = () => {
   };
 
   if (isLoading) return <div>Article Loading</div>;
+
+  if (!checklists) throw error;
 
   return (
     <>

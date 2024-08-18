@@ -1,10 +1,10 @@
 export const HTTP_STATUS_CODE = {
   OK: 200,
   NETWORK_ERROR: 100,
-  BAD_REQUEST: 404,
-  UNAUTHORIZED: 401,
-  SERVER_ERROR: 500,
   FETCH_FAILED: 400,
+  UNAUTHORIZED: 401,
+  BAD_REQUEST: 404,
+  SERVER_ERROR: 500,
 } as const;
 
 export type HttpErrorName = Exclude<keyof typeof HTTP_STATUS_CODE, 'OK'>;

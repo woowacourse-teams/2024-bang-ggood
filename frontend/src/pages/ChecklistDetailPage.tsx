@@ -23,7 +23,7 @@ const ChecklistDetailPage = () => {
   const { checklistId } = useParams() as RouteParams;
 
   const { mutate: deleteChecklist } = useDeleteChecklistQuery();
-  const { data: checklist, isError } = useGetChecklistDetailQuery(Number(checklistId));
+  const { data: checklist, isError } = useGetChecklistDetailQuery(checklistId);
 
   const navigate = useNavigate();
 

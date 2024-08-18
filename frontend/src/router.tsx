@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import { ROUTE_PATH } from '@/constants/routePath';
+import ArticleDetailPage from '@/pages/ArticleDetailPage';
 import ArticleListPage from '@/pages/ArticleListPage';
 import ChecklistCustomPage from '@/pages/ChecklistCustomPage';
 import ChecklistDetailPage from '@/pages/ChecklistDetailPage';
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         element: <ArticleListPage />,
         path: ROUTE_PATH.article,
+      },
+      {
+        element: <ArticleDetailPage />,
+        path: ROUTE_PATH.articleId,
       },
       {
         element: <LoginPage />,

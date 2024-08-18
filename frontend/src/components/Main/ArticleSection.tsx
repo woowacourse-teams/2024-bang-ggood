@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import ArticlePreviewCard from '@/components/Main/ArticlePreviewCard';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { MAX_ARTICLES_DISPLAY_COUNT } from '@/constants/system';
-import useGetArticleQuery from '@/hooks/query/useGetArticleQuery';
+import useGetArticleListQuery from '@/hooks/query/useGetArticleListQuery';
 import { flexRow, flexSpaceBetween, title4 } from '@/styles/common';
 import { Article } from '@/types/article';
 
 const ArticleSection = () => {
   const navigate = useNavigate();
-  const { data: articles, isLoading } = useGetArticleQuery();
+  const { data: articles, isLoading } = useGetArticleListQuery();
 
   const handleClickShowMore = () => {
     navigate(ROUTE_PATH.article);

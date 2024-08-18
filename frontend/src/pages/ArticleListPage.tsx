@@ -4,13 +4,13 @@ import FooterDefault from '@/components/_common/Footer/FooterDefault';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import ArticleCard from '@/components/Article/ArticleCard';
-import useGetArticleQuery from '@/hooks/query/useGetArticleQuery';
+import useGetArticleListQuery from '@/hooks/query/useGetArticleListQuery';
 import { flexColumn, title3 } from '@/styles/common';
 import theme from '@/styles/theme';
 import { Article } from '@/types/article';
 
 const ArticleListPage = () => {
-  const { data: articles, isLoading } = useGetArticleQuery();
+  const { data: articles, isLoading } = useGetArticleListQuery();
 
   if (isLoading) return <div>Article Loading</div>;
 

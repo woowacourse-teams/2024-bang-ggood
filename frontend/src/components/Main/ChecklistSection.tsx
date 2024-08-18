@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/_common/Button/Button';
-import ChecklistMiniCard from '@/components/ChecklistList/ChecklistMiniCard';
+import ChecklistPreviewCard from '@/components/Main/ChecklistPreviewCard';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useGetChecklistListQuery from '@/hooks/query/useGetChecklistListQuery';
 import { boxShadow, boxShadowSpread, flexColumn, flexRow, flexSpaceBetween, title3, title4 } from '@/styles/common';
@@ -10,7 +10,7 @@ import { ChecklistPreview } from '@/types/checklist';
 
 const ChecklistSection = () => {
   const navigate = useNavigate();
-  const { data: checklists, isLoading, error } = useGetChecklistListQuery();
+  const { data: checklists, isLoading } = useGetChecklistListQuery();
 
   const handleClickList = () => {
     navigate(ROUTE_PATH.checklistList);
@@ -22,8 +22,6 @@ const ChecklistSection = () => {
 
   if (isLoading) return <div>Article Loading</div>;
 
-  if (!checklists) throw error;
-
   return (
     <>
       <S.Title>집 구할 때 꼭 필요한 목록</S.Title>
@@ -34,8 +32,8 @@ const ChecklistSection = () => {
           </S.ContainerTitle>
           <Button size="xSmall" label="전체 보기" onClick={handleClickList} />
         </S.Row>
-        {checklists?.map((checklist: ChecklistPreview, index: number) => (
-          <ChecklistMiniCard key={checklist.checklistId} index={index} checklist={checklist} />
+        {checklists.map((checklist: ChecklistPreview, index: number) => (
+          <ChecklistPreviewCard key={checklist.checklistId} index={index} checklist={checklist} />
         ))}
         <S.NewButton label="+ 새로운 체크리스트 생성하기" isSquare size="full" onClick={handleNewChecklist} />
       </S.Container>

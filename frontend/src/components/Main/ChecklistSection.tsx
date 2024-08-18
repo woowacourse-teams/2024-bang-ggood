@@ -2,8 +2,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/_common/Button/Button';
-import ChecklistMiniCard from '@/components/ChecklistList/ChecklistMiniCard';
-import SkChecklistSection from '@/components/skeleton/Main/SkChecklistSection';
+import ChecklistPreviewCard from '@/components/Main/ChecklistPreviewCard';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useGetChecklistListQuery from '@/hooks/query/useGetChecklistListQuery';
 import { boxShadow, boxShadowSpread, flexColumn, flexRow, flexSpaceBetween, title3, title4 } from '@/styles/common';
@@ -11,7 +10,7 @@ import { ChecklistPreview } from '@/types/checklist';
 
 const ChecklistSection = () => {
   const navigate = useNavigate();
-  const { data: checklists, isLoading, error } = useGetChecklistListQuery();
+  const { data: checklists, isLoading } = useGetChecklistListQuery();
 
   const handleClickList = () => {
     navigate(ROUTE_PATH.checklistList);
@@ -21,9 +20,7 @@ const ChecklistSection = () => {
     navigate(ROUTE_PATH.checklistNew);
   };
 
-  if (isLoading) return <SkChecklistSection />;
-
-  if (!checklists) throw error;
+  if (isLoading) return <div>Article Loading</div>;
 
   return (
     <>
@@ -35,10 +32,10 @@ const ChecklistSection = () => {
           </S.ContainerTitle>
           <Button size="xSmall" label="전체 보기" onClick={handleClickList} />
         </S.Row>
-        {checklists?.map((checklist: ChecklistPreview, index: number) => (
-          <ChecklistMiniCard key={checklist.checklistId} index={index} checklist={checklist} />
+        {checklists.map((checklist: ChecklistPreview, index: number) => (
+          <ChecklistPreviewCard key={checklist.checklistId} index={index} checklist={checklist} />
         ))}
-        <S.NewButton label="+ 체크리스트 생성하기" isSquare size="full" onClick={handleNewChecklist} />
+        <S.NewButton label="+ 새로운 체크리스트 생성하기" isSquare size="full" onClick={handleNewChecklist} />
       </S.Container>
     </>
   );

@@ -13,7 +13,7 @@ interface Props {
   checklist: ChecklistPreview;
 }
 
-const ChecklistPreviewCard = ({ checklist }: Props) => {
+const ChecklistCard = ({ checklist }: Props) => {
   const navigate = useNavigate();
   const { checklistId, roomName, address, createdAt, deposit, rent, summary, isLiked } = checklist;
 
@@ -47,7 +47,7 @@ const ChecklistPreviewCard = ({ checklist }: Props) => {
   );
 };
 
-export default ChecklistPreviewCard;
+export default ChecklistCard;
 
 const S = {
   Container: styled.div`
@@ -89,13 +89,14 @@ const S = {
   SummaryWrapper: styled.div`
     ${flexRow}
     align-items: center;
-    gap: 5px;
+    padding-left: 8px;
+
+    background-color: ${({ theme }) => theme.palette.grey100};
+    border-radius: 10px;
   `,
   SummaryBox: styled.div`
     box-sizing: content-box;
     padding: 8px;
-
-    background-color: ${({ theme }) => theme.palette.grey100};
 
     font-size: ${({ theme }) => theme.text.size.small};
     border-radius: 4px;

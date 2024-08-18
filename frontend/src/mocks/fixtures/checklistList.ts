@@ -3,7 +3,7 @@ export const checklistList = {
     {
       checklistId: 1,
       roomName: '스튜디오 아파트',
-      address: '미국 애니타운 메인 스트리트',
+      address: '서울 ',
       deposit: 500,
       rent: 65,
       station: '잠실역',

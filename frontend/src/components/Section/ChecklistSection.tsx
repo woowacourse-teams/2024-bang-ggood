@@ -32,7 +32,7 @@ const ChecklistSection = () => {
           </S.ContainerTitle>
           <Button size="xSmall" label="전체 보기" onClick={handleClickList} />
         </S.Row>
-        {checklists.map((checklist: ChecklistPreview, index: number) => (
+        {checklists?.map((checklist: ChecklistPreview, index: number) => (
           <ChecklistMiniCard key={checklist.checklistId} index={index} checklist={checklist} />
         ))}
         <S.NewButton label="+ 새로운 체크리스트 생성하기" isSquare size="full" onClick={handleNewChecklist} />

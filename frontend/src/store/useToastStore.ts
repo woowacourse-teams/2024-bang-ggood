@@ -1,9 +1,13 @@
 import { create } from 'zustand';
 
+export type ToastType = 'positive' | 'negative';
+
 interface toastState {
   toast: string | null;
+  colorType: ToastType;
   showToast: (message: string) => void;
   hideToast: () => void;
+  setColorType: (type: ToastType) => void;
 }
 /**
  * @description 전역 토스트를 보여주는 컨텍스트입니다.useToast 라는 훅으로만 조작합니다.
@@ -14,11 +18,15 @@ interface toastState {
 
 const useToastStore = create<toastState>(set => ({
   toast: null,
+  colorType: 'positive',
   showToast: (message: string) => {
     set(state => ({ ...state, toast: message }));
   },
   hideToast: () => {
     set(state => ({ ...state, toast: null }));
+  },
+  setColorType: (newType: ToastType) => {
+    set({ colorType: newType });
   },
 }));
 

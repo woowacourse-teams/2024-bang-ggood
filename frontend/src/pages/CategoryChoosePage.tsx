@@ -9,7 +9,6 @@ import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { DEFAULT_TOAST_DURATION } from '@/constants/system';
 import useToast from '@/hooks/useToast';
 import { flexColumn, flexRow, title2 } from '@/styles/common';
 import { Category } from '@/types/category';
@@ -19,7 +18,7 @@ const MAX_SELECT_CATEGORY_COUNT = 3;
 const CategoryChoosePage = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number[]>([]);
-  const { showToast } = useToast(DEFAULT_TOAST_DURATION);
+  const { showToast } = useToast();
 
   const navigate = useNavigate();
 

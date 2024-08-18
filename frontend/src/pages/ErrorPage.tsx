@@ -9,7 +9,6 @@ import { flexColumn } from '@/styles/common';
 
 const ErrorPage = () => {
   const error = useRouteError() as Error;
-
   const navigate = useNavigate();
 
   const reset = () => {

@@ -1,5 +1,4 @@
-import { HTTP_STATUS_CODE } from '@/error/constants';
-import HttpError from '@/error/HttpError';
+import HTTPError from '@/error/HttpError';
 
 interface RequestProps {
   url: string;
@@ -7,11 +6,10 @@ interface RequestProps {
   body?: object[] | object;
   headers?: Record<string, string>;
   credentials?: string;
-  errorMessage?: string;
 }
 type FetchProps = Omit<RequestProps, 'method'>;
 
-const request = async ({ url, method, body, headers = {}, errorMessage }: RequestProps) => {
+const request = async ({ url, method, body, headers = {} }: RequestProps) => {
   const response = await fetch(url, {
     method,
     credentials: 'include',
@@ -22,32 +20,20 @@ const request = async ({ url, method, body, headers = {}, errorMessage }: Reques
   });
 
   if (!response.ok) {
-    throw new Error(`${response.status} ${errorMessage}`);
+    throw new HTTPError(response.status);
   }
 
-  return response;
-};
-
-const requestWithHandlingError = async ({ url, method, body, headers = {}, errorMessage }: RequestProps) => {
-  const response = await request({ url, method, body, headers, errorMessage });
-  if (!response) {
-    throw new HttpError(HTTP_STATUS_CODE.NETWORK_ERROR);
-  }
-
-  if (!response.ok) {
-    throw new HttpError(response.status);
-  }
-
-  return response;
+  const responseJson = await response.json();
+  return responseJson;
 };
 
 const fetcher = {
   get({ url, headers }: FetchProps) {
-    return requestWithHandlingError({ url, method: 'GET', headers });
+    return request({ url, method: 'GET', headers });
   },
 
   post({ url, body, headers }: FetchProps) {
-    return requestWithHandlingError({
+    return request({
       url,
       method: 'POST',
       body,
@@ -56,11 +42,11 @@ const fetcher = {
   },
 
   delete({ url, headers }: FetchProps) {
-    return requestWithHandlingError({ url, method: 'DELETE', headers });
+    return request({ url, method: 'DELETE', headers });
   },
 
   patch({ url, body, headers }: FetchProps) {
-    return requestWithHandlingError({
+    return request({
       url,
       method: 'PATCH',
       body,
@@ -69,7 +55,7 @@ const fetcher = {
   },
 
   put({ url, body, headers }: FetchProps) {
-    return requestWithHandlingError({
+    return request({
       url,
       method: 'PUT',
       body,

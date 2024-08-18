@@ -4,18 +4,25 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider } from 'react-router-dom';
 
 import Toast from '@/components/_common/Toast/Toast';
-import { DEFAULT_TOAST_DURATION } from '@/constants/system';
 import useToast from '@/hooks/useToast';
 import router from '@/router';
 import { baseStyle } from '@/styles/global';
 import theme from '@/styles/theme';
 
 const App = () => {
-  const { showToast } = useToast(DEFAULT_TOAST_DURATION);
+  const { showToast } = useToast({ type: 'negative' });
 
   const queryClient = new QueryClient({
+    defaultOptions: {
+      mutations: {
+        onError: error => showToast(error.message),
+      },
+      queries: {
+        throwOnError: true,
+      },
+    },
     queryCache: new QueryCache({
-      onError: error => showToast(`Something went wrong: ${error.message}`),
+      onError: error => showToast(error.message),
     }),
   });
 

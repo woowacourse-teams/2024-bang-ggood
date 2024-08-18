@@ -10,14 +10,13 @@ import TipBox from '@/components/_common/TipBox/TipBox';
 import { ChecklistCustomTabs } from '@/components/ChecklistCustom/CustomTabs';
 import QuestionListTemplate from '@/components/ChecklistCustom/QuestionListTemplate/QuestionListTemplate';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { DEFAULT_TOAST_DURATION } from '@/constants/system';
 import useHandleTipBox from '@/hooks/useHandleTipBox';
 import useToast from '@/hooks/useToast';
 import useChecklistCustomStore from '@/store/useChecklistCustomStore';
 import { flexCenter, flexColumn, title2 } from '@/styles/common';
 
 const ChecklistCustomPage = () => {
-  const { showToast } = useToast(DEFAULT_TOAST_DURATION);
+  const { showToast } = useToast();
   const navigate = useNavigate();
 
   const { setValidCategory, setChecklistAllQuestionList, selectedQuestions } = useChecklistCustomStore();

@@ -9,14 +9,16 @@ import { Article } from '@/types/article';
 
 const ArticleSection = () => {
   const navigate = useNavigate();
-  const { data: articles, isLoading } = useGetArticleQuery();
-
+  const { data: articles, isLoading, isError } = useGetArticleQuery();
   const handleClickShowMore = () => {
     navigate(ROUTE_PATH.article);
   };
 
   if (isLoading) return <div>Article Loading</div>;
 
+  if (isError) {
+    return <div>에러</div>;
+  }
   return (
     <>
       <S.Row>

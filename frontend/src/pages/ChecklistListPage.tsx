@@ -6,7 +6,7 @@ import FloatingButton from '@/components/_common/FloatingButton/FloatingButton';
 import FooterDefault from '@/components/_common/Footer/FooterDefault';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
-import ChecklistPreviewCard from '@/components/ChecklistList/ChecklistCard';
+import ChecklistCard from '@/components/ChecklistList/ChecklistCard';
 import CustomBanner from '@/components/ChecklistList/CustomBanner';
 import NoChecklistTemplate from '@/components/ChecklistList/NoChecklistTemplate';
 import { ROUTE_PATH } from '@/constants/routePath';
@@ -36,15 +36,15 @@ const ChecklistListPage = () => {
   return (
     <>
       <Header center={<Header.Text>체크리스트</Header.Text>} />
-      <S.FlexBox>
-        <CustomBanner onClick={handleClickMoveCustomPage} />
-      </S.FlexBox>
-      <Layout>
+      <Layout withHeader withFooter>
+        <S.FlexBox>
+          <CustomBanner onClick={handleClickMoveCustomPage} />
+        </S.FlexBox>
         <S.ListBox>
           {checklistList.length ? (
             <>
               {checklistList?.map((checklist: ChecklistPreview) => (
-                <ChecklistPreviewCard key={checklist.checklistId} checklist={checklist} />
+                <ChecklistCard key={checklist.checklistId} checklist={checklist} />
               ))}
             </>
           ) : (
@@ -64,7 +64,7 @@ export default ChecklistListPage;
 
 const S = {
   FlexBox: styled.div`
-    padding: 0 16px;
+    margin-bottom: 16px;
   `,
   ListBox: styled.div`
     ${flexColumn}

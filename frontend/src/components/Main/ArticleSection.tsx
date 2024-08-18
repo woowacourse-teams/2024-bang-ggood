@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import ArticlePreviewCard from '@/components/Main/ArticlePreviewCard';
 import { ROUTE_PATH } from '@/constants/routePath';
+import { MAX_ARTICLES_DISPLAY_COUNT } from '@/constants/system';
 import useGetArticleQuery from '@/hooks/query/useGetArticleQuery';
 import { flexRow, flexSpaceBetween, title4 } from '@/styles/common';
 import { Article } from '@/types/article';
@@ -24,7 +25,7 @@ const ArticleSection = () => {
         <S.ShowMore onClick={handleClickShowMore}>더보기</S.ShowMore>
       </S.Row>
       <S.CardList>
-        {articles?.slice(0, 4).map((article: Article, index: number) => (
+        {articles?.slice(0, MAX_ARTICLES_DISPLAY_COUNT).map((article: Article, index: number) => (
           <S.CardWrapper key={article.articleId}>
             <ArticlePreviewCard index={index} article={article} />
           </S.CardWrapper>

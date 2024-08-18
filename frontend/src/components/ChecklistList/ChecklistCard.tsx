@@ -13,7 +13,7 @@ interface Props {
   checklist: ChecklistPreview;
 }
 
-const ChecklistPreviewCard = ({ checklist }: Props) => {
+const ChecklistCard = ({ checklist }: Props) => {
   const navigate = useNavigate();
   const { checklistId, roomName, address, createdAt, deposit, rent, summary, isLiked } = checklist;
 
@@ -47,7 +47,7 @@ const ChecklistPreviewCard = ({ checklist }: Props) => {
   );
 };
 
-export default ChecklistPreviewCard;
+export default ChecklistCard;
 
 const S = {
   Container: styled.div`

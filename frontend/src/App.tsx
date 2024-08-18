@@ -14,8 +14,8 @@ const App = () => {
 
   const queryClient = new QueryClient({
     defaultOptions: {
-      mutations: { retry: 0, onError: error => showToast(error.message) },
-      queries: { retry: 0, throwOnError: true },
+      mutations: { onError: error => showToast(error.message) },
+      queries: { throwOnError: true },
     },
     queryCache: new QueryCache({
       onError: error => showToast(error.message),

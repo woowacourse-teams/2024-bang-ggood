@@ -12,7 +12,7 @@ describe('useToast 테스트', () => {
     const TOAST_DURATION_MINUTE = TOAST_DURATION / 1000;
 
     it(`토스트에 메세지를 적으면 토스트가 메세지가 설정된다.`, async () => {
-      const { result } = renderHook(() => useToast());
+      const { result } = renderHook(() => useToast({ durationMinute: TOAST_DURATION_MINUTE }));
 
       act(() => {
         result.current.showToast(TOAST_MESSAGE);
@@ -22,7 +22,7 @@ describe('useToast 테스트', () => {
     });
 
     it(`토스트를 나오게 한 후 ${TOAST_DURATION_MINUTE}초 뒤에 토스트의 메세지 state가 null이 된다.`, async () => {
-      const { result } = renderHook(() => useToast());
+      const { result } = renderHook(() => useToast({ durationMinute: TOAST_DURATION_MINUTE }));
 
       act(() => {
         result.current.showToast(TOAST_MESSAGE);
@@ -32,7 +32,7 @@ describe('useToast 테스트', () => {
     });
 
     it(`토스트 호출을 두번하면 이후 메세지로 토스가 바뀐다.`, async () => {
-      const { result } = renderHook(() => useToast());
+      const { result } = renderHook(() => useToast({ durationMinute: TOAST_DURATION_MINUTE }));
       const CHANGED_TOAST_MESSAGE = '토스트가 바뀌었다.';
 
       act(() => {

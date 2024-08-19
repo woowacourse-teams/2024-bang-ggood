@@ -73,7 +73,7 @@ const S = {
   OptionList: styled.ul`
     position: absolute;
     ${flexColumn}
-    z-index: 1;
+    z-index: ${({ theme }) => theme.zIndex.DROPDOWN};
     width: 125px;
     max-height: 260px;
     margin-top: 4px;
@@ -87,7 +87,7 @@ const S = {
   OptionItem: styled.li`
     ${flexRow}
     align-items: center;
-    z-index: 1;
+    z-index: ${({ theme }) => theme.zIndex.DROPDOWN};
     width: 90%;
     margin: 5px 5%;
     padding: 5px 10px;

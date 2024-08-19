@@ -1,5 +1,5 @@
-import { HTTP_STATUS_CODE } from '@/apis/error/constants';
 import HTTPError from '@/apis/error/HttpError';
+import { HTTP_STATUS_CODE } from '@/constants/httpErrorMessage';
 
 interface RequestProps {
   url: string;
@@ -26,7 +26,7 @@ const request = async ({ url, method, body, headers = {} }: RequestProps) => {
     }
     return response;
   } catch (error) {
-    //TODO: 나중에 배포시 삭제
+    // TODO: 나중에 배포시 삭제
     console.error(error);
     if (error instanceof HTTPError) {
       throw error;

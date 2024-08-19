@@ -16,16 +16,24 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
         return findById(id).orElseThrow(() -> new BangggoodException(ExceptionCode.ARTICLE_NOT_FOUND));
     }
 
-    @Query("SELECT a FROM Article a WHERE a.id = :id AND a.deleted = false")
+    @Query("SELECT a FROM Article a " +
+            "WHERE a.id = :id " +
+            "AND a.deleted = false")
     Optional<Article> findById(@Param("id") Long id);
 
-    @Query("SELECT a FROM Article a WHERE a.deleted = false")
+    @Query("SELECT a FROM Article a " +
+            "WHERE a.deleted = false")
     List<Article> findAll();
 
-    @Query("SELECT a FROM Article a WHERE a.deleted = false ORDER BY a.createdAt DESC LIMIT :count")
+    @Query("SELECT a FROM Article a " +
+            "WHERE a.deleted = false " +
+            "ORDER BY a.createdAt DESC " +
+            "LIMIT :count")
     List<Article> findLatest(@Param("count") int count);
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)
-    @Query("UPDATE Article a SET a.deleted = true WHERE a.id = :id")
+    @Query("UPDATE Article a " +
+            "SET a.deleted = true " +
+            "WHERE a.id = :id")
     void deleteById(@Param("id") Long id);
 }

@@ -4,6 +4,7 @@ import Layout from '@/components/_common/layout/Layout';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import ChecklistQuestion from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
 import useChecklistStore from '@/store/useChecklistStore';
+import { flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
 
 const NewChecklistTemplate = () => {
@@ -25,21 +26,16 @@ const NewChecklistTemplate = () => {
 
 export default NewChecklistTemplate;
 
-const ContentBox = styled.div`
-  display: flex;
-  margin-top: 40px;
-
-  background-color: ${({ theme }) => theme.palette.background};
-  gap: 10px;
-  flex-direction: column;
-`;
-
-const QuestionBox = styled.div`
-  background-color: ${({ theme }) => theme.palette.white};
-  border-radius: 8px;
-`;
-
 const S = {
-  ContentBox,
-  QuestionBox,
+  ContentBox: styled.div`
+    ${flexColumn}
+    margin-bottom: 20px;
+
+    background-color: ${({ theme }) => theme.palette.background};
+    gap: 10px;
+  `,
+  QuestionBox: styled.div`
+    background-color: ${({ theme }) => theme.palette.white};
+    border-radius: 8px;
+  `,
 };

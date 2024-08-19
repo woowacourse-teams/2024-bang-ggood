@@ -21,33 +21,29 @@ const Tab = ({ id, onMoveTab, name, active, hasIndicator }: TabProps) => {
 
 export default Tab;
 
-const Container = styled.div<{ active: boolean }>`
-  position: relative;
-  z-index: ${({ theme }) => theme.zIndex.TABS};
-  ${flexCenter};
-  margin-top: 10px;
-  padding: 10px 16px;
+const S = {
+  Container: styled.div<{ active: boolean }>`
+    position: relative;
+    z-index: ${({ theme }) => theme.zIndex.TABS};
+    ${flexCenter};
+    margin-top: 10px;
+    padding: 10px 16px;
 
-  color: ${({ theme, active }) => (active ? theme.palette.yellow600 : theme.palette.black)};
-  font-weight: ${({ theme }) => theme.text.weight.bold};
-  cursor: pointer;
-  border-bottom: ${({ active, theme }) =>
-    active ? `3px solid ${theme.palette.yellow400}` : `3px solid ${theme.palette.yellow100}`};
-`;
+    color: ${({ theme, active }) => (active ? theme.palette.yellow600 : theme.palette.black)};
+    font-weight: ${({ theme }) => theme.text.weight.bold};
+    cursor: pointer;
+    border-bottom: ${({ active, theme }) =>
+      active ? `3px solid ${theme.palette.yellow400}` : `3px solid ${theme.palette.yellow100}`};
+  `,
+  UncompletedIndicator: styled.div`
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 5px;
+    height: 5px;
+    margin-left: 8px;
 
-const UncompletedIndicator = styled.div`
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 5px;
-  height: 5px;
-  margin-left: 8px;
-
-  background-color: ${({ theme }) => theme.palette.grey400};
-  border-radius: 50%;
-`;
-
-export const S = {
-  Container,
-  UncompletedIndicator,
+    background-color: ${({ theme }) => theme.palette.grey400};
+    border-radius: 50%;
+  `,
 };

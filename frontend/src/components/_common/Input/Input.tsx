@@ -35,13 +35,13 @@ interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const S = {
   Input: styled.input<StyledProps>`
+    width: ${({ width }) => width};
     height: 40px;
     padding: 6px 11px;
     border: 2px solid ${({ $color, theme }) => ($color ? $color : theme.palette.grey200)};
     border-radius: 4px;
 
     color: ${({ $color, theme }) => ($color ? $color : theme.palette.grey600)};
-    font-weight: ${({ theme }) => theme.text.weight.medium};
     font-size: ${({ theme }) => theme.text.size.medium};
     outline-color: ${({ theme }) => theme.palette.grey400};
     ${flexCenter}

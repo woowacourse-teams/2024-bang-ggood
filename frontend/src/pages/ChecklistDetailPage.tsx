@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import DeleteModal from '@/components/_common/DeleteModal/DeleteModal';
+import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import ChecklistAnswerSection from '@/components/ChecklistDetail/ChecklistAnswerSection';
@@ -47,12 +48,21 @@ const ChecklistDetailPage = () => {
     });
   };
 
+  const handleEditButton = () => {
+    navigate(ROUTE_PATH.checklistEditById(Number(checklistId)));
+  };
+
   return (
     <>
       <Header
         left={<Header.Backward />}
         center={<Header.Text>{formattedDate(checklist?.room?.createdAt ?? '')}</Header.Text>}
-        right={<Header.TextButton onClick={modalOpen}>삭제</Header.TextButton>}
+        right={
+          <FlexBox.Horizontal gap="10px">
+            <Header.TextButton onClick={handleEditButton}>편집</Header.TextButton>
+            <Header.TextButton onClick={modalOpen}>삭제</Header.TextButton>
+          </FlexBox.Horizontal>
+        }
       />
       <Layout bgColor={theme.palette.grey50}>
         <S.Wrapper>

@@ -29,7 +29,6 @@ const ChecklistQuestion = ({ question }: Props) => {
     <S.Container>
       <S.Question>
         <S.Title>{title}</S.Title>
-        {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
       </S.Question>
       <S.Options>
         {ANSWER_OPTIONS.map(option => (

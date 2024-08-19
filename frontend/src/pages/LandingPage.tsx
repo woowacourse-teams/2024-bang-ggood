@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 import FirstSection from '@/components/Landing/FirstSection';
+import FourthSection from '@/components/Landing/FourthSection';
 import SecondSection from '@/components/Landing/SecondSection';
 import ThirdSection from '@/components/Landing/ThirdSection';
 import { flexColumn } from '@/styles/common';
@@ -24,6 +25,10 @@ const SectionColors: Record<string, Color> = {
     background: theme.palette.green100,
     textType: 'dark',
   },
+  fourth: {
+    background: theme.palette.white,
+    textType: 'dark',
+  },
 };
 
 const LandingPage = () => {
@@ -37,6 +42,9 @@ const LandingPage = () => {
       </S.Section>
       <S.Section height={760} color={SectionColors.third.background} textColor={SectionColors.third.textType}>
         <ThirdSection />
+      </S.Section>
+      <S.Section height={830} color={SectionColors.fourth.background} textColor={SectionColors.fourth.textType}>
+        <FourthSection />
       </S.Section>
     </S.Container>
   );

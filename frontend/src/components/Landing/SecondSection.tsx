@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRef } from 'react';
 
-import { ImageBox } from '@/components/Landing/style';
+import { Highlight, ImageBox } from '@/components/Landing/style';
 import useIntersection from '@/hooks/useIntersection';
 import { flexColumn } from '@/styles/common';
 
@@ -17,13 +17,13 @@ const SecondSection = () => {
         <S.Text>
           방끗은 방 구할 때 기록하는
           <br />
-          <S.Highlight>체크리스트 서비스</S.Highlight>에요!
+          <Highlight>체크리스트 서비스</Highlight>에요!
         </S.Text>
         <S.Text>
-          새집을 구하러 다니는 당신이 <br />한 방을 둘러보는 시간은 <S.Bold>단 10분!</S.Bold>
+          새집을 구하러 다니는 당신이 <br />한 방을 둘러보는 시간은 <S.Bold>단 10분 ⏰ </S.Bold>
         </S.Text>
         <S.Text>
-          <S.Highlight>방끗</S.Highlight>은 그 귀중한 시간을
+          <Highlight>방끗</Highlight>은 그 귀중한 시간을
           <br />
           <S.Bold>효율적으로 쓰도록</S.Bold>
           <br /> 도와주기 위해 태어났어요.
@@ -58,12 +58,6 @@ const S = {
   `,
   Bold: styled.span`
     font-weight: ${({ theme }) => theme.text.weight.semiBold};
-  `,
-  Highlight: styled.span`
-    font-weight: ${({ theme }) => theme.text.weight.semiBold};
-    width: fit-content;
-    padding: 3px;
-    background-color: ${({ theme }) => theme.palette.yellow500};
   `,
 };
 export default SecondSection;

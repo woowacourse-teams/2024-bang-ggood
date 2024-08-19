@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRef } from 'react';
 
-import { ImageBox } from '@/components/Landing/style';
+import { Bold, Container, ImageBox, TextBox } from '@/components/Landing/style';
 import useIntersection from '@/hooks/useIntersection';
 import { boxShadow, flexCenter, flexColumn, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
@@ -13,13 +13,13 @@ const ThirdSection = () => {
   const { isIntersecting } = useIntersection(infiniteScrollConfig, ref);
 
   return (
-    <S.Container>
-      <S.TextBox>
+    <Container>
+      <TextBox>
         <S.Text>
           방 구할 때 어디를 봐야 할지 <br />더 이상 고민하지 마세요!
         </S.Text>
         <S.Text>
-          <S.Bold>방구하기 N년차 전문가</S.Bold>들이 <br />
+          <Bold>방구하기 N년차 전문가</Bold>들이 <br />
           직접 방을 보러다니면서 <br />
           <S.Highlight>제일 중요하고 필요한 질문들</S.Highlight>만
           <br /> 모아놨어요.
@@ -48,42 +48,27 @@ const ThirdSection = () => {
           </S.Card>
         </S.CardList>
         <S.Text margin={15}>
-          짧은 시간동안 <S.Bold>O X</S.Bold> 로 빠르게 체크해요!
+          짧은 시간동안 <Bold>O X</Bold> 로 빠르게 체크해요!
         </S.Text>
         <S.CenterBox>
           <S.ImageBox isIntersecting={isIntersecting}>
             <img src="/image/checkScreenShot.png" width="300px" />
           </S.ImageBox>
         </S.CenterBox>
-      </S.TextBox>
-    </S.Container>
+      </TextBox>
+    </Container>
   );
 };
 
 export default ThirdSection;
 
 const S = {
-  Container: styled.div`
-    ${flexColumn}
-    line-height: 1.5;
-  `,
   Highlight: styled.span`
     font-weight: ${({ theme }) => theme.text.weight.semiBold};
     width: fit-content;
     padding: 3px;
 
     background-color: ${({ theme }) => theme.palette.yellow500};
-  `,
-  Bold: styled.span`
-    font-weight: ${({ theme }) => theme.text.weight.semiBold};
-  `,
-  TextBox: styled.div`
-    ${flexColumn};
-    width: 100%;
-    gap: px;
-    justify-content: center;
-    margin-top: 30px;
-    text-align: center;
   `,
   Observer: styled.div`
     height: 5px;

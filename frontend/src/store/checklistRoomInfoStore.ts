@@ -27,9 +27,10 @@ export const initialRoomInfo = {
   // TODO: UT 를 위한 기본 더미 이름
   roomName: '8월 14일 1번째 방',
   address: undefined,
-  station: undefined,
   deposit: undefined,
   rent: undefined,
+  maintenanceFee: undefined,
+  station: undefined,
   walkingTime: undefined,
   size: undefined,
   floor: undefined,
@@ -42,7 +43,6 @@ export const initialRoomInfo = {
   occupancyPeriod: '초',
   summary: undefined,
   memo: undefined,
-  maintenanceFee: undefined,
 } as const;
 
 const roomInfoType = {
@@ -51,6 +51,7 @@ const roomInfoType = {
   station: 'string',
   deposit: 'number',
   rent: 'number',
+  maintenanceFee: 'number',
   walkingTime: 'number',
   size: 'number',
   floor: 'number',
@@ -64,7 +65,6 @@ const roomInfoType = {
   summary: 'string',
   memo: 'string',
   createdAt: 'string',
-  maintenanceFee: 'string',
   includedUtilities: '',
 } as const;
 
@@ -106,7 +106,7 @@ const checklistRoomInfoStore = createStore<
   errorMessage: initialErrorMessages,
   actions: {
     set: (name, value) => {
-      // 다 지우기할 시 다 지워주고, 에러메시지도 지우기
+      // 다 지우기할 시 다 지워주고, 에러메시지도 지워진다.
       if (value === '') {
         get().actions._updateErrorMsg(name as keyof RoomInfo, '');
         get().actions._update(name as keyof RoomInfo, '');

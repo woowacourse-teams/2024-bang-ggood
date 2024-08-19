@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import FooterLayout from '@/components/_common/layout/FooterLayout';
+import AuthGuard from '@/components/Auth/AuthGuard';
 import { ROUTE_PATH } from '@/constants/routePath';
 import ArticleDetailPage from '@/pages/ArticleDetailPage';
 import ArticleListPage from '@/pages/ArticleListPage';
@@ -15,11 +16,10 @@ import NewChecklistPage from '@/pages/NewChecklistPage';
 import NotFound from '@/pages/NotFound';
 import RoomComparePage from '@/pages/RoomComparePage';
 import RoomCompareSelectPage from '@/pages/RoomCompareSelectPage';
-import RootLayout from '@/RootLayout';
 
 const router = createBrowserRouter([
   {
-    element: <RootLayout />,
+    element: <AuthGuard />,
     errorElement: <ErrorPage />,
     children: [
       {

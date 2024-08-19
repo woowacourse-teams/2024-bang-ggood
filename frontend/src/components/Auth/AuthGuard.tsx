@@ -10,7 +10,7 @@ const isAuthenticated = () => {
   return localStorage.getItem(STORAGE_KEYS.LOGIN) !== null;
 };
 
-const RootLayout = () => {
+const AuthGuard = () => {
   const navigate = useNavigate();
   useGaTracker();
 
@@ -23,4 +23,4 @@ const RootLayout = () => {
   return <Outlet />;
 };
 
-export default RootLayout;
+export default AuthGuard;

@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import FifthSection from '@/components/Landing/FifthSection';
 import FirstSection from '@/components/Landing/FirstSection';
 import FourthSection from '@/components/Landing/FourthSection';
 import SecondSection from '@/components/Landing/SecondSection';
@@ -12,6 +13,7 @@ interface Color {
   background: string;
   textType: TextType;
 }
+
 const SectionColors: Record<string, Color> = {
   first: {
     background: theme.palette.white,
@@ -29,12 +31,16 @@ const SectionColors: Record<string, Color> = {
     background: theme.palette.white,
     textType: 'dark',
   },
+  fifth: {
+    background: theme.palette.yellow200,
+    textType: 'dark',
+  },
 };
 
 const LandingPage = () => {
   return (
     <S.Container>
-      <S.Section color={SectionColors.first.background} textColor={SectionColors.first.textType}>
+      <S.Section height={600} color={SectionColors.first.background} textColor={SectionColors.first.textType}>
         <FirstSection />
       </S.Section>
       <S.Section color={SectionColors.second.background} textColor={SectionColors.second.textType}>
@@ -43,8 +49,11 @@ const LandingPage = () => {
       <S.Section height={760} color={SectionColors.third.background} textColor={SectionColors.third.textType}>
         <ThirdSection />
       </S.Section>
-      <S.Section height={830} color={SectionColors.fourth.background} textColor={SectionColors.fourth.textType}>
+      <S.Section height={900} color={SectionColors.fourth.background} textColor={SectionColors.fourth.textType}>
         <FourthSection />
+      </S.Section>
+      <S.Section height={250} color={SectionColors.fifth.background} textColor={SectionColors.fourth.textType}>
+        <FifthSection />
       </S.Section>
     </S.Container>
   );

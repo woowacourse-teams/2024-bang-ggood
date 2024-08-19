@@ -1,15 +1,18 @@
 import styled from '@emotion/styled';
 import { useRef } from 'react';
 
-import { LampIcon, PencilIcon } from '@/assets/assets';
+import ArticleCard from '@/components/Article/ArticleCard';
 import { Bold, Container, Highlight, ImageBox, Text, TextBox } from '@/components/Landing/style';
 import useIntersection from '@/hooks/useIntersection';
+import { articleList } from '@/mocks/fixtures/articleList';
 
 const FourthSection = () => {
   const ref = useRef<HTMLDivElement>(null);
+  const ref2 = useRef<HTMLDivElement>(null);
 
   const infiniteScrollConfig = { threshold: 0.15, rootMargin: '50px' };
   const { isIntersecting } = useIntersection(infiniteScrollConfig, ref);
+  const { isIntersecting: isIntersecting2 } = useIntersection(infiniteScrollConfig, ref);
 
   return (
     <Container>
@@ -26,17 +29,15 @@ const FourthSection = () => {
         <ImageBox isIntersecting={isIntersecting}>
           <img src="/image/mainScreenShot.png" width="200px" />
         </ImageBox>
-        <S.PencilIconBox>
-          <PencilIcon width={100} height={120} />
-        </S.PencilIconBox>
         <Text margin={40}>
           방 구하기 초보라 아무것도 모르겠다면,
           <br />
           <Highlight> 집 구하기 꿀팁이 담긴 아티클(article)</Highlight>을
           <br /> 읽으면서 방 구하기 고수가 되어보아요!
-          <S.LampIconBox>
-            <LampIcon width={100} />
-          </S.LampIconBox>
+          <S.Observer ref={ref2} />
+          <ImageBox isIntersecting={isIntersecting2}>
+            <ArticleCard index={1} article={articleList.articles[2]} />
+          </ImageBox>
         </Text>
       </TextBox>
     </Container>
@@ -55,5 +56,6 @@ const S = {
   `,
   LampIconBox: styled.div`
     margin-top: 20px;
+    position: absolute;
   `,
 };

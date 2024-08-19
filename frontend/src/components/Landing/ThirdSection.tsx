@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { useRef } from 'react';
 
+import { PencilIcon } from '@/assets/assets';
 import { Bold, Container, ImageBox, TextBox } from '@/components/Landing/style';
 import useIntersection from '@/hooks/useIntersection';
 import { boxShadow, flexCenter, flexColumn, title4 } from '@/styles/common';
@@ -47,11 +48,15 @@ const ThirdSection = () => {
             화장실 내부에 환기 시설이 있나요?
           </S.Card>
         </S.CardList>
+
         <S.Text margin={15}>
           짧은 시간동안 <Bold>O X</Bold> 로 빠르게 체크해요!
         </S.Text>
         <S.CenterBox>
           <S.ImageBox isIntersecting={isIntersecting}>
+            <S.PencilIconBox>
+              <PencilIcon width={100} height={120} />
+            </S.PencilIconBox>
             <img src="/image/checkScreenShot.png" width="300px" />
           </S.ImageBox>
         </S.CenterBox>
@@ -69,6 +74,11 @@ const S = {
     padding: 3px;
 
     background-color: ${({ theme }) => theme.palette.yellow500};
+  `,
+  PencilIconBox: styled.div`
+    position: absolute;
+    left: 280px;
+    transform: scaleX(-1);
   `,
   Observer: styled.div`
     height: 5px;
@@ -117,6 +127,7 @@ const S = {
     border-radius: 10px;
     width: 320px;
     ${boxShadow}
+    position: relative;
   `,
   CenterBox: styled.div`
     width: 100%;

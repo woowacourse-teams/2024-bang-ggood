@@ -54,7 +54,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
       <S.GapBox>
         <S.Row>
           <Room />
-          {room.structure}
+          {formattedUndefined(room.structure, 'string', '방 구조')}
         </S.Row>
         <S.Row>
           <Stairs />
@@ -68,7 +68,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
       </S.Row>
       <S.Row>
         <LocationLineIcon height={20} width={20} />
-        {address?.address} <br /> {address?.buildingName}
+        {formattedUndefined(address?.address, 'string', '주소')} <br /> {address?.buildingName}
       </S.Row>
       <S.Row>
         <Subway />

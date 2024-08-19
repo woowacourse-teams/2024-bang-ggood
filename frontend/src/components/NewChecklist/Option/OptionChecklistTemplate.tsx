@@ -1,13 +1,15 @@
 import styled from '@emotion/styled';
 
+import Layout from '@/components/_common/layout/Layout';
 import TipBox from '@/components/_common/TipBox/TipBox';
 import OptionAllSelectBox from '@/components/NewChecklist/Option/OptionAllSelectBox';
 import { OptionList } from '@/components/NewChecklist/Option/OptionList';
 import { flexCenter, flexColumn, title4 } from '@/styles/common';
+import theme from '@/styles/theme';
 
 const OptionChecklistTemplate = () => {
   return (
-    <S.Container>
+    <Layout bgColor={theme.palette.background} withHeader withTab>
       <TipBox tipType={'OPTION'} />
       <S.InnerBox>
         <OptionAllSelectBox />
@@ -15,7 +17,7 @@ const OptionChecklistTemplate = () => {
           <OptionList />
         </S.OptionBox>
       </S.InnerBox>
-    </S.Container>
+    </Layout>
   );
 };
 
@@ -24,14 +26,12 @@ export default OptionChecklistTemplate;
 const S = {
   Container: styled.div`
     ${flexColumn}
-    margin-top: 40px;
     padding: 16px;
 
     background-color: ${({ theme }) => theme.palette.background};
     min-height: calc(100vh - 64px);
     align-items: center;
   `,
-
   InnerBox: styled.div`
     width: 100%;
     ${flexColumn}

@@ -13,8 +13,7 @@ const NewChecklistTemplate = () => {
 
   const questions = getCategoryQnA(currentTabId);
   return (
-    //TODO: 나중에 탭부분 empty 박스로 적용 필요
-    <Layout bgColor={theme.palette.background} style={{ minHeight: `calc(100vh - 64px)`, marginTop: '15px' }}>
+    <Layout bgColor={theme.palette.background} withHeader withTab>
       <S.ContentBox>
         {questions?.questions.map((question: ChecklistQuestion) => (
           <ChecklistQuestion key={`${currentTabId}-${question.questionId}`} question={question} />

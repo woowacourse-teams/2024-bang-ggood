@@ -16,7 +16,6 @@ import { flexColumn } from '@/styles/common';
 const NewChecklistInfoTemplate = () => {
   return (
     <>
-      <S.EmptyBox />
       <S.ContentWrapper>
         <S.Container>
           <RoomName />

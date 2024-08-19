@@ -1,7 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import FooterLayout from '@/components/_common/layout/FooterLayout';
+import AuthGuard from '@/components/Auth/AuthGuard';
 import { ROUTE_PATH } from '@/constants/routePath';
+import ArticleDetailPage from '@/pages/ArticleDetailPage';
 import ArticleListPage from '@/pages/ArticleListPage';
 import ChecklistCustomPage from '@/pages/ChecklistCustomPage';
 import ChecklistDetailPage from '@/pages/ChecklistDetailPage';
@@ -10,15 +12,15 @@ import EditChecklistPage from '@/pages/EditChecklistPage';
 import ErrorPage from '@/pages/ErrorPage';
 import LoginPage from '@/pages/LoginPage';
 import MainPage from '@/pages/MainPage';
+import MyPage from '@/pages/MyPage';
 import NewChecklistPage from '@/pages/NewChecklistPage';
 import NotFound from '@/pages/NotFound';
 import RoomComparePage from '@/pages/RoomComparePage';
 import RoomCompareSelectPage from '@/pages/RoomCompareSelectPage';
-import RootLayout from '@/RootLayout';
 
 const router = createBrowserRouter([
   {
-    element: <RootLayout />,
+    element: <AuthGuard />,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -32,6 +34,10 @@ const router = createBrowserRouter([
           {
             element: <ArticleListPage />,
             path: ROUTE_PATH.article,
+          },
+          {
+            element: <MyPage />,
+            path: ROUTE_PATH.myPage,
           },
         ],
       },
@@ -58,6 +64,10 @@ const router = createBrowserRouter([
       {
         element: <RoomComparePage />,
         path: ROUTE_PATH.roomCompare,
+      },
+      {
+        element: <ArticleDetailPage />,
+        path: ROUTE_PATH.articleId,
       },
       {
         element: <LoginPage />,

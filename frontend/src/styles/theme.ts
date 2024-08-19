@@ -41,7 +41,7 @@ const palette = {
   /* original */
   black: '#363636',
   white: '#FFFFFF',
-  background: '#F5F4F2',
+  background: '#F5F5F5',
 
   /* etc */
   kakao: '#FEE500',
@@ -72,6 +72,7 @@ const viewport = {
 
 /*range: 10~50 */
 const zIndex = {
+  DROPDOWN: 5,
   FLOATING_BUTTON: 10,
   TABS: 10,
   HEADER: 10,

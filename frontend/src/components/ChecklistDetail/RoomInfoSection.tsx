@@ -3,8 +3,9 @@ import styled from '@emotion/styled';
 import { Building, Calendar, LocationLineIcon, Room, Stairs, Subway } from '@/assets/assets';
 import LikeButton from '@/components/_common/Like/LikeButton';
 import AddressMap from '@/components/_common/Map/AddressMap';
-import { flexColumn, flexRow, title1 } from '@/styles/common';
+import { flexColumn, flexRow, flexSpaceBetween, title2 } from '@/styles/common';
 import { RoomInfo } from '@/types/room';
+import formattedDate from '@/utils/formattedDate';
 import formattedUndefined from '@/utils/formattedUndefined';
 
 interface Props {
@@ -30,6 +31,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
     realEstate,
     occupancyMonth,
     occupancyPeriod,
+    createdAt,
   } = room;
 
   return (
@@ -41,8 +43,11 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
         </S.Row>
         <S.Row>
           <S.MoneyText>
-            보증금 {formattedUndefined(deposit)} / 월세 {formattedUndefined(rent)} + 관리비{' '}
-            {formattedUndefined(maintenanceFee)}
+            <div>
+              보증금 {formattedUndefined(deposit)} / 월세 {formattedUndefined(rent)} + 관리비{' '}
+              {formattedUndefined(maintenanceFee)}
+            </div>
+            <div>{formattedDate(createdAt ?? '')}</div>
           </S.MoneyText>
         </S.Row>
       </S.GreenWrapper>
@@ -92,12 +97,8 @@ const S = {
     background-color: ${({ theme }) => theme.palette.white};
     border-radius: 8px;
 
-    font-size: ${({ theme }) => theme.text.size.medium};
     line-height: 1.5;
     letter-spacing: 0.05rem;
-  `,
-  MoneyText: styled.div`
-    font-size: ${({ theme }) => theme.text.size.medium};
   `,
   GreenWrapper: styled.div`
     width: 100%;
@@ -106,7 +107,7 @@ const S = {
     background-color: ${({ theme }) => theme.palette.green500};
 
     color: ${({ theme }) => theme.palette.white};
-    font-size: ${({ theme }) => theme.text.size.large};
+    font-size: ${({ theme }) => theme.text.size.medium};
     box-sizing: border-box;
     border-radius: 16px;
   `,
@@ -124,8 +125,15 @@ const S = {
   `,
   Title: styled.div`
     width: 100%;
-    ${title1}
+    ${title2}
     min-height: 40px;
     word-break: keep-all;
+  `,
+  MoneyText: styled.div`
+    width: 100%;
+
+    font-size: ${({ theme }) => theme.text.size.small};
+    ${flexRow}
+    ${flexSpaceBetween}
   `,
 };

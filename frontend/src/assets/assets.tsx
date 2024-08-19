@@ -25,6 +25,9 @@ import Room from '@/assets/icons/room/house.svg';
 import Stairs from '@/assets/icons/room/stairs.svg';
 import Subway from '@/assets/icons/room/subway.svg';
 
+// Select Tag
+import DropdownMark from '@/assets/icons/dropdown/dropdown-mark.svg';
+
 // etc
 import BangBangCryIcon from '@/assets/icons/bang-bang-cry-icon.svg';
 import BangBangIcon from '@/assets/icons/bang-bang-icon.svg';
@@ -36,7 +39,6 @@ import PencilIcon from '@/assets/icons/pencil-icon.svg';
 import QuestionDot from '@/assets/icons/question-dot.svg';
 import SmallCheck from '@/assets/icons/small-check.svg';
 import SmileMessageIcon from '@/assets/icons/smile-message-icon.svg';
-
 export {
   ArrowBack,
   ArrowDownSmall,
@@ -50,6 +52,7 @@ export {
   Calendar,
   CheckIcon,
   CloseIcon,
+  DropdownMark,
   InputRequiredDot,
   KakaoLogo,
   LampIcon,

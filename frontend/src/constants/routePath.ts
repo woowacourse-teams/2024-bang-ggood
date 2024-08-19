@@ -4,6 +4,8 @@ export const ROUTE_PATH = {
   checklistList: '/checklist',
   checklistNew: '/checklist/new',
   checklistEdit: '/checklist/edit/:checklistId',
+  checklistEditOne: (id: number) => `/checklist/edit/${id}`,
+
   checklistCustom: `/checklist/custom`,
   checklistId: '/checklist/:checklistId',
   checklistOne: (id: number) => `/checklist/${id}`,
@@ -14,6 +16,7 @@ export const ROUTE_PATH = {
   roomCompare: '/room-compare',
   /* article */
   article: '/article',
+  articleId: '/article/:articleId',
   articleOne: (id: number) => `/article/${id}`,
   /* TODO: 추후 추가될 페이지들의 라우트패스 */
   location: '/location',

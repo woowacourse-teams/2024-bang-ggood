@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { LocationLineIcon } from '@/assets/assets';
 import LikeButton from '@/components/_common/Like/LikeButton';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { boxShadow, flexCenter, flexColumn, flexRow, flexSpaceBetween, omitText, title3 } from '@/styles/common';
+import { boxShadow, flexCenter, flexColumn, flexSpaceBetween, omitText, title3 } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
 import formattedDate from '@/utils/formattedDate';
 import formattedUndefined from '@/utils/formattedUndefined';
@@ -38,7 +38,7 @@ const ChecklistCard = ({ checklist }: Props) => {
       </S.Column>
       <S.Row>
         <S.SummaryWrapper>
-          <S.SummaryBox>{`"${formattedUndefined(summary)}"`}</S.SummaryBox>
+          <S.SummaryBox>{`"${formattedUndefined(summary, 'string', '한줄평')}"`}</S.SummaryBox>
         </S.SummaryWrapper>
         <S.Date>{formattedDate(createdAt ?? '')}</S.Date>
       </S.Row>
@@ -74,40 +74,35 @@ const S = {
     ${flexCenter}
     gap: 5px;
 
-    font-size: ${({ theme }) => theme.text.size.small};
+    font-size: ${({ theme }) => theme.text.size.xSmall};
   `,
   Date: styled.p`
     color: ${({ theme }) => theme.palette.grey500};
-    font-size: ${({ theme }) => theme.text.size.small};
+    font-size: ${({ theme }) => theme.text.size.xxSmall};
   `,
   Title: styled.p`
     ${title3}
     margin-bottom: 10px;
   `,
   Deposit: styled.p`
-    ${title3}
-    font-weight: ${({ theme }) => theme.text.size.medium};
+    font-size: ${({ theme }) => theme.text.size.medium};
   `,
   SummaryWrapper: styled.div`
-    width: calc(100% - 90px);
-    ${flexRow}
     align-items: center;
     padding: 8px;
 
-    background-color: ${({ theme }) => theme.palette.grey100};
+    background-color: ${({ theme }) => theme.palette.grey50};
     border-radius: 6px;
 
-    max-width: 400px;
+    box-sizing: content-box;
+    max-width: 80%;
   `,
   SummaryBox: styled.div`
     box-sizing: content-box;
-    padding-left: 4px;
 
     ${omitText};
     border-radius: 4px;
 
-    @media (width >= 500px) {
-      font-size: ${({ theme }) => theme.text.size.medium};
-    }
+    font-size: ${({ theme }) => theme.text.size.xSmall};
   `,
 };

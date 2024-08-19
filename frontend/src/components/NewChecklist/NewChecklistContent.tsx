@@ -10,16 +10,12 @@ const NewChecklistContent = () => {
 
   return (
     <S.Container>
-      {currentTabId === -1 ? (
-        /*방 기본정보 템플릿*/
-        <NewChecklistInfoTemplate />
-      ) : currentTabId === 0 ? (
-        /*옵션 선택 템플릿*/
-        <OptionChecklistTemplate />
-      ) : (
-        /* 체크리스트 템플릿 */
-        <NewChecklistTemplate />
-      )}
+      {/*방 기본정보 템플릿 */}
+      {currentTabId === -1 && <NewChecklistInfoTemplate />}
+      {/* 옵션 선택 템플릿 */}
+      {currentTabId === 0 && <OptionChecklistTemplate />}
+      {/* 체크리스트 템플릿 */}
+      {currentTabId > 0 && <NewChecklistTemplate />}
     </S.Container>
   );
 };

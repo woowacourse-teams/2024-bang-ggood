@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import DeleteModal from '@/components/_common/DeleteModal/DeleteModal';
+import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import ChecklistAnswerSection from '@/components/ChecklistDetail/ChecklistAnswerSection';
@@ -12,7 +13,6 @@ import useDeleteChecklistQuery from '@/hooks/query/useDeleteChecklistQuery';
 import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery';
 import useModalOpen from '@/hooks/useModalOpen';
 import theme from '@/styles/theme';
-import formattedDate from '@/utils/formattedDate';
 
 type RouteParams = {
   checklistId: string;
@@ -24,7 +24,7 @@ const ChecklistDetailPage = () => {
   const { checklistId } = useParams() as RouteParams;
 
   const { mutate: deleteChecklist } = useDeleteChecklistQuery();
-  const { data: checklist, isError, isLoading } = useGetChecklistDetailQuery(Number(checklistId));
+  const { data: checklist, isLoading, isError } = useGetChecklistDetailQuery(checklistId);
 
   const navigate = useNavigate();
 
@@ -47,14 +47,21 @@ const ChecklistDetailPage = () => {
     });
   };
 
+  const handleEditButton = () => {
+    navigate(ROUTE_PATH.checklistEditOne(Number(checklistId)));
+  };
   return (
     <>
       <Header
         left={<Header.Backward />}
-        center={<Header.Text>{formattedDate(checklist?.room?.createdAt ?? '')}</Header.Text>}
-        right={<Header.TextButton onClick={modalOpen}>삭제</Header.TextButton>}
+        right={
+          <FlexBox.Horizontal gap="15px">
+            <Header.TextButton onClick={handleEditButton}>편집</Header.TextButton>
+            <Header.TextButton onClick={modalOpen}>삭제</Header.TextButton>
+          </FlexBox.Horizontal>
+        }
       />
-      <Layout bgColor={theme.palette.grey100}>
+      <Layout bgColor={theme.palette.grey50}>
         <S.Wrapper>
           <RoomInfoSection room={checklist?.room} isLiked={checklist?.isLiked} checklistId={checklist?.checklistId} />
           <ChecklistAnswerSection categories={checklist?.categories} />

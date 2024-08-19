@@ -1,5 +1,9 @@
 export const MAX_BADGE_DISPLAY_COUNT = 4;
 
+export const MAX_ARTICLES_DISPLAY_COUNT = 4;
+
+export const MAX_CHECKLISTS_DISPLAY_COUNT = 3;
+
 export const DEFAULT_TOAST_DURATION = 2;
 
 // 5분

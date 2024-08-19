@@ -21,16 +21,19 @@ const MyPage = () => {
   return (
     <>
       <Header center={<Header.Text>마이페이지</Header.Text>} />
+
       <Layout bgColor={theme.palette.background} withFooter withHeader>
-        <S.Container>
-          <S.Profile>
-            <S.ProfileIcon>
-              <BangBangIcon width="100" height="100" />
-            </S.ProfileIcon>
-            닉네임
-            <S.Button label="로그아웃" size="small" color="dark" onClick={modalOpen}></S.Button>
-          </S.Profile>
-        </S.Container>
+        <S.Inner>
+          <S.Container style={{ width: '100%' }}>
+            <S.Profile>
+              <S.ProfileIcon>
+                <BangBangIcon width="100" height="100" />
+              </S.ProfileIcon>
+              안녕하세요 닉네임님
+            </S.Profile>
+          </S.Container>
+          <S.Button label="로그아웃" size="small" color="dark" onClick={modalOpen}></S.Button>
+        </S.Inner>
       </Layout>
 
       <Modal isOpen={isModalOpen} onClose={modalClose}>
@@ -54,9 +57,15 @@ const S = {
 
     border-radius: 16px;
     gap: 12px;
+
+    background-color: ${({ theme }) => theme.palette.white};
     ${boxShadow};
     ${flexColumn};
     ${boxShadowSpread}
+  `,
+  Inner: styled.div`
+    ${flexCenter}
+    ${flexColumn}
   `,
   ProfileIcon: styled.div`
     ${flexCenter}

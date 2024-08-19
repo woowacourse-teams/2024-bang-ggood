@@ -10,7 +10,7 @@ import ChecklistListPage from '@/pages/ChecklistListPage';
 import EditChecklistPage from '@/pages/EditChecklistPage';
 import ErrorPage from '@/pages/ErrorPage';
 import LandingPage from '@/pages/LandingPage';
-import LoginPage from '@/pages/LoginPage';
+import MainPage from '@/pages/MainPage';
 import NewChecklistPage from '@/pages/NewChecklistPage';
 import NotFound from '@/pages/NotFound';
 import RoomComparePage from '@/pages/RoomComparePage';
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
       {
         element: <FooterLayout />,
         children: [
-          // { element: <MainPage />, path: ROUTE_PATH.home },
+          { element: <MainPage />, path: ROUTE_PATH.home },
           {
             element: <ChecklistListPage />,
             path: ROUTE_PATH.checklistList,
@@ -59,13 +59,10 @@ const router = createBrowserRouter([
         element: <RoomComparePage />,
         path: ROUTE_PATH.roomCompare,
       },
-      {
-        element: <LoginPage />,
-        path: ROUTE_PATH.login,
-      },
+      /*TODO: 나중에 기본으로 라우터 변경 필요*/
       {
         element: <LandingPage />,
-        path: ROUTE_PATH.home,
+        path: ROUTE_PATH.login,
       },
       {
         element: <NotFound />,

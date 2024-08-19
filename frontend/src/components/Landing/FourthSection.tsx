@@ -3,6 +3,7 @@ import { useRef } from 'react';
 
 import ArticleCard from '@/components/Article/ArticleCard';
 import { Bold, Container, Highlight, ImageBox, Text, TextBox } from '@/components/Landing/style';
+import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';
 import { articleList } from '@/mocks/fixtures/articleList';
 
@@ -10,9 +11,8 @@ const FourthSection = () => {
   const ref = useRef<HTMLDivElement>(null);
   const ref2 = useRef<HTMLDivElement>(null);
 
-  const infiniteScrollConfig = { threshold: 0.15, rootMargin: '50px' };
-  const { isIntersecting } = useIntersection(infiniteScrollConfig, ref);
-  const { isIntersecting: isIntersecting2 } = useIntersection(infiniteScrollConfig, ref);
+  const { isIntersecting } = useIntersection(INTERSECTION_CONFIG, ref);
+  const { isIntersecting: isIntersecting2 } = useIntersection(INTERSECTION_CONFIG, ref2);
 
   return (
     <Container>

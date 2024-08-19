@@ -1,10 +1,11 @@
 import styled from '@emotion/styled';
 
 import { ArrowDownSmall, BangBangIcon, BangGgoodTextIcon, KakaoLogo, SmallCheck } from '@/assets/assets';
+import { Text } from '@/components/Landing/style';
 import { moveUpDown } from '@/styles/animation';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
 
-const FirstSection = () => {
+const FirstSection = ({ handleLogin }: { handleLogin: () => void }) => {
   return (
     <>
       <S.LogoBox>
@@ -19,9 +20,9 @@ const FirstSection = () => {
         <BangGgoodTextIcon width={220} height={50} />
       </S.LogoBox>
       <S.ButtonWrapper>
-        <S.KakaoLoginButton onClick={() => {}}>
+        <S.KakaoLoginButton onClick={handleLogin}>
           <KakaoLogo />
-          <span>카카오로 로그인</span>
+          <Text>카카오로 로그인</Text>
         </S.KakaoLoginButton>
       </S.ButtonWrapper>
       <S.MoreBox>
@@ -69,6 +70,7 @@ const S = {
     ${flexCenter}
     ${flexColumn}
     gap: 10px;
+    margin-top: 20px;
     width: 100%;
   `,
   SubText: styled.div`
@@ -87,7 +89,7 @@ const S = {
     font-size: ${({ theme }) => theme.text.size.large};
   `,
   MoreBox: styled.div`
-    padding-top: 40px;
+    padding-top: 20px;
     gap: 10px;
     width: 100%;
     ${flexColumn}

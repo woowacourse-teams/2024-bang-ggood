@@ -3,15 +3,17 @@ import { useRef } from 'react';
 
 import { PencilIcon } from '@/assets/assets';
 import { Bold, Container, Highlight, ImageBox, TextBox } from '@/components/Landing/style';
+import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';
 import { boxShadow, flexCenter, flexColumn, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
 
 const ThirdSection = () => {
   const ref = useRef<HTMLDivElement>(null);
+  const ref2 = useRef<HTMLDivElement>(null);
 
-  const infiniteScrollConfig = { threshold: 0.15, rootMargin: '15px' };
-  const { isIntersecting } = useIntersection(infiniteScrollConfig, ref);
+  const { isIntersecting } = useIntersection(INTERSECTION_CONFIG, ref);
+  const { isIntersecting: isIntersecting2 } = useIntersection(INTERSECTION_CONFIG, ref2);
 
   return (
     <Container>
@@ -52,8 +54,9 @@ const ThirdSection = () => {
         <S.Text margin={35}>
           짧은 시간동안 <Bold>O X</Bold> 로 <Highlight>빠르게 체크해요!</Highlight>
         </S.Text>
+        <S.Observer ref={ref2} />
         <S.CenterBox>
-          <S.ImageBox isIntersecting={isIntersecting}>
+          <S.ImageBox isIntersecting={isIntersecting2}>
             <S.PencilIconBox>
               <PencilIcon width={100} height={90} />
             </S.PencilIconBox>

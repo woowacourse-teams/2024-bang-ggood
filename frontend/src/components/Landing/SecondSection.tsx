@@ -2,14 +2,14 @@ import styled from '@emotion/styled';
 import { useRef } from 'react';
 
 import { Highlight, ImageBox } from '@/components/Landing/style';
+import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';
 import { flexColumn } from '@/styles/common';
 
 const SecondSection = () => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const infiniteScrollConfig = { threshold: 0.25, rootMargin: '50px' };
-  const { isIntersecting } = useIntersection(infiniteScrollConfig, ref);
+  const { isIntersecting } = useIntersection(INTERSECTION_CONFIG, ref);
 
   return (
     <S.Container>

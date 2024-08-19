@@ -8,3 +8,5 @@ export const DEFAULT_TOAST_DURATION = 2;
 
 // 5분
 export const STALE_TIME = 5 * 60 * 1000;
+
+export const INTERSECTION_CONFIG = { threshold: 0.5, rootMargin: '15px' };

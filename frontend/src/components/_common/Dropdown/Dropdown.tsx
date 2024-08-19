@@ -62,6 +62,7 @@ const S = {
     position: relative;
     width: 100%;
     height: 100%;
+    min-height: 24px;
     padding: 0 10px;
     border: 1px solid ${theme.palette.grey400};
     align-items: center;
@@ -76,6 +77,7 @@ const S = {
     z-index: ${({ theme }) => theme.zIndex.DROPDOWN};
     width: 125px;
     max-height: 260px;
+
     margin-top: 4px;
     overflow-y: auto;
     box-shadow: 0 0 10px 0 ${theme.palette.grey400};

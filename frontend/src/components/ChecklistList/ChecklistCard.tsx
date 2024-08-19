@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { LocationLineIcon, SmileMessageIcon } from '@/assets/assets';
 import LikeButton from '@/components/_common/Like/LikeButton';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { boxShadow, flexCenter, flexColumn, flexRow, flexSpaceBetween, title3 } from '@/styles/common';
+import { boxShadow, flexCenter, flexColumn, flexRow, flexSpaceBetween, omitText, title3 } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
 import formattedDate from '@/utils/formattedDate';
 import formattedUndefined from '@/utils/formattedUndefined';
@@ -87,18 +87,21 @@ const S = {
     font-size: ${({ theme }) => theme.text.size.medium};
   `,
   SummaryWrapper: styled.div`
+    width: 240px;
     ${flexRow}
     align-items: center;
-    padding-left: 8px;
+    padding: 4px;
 
     background-color: ${({ theme }) => theme.palette.grey100};
     border-radius: 10px;
   `,
   SummaryBox: styled.div`
     box-sizing: content-box;
-    padding: 8px;
+    padding-left: 4px;
 
-    font-size: ${({ theme }) => theme.text.size.small};
+    ${omitText};
+    font-weight: ${({ theme }) => theme.text.weight.semiBold};
+    font-size: ${({ theme }) => theme.text.size.xSmall};
     border-radius: 4px;
   `,
 };

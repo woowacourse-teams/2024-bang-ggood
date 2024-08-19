@@ -32,6 +32,12 @@ const ChecklistDetailPage = () => {
     navigate(ROUTE_PATH.checklistList);
   }
 
+  if (isLoading) {
+    return <SkChecklistDetail />;
+  }
+
+  if (!checklist) return;
+
   const handleDelete = async () => {
     deleteChecklist(Number(checklistId), {
       onSuccess: () => {
@@ -41,32 +47,20 @@ const ChecklistDetailPage = () => {
     });
   };
 
-  if (isLoading) {
-    return <SkChecklistDetail />;
-  }
-
   return (
     <>
-      {checklist && (
-        <>
-          <Header
-            left={<Header.Backward />}
-            center={<Header.Text>{formattedDate(checklist?.room?.createdAt ?? '')}</Header.Text>}
-            right={<Header.TextButton onClick={modalOpen}>삭제</Header.TextButton>}
-          />
-          <Layout bgColor={theme.palette.grey100}>
-            <S.Wrapper>
-              <RoomInfoSection
-                room={checklist?.room}
-                isLiked={checklist?.isLiked}
-                checklistId={checklist?.checklistId}
-              />
-              <ChecklistAnswerSection categories={checklist?.categories} />
-            </S.Wrapper>
-          </Layout>
-          {isModalOpen && <DeleteModal isOpen={isModalOpen} onClose={modalClose} handleDelete={handleDelete} />}
-        </>
-      )}
+      <Header
+        left={<Header.Backward />}
+        center={<Header.Text>{formattedDate(checklist?.room?.createdAt ?? '')}</Header.Text>}
+        right={<Header.TextButton onClick={modalOpen}>삭제</Header.TextButton>}
+      />
+      <Layout bgColor={theme.palette.grey100}>
+        <S.Wrapper>
+          <RoomInfoSection room={checklist?.room} isLiked={checklist?.isLiked} checklistId={checklist?.checklistId} />
+          <ChecklistAnswerSection categories={checklist?.categories} />
+        </S.Wrapper>
+      </Layout>
+      {isModalOpen && <DeleteModal isOpen={isModalOpen} onClose={modalClose} handleDelete={handleDelete} />}
     </>
   );
 };

@@ -11,10 +11,10 @@ const SkChecklistDetail = () => {
     <>
       <Header />
       <Layout bgColor={theme.palette.grey100}>
-        <Sk.Wrapper>
+        <S.Wrapper>
           <SkRoomInfoSection />
           <SkChecklistAnswer />
-        </Sk.Wrapper>
+        </S.Wrapper>
       </Layout>
     </>
   );
@@ -22,7 +22,7 @@ const SkChecklistDetail = () => {
 
 export default SkChecklistDetail;
 
-const Sk = {
+const S = {
   Wrapper: styled.div`
     min-height: calc(100vh - 64px);
   `,

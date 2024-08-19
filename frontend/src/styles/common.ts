@@ -72,3 +72,10 @@ export const Skeleton = `
     }
   }
 `;
+
+export const omitText = css`
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+`;

@@ -4,14 +4,14 @@ import { flexColumn, Skeleton } from '@/styles/common';
 
 const SkChecklistAnswer = () => {
   return (
-    <Sk.Container>
-      <Sk.AccordionHeader />
-      <Sk.AccordionBody />
-    </Sk.Container>
+    <S.Container>
+      <S.AccordionHeader />
+      <S.AccordionBody />
+    </S.Container>
   );
 };
 
-const Sk = {
+const S = {
   Container: styled.div`
     ${flexColumn}
     gap: 10px;

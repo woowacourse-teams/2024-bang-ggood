@@ -5,24 +5,24 @@ import { flexColumn, flexRow, Skeleton, title1 } from '@/styles/common';
 const SkRoomInfoSection = () => {
   return (
     <>
-      <Sk.Container>
-        <Sk.GreenWrapper />
-        <Sk.GapBox>
-          <Sk.Row />
-          <Sk.Row />
-        </Sk.GapBox>
-        <Sk.Row />
-        <Sk.Row width={'300px'} />
-        <Sk.Row width={'300px'} />
-        <Sk.Map />
-      </Sk.Container>
+      <S.Container>
+        <S.GreenWrapper />
+        <S.GapBox>
+          <S.Row />
+          <S.Row />
+        </S.GapBox>
+        <S.Row />
+        <S.Row width={'300px'} />
+        <S.Row width={'300px'} />
+        <S.Map />
+      </S.Container>
     </>
   );
 };
 
 export default SkRoomInfoSection;
 
-const Sk = {
+const S = {
   Container: styled.div`
     box-sizing: border-box;
     width: 100%;

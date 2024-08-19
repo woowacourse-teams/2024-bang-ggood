@@ -9,24 +9,24 @@ const SHOW_MOCK_COUNT = 4;
 const SkChecklistList = () => {
   return (
     <>
-      <Sk.FlexBox>
-        <Sk.Banner />
-      </Sk.FlexBox>
+      <S.FlexBox>
+        <S.Banner />
+      </S.FlexBox>
       <Layout>
-        <Sk.ListBox>
+        <S.ListBox>
           {Array.from({ length: SHOW_MOCK_COUNT }).map((e, i) => {
-            return <Sk.PreviewCard key={i} />;
+            return <S.PreviewCard key={i} />;
           })}
-        </Sk.ListBox>
+        </S.ListBox>
       </Layout>
-      <Sk.Wrapper>
-        <Sk.Button />
-      </Sk.Wrapper>
+      <S.Wrapper>
+        <S.Button />
+      </S.Wrapper>
     </>
   );
 };
 
-const Sk = {
+const S = {
   FlexBox: styled.div`
     padding: 0 16px;
   `,

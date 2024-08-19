@@ -5,23 +5,23 @@ import { flexRow, flexSpaceBetween, Skeleton } from '@/styles/common';
 const SkArticleSection = () => {
   return (
     <>
-      <Sk.Row>
-        <Sk.Title />
-      </Sk.Row>
-      <Sk.CardList>
+      <S.Row>
+        <S.Title />
+      </S.Row>
+      <S.CardList>
         {new Array(3).fill(0).map((e, i) => (
-          <Sk.CardWrapper key={i}>
-            <Sk.Card />
-          </Sk.CardWrapper>
+          <S.CardWrapper key={i}>
+            <S.Card />
+          </S.CardWrapper>
         ))}
-      </Sk.CardList>
+      </S.CardList>
     </>
   );
 };
 
 export default SkArticleSection;
 
-const Sk = {
+const S = {
   Row: styled.div`
     width: 100%;
     box-sizing: border-box;

@@ -72,6 +72,7 @@ const viewport = {
 
 /*range: 10~50 */
 const zIndex = {
+  DROPDOWN: 5,
   FLOATING_BUTTON: 10,
   TABS: 10,
   HEADER: 10,

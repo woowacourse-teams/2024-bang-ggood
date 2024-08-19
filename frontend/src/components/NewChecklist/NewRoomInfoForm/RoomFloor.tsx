@@ -1,11 +1,11 @@
 import { useStore } from 'zustand';
 
+import Dropdown from '@/components/_common/Dropdown/Dropdown';
 import FormField from '@/components/_common/FormField/FormField';
 import Input from '@/components/_common/Input/Input';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import { roomFloorLevels } from '@/constants/roomInfo';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
-import { InputChangeEvent } from '@/types/event';
 
 const RoomFloor = () => {
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
@@ -17,13 +17,13 @@ const RoomFloor = () => {
     <FormField>
       <FormField.Label label="층수" />
       <FormStyled.FieldBox>
-        <select name="floorLevel" value={floorLevel} onChange={e => actions.onChange(e as unknown as InputChangeEvent)}>
-          {roomFloorLevels.map(value => (
-            <option key={value} value={value}>
-              {value}
-            </option>
-          ))}
-        </select>
+        <Dropdown
+          initialValue={floorLevel}
+          options={roomFloorLevels.map(value => ({ value }))}
+          onSelectSetter={(level: string) => {
+            actions.set('floorLevel', level);
+          }}
+        />
         <Input width="medium" placeholder="" name="floor" value={floor} onChange={actions.onChange} />
         <FormStyled.FlexLabel label="층"></FormStyled.FlexLabel>
       </FormStyled.FieldBox>

@@ -13,7 +13,6 @@ import useDeleteChecklistQuery from '@/hooks/query/useDeleteChecklistQuery';
 import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery';
 import useModalOpen from '@/hooks/useModalOpen';
 import theme from '@/styles/theme';
-import formattedDate from '@/utils/formattedDate';
 
 type RouteParams = {
   checklistId: string;
@@ -51,12 +50,11 @@ const ChecklistDetailPage = () => {
   const handleEditButton = () => {
     navigate(ROUTE_PATH.checklistEditById(Number(checklistId)));
   };
-
   return (
     <>
       <Header
         left={<Header.Backward />}
-        center={<Header.Text>{formattedDate(checklist?.room?.createdAt ?? '')}</Header.Text>}
+        center={<Header.Text>{checklist?.room.roomName}</Header.Text>}
         right={
           <FlexBox.Horizontal gap="10px">
             <Header.TextButton onClick={handleEditButton}>편집</Header.TextButton>

@@ -38,7 +38,7 @@ const ChecklistListPage = () => {
           <CustomBanner onClick={handleClickMoveCustomPage} />
         </S.FlexBox>
         <S.ListBox>
-          {checklistList.length ? (
+          {checklistList?.length ? (
             <>
               {checklistList?.map((checklist: ChecklistPreview) => (
                 <ChecklistCard key={checklist.checklistId} checklist={checklist} />

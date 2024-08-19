@@ -30,30 +30,32 @@ const NewChecklistPage = () => {
 
   const navigate = useNavigate();
 
-  /*방 기본 정보 */
+  // 방 기본 정보
   const { value: roomInfoAnswer, actions } = useStore(checklistRoomInfoStore);
-  /* 주소 */
-  //TODO: 백엔드 상의후에 post에 추가
+  // 주소
+  // TODO: 백엔드 상의후에 post에 추가
   //const { address, jibunAddress, buildingName } = useStore(checklistAddressStore);
 
-  /*선택된 옵션*/
+  // 선택된 옵션
   const { selectedOptions, resetToDefaultOptions } = useOptionStore();
 
   /*체크리스트 답변*/
   const { checklistCategoryQnA, setAnswerInQuestion } = useChecklistStore();
 
-  /*한줄평 모달*/
+  // 한줄평 모달
   const {
     isModalOpen: isSummaryModalOpen,
     modalOpen: summaryModalOpen,
     modalClose: summaryModalClose,
   } = useModalOpen();
 
-  /*메모 모달*/
+  // 메모 모달
   const { isModalOpen: isMemoModalOpen, modalOpen: memoModalOpen, modalClose: memoModalClose } = useModalOpen();
 
+  // TODO: 상수화 처리
   const { resetShowTipBox } = useHandleTipBox('OPTION');
 
+  // TODO: query 로 변경
   useEffect(() => {
     const fetchChecklist = async () => {
       const checklist = await getChecklistQuestions();
@@ -69,7 +71,7 @@ const NewChecklistPage = () => {
     fetchChecklist();
   }, []);
 
-  /* 현재 상태를 백엔드에 보내는 답안 포맷으로 바꾸는 함수 */
+  // 현재 상태를 백엔드에 보내는 답안 포맷으로 바꾸는 함수
   const transformQuestions = (checklist: ChecklistCategoryQnA[]) => {
     return checklist.flatMap(category =>
       category.questions.map(question => ({
@@ -90,6 +92,7 @@ const NewChecklistPage = () => {
         {
           onSuccess: () => {
             summaryModalClose();
+            // TODO: 메세지 상수처리
             showToast('체크리스트가 저장되었습니다.');
             actions.reset();
             navigate(ROUTE_PATH.checklistList);
@@ -111,8 +114,10 @@ const NewChecklistPage = () => {
       <TabProvider defaultTab={-1}>
         {/* 체크리스트 작성의 탭 */}
         <Tabs tabList={tabs} />
+
         {/* 체크리스트 콘텐츠 섹션 */}
         <NewChecklistContent />
+
         {/* 메모 모달 */}
         {isMemoModalOpen ? (
           <>

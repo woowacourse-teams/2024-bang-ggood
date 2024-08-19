@@ -19,8 +19,6 @@ const ArticleSection = () => {
 
   if (isLoading) return <SkArticleSection />;
 
-  if (!articles) return;
-
   return (
     <>
       <S.Row>

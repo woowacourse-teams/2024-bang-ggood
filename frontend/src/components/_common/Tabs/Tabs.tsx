@@ -24,9 +24,9 @@ const Tabs = ({ tabList }: Props) => {
   };
 
   return (
-    <VisibleContainer>
-      <Container>
-        <FlexContainer>
+    <S.VisibleContainer>
+      <S.Container>
+        <S.FlexContainer>
           {tabList?.map(tab => {
             const { id, name } = tab;
             const hasIndicator = 'hasIndicator' in tab ? tab.hasIndicator : null;
@@ -42,37 +42,41 @@ const Tabs = ({ tabList }: Props) => {
               />
             );
           })}
-        </FlexContainer>
-      </Container>
-    </VisibleContainer>
+        </S.FlexContainer>
+      </S.Container>
+      <S.EmptyBox />
+    </S.VisibleContainer>
   );
 };
 
 export default Tabs;
 
-const Container = styled.div`
-  position: fixed;
-  max-width: 600px;
+const S = {
+  VisibleContainer: styled.div`
+    max-width: 600px;
+  `,
+  EmptyBox: styled.div`
+    height: 54px;
+  `,
+  Container: styled.div`
+    position: fixed;
+    max-width: 600px;
 
-  z-index: ${({ theme }) => theme.zIndex.TABS};
-  width: 100%;
+    z-index: ${({ theme }) => theme.zIndex.TABS};
+    width: 100%;
 
-  background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.palette.white};
 
-  white-space: nowrap;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
+    white-space: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-const VisibleContainer = styled.div`
-  max-width: 600px;
-`;
-
-const FlexContainer = styled.div`
-  display: inline-flex;
-`;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  `,
+  FlexContainer: styled.div`
+    display: inline-flex;
+  `,
+};

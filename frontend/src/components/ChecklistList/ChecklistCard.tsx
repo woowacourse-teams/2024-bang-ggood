@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { LocationLineIcon, SmileMessageIcon } from '@/assets/assets';
+import { LocationLineIcon } from '@/assets/assets';
 import LikeButton from '@/components/_common/Like/LikeButton';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { boxShadow, flexCenter, flexColumn, flexRow, flexSpaceBetween, title3 } from '@/styles/common';
+import { boxShadow, flexCenter, flexColumn, flexRow, flexSpaceBetween, omitText, title3 } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
 import formattedDate from '@/utils/formattedDate';
 import formattedUndefined from '@/utils/formattedUndefined';
@@ -38,8 +38,7 @@ const ChecklistCard = ({ checklist }: Props) => {
       </S.Column>
       <S.Row>
         <S.SummaryWrapper>
-          <SmileMessageIcon />
-          <S.SummaryBox>{formattedUndefined(summary)}</S.SummaryBox>
+          <S.SummaryBox>{`"${formattedUndefined(summary)}"`}</S.SummaryBox>
         </S.SummaryWrapper>
         <S.Date>{formattedDate(createdAt ?? '')}</S.Date>
       </S.Row>
@@ -58,7 +57,8 @@ const S = {
     border-radius: 8px;
 
     padding: 12px 16px;
-    border: 1px solid ${({ theme }) => theme.palette.grey200};
+
+    background-color: white;
 
     letter-spacing: 0.05rem;
     ${boxShadow}
@@ -74,30 +74,40 @@ const S = {
     ${flexCenter}
     gap: 5px;
 
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    font-size: ${({ theme }) => theme.text.size.small};
   `,
   Date: styled.p`
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    color: ${({ theme }) => theme.palette.grey500};
+    font-size: ${({ theme }) => theme.text.size.small};
   `,
   Title: styled.p`
     ${title3}
     margin-bottom: 10px;
   `,
   Deposit: styled.p`
-    font-size: ${({ theme }) => theme.text.size.medium};
+    ${title3}
+    font-weight: ${({ theme }) => theme.text.size.medium};
   `,
   SummaryWrapper: styled.div`
+    width: calc(100% - 90px);
     ${flexRow}
     align-items: center;
-    gap: 5px;
-  `,
-  SummaryBox: styled.div`
-    box-sizing: content-box;
     padding: 8px;
 
     background-color: ${({ theme }) => theme.palette.grey100};
+    border-radius: 6px;
 
-    font-size: ${({ theme }) => theme.text.size.small};
+    max-width: 400px;
+  `,
+  SummaryBox: styled.div`
+    box-sizing: content-box;
+    padding-left: 4px;
+
+    ${omitText};
     border-radius: 4px;
+
+    @media (width >= 500px) {
+      font-size: ${({ theme }) => theme.text.size.medium};
+    }
   `,
 };

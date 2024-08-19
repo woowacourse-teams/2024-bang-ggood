@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import { DropdownMark } from '@/assets/assets';
-import { flexColumn, flexRow } from '@/styles/common';
+import { flexColumn, flexRow, flexSpaceBetween } from '@/styles/common';
 import theme from '@/styles/theme';
 
 interface Option {
@@ -58,7 +58,7 @@ const S = {
     height: 100%;
   `,
   SelectedOption: styled.label`
-    display: flex;
+    ${flexSpaceBetween}
     position: relative;
     width: 100%;
     height: 100%;
@@ -66,7 +66,6 @@ const S = {
     padding: 0 10px;
     border: 1px solid ${theme.palette.grey400};
     align-items: center;
-    justify-content: space-between;
     box-sizing: border-box;
     border-radius: 4px;
     column-gap: 4px;

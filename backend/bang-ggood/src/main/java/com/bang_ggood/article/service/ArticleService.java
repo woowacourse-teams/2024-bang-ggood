@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class ArticleService {
 
-    public static final int MAX_ARTICLE_CARDS = 3;
+    private static final int MAX_ARTICLE_CARDS = 3;
     private final ArticleRepository articleRepository;
 
     public ArticleService(ArticleRepository articleRepository) {

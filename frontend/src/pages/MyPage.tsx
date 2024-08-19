@@ -22,7 +22,7 @@ const MyPage = () => {
       <S.Container>
         <S.Profile>
           <S.ProfileIcon>
-            <BangBangIcon width="100" height="100" clipPath="circle(45% at 50% 50%)" />
+            <BangBangIcon width="100" height="100" />
           </S.ProfileIcon>
           닉네임
           <S.Button label="로그아웃" size="small" color="dark" onClick={modalOpen}></S.Button>
@@ -54,10 +54,15 @@ const S = {
     ${boxShadowSpread}
   `,
   ProfileIcon: styled.div`
-    width: 90px;
-    height: 90px;
+    ${flexCenter}
+    overflow: hidden;
+    width: 136px;
+    height: 136px;
 
-    border-radius: 50px;
+    border-radius: 50%;
+    padding-left: 1%; /* 중앙에 있어도 왼쪽으로 쏠린느낌이라 보정 */
+
+    background-color: ${({ theme }) => theme.palette.yellow200};
   `,
   Profile: styled.div`
     ${flexColumn}

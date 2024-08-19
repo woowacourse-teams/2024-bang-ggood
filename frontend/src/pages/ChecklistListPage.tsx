@@ -12,6 +12,7 @@ import SkChecklistList from '@/components/skeleton/ChecklistList/SkChecklistLst'
 import { ROUTE_PATH } from '@/constants/routePath';
 import useGetChecklistListQuery from '@/hooks/query/useGetChecklistListQuery';
 import { flexColumn } from '@/styles/common';
+import theme from '@/styles/theme';
 import { ChecklistPreview } from '@/types/checklist';
 
 const ChecklistListPage = () => {
@@ -33,10 +34,10 @@ const ChecklistListPage = () => {
         <SkChecklistList />
       ) : (
         <>
-          <S.FlexBox>
-            <CustomBanner onClick={handleClickMoveCustomPage} />
-          </S.FlexBox>
-          <Layout>
+          <Layout bgColor={theme.palette.background} withFooter withHeader>
+            <S.FlexBox>
+              <CustomBanner onClick={handleClickMoveCustomPage} />
+            </S.FlexBox>
             <S.ListBox>
               {checklistList.length ? (
                 <>
@@ -60,11 +61,11 @@ const ChecklistListPage = () => {
 export default ChecklistListPage;
 const S = {
   FlexBox: styled.div`
-    padding: 0 16px;
+    margin-bottom: 12px;
   `,
   ListBox: styled.div`
     ${flexColumn}
-    gap: 8px;
+    gap: 12px;
     overflow-y: scroll;
   `,
   DefaultButton: styled.div`

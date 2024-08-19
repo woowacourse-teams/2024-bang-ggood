@@ -29,9 +29,12 @@ const router = createBrowserRouter([
             element: <ChecklistListPage />,
             path: ROUTE_PATH.checklistList,
           },
+          {
+            element: <ArticleListPage />,
+            path: ROUTE_PATH.article,
+          },
         ],
       },
-
       {
         element: <NewChecklistPage />,
         path: ROUTE_PATH.checklistNew,
@@ -56,10 +59,7 @@ const router = createBrowserRouter([
         element: <RoomComparePage />,
         path: ROUTE_PATH.roomCompare,
       },
-      {
-        element: <ArticleListPage />,
-        path: ROUTE_PATH.article,
-      },
+
       {
         element: <LoginPage />,
         path: ROUTE_PATH.login,

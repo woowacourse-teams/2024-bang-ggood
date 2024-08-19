@@ -28,7 +28,7 @@ const ChecklistCard = ({ checklist }: Props) => {
           <LocationLineIcon />
           {address}
         </S.LocationWrapper>
-        <LikeButton isLiked={isLiked} checklistId={checklistId} />
+        <S.Date>{formattedDate(createdAt ?? '')}</S.Date>
       </S.Row>
       <S.Column>
         <S.Title>{roomName}</S.Title>
@@ -41,7 +41,7 @@ const ChecklistCard = ({ checklist }: Props) => {
           <SmileMessageIcon />
           <S.SummaryBox>{formattedUndefined(summary)}</S.SummaryBox>
         </S.SummaryWrapper>
-        <S.Date>{formattedDate(createdAt ?? '')}</S.Date>
+        <LikeButton isLiked={isLiked} checklistId={checklistId} />
       </S.Row>
     </S.Container>
   );
@@ -58,7 +58,8 @@ const S = {
     border-radius: 8px;
 
     padding: 12px 16px;
-    border: 1px solid ${({ theme }) => theme.palette.grey200};
+
+    background-color: white;
 
     letter-spacing: 0.05rem;
     ${boxShadow}
@@ -74,34 +75,40 @@ const S = {
     ${flexCenter}
     gap: 5px;
 
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    font-size: ${({ theme }) => theme.text.size.small};
   `,
   Date: styled.p`
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    color: ${({ theme }) => theme.palette.grey500};
+    font-size: ${({ theme }) => theme.text.size.small};
   `,
   Title: styled.p`
     ${title3}
     margin-bottom: 10px;
   `,
   Deposit: styled.p`
-    font-size: ${({ theme }) => theme.text.size.medium};
+    ${title3}
+    font-weight: ${({ theme }) => theme.text.size.medium};
   `,
   SummaryWrapper: styled.div`
-    width: 240px;
+    width: calc(100% - 50px);
     ${flexRow}
     align-items: center;
     padding: 4px;
 
     background-color: ${({ theme }) => theme.palette.grey100};
     border-radius: 10px;
+
+    max-width: 400px;
   `,
   SummaryBox: styled.div`
     box-sizing: content-box;
     padding-left: 4px;
 
     ${omitText};
-    font-weight: ${({ theme }) => theme.text.weight.semiBold};
-    font-size: ${({ theme }) => theme.text.size.xSmall};
     border-radius: 4px;
+
+    @media (width >= 500px) {
+      font-size: ${({ theme }) => theme.text.size.medium};
+    }
   `,
 };

@@ -54,9 +54,8 @@ const ChecklistDetailPage = () => {
     <>
       <Header
         left={<Header.Backward />}
-        center={<Header.Text>{checklist?.room.roomName}</Header.Text>}
         right={
-          <FlexBox.Horizontal gap="10px">
+          <FlexBox.Horizontal gap="15px">
             <Header.TextButton onClick={handleEditButton}>편집</Header.TextButton>
             <Header.TextButton onClick={modalOpen}>삭제</Header.TextButton>
           </FlexBox.Horizontal>

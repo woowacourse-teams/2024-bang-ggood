@@ -10,19 +10,19 @@ interface Option {
 }
 
 interface Props {
-  initialValue: string;
+  initialValue?: string;
   options: Option[];
-  onChangeSelect: (value: string) => void;
+  onSelectSetter: (value: string) => void;
 }
 
-const DropDown = ({ initialValue, options, onChangeSelect }: Props) => {
-  const [selectedValue, setSelectedValue] = useState(initialValue);
+const Dropdown = ({ initialValue, options, onSelectSetter }: Props) => {
+  const [selectedValue, setSelectedValue] = useState(initialValue ?? options[0].value ?? '');
   const [isVisibleOptions, setIsVisibleOptions] = useState(false);
 
   const handleOptionClick = (option: Option) => {
     setSelectedValue(option.value);
     setIsVisibleOptions(false);
-    onChangeSelect(option.key);
+    onSelectSetter(option.value);
   };
 
   return (
@@ -46,7 +46,7 @@ const DropDown = ({ initialValue, options, onChangeSelect }: Props) => {
   );
 };
 
-export default DropDown;
+export default Dropdown;
 
 const S = {
   DropDownHeader: styled.div`
@@ -67,6 +67,7 @@ const S = {
   OptionList: styled.ul`
     position: absolute;
     ${flexColumn}
+    z-index: 1;
     width: 125px;
     max-height: 260px;
     margin-top: 4px;
@@ -80,6 +81,7 @@ const S = {
   OptionItem: styled.li`
     ${flexRow}
     align-items: center;
+    z-index: 1;
     width: 90%;
     margin: 5px 5%;
     padding: 5px 10px;
@@ -90,7 +92,6 @@ const S = {
     &:hover,
     &:active {
       background-color: ${theme.palette.grey400};
-      opacity: 0.5;
     }
   `,
 };

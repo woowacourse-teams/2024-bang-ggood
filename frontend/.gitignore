@@ -1,0 +1,16 @@
+### react ###
+.DS_*
+../.DS_*
+*.log
+logs
+**/*.backup.*
+**/*.back.*
+
+node_modules
+dist
+.env
+
+stories
+*storybook.log
+
+.*cache

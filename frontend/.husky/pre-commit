@@ -1,0 +1,4 @@
+# . "$(dirname -- "$0")/common.sh" && cd 'frontend' && yarn lint
+# . "$(dirname -- "$0")/common.sh" && cd 'frontend' && yarn test
+# . "$(dirname -- "$0")/common.sh" && cd 'frontend' && yarn format
+# . "$(dirname -- "$0")/common.sh" && cd 'frontend' && yarn lint:styled 

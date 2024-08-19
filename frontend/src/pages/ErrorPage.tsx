@@ -1,34 +1,31 @@
 import styled from '@emotion/styled';
-import { isRouteErrorResponse, useNavigate, useRouteError } from 'react-router-dom';
+import { useNavigate, useRouteError } from 'react-router-dom';
 
-import { BangBangIcon } from '@/assets/assets';
+import HttpError from '@/apis/error/HttpError';
+import { BangBangCryIcon } from '@/assets/assets';
+import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
 import { flexColumn } from '@/styles/common';
 
 const ErrorPage = () => {
-  const error = useRouteError();
+  const error = useRouteError() as Error;
   const navigate = useNavigate();
 
   const reset = () => {
     navigate('/', { replace: true });
   };
 
-  if (isRouteErrorResponse(error)) {
-    return <div onClick={reset}>라우터 에러: {error.statusText}</div>;
-  }
+  const { message } = error as HttpError;
 
   return (
     <>
       <Header left={<Header.Logo />} />
       <S.Wrapper>
-        <BangBangIcon />
+        <BangBangCryIcon width={300} height={100} />
         <S.TextWrapper>
-          <S.Text> 에러가 발생했어요 ;)</S.Text>
-          <S.Text> 재접속 해주세요~!! ☺️ </S.Text>
-          <S.Text>에러유형: {isRouteErrorResponse(error) ? `라우터 에러 - ${error.statusText}` : `일반 에러`} </S.Text>
-          <S.Text onClick={reset} $cursor>
-            홈페이지로 돌아가기
-          </S.Text>
+          <S.Text>에러가 발생했습니다!</S.Text>
+          <S.Text>{message}</S.Text>
+          <S.HomeButton onClick={reset} label="홈페이지로 돌아가기" />
         </S.TextWrapper>
       </S.Wrapper>
     </>
@@ -49,7 +46,7 @@ const S = {
   `,
   Text: styled.div<{ $cursor?: boolean }>`
     font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: ${({ theme }) => theme.text.size.large};
+    font-size: ${({ theme }) => theme.text.size.medium};
     ${({ $cursor }) => $cursor && `cursor:pointer;`}
   `,
   TextWrapper: styled.div`
@@ -57,5 +54,8 @@ const S = {
     align-items: center;
     gap: 10px;
     margin-top: 20px;
+  `,
+  HomeButton: styled(Button)`
+    margin-top: 30px;
   `,
 };

@@ -1,45 +1,48 @@
+import { HTTP_STATUS_CODE } from '@/apis/error/constants';
+import HTTPError from '@/apis/error/HttpError';
+
 interface RequestProps {
   url: string;
   method: 'GET' | 'POST' | 'DELETE' | 'PATCH' | 'PUT';
   body?: object[] | object;
   headers?: Record<string, string>;
   credentials?: string;
-  errorMessage?: string;
 }
 type FetchProps = Omit<RequestProps, 'method'>;
 
-const request = async ({ url, method, body, headers = {}, errorMessage }: RequestProps) => {
-  const response = await fetch(url, {
-    method,
-    credentials: 'include',
-    body: body ? JSON.stringify(body) : undefined,
-    headers: {
-      ...headers,
-    },
-  });
+const request = async ({ url, method, body, headers = {} }: RequestProps) => {
+  try {
+    const response = await fetch(url, {
+      method,
+      credentials: 'include',
+      body: body ? JSON.stringify(body) : undefined,
+      headers: {
+        ...headers,
+      },
+    });
 
-  if (!response.ok) {
-    throw new Error(`${response.status} ${errorMessage}`);
+    if (!response.ok || !response) {
+      throw new HTTPError(response.status);
+    }
+    return response;
+  } catch (error) {
+    //TODO: 나중에 배포시 삭제
+    console.error(error);
+    if (error instanceof HTTPError) {
+      throw error;
+    } else {
+      throw new HTTPError(HTTP_STATUS_CODE.NETWORK_ERROR);
+    }
   }
-
-  return response;
-};
-
-const networkRequest = async ({ url, method, body, headers = {}, errorMessage }: RequestProps) => {
-  const response = await request({ url, method, body, headers, errorMessage });
-  if (!response) {
-    throw new Error('네트워크 에러입니다.');
-  }
-  return response;
 };
 
 const fetcher = {
   get({ url, headers }: FetchProps) {
-    return networkRequest({ url, method: 'GET', headers });
+    return request({ url, method: 'GET', headers });
   },
 
   post({ url, body, headers }: FetchProps) {
-    return networkRequest({
+    return request({
       url,
       method: 'POST',
       body,
@@ -48,11 +51,11 @@ const fetcher = {
   },
 
   delete({ url, headers }: FetchProps) {
-    return networkRequest({ url, method: 'DELETE', headers });
+    return request({ url, method: 'DELETE', headers });
   },
 
   patch({ url, body, headers }: FetchProps) {
-    return networkRequest({
+    return request({
       url,
       method: 'PATCH',
       body,
@@ -61,7 +64,7 @@ const fetcher = {
   },
 
   put({ url, body, headers }: FetchProps) {
-    return networkRequest({
+    return request({
       url,
       method: 'PUT',
       body,

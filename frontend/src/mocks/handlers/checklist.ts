@@ -19,6 +19,7 @@ export const checklistHandlers = [
   http.get(BASE_URL + ENDPOINT.CHECKLISTS, () => {
     return HttpResponse.json(checklistList, { status: 200 });
   }),
+
   http.post(BASE_URL + ENDPOINT.CHECKLISTS, () => {
     return HttpResponse.json({}, { status: 201 });
   }),
@@ -30,6 +31,7 @@ export const checklistHandlers = [
     if (!roomIds[2]) return HttpResponse.json(twoRoomsForCompare, { status: 200 });
     return HttpResponse.json(threeRoomsForCompare, { status: 200 });
   }),
+
   http.get(BASE_URL + ENDPOINT.CHECKLIST_ALL_QUESTION, () => {
     return HttpResponse.json(checklistAllQuestions, { status: 200 });
   }),

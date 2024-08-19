@@ -28,9 +28,9 @@ const S = {
 
     border-radius: 16px;
 
-    background-color: ${({ theme }) => theme.palette.yellow300};
+    background-color: ${({ theme }) => theme.palette.green500};
 
-    color: ${({ theme }) => theme.palette.black};
+    color: ${({ theme }) => theme.palette.white};
     line-height: 1.3;
     box-sizing: border-box;
     justify-content: space-evenly;
@@ -41,7 +41,7 @@ const S = {
 
     &:hover,
     &:active {
-      background-color: ${({ theme }) => theme.palette.yellow300};
+      background-color: ${({ theme }) => theme.palette.green600};
     }
   `,
   Title: styled.span`

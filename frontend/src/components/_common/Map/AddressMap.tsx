@@ -59,7 +59,7 @@ const S = {
     width: 100%;
     height: 300px;
 
-    background-color: pink;
+    background-color: ${({ theme }) => theme.palette.background};
   `,
   Map: styled.div`
     width: 100%;

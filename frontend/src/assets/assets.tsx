@@ -13,16 +13,6 @@ import PlusBlack from '@/assets/icons/plusMinus/plus-black.svg';
 import PlusSmall from '@/assets/icons/plusMinus/plus-small.svg';
 import PlusWhite from '@/assets/icons/plusMinus/plus-white.svg';
 
-// footer logos
-import ChecklistLogoActive from '@/assets/icons/footer-icon/checklist-logo-active.svg';
-import ChecklistLogo from '@/assets/icons/footer-icon/checklist-logo.svg';
-import HomeLogoActive from '@/assets/icons/footer-icon/home-logo-active.svg';
-import HomeLogo from '@/assets/icons/footer-icon/home-logo.svg';
-import LocationLogoActive from '@/assets/icons/footer-icon/location-logo-active.svg';
-import LocationLogo from '@/assets/icons/footer-icon/location-logo.svg';
-import MyPageLogoActive from '@/assets/icons/footer-icon/my-page-logo-active.svg';
-import MyPageLogo from '@/assets/icons/footer-icon/my-page-logo.svg';
-
 // memo
 import MemoEmpty from '@/assets/icons/memo-empty.svg';
 import MemoFilled from '@/assets/icons/memo-filled.svg';
@@ -58,22 +48,14 @@ export {
   Building,
   Calendar,
   CheckIcon,
-  ChecklistLogo,
-  ChecklistLogoActive,
   CloseIcon,
-  HomeLogo,
-  HomeLogoActive,
   InputRequiredDot,
   KakaoLogo,
   LampIcon,
   LocationLineIcon,
-  LocationLogo,
-  LocationLogoActive,
   Memo,
   MemoEmpty,
   MemoFilled,
-  MyPageLogo,
-  MyPageLogoActive,
   PencilIcon,
   PlusBlack,
   PlusSmall,

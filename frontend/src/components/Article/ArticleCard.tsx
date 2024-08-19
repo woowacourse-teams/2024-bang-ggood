@@ -1,35 +1,29 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import ArrowRight from '@/assets/icons/arrow/ArrowRight';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { boxShadowSpread, title3 } from '@/styles/common';
-import theme from '@/styles/theme';
+import { boxShadow, flexColumn, title2 } from '@/styles/common';
 import { Article } from '@/types/article';
-import getSeqColor from '@/utils/getSeqColor';
+import formattedDate from '@/utils/formattedDate';
 
 interface Props {
-  index: number;
   article: Article;
 }
 
-const ArticleCard = ({ index, article }: Props) => {
+const ArticleCard = ({ article }: Props) => {
   const navigate = useNavigate();
-  const { articleId, keyword, title } = article;
+  const { articleId, keyword, title, summary, createdAt } = article;
 
-  const { color500, color600 } = getSeqColor(index);
-
-  const handleClickArticle = () => {
+  const handleClick = () => {
     navigate(ROUTE_PATH.articleOne(articleId));
   };
 
   return (
-    <S.Container bgColor={color500} onClick={handleClickArticle}>
-      <S.Keyword bgColor={color600}>{keyword}</S.Keyword>
+    <S.Container onClick={handleClick}>
+      <S.Keyword> {keyword}</S.Keyword>
       <S.Title>{title}</S.Title>
-      <S.ArrowButton>
-        <ArrowRight stroke={color600} />
-      </S.ArrowButton>
+      <S.Label>{summary}</S.Label>
+      <S.Label>{formattedDate(createdAt)}</S.Label>
     </S.Container>
   );
 };
@@ -37,38 +31,40 @@ const ArticleCard = ({ index, article }: Props) => {
 export default ArticleCard;
 
 const S = {
-  Container: styled.div<{ bgColor: string }>`
-    position: relative;
-    width: 190px;
-    height: 180px;
+  Container: styled.div`
+    ${flexColumn}
+    gap: 12px;
+    width: auto;
+    box-sizing: border-box;
     padding: 16px;
 
-    background-color: ${({ bgColor }) => bgColor};
+    border-radius: 16px;
 
-    color: ${theme.palette.white};
-    box-sizing: border-box;
-    border-radius: 24px;
-    ${boxShadowSpread}
+    background-color: ${({ theme }) => theme.palette.white};
+    ${boxShadow};
   `,
-  Keyword: styled.div<{ bgColor: string }>`
-    display: inline-block;
+  Keyword: styled.span`
+    align-self: flex-start;
     padding: 4px 10px;
 
-    background-color: ${({ bgColor }) => bgColor};
+    background-color: ${({ theme }) => theme.palette.grey100};
+
+    color: ${({ theme }) => theme.palette.grey600};
+    font-size: ${({ theme }) => theme.text.size.xxSmall};
+
     box-sizing: content-box;
     border-radius: 6px;
   `,
   Title: styled.div`
-    ${title3}
-    margin-top: 10px;
+    ${title2}
+    margin-top: 8px;
     word-break: keep-all;
 
     line-height: 1.6rem;
     letter-spacing: 0.05rem;
   `,
-  ArrowButton: styled.div`
-    position: absolute;
-    right: 16px;
-    bottom: 16px;
+  Label: styled.div`
+    color: ${({ theme }) => theme.palette.grey500};
+    font-size: ${({ theme }) => theme.text.size.xxSmall};
   `,
 };

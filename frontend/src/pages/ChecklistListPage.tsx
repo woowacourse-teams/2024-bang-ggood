@@ -5,7 +5,7 @@ import { PlusBlack } from '@/assets/assets';
 import FloatingButton from '@/components/_common/FloatingButton/FloatingButton';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
-import ChecklistPreviewCard from '@/components/ChecklistList/ChecklistCard';
+import ChecklistCard from '@/components/ChecklistList/ChecklistCard';
 import CustomBanner from '@/components/ChecklistList/CustomBanner';
 import NoChecklistTemplate from '@/components/ChecklistList/NoChecklistTemplate';
 import SkChecklistList from '@/components/skeleton/ChecklistList/SkChecklistLst';
@@ -26,42 +26,39 @@ const ChecklistListPage = () => {
     navigate(ROUTE_PATH.checklistNew);
   };
 
+  if (isLoading) {
+    return <SkChecklistList />;
+  }
+
   return (
     <>
       <Header center={<Header.Text>체크리스트</Header.Text>} />
-
-      {isLoading ? (
-        <SkChecklistList />
-      ) : (
-        <>
-          <Layout bgColor={theme.palette.background} withFooter withHeader>
-            <S.FlexBox>
-              <CustomBanner onClick={handleClickMoveCustomPage} />
-            </S.FlexBox>
-            <S.ListBox>
-              {checklistList.length ? (
-                <>
-                  {checklistList?.map((checklist: ChecklistPreview) => (
-                    <ChecklistPreviewCard key={checklist.checklistId} checklist={checklist} />
-                  ))}
-                </>
-              ) : (
-                <NoChecklistTemplate />
-              )}
-            </S.ListBox>
-          </Layout>
-          <FloatingButton size="extends" onClick={handleClickFloatingButton}>
-            <PlusBlack /> 작성하기
-          </FloatingButton>
-        </>
-      )}
+      <Layout bgColor={theme.palette.background} withFooter withHeader>
+        <S.FlexBox>
+          <CustomBanner onClick={handleClickMoveCustomPage} />
+        </S.FlexBox>
+        <S.ListBox>
+          {checklistList.length ? (
+            <>
+              {checklistList?.map((checklist: ChecklistPreview) => (
+                <ChecklistCard key={checklist.checklistId} checklist={checklist} />
+              ))}
+            </>
+          ) : (
+            <NoChecklistTemplate />
+          )}
+        </S.ListBox>
+      </Layout>
+      <FloatingButton size="extends" onClick={handleClickFloatingButton}>
+        <PlusBlack /> 작성하기
+      </FloatingButton>
     </>
   );
 };
 export default ChecklistListPage;
 const S = {
   FlexBox: styled.div`
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   `,
   ListBox: styled.div`
     ${flexColumn}

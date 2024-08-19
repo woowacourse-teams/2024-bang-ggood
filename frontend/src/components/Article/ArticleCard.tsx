@@ -2,17 +2,21 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import { ROUTE_PATH } from '@/constants/routePath';
-import { boxShadow, flexColumn, title2 } from '@/styles/common';
+import { boxShadow, flexColumn, title3 } from '@/styles/common';
 import { Article } from '@/types/article';
 import formattedDate from '@/utils/formattedDate';
+import getSeqColor from '@/utils/getSeqColor';
 
 interface Props {
+  index: number;
   article: Article;
 }
 
-const ArticleCard = ({ article }: Props) => {
+const ArticleCard = ({ index, article }: Props) => {
   const navigate = useNavigate();
   const { articleId, keyword, title, summary, createdAt } = article;
+
+  const { color500 } = getSeqColor(index);
 
   const handleClick = () => {
     navigate(ROUTE_PATH.articleOne(articleId));
@@ -20,7 +24,7 @@ const ArticleCard = ({ article }: Props) => {
 
   return (
     <S.Container onClick={handleClick}>
-      <S.Keyword> {keyword}</S.Keyword>
+      <S.Keyword bgColor={color500}> {keyword}</S.Keyword>
       <S.Title>{title}</S.Title>
       <S.Label>{summary}</S.Label>
       <S.Label>{formattedDate(createdAt)}</S.Label>
@@ -33,7 +37,7 @@ export default ArticleCard;
 const S = {
   Container: styled.div`
     ${flexColumn}
-    gap: 12px;
+    gap: 8px;
     width: auto;
     box-sizing: border-box;
     padding: 16px;
@@ -43,20 +47,20 @@ const S = {
     background-color: ${({ theme }) => theme.palette.white};
     ${boxShadow};
   `,
-  Keyword: styled.span`
+  Keyword: styled.span<{ bgColor: string }>`
+    padding: 4px 8px;
+
+    background-color: ${({ bgColor }) => bgColor};
+
+    color: ${({ theme }) => theme.palette.white};
+    font-size: ${({ theme }) => theme.text.size.xSmall};
     align-self: flex-start;
-    padding: 4px 10px;
-
-    background-color: ${({ theme }) => theme.palette.grey100};
-
-    color: ${({ theme }) => theme.palette.grey600};
-    font-size: ${({ theme }) => theme.text.size.xxSmall};
 
     box-sizing: content-box;
     border-radius: 6px;
   `,
   Title: styled.div`
-    ${title2}
+    ${title3}
     margin-top: 8px;
     word-break: keep-all;
 

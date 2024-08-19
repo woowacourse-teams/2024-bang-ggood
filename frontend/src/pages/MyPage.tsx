@@ -4,10 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { BangBangIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
+import Layout from '@/components/_common/layout/Layout';
 import Modal from '@/components/_common/Modal/Modal';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useModalOpen from '@/hooks/useModalOpen';
 import { boxShadow, boxShadowSpread, flexCenter, flexColumn } from '@/styles/common';
+import theme from '@/styles/theme';
 
 const MyPage = () => {
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
@@ -19,15 +21,18 @@ const MyPage = () => {
   return (
     <>
       <Header center={<Header.Text>마이페이지</Header.Text>} />
-      <S.Container>
-        <S.Profile>
-          <S.ProfileIcon>
-            <BangBangIcon width="100" height="100" />
-          </S.ProfileIcon>
-          닉네임
-          <S.Button label="로그아웃" size="small" color="dark" onClick={modalOpen}></S.Button>
-        </S.Profile>
-      </S.Container>
+      <Layout bgColor={theme.palette.background} withFooter withHeader>
+        <S.Container>
+          <S.Profile>
+            <S.ProfileIcon>
+              <BangBangIcon width="100" height="100" />
+            </S.ProfileIcon>
+            닉네임
+            <S.Button label="로그아웃" size="small" color="dark" onClick={modalOpen}></S.Button>
+          </S.Profile>
+        </S.Container>
+      </Layout>
+
       <Modal isOpen={isModalOpen} onClose={modalClose}>
         <Modal.header>로그아웃</Modal.header>
         <Modal.body>정말 로그아웃 하실건가요?</Modal.body>

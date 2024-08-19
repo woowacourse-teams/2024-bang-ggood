@@ -41,7 +41,7 @@ const palette = {
   /* original */
   black: '#363636',
   white: '#FFFFFF',
-  background: '#F5F4F2',
+  background: '#F5F5F5',
 
   /* etc */
   kakao: '#FEE500',

@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import FooterLayout from '@/components/_common/layout/FooterLayout';
 import { ROUTE_PATH } from '@/constants/routePath';
+import ArticleDetailPage from '@/pages/ArticleDetailPage';
 import ArticleListPage from '@/pages/ArticleListPage';
 import ChecklistCustomPage from '@/pages/ChecklistCustomPage';
 import ChecklistDetailPage from '@/pages/ChecklistDetailPage';
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
         path: ROUTE_PATH.roomCompare,
       },
 
+      {
+        element: <ArticleDetailPage />,
+        path: ROUTE_PATH.articleId,
+      },
       {
         element: <LoginPage />,
         path: ROUTE_PATH.login,

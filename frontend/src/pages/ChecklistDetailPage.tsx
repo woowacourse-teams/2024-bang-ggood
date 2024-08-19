@@ -24,7 +24,7 @@ const ChecklistDetailPage = () => {
   const { checklistId } = useParams() as RouteParams;
 
   const { mutate: deleteChecklist } = useDeleteChecklistQuery();
-  const { data: checklist, isError, isLoading } = useGetChecklistDetailQuery(Number(checklistId));
+  const { data: checklist, isLoading, isError } = useGetChecklistDetailQuery(checklistId);
 
   const navigate = useNavigate();
 
@@ -54,7 +54,7 @@ const ChecklistDetailPage = () => {
         center={<Header.Text>{formattedDate(checklist?.room?.createdAt ?? '')}</Header.Text>}
         right={<Header.TextButton onClick={modalOpen}>삭제</Header.TextButton>}
       />
-      <Layout bgColor={theme.palette.grey100}>
+      <Layout bgColor={theme.palette.grey50}>
         <S.Wrapper>
           <RoomInfoSection room={checklist?.room} isLiked={checklist?.isLiked} checklistId={checklist?.checklistId} />
           <ChecklistAnswerSection categories={checklist?.categories} />

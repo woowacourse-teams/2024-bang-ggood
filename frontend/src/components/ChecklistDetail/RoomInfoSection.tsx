@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Building, Calendar, LocationLineIcon, Room, Stairs, Subway } from '@/assets/assets';
 import LikeButton from '@/components/_common/Like/LikeButton';
 import AddressMap from '@/components/_common/Map/AddressMap';
-import { flexColumn, flexRow, title1 } from '@/styles/common';
+import { flexColumn, flexRow, title2 } from '@/styles/common';
 import { RoomInfo } from '@/types/room';
 import formattedUndefined from '@/utils/formattedUndefined';
 
@@ -92,12 +92,8 @@ const S = {
     background-color: ${({ theme }) => theme.palette.white};
     border-radius: 8px;
 
-    font-size: ${({ theme }) => theme.text.size.medium};
     line-height: 1.5;
     letter-spacing: 0.05rem;
-  `,
-  MoneyText: styled.div`
-    font-size: ${({ theme }) => theme.text.size.medium};
   `,
   GreenWrapper: styled.div`
     width: 100%;
@@ -106,7 +102,7 @@ const S = {
     background-color: ${({ theme }) => theme.palette.green500};
 
     color: ${({ theme }) => theme.palette.white};
-    font-size: ${({ theme }) => theme.text.size.large};
+    font-size: ${({ theme }) => theme.text.size.medium};
     box-sizing: border-box;
     border-radius: 16px;
   `,
@@ -124,8 +120,11 @@ const S = {
   `,
   Title: styled.div`
     width: 100%;
-    ${title1}
+    ${title2}
     min-height: 40px;
     word-break: keep-all;
+  `,
+  MoneyText: styled.div`
+    font-size: ${({ theme }) => theme.text.size.small};
   `,
 };

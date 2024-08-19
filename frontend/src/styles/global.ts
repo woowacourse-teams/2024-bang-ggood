@@ -16,5 +16,9 @@ export const baseStyle = css`
     border-left: 1px solid ${theme.palette.grey200};
     border-right: 1px solid ${theme.palette.grey200};
     box-shadow: 0 0 20px ${theme.palette.grey100};
+
+    @supports (-webkit-touch-callout: none) {
+      min-height: -webkit-fill-available;
+    }
   }
 `;

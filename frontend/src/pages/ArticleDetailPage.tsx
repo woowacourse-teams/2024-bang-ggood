@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import MarkdownPreview from '@uiw/react-markdown-preview';
 import { useParams } from 'react-router-dom';
 
 import Header from '@/components/_common/Header/Header';
@@ -31,9 +32,7 @@ const ArticleDetailPage = () => {
           <S.Date>{formattedDate(article?.createdAt ?? '')}</S.Date>
         </S.Row>
         <S.Title>{article?.title}</S.Title>
-
-        {/* TODO: 이렇게 작성해도 될 것인가..  */}
-        <S.Contents dangerouslySetInnerHTML={{ __html: article?.contents ?? '' }} />
+        <MarkdownPreview source={article?.contents} />
       </Layout>
     </>
   );
@@ -61,7 +60,7 @@ const S = {
     font-size: ${({ theme }) => theme.text.size.xSmall};
   `,
   Title: styled.div`
-    margin: 24px;
+    margin: 36px;
 
     ${title1}
     text-align: center;

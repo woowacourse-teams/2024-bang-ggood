@@ -30,6 +30,7 @@
     "@testing-library/jest-dom": "^6.4.8",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "@uiw/react-markdown-preview": "^5.1.2",
     "dotenv": "^16.4.5",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-simple-import-sort": "^12.1.1",

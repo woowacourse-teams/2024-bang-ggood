@@ -54,7 +54,7 @@ const S = {
   `,
   DropDownHeader: styled.div`
     cursor: pointer;
-    width: 100%;
+    width: 125px;
     height: 100%;
   `,
   SelectedOption: styled.label`

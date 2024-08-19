@@ -44,9 +44,10 @@ const S = {
   `,
   Container: styled.div`
     ${flexColumn}
-    padding: 16px;
     justify-content: start;
-    row-gap: 28px;
+    row-gap: 20px;
+
+    margin-bottom: 20px;
   `,
 };
 

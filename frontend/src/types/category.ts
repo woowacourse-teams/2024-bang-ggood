@@ -5,6 +5,7 @@ export interface Category {
   categoryName: CategoryName;
 }
 
-export interface CategoryScore extends Category {
-  score?: number;
-}
+// TODO: 방비교 추후를 위해..
+// export interface CategoryScore extends Category {
+//   score?: number;
+// }

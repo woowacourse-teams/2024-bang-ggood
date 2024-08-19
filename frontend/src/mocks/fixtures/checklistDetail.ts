@@ -2,7 +2,6 @@ import { ChecklistInfo } from '@/types/checklist';
 
 export const checklistDetail: ChecklistInfo = {
   checklistId: 1,
-  score: 88,
   isLiked: true,
   room: {
     roomName: '아름다운 방',

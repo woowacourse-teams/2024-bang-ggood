@@ -1,5 +1,5 @@
 import { AnswerType } from '@/types/answer';
-import { CategoryScore } from '@/types/category';
+// import { CategoryScore } from '@/types/category';
 import { Option } from '@/types/option';
 import { RoomInfo } from '@/types/room';
 
@@ -57,6 +57,7 @@ export interface ChecklistPreview {
   walkingTime: number;
 }
 
+// TODO: 방비교 추후를 위해..
 // 체크리스트 비교
 export interface ChecklistCompare {
   room: RoomInfo;
@@ -65,15 +66,13 @@ export interface ChecklistCompare {
   score: number;
   optionCount: number;
   options: Option[];
-  categories: CategoryScore[];
+  // categories: CategoryScore[];
 }
 
 // 체크리스트 디테일
 export interface ChecklistInfo {
   checklistId: number;
   isLiked: boolean;
-  // TODO: score 삭제 필요
-  score: number;
   room: RoomInfo;
   options: Option[];
   categories: ChecklistCategoryQnA[];

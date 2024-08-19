@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import { flexColumn, Skeleton } from '@/styles/common';
 import theme from '@/styles/theme';
@@ -8,7 +9,8 @@ const SHOW_ARTICLE_COUNT = 3;
 
 const SkArticleList = () => {
   return (
-    <div>
+    <>
+      <Header center={<Header.Text>아티클</Header.Text>} />
       <Layout bgColor={theme.palette.background} withHeader withFooter>
         <S.Title />
         <S.ListContainer>
@@ -17,7 +19,7 @@ const SkArticleList = () => {
           ))}
         </S.ListContainer>
       </Layout>
-    </div>
+    </>
   );
 };
 

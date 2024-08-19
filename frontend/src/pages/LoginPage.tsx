@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { postKakaoCode } from '@/apis/login';
 import { BangBangIcon, KakaoLogo } from '@/assets/assets';
 import Layout from '@/components/_common/layout/Layout';
-import { STORAGE_KEYS } from '@/constants/localStorage';
 import { KAKAO_AUTH_URL } from '@/constants/oAuth';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { flexCenter, flexColumn, flexRow } from '@/styles/common';
@@ -19,7 +18,6 @@ const LoginPage = () => {
     const postLogin = async () => {
       if (code) {
         await postKakaoCode(code).then(async () => {
-          localStorage.setItem(STORAGE_KEYS.LOGIN, 'true');
           navigate(ROUTE_PATH.home);
         });
       }

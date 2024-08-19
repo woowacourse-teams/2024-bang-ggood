@@ -65,20 +65,19 @@ const router = createBrowserRouter([
         element: <RoomComparePage />,
         path: ROUTE_PATH.roomCompare,
       },
-
       {
         element: <ArticleDetailPage />,
         path: ROUTE_PATH.articleId,
-      },
-      {
-        element: <LoginPage />,
-        path: ROUTE_PATH.login,
       },
       {
         element: <NotFound />,
         path: '*',
       },
     ],
+  },
+  {
+    element: <LoginPage />,
+    path: ROUTE_PATH.login,
   },
 ]);
 

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { LocationLineIcon, SmileMessageIcon } from '@/assets/assets';
+import { LocationLineIcon } from '@/assets/assets';
 import LikeButton from '@/components/_common/Like/LikeButton';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { boxShadow, flexCenter, flexColumn, flexRow, flexSpaceBetween, omitText, title3 } from '@/styles/common';
@@ -28,7 +28,7 @@ const ChecklistCard = ({ checklist }: Props) => {
           <LocationLineIcon />
           {address}
         </S.LocationWrapper>
-        <S.Date>{formattedDate(createdAt ?? '')}</S.Date>
+        <LikeButton isLiked={isLiked} checklistId={checklistId} />
       </S.Row>
       <S.Column>
         <S.Title>{roomName}</S.Title>
@@ -38,10 +38,9 @@ const ChecklistCard = ({ checklist }: Props) => {
       </S.Column>
       <S.Row>
         <S.SummaryWrapper>
-          <SmileMessageIcon />
-          <S.SummaryBox>{formattedUndefined(summary)}</S.SummaryBox>
+          <S.SummaryBox>{`"${formattedUndefined(summary)}"`}</S.SummaryBox>
         </S.SummaryWrapper>
-        <LikeButton isLiked={isLiked} checklistId={checklistId} />
+        <S.Date>{formattedDate(createdAt ?? '')}</S.Date>
       </S.Row>
     </S.Container>
   );
@@ -90,13 +89,13 @@ const S = {
     font-weight: ${({ theme }) => theme.text.size.medium};
   `,
   SummaryWrapper: styled.div`
-    width: calc(100% - 50px);
+    width: calc(100% - 90px);
     ${flexRow}
     align-items: center;
-    padding: 4px;
+    padding: 8px;
 
     background-color: ${({ theme }) => theme.palette.grey100};
-    border-radius: 10px;
+    border-radius: 6px;
 
     max-width: 400px;
   `,

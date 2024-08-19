@@ -13,6 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 import static com.bang_ggood.article.ArticleFixture.ARTICLE;
+import static com.bang_ggood.article.ArticleFixture.ARTICLE_1;
+import static com.bang_ggood.article.ArticleFixture.ARTICLE_2;
+import static com.bang_ggood.article.ArticleFixture.ARTICLE_3;
+import static com.bang_ggood.article.ArticleFixture.ARTICLE_4;
 import static com.bang_ggood.article.ArticleFixture.ARTICLE_CREATE_REQUEST;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -66,14 +70,10 @@ public class ArticleServiceTest extends IntegrationTestSupport {
     @Test
     void readLatestArticles() {
         // given
-        Article article1 = new Article("제목1", "내용1", "키워드1", "요약1");
-        Article article2 = new Article("제목2", "내용2", "키워드2", "요약2");
-        Article article3 = new Article("제목3", "내용3", "키워드3", "요약3");
-        Article article4 = new Article("제목4", "내용4", "키워드4", "요약4");
-        articleRepository.save(article1);
-        articleRepository.save(article2);
-        articleRepository.save(article3);
-        articleRepository.save(article4);
+        articleRepository.save(ARTICLE_1);
+        articleRepository.save(ARTICLE_2);
+        articleRepository.save(ARTICLE_3);
+        articleRepository.save(ARTICLE_4);
 
         // when
         List<String> articleTitles = articleService.readLatestArticles().articles().stream()
@@ -81,7 +81,7 @@ public class ArticleServiceTest extends IntegrationTestSupport {
                 .toList();
 
         // then
-        assertThat(articleTitles).containsExactly("제목4", "제목3", "제목2");
+        assertThat(articleTitles).containsExactly(ARTICLE_4.getTitle(), ARTICLE_3.getTitle(), ARTICLE_2.getTitle());
     }
 
     @DisplayName("아티클 삭제 성공")

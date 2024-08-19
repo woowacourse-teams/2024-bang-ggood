@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import HomeCircle from '@/assets/icons/common/HomeCircle';
 import { flexColumn, flexRow, flexSpaceBetween, title3 } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
+import formattedUndefined from '@/utils/formattedUndefined';
 import getSeqColor from '@/utils/getSeqColor';
 
 interface Props {
@@ -14,17 +15,19 @@ const ChecklistPreviewCard = ({ index, checklist }: Props) => {
   const colorList = ['green', 'blue', 'red'];
   const { color200, color500 } = getSeqColor(index, colorList);
 
+  const { station, walkingTime, roomName, deposit, rent } = checklist;
+
   return (
     <S.Container>
       <HomeCircle color={color500} bgColor={color200} />
       <S.Column>
         <S.Label>
-          {checklist.station} · {checklist.walkingTime}분
+          {formattedUndefined(station)} · {formattedUndefined(walkingTime)} 분
         </S.Label>
         <S.Row>
-          <S.Title> {checklist.roomName}</S.Title>
+          <S.Title>{roomName}</S.Title>
           <div>
-            {checklist.deposit} / {checklist.rent}
+            {formattedUndefined(deposit)} / {formattedUndefined(rent)}
           </div>
         </S.Row>
       </S.Column>

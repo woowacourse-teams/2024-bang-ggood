@@ -38,7 +38,7 @@ const ChecklistCard = ({ checklist }: Props) => {
       </S.Column>
       <S.Row>
         <S.SummaryWrapper>
-          <S.SummaryBox>{`"${formattedUndefined(summary)}"`}</S.SummaryBox>
+          <S.SummaryBox>{`"${formattedUndefined(summary, 'string', '한줄평')}"`}</S.SummaryBox>
         </S.SummaryWrapper>
         <S.Date>{formattedDate(createdAt ?? '')}</S.Date>
       </S.Row>

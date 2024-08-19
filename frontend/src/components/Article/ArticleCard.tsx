@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import { ROUTE_PATH } from '@/constants/routePath';
-import { boxShadow, flexColumn, title2 } from '@/styles/common';
+import { boxShadow, flexColumn, title3 } from '@/styles/common';
 import { Article } from '@/types/article';
 import formattedDate from '@/utils/formattedDate';
 import getSeqColor from '@/utils/getSeqColor';
@@ -37,7 +37,7 @@ export default ArticleCard;
 const S = {
   Container: styled.div`
     ${flexColumn}
-    gap: 12px;
+    gap: 8px;
     width: auto;
     box-sizing: border-box;
     padding: 16px;
@@ -48,7 +48,7 @@ const S = {
     ${boxShadow};
   `,
   Keyword: styled.span<{ bgColor: string }>`
-    padding: 4px 10px;
+    padding: 4px 8px;
 
     background-color: ${({ bgColor }) => bgColor};
 
@@ -60,7 +60,7 @@ const S = {
     border-radius: 6px;
   `,
   Title: styled.div`
-    ${title2}
+    ${title3}
     margin-top: 8px;
     word-break: keep-all;
 

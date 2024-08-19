@@ -5,6 +5,7 @@ import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import MyPageModal from '@/components/MyPage/MyPageModal';
+import useUserQuery from '@/hooks/query/useUserQuery';
 import useModalOpen from '@/hooks/useModalOpen';
 import { boxShadow, boxShadowSpread, flexCenter, flexColumn, title2 } from '@/styles/common';
 import theme from '@/styles/theme';
@@ -12,6 +13,13 @@ import theme from '@/styles/theme';
 const MyPage = () => {
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
 
+  const { data, isLoading, isError } = useUserQuery();
+  if (isLoading) {
+    return 'Loading...';
+  }
+  if (isError) {
+    return '로그인 되지 않았습니다.';
+  }
   return (
     <>
       <Header center={<Header.Text>마이페이지</Header.Text>} />
@@ -23,7 +31,7 @@ const MyPage = () => {
               <S.ProfileIcon>
                 <BangBangIcon width="100" height="100" />
               </S.ProfileIcon>
-              안녕하세요 닉네임님
+              {`안녕하세요 ${data?.username}님`}
             </S.Profile>
           </S.Container>
           <S.Button label="로그아웃" size="small" color="dark" onClick={modalOpen}></S.Button>

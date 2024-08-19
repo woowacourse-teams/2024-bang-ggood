@@ -48,7 +48,7 @@ const ChecklistDetailPage = () => {
   };
 
   const handleEditButton = () => {
-    navigate(ROUTE_PATH.checklistEditById(Number(checklistId)));
+    navigate(ROUTE_PATH.checklistEditOne(Number(checklistId)));
   };
   return (
     <>

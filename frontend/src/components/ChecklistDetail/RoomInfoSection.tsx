@@ -3,8 +3,9 @@ import styled from '@emotion/styled';
 import { Building, Calendar, LocationLineIcon, Room, Stairs, Subway } from '@/assets/assets';
 import LikeButton from '@/components/_common/Like/LikeButton';
 import AddressMap from '@/components/_common/Map/AddressMap';
-import { flexColumn, flexRow, title2 } from '@/styles/common';
+import { flexColumn, flexRow, flexSpaceBetween, title2 } from '@/styles/common';
 import { RoomInfo } from '@/types/room';
+import formattedDate from '@/utils/formattedDate';
 import formattedUndefined from '@/utils/formattedUndefined';
 
 interface Props {
@@ -30,6 +31,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
     realEstate,
     occupancyMonth,
     occupancyPeriod,
+    createdAt,
   } = room;
 
   return (
@@ -41,8 +43,11 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
         </S.Row>
         <S.Row>
           <S.MoneyText>
-            보증금 {formattedUndefined(deposit)} / 월세 {formattedUndefined(rent)} + 관리비{' '}
-            {formattedUndefined(maintenanceFee)}
+            <div>
+              보증금 {formattedUndefined(deposit)} / 월세 {formattedUndefined(rent)} + 관리비{' '}
+              {formattedUndefined(maintenanceFee)}
+            </div>
+            <div>{formattedDate(createdAt ?? '')}</div>
           </S.MoneyText>
         </S.Row>
       </S.GreenWrapper>
@@ -125,6 +130,10 @@ const S = {
     word-break: keep-all;
   `,
   MoneyText: styled.div`
+    width: 100%;
+
     font-size: ${({ theme }) => theme.text.size.small};
+    ${flexRow}
+    ${flexSpaceBetween}
   `,
 };

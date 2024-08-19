@@ -18,9 +18,15 @@ public class Article extends BaseEntity {
 
     private String content;
 
-    public Article(String title, String content) {
+    private String keyword;
+
+    private String summary;
+
+    public Article(String title, String content, String keyword, String summary) {
         this.title = title;
         this.content = content;
+        this.keyword = keyword;
+        this.summary = summary;
     }
 
     protected Article() {
@@ -36,6 +42,14 @@ public class Article extends BaseEntity {
 
     public String getContent() {
         return content;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public String getSummary() {
+        return summary;
     }
 
     @Override
@@ -57,6 +71,8 @@ public class Article extends BaseEntity {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
+                ", keyword='" + keyword + '\'' +
+                ", summary='" + summary + '\'' +
                 '}';
     }
 }

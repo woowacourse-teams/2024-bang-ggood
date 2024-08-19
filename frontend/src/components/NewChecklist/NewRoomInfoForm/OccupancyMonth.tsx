@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { useStore } from 'zustand';
 
 import Dropdown from '@/components/_common/Dropdown/Dropdown';
@@ -33,9 +32,4 @@ const OccupancyMonth = () => {
   );
 };
 
-const S = {
-  SelectOccupancyPeriod: styled.select`
-    width: 30%;
-  `,
-};
 export default OccupancyMonth;

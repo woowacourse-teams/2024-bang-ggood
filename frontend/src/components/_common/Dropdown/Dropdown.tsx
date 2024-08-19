@@ -26,10 +26,10 @@ const Dropdown = ({ initialValue, options, onSelectSetter }: Props) => {
   };
 
   return (
-    <div>
+    <S.Wrapper>
       <S.DropDownHeader onClick={() => setIsVisibleOptions(prev => !prev)}>
         <S.SelectedOption>
-          {selectedValue}
+          <div>{selectedValue}</div>
           <DropdownMark />
         </S.SelectedOption>
       </S.DropDownHeader>
@@ -42,27 +42,33 @@ const Dropdown = ({ initialValue, options, onSelectSetter }: Props) => {
           ))}
         </S.OptionList>
       )}
-    </div>
+    </S.Wrapper>
   );
 };
 
 export default Dropdown;
 
 const S = {
+  Wrapper: styled.div`
+    flex: 0 0 auto;
+  `,
   DropDownHeader: styled.div`
     cursor: pointer;
+    width: 100%;
+    height: 100%;
   `,
   SelectedOption: styled.label`
     display: flex;
     position: relative;
-    width: 125px;
-    height: 30px;
+    width: 100%;
+    height: 100%;
     padding: 0 10px;
     border: 1px solid ${theme.palette.grey400};
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
     border-radius: 4px;
+    column-gap: 4px;
   `,
   OptionList: styled.ul`
     position: absolute;

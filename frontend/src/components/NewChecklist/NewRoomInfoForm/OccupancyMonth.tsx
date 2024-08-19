@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import { useStore } from 'zustand';
 
+import Dropdown from '@/components/_common/Dropdown/Dropdown';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
-import { InputChangeEvent } from '@/types/event';
 
 const OccupancyMonth = () => {
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
@@ -20,15 +20,13 @@ const OccupancyMonth = () => {
       <FormStyled.FieldBox>
         <FormField.Input width="medium" onChange={actions.onChange} name="occupancyMonth" value={occupancyMonth} />
         <FormStyled.FlexLabel label="월  " />
-        <S.SelectOccupancyPeriod
-          name="occupancyPeriod"
-          value={occupancyPeriod}
-          onChange={e => actions.onChange(e as unknown as InputChangeEvent)}
-        >
-          <option value="초">초</option>
-          <option value="중순">중순</option>
-          <option value="말">말</option>
-        </S.SelectOccupancyPeriod>
+        <Dropdown
+          initialValue={occupancyPeriod}
+          options={['초', '중순', '말'].map(value => ({ value }))}
+          onSelectSetter={(level: string) => {
+            actions.set('occupancyPeriod', level);
+          }}
+        />
       </FormStyled.FieldBox>
       <FormField.ErrorMessage value={errorMessageOccupancyMonth || errorMessageOccupancyPeriod || ''} />
     </FlexBox.Vertical>

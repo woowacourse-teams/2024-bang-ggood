@@ -1,6 +1,7 @@
 package com.bang_ggood.article.controller;
 
 import com.bang_ggood.AcceptanceTest;
+import com.bang_ggood.article.dto.request.ArticleCreateRequest;
 import com.bang_ggood.article.repository.ArticleRepository;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.exception.dto.ExceptionResponse;
@@ -52,6 +53,20 @@ public class ArticleE2ETest extends AcceptanceTest {
                 .as(ExceptionResponse.class);
 
         assertThat(response.message()).isEqualTo(ExceptionCode.AUTHENTICATION_COOKIE_EMPTY.getMessage());
+    }
+
+    @DisplayName("아티클 생성 실패: 제목이 비어있는 경우")
+    @Test
+    void createArticle_titleBlank_exception() {
+        ArticleCreateRequest request = new ArticleCreateRequest("", "내용", "키워드", "요약");
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .body(request)
+                .when().post("/articles")
+                .then().log().all()
+                .statusCode(400);
     }
 
     @DisplayName("아티클 조회 성공")

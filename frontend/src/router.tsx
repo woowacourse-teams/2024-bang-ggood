@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 
+import FooterLayout from '@/components/_common/layout/FooterLayout';
 import { ROUTE_PATH } from '@/constants/routePath';
 import ArticleDetailPage from '@/pages/ArticleDetailPage';
 import ArticleListPage from '@/pages/ArticleListPage';
@@ -22,12 +23,18 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        element: <MainPage />,
-        path: ROUTE_PATH.home,
-      },
-      {
-        element: <ChecklistListPage />,
-        path: ROUTE_PATH.checklistList,
+        element: <FooterLayout />,
+        children: [
+          { element: <MainPage />, path: ROUTE_PATH.home },
+          {
+            element: <ChecklistListPage />,
+            path: ROUTE_PATH.checklistList,
+          },
+          {
+            element: <ArticleListPage />,
+            path: ROUTE_PATH.article,
+          },
+        ],
       },
       {
         element: <NewChecklistPage />,
@@ -53,10 +60,7 @@ const router = createBrowserRouter([
         element: <RoomComparePage />,
         path: ROUTE_PATH.roomCompare,
       },
-      {
-        element: <ArticleListPage />,
-        path: ROUTE_PATH.article,
-      },
+
       {
         element: <ArticleDetailPage />,
         path: ROUTE_PATH.articleId,

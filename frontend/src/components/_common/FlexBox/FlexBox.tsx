@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { flexColumn, flexRow, flexSpaceBetween } from '@/styles/common';
+import { flexColumn, flexRow } from '@/styles/common';
 
 const FlexBox = {
   Vertical: styled.div<{ gap?: string; width?: string }>`
@@ -9,9 +9,8 @@ const FlexBox = {
     flex: auto;
     ${({ width }) => width && `width:${width};`}
   `,
-  Horizontal: styled.div<{ gap?: number | string; flexWrap?: string; width?: string }>`
+  Horizontal: styled.div<{ gap?: number | string; flexWrap?: string; width?: string; type?: 'spaceBetween' | 'row' }>`
     ${flexRow}
-    ${flexSpaceBetween}
     gap: 8px ${({ gap: gap }) => gap ?? '6%'};
     ${({ flexWrap }) => flexWrap && `flex-wrap:${flexWrap};`}
     ${({ width }) => width && `width:${width};`}

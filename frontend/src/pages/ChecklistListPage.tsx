@@ -3,40 +3,37 @@ import { useNavigate } from 'react-router-dom';
 
 import { PlusBlack } from '@/assets/assets';
 import FloatingButton from '@/components/_common/FloatingButton/FloatingButton';
-import FooterDefault from '@/components/_common/Footer/FooterDefault';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import ChecklistCard from '@/components/ChecklistList/ChecklistCard';
 import CustomBanner from '@/components/ChecklistList/CustomBanner';
 import NoChecklistTemplate from '@/components/ChecklistList/NoChecklistTemplate';
+import SkChecklistList from '@/components/skeleton/ChecklistList/SkChecklistLst';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useGetChecklistListQuery from '@/hooks/query/useGetChecklistListQuery';
 import { flexColumn } from '@/styles/common';
+import theme from '@/styles/theme';
 import { ChecklistPreview } from '@/types/checklist';
 
 const ChecklistListPage = () => {
   const navigate = useNavigate();
-
-  const { data: checklistList, isLoading, error } = useGetChecklistListQuery();
+  const { data: checklistList, isLoading } = useGetChecklistListQuery();
 
   const handleClickMoveCustomPage = () => {
     navigate(ROUTE_PATH.checklistCustom);
   };
-
   const handleClickFloatingButton = () => {
     navigate(ROUTE_PATH.checklistNew);
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <SkChecklistList />;
   }
-
-  if (!checklistList) throw error;
 
   return (
     <>
       <Header center={<Header.Text>체크리스트</Header.Text>} />
-      <Layout withHeader withFooter>
+      <Layout bgColor={theme.palette.background} withFooter withHeader>
         <S.FlexBox>
           <CustomBanner onClick={handleClickMoveCustomPage} />
         </S.FlexBox>
@@ -55,20 +52,17 @@ const ChecklistListPage = () => {
       <FloatingButton size="extends" onClick={handleClickFloatingButton}>
         <PlusBlack /> 작성하기
       </FloatingButton>
-      <FooterDefault />
     </>
   );
 };
-
 export default ChecklistListPage;
-
 const S = {
   FlexBox: styled.div`
     margin-bottom: 16px;
   `,
   ListBox: styled.div`
     ${flexColumn}
-    gap: 8px;
+    gap: 12px;
     overflow-y: scroll;
   `,
   DefaultButton: styled.div`

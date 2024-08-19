@@ -8,51 +8,44 @@ import ThirdSection from '@/components/Landing/ThirdSection';
 import { flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
 
-type TextType = 'dark' | 'light';
 interface Color {
   background: string;
-  textType: TextType;
 }
 
 const SectionColors: Record<string, Color> = {
   first: {
     background: theme.palette.white,
-    textType: 'dark',
   },
   second: {
     background: theme.palette.yellow100,
-    textType: 'dark',
   },
   third: {
     background: theme.palette.green100,
-    textType: 'dark',
   },
   fourth: {
-    background: theme.palette.white,
-    textType: 'dark',
+    background: 'tranparent',
   },
   fifth: {
     background: theme.palette.yellow200,
-    textType: 'dark',
   },
 };
 
 const LandingPage = () => {
   return (
     <S.Container>
-      <S.Section height={600} color={SectionColors.first.background} textColor={SectionColors.first.textType}>
+      <S.Section height={600} color={SectionColors.first.background}>
         <FirstSection />
       </S.Section>
-      <S.Section color={SectionColors.second.background} textColor={SectionColors.second.textType}>
+      <S.Section color={SectionColors.second.background}>
         <SecondSection />
       </S.Section>
-      <S.Section height={760} color={SectionColors.third.background} textColor={SectionColors.third.textType}>
+      <S.Section height={820} color={SectionColors.third.background}>
         <ThirdSection />
       </S.Section>
-      <S.Section height={900} color={SectionColors.fourth.background} textColor={SectionColors.fourth.textType}>
+      <S.Section height={900} color={SectionColors.fourth.background}>
         <FourthSection />
       </S.Section>
-      <S.Section height={250} color={SectionColors.fifth.background} textColor={SectionColors.fourth.textType}>
+      <S.Section height={250} color={SectionColors.fifth.background}>
         <FifthSection />
       </S.Section>
     </S.Container>
@@ -62,14 +55,14 @@ const LandingPage = () => {
 export default LandingPage;
 
 const S = {
-  Section: styled.div<{ color: string; textColor: TextType; height?: number }>`
+  Section: styled.div<{ color: string; height?: number }>`
     width: 100%;
     height: ${({ height }) => height ?? 680}px;
-    background-color: ${({ color }) => color ?? 'white'};
+    background-color: ${({ color }) => (typeof color === 'string' ? color : color)};
     display: flex;
     flex-direction: column;
     gap: 20px;
-    color: ${({ textColor }) => (textColor === 'light' ? 'white' : 'black')};
+    color: black;
   `,
   Container: styled.div`
     background-color: ${({ theme }) => theme.palette.background};

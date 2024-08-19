@@ -20,5 +20,8 @@ const S = {
     width: 140px;
     padding: 10px;
     background-color: ${({ theme }) => theme.palette.yellow600};
+    &:hover {
+      background-color: ${({ theme }) => theme.palette.yellow400};
+    }
   `,
 };

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useRef } from 'react';
 
 import { PencilIcon } from '@/assets/assets';
-import { Bold, Container, ImageBox, TextBox } from '@/components/Landing/style';
+import { Bold, Container, Highlight, ImageBox, TextBox } from '@/components/Landing/style';
 import useIntersection from '@/hooks/useIntersection';
 import { boxShadow, flexCenter, flexColumn, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
@@ -49,13 +49,13 @@ const ThirdSection = () => {
           </S.Card>
         </S.CardList>
 
-        <S.Text margin={15}>
-          짧은 시간동안 <Bold>O X</Bold> 로 빠르게 체크해요!
+        <S.Text margin={35}>
+          짧은 시간동안 <Bold>O X</Bold> 로 <Highlight>빠르게 체크해요!</Highlight>
         </S.Text>
         <S.CenterBox>
           <S.ImageBox isIntersecting={isIntersecting}>
             <S.PencilIconBox>
-              <PencilIcon width={100} height={120} />
+              <PencilIcon width={100} height={90} />
             </S.PencilIconBox>
             <img src="/image/checkScreenShot.png" width="300px" />
           </S.ImageBox>
@@ -77,7 +77,7 @@ const S = {
   `,
   PencilIconBox: styled.div`
     position: absolute;
-    left: 280px;
+    left: 260px;
     transform: scaleX(-1);
   `,
   Observer: styled.div`

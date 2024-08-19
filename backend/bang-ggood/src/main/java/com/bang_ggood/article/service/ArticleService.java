@@ -23,7 +23,7 @@ public class ArticleService {
     }
 
     @Transactional
-    public Long createArticle(ArticleCreateRequest request) {
+    public long createArticle(ArticleCreateRequest request) {
         Article article = request.toEntity();
         articleRepository.save(article);
         return article.getId();

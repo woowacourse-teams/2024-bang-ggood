@@ -1,6 +1,6 @@
 package com.bang_ggood.utils;
 
-import com.bang_ggood.station.domain.Station;
+import com.bang_ggood.station.domain.SubwayStation;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
@@ -13,16 +13,16 @@ import java.util.List;
 
 public class FileReader {
 
-    public static final String stationPath = "seoul_stations_240819.csv";
+    public static final String SUBWAY_DATA_PATH = "seoul_stations_240819.csv";
 
-    public static List<Station> readStationData() {
-        List<Station> stations = new ArrayList<>();
-        ClassPathResource resource = new ClassPathResource(stationPath);
+    public static List<SubwayStation> readSubwayStationData() {
+        List<SubwayStation> stations = new ArrayList<>();
+        ClassPathResource resource = new ClassPathResource(SUBWAY_DATA_PATH);
         try (CSVReader csvReader = new CSVReaderBuilder(
                 new InputStreamReader(resource.getInputStream(), Charset.forName("EUC-KR"))).build()) {
             String[] line = csvReader.readNext(); // drop first row
             while ((line = csvReader.readNext()) != null) {
-                Station station = new Station(
+                SubwayStation station = new SubwayStation(
                         Integer.parseInt(line[0]),
                         line[1],
                         line[2],

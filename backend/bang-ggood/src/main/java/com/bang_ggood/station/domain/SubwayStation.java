@@ -1,6 +1,6 @@
 package com.bang_ggood.station.domain;
 
-public class Station {
+public class SubwayStation {
 
     private final Integer id;
     private final String name;
@@ -8,7 +8,7 @@ public class Station {
     private final double latitude;
     private final double longitude;
 
-    public Station(Integer id, String name, String line, double latitude, double longitude) {
+    public SubwayStation(Integer id, String name, String line, double latitude, double longitude) {
         this.id = id;
         this.name = name;
         this.line = line;

@@ -1,7 +1,7 @@
 package com.bang_ggood.station;
 
 import com.bang_ggood.IntegrationTestSupport;
-import com.bang_ggood.station.service.StationService;
+import com.bang_ggood.station.service.SubwayStationService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -11,17 +11,17 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class StationServiceTest extends IntegrationTestSupport {
+public class SubwayStationServiceTest extends IntegrationTestSupport {
 
     @Autowired
-    StationService stationService;
+    SubwayStationService subwayStationService;
 
     @DisplayName("가까운 지하철 조회 성공")
     @ParameterizedTest
     @MethodSource("provideStationData")
     void readNearestStation(double latitude, double longitude, String nearestStationName) {
         // given & when
-        String stationName = stationService.readNearestStation(latitude, longitude).name();
+        String stationName = subwayStationService.readNearestStation(latitude, longitude).stationName();
 
         // then
         assertThat(stationName).isEqualTo(nearestStationName);

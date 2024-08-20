@@ -1,11 +1,12 @@
 import { createStore } from 'zustand';
 
 import { InputChangeEvent } from '@/types/event';
+import { objectMap } from '@/utils/typeFunctions';
 import { AllString } from '@/utils/utilityTypes';
 import { validation } from '@/utils/validation';
 import { Validator } from '@/utils/validators';
 
-const initialErrorMessages = <T extends object>(initial: T) =>
+const initialErrorMessages = <T extends object>(initial: Partial<T>) =>
   Object.fromEntries(Object.entries(initial).map(([key]) => [key, ''])) as AllString<T>;
 
 interface FormAction<T> {
@@ -20,10 +21,10 @@ interface FormAction<T> {
   _transform: (name: string, value: string) => void;
 }
 
-type FormState<T> = { rawValue: Partial<AllString<T>> } & { value: T } & { errorMessage: AllString<T> };
+type FormState<T> = { rawValue: Partial<AllString<T>>; value: Partial<T>; errorMessage: AllString<T> };
 
-const createFormStore = <T extends { [key in keyof T]: string | undefined }>(
-  initial: T,
+const createFormStore = <T extends object>(
+  initialRaw: Partial<AllString<T>>,
   validatorSet: Record<string, Validator[]>,
   valueType: AllString<T>,
 ) =>
@@ -32,9 +33,9 @@ const createFormStore = <T extends { [key in keyof T]: string | undefined }>(
       actions: FormAction<T>;
     }
   >((set, get) => ({
-    rawValue: initial,
-    value: initial,
-    errorMessage: initialErrorMessages(initial),
+    rawValue: initialRaw,
+    value: transformAll(initialRaw, valueType),
+    errorMessage: initialErrorMessages(initialRaw),
     actions: {
       onChange: event => {
         get().actions.set(event.target.name as keyof T, event.target.value);
@@ -48,7 +49,12 @@ const createFormStore = <T extends { [key in keyof T]: string | undefined }>(
         get().actions._updateAfterValidation(name, value ?? '', validatorSet[name as string]);
       },
 
-      resetAll: () => set({ rawValue: initial, value: initial, errorMessage: initialErrorMessages(initial) }),
+      resetAll: () =>
+        set({
+          rawValue: initialRaw,
+          value: transformAll(initialRaw, valueType),
+          errorMessage: initialErrorMessages(initialRaw),
+        }),
       setAll: set,
       _reset: name => {
         get().actions._updateErrorMsg(name, '');
@@ -76,5 +82,11 @@ const createFormStore = <T extends { [key in keyof T]: string | undefined }>(
         set({ value: { ...get().value, [name]: valueType[name as keyof T] === 'number' ? Number(value) : value } }),
     },
   }));
+
+const transformAll = <T>(rawValues: Partial<AllString<T>>, valueType: AllString<T>) =>
+  objectMap(rawValues, ([key, value]) => [
+    key,
+    valueType[key as keyof T] === 'number' ? Number(value) : value,
+  ]) as Partial<T>;
 
 export default createFormStore;

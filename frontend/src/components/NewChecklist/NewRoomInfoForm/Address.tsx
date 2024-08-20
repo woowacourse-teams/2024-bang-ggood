@@ -8,7 +8,6 @@ import checklistAddressStore from '@/store/checklistAddressStore';
 
 const Address = () => {
   const address = useStore(checklistAddressStore, state => state.address);
-  // const errorMessage = useStore(checklistRoomInfoStore, state => state.errorMessage.address);
 
   return (
     <FormField>
@@ -20,7 +19,7 @@ const Address = () => {
         {/*주소 찾기 모달*/}
         <DaumAddressModal />
       </FlexBox.Horizontal>
-      <FormField.ErrorMessage value={errorMessage ?? ''} />
+      <FormField.ErrorMessage value="" /> {/* 검증이 없으므로 에러메시지도 없음 */}
     </FormField>
   );
 };

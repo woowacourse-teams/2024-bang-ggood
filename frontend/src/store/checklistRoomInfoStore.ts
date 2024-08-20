@@ -1,4 +1,5 @@
 import createFormStore from '@/store/createFormStore';
+import { RoomInfo } from '@/types/room';
 import {
   inRangeValidator,
   isIntegerValidator,
@@ -74,6 +75,6 @@ const validatorSet: Record<string, Validator[]> = {
   memo: [],
 };
 
-const checklistRoomInfoStore = createFormStore(initialRoomInfo, validatorSet, roomInfoType);
+const checklistRoomInfoStore = createFormStore<RoomInfo>(initialRoomInfo, validatorSet, roomInfoType);
 
 export default checklistRoomInfoStore;

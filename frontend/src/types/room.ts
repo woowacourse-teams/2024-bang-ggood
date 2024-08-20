@@ -5,10 +5,8 @@ export type OccupancyPeriod = '초' | '중순' | '말';
 
 export type RoomInfo = Partial<{
   roomName: string;
-  address: Address;
   deposit: number;
   rent: number;
-  includedUtilities: IncludedUtilities; // 관리비 포함항목
   maintenanceFee: number;
   contractTerm: number;
   floor: number;
@@ -22,7 +20,10 @@ export type RoomInfo = Partial<{
   occupancyPeriod: OccupancyPeriod;
   summary: string;
   memo: string;
+  type: string;
   createdAt?: string;
+  address: Address;
+  includedUtilities: IncludedUtilities; // 관리비 포함항목
 }>;
 export type RoomInfoName = keyof RoomInfo;
 export interface IncludedUtilities {

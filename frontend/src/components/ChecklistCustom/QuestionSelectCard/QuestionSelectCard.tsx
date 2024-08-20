@@ -43,7 +43,7 @@ const S = {
   Container: styled.div<{ isChecked: boolean }>`
     display: flex;
     width: 100%;
-    min-height: 50px;
+    min-height: 5rem;
     justify-content: space-between;
     align-items: center;
 
@@ -52,31 +52,31 @@ const S = {
   FlexColumn: styled.div`
     display: flex;
     width: 90%;
-    padding: 10px;
-    padding-left: 20px;
+    padding: 1rem;
+    padding-left: 2rem;
     flex-direction: column;
   `,
   FlexRow: styled.div`
     ${flexCenter}
-    gap: 8px;
+    gap: .8rem;
     justify-content: left;
   `,
   Title: styled.div`
     display: flex;
 
     font-size: ${({ theme }) => theme.text.size.medium};
-    line-height: 1.5;
-    gap: 10px;
+    line-height: 1.6rem;
+    gap: 1rem;
   `,
   Subtitle: styled.div`
-    padding-left: 20px;
+    padding-left: 2rem;
 
     color: ${({ theme }) => theme.palette.grey500};
     font-size: ${({ theme }) => theme.text.size.small};
-    line-height: 1.5;
+    line-height: 1.6rem;
     word-break: keep-all;
   `,
   CheckBoxContainer: styled.div`
-    padding-right: 20px;
+    padding-right: 2rem;
   `,
 };

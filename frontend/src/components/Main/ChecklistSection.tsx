@@ -50,18 +50,18 @@ export default ChecklistSection;
 const S = {
   Title: styled.div`
     ${title4};
-    margin: 16px 0 0 16px;
+    margin: 1.6rem 0 0 1.6rem;
   `,
   Container: styled.div`
     max-width: 100%;
     box-sizing: border-box;
-    margin: 16px;
-    padding: 24px 16px;
+    margin: 1.6rem;
+    padding: 2.4rem 1.6rem;
 
-    border-radius: 16px;
+    border-radius: 1.6rem;
     ${boxShadow};
     ${flexColumn};
-    gap: 12px;
+    gap: 1.2rem;
 
     ${boxShadowSpread}
   `,
@@ -81,8 +81,8 @@ const S = {
   `,
   NewButton: styled(Button)`
     width: 100%;
-    padding: 18px 48px;
-    border-radius: 8px;
+    padding: 1.8rem 4.8rem;
+    border-radius: 0.8rem;
 
     background-color: ${({ theme }) => theme.palette.grey50};
   `,

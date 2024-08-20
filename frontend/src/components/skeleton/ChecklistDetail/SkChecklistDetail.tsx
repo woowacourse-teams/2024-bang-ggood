@@ -1,5 +1,3 @@
-import styled from '@emotion/styled';
-
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import SkChecklistAnswer from '@/components/skeleton/ChecklistDetail/SkChecklistAnswer';
@@ -10,20 +8,12 @@ const SkChecklistDetail = () => {
   return (
     <>
       <Header />
-      <Layout bgColor={theme.palette.grey100}>
-        <S.Wrapper>
-          <SkRoomInfoSection />
-          <SkChecklistAnswer />
-        </S.Wrapper>
+      <Layout bgColor={theme.palette.grey100} withHeader>
+        <SkRoomInfoSection />
+        <SkChecklistAnswer />
       </Layout>
     </>
   );
 };
 
 export default SkChecklistDetail;
-
-const S = {
-  Wrapper: styled.div`
-    min-height: calc(100vh - 64px);
-  `,
-};

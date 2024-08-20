@@ -30,7 +30,7 @@ const S = {
   QuestionList: styled.div`
     width: 100%;
     height: fit-content;
-    border-radius: 8px;
+    border-radius: 0.8rem;
 
     background-color: ${({ theme }) => theme.palette.white};
   `,

@@ -43,7 +43,7 @@ const S = {
     width: 100%;
     box-sizing: border-box;
 
-    padding: 16px 16px 0;
+    padding: 1.6rem 1.6rem 0;
     ${flexRow};
     ${flexSpaceBetween};
   `,
@@ -61,8 +61,8 @@ const S = {
     ${flexRow}
     overflow-x: scroll;
     scroll-snap-type: x mandatory;
-    padding: 16px;
-    gap: 16px;
+    padding: 1.6rem;
+    gap: 1.6rem;
     scrollbar-width: none;
 
     &::-webkit-scrollbar {
@@ -71,12 +71,12 @@ const S = {
   `,
   CardWrapper: styled.div`
     display: inline-block;
-    width: 190px;
+    width: 19rem;
     scroll-snap-align: start;
     flex: 0 0 auto;
 
     &:first-of-type {
-      padding-left: 16px;
+      padding-left: 1.6rem;
     }
   `,
 };

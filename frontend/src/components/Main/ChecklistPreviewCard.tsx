@@ -48,15 +48,15 @@ const S = {
   Container: styled.div`
     width: 100%;
     ${flexRow};
-    gap: 10px;
+    gap: 1rem;
 
-    padding: 4px 0;
+    padding: 0.4rem 0;
     align-items: center;
   `,
   Column: styled.div`
     width: 100%;
     ${flexColumn}
-    gap: 10px;
+    gap: 1rem;
   `,
   Label: styled.div`
     color: ${({ theme }) => theme.palette.grey500};

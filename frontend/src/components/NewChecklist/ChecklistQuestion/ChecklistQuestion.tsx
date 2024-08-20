@@ -40,6 +40,7 @@ const ChecklistQuestion = ({ question }: Props) => {
     </S.Container>
   );
 };
+
 export default ChecklistQuestion;
 
 const S = {
@@ -48,13 +49,13 @@ const S = {
     width: 100%;
     ${flexRow}
     ${flexSpaceBetween}
-    padding: 16px;
-    gap: 5px;
+    padding: 1.6rem;
+    gap: 0.5rem;
 
     box-sizing: border-box;
 
     background-color: ${({ theme }) => theme.palette.white};
-    border-radius: 8px;
+    border-radius: 0.8rem;
   `,
   Question: styled.div`
     width: 80%;
@@ -62,11 +63,11 @@ const S = {
   Title: styled.div`
     display: flex;
     width: 100%;
-    margin: 5px 0;
+    margin: 0.5rem 0;
 
     font-size: ${({ theme }) => theme.text.size.medium};
     line-height: 1.5;
-    gap: 10px;
+    gap: 1rem;
     align-items: baseline;
   `,
   Subtitle: styled.div`
@@ -78,10 +79,10 @@ const S = {
     word-break: keep-all;
   `,
   Options: styled.div`
-    width: 80px;
+    width: 8rem;
 
     ${flexRow}
-    gap: 15px;
+    gap: 1.5rem;
 
     ${flexSpaceBetween}
     align-items: center;
@@ -89,11 +90,11 @@ const S = {
 
   ButtonBox: styled.div`
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 1rem;
+    right: 1rem;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 4rem;
+    height: 4rem;
     ${flexCenter}
 
     :hover {

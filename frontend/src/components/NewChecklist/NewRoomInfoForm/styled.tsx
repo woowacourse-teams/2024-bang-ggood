@@ -4,7 +4,7 @@ import { Button } from 'storybook/internal/components';
 import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
 import RadioGroup from '@/components/_common/RadioGroup/RadioGroup';
-import { flexCenter } from '@/styles/common';
+import { flexCenter, title4 } from '@/styles/common';
 
 const FormStyled = {
   Center: styled.div`
@@ -17,15 +17,15 @@ const FormStyled = {
     font-size: ${({ theme }) => theme.text.size.large};
   `,
   AddressButton: styled(Button)`
-    width: 90px;
-    height: 30px;
-    padding: 5px;
+    width: 9rem;
+    height: 3rem;
+    padding: 0.5rem;
 
     font-size: ${({ theme }) => theme.text.size.xSmall};
   `,
   AddOptionButton: styled(Button)`
     width: 100%;
-    border-radius: 4px;
+    border-radius: 0.4rem;
 
     background-color: ${({ theme }) => theme.palette.yellow500};
 
@@ -33,18 +33,18 @@ const FormStyled = {
       background-color: ${({ theme }) => theme.palette.yellow600};
     }
 
-    color: black;
+    color: ${({ theme }) => theme.palette.black};
   `,
   FieldBox: styled.div`
     display: flex;
     justify-content: flex-start;
     width: 100%;
-    gap: 15px;
+    gap: 1.5rem;
   `,
   OptionButtonContainer: styled.div<{ gap?: number | string; flexWrap?: string }>`
     display: flex;
     justify-content: flex-start;
-    gap: 8px ${({ gap: gap }) => gap ?? '8px'};
+    gap: 0.8rem ${({ gap: gap }) => gap ?? '.8rem'};
     ${({ flexWrap }) => (flexWrap ? 'flex-wrap:' + flexWrap + ';' : '')}
   `,
 
@@ -52,13 +52,8 @@ const FormStyled = {
     flex: 1 1 auto;
   `,
   FlexLabel: styled(FormField.Label)`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    /* flex: 1 1 auto; */
-
-    font-weight: ${({ theme }) => theme.text.weight.bold};
+    ${flexCenter}
+    ${title4}
     white-space: pre;
   `,
 
@@ -68,7 +63,7 @@ const FormStyled = {
 
     ${flexCenter}
     font-size: ${({ theme }) => theme.text.size.xSmall};
-    column-gap: 7px;
+    column-gap: 0.7rem;
   `,
 };
 export default FormStyled;

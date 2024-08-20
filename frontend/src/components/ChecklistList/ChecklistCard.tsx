@@ -52,11 +52,11 @@ const S = {
   Container: styled.div`
     ${flexColumn}
     width: 100%;
-    gap: 10px;
+    gap: 1rem;
     box-sizing: border-box;
-    border-radius: 8px;
+    border-radius: 0.8rem;
 
-    padding: 12px 16px;
+    padding: 1.2rem 1.6rem;
 
     background-color: white;
 
@@ -72,7 +72,7 @@ const S = {
   `,
   LocationWrapper: styled.p`
     ${flexCenter}
-    gap: 5px;
+    gap: .5rem;
 
     font-size: ${({ theme }) => theme.text.size.xSmall};
   `,
@@ -82,17 +82,17 @@ const S = {
   `,
   Title: styled.p`
     ${title3}
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
   `,
   Deposit: styled.p`
     font-size: ${({ theme }) => theme.text.size.medium};
   `,
   SummaryWrapper: styled.div`
     align-items: center;
-    padding: 8px;
+    padding: 0.8rem;
 
     background-color: ${({ theme }) => theme.palette.grey50};
-    border-radius: 6px;
+    border-radius: 0.6rem;
 
     box-sizing: content-box;
     max-width: 80%;
@@ -101,7 +101,7 @@ const S = {
     box-sizing: content-box;
 
     ${omitText};
-    border-radius: 4px;
+    border-radius: 0.4rem;
 
     font-size: ${({ theme }) => theme.text.size.xSmall};
   `,

@@ -38,9 +38,9 @@ const S = {
   Container: styled.div`
     ${flexColumn}
     justify-content: start;
-    row-gap: 20px;
+    row-gap: 2rem;
 
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
   `,
 };
 

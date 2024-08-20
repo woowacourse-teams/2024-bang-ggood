@@ -35,6 +35,6 @@ const S = {
     flex: auto;
     display: flex;
     flex-direction: column;
-    row-gap: 10px;
+    row-gap: 1rem;
   `,
 };

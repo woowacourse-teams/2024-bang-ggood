@@ -90,43 +90,43 @@ const S = {
     box-sizing: border-box;
     width: 100%;
     ${flexColumn}
-    gap: 16px;
-    margin-bottom: 10px;
-    padding: 16px;
+    gap: 1.6rem;
+    margin-bottom: 1rem;
+    padding: 1.6rem;
 
     background-color: ${({ theme }) => theme.palette.white};
-    border-radius: 8px;
+    border-radius: 0.8rem;
 
     line-height: 1.5;
-    letter-spacing: 0.05rem;
+    letter-spacing: 0.5px;
   `,
   GreenWrapper: styled.div`
     width: 100%;
-    padding: 16px;
+    padding: 1.6rem;
 
     background-color: ${({ theme }) => theme.palette.green500};
 
     color: ${({ theme }) => theme.palette.white};
     font-size: ${({ theme }) => theme.text.size.medium};
     box-sizing: border-box;
-    border-radius: 16px;
+    border-radius: 1.6rem;
   `,
   Row: styled.div`
     ${flexRow}
-    gap: 10px;
+    gap: 1rem;
   `,
   GapBox: styled.div`
     display: flex;
     gap: 30%;
 
-    @media (width <= 440px) {
-      gap: 60px;
+    @media (width <= 44rem) {
+      gap: 6rem;
     }
   `,
   Title: styled.div`
     width: 100%;
     ${title2}
-    min-height: 40px;
+    min-height: 4rem;
     word-break: keep-all;
   `,
   MoneyText: styled.div`

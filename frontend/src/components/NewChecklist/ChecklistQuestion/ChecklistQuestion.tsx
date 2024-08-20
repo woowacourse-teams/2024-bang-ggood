@@ -1,12 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import styled from '@emotion/styled';
 
+import HighlightText from '@/components/_common/Highlight/HighlightText';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import AnswerIcon from '@/components/Answer/AnswerIcon';
 import { ANSWER_OPTIONS } from '@/constants/answer';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';
 import { flexCenter, flexRow, flexSpaceBetween } from '@/styles/common';
-import { AnswerType } from '@/types/answer';
+import { Answer, AnswerType } from '@/types/answer';
 import { ChecklistQuestion } from '@/types/checklist';
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const ChecklistQuestion = ({ question }: Props) => {
-  const { questionId, title, subtitle } = question;
+  const { questionId, title, highlight } = question;
 
   const { updateAndToggleAnswer: updateAnswer, findCategoryQuestion } = useChecklistAnswer();
   const { currentTabId } = useTabContext();
@@ -28,10 +28,10 @@ const ChecklistQuestion = ({ question }: Props) => {
   return (
     <S.Container>
       <S.Question>
-        <S.Title>{title}</S.Title>
+        <HighlightText title={title} highlight={highlight} />
       </S.Question>
       <S.Options>
-        {ANSWER_OPTIONS.map(option => (
+        {ANSWER_OPTIONS.map((option: Answer) => (
           <div key={option.id} onClick={() => handleClick(option.name)}>
             <AnswerIcon answer={option.name} isSelected={answer === option.name} />
           </div>

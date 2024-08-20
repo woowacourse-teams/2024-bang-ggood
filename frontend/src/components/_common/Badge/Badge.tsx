@@ -1,3 +1,4 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { flexCenter } from '@/styles/common';
@@ -31,7 +32,7 @@ export default Badge;
 const S = {
   Button: styled.button<{ size: BadgeSize; isSelected: boolean }>`
     ${flexCenter}
-    border-radius: 20px;
+    border-radius: 2rem;
     box-sizing: border-box;
 
     color: ${({ theme }) => theme.palette.grey600};
@@ -41,30 +42,34 @@ const S = {
 
     ${({ isSelected }) =>
       isSelected
-        ? `
-        background-color: ${theme.palette.yellow200};
-        border: 2px solid ${theme.palette.yellow500};
-    `
-        : `
-        background-color: ${theme.palette.white};
-        border: 2px solid ${theme.palette.grey200};
-    `}
+        ? css`
+            border: 0.2rem solid ${theme.palette.yellow500};
+
+            background-color: ${theme.palette.yellow200};
+          `
+        : css`
+            border: 0.2rem solid ${theme.palette.grey200};
+
+            background-color: ${theme.palette.white};
+          `}
   `,
 };
 
 const typeStyles = {
-  short: `
-    height: 26px;
-    padding: 4px 10px; 
+  short: css`
+    height: 2.6rem;
+    padding: 0.4rem 1rem;
+
     font-size: ${theme.text.size.xSmall};
   `,
-  long: `
-    height: 32px;
-    padding: 4px 16px;
+  long: css`
+    height: 3.2rem;
+    padding: 0.4rem 1.6rem;
+
     font-size: ${theme.text.size.small};
   `,
-  button: `
-    padding: 8px 15px;
+  button: css`
+    padding: 0.8rem 1.5rem;
 
     font-size: ${theme.text.size.medium};
   `,

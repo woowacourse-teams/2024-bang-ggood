@@ -188,7 +188,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         List<Integer> responseQuestionsIds = checklistQuestionsResponse.categories().stream()
                 .map(CategoryQuestionsResponse::questions)
                 .flatMap(Collection::stream)
-                .map(QuestionResponse::questionId)
+                .map(QuestionResponse::getQuestionId)
                 .toList();
 
         assertThat(responseQuestionsIds).containsExactlyElementsOf(defaultQuestionsIds);

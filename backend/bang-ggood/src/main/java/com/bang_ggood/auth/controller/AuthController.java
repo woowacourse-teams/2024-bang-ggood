@@ -25,7 +25,6 @@ public class AuthController {
     public ResponseEntity<Void> login(@Valid @RequestBody OauthLoginRequest request) {
         String token = authService.login(request);
         ResponseCookie cookie = cookieProvider.createCookie(token);
-
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).build();
     }
 }

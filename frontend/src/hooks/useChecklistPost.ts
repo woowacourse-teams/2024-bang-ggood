@@ -1,11 +1,8 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from 'zustand';
 
-import { getChecklistQuestions } from '@/apis/checklist';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
-import useHandleTipBox from '@/hooks/useHandleTipBox';
 import useToast from '@/hooks/useToast';
 import checklistAddressStore from '@/store/checklistAddressStore';
 import checklistIncludedUtilitiesStore from '@/store/checklistIncludedUtilitesStore';
@@ -22,11 +19,7 @@ const useChecklistPost = (summaryModalClose: () => void) => {
 
   // 방 기본 정보
   const { value: roomInfoAnswer, actions } = useStore(checklistRoomInfoStore);
-
   const includedUtilities = useStore(checklistIncludedUtilitiesStore);
-
-  // 주소
-  // TODO: 백엔드 상의후에 post에 추가
   const addressData = useStore(checklistAddressStore, ({ address, buildingName, jibunAddress, position }) => ({
     address,
     buildingName,
@@ -35,29 +28,10 @@ const useChecklistPost = (summaryModalClose: () => void) => {
   }));
 
   // 선택된 옵션
-  const { selectedOptions, resetToDefaultOptions } = useOptionStore();
+  const selectedOptions = useOptionStore(state => state.selectedOptions);
 
   /*체크리스트 답변*/
-  const { checklistCategoryQnA, setAnswerInQuestion } = useChecklistStore();
-
-  // TODO: 상수화 처리
-  const { resetShowTipBox } = useHandleTipBox('OPTION');
-
-  // TODO: query 로 변경
-  useEffect(() => {
-    const fetchChecklist = async () => {
-      const checklist = await getChecklistQuestions();
-
-      // 체크리스트 질문에 대한 답안지 객체 생성
-      setAnswerInQuestion(checklist);
-      // 옵션 선택지 리셋
-      resetToDefaultOptions();
-      //로컬 스토리지 팁 보이는 여부 리셋
-      resetShowTipBox();
-    };
-
-    fetchChecklist();
-  }, []);
+  const checklistCategoryQnA = useChecklistStore(state => state.checklistCategoryQnA);
 
   const handleSubmitChecklist = () => {
     const fetchNewChecklist = () => {
@@ -70,8 +44,7 @@ const useChecklistPost = (summaryModalClose: () => void) => {
         {
           onSuccess: () => {
             summaryModalClose();
-            // TODO: 메세지 상수처리
-            showToast('체크리스트가 저장되었습니다.');
+            showToast('체크리스트가 저장되었습니다.'); // TODO: 메세지 상수처리
             actions.reset();
             navigate(ROUTE_PATH.checklistList);
           },

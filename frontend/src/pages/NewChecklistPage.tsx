@@ -7,6 +7,7 @@ import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
 import useChecklistPost from '@/hooks/useChecklistPost';
+import useChecklistTemplate from '@/hooks/useInitialChecklist';
 import useModalOpen from '@/hooks/useModalOpen';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 
@@ -20,7 +21,9 @@ const NewChecklistPage = () => {
     modalOpen: summaryModalOpen,
     modalClose: summaryModalClose,
   } = useModalOpen();
-  const { handleSubmitChecklist } = useChecklistPost(summaryModalClose);
+
+  useChecklistTemplate(); // 체크리스트 질문 가져오기 및 준비
+  const { handleSubmitChecklist } = useChecklistPost(summaryModalClose); // 체크리스트 POST
 
   return (
     <>

@@ -6,12 +6,12 @@ export const checklistQuestions = {
       questions: [
         {
           questionId: 1,
-          title: '수압/배수를 확인해주세요.',
-          subtitle: '화장실과 주방을 확인해주세요',
+          title: '화장실이 깨끗한가요?',
+          subtitle: null,
         },
         {
           questionId: 2,
-          title: '수압/배수를 확인해주세요.',
+          title: '수압 및 물 빠짐이 괜찮은가요?',
           subtitle: null,
         },
         {

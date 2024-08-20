@@ -4,6 +4,7 @@ import { InputChangeEvent } from '@/types/event';
 import { RoomInfo } from '@/types/room';
 import { AllString } from '@/utils/utilityTypes';
 import {
+  inRangeValidator,
   isIntegerValidator,
   isNumericValidator,
   lengthValidator,
@@ -84,8 +85,8 @@ const validatorSet: Record<string, Validator[]> = {
   floorLevel: [],
   structure: [],
   realEstate: [],
-  occupancyMonth: [],
-  occupancyPeriod: [],
+  occupancyMonth: [isNumericValidator, positiveValidator, inRangeValidator(1, 12)],
+  occupancyPeriod: [isNumericValidator, positiveValidator],
   summary: [],
   memo: [],
 };

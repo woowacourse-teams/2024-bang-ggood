@@ -6,16 +6,25 @@ import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import { roomIncludedUtilites } from '@/constants/roomInfo';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
-import { RoomInfo } from '@/types/room';
+import checklistIncludedUtilitiesStore from '@/store/checklistIncludedUtilitesStore';
+import { IncludedUtilities } from '@/types/room';
+
+type UtilityName = (typeof roomIncludedUtilites)[number];
+type UtilityValue = keyof IncludedUtilities;
+const nameToValue: Record<UtilityName, UtilityValue> = {
+  '💧수도': 'water',
+  '🛜인터넷': 'internet',
+  '⚡전기': 'electricity',
+  '⛽가스': 'gas',
+};
 
 const IncludedUtilities = () => {
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  // const includedUtilities = useStore(checklistRoomInfoStore, state => state.rawValue.includedUtilities);
+  const includedUtilities = useStore(checklistIncludedUtilitiesStore);
+  const actions = useStore(checklistIncludedUtilitiesStore, state => state.actions);
 
   const handleClickTagButton = useCallback(
-    (name: keyof RoomInfo, value: string) => {
-      actions.set(name, value);
+    (name: keyof IncludedUtilities) => {
+      actions.toggle(name);
     },
     [actions],
   );
@@ -24,15 +33,14 @@ const IncludedUtilities = () => {
     <FlexBox.Vertical>
       <FormField.Label label="관리비 포함 항목" />
       <FormStyled.OptionButtonContainer flexWrap="wrap">
-        {roomIncludedUtilites.map(utility => (
+        {roomIncludedUtilites.map((utility: UtilityName) => (
           <Badge
             key={utility}
             label={utility}
             name={utility}
             size="button"
-            /* TODO : 제대로 동작하게만들기 */
-            isSelected={false}
-            onClick={() => handleClickTagButton('includedUtilities', utility)}
+            isSelected={includedUtilities[nameToValue[utility]]}
+            onClick={() => handleClickTagButton(nameToValue[utility])}
           />
         ))}
       </FormStyled.OptionButtonContainer>

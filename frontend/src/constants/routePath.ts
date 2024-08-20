@@ -1,8 +1,7 @@
 export const ROUTE_PATH = {
-  root: '/',
-  /* home */
-  home: '/home',
-  /* checklist */
+  home: '/',
+  main: '/main',
+  /*checklist */
   checklistList: '/checklist',
   checklistNew: '/checklist/new',
   checklistEdit: '/checklist/edit/:checklistId',

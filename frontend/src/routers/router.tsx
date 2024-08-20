@@ -1,7 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import FooterLayout from '@/components/_common/layout/FooterLayout';
-import AuthGuard from '@/components/Auth/AuthGuard';
 import { ROUTE_PATH } from '@/constants/routePath';
 import ArticleDetailPage from '@/pages/ArticleDetailPage';
 import ArticleListPage from '@/pages/ArticleListPage';
@@ -10,13 +9,13 @@ import ChecklistDetailPage from '@/pages/ChecklistDetailPage';
 import ChecklistListPage from '@/pages/ChecklistListPage';
 import EditChecklistPage from '@/pages/EditChecklistPage';
 import ErrorPage from '@/pages/ErrorPage';
-import LoginPage from '@/pages/LoginPage';
+import LandingPage from '@/pages/LandingPage';
 import MainPage from '@/pages/MainPage';
-import MyPage from '@/pages/MyPage';
 import NewChecklistPage from '@/pages/NewChecklistPage';
 import NotFound from '@/pages/NotFound';
 import RoomComparePage from '@/pages/RoomComparePage';
 import RoomCompareSelectPage from '@/pages/RoomCompareSelectPage';
+import AuthGuard from '@/routers/AuthGuard';
 
 const router = createBrowserRouter([
   {
@@ -26,7 +25,7 @@ const router = createBrowserRouter([
       {
         element: <FooterLayout />,
         children: [
-          { element: <MainPage />, path: ROUTE_PATH.home },
+          { element: <MainPage />, path: ROUTE_PATH.main },
           {
             element: <ChecklistListPage />,
             path: ROUTE_PATH.checklistList,
@@ -34,10 +33,6 @@ const router = createBrowserRouter([
           {
             element: <ArticleListPage />,
             path: ROUTE_PATH.article,
-          },
-          {
-            element: <MyPage />,
-            path: ROUTE_PATH.myPage,
           },
         ],
       },
@@ -69,15 +64,15 @@ const router = createBrowserRouter([
         element: <ArticleDetailPage />,
         path: ROUTE_PATH.articleId,
       },
-      {
-        element: <NotFound />,
-        path: '*',
-      },
     ],
   },
   {
-    element: <LoginPage />,
-    path: ROUTE_PATH.root,
+    element: <LandingPage />,
+    path: ROUTE_PATH.home,
+  },
+  {
+    element: <NotFound />,
+    path: '*',
   },
 ]);
 

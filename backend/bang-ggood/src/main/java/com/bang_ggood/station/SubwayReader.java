@@ -1,4 +1,4 @@
-package com.bang_ggood.utils;
+package com.bang_ggood.station;
 
 import com.bang_ggood.station.domain.SubwayStation;
 import com.opencsv.CSVReader;
@@ -11,7 +11,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileReader {
+public class SubwayReader {
 
     public static final String SUBWAY_DATA_PATH = "seoul_stations_240819.csv";
 

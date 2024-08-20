@@ -4,7 +4,7 @@ import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.station.domain.SubwayStation;
 import com.bang_ggood.station.dto.SubwayStationResponse;
-import com.bang_ggood.utils.FileReader;
+import com.bang_ggood.station.SubwayReader;
 import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.List;
@@ -14,7 +14,7 @@ public class SubwayStationService {
 
     private static final int METER_PER_DEGREE = 111_320;
     private static final double AVERAGE_WALKING_SPEED = 1.3 * 60; // meter per minute
-    private static final List<SubwayStation> SUBWAY_STATIONS = FileReader.readSubwayStationData();
+    private static final List<SubwayStation> SUBWAY_STATIONS = SubwayReader.readSubwayStationData();
 
     public SubwayStationResponse readNearestStation(double latitude, double longitude) {
         return SUBWAY_STATIONS.stream()

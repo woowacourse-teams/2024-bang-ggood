@@ -9,10 +9,10 @@ export default ModalFooter;
 const S = {
   Container: styled.div`
     display: flex;
-    width: calc(100% - 32px);
-    padding: 16px;
+    width: calc(100% - 3.2rem);
+    padding: 1.6rem;
     justify-content: end;
 
-    gap: 10px;
+    gap: 1rem;
   `,
 };

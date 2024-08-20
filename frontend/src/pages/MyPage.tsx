@@ -50,11 +50,11 @@ const S = {
   Container: styled.div`
     max-width: 100%;
     box-sizing: border-box;
-    margin: 16px;
-    padding: 24px 16px;
+    margin: 1.6rem;
+    padding: 2.4rem 1.6rem;
 
-    border-radius: 16px;
-    gap: 12px;
+    border-radius: 1.6rem;
+    gap: 1.2rem;
 
     background-color: ${({ theme }) => theme.palette.white};
     ${boxShadow};
@@ -68,8 +68,8 @@ const S = {
   ProfileIcon: styled.div`
     ${flexCenter}
     overflow: hidden;
-    width: 136px;
-    height: 136px;
+    width: 13.6rem;
+    height: 13.6rem;
 
     border-radius: 50%;
 
@@ -77,16 +77,16 @@ const S = {
   `,
   Profile: styled.div`
     ${flexColumn}
-    row-gap:8px;
+    row-gap:.8rem;
 
     ${title2}
     align-items: center;
   `,
   Button: styled(Button)`
-    width: 150px;
+    width: 15rem;
   `,
   ButtonContainer: styled.div`
     ${flexCenter}
-    column-gap:20px
+    column-gap:2rem
   `,
 };

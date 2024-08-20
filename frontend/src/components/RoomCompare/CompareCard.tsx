@@ -130,8 +130,8 @@ const S = {
     min-height: 6rem;
 
     font-size: ${({ theme }) => theme.text.size.medium};
-    line-height: 12px;
-    letter-spacing: 0.5px;
+    line-height: 1.6rem;
+    letter-spacing: 0.05rem;
     text-align: center;
     justify-content: center;
     word-break: break-all;

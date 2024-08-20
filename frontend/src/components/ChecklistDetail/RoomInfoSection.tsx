@@ -97,8 +97,8 @@ const S = {
     background-color: ${({ theme }) => theme.palette.white};
     border-radius: 0.8rem;
 
-    line-height: 1.5;
-    letter-spacing: 0.5px;
+    line-height: 1.6rem;
+    letter-spacing: 0.05rem;
   `,
   GreenWrapper: styled.div`
     width: 100%;

@@ -55,20 +55,22 @@ const ChecklistListPage = () => {
     </>
   );
 };
+
 export default ChecklistListPage;
+
 const S = {
   FlexBox: styled.div`
-    margin-bottom: 16px;
+    margin-bottom: 1.6rem;
   `,
   ListBox: styled.div`
     ${flexColumn}
-    gap: 12px;
+    gap: 1.2rem;
     overflow-y: scroll;
   `,
   DefaultButton: styled.div`
     position: fixed;
-    top: 20px;
-    right: 40px;
+    top: 2rem;
+    right: 4rem;
     z-index: 1000;
   `,
 };

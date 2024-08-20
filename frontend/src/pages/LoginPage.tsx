@@ -57,18 +57,16 @@ const S = {
     ${flexCenter}
     ${flexColumn}
     width: 100%;
-    height: calc(100vh - 32px);
-    gap: 70px;
+    height: calc(100vh - 3.2rem);
+    gap: 7rem;
   `,
   TextWrapper: styled.div`
-    width: 280px;
+    width: 28rem;
 
     line-height: 1.4;
-
-    /* ${flexColumn} */
     align-items: center;
     justify-content: left;
-    gap: 10px;
+    gap: 1rem;
   `,
   Text: styled.div<{ isBold?: boolean }>`
     ${({ isBold, theme }) =>
@@ -81,20 +79,20 @@ const S = {
   ButtonWrapper: styled.div`
     ${flexCenter}
     ${flexColumn}
-    gap: 10px;
+    gap: 1rem;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 2rem;
   `,
   SubText: styled.div`
     font-size: ${({ theme }) => theme.text.size.small};
   `,
   KakaoLoginButton: styled.div`
-    width: 300px;
-    height: 50px;
+    width: 30rem;
+    height: 5rem;
     ${flexRow}
     justify-content: space-evenly;
     align-items: center;
-    border-radius: 8px;
+    border-radius: 0.8rem;
 
     background-color: ${({ theme }) => theme.palette.kakao};
 

@@ -42,7 +42,7 @@ const S = {
   `,
   ListContainer: styled.div`
     ${flexColumn}
-    gap: 12px;
-    margin-top: 16px;
+    gap: 1.2rem;
+    margin-top: 1.6rem;
   `,
 };

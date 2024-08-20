@@ -68,6 +68,6 @@ const S = {
     background-color: ${({ bgColor }) => bgColor};
     overflow-y: scroll;
     flex-direction: column;
-    row-gap: 10px;
+    row-gap: 1rem;
   `,
 };

@@ -30,7 +30,7 @@ const useChecklistPost = (summaryModalClose: () => void) => {
   // 선택된 옵션
   const selectedOptions = useOptionStore(state => state.selectedOptions);
 
-  /*체크리스트 답변*/
+  // 체크리스트 답변
   const checklistCategoryQnA = useChecklistStore(state => state.checklistCategoryQnA);
 
   const handleSubmitChecklist = () => {

@@ -1,3 +1,4 @@
+import { roomIncludedUtilites } from '@/constants/roomInfo';
 import { Address } from '@/types/address';
 
 export type OccupancyPeriod = '초' | '중순' | '말';
@@ -7,8 +8,7 @@ export type RoomInfo = Partial<{
   address: Address;
   deposit: number;
   rent: number;
-  // includedUtilities : 관리비 포함항목 (전기, 수도 등).
-  includedUtilities: IncludedUtilities;
+  includedUtilities: IncludedUtilities; // 관리비 포함항목
   maintenanceFee: number;
   contractTerm: number;
   floor: number;
@@ -24,11 +24,12 @@ export type RoomInfo = Partial<{
   memo: string;
   createdAt?: string;
 }>;
+export type RoomInfoName = keyof RoomInfo;
 export interface IncludedUtilities {
   water: boolean;
   electricity: boolean;
   internet: boolean;
   gas: boolean;
 }
-
-export type RoomInfoName = keyof RoomInfo;
+export type UtilityName = (typeof roomIncludedUtilites)[number];
+export type UtilityValue = keyof IncludedUtilities;

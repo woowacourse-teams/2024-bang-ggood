@@ -33,21 +33,16 @@ const NewChecklistPage = () => {
         right={<Button label={'저장'} size="small" color="dark" onClick={summaryModalOpen} />}
       />
       <TabProvider defaultTab={-1}>
-        {/* 체크리스트 작성의 탭 */}
         <Tabs tabList={tabs} />
-
-        {/* 체크리스트 콘텐츠 섹션 */}
         <NewChecklistContent />
       </TabProvider>
 
-      {/* 메모 모달 */}
       {isMemoModalOpen ? (
         <MemoModal isModalOpen={isMemoModalOpen} modalClose={memoModalClose} />
       ) : (
         <MemoButton onClick={memoModalOpen} />
       )}
 
-      {/* 한줄평 모달 */}
       {isSummaryModalOpen && (
         <SummaryModal
           isModalOpen={isSummaryModalOpen}

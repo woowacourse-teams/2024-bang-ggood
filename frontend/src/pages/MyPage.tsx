@@ -38,7 +38,6 @@ const MyPage = () => {
           <S.Button label="로그아웃" size="small" color="dark" onClick={modalOpen}></S.Button>
         </S.Inner>
       </Layout>
-
       <MyPageModal isOpen={isModalOpen} onClose={modalClose} />
     </>
   );
@@ -87,6 +86,6 @@ const S = {
   `,
   ButtonContainer: styled.div`
     ${flexCenter}
-    column-gap:2rem
+    column-gap:2rem;
   `,
 };

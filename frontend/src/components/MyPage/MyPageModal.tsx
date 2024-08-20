@@ -8,6 +8,7 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
 }
+
 const MyPageModal = ({ isOpen, onClose }: Props) => {
   const navigate = useNavigate();
 

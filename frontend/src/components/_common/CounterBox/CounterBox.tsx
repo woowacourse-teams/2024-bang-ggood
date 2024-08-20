@@ -15,7 +15,7 @@ const CounterBox = ({
   color = theme.palette.grey500,
   hasBracket = false,
   currentCount,
-  gap = 3,
+  gap = 0.03,
   totalCount,
 }: Props) => {
   return (

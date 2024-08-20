@@ -37,6 +37,7 @@ const S = {
   `,
   TipText: styled.div`
     padding: 1.2rem;
+    word-break: keep-all;
   `,
   Bold: styled.span`
     ${title4}

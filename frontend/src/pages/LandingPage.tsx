@@ -58,13 +58,13 @@ const LandingPage = () => {
       <S.Section height={570} color={SectionColors.first.background}>
         <FirstSection />
       </S.Section>
-      <S.Section height={680} color={SectionColors.second.background}>
+      <S.Section height={700} color={SectionColors.second.background}>
         <SecondSection />
       </S.Section>
       <S.Section height={820} color={SectionColors.third.background}>
         <ThirdSection />
       </S.Section>
-      <S.Section height={930} color={SectionColors.fourth.background}>
+      <S.Section height={950} color={SectionColors.fourth.background}>
         <FourthSection />
       </S.Section>
       <S.Section height={250} color={SectionColors.fifth.background}>

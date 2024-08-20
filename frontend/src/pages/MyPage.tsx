@@ -25,7 +25,6 @@ const MyPage = () => {
   return (
     <>
       <Header center={<Header.Text>마이페이지</Header.Text>} />
-
       <Layout bgColor={theme.palette.background} withFooter withHeader>
         <S.Inner>
           <S.Container style={{ width: '100%' }}>

@@ -15,8 +15,8 @@ class RoomTest {
         //given & when & then
         assertThatThrownBy(() -> {
             new Room(
-                    "방이름", "잠실역", 12, "부산광역시 루터회관", Type.APARTMENT, 12.0,
-                    10, FloorLevel.BASEMENT, Structure.TWO_ROOM
+                    "방이름", "부산광역시 북구", "루터회관","잠실", 12,
+                    FloorLevel.BASEMENT, 10, Structure.TWO_ROOM, 7.5
             );
         })
                 .isInstanceOf(BangggoodException.class)

@@ -2,17 +2,25 @@ package com.bang_ggood.auth.controller;
 
 import com.bang_ggood.AcceptanceTest;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
+import com.bang_ggood.auth.service.AuthService;
+import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.exception.ExceptionCode;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import java.util.logging.Logger;
 
 import static org.hamcrest.Matchers.containsString;
 
 class AuthE2ETest extends AcceptanceTest {
+
+    @Autowired
+    private AuthService authService;
+
 
     @DisplayName("로그인 실패 : 인가코드가 없는 경우")
     @Test
@@ -50,5 +58,20 @@ class AuthE2ETest extends AcceptanceTest {
                 .then().log().all()
                 .statusCode(401)
                 .body("message", containsString(ExceptionCode.AUTHENTICATION_COOKIE_INVALID.getMessage()));
+    }
+
+    @DisplayName("인증 실패 : 블랙리스트에 들어간 토큰일 경우")
+    @Test
+    void authentication_token_blacklist_exception() {
+        authService.logout(this.responseCookie.getValue());
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST)
+                .when().post("/checklists")
+                .then().log().all()
+                .statusCode(401)
+                .body("message", containsString(ExceptionCode.AUTHENTICATION_TOKEN_IN_BLACKLIST.getMessage()));
     }
 }

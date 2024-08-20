@@ -20,14 +20,14 @@ import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 @Service
 public class AuthService {
 
-    private static final Map<String, Long> blackList = new HashMap<>();
+    private static final Set<String> blackList = new HashSet<>();
 
     private final OauthClient oauthClient;
     private final JwtTokenProvider jwtTokenProvider;
@@ -97,9 +97,12 @@ public class AuthService {
         checklistService.createChecklist(user, checklistRequest);
     }
 
-    @Transactional
-    public void logout(User user, String accessToken) {
-        blackList.put(accessToken, user.getId());
+    public void logout(String accessToken) {
+        blackList.add(accessToken);
+    }
+
+    public boolean isAccessTokenInBlackList(String accessToken) {
+        return blackList.contains(accessToken);
     }
 
     public User extractUser(String token) {

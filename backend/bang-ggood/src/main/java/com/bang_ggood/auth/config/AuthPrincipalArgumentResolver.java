@@ -40,6 +40,11 @@ public class AuthPrincipalArgumentResolver implements HandlerMethodArgumentResol
         }
 
         String token = extractToken(request.getCookies());
+
+        if (authService.isAccessTokenInBlackList(token)) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_IN_BLACKLIST);
+        }
+
         return authService.extractUser(token);
     }
 

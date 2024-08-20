@@ -35,7 +35,7 @@ public class AuthController {
     @PostMapping("/oauth/logout")
     public ResponseEntity<Void> logout(@AuthPrincipal User user,
                                        @RequestHeader(value = "Cookie") String accessToken) {
-        authService.logout(user, accessToken);
+        authService.logout(accessToken);
         return ResponseEntity.ok().build();
     }
 }

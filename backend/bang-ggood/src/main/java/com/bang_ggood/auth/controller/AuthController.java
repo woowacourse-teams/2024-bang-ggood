@@ -36,6 +36,6 @@ public class AuthController {
     public ResponseEntity<Void> logout(@AuthPrincipal User user,
                                        @RequestHeader(value = "Cookie") String accessToken) {
         authService.logout(accessToken);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

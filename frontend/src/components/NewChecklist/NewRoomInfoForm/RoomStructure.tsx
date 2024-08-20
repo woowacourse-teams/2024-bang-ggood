@@ -7,15 +7,14 @@ import FormField from '@/components/_common/FormField/FormField';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import { roomStructures } from '@/constants/roomInfo';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
-import { RoomInfo } from '@/types/room';
 
 const RoomStructure = () => {
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
   const roomStructure = useStore(checklistRoomInfoStore, state => state.rawValue.structure);
 
   const handleClickTagButton = useCallback(
-    (name: keyof RoomInfo, value: string) => {
-      actions.set(name, value);
+    (value: string) => {
+      actions.set('structure', value);
     },
     [actions],
   );
@@ -31,7 +30,7 @@ const RoomStructure = () => {
             name={structure}
             size="button"
             isSelected={structure === roomStructure}
-            onClick={() => handleClickTagButton('structure', structure)}
+            onClick={() => handleClickTagButton(structure)}
           />
         ))}
       </FormStyled.OptionButtonContainer>

@@ -51,6 +51,7 @@ export default Dropdown;
 const S = {
   Wrapper: styled.div`
     flex: 0 0 auto;
+    position: relative;
   `,
   DropDownHeader: styled.div`
     cursor: pointer;

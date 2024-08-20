@@ -12,6 +12,8 @@ import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.QuestionRequest;
 import com.bang_ggood.checklist.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.checklist.service.ChecklistService;
+import com.bang_ggood.exception.BangggoodException;
+import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.domain.FloorLevel;
 import com.bang_ggood.room.domain.Structure;
 import com.bang_ggood.room.domain.Type;
@@ -97,8 +99,16 @@ public class AuthService {
         checklistService.createChecklist(user, checklistRequest);
     }
 
-    public void logout(String accessToken) {
+    public void logout(String accessToken, User user) {
+        AuthUser authUser = jwtTokenProvider.resolveToken(accessToken);
+        validateTokenOwnership(user, authUser);
         blackList.add(accessToken);
+    }
+
+    private static void validateTokenOwnership(User user, AuthUser authUser) {
+        if(!user.getId().equals(authUser.id())) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER);
+        }
     }
 
     public boolean isAccessTokenInBlackList(String accessToken) {

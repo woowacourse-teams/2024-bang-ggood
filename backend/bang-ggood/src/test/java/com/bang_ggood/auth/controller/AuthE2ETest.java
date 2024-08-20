@@ -5,6 +5,7 @@ import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.service.AuthService;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.exception.ExceptionCode;
+import com.bang_ggood.user.UserFixture;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Header;
@@ -12,7 +13,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import java.util.logging.Logger;
 
 import static org.hamcrest.Matchers.containsString;
 
@@ -20,7 +20,6 @@ class AuthE2ETest extends AcceptanceTest {
 
     @Autowired
     private AuthService authService;
-
 
     @DisplayName("로그인 실패 : 인가코드가 없는 경우")
     @Test
@@ -63,7 +62,7 @@ class AuthE2ETest extends AcceptanceTest {
     @DisplayName("인증 실패 : 블랙리스트에 들어간 토큰일 경우")
     @Test
     void authentication_token_blacklist_exception() {
-        authService.logout(this.responseCookie.getValue());
+        authService.logout(this.responseCookie.getValue(), UserFixture.USER1);
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)

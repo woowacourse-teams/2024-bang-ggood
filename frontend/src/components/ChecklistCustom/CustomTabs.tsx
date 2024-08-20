@@ -8,9 +8,6 @@ export const ChecklistCustomTabs = () => {
     id: category.categoryId,
     name: category.categoryName as string,
   }));
-  return (
-    <>
-      <Tabs tabList={checklistCustomTabs} />
-    </>
-  );
+
+  return <Tabs tabList={checklistCustomTabs} />;
 };

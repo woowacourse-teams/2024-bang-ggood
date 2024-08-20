@@ -27,22 +27,22 @@ export default SkArticleList;
 
 const S = {
   Title: styled.div`
-    width: 200px;
-    height: 30px;
+    width: 20rem;
+    height: 3rem;
     ${Skeleton}
   `,
   ListContainer: styled.div`
     ${flexColumn}
-    gap: 12px;
-    margin-top: 16px;
+    gap: 1.2rem;
+    margin-top: 1.6rem;
   `,
   ArticleCard: styled.div`
     width: 100%;
-    height: 153px;
+    height: 15.3rem;
     box-sizing: border-box;
-    padding: 16px;
+    padding: 1.6rem;
 
-    border-radius: 16px;
+    border-radius: 1.6rem;
     ${Skeleton}
   `,
 };

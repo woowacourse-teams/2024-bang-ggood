@@ -31,10 +31,12 @@ export const UnChecked: Story = {
     );
   },
 };
+
 export const Hover: Story = {
   args: { isChecked: false },
   parameters: { pseudo: { hover: true } },
 };
+
 export const Checked: Story = {
   args: { isChecked: true },
 };

@@ -25,7 +25,7 @@ const router = createBrowserRouter([
       {
         element: <FooterLayout />,
         children: [
-          { element: <MainPage />, path: ROUTE_PATH.main },
+          { element: <MainPage />, path: ROUTE_PATH.home },
           {
             element: <ChecklistListPage />,
             path: ROUTE_PATH.checklistList,
@@ -68,7 +68,7 @@ const router = createBrowserRouter([
   },
   {
     element: <LandingPage />,
-    path: ROUTE_PATH.home,
+    path: ROUTE_PATH.root,
   },
   {
     element: <NotFound />,

@@ -36,7 +36,7 @@ const S = {
     box-sizing: border-box;
     overflow: hidden auto;
     ${({ withHeader, withFooter, withTab }) => getHeightStyle(withHeader, withFooter, withTab)}
-    padding: 16px;
+    padding: 1.6rem;
 
     background-color: ${({ bgColor }) => bgColor};
   `,
@@ -45,22 +45,22 @@ const S = {
 const getHeightStyle = (withHeader: boolean, withFooter: boolean, withTab: boolean) => {
   if (withHeader && withFooter) {
     return css`
-      height: calc(100vh - ${HEADER_SIZE}px - ${FOOTER_SIZE}px);
+      height: calc(100vh - ${HEADER_SIZE}rem - ${FOOTER_SIZE}rem);
     `;
   }
   if (withHeader && withTab) {
     return css`
-      height: calc(100vh - ${HEADER_SIZE}px - ${TAB_SIZE}px);
+      height: calc(100vh - ${HEADER_SIZE}rem - ${TAB_SIZE}rem);
     `;
   }
   if (withHeader) {
     return css`
-      height: calc(100vh - ${HEADER_SIZE}px);
+      height: calc(100vh - ${HEADER_SIZE}rem);
     `;
   }
   if (withFooter) {
     return css`
-      height: calc(100vh - ${FOOTER_SIZE}px);
+      height: calc(100vh - ${FOOTER_SIZE}rem);
     `;
   }
   return css`

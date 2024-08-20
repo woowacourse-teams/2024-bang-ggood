@@ -6,7 +6,7 @@ const makeEvent = (name: string, value: string) => ({ target: { name, value } })
 
 describe('useChecklistBasicInfoStore 테스트', () => {
   beforeEach(() => {
-    store.getState().actions.reset();
+    store.getState().actions.resetAll();
   });
 
   it('모든 변수의 초기값이 적용된다.', () => {

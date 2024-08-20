@@ -81,18 +81,18 @@ export default MemoModal;
 const S = {
   Title: styled.div`
     ${title3}
-    margin-top:10px;
+    margin-top:1rem;
   `,
   OpenBarBox: styled.div`
     ${flexCenter}
     width:100%;
-    height: 20px;
+    height: 2rem;
     flex-direction: column;
   `,
   OpenBar: styled.div`
     width: 100%;
-    height: 20px;
-    border-radius: 5px;
+    height: 2rem;
+    border-radius: 0.5rem;
 
     background-color: ${({ theme }) => theme.palette.yellow200};
   `,
@@ -103,13 +103,13 @@ const S = {
 
   ButtonBox: styled.div`
     position: absolute;
-    right: 10px;
-    bottom: 10px;
-    margin-top: 10px;
+    right: 1rem;
+    bottom: 1rem;
+    margin-top: 1rem;
   `,
   EmptyBox: styled.div`
     width: 100%;
-    height: 300px;
+    height: 30rem;
 
     background-color: ${({ theme }) => theme.palette.background};
   `,

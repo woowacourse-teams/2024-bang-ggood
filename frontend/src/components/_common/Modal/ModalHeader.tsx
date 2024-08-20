@@ -3,13 +3,13 @@ import styled from '@emotion/styled';
 import { flexCenter, flexSpaceBetween, title2, title3 } from '@/styles/common';
 
 type Position = 'left' | 'center';
-interface TitleProps
-  extends React.PropsWithChildren<{
-    title?: string;
-    position?: Position;
-  }> {}
 
-const ModalHeader = ({ title, children, position = 'left' }: TitleProps) => {
+interface Props extends React.PropsWithChildren {
+  title?: string;
+  position?: Position;
+}
+
+const ModalHeader = ({ title, children, position = 'left' }: Props) => {
   return (
     <S.Container position={position}>
       {title && <S.Title>{title}</S.Title>}
@@ -18,33 +18,28 @@ const ModalHeader = ({ title, children, position = 'left' }: TitleProps) => {
   );
 };
 
-const Container = styled.div<{ position: Position }>`
-  ${flexSpaceBetween}
-  flex-direction: ${({ position }) => position === 'center' && 'column'};
-  width: calc(100% - 64px);
-  margin-top: 5px;
-  margin-bottom: 10px;
-  padding: 0 16px;
-
-  line-height: normal;
-  min-height: 45px;
-  align-items: center;
-  ${title3}
-`;
-
-const Title = styled.span`
-  height: 30px;
-  ${flexCenter}
-  margin-bottom: 16px;
-  padding-top: 20px;
-
-  ${title2}
-  text-align: left;
-`;
+export default ModalHeader;
 
 const S = {
-  Container,
-  Title,
-};
+  Container: styled.div<{ position: Position }>`
+    ${flexSpaceBetween}
+    flex-direction: ${({ position }) => position === 'center' && 'column'};
+    width: calc(100% - 6.4rem);
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 0 1.6rem;
 
-export default ModalHeader;
+    min-height: 4.5rem;
+    align-items: center;
+    ${title3}
+  `,
+  Title: styled.span`
+    height: 3rem;
+    ${flexCenter}
+    margin-bottom: 1.6rem;
+    padding-top: 2rem;
+
+    ${title2}
+    text-align: left;
+  `,
+};

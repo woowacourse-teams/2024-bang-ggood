@@ -28,13 +28,11 @@ const S = {
     height: 50vh;
     ${flexCenter}
     flex-direction: column;
-    gap: 10px;
+    gap: 1rem;
   `,
   TextBox: styled.div`
     ${flexCenter}
     flex-direction: column;
-
-    line-height: 1.5;
   `,
 };
 

@@ -1,12 +1,7 @@
-interface Props extends React.SVGProps<SVGSVGElement> {
-  fill?: string;
-  stroke?: string;
-}
-
-const None = ({ color, ...rest }: Props) => {
+const None = ({ color, ...rest }: React.SVGProps<SVGSVGElement>) => {
   return (
-    <svg {...rest} width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="14.5" cy="14.5" r="12" stroke={color} strokeWidth="5" />
+    <svg {...rest} width="28" height="5" viewBox="0 0 28 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="2.5" y1="2.5" x2="25.5" y2="2.5" stroke={color} strokeWidth="5" stroke-linecap="round" />
     </svg>
   );
 };

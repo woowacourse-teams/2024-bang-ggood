@@ -1,9 +1,7 @@
-import { createStore } from 'zustand';
-
-import { InputChangeEvent } from '@/types/event';
+import createFormStore from '@/store/createFormStore';
 import { RoomInfo } from '@/types/room';
-import { AllString } from '@/utils/utilityTypes';
 import {
+  inRangeValidator,
   isIntegerValidator,
   isNumericValidator,
   lengthValidator,
@@ -12,21 +10,8 @@ import {
   Validator,
 } from '@/utils/validators';
 
-interface RoomInfoAction {
-  reset: () => void;
-  set: (name: keyof typeof validatorSet, value: string | undefined) => void;
-  setAll: (state: Partial<RoomInfoState>) => void;
-  _update: (field: keyof AllString<RoomInfo> | keyof AllString<RoomInfo>, value: string | undefined) => void;
-  _updateErrorMsg: (field: keyof RoomInfo, value: string) => void;
-  _updateAfterValidation: (field: keyof RoomInfo, value: string, validators: Validator[]) => void;
-  _transform: (name: string, value: string) => void;
-  onChange: (event: InputChangeEvent) => void;
-}
-
 export const initialRoomInfo = {
-  // TODO: UT 를 위한 기본 더미 이름
-  roomName: '8월 14일 1번째 방',
-  address: undefined,
+  roomName: '8월 14일 1번째 방', // TODO: N번째방 구현하기
   deposit: undefined,
   rent: undefined,
   maintenanceFee: undefined,
@@ -84,64 +69,12 @@ const validatorSet: Record<string, Validator[]> = {
   floorLevel: [],
   structure: [],
   realEstate: [],
-  occupancyMonth: [],
-  occupancyPeriod: [],
+  occupancyMonth: [isNumericValidator, positiveValidator, inRangeValidator(1, 12)],
+  occupancyPeriod: [isNumericValidator, positiveValidator],
   summary: [],
   memo: [],
 };
 
-const initialErrorMessages = Object.fromEntries(Object.entries(initialRoomInfo).map(([key]) => [key, '']));
-
-type RoomInfoState = { rawValue: AllString<RoomInfo> } & { value: RoomInfo } & { errorMessage: AllString<RoomInfo> };
-
-const transform = (name: string, value: string) =>
-  roomInfoType[name as keyof RoomInfo] === 'number' ? Number(value) : value;
-const checklistRoomInfoStore = createStore<
-  RoomInfoState & {
-    actions: RoomInfoAction;
-  }
->((set, get) => ({
-  rawValue: initialRoomInfo,
-  value: initialRoomInfo,
-  errorMessage: initialErrorMessages,
-  actions: {
-    set: (name, value) => {
-      // 다 지우기할 시 다 지워주고, 에러메시지도 지워진다.
-      if (value === '') {
-        get().actions._updateErrorMsg(name as keyof RoomInfo, '');
-        get().actions._update(name as keyof RoomInfo, '');
-        return;
-      }
-
-      get().actions._updateAfterValidation(name as keyof RoomInfo, value ?? '', validatorSet[name]);
-    },
-
-    onChange: (event: InputChangeEvent) => {
-      get().actions.set(event.target.name as keyof RoomInfo, event.target.value);
-    },
-
-    reset: () => set({ rawValue: initialRoomInfo, value: initialRoomInfo, errorMessage: initialErrorMessages }),
-    setAll: set,
-    _update: (name, value) => set({ rawValue: { ...get().rawValue, [name]: value } }),
-    _updateErrorMsg: (name, value) => set({ errorMessage: { ...get().errorMessage, [name]: value } }),
-    _updateAfterValidation: (name, value, validators) => {
-      // 에러 검증
-      const newErrorMessage = validators
-        .slice()
-        .reverse()
-        .reduce((acc, { validate, errorMessage }) => (!validate(value) ? errorMessage : acc), '');
-
-      // 에러메시지 업데이트
-      get().actions._updateErrorMsg(name, newErrorMessage);
-
-      // 검증 통과시 입력
-      if (newErrorMessage.length === 0) {
-        get().actions._update(name, value);
-        get().actions._transform(name, value);
-      }
-    },
-    _transform: (name, value) => set({ value: { ...get().value, [name]: transform(name, value) } }),
-  },
-}));
+const checklistRoomInfoStore = createFormStore<RoomInfo>(initialRoomInfo, validatorSet, roomInfoType);
 
 export default checklistRoomInfoStore;

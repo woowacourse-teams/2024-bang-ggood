@@ -31,26 +31,22 @@ const OptionAllSelectBox = () => {
   );
 };
 
-const ButtonContainer = styled.div`
-  height: 50px;
-  padding: 10px 30px;
-  ${flexSpaceBetween}
-  align-items: center;
-`;
-
-const TotalSelectBox = styled.div`
-  ${flexCenter}
-  gap:10px;
-
-  span {
-    ${title4};
-    color: ${({ theme }) => theme.palette.grey600};
-  }
-`;
+export default OptionAllSelectBox;
 
 const S = {
-  ButtonContainer,
-  TotalSelectBox,
-};
+  ButtonContainer: styled.div`
+    height: 5rem;
+    padding: 1rem 3rem;
+    ${flexSpaceBetween}
+    align-items: center;
+  `,
+  TotalSelectBox: styled.div`
+    ${flexCenter}
+    gap:1rem;
 
-export default OptionAllSelectBox;
+    span {
+      ${title4};
+      color: ${({ theme }) => theme.palette.grey600};
+    }
+  `,
+};

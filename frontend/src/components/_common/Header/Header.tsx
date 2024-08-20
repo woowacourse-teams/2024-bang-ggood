@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { ArrowBack, BangGgoodTextIcon } from '@/assets/assets';
 import { ROUTE_PATH } from '@/constants/routePath';
+import { HEADER_SIZE } from '@/constants/style';
 import { flexCenter, title3 } from '@/styles/common';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
@@ -29,18 +30,18 @@ const HeaderWrapper = ({ left, right, center, ...rest }: Props) => {
 
 const S = {
   EmptyBox: styled.div`
-    height: 64px;
+    height: ${HEADER_SIZE}rem;
   `,
   Wrapper: styled.header`
     display: flex;
     position: fixed;
     z-index: ${({ theme }) => theme.zIndex.HEADER};
     width: 100%;
-    height: 64px;
-    padding: 16px;
+    height: ${HEADER_SIZE}rem;
+    padding: 1.6rem;
 
     background-color: ${({ theme }) => theme.palette.white};
-    max-width: 600px;
+    max-width: 60rem;
     align-items: center;
     box-sizing: border-box;
     justify-content: space-between;

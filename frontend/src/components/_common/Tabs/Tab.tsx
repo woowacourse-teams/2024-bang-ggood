@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { flexCenter } from '@/styles/common';
 
-interface TabProps {
+interface Props {
   id: number;
   onMoveTab: (id: number) => void;
   name: string;
@@ -10,7 +10,7 @@ interface TabProps {
   hasIndicator: boolean | null;
 }
 
-const Tab = ({ id, onMoveTab, name, active, hasIndicator }: TabProps) => {
+const Tab = ({ id, onMoveTab, name, active, hasIndicator }: Props) => {
   return (
     <S.Container key={id} onClick={() => onMoveTab(id)} active={active}>
       {name}
@@ -26,22 +26,22 @@ const S = {
     position: relative;
     z-index: ${({ theme }) => theme.zIndex.TABS};
     ${flexCenter};
-    margin-top: 10px;
-    padding: 10px 16px;
+    margin-top: 1rem;
+    padding: 1rem 1.6rem;
 
     color: ${({ theme, active }) => (active ? theme.palette.yellow600 : theme.palette.black)};
     font-weight: ${({ theme }) => theme.text.weight.bold};
     cursor: pointer;
     border-bottom: ${({ active, theme }) =>
-      active ? `3px solid ${theme.palette.yellow400}` : `3px solid ${theme.palette.yellow100}`};
+      active ? `.3rem solid ${theme.palette.yellow400}` : `.3rem solid ${theme.palette.yellow100}`};
   `,
   UncompletedIndicator: styled.div`
     position: absolute;
-    top: 5px;
-    right: 5px;
-    width: 5px;
-    height: 5px;
-    margin-left: 8px;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-left: 0.8rem;
 
     background-color: ${({ theme }) => theme.palette.grey400};
     border-radius: 50%;

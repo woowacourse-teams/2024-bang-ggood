@@ -30,36 +30,42 @@ const SkChecklistList = () => {
 
 const S = {
   FlexBox: styled.div`
-    padding: 0 16px;
+    padding: 0 1.6rem;
   `,
   ListBox: styled.div`
     ${flexColumn}
-    gap:10px;
+    gap:1rem;
   `,
   Banner: styled.div`
     ${Skeleton}
     ${flexCenter}
 
     width: 100%;
-    height: 80px;
-    padding: 16px;
+    height: 8rem;
+    padding: 1.6rem;
 
-    border-radius: 16px;
+    border-radius: 1.6rem;
 
     box-sizing: border-box;
-    gap: 5px;
+    gap: 0.5rem;
   `,
   PreviewCard: styled.div`
     ${flexColumn}
     width: 100%;
-    gap: 10px;
+    gap: 1rem;
     box-sizing: border-box;
     ${Skeleton}
-    border-radius: 8px;
+    border-radius: .8rem;
 
+<<<<<<< HEAD
     height: 150px;
     padding: 12px 16px;
     border: 1px solid ${({ theme }) => theme.palette.grey200};
+=======
+    height: 10rem;
+    padding: 1.2rem 1.6rem;
+    border: 0.1rem solid ${({ theme }) => theme.palette.grey200};
+>>>>>>> c9415f752eb857b08f842b01412e9fad847c9dc7
 
     ${boxShadow}
   `,
@@ -72,19 +78,19 @@ const S = {
     padding-right: 10%;
 
     transform: translateX(-50%);
-    max-width: 600px;
+    max-width: 60rem;
     justify-content: flex-end;
 
-    @media (min-width: ${theme.viewport.MOBILE}px) {
-      padding-right: 20px;
+    @media (min-width: ${theme.viewport.MOBILE}rem) {
+      padding-right: 2rem;
     }
   `,
   Button: styled.button`
     ${Skeleton}
-    width:100px;
-    height: 40px;
+    width:10rem;
+    height: 4rem;
     border: none;
-    border-radius: 50px;
+    border-radius: 5rem;
   `,
 };
 

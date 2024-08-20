@@ -11,12 +11,12 @@ export type RoomInfo = Partial<{
   includedUtilities: string[]; // 지금 string[] 되어있지만 객체로바뀔예정
   maintenanceFee: number;
   contractTerm: number;
+  floorLevel: string;
   floor: number;
   station: string;
   walkingTime: number;
   realEstate: string;
   size: number;
-  floorLevel: string;
   structure: string;
   occupancyMonth: number;
   occupancyPeriod: OccupancyPeriod;

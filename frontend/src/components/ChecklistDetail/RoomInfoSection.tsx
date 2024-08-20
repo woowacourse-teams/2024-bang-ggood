@@ -16,7 +16,7 @@ interface Props {
 
 const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
   // TODO: 로딩 중일 때 스켈레톤표시
-  if (!room) return null;
+
   const {
     roomName,
     deposit,
@@ -58,7 +58,9 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
         </S.Row>
         <S.Row>
           <Stairs />
-          {floorLevel === '지상' ? `${formattedUndefined(floor)}층` : floorLevel}
+          {floorLevel === '지상'
+            ? `${formattedUndefined(floor)}층`
+            : formattedUndefined(floorLevel, 'string', '방 종류')}
         </S.Row>
       </S.GapBox>
       <S.Row>

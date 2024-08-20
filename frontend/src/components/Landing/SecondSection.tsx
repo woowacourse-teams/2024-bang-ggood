@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 
-//import { AnimationBox, Bold, Highlight, Text, TextBox } from '@/components/Landing/style';
 import S from '@/components/Landing/style';
 import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';

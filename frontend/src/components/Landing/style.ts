@@ -147,9 +147,9 @@ const S = {
     ${flexCenter}
     gap:10px;
 
-    background-color: ${({ color }) => color ?? 'white'};
+    background-color: ${({ color, theme }) => color ?? theme.palette.white};
 
-    color: white;
+    color: ${({ theme }) => theme.palette.white};
 
     box-sizing: content-box;
     border-radius: 6px;

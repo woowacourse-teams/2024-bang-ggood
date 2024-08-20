@@ -1,15 +1,10 @@
 import styled from '@emotion/styled';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-import { postKakaoCode } from '@/apis/login';
 import FifthSection from '@/components/Landing/FifthSection';
 import FirstSection from '@/components/Landing/FirstSection';
 import FourthSection from '@/components/Landing/FourthSection';
 import SecondSection from '@/components/Landing/SecondSection';
 import ThirdSection from '@/components/Landing/ThirdSection';
-import { KAKAO_AUTH_URL } from '@/constants/oAuth';
-import { ROUTE_PATH } from '@/constants/routePath';
 import { flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
 
@@ -36,30 +31,10 @@ const SectionColors: Record<string, Color> = {
 };
 
 const LandingPage = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const code = new URL(window.location.href).searchParams.get('code');
-
-    const postLogin = async () => {
-      if (code) {
-        await postKakaoCode(code).then(async () => {
-          navigate(ROUTE_PATH.home);
-        });
-      }
-    };
-
-    postLogin();
-  }, []);
-
-  const handleLogin = async () => {
-    window.location.href = KAKAO_AUTH_URL;
-  };
-
   return (
     <S.Container>
       <S.Section height={570} color={SectionColors.first.background}>
-        <FirstSection handleLogin={handleLogin} />
+        <FirstSection />
       </S.Section>
       <S.Section height={680} color={SectionColors.second.background}>
         <SecondSection />

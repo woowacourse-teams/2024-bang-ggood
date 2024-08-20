@@ -1,7 +1,16 @@
+import { useNavigate } from 'react-router-dom';
+
 import { ArrowDownSmall, BangBangIcon, BangGgoodTextIcon, KakaoLogo, SmallCheck } from '@/assets/assets';
 import S from '@/components/Landing/style';
+import { ROUTE_PATH } from '@/constants/routePath';
 
-const FirstSection = ({ handleLogin }: { handleLogin: () => void }) => {
+const FirstSection = () => {
+  const navigate = useNavigate();
+
+  const handleMoveLogin = () => {
+    navigate(ROUTE_PATH.login);
+  };
+
   return (
     <>
       <S.LogoBox>
@@ -16,7 +25,7 @@ const FirstSection = ({ handleLogin }: { handleLogin: () => void }) => {
         <BangGgoodTextIcon width={220} height={50} />
       </S.LogoBox>
       <S.ButtonWrapper>
-        <S.KakaoLoginButton onClick={handleLogin}>
+        <S.KakaoLoginButton onClick={handleMoveLogin}>
           <KakaoLogo />
           <S.Text>카카오로 로그인</S.Text>
         </S.KakaoLoginButton>
@@ -32,67 +41,3 @@ const FirstSection = ({ handleLogin }: { handleLogin: () => void }) => {
 };
 
 export default FirstSection;
-
-// const S = {
-//   LogoBox: styled.div`
-//     width: 100%;
-//     align-items: center;
-//     height: 370px;
-//     padding-top: 80px;
-//     gap: 40px;
-//     ${flexColumn}
-//   `,
-//   CheckIconBox: styled.div`
-//     position: absolute;
-//     top: 22px;
-//     right: 77px;
-//   `,
-//   TextWrapper: styled.div`
-//     display: flex;
-//     position: relative;
-//     width: 280px;
-
-//     font-size: 18px;
-//     line-height: 1.4;
-//     flex-direction: column;
-//     align-items: center;
-//     justify-content: left;
-//     gap: 10px;
-//   `,
-//   ButtonWrapper: styled.div`
-//     ${flexCenter}
-//     ${flexColumn}
-//     gap: 10px;
-//     width: 100%;
-//     margin-top: 20px;
-//   `,
-//   SubText: styled.div`
-//     font-size: ${({ theme }) => theme.text.size.small};
-//   `,
-//   KakaoLoginButton: styled.div`
-//     width: 300px;
-//     height: 50px;
-//     ${flexRow}
-//     justify-content: space-evenly;
-//     align-items: center;
-//     border-radius: 8px;
-
-//     background-color: ${({ theme }) => theme.palette.kakao};
-
-//     font-size: ${({ theme }) => theme.text.size.large};
-//   `,
-//   MoreBox: styled.div`
-//     width: 100%;
-//     padding-top: 20px;
-//     gap: 10px;
-//     ${flexColumn}
-//     align-items: center;
-
-//     color: ${({ theme }) => theme.palette.grey500};
-//   `,
-//   AnimationBox: styled.div`
-//     height: 40px;
-
-//     animation: ${moveUpDown} 1s infinite;
-//   `,
-// };

@@ -10,6 +10,7 @@ import ChecklistListPage from '@/pages/ChecklistListPage';
 import EditChecklistPage from '@/pages/EditChecklistPage';
 import ErrorPage from '@/pages/ErrorPage';
 import LandingPage from '@/pages/LandingPage';
+import LoginPage from '@/pages/LoginPage';
 import MainPage from '@/pages/MainPage';
 import NewChecklistPage from '@/pages/NewChecklistPage';
 import NotFound from '@/pages/NotFound';
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
       {
         element: <FooterLayout />,
         children: [
-          { element: <MainPage />, path: ROUTE_PATH.home },
+          { element: <MainPage />, path: ROUTE_PATH.main },
           {
             element: <ChecklistListPage />,
             path: ROUTE_PATH.checklistList,
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
   },
   {
     element: <LandingPage />,
+    path: ROUTE_PATH.home,
+  },
+  {
+    element: <LoginPage />,
     path: ROUTE_PATH.login,
   },
   {

@@ -1,9 +1,4 @@
-import { createStore } from 'zustand';
-
-import { InputChangeEvent } from '@/types/event';
-import { RoomInfo } from '@/types/room';
-import { AllString } from '@/utils/utilityTypes';
-import { validation } from '@/utils/validation';
+import createFormStore from '@/store/createFormStore';
 import {
   inRangeValidator,
   isIntegerValidator,
@@ -14,22 +9,8 @@ import {
   Validator,
 } from '@/utils/validators';
 
-interface RoomInfoAction {
-  onChange: (event: InputChangeEvent) => void;
-  set: (name: keyof RoomInfo, value: string | undefined) => void;
-  setAll: (state: Partial<RoomInfoState>) => void;
-  resetAll: () => void;
-  _reset: (name: keyof RoomInfo) => void;
-  _update: (name: keyof AllString<RoomInfo>, value: string | undefined) => void;
-  _updateErrorMsg: (field: keyof RoomInfo, value: string) => void;
-  _updateAfterValidation: (field: keyof RoomInfo, value: string, validators: Validator[]) => void;
-  _transform: (name: string, value: string) => void;
-}
-
 export const initialRoomInfo = {
-  // TODO: UT 를 위한 기본 더미 이름
-  roomName: '8월 14일 1번째 방',
-  address: undefined,
+  roomName: '8월 14일 1번째 방', // TODO: N번째방 구현하기
   deposit: undefined,
   rent: undefined,
   maintenanceFee: undefined,
@@ -93,59 +74,6 @@ const validatorSet: Record<string, Validator[]> = {
   memo: [],
 };
 
-const initialErrorMessages = Object.fromEntries(Object.entries(initialRoomInfo).map(([key]) => [key, '']));
-
-type RoomInfoState = { rawValue: AllString<RoomInfo> } & { value: RoomInfo } & { errorMessage: AllString<RoomInfo> };
-
-const transform = (name: string, value: string) =>
-  roomInfoType[name as keyof RoomInfo] === 'number' ? Number(value) : value;
-const checklistRoomInfoStore = createStore<
-  RoomInfoState & {
-    actions: RoomInfoAction;
-  }
->((set, get) => ({
-  rawValue: initialRoomInfo,
-  value: initialRoomInfo,
-  errorMessage: initialErrorMessages,
-  actions: {
-    onChange: event => {
-      get().actions.set(event.target.name as keyof RoomInfo, event.target.value);
-    },
-    set: (name, value) => {
-      if (value === '') {
-        get().actions._reset(name);
-        return;
-      }
-
-      get().actions._updateAfterValidation(name, value ?? '', validatorSet[name]);
-    },
-
-    resetAll: () => set({ rawValue: initialRoomInfo, value: initialRoomInfo, errorMessage: initialErrorMessages }),
-    setAll: set,
-    _reset: name => {
-      get().actions._updateErrorMsg(name, '');
-      get().actions._update(name, '');
-    },
-    _update: (name, value) => {
-      set({ rawValue: { ...get().rawValue, [name]: value } });
-      get().actions._transform(name, value ?? '');
-    },
-    _updateErrorMsg: (name, value) => set({ errorMessage: { ...get().errorMessage, [name]: value } }),
-    _updateAfterValidation: (name, value, validators) => {
-      validation(
-        name,
-        value,
-        validators,
-        (name: string, value: string) => {
-          get().actions._update(name as keyof AllString<RoomInfo>, value);
-        },
-        (name: string, errorMessage: string) => {
-          get().actions._updateErrorMsg(name as keyof RoomInfo, errorMessage);
-        },
-      );
-    },
-    _transform: (name, value) => set({ value: { ...get().value, [name]: transform(name, value) } }),
-  },
-}));
+const checklistRoomInfoStore = createFormStore(initialRoomInfo, validatorSet, roomInfoType);
 
 export default checklistRoomInfoStore;

@@ -5,11 +5,10 @@ import FormField from '@/components/_common/FormField/FormField';
 import DaumAddressModal from '@/components/NewChecklist/AddressModal/DaumAddressModal';
 import RealTimeAddressModal from '@/components/NewChecklist/AddressModal/RealTimeAddressModal';
 import checklistAddressStore from '@/store/checklistAddressStore';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
 const Address = () => {
   const address = useStore(checklistAddressStore, state => state.address);
-  const errorMessage = useStore(checklistRoomInfoStore, state => state.errorMessage.address);
+  // const errorMessage = useStore(checklistRoomInfoStore, state => state.errorMessage.address);
 
   return (
     <FormField>

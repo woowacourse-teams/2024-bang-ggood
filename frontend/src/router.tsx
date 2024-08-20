@@ -77,7 +77,7 @@ const router = createBrowserRouter([
   },
   {
     element: <LoginPage />,
-    path: ROUTE_PATH.login,
+    path: ROUTE_PATH.root,
   },
 ]);
 

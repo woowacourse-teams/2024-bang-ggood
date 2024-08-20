@@ -59,16 +59,6 @@ const S = {
   Question: styled.div`
     width: 80%;
   `,
-  Title: styled.div`
-    display: flex;
-    width: 100%;
-    margin: 5px 0;
-
-    font-size: ${({ theme }) => theme.text.size.medium};
-    line-height: 1.5;
-    gap: 10px;
-    align-items: baseline;
-  `,
   Subtitle: styled.div`
     width: 100%;
 
@@ -86,7 +76,6 @@ const S = {
     ${flexSpaceBetween}
     align-items: center;
   `,
-
   ButtonBox: styled.div`
     position: absolute;
     top: 10px;

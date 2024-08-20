@@ -7,6 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public record OauthInfoApiResponse(String id, String connected_at, KakaoAccountResponse kakao_account) {
 
     public User toUserEntity() {
-        return new User(kakao_account.name(), kakao_account.email());
+        return new User(kakao_account.profile().nickname(), kakao_account.email());
     }
 }

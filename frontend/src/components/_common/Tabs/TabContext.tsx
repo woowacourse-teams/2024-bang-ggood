@@ -1,5 +1,7 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 
+import { ERROR_MESSAGE } from '@/constants/errorMessage';
+
 interface ContextProps {
   currentTabId: number;
   setCurrentTabId: React.Dispatch<React.SetStateAction<number>>;
@@ -12,7 +14,12 @@ const defaultContext: ContextProps = {
 
 const TabContext = createContext<ContextProps>(defaultContext);
 
-export const TabProvider = ({ children, defaultTab = 0 }: { children: ReactNode; defaultTab: number }) => {
+interface Props {
+  children: ReactNode;
+  defaultTab: number;
+}
+
+export const TabProvider = ({ children, defaultTab = 0 }: Props) => {
   const [currentTabId, setCurrentTabId] = useState<number>(defaultTab);
 
   return <TabContext.Provider value={{ currentTabId, setCurrentTabId }}>{children}</TabContext.Provider>;
@@ -20,8 +27,10 @@ export const TabProvider = ({ children, defaultTab = 0 }: { children: ReactNode;
 
 export const useTabContext = () => {
   const context = useContext(TabContext);
+
   if (!context) {
-    throw new Error('useTabContext는 TabProvider 안에서 사용해야 합니다.');
+    throw new Error(ERROR_MESSAGE.USETABCONTEXT);
   }
+
   return context;
 };

@@ -78,6 +78,7 @@ const zIndex = {
   HEADER: 10,
   MODAL: 20,
   TOAST: 30,
+  MAP_MESSAGE: 100,
 };
 
 const theme = {

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
-import ArticleCard from '@/components/Article/ArticleCard';
+import ArticleCard from '@/components/ArticleList/ArticleCard';
 import SkArticleList from '@/components/skeleton/Article/SkArticleList';
 import useGetArticleListQuery from '@/hooks/query/useGetArticleListQuery';
 import { flexColumn, title3 } from '@/styles/common';

@@ -53,7 +53,7 @@ export default FooterButton;
 const S = {
   Wrapper: styled.div`
     ${flexColumn}
-    gap: 5px;
+    gap: .5rem;
     align-items: center;
   `,
   Text: styled.div<{ isActive: boolean }>`

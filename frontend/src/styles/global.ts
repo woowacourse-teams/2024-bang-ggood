@@ -13,6 +13,7 @@ export const baseStyle = css`
   body {
     line-height: normal;
     font-family: 'SUITE Variable';
+    font-size: ${theme.text.size.small};
 
     max-width: 60rem;
     min-height: 100vh;

@@ -75,13 +75,12 @@ const RealTimeMap = () => {
       if (result[0].road_address) {
         setAddress(result[0].road_address.address_name);
         setBuildingName(result[0].road_address.building_name);
-        //TODO: 빌딩 주소가 없을 때도 있음.
       }
     }
   };
 
   useEffect(() => {
-    /*첫 지도 생성 */
+    // 첫 지도 생성
     const mapContainer = document.getElementById('map');
     if (!mapContainer) return;
 
@@ -93,7 +92,7 @@ const RealTimeMap = () => {
     const map = new kakao.maps.Map(mapContainer, mapOption);
     mapRef.current = map;
 
-    /*첫 커스텀 마커 생성 */
+    // 첫 커스텀 마커 생성
     const imageSrc = 'https://github.com/user-attachments/assets/cdd2825b-407f-485a-8cc9-5d261acf815d ',
       imageSize = new kakao.maps.Size(32, 40),
       imageOption = { offset: new kakao.maps.Point(15, 45) };
@@ -107,13 +106,13 @@ const RealTimeMap = () => {
     });
     markerRef.current = marker;
 
-    /*첫 인포윈도우 생성 */
+    // 첫 인포윈도우 생성
     infoWindowRef.current = new kakao.maps.InfoWindow({
       content: '<span id="info-title">이 위치가 맞나요?</span>',
       removable: true,
     });
 
-    /*geolocation으로 현재 실시간 위치 받아오기*/
+    // geolocation으로 현재 실시간 위치 받아오기
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(successGeolocation, errorGeolocation);
     } else {
@@ -130,7 +129,7 @@ const RealTimeMap = () => {
     });
   }, []);
 
-  /*위치가 수정될 때마다 마커의 위치를 옮기기 */
+  // 위치가 수정될 때마다 마커의 위치를 옮기기
   useEffect(() => {
     if (markerRef.current && mapRef.current) {
       const locPosition = new kakao.maps.LatLng(position.lat, position.lon);
@@ -157,16 +156,16 @@ const S = {
   `,
   MapBox: styled.div`
     width: 100%;
-    min-height: 400px;
+    min-height: 40rem;
   `,
   Message: styled.div`
-    z-index: 100;
-    width: 100px;
-    height: 50px;
+    z-index: ${({ theme }) => theme.zIndex.MAP_MESSAGE};
+    width: 10rem;
+    height: 5rem;
   `,
   MapEmptyBox: styled.div`
     width: 100%;
-    min-height: 400px;
+    min-height: 40rem;
 
     background-color: ${({ theme }) => theme.palette.background};
     ${flexCenter}

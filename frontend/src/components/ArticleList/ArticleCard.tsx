@@ -36,18 +36,18 @@ export default ArticleCard;
 const S = {
   Container: styled.div`
     ${flexColumn}
-    gap: 8px;
+    gap: .8rem;
     width: auto;
     box-sizing: border-box;
-    padding: 16px;
+    padding: 1.6rem;
 
-    border-radius: 16px;
+    border-radius: 1.6rem;
 
     background-color: ${({ theme }) => theme.palette.white};
     ${boxShadow};
   `,
   Keyword: styled.span<{ bgColor: string }>`
-    padding: 4px 8px;
+    padding: 0.4rem 0.8rem;
 
     background-color: ${({ bgColor }) => bgColor};
 
@@ -56,11 +56,11 @@ const S = {
     align-self: flex-start;
 
     box-sizing: content-box;
-    border-radius: 6px;
+    border-radius: 0.6rem;
   `,
   Title: styled.div`
     ${title3}
-    margin-top: 8px;
+    margin-top: .8rem;
     word-break: keep-all;
 
     line-height: 1.6rem;

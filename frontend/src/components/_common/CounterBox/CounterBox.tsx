@@ -33,7 +33,7 @@ const S = {
   Container: styled.div<{ $color: string; $gap: number }>`
     ${flexRow}
     color: ${({ $color }) => $color};
-    gap: ${({ $gap }) => $gap}px;
+    gap: ${({ $gap }) => $gap}rem;
     ${title3}
   `,
 };

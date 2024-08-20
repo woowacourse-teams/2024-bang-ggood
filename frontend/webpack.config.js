@@ -33,21 +33,12 @@ const config = {
     port: 3000,
     allowedHosts: 'all',
     historyApiFallback: true,
-    // server: {
-    //   type: 'https',
-    //   options: {
-    //     key: fs.readFileSync('./private.key'),
-    //     cert: fs.readFileSync('./private.pem'),
-    //   },
-    // },
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: 'index.html',
     }),
     new webpack.DefinePlugin(envKeys),
-    // Add your plugins here
-    // Learn more about plugins from https:/webpack.js.org/configuration/plugins/
   ],
   performance: {
     hints: false,
@@ -121,7 +112,7 @@ module.exports = () => {
     config.plugins.push(
       sentryWebpackPlugin({
         authToken: process.env.SENTRY_AUTH_TOKEN,
-        org: 'skiende74',
+        org: process.env.SENTRY_ID,
         project: 'javascript-react',
       }),
     );

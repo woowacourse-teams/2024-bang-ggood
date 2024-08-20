@@ -37,6 +37,7 @@ import LampIcon from '@/assets/icons/lamp-icon.svg';
 import BangGgoodTextIcon from '@/assets/icons/logo.svg';
 import PencilIcon from '@/assets/icons/pencil-icon.svg';
 import QuestionDot from '@/assets/icons/question-dot.svg';
+import SmallCheck from '@/assets/icons/small-check.svg';
 import SmileMessageIcon from '@/assets/icons/smile-message-icon.svg';
 export {
   ArrowBack,
@@ -65,6 +66,7 @@ export {
   PlusWhite,
   QuestionDot,
   Room,
+  SmallCheck,
   SmileMessageIcon,
   Stairs,
   Subway,

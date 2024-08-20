@@ -23,21 +23,17 @@ const S = {
   
     `}
   `,
-
   EmptyBox: styled.div<{ height: number }>`
     width: 100%;
     height: ${({ height }) => height}px;
   `,
-
   Observer: styled.div`
     height: 10px;
   `,
-
   Container: styled.div`
     ${flexColumn}
     line-height: 1.5;
   `,
-
   TextBox: styled.div`
     ${flexColumn};
     width: 100%;
@@ -45,17 +41,14 @@ const S = {
     margin-top: 30px;
     text-align: center;
   `,
-
   Bold: styled.span`
     font-weight: ${({ theme }) => theme.text.weight.semiBold};
   `,
-
   Text: styled.div<{ margin?: number }>`
     margin: ${({ margin }) => margin ?? 5}px;
     line-height: 1.5;
     font-size: ${({ theme }) => theme.text.size.medium};
   `,
-
   Highlight: styled.span`
     font-weight: ${({ theme }) => theme.text.weight.semiBold};
     width: fit-content;
@@ -161,7 +154,6 @@ const S = {
     box-sizing: content-box;
     border-radius: 6px;
   `,
-
   CenterBox: styled.div`
     width: 100%;
     ${flexCenter}

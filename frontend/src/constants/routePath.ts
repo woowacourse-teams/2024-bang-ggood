@@ -21,6 +21,5 @@ export const ROUTE_PATH = {
   /* etc */
   location: '/location',
   myPage: '/my-page',
-  landing: '/landing',
   login: '/login',
 };

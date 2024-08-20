@@ -3,6 +3,7 @@ import { createStore } from 'zustand';
 import { InputChangeEvent } from '@/types/event';
 import { RoomInfo } from '@/types/room';
 import { AllString } from '@/utils/utilityTypes';
+import { validation } from '@/utils/validation';
 import {
   inRangeValidator,
   isIntegerValidator,
@@ -14,14 +15,15 @@ import {
 } from '@/utils/validators';
 
 interface RoomInfoAction {
-  reset: () => void;
-  set: (name: keyof typeof validatorSet, value: string | undefined) => void;
+  onChange: (event: InputChangeEvent) => void;
+  set: (name: keyof RoomInfo, value: string | undefined) => void;
   setAll: (state: Partial<RoomInfoState>) => void;
-  _update: (field: keyof AllString<RoomInfo> | keyof AllString<RoomInfo>, value: string | undefined) => void;
+  resetAll: () => void;
+  _reset: (name: keyof RoomInfo) => void;
+  _update: (name: keyof AllString<RoomInfo>, value: string | undefined) => void;
   _updateErrorMsg: (field: keyof RoomInfo, value: string) => void;
   _updateAfterValidation: (field: keyof RoomInfo, value: string, validators: Validator[]) => void;
   _transform: (name: string, value: string) => void;
-  onChange: (event: InputChangeEvent) => void;
 }
 
 export const initialRoomInfo = {
@@ -106,40 +108,41 @@ const checklistRoomInfoStore = createStore<
   value: initialRoomInfo,
   errorMessage: initialErrorMessages,
   actions: {
+    onChange: event => {
+      get().actions.set(event.target.name as keyof RoomInfo, event.target.value);
+    },
     set: (name, value) => {
-      // 다 지우기할 시 다 지워주고, 에러메시지도 지워진다.
       if (value === '') {
-        get().actions._updateErrorMsg(name as keyof RoomInfo, '');
-        get().actions._update(name as keyof RoomInfo, '');
+        get().actions._reset(name);
         return;
       }
 
-      get().actions._updateAfterValidation(name as keyof RoomInfo, value ?? '', validatorSet[name]);
+      get().actions._updateAfterValidation(name, value ?? '', validatorSet[name]);
     },
 
-    onChange: (event: InputChangeEvent) => {
-      get().actions.set(event.target.name as keyof RoomInfo, event.target.value);
-    },
-
-    reset: () => set({ rawValue: initialRoomInfo, value: initialRoomInfo, errorMessage: initialErrorMessages }),
+    resetAll: () => set({ rawValue: initialRoomInfo, value: initialRoomInfo, errorMessage: initialErrorMessages }),
     setAll: set,
-    _update: (name, value) => set({ rawValue: { ...get().rawValue, [name]: value } }),
+    _reset: name => {
+      get().actions._updateErrorMsg(name, '');
+      get().actions._update(name, '');
+    },
+    _update: (name, value) => {
+      set({ rawValue: { ...get().rawValue, [name]: value } });
+      get().actions._transform(name, value ?? '');
+    },
     _updateErrorMsg: (name, value) => set({ errorMessage: { ...get().errorMessage, [name]: value } }),
     _updateAfterValidation: (name, value, validators) => {
-      // 에러 검증
-      const newErrorMessage = validators
-        .slice()
-        .reverse()
-        .reduce((acc, { validate, errorMessage }) => (!validate(value) ? errorMessage : acc), '');
-
-      // 에러메시지 업데이트
-      get().actions._updateErrorMsg(name, newErrorMessage);
-
-      // 검증 통과시 입력
-      if (newErrorMessage.length === 0) {
-        get().actions._update(name, value);
-        get().actions._transform(name, value);
-      }
+      validation(
+        name,
+        value,
+        validators,
+        (name: string, value: string) => {
+          get().actions._update(name as keyof AllString<RoomInfo>, value);
+        },
+        (name: string, errorMessage: string) => {
+          get().actions._updateErrorMsg(name as keyof RoomInfo, errorMessage);
+        },
+      );
     },
     _transform: (name, value) => set({ value: { ...get().value, [name]: transform(name, value) } }),
   },

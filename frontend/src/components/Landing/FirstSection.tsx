@@ -1,14 +1,10 @@
-import { useNavigate } from 'react-router-dom';
-
 import { ArrowDownSmall, BangBangIcon, BangGgoodTextIcon, KakaoLogo, SmallCheck } from '@/assets/assets';
 import S from '@/components/Landing/style';
-import { ROUTE_PATH } from '@/constants/routePath';
+import { KAKAO_AUTH_URL } from '@/constants/oAuth';
 
 const FirstSection = () => {
-  const navigate = useNavigate();
-
   const handleMoveLogin = () => {
-    navigate(ROUTE_PATH.login);
+    window.location.href = KAKAO_AUTH_URL;
   };
 
   return (

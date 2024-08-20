@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
-import AccordionHeader from '@/components/_common/Accordion/AccodionHeader';
 import AccordionBody from '@/components/_common/Accordion/AccordionBody';
 import { AccordionProvider } from '@/components/_common/Accordion/AccordionContext';
+import AccordionHeader from '@/components/_common/Accordion/AccordionHeader';
 import { flexColumn } from '@/styles/common';
 
 interface Props {
@@ -26,7 +26,7 @@ const S = {
   Container: styled.div<{ width: string }>`
     ${flexColumn};
     width: ${({ width }) => width};
-    gap: 10px;
+    gap: 1rem;
   `,
 };
 export default Accordion;

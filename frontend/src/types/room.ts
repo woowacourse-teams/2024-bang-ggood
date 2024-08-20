@@ -8,7 +8,7 @@ export type RoomInfo = Partial<{
   deposit: number;
   rent: number;
   // includedUtilities : 관리비 포함항목 (전기, 수도 등).
-  includedUtilities: string[]; // 지금 string[] 되어있지만 객체로바뀔예정
+  includedUtilities: IncludedUtilities;
   maintenanceFee: number;
   contractTerm: number;
   floor: number;
@@ -24,5 +24,11 @@ export type RoomInfo = Partial<{
   memo: string;
   createdAt?: string;
 }>;
+export interface IncludedUtilities {
+  water: boolean;
+  electricity: boolean;
+  internet: boolean;
+  gas: boolean;
+}
 
 export type RoomInfoName = keyof RoomInfo;

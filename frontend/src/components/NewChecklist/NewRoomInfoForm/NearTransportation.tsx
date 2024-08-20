@@ -18,7 +18,13 @@ const NearTransportation = () => {
       <FormStyled.FieldBox>
         <FormField.Input width="medium" onChange={actions.onChange} name="station" value={station} />
         <FormStyled.FlexLabel label=" 역  " />
-        <FormField.Input width="medium" placeholder="" onChange={actions.onChange} name="rent" value={walkingTime} />
+        <FormField.Input
+          width="medium"
+          placeholder=""
+          onChange={actions.onChange}
+          name="walkingTime"
+          value={walkingTime}
+        />
         <FormStyled.FlexLabel label=" 분 거리  " />
       </FormStyled.FieldBox>
       <FormField.ErrorMessage value={errorMessageStation || errorMessageWalkingTime || ''} />

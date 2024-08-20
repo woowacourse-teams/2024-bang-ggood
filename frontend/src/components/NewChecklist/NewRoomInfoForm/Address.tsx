@@ -8,8 +8,8 @@ import checklistAddressStore from '@/store/checklistAddressStore';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
 const Address = () => {
+  const address = useStore(checklistAddressStore, state => state.address);
   const errorMessage = useStore(checklistRoomInfoStore, state => state.errorMessage.address);
-  const { address } = useStore(checklistAddressStore);
 
   return (
     <FormField>

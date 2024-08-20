@@ -40,7 +40,7 @@ const FooterLinkButton = (Logo: JSX.Element, LogoActive: JSX.Element, path: stri
 };
 
 const Footer = Object.assign(FooterWrapper, {
-  Home: FooterLinkButton(<FooterButton logo="home" />, <FooterButton logo="home" isActive />, ROUTE_PATH.home),
+  Home: FooterLinkButton(<FooterButton logo="home" />, <FooterButton logo="home" isActive />, ROUTE_PATH.main),
   Checklist: FooterLinkButton(
     <FooterButton logo="checklist" />,
     <FooterButton logo="checklist" isActive />,

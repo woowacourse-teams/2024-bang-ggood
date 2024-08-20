@@ -5,7 +5,7 @@ import Layout from '@/components/_common/layout/Layout';
 import { boxShadow, flexCenter, flexColumn, Skeleton } from '@/styles/common';
 import theme from '@/styles/theme';
 
-const SHOW_MOCK_COUNT = 4;
+const SHOW_MOCK_COUNT = 3;
 
 const SkChecklistList = () => {
   return (
@@ -57,7 +57,7 @@ const S = {
     ${Skeleton}
     border-radius: 8px;
 
-    height: 100px;
+    height: 150px;
     padding: 12px 16px;
     border: 1px solid ${({ theme }) => theme.palette.grey200};
 

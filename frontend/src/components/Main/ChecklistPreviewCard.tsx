@@ -29,7 +29,7 @@ const ChecklistPreviewCard = ({ index, checklist }: Props) => {
       <HomeCircle color={color500} bgColor={color200} />
       <S.Column>
         <S.Label>
-          {formattedUndefined(station)} · {formattedUndefined(walkingTime)} 분
+          {formattedUndefined(station)} · {formattedUndefined(walkingTime)}분
         </S.Label>
         <S.Row>
           <S.Title>{roomName}</S.Title>

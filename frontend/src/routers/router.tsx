@@ -11,6 +11,7 @@ import EditChecklistPage from '@/pages/EditChecklistPage';
 import ErrorPage from '@/pages/ErrorPage';
 import LandingPage from '@/pages/LandingPage';
 import MainPage from '@/pages/MainPage';
+import MyPage from '@/pages/MyPage';
 import NewChecklistPage from '@/pages/NewChecklistPage';
 import NotFound from '@/pages/NotFound';
 import RoomComparePage from '@/pages/RoomComparePage';
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
       {
         element: <FooterLayout />,
         children: [
-          { element: <MainPage />, path: ROUTE_PATH.main },
+          { element: <MainPage />, path: ROUTE_PATH.home },
           {
             element: <ChecklistListPage />,
             path: ROUTE_PATH.checklistList,
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
             element: <ArticleListPage />,
             path: ROUTE_PATH.article,
           },
+          {
+            element: <MyPage />,
+            path: ROUTE_PATH.myPage,
+          }
         ],
       },
       {
@@ -68,7 +73,7 @@ const router = createBrowserRouter([
   },
   {
     element: <LandingPage />,
-    path: ROUTE_PATH.home,
+    path: ROUTE_PATH.landing,
   },
   {
     element: <NotFound />,

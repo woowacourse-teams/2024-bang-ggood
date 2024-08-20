@@ -36,7 +36,8 @@ export default ArticleCard;
 const S = {
   Container: styled.div`
     ${flexColumn}
-    gap: .8rem;
+
+    gap: 0.8rem;
     width: auto;
     box-sizing: border-box;
     padding: 1.6rem;

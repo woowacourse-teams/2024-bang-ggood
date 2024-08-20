@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-import ArticleCard from '@/components/Article/ArticleCard';
+import ArticleCard from '@/components/ArticleList/ArticleCard';
 import S from '@/components/Landing/style';
 import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';
@@ -38,7 +38,9 @@ const FourthSection = () => {
           <S.Observer ref={ref2} />
           <S.EmptyBox height={20} />
           <S.AnimationBox isIntersecting={isIntersecting2}>
-            <ArticleCard article={articleList.articles[2]} />
+            <div>
+              <ArticleCard article={articleList.articles[2]} />
+            </div>
           </S.AnimationBox>
         </S.Text>
       </S.TextBox>

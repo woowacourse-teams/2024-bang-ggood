@@ -121,7 +121,7 @@ module.exports = () => {
     config.plugins.push(
       sentryWebpackPlugin({
         authToken: process.env.SENTRY_AUTH_TOKEN,
-        org: 'skiende74',
+        org: process.env.SENTRY_ID,
         project: 'javascript-react',
       }),
     );

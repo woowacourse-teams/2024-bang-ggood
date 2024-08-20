@@ -5,7 +5,6 @@ import com.bang_ggood.checklist.domain.OccupancyPeriod;
 import com.bang_ggood.room.domain.FloorLevel;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.domain.Structure;
-import com.bang_ggood.room.domain.Type;
 import com.bang_ggood.room.dto.request.RoomRequest;
 
 public class RoomFixture {

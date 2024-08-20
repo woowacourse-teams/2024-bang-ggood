@@ -14,7 +14,6 @@ import com.bang_ggood.checklist.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.checklist.service.ChecklistService;
 import com.bang_ggood.room.domain.FloorLevel;
 import com.bang_ggood.room.domain.Structure;
-import com.bang_ggood.room.domain.Type;
 import com.bang_ggood.room.dto.request.RoomRequest;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;

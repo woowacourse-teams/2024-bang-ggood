@@ -12,7 +12,7 @@ public record SelectedRoomResponse(String roomName, Integer deposit, Integer ren
         return new SelectedRoomResponse(checklist.getRoomName(), checklist.getDeposit(), checklist.getRent(),
                 checklist.getContractTerm(), checklist.getRoomFloor(), checklist.getRoomAddress(),
                 checklist.getRoomStation(), checklist.getRoomWalkingTime(), checklist.getRealEstate(),
-                checklist.getRoomType().getName(), checklist.getRoomSize(), checklist.getRoomFloorLevel().getName(),
+                null, checklist.getRoomSize(), checklist.getRoomFloorLevel().getName(),
                 checklist.getRoomStructure().getName(), checklist.getOccupancyMonth(), checklist.getOccupancyPeriod(),
                 checklist.getMemo(), checklist.getSummary(), checklist.getCreatedAt());
     }

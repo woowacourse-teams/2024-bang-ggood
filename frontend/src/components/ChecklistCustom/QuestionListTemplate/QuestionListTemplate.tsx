@@ -14,7 +14,7 @@ const QuestionListTemplate = () => {
   return (
     <S.Container>
       <S.CounterBox>
-        <S.Span>선택 개수 </S.Span>
+        <S.Span>선택 개수 :</S.Span>
         <CounterBox currentCount={12} totalCount={13} />
       </S.CounterBox>
       <QuestionCardList

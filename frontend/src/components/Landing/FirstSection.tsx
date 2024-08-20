@@ -1,9 +1,5 @@
-import styled from '@emotion/styled';
-
 import { ArrowDownSmall, BangBangIcon, BangGgoodTextIcon, KakaoLogo, SmallCheck } from '@/assets/assets';
-import { Text } from '@/components/Landing/style';
-import { moveUpDown } from '@/styles/animation';
-import { flexCenter, flexColumn, flexRow } from '@/styles/common';
+import S from '@/components/Landing/style';
 
 const FirstSection = ({ handleLogin }: { handleLogin: () => void }) => {
   return (
@@ -11,8 +7,8 @@ const FirstSection = ({ handleLogin }: { handleLogin: () => void }) => {
       <S.LogoBox>
         <BangBangIcon width="350" height="130" />
         <S.TextWrapper>
-          <S.Text>방 구하기</S.Text>
-          <S.Text>이거 하나로 끝!</S.Text>
+          <S.SubtitleText>방 구하기</S.SubtitleText>
+          <S.SubtitleText>이거 하나로 끝!</S.SubtitleText>
           <S.CheckIconBox>
             <SmallCheck />
           </S.CheckIconBox>
@@ -22,14 +18,14 @@ const FirstSection = ({ handleLogin }: { handleLogin: () => void }) => {
       <S.ButtonWrapper>
         <S.KakaoLoginButton onClick={handleLogin}>
           <KakaoLogo />
-          <Text>카카오로 로그인</Text>
+          <S.Text>카카오로 로그인</S.Text>
         </S.KakaoLoginButton>
       </S.ButtonWrapper>
       <S.MoreBox>
         <S.SubText>방끗을 소개할게요!</S.SubText>
-        <S.AnimationBox>
+        <S.MoveUpDownAnimationBox>
           <ArrowDownSmall />
-        </S.AnimationBox>
+        </S.MoveUpDownAnimationBox>
       </S.MoreBox>
     </>
   );
@@ -37,67 +33,66 @@ const FirstSection = ({ handleLogin }: { handleLogin: () => void }) => {
 
 export default FirstSection;
 
-const S = {
-  LogoBox: styled.div`
-    width: 100%;
-    align-items: center;
-    height: 370px;
-    padding-top: 80px;
-    gap: 40px;
-    ${flexColumn}
-  `,
-  CheckIconBox: styled.div`
-    position: absolute;
-    right: 77px;
-    top: 22px;
-  `,
-  TextWrapper: styled.div`
-    width: 280px;
-    position: relative;
-    line-height: 1.4;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: left;
-    font-size: 18px;
-    gap: 10px;
-  `,
-  Text: styled.div`
-    font-size: ${({ theme }) => theme.text.size.large};
-    font-weight: ${({ theme }) => theme.text.weight.semiBold};
-  `,
-  ButtonWrapper: styled.div`
-    ${flexCenter}
-    ${flexColumn}
-    gap: 10px;
-    margin-top: 20px;
-    width: 100%;
-  `,
-  SubText: styled.div`
-    font-size: ${({ theme }) => theme.text.size.small};
-  `,
-  KakaoLoginButton: styled.div`
-    width: 300px;
-    height: 50px;
-    ${flexRow}
-    justify-content: space-evenly;
-    align-items: center;
-    border-radius: 8px;
+// const S = {
+//   LogoBox: styled.div`
+//     width: 100%;
+//     align-items: center;
+//     height: 370px;
+//     padding-top: 80px;
+//     gap: 40px;
+//     ${flexColumn}
+//   `,
+//   CheckIconBox: styled.div`
+//     position: absolute;
+//     top: 22px;
+//     right: 77px;
+//   `,
+//   TextWrapper: styled.div`
+//     display: flex;
+//     position: relative;
+//     width: 280px;
 
-    background-color: ${({ theme }) => theme.palette.kakao};
+//     font-size: 18px;
+//     line-height: 1.4;
+//     flex-direction: column;
+//     align-items: center;
+//     justify-content: left;
+//     gap: 10px;
+//   `,
+//   ButtonWrapper: styled.div`
+//     ${flexCenter}
+//     ${flexColumn}
+//     gap: 10px;
+//     width: 100%;
+//     margin-top: 20px;
+//   `,
+//   SubText: styled.div`
+//     font-size: ${({ theme }) => theme.text.size.small};
+//   `,
+//   KakaoLoginButton: styled.div`
+//     width: 300px;
+//     height: 50px;
+//     ${flexRow}
+//     justify-content: space-evenly;
+//     align-items: center;
+//     border-radius: 8px;
 
-    font-size: ${({ theme }) => theme.text.size.large};
-  `,
-  MoreBox: styled.div`
-    padding-top: 20px;
-    gap: 10px;
-    width: 100%;
-    ${flexColumn}
-    align-items: center;
-    color: ${({ theme }) => theme.palette.grey500};
-  `,
-  AnimationBox: styled.div`
-    height: 40px;
-    animation: ${moveUpDown} 1s infinite;
-  `,
-};
+//     background-color: ${({ theme }) => theme.palette.kakao};
+
+//     font-size: ${({ theme }) => theme.text.size.large};
+//   `,
+//   MoreBox: styled.div`
+//     width: 100%;
+//     padding-top: 20px;
+//     gap: 10px;
+//     ${flexColumn}
+//     align-items: center;
+
+//     color: ${({ theme }) => theme.palette.grey500};
+//   `,
+//   AnimationBox: styled.div`
+//     height: 40px;
+
+//     animation: ${moveUpDown} 1s infinite;
+//   `,
+// };

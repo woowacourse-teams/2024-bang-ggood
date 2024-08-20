@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import FooterLayout from '@/components/_common/layout/FooterLayout';
 import { ROUTE_PATH } from '@/constants/routePath';
+import ArticleDetailPage from '@/pages/ArticleDetailPage';
 import ArticleListPage from '@/pages/ArticleListPage';
 import ChecklistCustomPage from '@/pages/ChecklistCustomPage';
 import ChecklistDetailPage from '@/pages/ChecklistDetailPage';
@@ -59,16 +60,19 @@ const router = createBrowserRouter([
         element: <RoomComparePage />,
         path: ROUTE_PATH.roomCompare,
       },
-      /*TODO: 나중에 기본으로 라우터 변경 필요*/
       {
-        element: <LandingPage />,
-        path: ROUTE_PATH.landing,
-      },
-      {
-        element: <NotFound />,
-        path: '*',
+        element: <ArticleDetailPage />,
+        path: ROUTE_PATH.articleId,
       },
     ],
+  },
+  {
+    element: <LandingPage />,
+    path: ROUTE_PATH.login,
+  },
+  {
+    element: <NotFound />,
+    path: '*',
   },
 ]);
 

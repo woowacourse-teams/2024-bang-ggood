@@ -1,8 +1,7 @@
-import styled from '@emotion/styled';
 import { useRef } from 'react';
 
 import ArticleCard from '@/components/Article/ArticleCard';
-import { Bold, Container, Highlight, ImageBox, Text, TextBox } from '@/components/Landing/style';
+import S from '@/components/Landing/style';
 import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';
 import { articleList } from '@/mocks/fixtures/articleList';
@@ -15,47 +14,36 @@ const FourthSection = () => {
   const { isIntersecting: isIntersecting2 } = useIntersection(INTERSECTION_CONFIG, ref2);
 
   return (
-    <Container>
-      <TextBox>
-        <Text>
-          필요한 질문은 <Bold>넣고,</Bold> <br />
-          필요없는 질문은 <Bold>빼고!</Bold>
-        </Text>
-        <Text>
+    <S.Container>
+      <S.TextBox>
+        <S.Text>
+          필요한 질문은 <S.Bold>넣고,</S.Bold> <br />
+          필요없는 질문은 <S.Bold>빼고!</S.Bold>
+        </S.Text>
+        <S.EmptyBox height={10} />
+        <S.Text>
           원하는 질문들만 선택해서 나에게 <br />
-          <Highlight>딱 맞는 체크리스트</Highlight>를 만들어 봐요.
-        </Text>
+          <S.Highlight>딱 맞는 체크리스트</S.Highlight>를 만들어 봐요.
+        </S.Text>
+        <S.EmptyBox height={10} />
         <S.Observer ref={ref} />
-        <ImageBox isIntersecting={isIntersecting}>
+        <S.AnimationBox isIntersecting={isIntersecting}>
           <img src="/image/mainScreenShot.png" width="200px" />
-        </ImageBox>
-        <Text margin={40}>
+        </S.AnimationBox>
+        <S.Text margin={30}>
           방 구하기 초보라 아무것도 모르겠다면,
           <br />
-          <Highlight> 집 구하기 꿀팁이 담긴 아티클(article)</Highlight>을
+          <S.Highlight> 집 구하기 꿀팁이 담긴 아티클(article)</S.Highlight>을
           <br /> 읽으면서 방 구하기 고수가 되어보아요!
           <S.Observer ref={ref2} />
-          <ImageBox isIntersecting={isIntersecting2}>
-            <ArticleCard index={1} article={articleList.articles[2]} />
-          </ImageBox>
-        </Text>
-      </TextBox>
-    </Container>
+          <S.EmptyBox height={20} />
+          <S.AnimationBox isIntersecting={isIntersecting2}>
+            <ArticleCard article={articleList.articles[2]} />
+          </S.AnimationBox>
+        </S.Text>
+      </S.TextBox>
+    </S.Container>
   );
 };
 
 export default FourthSection;
-
-const S = {
-  Observer: styled.div`
-    height: 20px;
-  `,
-  PencilIconBox: styled.div`
-    position: absolute;
-    left: 30px;
-  `,
-  LampIconBox: styled.div`
-    margin-top: 20px;
-    position: absolute;
-  `,
-};

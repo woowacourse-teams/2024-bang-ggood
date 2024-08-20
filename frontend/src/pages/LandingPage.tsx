@@ -8,7 +8,6 @@ import FirstSection from '@/components/Landing/FirstSection';
 import FourthSection from '@/components/Landing/FourthSection';
 import SecondSection from '@/components/Landing/SecondSection';
 import ThirdSection from '@/components/Landing/ThirdSection';
-import { STORAGE_KEYS } from '@/constants/localStorage';
 import { KAKAO_AUTH_URL } from '@/constants/oAuth';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { flexColumn } from '@/styles/common';
@@ -45,7 +44,6 @@ const LandingPage = () => {
     const postLogin = async () => {
       if (code) {
         await postKakaoCode(code).then(async () => {
-          localStorage.setItem(STORAGE_KEYS.LOGIN, 'true');
           navigate(ROUTE_PATH.home);
         });
       }
@@ -60,16 +58,16 @@ const LandingPage = () => {
 
   return (
     <S.Container>
-      <S.Section height={600} color={SectionColors.first.background}>
+      <S.Section height={570} color={SectionColors.first.background}>
         <FirstSection handleLogin={handleLogin} />
       </S.Section>
-      <S.Section color={SectionColors.second.background}>
+      <S.Section height={680} color={SectionColors.second.background}>
         <SecondSection />
       </S.Section>
       <S.Section height={820} color={SectionColors.third.background}>
         <ThirdSection />
       </S.Section>
-      <S.Section height={900} color={SectionColors.fourth.background}>
+      <S.Section height={930} color={SectionColors.fourth.background}>
         <FourthSection />
       </S.Section>
       <S.Section height={250} color={SectionColors.fifth.background}>
@@ -82,18 +80,18 @@ const LandingPage = () => {
 export default LandingPage;
 
 const S = {
-  Section: styled.div<{ color: string; height?: number }>`
-    width: 100%;
-    height: ${({ height }) => height ?? 680}px;
-    background-color: ${({ color }) => (typeof color === 'string' ? color : color)};
+  Section: styled.div<{ color: string; height: number }>`
     display: flex;
+    width: 100%;
+    height: ${({ height }) => height}px;
+
+    background-color: ${({ color }) => color};
+
+    color: ${({ theme }) => theme.palette.black};
     flex-direction: column;
-    gap: 20px;
-    color: black;
   `,
   Container: styled.div`
     background-color: ${({ theme }) => theme.palette.background};
     ${flexColumn};
-    gap: 20px;
   `,
 };

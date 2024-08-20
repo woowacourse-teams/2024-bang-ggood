@@ -8,15 +8,14 @@ import formattedDate from '@/utils/formattedDate';
 import getSeqColor from '@/utils/getSeqColor';
 
 interface Props {
-  index: number;
   article: Article;
 }
 
-const ArticleCard = ({ index, article }: Props) => {
+const ArticleCard = ({ article }: Props) => {
   const navigate = useNavigate();
   const { articleId, keyword, title, summary, createdAt } = article;
 
-  const { color500 } = getSeqColor(index);
+  const { color500 } = getSeqColor(articleId);
 
   const handleClick = () => {
     navigate(ROUTE_PATH.articleOne(articleId));

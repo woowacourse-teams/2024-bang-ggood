@@ -5,7 +5,7 @@ import { RouterProvider } from 'react-router-dom';
 
 import Toast from '@/components/_common/Toast/Toast';
 import useToast from '@/hooks/useToast';
-import router from '@/router';
+import router from '@/routers/router';
 import { baseStyle } from '@/styles/global';
 import theme from '@/styles/theme';
 

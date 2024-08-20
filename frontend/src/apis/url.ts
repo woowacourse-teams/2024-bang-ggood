@@ -24,5 +24,5 @@ export const ENDPOINT = {
   ARTICLE_ID: (id: number) => `/articles/${id}`,
   // login
   OAUTH: '/oauth/login',
-  USER_INFO: '/user',
+  USER_INFO: '/user/me',
 };

@@ -1,4 +1,5 @@
 export const QUERY_KEYS = {
+  USER: 'user',
   ARTICLE: 'article',
   ARTICLE_LIST: 'article-list',
   CHECKLIST: 'checklist',

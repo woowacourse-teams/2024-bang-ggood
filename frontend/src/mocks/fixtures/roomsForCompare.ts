@@ -22,17 +22,14 @@ export const threeRoomsForCompare = {
       size: 24,
       floorLevel: '지상',
       rank: 1,
-      score: 87,
       categories: [
         {
           categoryId: 1,
           categoryName: '청결',
-          score: null,
         },
         {
           categoryId: 2,
           categoryName: '편의시설',
-          score: 2,
         },
       ],
     },
@@ -40,7 +37,7 @@ export const threeRoomsForCompare = {
       checklistId: 2,
       roomName: '잠실 A방',
       rank: 2,
-      score: 87,
+
       deposit: 1000,
       rent: 30,
       address: '서울시 송파구 잠실동',
@@ -58,13 +55,10 @@ export const threeRoomsForCompare = {
         {
           categoryId: 1,
           categoryName: '청결도',
-          score: 9,
         },
         {
           categoryId: 2,
           categoryName: '편의시설',
-
-          score: 5,
         },
       ],
     },
@@ -72,7 +66,6 @@ export const threeRoomsForCompare = {
       checklistId: 3,
       roomName: '서울대입구역 C방',
       rank: 3,
-      score: 77,
       deposit: 1000,
       rent: 30,
       options: [
@@ -84,13 +77,10 @@ export const threeRoomsForCompare = {
         {
           categoryId: 1,
           categoryName: '청결도',
-          score: 3,
         },
         {
           categoryId: 2,
           categoryName: '편의시설',
-
-          score: 6,
         },
       ],
       address: '서울시 광진구 구의동',
@@ -109,7 +99,7 @@ export const twoRoomsForCompare = {
       checklistId: 1,
       roomName: '서울대입구 B방',
       rank: 1,
-      score: 87,
+
       deposit: 1000,
       rent: 30,
       options: [
@@ -121,13 +111,10 @@ export const twoRoomsForCompare = {
         {
           categoryId: 1,
           categoryName: '청결도',
-          score: 7,
         },
         {
           categoryId: 2,
           categoryName: '편의시설',
-
-          score: 6,
         },
       ],
       address: '서울시 관악구 봉천동',
@@ -141,7 +128,7 @@ export const twoRoomsForCompare = {
       checklistId: 2,
       roomName: '잠실 A방',
       rank: 2,
-      score: 87,
+
       deposit: 1000,
       rent: 30,
       options: [
@@ -153,7 +140,6 @@ export const twoRoomsForCompare = {
         {
           categoryId: 1,
           categoryName: '청결도',
-          score: null,
         },
         {
           categoryId: 2,

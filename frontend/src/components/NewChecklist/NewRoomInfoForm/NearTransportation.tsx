@@ -16,16 +16,16 @@ const NearTransportation = () => {
     <FlexBox.Vertical gap="15px">
       <FormField.Label label="가까운 교통편" />
       <FormStyled.FieldBox>
-        <FormField.Input width="medium" onChange={actions.onChange} name="station" value={station} />
-        <FormStyled.FlexLabel label=" 역  " />
+        <FormField.Input width="small" onChange={actions.onChange} name="station" value={station} />
+        <FormStyled.FlexLabel label=" 역까지 도보" />
         <FormField.Input
-          width="medium"
+          width="small"
           placeholder=""
           onChange={actions.onChange}
           name="walkingTime"
           value={walkingTime}
         />
-        <FormStyled.FlexLabel label=" 분 거리  " />
+        <FormStyled.FlexLabel label=" 분" />
       </FormStyled.FieldBox>
       <FormField.ErrorMessage value={errorMessageStation || errorMessageWalkingTime || ''} />
     </FlexBox.Vertical>

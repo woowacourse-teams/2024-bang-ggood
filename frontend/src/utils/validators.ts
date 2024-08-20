@@ -22,10 +22,12 @@ export const isNumericValidator: Validator = {
   validate: value => !isNaN(Number(value)) && !(value !== '0' && Number(value) === 0), // ' '을 Number()에 넣으면 0이라서 엣지케이스 처리했음
   errorMessage: '숫자만 입력해주세요.',
 };
+
 export const isIntegerValidator: Validator = {
   validate: value => Number(value) === parseInt(value),
   errorMessage: '정수만 입력해주세요.',
 };
+
 export const positiveValidator: Validator = {
   validate: value => Number(value) > 0,
   errorMessage: '양수만 입력해주세요.',

@@ -12,14 +12,16 @@ import theme from '@/styles/theme';
 
 const MyPage = () => {
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
+  const { data: user, isLoading, isError } = useUserQuery();
 
-  const { data, isLoading, isError } = useUserQuery();
   if (isLoading) {
     return 'Loading...';
   }
+
   if (isError) {
     return '로그인 되지 않았습니다.';
   }
+
   return (
     <>
       <Header center={<Header.Text>마이페이지</Header.Text>} />
@@ -31,7 +33,7 @@ const MyPage = () => {
               <S.ProfileIcon>
                 <BangBangIcon width="100" height="100" />
               </S.ProfileIcon>
-              {`안녕하세요 ${data?.username}님`}
+              {`안녕하세요 ${user?.userName}님`}
             </S.Profile>
           </S.Container>
           <S.Button label="로그아웃" size="small" color="dark" onClick={modalOpen}></S.Button>
@@ -42,6 +44,8 @@ const MyPage = () => {
     </>
   );
 };
+
+export default MyPage;
 
 const S = {
   Container: styled.div`
@@ -87,5 +91,3 @@ const S = {
     column-gap:20px
   `,
 };
-
-export default MyPage;

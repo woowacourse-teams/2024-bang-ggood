@@ -11,5 +11,6 @@
   "stylelint.validate": ["css", "typescriptreact"],
   "stylelint.configFile": ".stylelintrc.json",
   "stylelint.packageManager": "yarn",
-  "eslint.enable": true
+  "eslint.enable": true,
+  "cSpell.words": ["Kakao", "tanstack", "zustand"]
 }

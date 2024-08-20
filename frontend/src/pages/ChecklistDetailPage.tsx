@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import DeleteModal from '@/components/_common/DeleteModal/DeleteModal';
@@ -50,6 +49,7 @@ const ChecklistDetailPage = () => {
   const handleEditButton = () => {
     navigate(ROUTE_PATH.checklistEditOne(Number(checklistId)));
   };
+
   return (
     <>
       <Header
@@ -61,11 +61,9 @@ const ChecklistDetailPage = () => {
           </FlexBox.Horizontal>
         }
       />
-      <Layout bgColor={theme.palette.grey50}>
-        <S.Wrapper>
-          <RoomInfoSection room={checklist?.room} isLiked={checklist?.isLiked} checklistId={checklist?.checklistId} />
-          <ChecklistAnswerSection categories={checklist?.categories} />
-        </S.Wrapper>
+      <Layout bgColor={theme.palette.grey50} withHeader>
+        <RoomInfoSection room={checklist?.room} isLiked={checklist?.isLiked} checklistId={checklist?.checklistId} />
+        <ChecklistAnswerSection categories={checklist?.categories} />
       </Layout>
       {isModalOpen && <DeleteModal isOpen={isModalOpen} onClose={modalClose} handleDelete={handleDelete} />}
     </>
@@ -73,9 +71,3 @@ const ChecklistDetailPage = () => {
 };
 
 export default ChecklistDetailPage;
-
-const S = {
-  Wrapper: styled.div`
-    min-height: calc(100vh - 64px);
-  `,
-};

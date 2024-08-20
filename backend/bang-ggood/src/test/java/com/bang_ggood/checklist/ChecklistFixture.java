@@ -18,36 +18,41 @@ public class ChecklistFixture {
     public static final Checklist CHECKLIST1_USER1 = new Checklist(
             RoomFixture.ROOM_1,
             UserFixture.USER1,
-            1000, 50, 12, "방끗공인중개사", "메모", "한줄평",
-            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY
+            1000, 50, 5, 12,
+            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY,
+            "방끗공인중개사", "메모", "한줄평"
     );
 
     public static final Checklist CHECKLIST2_USER1 = new Checklist(
             RoomFixture.ROOM_2,
             UserFixture.USER1,
-            1000, 50, 12, "방끗공인중개사", "메모", "한줄평",
-            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY
+            1000, 50, 5, 12,
+            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY,
+            "방끗공인중개사", "메모", "한줄평"
     );
 
     public static final Checklist CHECKLIST3_USER1 = new Checklist(
             RoomFixture.ROOM_3,
             UserFixture.USER1,
-            1000, 50, 12, "방끗공인중개사", "메모", "한줄평",
-            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY
+            1000, 50, 5, 12,
+            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY,
+            "방끗공인중개사", "메모", "한줄평"
     );
 
     public static final Checklist CHECKLIST3_USER2 = new Checklist(
             RoomFixture.ROOM_3,
             UserFixture.USER2,
-            1000, 50, 12, "방끗공인중개사", "메모", "한줄평",
-            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY
+            1000, 50, 5, 12,
+            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY,
+            "방끗공인중개사", "메모", "한줄평"
     );
 
     public static final Checklist CHECKLIST1_WITH_USER1_ID = new Checklist(
             RoomFixture.ROOM_1,
             UserFixture.USER1_WITH_ID,
-            1000, 50, 12, "방끗공인중개사", "메모", "한줄평",
-            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY
+            1000, 50, 5, 12,
+            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY,
+            "방끗공인중개사", "메모", "한줄평"
     );
 
     public static final QuestionRequest QUESTION_1_CREATE_REQUEST = new QuestionRequest(

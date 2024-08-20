@@ -16,7 +16,7 @@ const AuthGuard = () => {
 
   useEffect(() => {
     if (!isAuthenticated()) {
-      navigate(ROUTE_PATH.login);
+      navigate(ROUTE_PATH.landing);
     }
   }, [navigate]);
 

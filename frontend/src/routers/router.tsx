@@ -1,7 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import FooterLayout from '@/components/_common/layout/FooterLayout';
-import AuthGuard from '@/components/Auth/AuthGuard';
 import { ROUTE_PATH } from '@/constants/routePath';
 import ArticleListPage from '@/pages/ArticleListPage';
 import ChecklistCustomPage from '@/pages/ChecklistCustomPage';
@@ -15,6 +14,7 @@ import NewChecklistPage from '@/pages/NewChecklistPage';
 import NotFound from '@/pages/NotFound';
 import RoomComparePage from '@/pages/RoomComparePage';
 import RoomCompareSelectPage from '@/pages/RoomCompareSelectPage';
+import AuthGuard from '@/routers/AuthGuard';
 
 const router = createBrowserRouter([
   {
@@ -62,7 +62,7 @@ const router = createBrowserRouter([
       /*TODO: 나중에 기본으로 라우터 변경 필요*/
       {
         element: <LandingPage />,
-        path: ROUTE_PATH.login,
+        path: ROUTE_PATH.landing,
       },
       {
         element: <NotFound />,

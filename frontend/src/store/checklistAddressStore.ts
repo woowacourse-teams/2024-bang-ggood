@@ -4,6 +4,7 @@ interface AddressState {
   address: string;
   buildingName: string;
   jibunAddress: string;
+  position: { lat: number; lon: number };
   setAddress: (add: string) => void;
   setJibunAddress: (add: string) => void;
   setBuildingName: (add: string) => void;
@@ -14,6 +15,7 @@ const checklistAddressStore = createStore<AddressState>(set => ({
   buildingName: '',
   jibunAddress: '',
   position: { lat: 0, lon: 0 },
+
   setAddress: (newAddress: string) => {
     set({ address: newAddress });
   },

@@ -65,8 +65,4 @@ const S = {
     ${title1}
     text-align: center;
   `,
-  Contents: styled.div`
-    line-height: 1.6rem;
-    letter-spacing: 0.05rem;
-  `,
 };

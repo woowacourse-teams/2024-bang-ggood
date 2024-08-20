@@ -63,7 +63,6 @@ const S = {
   TextWrapper: styled.div`
     width: 28rem;
 
-    line-height: 1.4;
     align-items: center;
     justify-content: left;
     gap: 1rem;

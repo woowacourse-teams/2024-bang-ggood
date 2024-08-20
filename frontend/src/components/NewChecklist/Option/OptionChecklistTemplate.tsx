@@ -66,7 +66,6 @@ const S = {
     background-color: ${({ theme }) => theme.palette.white};
 
     font-size: 1.4rem;
-    line-height: 1.3;
     border-radius: 1rem;
   `,
   TipText: styled.div`

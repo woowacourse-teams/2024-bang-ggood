@@ -12,6 +12,8 @@ export const baseStyle = css`
 
   body {
     line-height: normal;
+    letter-spacing: 0.14rem;
+
     font-family: 'SUITE Variable';
     font-size: ${theme.text.size.small};
 

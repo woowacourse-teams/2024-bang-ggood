@@ -37,7 +37,6 @@ const S = {
 
     color: ${({ theme }) => theme.palette.grey600};
     ${({ size }) => typeStyles[size]}
-    line-height: 1;
     cursor: pointer;
 
     ${({ isSelected }) =>

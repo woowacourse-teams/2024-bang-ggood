@@ -65,7 +65,6 @@ const S = {
     display: flex;
 
     font-size: ${({ theme }) => theme.text.size.medium};
-    line-height: 1.6rem;
     gap: 1rem;
   `,
   Subtitle: styled.div`
@@ -73,7 +72,6 @@ const S = {
 
     color: ${({ theme }) => theme.palette.grey500};
     font-size: ${({ theme }) => theme.text.size.small};
-    line-height: 1.6rem;
     word-break: keep-all;
   `,
   CheckBoxContainer: styled.div`

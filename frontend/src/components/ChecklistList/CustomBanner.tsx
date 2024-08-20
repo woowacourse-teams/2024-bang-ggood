@@ -31,7 +31,7 @@ const S = {
     background-color: ${({ theme }) => theme.palette.green500};
 
     color: ${({ theme }) => theme.palette.white};
-    line-height: 1.3rem;
+
     box-sizing: border-box;
     justify-content: space-evenly;
     align-items: center;

@@ -66,7 +66,6 @@ const S = {
     margin: 0.5rem 0;
 
     font-size: ${({ theme }) => theme.text.size.medium};
-    line-height: 1.5;
     gap: 1rem;
     align-items: baseline;
   `,
@@ -75,7 +74,6 @@ const S = {
 
     color: ${({ theme }) => theme.palette.grey500};
     font-size: ${({ theme }) => theme.text.size.small};
-    line-height: 1.5;
     word-break: keep-all;
   `,
   Options: styled.div`

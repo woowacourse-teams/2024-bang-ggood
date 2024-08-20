@@ -44,7 +44,6 @@ const S = {
     margin: 0.5rem 0;
 
     font-size: ${({ theme }) => theme.text.size.medium};
-    line-height: 1.6rem;
     align-items: baseline;
 
     gap: 1rem;
@@ -54,7 +53,7 @@ const S = {
 
     color: ${({ theme }) => theme.palette.grey500};
     font-size: ${({ theme }) => theme.text.size.small};
-    line-height: 1.6rem;
+
     word-break: keep-all;
   `,
   TitleContainer: styled.div`

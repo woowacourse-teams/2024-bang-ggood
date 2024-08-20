@@ -58,10 +58,8 @@ const S = {
 
     padding: 1.2rem 1.6rem;
 
-    background-color: white;
-
-    letter-spacing: 0.05rem;
-    ${boxShadow}
+    background-color: ${({ theme }) => theme.palette.white};
+    ${boxShadow};
   `,
   Row: styled.div`
     ${flexSpaceBetween}

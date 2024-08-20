@@ -21,7 +21,6 @@ const S = {
     margin-bottom: 1rem;
     padding: 0 1.6rem;
 
-    line-height: 1.5;
     text-align: left;
     flex-direction: column;
     box-sizing: border-box;

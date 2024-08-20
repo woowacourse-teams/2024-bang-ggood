@@ -29,7 +29,6 @@ const S = {
     margin-bottom: 1rem;
     padding: 0 1.6rem;
 
-    line-height: normal;
     min-height: 4.5rem;
     align-items: center;
     ${title3}

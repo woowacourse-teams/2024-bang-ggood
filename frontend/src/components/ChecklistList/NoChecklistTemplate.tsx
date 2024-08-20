@@ -33,8 +33,6 @@ const S = {
   TextBox: styled.div`
     ${flexCenter}
     flex-direction: column;
-
-    line-height: 1.5rem;
   `,
 };
 

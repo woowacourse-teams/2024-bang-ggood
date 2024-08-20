@@ -62,9 +62,6 @@ const S = {
     ${title3}
     margin-top: .8rem;
     word-break: keep-all;
-
-    line-height: 1.6rem;
-    letter-spacing: 0.05rem;
   `,
   Label: styled.div`
     color: ${({ theme }) => theme.palette.grey500};

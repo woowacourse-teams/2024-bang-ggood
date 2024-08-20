@@ -62,9 +62,6 @@ const S = {
     ${title3}
     margin-top: 1rem;
     word-break: keep-all;
-
-    line-height: 1.6rem;
-    letter-spacing: 0.05rem;
   `,
   ArrowButton: styled.div`
     position: absolute;

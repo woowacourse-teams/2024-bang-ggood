@@ -112,11 +112,9 @@ const S = {
     margin-top: 3rem;
 
     ${flexColumn}
-    letter-spacing: 0.05rem;
   `,
   Title: styled.h1`
     ${title2}
-    line-height: 1.6rem;
   `,
   SubTitle: styled.span`
     margin-top: 1rem;

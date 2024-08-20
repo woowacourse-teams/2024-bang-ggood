@@ -33,7 +33,7 @@ export default Button;
 
 const S = {
   Button: styled.button<{ size: ButtonSize; color: ColorOption; isSquare: boolean }>`
-    ${({ isSquare }) => (isSquare ? 'border-radius: 4px' : 'border-radius: 100px')};
+    ${({ isSquare }) => (isSquare ? 'border-radius: .4rem' : 'border-radius: 10rem')};
     ${({ size }) => sizeStyles[size]};
     ${({ color }) => ColorStyles[color]};
     cursor: pointer;
@@ -71,21 +71,21 @@ const ColorStyles = {
 
 const sizeStyles = {
   xSmall: css`
-    padding: 8px 15px;
+    padding: 0.8rem 1.5rem;
     ${title4}
-    min-width:70px;
+    min-width:7rem;
   `,
   small: css`
-    padding: 10px 24px;
+    padding: 1rem 2.4rem;
     ${title4}
   `,
   medium: css`
-    padding: 12px 48px;
+    padding: 1.2rem 4.8rem;
     ${title3}
   `,
   full: css`
     width: 100%;
-    padding: 10px 48px;
+    padding: 1rem 4.8rem;
     ${title3}
   `,
 };

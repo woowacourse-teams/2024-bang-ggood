@@ -51,7 +51,7 @@ export const IconButton: Story = {
 export const TextIconButton: Story = {
   args: {
     children: (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem' }}>
         <PlusBlack /> 추가
       </div>
     ),

@@ -2,9 +2,9 @@
 #info-title {
   display: block;
   text-align: center;
-  height: 24px;
-  font-size: 14px;
-  line-height: 22px;
-  border-radius: 4px;
-  padding: 0px 10px;
+  height: 2.4rem;
+  font-size: 1.4rem;
+  line-height: 2.2rem;
+  border-radius: 0.4rem;
+  padding: 0rem 1rem;
 }

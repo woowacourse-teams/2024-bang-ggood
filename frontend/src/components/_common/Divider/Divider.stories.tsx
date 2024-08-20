@@ -12,7 +12,7 @@ const meta = {
       },
     },
     args: {
-      size: '400px',
+      size: '40rem',
     },
     argTypes: {
       isBold: { control: 'boolean' },
@@ -28,9 +28,9 @@ export const Default: Story = {
 };
 
 export const Vertical: Story = {
-  args: { direction: 'vertical', size: '200px' },
+  args: { direction: 'vertical', size: '20rem' },
 };
 
 export const BoldHorizontal: Story = {
-  args: { direction: 'horizontal', size: '200px', isBold: true },
+  args: { direction: 'horizontal', size: '20rem', isBold: true },
 };

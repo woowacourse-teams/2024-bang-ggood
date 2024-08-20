@@ -14,7 +14,7 @@ const meta = {
       },
     },
     args: {
-      size: '80px',
+      size: '8rem',
     },
   },
 } satisfies Meta<typeof OptionButton>;
@@ -22,21 +22,23 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const Wrapper = styled.div`
-  display: flex;
-  width: 80px;
-  height: 80px;
-  align-items: center;
-  justify-content: center;
-`;
-
 export const Default: Story = {
   args: { option: OPTIONS[0] },
   decorators: [
     Story => (
-      <Wrapper>
+      <S.Wrapper>
         <Story />
-      </Wrapper>
+      </S.Wrapper>
     ),
   ],
+};
+
+const S = {
+  Wrapper: styled.div`
+    display: flex;
+    width: 8rem;
+    height: 8rem;
+    align-items: center;
+    justify-content: center;
+  `,
 };

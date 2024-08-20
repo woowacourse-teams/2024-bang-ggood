@@ -4,6 +4,7 @@ import { Link, LinkProps, useLocation } from 'react-router-dom';
 
 import FooterButton from '@/components/_common/Footer/FooterButton';
 import { ROUTE_PATH } from '@/constants/routePath';
+import { FOOTER_SIZE } from '@/constants/style';
 
 interface Props {
   children: React.ReactNode;
@@ -62,22 +63,22 @@ export default Footer;
 
 const S = {
   EmptyBox: styled.div`
-    height: 64px;
+    height: ${FOOTER_SIZE}rem;
   `,
   Wrapper: styled.footer`
     display: flex;
     position: fixed;
     bottom: 0%;
     width: 100%;
-    height: 64px;
-    padding: 8px 16px 16px;
+    height: ${FOOTER_SIZE}rem;
+    padding: 0.8rem 1.6rem 1.6rem;
 
     background-color: ${({ theme }) => theme.palette.white};
-    max-width: 600px;
+    max-width: 60rem;
     align-items: flex-start;
     box-sizing: border-box;
 
-    box-shadow: 0 -4px 10px 0 rgb(0 0 0 / 3%);
+    box-shadow: 0 -0.4rem 1rem 0 rgb(0 0 0 / 3%);
   `,
   FlexBox: styled.div`
     display: flex;

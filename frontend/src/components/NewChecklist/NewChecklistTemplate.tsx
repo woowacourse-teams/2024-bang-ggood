@@ -28,13 +28,13 @@ export default NewChecklistTemplate;
 const S = {
   ContentBox: styled.div`
     ${flexColumn}
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
 
     background-color: ${({ theme }) => theme.palette.background};
-    gap: 10px;
+    gap: 1rem;
   `,
   QuestionBox: styled.div`
     background-color: ${({ theme }) => theme.palette.white};
-    border-radius: 8px;
+    border-radius: 0.8rem;
   `,
 };

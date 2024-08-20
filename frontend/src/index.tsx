@@ -8,12 +8,7 @@ import ReactDOM from 'react-dom/client';
 import App from '@/App';
 
 async function enableMocking() {
-  if (process.env.DEV_MODE === 'off') {
-    return;
-  }
-
-  if (process.env.DEV_MODE === 'api') {
-    document.cookie = `token=${process.env.COOKIE}`;
+  if (process.env.DEV_MODE !== 'on') {
     return;
   }
 

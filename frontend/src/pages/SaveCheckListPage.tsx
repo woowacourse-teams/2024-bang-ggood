@@ -29,7 +29,7 @@ const S = {
     display: flex;
     width: 100%;
     height: 80vh;
-    gap: 10px;
+    gap: 1rem;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -42,13 +42,13 @@ const S = {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 1rem;
+    margin-top: 2rem;
   `,
   Button: styled.div`
     display: flex;
-    margin-top: 30px;
-    padding: 16px 24px;
+    margin-top: 3rem;
+    padding: 1.6rem 2.4rem;
 
     background-color: ${({ theme }) => theme.palette.green500};
 
@@ -57,7 +57,7 @@ const S = {
     font-size: ${({ theme }) => theme.text.size.large};
     justify-content: center;
     align-items: center;
-    border-radius: 8px;
+    border-radius: 0.8rem;
 
     &:hover,
     &:active {

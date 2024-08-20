@@ -12,7 +12,7 @@ interface Props extends SVGProps<SVGSVGElement> {
   color?: string;
 }
 
-const AnswerColor: Record<AnswerType, { selected?: string; notSelected: string }> = {
+const AnswerColor: Record<AnswerType, { selected: string; notSelected?: string }> = {
   GOOD: {
     selected: theme.palette.green600,
     notSelected: theme.palette.grey300,
@@ -22,7 +22,7 @@ const AnswerColor: Record<AnswerType, { selected?: string; notSelected: string }
     notSelected: theme.palette.grey300,
   },
   NONE: {
-    notSelected: theme.palette.grey300,
+    selected: theme.palette.grey300,
   },
 };
 

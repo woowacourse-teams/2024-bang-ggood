@@ -17,7 +17,7 @@ const FormFieldWrapper = styled.div<{ rowGap?: string }>`
   ${flexColumn}
 
   flex: auto;
-  row-gap: ${({ rowGap }) => (rowGap ? rowGap : '12px')};
+  row-gap: ${({ rowGap }) => (rowGap ? rowGap : '1.2rem')};
 `;
 
 const FormField = Object.assign(FormFieldWrapper, {
@@ -36,15 +36,15 @@ const FormField = Object.assign(FormFieldWrapper, {
 const S = {
   MovedRequiredDot: styled(InputRequiredDot)`
     position: relative;
-    top: -15px;
-    left: 5px;
+    top: -1.5rem;
+    left: 0.5rem;
   `,
   LabelContainer: styled.label`
     position: relative;
     z-index: 0;
   `,
   ErrorMessage: styled.p`
-    height: 10px;
+    height: 1rem;
 
     color: ${({ theme }) => theme.palette.red500};
     font-size: ${({ theme }) => theme.text.size.xSmall};

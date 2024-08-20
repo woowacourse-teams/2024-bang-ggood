@@ -54,11 +54,11 @@ const S = {
     position: relative;
     width: 100%;
     ${flexColumn}
-    gap: 20px;
+    gap: 2rem;
   `,
   CounterContainer: styled.div`
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 1rem;
+    right: 1rem;
   `,
 };

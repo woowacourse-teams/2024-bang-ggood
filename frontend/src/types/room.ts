@@ -11,12 +11,12 @@ export type RoomInfo = Partial<{
   includedUtilities: IncludedUtilities; // 관리비 포함항목
   maintenanceFee: number;
   contractTerm: number;
+  floorLevel: string;
   floor: number;
   station: string;
   walkingTime: number;
   realEstate: string;
   size: number;
-  floorLevel: string;
   structure: string;
   occupancyMonth: number;
   occupancyPeriod: OccupancyPeriod;

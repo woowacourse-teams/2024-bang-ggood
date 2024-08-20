@@ -13,7 +13,7 @@ const NearTransportation = () => {
   const errorMessageWalkingTime = useStore(checklistRoomInfoStore, state => state.errorMessage.walkingTime);
 
   return (
-    <FlexBox.Vertical gap="15px">
+    <FlexBox.Vertical gap="1.5rem">
       <FormField.Label label="가까운 교통편" />
       <FormStyled.FieldBox>
         <FormField.Input width="small" onChange={actions.onChange} name="station" value={station} />

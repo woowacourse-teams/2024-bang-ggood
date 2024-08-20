@@ -1,10 +1,10 @@
-import styled from '@emotion/styled';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getChecklistAllQuestions, putCustomChecklist } from '@/apis/checklist';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
+import Layout from '@/components/_common/layout/Layout';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import TipBox from '@/components/_common/TipBox/TipBox';
 import { ChecklistCustomTabs } from '@/components/ChecklistCustom/CustomTabs';
@@ -13,7 +13,7 @@ import { ROUTE_PATH } from '@/constants/routePath';
 import useHandleTipBox from '@/hooks/useHandleTipBox';
 import useToast from '@/hooks/useToast';
 import useChecklistCustomStore from '@/store/useChecklistCustomStore';
-import { flexCenter, flexColumn, title2 } from '@/styles/common';
+import theme from '@/styles/theme';
 
 const ChecklistCustomPage = () => {
   const { showToast } = useToast();
@@ -58,34 +58,17 @@ const ChecklistCustomPage = () => {
         center={<Header.Text>{'체크리스트 편집'}</Header.Text>}
         right={<Button label={'저장'} size="small" color="dark" onClick={handleSubmitChecklist} />}
       />
-
       <TabProvider defaultTab={1}>
         {/*체크리스트 작성의 탭*/}
         <ChecklistCustomTabs />
         {/*체크리스트 콘텐츠 섹션*/}
-        <S.Container>
+        <Layout bgColor={theme.palette.background} withHeader withTab>
           <TipBox tipType={'CUSTOM_QUESTION'} />
           <QuestionListTemplate />
-        </S.Container>
+        </Layout>
       </TabProvider>
     </>
   );
 };
 
 export default ChecklistCustomPage;
-
-const S = {
-  Title: styled.div`
-    ${title2}
-    ${flexCenter}
-  `,
-  Container: styled.div`
-    width: calc(100% - 24px);
-    ${flexColumn}
-    padding: 50px 12px 30px;
-
-    background-color: ${({ theme }) => theme.palette.background};
-
-    min-height: calc(100vh - 120px);
-  `,
-};

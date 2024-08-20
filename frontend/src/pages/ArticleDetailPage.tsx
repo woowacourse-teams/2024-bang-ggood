@@ -32,7 +32,7 @@ const ArticleDetailPage = () => {
           <S.Date>{formattedDate(article?.createdAt ?? '')}</S.Date>
         </S.Row>
         <S.Title>{article?.title}</S.Title>
-        <MarkdownPreview source={article?.contents} />
+        <MarkdownPreview source={article?.content} />
       </Layout>
     </>
   );

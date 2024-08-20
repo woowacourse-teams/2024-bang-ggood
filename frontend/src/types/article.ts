@@ -3,6 +3,6 @@ export interface Article {
   keyword: string;
   title: string;
   summary: string;
-  contents: string;
+  content: string;
   createdAt: string;
 }

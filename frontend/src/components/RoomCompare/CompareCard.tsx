@@ -6,6 +6,7 @@ import Modal from '@/components/_common/Modal/Modal';
 import CompareItem from '@/components/RoomCompare/CompareItem';
 import { boxShadow, flexColumn, title1, title2, title3 } from '@/styles/common';
 import { ChecklistCompare } from '@/types/checklist';
+import { Option } from '@/types/option';
 
 interface Props {
   roomInfo: ChecklistCompare;
@@ -13,8 +14,7 @@ interface Props {
 }
 
 const CompareCard = ({ roomInfo, compareNum }: Props) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { score, rank, room, options, categories } = roomInfo;
+  const { rank, room, options } = roomInfo;
 
   const isHightestRoom = rank === 1 || compareNum === 2 ? true : false;
 
@@ -34,7 +34,7 @@ const CompareCard = ({ roomInfo, compareNum }: Props) => {
       <S.Title>{room.roomName}</S.Title>
       <S.RankWrapper>
         <S.Rank>{rank}등</S.Rank>
-        <S.Score>({score}점)</S.Score>
+        {/* <S.Score>({score}점)</S.Score> */}
       </S.RankWrapper>
       {/* 주소 / 층수 */}
       {/*TODO: 나중에 살리면 주소 수정 필요*/}
@@ -83,7 +83,7 @@ const CompareCard = ({ roomInfo, compareNum }: Props) => {
         <Modal.header title="옵션 종류" />
         <Modal.body>
           <S.Box>
-            {options.map(option => (
+            {options.map((option: Option) => (
               <Badge size="long" key={option.optionId} label={option.optionName} />
             ))}
           </S.Box>
@@ -91,7 +91,6 @@ const CompareCard = ({ roomInfo, compareNum }: Props) => {
       </Modal>
       {/* 체크리스트 카테고리별 모음 */}
       {/* <S.Subtitle isLabeled={isHightestRoom}>체크리스트</S.Subtitle> */}
-      {/* TODO: OX 답변 대체 필요 */}
     </S.Container>
   );
 };

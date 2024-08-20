@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 import HomeCircle from '@/assets/icons/common/HomeCircle';
+import { ROUTE_PATH } from '@/constants/routePath';
 import { flexColumn, flexRow, flexSpaceBetween, title3 } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
 import formattedUndefined from '@/utils/formattedUndefined';
@@ -12,13 +14,18 @@ interface Props {
 }
 
 const ChecklistPreviewCard = ({ index, checklist }: Props) => {
+  const navigate = useNavigate();
   const colorList = ['green', 'blue', 'red'];
   const { color200, color500 } = getSeqColor(index, colorList);
 
-  const { station, walkingTime, roomName, deposit, rent } = checklist;
+  const { checklistId, station, walkingTime, roomName, deposit, rent } = checklist;
+
+  const handleClick = () => {
+    navigate(ROUTE_PATH.checklistOne(checklistId));
+  };
 
   return (
-    <S.Container>
+    <S.Container onClick={handleClick}>
       <HomeCircle color={color500} bgColor={color200} />
       <S.Column>
         <S.Label>

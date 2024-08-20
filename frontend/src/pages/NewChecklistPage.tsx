@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from 'zustand';
@@ -117,18 +116,14 @@ const NewChecklistPage = () => {
 
         {/* 체크리스트 콘텐츠 섹션 */}
         <NewChecklistContent />
-
-        {/* 메모 모달 */}
-        {isMemoModalOpen ? (
-          <>
-            {/* 모달이 열렸을 때 컨텐츠를 다 보이게 하려는 빈 박스 */}
-            <S.EmptyBox />
-            <MemoModal isModalOpen={isMemoModalOpen} modalClose={memoModalClose} />
-          </>
-        ) : (
-          <MemoButton onClick={memoModalOpen} />
-        )}
       </TabProvider>
+
+      {/* 메모 모달 */}
+      {isMemoModalOpen ? (
+        <MemoModal isModalOpen={isMemoModalOpen} modalClose={memoModalClose} />
+      ) : (
+        <MemoButton onClick={memoModalOpen} />
+      )}
 
       {/* 한줄평 모달 */}
       {isSummaryModalOpen && (
@@ -140,15 +135,6 @@ const NewChecklistPage = () => {
       )}
     </>
   );
-};
-
-const S = {
-  EmptyBox: styled.div`
-    width: 100%;
-    height: 300px;
-
-    background-color: ${({ theme }) => theme.palette.background};
-  `,
 };
 
 export default NewChecklistPage;

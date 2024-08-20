@@ -77,6 +77,6 @@ const S = {
     word-break: keep-all;
   `,
   CheckBoxContainer: styled.div`
-    padding-right: 40px;
+    padding-right: 20px;
   `,
 };

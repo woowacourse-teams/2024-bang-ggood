@@ -24,9 +24,7 @@ const ArticleListPage = () => {
           집 구하기 전 꼭 필요한 이야기 <S.Count>{articles?.length}</S.Count>
         </S.Title>
         <S.ListContainer>
-          {articles?.map((article: Article, index: number) => (
-            <ArticleCard key={article.articleId} index={index} article={article} />
-          ))}
+          {articles?.map((article: Article) => <ArticleCard key={article.articleId} article={article} />)}
         </S.ListContainer>
       </Layout>
     </>

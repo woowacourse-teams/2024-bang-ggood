@@ -64,7 +64,11 @@ const S = {
     word-break: keep-all;
   `,
   Label: styled.div`
+    width: 90%;
+
     color: ${({ theme }) => theme.palette.grey500};
-    font-size: ${({ theme }) => theme.text.size.xxSmall};
+    font-size: ${({ theme }) => theme.text.size.xSmall};
+
+    word-break: keep-all;
   `,
 };

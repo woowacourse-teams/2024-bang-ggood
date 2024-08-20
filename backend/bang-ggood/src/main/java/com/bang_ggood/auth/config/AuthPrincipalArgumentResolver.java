@@ -41,18 +41,22 @@ public class AuthPrincipalArgumentResolver implements HandlerMethodArgumentResol
 
         String token = extractToken(request.getCookies());
 
-        if (authService.isAccessTokenInBlackList(token)) {
-            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_IN_BLACKLIST);
-        }
-
         return authService.extractUser(token);
     }
 
     private String extractToken(Cookie[] cookies) {
-        return Arrays.stream(cookies)
+        String token = Arrays.stream(cookies)
                 .filter(cookie -> cookie.getName().equals(CookieProvider.TOKEN_COOKIE_NAME))
                 .findAny()
                 .map(Cookie::getValue)
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.AUTHENTICATION_COOKIE_INVALID));
+        validateAccessTokenInBlacklist(token);
+        return token;
+    }
+
+    private void validateAccessTokenInBlacklist(String token) {
+        if (authService.isAccessTokenInBlackList(token)) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_IN_BLACKLIST);
+        }
     }
 }

@@ -27,4 +27,12 @@ public class CorsConfig {
 
         return new CorsFilter(source);
     }
+
+    public List<String> getAllowOrigins() {
+        return allowOrigins;
+    }
+
+    public void setAllowOrigins(List<String> allowOrigins) {
+        this.allowOrigins = allowOrigins;
+    }
 }

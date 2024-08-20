@@ -121,4 +121,8 @@ public enum Question {
     public Category getCategory() {
         return category;
     }
+
+    public List<String> getHighlights() {
+        return highlights;
+    }
 }

@@ -264,10 +264,10 @@ public class ChecklistService {
         List<Integer> maintenanceIds = readChecklistMaintenancesByChecklist(checklist);
         SelectedRoomResponse selectedRoomResponse = SelectedRoomResponse.of(checklist, maintenanceIds);
         List<SelectedOptionResponse> options = readOptionsByChecklistId(id);
-        List<SelectedCategoryQuestionsResponse> selectedCategoryQuestionsResponse = readCategoryQuestionsByChecklistId(
-                id);
+        List<SelectedCategoryQuestionsResponse> selectedCategoryQuestionsResponse = readCategoryQuestionsByChecklistId(id);
+        boolean isLiked = checklistLikeRepository.existsByChecklist(checklist);
 
-        return new SelectedChecklistResponse(selectedRoomResponse, options, selectedCategoryQuestionsResponse);
+        return new SelectedChecklistResponse(selectedRoomResponse, isLiked, options, selectedCategoryQuestionsResponse);
     }
 
     private List<Integer> readChecklistMaintenancesByChecklist(Checklist checklist) {

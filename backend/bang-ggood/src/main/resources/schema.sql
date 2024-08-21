@@ -102,7 +102,7 @@ CREATE TABLE checklist_like
     FOREIGN KEY (checklist_id) REFERENCES checklist (id)
 );
 
-CREATE TABLE checklist_included_maintenance
+CREATE TABLE checklist_maintenance
 (
     id               BIGINT AUTO_INCREMENT PRIMARY KEY,
     checklist_id     BIGINT,

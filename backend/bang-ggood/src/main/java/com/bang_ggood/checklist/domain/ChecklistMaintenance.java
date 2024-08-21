@@ -12,7 +12,7 @@ import jakarta.persistence.ManyToOne;
 import java.util.Objects;
 
 @Entity
-public class ChecklistIncludedMaintenance extends BaseEntity {
+public class ChecklistMaintenance extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,12 +24,12 @@ public class ChecklistIncludedMaintenance extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private MaintenanceItem maintenanceItem;
 
-    public ChecklistIncludedMaintenance(Checklist checklist, MaintenanceItem maintenanceItem) {
+    public ChecklistMaintenance(Checklist checklist, MaintenanceItem maintenanceItem) {
         this.checklist = checklist;
         this.maintenanceItem = maintenanceItem;
     }
 
-    protected ChecklistIncludedMaintenance() {
+    protected ChecklistMaintenance() {
     }
 
     public Long getId() {
@@ -52,7 +52,7 @@ public class ChecklistIncludedMaintenance extends BaseEntity {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ChecklistIncludedMaintenance that = (ChecklistIncludedMaintenance) o;
+        ChecklistMaintenance that = (ChecklistMaintenance) o;
         return Objects.equals(id, that.id);
     }
 
@@ -63,7 +63,7 @@ public class ChecklistIncludedMaintenance extends BaseEntity {
 
     @Override
     public String toString() {
-        return "ChecklistIncludedMaintenance{" +
+        return "ChecklistMaintenance{" +
                 "id=" + id +
                 ", checklist=" + checklist +
                 ", maintenanceItem='" + maintenanceItem + '\'' +

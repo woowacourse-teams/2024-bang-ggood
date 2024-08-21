@@ -1,18 +1,18 @@
 package com.bang_ggood.checklist.repository;
 
-import com.bang_ggood.checklist.domain.ChecklistIncludedMaintenance;
+import com.bang_ggood.checklist.domain.ChecklistMaintenance;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface ChecklistIncludedMaintenanceRepository extends JpaRepository<ChecklistIncludedMaintenance, Long> {
+public interface ChecklistMaintenanceRepository extends JpaRepository<ChecklistMaintenance, Long> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE ChecklistIncludedMaintenance cim "
-            + "SET cim.deleted = true "
-            + "WHERE cim.checklist.id = :checklistId")
+    @Query("UPDATE ChecklistMaintenance cm "
+            + "SET cm.deleted = true "
+            + "WHERE cm.checklist.id = :checklistId")
     void deleteAllByChecklistId(@Param("checklistId") Long checklistId);
 }

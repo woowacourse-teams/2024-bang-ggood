@@ -2,7 +2,7 @@ package com.bang_ggood.checklist;
 
 import com.bang_ggood.checklist.domain.Answer;
 import com.bang_ggood.checklist.domain.Checklist;
-import com.bang_ggood.checklist.domain.ChecklistIncludedMaintenance;
+import com.bang_ggood.checklist.domain.ChecklistMaintenance;
 import com.bang_ggood.checklist.domain.ChecklistLike;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.MaintenanceItem;
@@ -199,11 +199,11 @@ public class ChecklistFixture {
 
     public static final ChecklistLike CHECKLIST2_LIKE = new ChecklistLike(CHECKLIST2_USER1);
 
-    public static final ChecklistIncludedMaintenance CHECKLIST1_INCLUDED_MAINTENANCE_1 = new ChecklistIncludedMaintenance(
+    public static final ChecklistMaintenance CHECKLIST1_INCLUDED_MAINTENANCE_1 = new ChecklistMaintenance(
             ChecklistFixture.CHECKLIST1_USER1, MaintenanceItem.ELECTRICITY
     );
 
-    public static final ChecklistIncludedMaintenance CHECKLIST1_INCLUDED_MAINTENANCE_2 = new ChecklistIncludedMaintenance(
+    public static final ChecklistMaintenance CHECKLIST1_INCLUDED_MAINTENANCE_2 = new ChecklistMaintenance(
             ChecklistFixture.CHECKLIST1_USER1, MaintenanceItem.GAS
     );
 }

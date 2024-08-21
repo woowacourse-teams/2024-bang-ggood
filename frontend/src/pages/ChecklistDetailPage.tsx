@@ -18,14 +18,13 @@ type RouteParams = {
 };
 
 const ChecklistDetailPage = () => {
+  const navigate = useNavigate();
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
 
   const { checklistId } = useParams() as RouteParams;
 
-  const { mutate: deleteChecklist } = useDeleteChecklistQuery();
   const { data: checklist, isLoading, isError } = useGetChecklistDetailQuery(checklistId);
-
-  const navigate = useNavigate();
+  const { mutate: deleteChecklist } = useDeleteChecklistQuery();
 
   if (isError) {
     navigate(ROUTE_PATH.checklistList);

@@ -5,6 +5,7 @@ import HttpError from '@/apis/error/HttpError';
 import { BangBangCryIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
+import { ROUTE_PATH } from '@/constants/routePath';
 import { flexColumn } from '@/styles/common';
 
 const ErrorPage = () => {
@@ -12,7 +13,7 @@ const ErrorPage = () => {
   const navigate = useNavigate();
 
   const reset = () => {
-    navigate('/', { replace: true });
+    navigate(ROUTE_PATH.home, { replace: true });
   };
 
   const { message } = error as HttpError;

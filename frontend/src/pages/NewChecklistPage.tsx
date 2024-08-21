@@ -6,6 +6,7 @@ import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
 import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
+import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useChecklistPost from '@/hooks/useChecklistPost';
 import useChecklistTemplate from '@/hooks/useInitialChecklist';
 import useModalOpen from '@/hooks/useModalOpen';
@@ -30,10 +31,10 @@ const NewChecklistPage = () => {
     <>
       <Header
         left={<Header.Backward />}
-        center={<Header.Text>{'새 체크리스트'}</Header.Text>}
-        right={<Button label={'저장'} size="xSmall" color="dark" onClick={summaryModalOpen} />}
+        center={<Header.Text>새 체크리스트</Header.Text>}
+        right={<Button label="저장" size="xSmall" color="dark" onClick={summaryModalOpen} />}
       />
-      <TabProvider defaultTab={1}>
+      <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
         <Tabs tabList={tabs} />
         <NewChecklistContent />
       </TabProvider>

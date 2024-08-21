@@ -11,7 +11,7 @@ public record SelectedRoomResponse(String roomName, Integer deposit, Integer ren
                                    List<Integer> includedMaintenances,
                                    LocalDateTime createdAt) {
 
-    public static SelectedRoomResponse from(Checklist checklist, List<Integer> includedMaintenances) {
+    public static SelectedRoomResponse of(Checklist checklist, List<Integer> includedMaintenances) {
         return new SelectedRoomResponse(checklist.getRoomName(), checklist.getDeposit(), checklist.getRent(),
                 checklist.getContractTerm(), checklist.getRoomFloor(), checklist.getRoomAddress(), checklist.getRoomBuildingName(),
                 checklist.getRoomStation(), checklist.getRoomWalkingTime(), checklist.getRealEstate(),

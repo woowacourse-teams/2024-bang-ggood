@@ -262,7 +262,7 @@ public class ChecklistService {
         validateChecklistOwnership(user, checklist);
 
         List<Integer> maintenanceIds = readChecklistMaintenancesByChecklist(checklist);
-        SelectedRoomResponse selectedRoomResponse = SelectedRoomResponse.from(checklist, maintenanceIds);
+        SelectedRoomResponse selectedRoomResponse = SelectedRoomResponse.of(checklist, maintenanceIds);
         List<SelectedOptionResponse> options = readOptionsByChecklistId(id);
         List<SelectedCategoryQuestionsResponse> selectedCategoryQuestionsResponse = readCategoryQuestionsByChecklistId(id);
 

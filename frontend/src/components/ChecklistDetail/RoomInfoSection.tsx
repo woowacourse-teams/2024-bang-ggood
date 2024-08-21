@@ -81,7 +81,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
       </S.Row>
       <S.Row>
         <Pencil />
-        {formattedDate(createdAt ?? '')}
+        {formattedDate(createdAt ?? '', '.')}
       </S.Row>
       <div></div>
       <AddressMap location={address?.address || ''} />

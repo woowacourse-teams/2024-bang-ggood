@@ -8,6 +8,7 @@ export const baseStyle = css`
 
   html {
     font-size: 62.5%;
+    font-family: 'SUITE Variable';
   }
 
   body {

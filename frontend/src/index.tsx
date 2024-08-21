@@ -1,4 +1,3 @@
-import '@/styles/font';
 import './index.css';
 import './sentry';
 

@@ -135,7 +135,8 @@ public class ChecklistService {
         validateIncludedMaintenance(checklistRequest.room().includedMaintenances());
         List<ChecklistIncludedMaintenance> checklistIncludedMaintenances =
                 checklistRequest.room().includedMaintenances().stream()
-                        .map(maintenanceId -> new ChecklistIncludedMaintenance(checklist, MaintenanceItem.fromId(maintenanceId)))
+                        .map(maintenanceId -> new ChecklistIncludedMaintenance(checklist,
+                                MaintenanceItem.fromId(maintenanceId)))
                         .collect(Collectors.toList());
         checklistIncludedMaintenanceRepository.saveAll(checklistIncludedMaintenances);
     }
@@ -262,7 +263,8 @@ public class ChecklistService {
 
         SelectedRoomResponse selectedRoomResponse = SelectedRoomResponse.of(checklist);
         List<SelectedOptionResponse> options = readOptionsByChecklistId(id);
-        List<SelectedCategoryQuestionsResponse> selectedCategoryQuestionsResponse = readCategoryQuestionsByChecklistId(id);
+        List<SelectedCategoryQuestionsResponse> selectedCategoryQuestionsResponse = readCategoryQuestionsByChecklistId(
+                id);
 
         return new SelectedChecklistResponse(selectedRoomResponse, options, selectedCategoryQuestionsResponse);
     }
@@ -362,7 +364,8 @@ public class ChecklistService {
         List<Integer> maintenanceIds = checklistRequest.room().includedMaintenances();
         validateIncludedMaintenance(maintenanceIds);
         List<ChecklistIncludedMaintenance> checklistIncludedMaintenances = maintenanceIds.stream()
-                .map(maintenanceId -> new ChecklistIncludedMaintenance(checklist, MaintenanceItem.fromId(maintenanceId)))
+                .map(maintenanceId -> new ChecklistIncludedMaintenance(checklist,
+                        MaintenanceItem.fromId(maintenanceId)))
                 .toList();
         checklistIncludedMaintenanceRepository.deleteAllByChecklistId(checklist.getId());
         checklistIncludedMaintenanceRepository.saveAll(checklistIncludedMaintenances);

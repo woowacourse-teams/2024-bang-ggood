@@ -13,19 +13,19 @@ DROP TABLE IF EXISTS article CASCADE;
 -- Create tables
 CREATE TABLE room
 (
-    id           BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name         VARCHAR(255),
-    address      VARCHAR(255),
-    building_name      VARCHAR(255),
-    station      VARCHAR(255),
-    walking_time INTEGER,
-    floor_level  VARCHAR(255),
-    floor        INTEGER,
-    structure    VARCHAR(255),
-    size         DOUBLE,
-    created_at   TIMESTAMP(6),
-    modified_at  TIMESTAMP(6),
-    deleted      BOOLEAN
+    id            BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name          VARCHAR(255),
+    address       VARCHAR(255),
+    building_name VARCHAR(255),
+    station       VARCHAR(255),
+    walking_time  INTEGER,
+    floor_level   VARCHAR(255),
+    floor         INTEGER,
+    structure     VARCHAR(255),
+    size DOUBLE,
+    created_at    TIMESTAMP(6),
+    modified_at   TIMESTAMP(6),
+    deleted       BOOLEAN
 );
 
 CREATE TABLE users
@@ -61,12 +61,12 @@ CREATE TABLE checklist
 
 CREATE TABLE checklist_included_maintenance
 (
-    id           BIGINT AUTO_INCREMENT PRIMARY KEY,
-    checklist_id BIGINT,
+    id               BIGINT AUTO_INCREMENT PRIMARY KEY,
+    checklist_id     BIGINT,
     maintenance_item VARCHAR(255),
-    created_at   TIMESTAMP(6),
-    modified_at  TIMESTAMP(6),
-    deleted      BOOLEAN,
+    created_at       TIMESTAMP(6),
+    modified_at      TIMESTAMP(6),
+    deleted          BOOLEAN,
     FOREIGN KEY (checklist_id) REFERENCES checklist (id)
 );
 

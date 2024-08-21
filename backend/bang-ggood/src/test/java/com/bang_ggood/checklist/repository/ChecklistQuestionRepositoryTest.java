@@ -2,7 +2,6 @@ package com.bang_ggood.checklist.repository;
 
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
-import com.bang_ggood.checklist.domain.ChecklistIncludedMaintenance;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.repository.RoomRepository;
@@ -12,11 +11,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
 
@@ -64,12 +62,16 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
         checklistQuestionRepository.save(ChecklistFixture.CHECKLIST_QUESTION_2);
 
         //when
-        checklistQuestionRepository.deleteAllByChecklistId(ChecklistFixture.CHECKLIST_QUESTION_1.getChecklist().getId());
+        checklistQuestionRepository.deleteAllByChecklistId(
+                ChecklistFixture.CHECKLIST_QUESTION_1.getChecklist().getId());
 
         //then
         assertAll(
-                () -> assertThat(checklistQuestionRepository.existsById(ChecklistFixture.CHECKLIST_QUESTION_1.getId())).isTrue(),
-                () -> assertThat(checklistQuestionRepository.findById(ChecklistFixture.CHECKLIST_QUESTION_1.getId()).get().isDeleted()).isTrue()
+                () -> assertThat(
+                        checklistQuestionRepository.existsById(ChecklistFixture.CHECKLIST_QUESTION_1.getId())).isTrue(),
+                () -> assertThat(
+                        checklistQuestionRepository.findById(ChecklistFixture.CHECKLIST_QUESTION_1.getId()).get()
+                                .isDeleted()).isTrue()
         );
     }
 }

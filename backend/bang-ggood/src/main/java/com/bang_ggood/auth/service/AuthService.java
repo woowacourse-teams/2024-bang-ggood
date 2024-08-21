@@ -4,8 +4,6 @@ import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.response.OauthInfoApiResponse;
 import com.bang_ggood.checklist.domain.Answer;
 import com.bang_ggood.checklist.domain.CustomChecklistQuestion;
-import com.bang_ggood.checklist.domain.OccupancyMonth;
-import com.bang_ggood.checklist.domain.OccupancyPeriod;
 import com.bang_ggood.checklist.domain.Option;
 import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
@@ -14,8 +12,6 @@ import com.bang_ggood.checklist.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.checklist.service.ChecklistService;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
-import com.bang_ggood.room.domain.FloorLevel;
-import com.bang_ggood.room.domain.Structure;
 import com.bang_ggood.room.dto.request.RoomRequest;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -44,6 +40,12 @@ public class AuthService {
         this.checklistService = checklistService;
         this.userRepository = userRepository;
         this.customChecklistQuestionRepository = customChecklistQuestionRepository;
+    }
+
+    private static void validateTokenOwnership(User user, AuthUser authUser) {
+        if (!user.getId().equals(authUser.id())) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER);
+        }
     }
 
     @Transactional
@@ -102,12 +104,6 @@ public class AuthService {
         AuthUser authUser = jwtTokenProvider.resolveToken(accessToken);
         validateTokenOwnership(user, authUser);
         blackList.add(accessToken);
-    }
-
-    private static void validateTokenOwnership(User user, AuthUser authUser) {
-        if (!user.getId().equals(authUser.id())) {
-            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER);
-        }
     }
 
     public boolean isAccessTokenInBlackList(String accessToken) {

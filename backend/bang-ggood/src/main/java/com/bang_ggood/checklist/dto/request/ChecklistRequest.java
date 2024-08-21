@@ -1,7 +1,6 @@
 package com.bang_ggood.checklist.dto.request;
 
 import com.bang_ggood.checklist.domain.Checklist;
-import com.bang_ggood.checklist.domain.ChecklistIncludedMaintenance;
 import com.bang_ggood.checklist.domain.OccupancyMonth;
 import com.bang_ggood.checklist.domain.OccupancyPeriod;
 import com.bang_ggood.room.domain.Room;

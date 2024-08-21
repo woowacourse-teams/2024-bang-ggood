@@ -79,7 +79,8 @@ public class Checklist extends BaseEntity {
     public Checklist(Integer deposit, Integer rent, Integer maintenanceFee, Integer contractTerm,
                      OccupancyMonth occupancyMonth, OccupancyPeriod occupancyPeriod, String realEstate,
                      String memo, String summary) {
-        this(null, null, deposit, rent, maintenanceFee, contractTerm, occupancyMonth, occupancyPeriod, realEstate, memo, summary);
+        this(null, null, deposit, rent, maintenanceFee, contractTerm, occupancyMonth, occupancyPeriod, realEstate, memo,
+                summary);
     }
 
     protected Checklist() {

@@ -10,12 +10,15 @@ import java.util.Set;
 
 public enum Question {
 
-    ROOM_CONDITION_1(1, Category.ROOM_CONDITION, "방 안에 물이 새거나 곰팡이가 핀 곳은 없나요?", "천장, 벽면, 가구 뒤, 장판을 확인하세요.", List.of("곰팡이"), true),
-    ROOM_CONDITION_2(2, Category.ROOM_CONDITION, "방에서 불쾌한 냄새가 나지는 않나요?", "싱크대, 화장실 배수구를 확인하세요.", List.of("불쾌한 냄새"), true),
+    ROOM_CONDITION_1(1, Category.ROOM_CONDITION, "방 안에 물이 새거나 곰팡이가 핀 곳은 없나요?", "천장, 벽면, 가구 뒤, 장판을 확인하세요.",
+            List.of("곰팡이"), true),
+    ROOM_CONDITION_2(2, Category.ROOM_CONDITION, "방에서 불쾌한 냄새가 나지는 않나요?", "싱크대, 화장실 배수구를 확인하세요.", List.of("불쾌한 냄새"),
+            true),
     ROOM_CONDITION_3(3, Category.ROOM_CONDITION, "벌레가 나온 흔적은 없나요?", "벌레 퇴치약이 부착되어 있는지 확인하세요.", List.of("벌레"), true),
     ROOM_CONDITION_4(4, Category.ROOM_CONDITION, "방 인테리어가 마음에 드나요?", null, List.of("방 인테리어"), true),
     ROOM_CONDITION_5(5, Category.ROOM_CONDITION, "물건을 충분히 수납할 수 있는 공간이 있나요?", null, List.of("수납할 수 있는 공간"), true),
-    ROOM_CONDITION_6(6, Category.ROOM_CONDITION, "에어컨은 깨끗한가요?", "에어컨을 틀어서 불쾌한 냄새가 나진 않는지 확인하세요.", List.of("에어컨"),false),
+    ROOM_CONDITION_6(6, Category.ROOM_CONDITION, "에어컨은 깨끗한가요?", "에어컨을 틀어서 불쾌한 냄새가 나진 않는지 확인하세요.", List.of("에어컨"),
+            false),
     ROOM_CONDITION_7(7, Category.ROOM_CONDITION, "보일러가 잘 동작하나요?", null, List.of("보일러"), false),
     ROOM_CONDITION_8(8, Category.ROOM_CONDITION, "콘센트 위치와 개수가 적절한가요?", null, List.of("콘센트"), false),
     ROOM_CONDITION_9(9, Category.ROOM_CONDITION, "벽지 상태가 양호한가요?", null, List.of("벽지 상태"), false),
@@ -25,7 +28,8 @@ public enum Question {
     WINDOW_3(12, Category.WINDOW, "환기가 잘 되는 구조인가요?", "창문 크기와 방향을 확인하세요.", List.of("환기"), true),
     WINDOW_4(13, Category.WINDOW, "햇빛이 잘 들어오나요?", null, List.of("햇빛"), true),
     WINDOW_5(14, Category.WINDOW, "창문이 이중창인가요?", null, List.of("이중창"), false),
-    WINDOW_6(15, Category.WINDOW, "창문 밖에서 불쾌한 냄새가 들어오진 않나요?", "하천, 배수구, 음식물 쓰레기통이 있지 않은지 확인하세요.", List.of("불쾌한 냄새"), false),
+    WINDOW_6(15, Category.WINDOW, "창문 밖에서 불쾌한 냄새가 들어오진 않나요?", "하천, 배수구, 음식물 쓰레기통이 있지 않은지 확인하세요.", List.of("불쾌한 냄새"),
+            false),
 
     BATHROOM_1(16, Category.BATHROOM, "화장실이 깨끗한가요?", "청소 가능한 얼룩인지 확인하세요.", List.of("깨끗"), true),
     BATHROOM_2(17, Category.BATHROOM, "수압 및 물 빠짐이 괜찮은가요?", "화장실에서 수도와 변기를 동시에 사용해보세요.", List.of("수압 및 물 빠짐"), true),
@@ -46,6 +50,11 @@ public enum Question {
     OUTSIDE_4(30, Category.OUTSIDE, "집 가는 길이 언덕이진 않나요?", null, List.of("언덕"), false),
     OUTSIDE_5(31, Category.OUTSIDE, "옆 건물에서 보이는 구조는 아닌가요?", null, List.of("보이는 구조"), false);
 
+    static {
+        validateQuestionIdDuplication();
+        validateQuestionHighlightsMisMatch();
+    }
+
     private final int id;
     private final Category category;
     private final String title;
@@ -60,11 +69,6 @@ public enum Question {
         this.subtitle = subtitle;
         this.highlights = highlights;
         this.isDefault = isDefault;
-    }
-
-    static {
-        validateQuestionIdDuplication();
-        validateQuestionHighlightsMisMatch();
     }
 
     private static void validateQuestionIdDuplication() {

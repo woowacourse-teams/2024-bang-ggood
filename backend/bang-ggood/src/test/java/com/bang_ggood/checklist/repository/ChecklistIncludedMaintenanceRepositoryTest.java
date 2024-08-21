@@ -2,7 +2,6 @@ package com.bang_ggood.checklist.repository;
 
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
-import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistIncludedMaintenance;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.repository.RoomRepository;
@@ -14,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ChecklistIncludedMaintenanceRepositoryTest extends IntegrationTestSupport {
 
@@ -48,14 +47,17 @@ class ChecklistIncludedMaintenanceRepositoryTest extends IntegrationTestSupport 
                 ChecklistFixture.CHECKLIST1_INCLUDED_MAINTENANCE_2);
 
         //when
-        checklistIncludedMaintenanceRepository.deleteAllByChecklistId(ChecklistFixture.CHECKLIST1_INCLUDED_MAINTENANCE_1.getChecklist().getId());
+        checklistIncludedMaintenanceRepository.deleteAllByChecklistId(
+                ChecklistFixture.CHECKLIST1_INCLUDED_MAINTENANCE_1.getChecklist().getId());
 
         //then
         assertAll(
                 () -> assertThat(checklistIncludedMaintenanceRepository.existsById(saved1.getId())).isTrue(),
                 () -> assertThat(checklistIncludedMaintenanceRepository.existsById(saved2.getId())).isTrue(),
-                () -> assertThat(checklistIncludedMaintenanceRepository.findById(saved1.getId()).get().isDeleted()).isTrue(),
-                () -> assertThat(checklistIncludedMaintenanceRepository.findById(saved2.getId()).get().isDeleted()).isTrue()
+                () -> assertThat(
+                        checklistIncludedMaintenanceRepository.findById(saved1.getId()).get().isDeleted()).isTrue(),
+                () -> assertThat(
+                        checklistIncludedMaintenanceRepository.findById(saved2.getId()).get().isDeleted()).isTrue()
         );
     }
 }

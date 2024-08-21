@@ -1,7 +1,6 @@
 package com.bang_ggood.checklist.domain;
 
 import com.bang_ggood.BaseEntity;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

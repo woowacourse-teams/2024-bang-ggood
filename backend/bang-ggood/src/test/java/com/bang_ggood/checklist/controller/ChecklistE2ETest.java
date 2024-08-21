@@ -158,8 +158,8 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .as(SelectedChecklistResponse.class);
 
         Assertions.assertAll(
-                () -> assertThat(selectedChecklistResponse.room().roomName()).isEqualTo("방이름"),
-                () -> assertThat(selectedChecklistResponse.room().address()).isEqualTo("부산광역시 루터회관")
+                () -> assertThat(selectedChecklistResponse.room().roomName()).isEqualTo(ChecklistFixture.CHECKLIST_CREATE_REQUEST.room().roomName()),
+                () -> assertThat(selectedChecklistResponse.room().address()).isEqualTo(ChecklistFixture.CHECKLIST_CREATE_REQUEST.room().address())
         );
     }
 

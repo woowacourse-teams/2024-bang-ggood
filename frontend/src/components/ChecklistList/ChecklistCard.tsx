@@ -101,6 +101,6 @@ const S = {
     ${omitText};
     border-radius: 0.4rem;
 
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    font-size: ${({ theme }) => theme.text.size.small};
   `,
 };

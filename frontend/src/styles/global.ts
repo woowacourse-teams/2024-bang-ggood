@@ -11,10 +11,10 @@ export const baseStyle = css`
   }
 
   body {
+    font-family: 'SUITE Variable', sans-serif;
     line-height: normal;
     letter-spacing: 0.14rem;
 
-    font-family: 'SUITE Variable';
     font-size: ${theme.text.size.small};
 
     max-width: 60rem;

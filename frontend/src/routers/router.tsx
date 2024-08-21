@@ -11,6 +11,7 @@ import EditChecklistPage from '@/pages/EditChecklistPage';
 import ErrorPage from '@/pages/ErrorPage';
 import LandingPage from '@/pages/LandingPage';
 import MainPage from '@/pages/MainPage';
+import MyPage from '@/pages/MyPage';
 import NewChecklistPage from '@/pages/NewChecklistPage';
 import NotFound from '@/pages/NotFound';
 import RoomComparePage from '@/pages/RoomComparePage';
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
           {
             element: <ArticleListPage />,
             path: ROUTE_PATH.article,
+          },
+          {
+            element: <MyPage />,
+            path: ROUTE_PATH.myPage,
           },
         ],
       },

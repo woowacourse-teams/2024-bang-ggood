@@ -17,7 +17,7 @@ export interface ChecklistQuestion {
   questionId: number;
   title: string;
   subtitle: string | null;
-  highlight: string[];
+  highlights: string[];
 }
 
 // 기본 체크리스트

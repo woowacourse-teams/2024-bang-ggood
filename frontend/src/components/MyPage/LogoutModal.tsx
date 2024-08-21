@@ -3,18 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
 import { ROUTE_PATH } from '@/constants/routePath';
+import useLogoutQuery from '@/hooks/query/useLogoutQuery';
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const MyPageModal = ({ isOpen, onClose }: Props) => {
+const LogoutModal = ({ isOpen, onClose }: Props) => {
   const navigate = useNavigate();
 
+  const { mutate: userLogout, isSuccess } = useLogoutQuery();
+
   const handleLogout = () => {
-    // TODO : 백엔드 로그아웃 API완성시 호출 필요.
-    navigate(ROUTE_PATH.home);
+    userLogout();
+    if (isSuccess) navigate(ROUTE_PATH.home);
   };
 
   return (
@@ -29,4 +32,4 @@ const MyPageModal = ({ isOpen, onClose }: Props) => {
   );
 };
 
-export default MyPageModal;
+export default LogoutModal;

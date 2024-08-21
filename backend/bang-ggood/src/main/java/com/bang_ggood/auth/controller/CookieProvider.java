@@ -35,7 +35,7 @@ public class CookieProvider {
                 .httpOnly(true)
                 .secure(true)
                 .sameSite("None")
-                .maxAge(0) // 즉시 만료
+                .maxAge(0)
                 .path("/")
                 .build();
     }

@@ -6,6 +6,8 @@ import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';
 import { articleList } from '@/mocks/fixtures/articleList';
 
+import MainScreenShot from '../../../public/image/mainScreenShot.png';
+
 const FourthSection = () => {
   const ref = useRef<HTMLDivElement>(null);
   const ref2 = useRef<HTMLDivElement>(null);
@@ -28,7 +30,7 @@ const FourthSection = () => {
         <S.EmptyBox height={10} />
         <S.Observer ref={ref} />
         <S.AnimationBox isIntersecting={isIntersecting}>
-          <img src="/image/mainScreenShot.png" width="200px" />
+          <img src={MainScreenShot} width="200px" />
         </S.AnimationBox>
         <S.Text margin={30}>
           방 구하기 초보라 아무것도 모르겠다면,

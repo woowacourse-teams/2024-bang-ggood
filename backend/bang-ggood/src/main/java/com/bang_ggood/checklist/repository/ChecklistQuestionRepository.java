@@ -15,7 +15,7 @@ public interface ChecklistQuestionRepository extends JpaRepository<ChecklistQues
             + "AND cq.deleted = false")
     List<ChecklistQuestion> findByChecklistId(@Param("checklistId") long checklistId);
 
-    @Modifying
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Transactional
     @Query("UPDATE ChecklistQuestion cq "
             + "SET cq.deleted = true "

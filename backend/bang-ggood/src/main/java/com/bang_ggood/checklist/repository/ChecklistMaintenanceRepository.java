@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface ChecklistMaintenanceRepository extends JpaRepository<ChecklistMaintenance, Long> {
 
-    @Modifying
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Transactional
     @Query("UPDATE ChecklistMaintenance cm "
             + "SET cm.deleted = true "

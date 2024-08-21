@@ -9,7 +9,7 @@ import { baseStyle } from '@/styles/global';
 import theme from '@/styles/theme';
 
 const App = () => {
-  const { showToast } = useToast({ type: 'negative' });
+  const { showToast } = useToast();
 
   const queryClient = new QueryClient({
     defaultOptions: {

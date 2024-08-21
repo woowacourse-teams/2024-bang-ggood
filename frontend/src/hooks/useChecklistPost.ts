@@ -12,7 +12,7 @@ import useOptionStore from '@/store/useOptionStore';
 import { ChecklistCategoryQnA } from '@/types/checklist';
 
 const useChecklistPost = (summaryModalClose: () => void) => {
-  const { showToast } = useToast();
+  const { showToast } = useToast({ type: 'positive' });
   const { mutate: addChecklist } = useAddChecklistQuery();
 
   const navigate = useNavigate();
@@ -20,11 +20,9 @@ const useChecklistPost = (summaryModalClose: () => void) => {
   // 방 기본 정보
   const { value: roomInfoAnswer, actions } = useStore(checklistRoomInfoStore);
   const includedMaintenances = useStore(checklistIncludedMaintenancesStore);
-  const addressData = useStore(checklistAddressStore, ({ address, buildingName, jibunAddress, position }) => ({
+  const { address, buildingName } = useStore(checklistAddressStore, ({ address, buildingName }) => ({
     address,
     buildingName,
-    jibunAddress,
-    position,
   }));
 
   // 선택된 옵션
@@ -34,22 +32,21 @@ const useChecklistPost = (summaryModalClose: () => void) => {
   const checklistCategoryQnA = useChecklistStore(state => state.checklistCategoryQnA);
 
   const handleSubmitChecklist = () => {
+    const postData = {
+      room: { ...roomInfoAnswer, address, buildingName, ...{ includedMaintenances: includedMaintenances.value } },
+      options: selectedOptions,
+      questions: transformQuestions(checklistCategoryQnA),
+    };
+
     const fetchNewChecklist = () => {
-      addChecklist(
-        {
-          room: { ...roomInfoAnswer, ...{ addressData }, ...{ includedMaintenances: includedMaintenances.value } },
-          options: selectedOptions,
-          questions: transformQuestions(checklistCategoryQnA),
+      addChecklist(postData, {
+        onSuccess: () => {
+          summaryModalClose();
+          showToast('체크리스트가 저장되었습니다.'); // TODO: 메세지 상수처리
+          actions.resetAll();
+          navigate(ROUTE_PATH.checklistList);
         },
-        {
-          onSuccess: () => {
-            summaryModalClose();
-            showToast('체크리스트가 저장되었습니다.'); // TODO: 메세지 상수처리
-            actions.resetAll();
-            navigate(ROUTE_PATH.checklistList);
-          },
-        },
-      );
+      });
     };
 
     fetchNewChecklist();

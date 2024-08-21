@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 
-import { Building, Calendar, LocationLineIcon, Room, Stairs, Subway } from '@/assets/assets';
+import { Building, Calendar, LocationLineIcon, Pencil, Room, Stairs, Subway } from '@/assets/assets';
 import LikeButton from '@/components/_common/Like/LikeButton';
-import AddressMap from '@/components/_common/Map/AddressMap';
 import { flexColumn, flexRow, flexSpaceBetween, title2 } from '@/styles/common';
 import { RoomInfo } from '@/types/room';
 import formattedDate from '@/utils/formattedDate';
@@ -30,6 +29,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
     walkingTime,
     realEstate,
     occupancyMonth,
+    buildingName,
     occupancyPeriod,
     createdAt,
   } = room;
@@ -47,7 +47,6 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
               보증금 {formattedUndefined(deposit)} / 월세 {formattedUndefined(rent)} + 관리비{' '}
               {formattedUndefined(maintenanceFee)}
             </div>
-            <div>{formattedDate(createdAt ?? '')}</div>
           </S.MoneyText>
         </S.Row>
       </S.GreenWrapper>
@@ -70,17 +69,22 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
       </S.Row>
       <S.Row>
         <LocationLineIcon height={20} width={20} />
-        {formattedUndefined(address?.address, 'string', '주소')} <br /> {address?.buildingName}
+        {formattedUndefined(address, 'string', '주소')} <br /> {buildingName}
       </S.Row>
       <S.Row>
         <Subway />
-        {formattedUndefined(station)}까지 도보 {formattedUndefined(walkingTime)}분
+        {formattedUndefined(station)}역까지 도보 {formattedUndefined(walkingTime)}분
       </S.Row>
       <S.Row>
         <Building />
         {formattedUndefined(realEstate, 'string', '부동산')}
       </S.Row>
-      <AddressMap location={address?.address || ''} />
+      <S.Row>
+        <Pencil />
+        {formattedDate(createdAt ?? '', '.')}
+      </S.Row>
+      <div></div>
+      {/* <AddressMap location={address ?? ''} /> TODO: 카카오맵 API 에러 일단주석 */}
     </S.Container>
   );
 };

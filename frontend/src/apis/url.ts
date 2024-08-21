@@ -23,6 +23,7 @@ export const ENDPOINT = {
   ARTICLES: '/articles',
   ARTICLE_ID: (id: number) => `/articles/${id}`,
   // login
-  OAUTH: '/oauth/login',
+  LOGIN: '/oauth/login',
+  LOGOUT: '/oauth/logout',
   USER_INFO: '/user/me',
 };

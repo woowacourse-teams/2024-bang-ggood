@@ -3,7 +3,6 @@ import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
 import Input from '@/components/_common/Input/Input';
-import RealTimeMap from '@/components/_common/Map/RealTimeMap';
 import Modal from '@/components/_common/Modal/Modal';
 import useModalOpen from '@/hooks/useModalOpen';
 import checklistAddressStore from '@/store/checklistAddressStore';
@@ -30,7 +29,8 @@ const RealTimeAddressModal = () => {
               <Button label="확인" size="xSmall" isSquare={true} onClick={modalClose} />
             </S.InputBox>
             {/* 지도 */}
-            <RealTimeMap />
+            {/* <RealTimeMap /> */
+            /* TODO: 카카오 api 에러 일단 주석 */}
           </Modal.body>
         </Modal>
       )}

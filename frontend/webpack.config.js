@@ -57,8 +57,9 @@ const config = {
         test: /\.css$/i,
         use: [stylesHandler, 'css-loader'],
       },
+      { test: /\.html$/i, use: ['html-loader'] },
       {
-        test: /\.(eot|ttf|woff|woff2|png|jpg|gif)$/i,
+        test: /\.(eot|ttf|woff|woff2)$/i,
         type: 'asset',
         use: [
           {
@@ -69,6 +70,7 @@ const config = {
           },
         ],
       },
+      { test: /\.(png|jpg|gif)/i, type: 'asset/resource' },
       {
         test: /\.svg$/i,
         issuer: /\.[jt]sx?$/,
@@ -137,7 +139,7 @@ module.exports = () => {
         },
       },
     };
-    config.plugins.push(new BundleAnalyzerPlugin()); /* 원할때만 켜기 */
+    // config.plugins.push(new BundleAnalyzerPlugin()); /* 원할때만 켜기 */
   } else {
     config.mode = 'development';
   }

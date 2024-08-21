@@ -15,6 +15,7 @@ import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery
 import useModalOpen from '@/hooks/useModalOpen';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import useToast from '@/hooks/useToast';
+import checklistIncludedMaintenancesStore from '@/store/checklistIncludedMaintenancesStore';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useOptionStore from '@/store/useOptionStore';
@@ -37,6 +38,8 @@ const EditChecklistPage = () => {
   const roomInfoAnswer = useStore(checklistRoomInfoStore, state => state.value);
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
   const roomName = useStore(checklistRoomInfoStore, state => state.value.roomName);
+  const IncludedMaintenancesActions = useStore(checklistIncludedMaintenancesStore, state => state.actions);
+
   /* option */
   const { selectedOptions, setSelectedOptions } = useOptionStore();
   /* checklist */
@@ -48,7 +51,8 @@ const EditChecklistPage = () => {
     const fetchChecklistAndSetToStore = async () => {
       if (!isSuccess) return;
 
-      actions.setAll({ rawValue: objectOmit(checklist.room, new Set('includedUtilities')), value: checklist.room });
+      actions.setAll({ rawValue: objectOmit(checklist.room, new Set('includedMaintenances')), value: checklist.room });
+      IncludedMaintenancesActions.set(checklist.room.includedMaintenances ?? []);
       setSelectedOptions(checklist.options.flatMap(option => option.optionId));
 
       setAnswers(checklist.categories);

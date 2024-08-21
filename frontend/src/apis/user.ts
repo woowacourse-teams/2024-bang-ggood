@@ -2,13 +2,13 @@ import fetcher from '@/apis/fetcher';
 import { BASE_URL, ENDPOINT } from '@/apis/url';
 import { User } from '@/types/user';
 
-export const postKakaoCode = async (code: string) => {
-  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.OAUTH, body: { code } });
+export const postLogin = async (code: string) => {
+  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.LOGIN, body: { code } });
+  return response;
+};
 
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-
+export const postLogout = async () => {
+  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.LOGOUT });
   return response;
 };
 

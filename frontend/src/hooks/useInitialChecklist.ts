@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import useDefaultRoomName from '@/components/NewChecklist/NewRoomInfoForm/useDefaultRoomName';
 import useGetChecklistQuestionQuery from '@/hooks/query/useGetChecklistQuestionQuery';
 import useHandleTipBox from '@/hooks/useHandleTipBox';
 import useChecklistStore from '@/store/useChecklistStore';
@@ -9,6 +10,8 @@ const useInitialChecklist = () => {
   const setAnswerInQuestion = useChecklistStore(state => state.setAnswerInQuestion);
   const resetToDefaultOptions = useOptionStore(state => state.resetToDefaultOptions);
   const { resetShowTipBox } = useHandleTipBox('OPTION'); // TODO: 상수화 처리
+
+  useDefaultRoomName();
 
   const result = useGetChecklistQuestionQuery();
   useEffect(() => {

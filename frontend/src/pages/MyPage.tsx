@@ -4,7 +4,7 @@ import { BangBangIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
-import MyPageModal from '@/components/MyPage/MyPageModal';
+import LogoutModal from '@/components/MyPage/LogoutModal';
 import useUserQuery from '@/hooks/query/useUserQuery';
 import useModalOpen from '@/hooks/useModalOpen';
 import { boxShadow, boxShadowSpread, flexCenter, flexColumn, title2 } from '@/styles/common';
@@ -38,7 +38,7 @@ const MyPage = () => {
           <S.Button label="로그아웃" size="small" color="dark" onClick={modalOpen}></S.Button>
         </S.Inner>
       </Layout>
-      <MyPageModal isOpen={isModalOpen} onClose={modalClose} />
+      <LogoutModal isOpen={isModalOpen} onClose={modalClose} />
     </>
   );
 };

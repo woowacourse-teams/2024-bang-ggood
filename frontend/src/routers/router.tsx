@@ -38,7 +38,7 @@ const router = createBrowserRouter([
           {
             element: <MyPage />,
             path: ROUTE_PATH.myPage,
-          }
+          },
         ],
       },
       {
@@ -73,7 +73,7 @@ const router = createBrowserRouter([
   },
   {
     element: <LandingPage />,
-    path: ROUTE_PATH.landing,
+    path: ROUTE_PATH.root,
   },
   {
     element: <NotFound />,

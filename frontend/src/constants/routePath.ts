@@ -1,5 +1,5 @@
 export const ROUTE_PATH = {
-  landing: '/',
+  root: '/',
   home: '/home',
   /*checklist */
   checklistList: '/checklist',

@@ -188,7 +188,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         List<Integer> responseQuestionsIds = checklistQuestionsResponse.categories().stream()
                 .map(CategoryQuestionsResponse::questions)
                 .flatMap(Collection::stream)
-                .map(QuestionResponse::questionId)
+                .map(QuestionResponse::getQuestionId)
                 .toList();
 
         assertThat(responseQuestionsIds).containsExactlyElementsOf(defaultQuestionsIds);
@@ -389,7 +389,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         // then
         long selectedCount = response.categories().stream()
                 .flatMap(category -> category.questions().stream())
-                .filter(CustomChecklistQuestionResponse::isSelected)
+                .filter(CustomChecklistQuestionResponse::getIsSelected)
                 .count();
 
         Assertions.assertThat(selectedCount).isEqualTo(questions.size());

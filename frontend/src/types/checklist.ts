@@ -1,59 +1,96 @@
-import { Badge } from '@/types/badge';
-import { CategoryScore } from '@/types/category';
-import { Emotion } from '@/types/emotionAnswer';
+import { AnswerType } from '@/types/answer';
+// import { CategoryScore } from '@/types/category';
+import { Option } from '@/types/option';
 import { RoomInfo } from '@/types/room';
 
-export interface ChecklistCategoryQuestions {
+export interface CategoryAndQuestion {
+  categoryId: number;
+  questionId: number;
+}
+
+interface ChecklistCategoryBase {
   categoryId: number;
   categoryName: string;
-  questions: ChecklistAnswer[];
 }
 
 export interface ChecklistQuestion {
   questionId: number;
   title: string;
   subtitle: string | null;
+  highlights: string[];
 }
 
-export interface ChecklistAnswer extends ChecklistQuestion {
-  answer?: Emotion;
+// 기본 체크리스트
+export interface ChecklistCategoryQuestions extends ChecklistCategoryBase {
+  questions: ChecklistQuestion[];
 }
 
-export interface ChecklistFormAfterAnswer {
-  questionId: number;
-  answer: Emotion;
+// 체크리스트 작성: 모든 질문 + 답변
+export interface ChecklistCategoryQnA extends ChecklistCategoryBase {
+  questions: OneQuestionWithAnswer[];
 }
 
-export interface ChecklistFormAnswer {
-  questionId: number;
-  answer: number;
+// 하나의 질문 + 답변 컴포넌트
+export interface OneQuestionWithAnswer extends ChecklistQuestion {
+  answer: AnswerType;
 }
 
-export interface Option {
-  id: number;
-  filled: string;
-  unfilled: string;
+// 체크리스트 커스텀
+export interface ChecklistCategoryQnIsSelected extends ChecklistCategoryBase {
+  questions: ChecklistQuestionWithIsSelected[];
 }
 
-export interface ChecklistPreview extends RoomInfo {
+export interface ChecklistQuestionWithIsSelected extends ChecklistQuestion {
+  isSelected: boolean;
+}
+
+// 체크리스트 카드
+export interface ChecklistPreview {
   checklistId: number;
-  badge?: Badge[];
+  roomName: string;
+  address: string;
+  deposit: number;
+  rent: number;
   createdAt: string;
+  summary: string;
+  isLiked: boolean;
+  station: string;
+  walkingTime: number;
 }
 
-export interface ChecklistCompare extends RoomInfo {
-  checklistId: number;
-  rank?: number;
-  score: number;
-  // TODO: 백엔드 api 변경으로 인한 수정
-  // options: number[];
-  optionCount: number;
-  categories: CategoryScore[];
-}
-
-export interface ChecklistInfo {
+// TODO: 방비교 추후를 위해..
+// 체크리스트 비교
+export interface ChecklistCompare {
   room: RoomInfo;
   checklistId: number;
+  rank: number;
+  score: number;
+  optionCount: number;
+  options: Option[];
+  // categories: CategoryScore[];
+}
+
+// 체크리스트 디테일
+export interface ChecklistInfo {
+  checklistId: number;
+  isLiked: boolean;
+  room: RoomInfo;
+  options: Option[];
+  categories: ChecklistCategoryQnA[];
+}
+
+export interface ChecklistCustom {
+  questionIds: number[];
+}
+
+// 체크리스트 POST API 용
+interface AnswerPostForm {
+  questionId: number;
+  answer: AnswerType;
+}
+
+export interface ChecklistPostForm {
+  room: RoomInfo;
   options: number[];
-  categories: ChecklistCategoryQuestions[];
+  questions: AnswerPostForm[];
 }

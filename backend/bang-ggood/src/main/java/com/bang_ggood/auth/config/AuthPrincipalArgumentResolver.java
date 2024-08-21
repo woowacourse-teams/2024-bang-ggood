@@ -40,6 +40,7 @@ public class AuthPrincipalArgumentResolver implements HandlerMethodArgumentResol
         }
 
         String token = extractToken(request.getCookies());
+
         return authService.extractUser(token);
     }
 

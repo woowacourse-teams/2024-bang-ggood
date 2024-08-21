@@ -2,8 +2,10 @@ package com.bang_ggood.checklist;
 
 import com.bang_ggood.checklist.domain.Answer;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.ChecklistMaintenance;
 import com.bang_ggood.checklist.domain.ChecklistLike;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
+import com.bang_ggood.checklist.domain.MaintenanceItem;
 import com.bang_ggood.checklist.domain.OccupancyMonth;
 import com.bang_ggood.checklist.domain.OccupancyPeriod;
 import com.bang_ggood.checklist.domain.Question;
@@ -18,36 +20,41 @@ public class ChecklistFixture {
     public static final Checklist CHECKLIST1_USER1 = new Checklist(
             RoomFixture.ROOM_1,
             UserFixture.USER1,
-            1000, 50, 12, "방끗공인중개사", "메모", "한줄평",
-            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY
+            1000, 50, 5, 12,
+            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY,
+            "방끗공인중개사", "메모", "한줄평"
     );
 
     public static final Checklist CHECKLIST2_USER1 = new Checklist(
             RoomFixture.ROOM_2,
             UserFixture.USER1,
-            1000, 50, 12, "방끗공인중개사", "메모", "한줄평",
-            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY
+            1000, 50, 5, 12,
+            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY,
+            "방끗공인중개사", "메모", "한줄평"
     );
 
     public static final Checklist CHECKLIST3_USER1 = new Checklist(
             RoomFixture.ROOM_3,
             UserFixture.USER1,
-            1000, 50, 12, "방끗공인중개사", "메모", "한줄평",
-            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY
+            1000, 50, 5, 12,
+            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY,
+            "방끗공인중개사", "메모", "한줄평"
     );
 
     public static final Checklist CHECKLIST3_USER2 = new Checklist(
             RoomFixture.ROOM_3,
             UserFixture.USER2,
-            1000, 50, 12, "방끗공인중개사", "메모", "한줄평",
-            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY
+            1000, 50, 5, 12,
+            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY,
+            "방끗공인중개사", "메모", "한줄평"
     );
 
     public static final Checklist CHECKLIST1_WITH_USER1_ID = new Checklist(
             RoomFixture.ROOM_1,
             UserFixture.USER1_WITH_ID,
-            1000, 50, 12, "방끗공인중개사", "메모", "한줄평",
-            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY
+            1000, 50, 5, 12,
+            OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY,
+            "방끗공인중개사", "메모", "한줄평"
     );
 
     public static final QuestionRequest QUESTION_1_CREATE_REQUEST = new QuestionRequest(
@@ -191,4 +198,12 @@ public class ChecklistFixture {
     public static final ChecklistLike CHECKLIST1_LIKE = new ChecklistLike(CHECKLIST1_USER1);
 
     public static final ChecklistLike CHECKLIST2_LIKE = new ChecklistLike(CHECKLIST2_USER1);
+
+    public static final ChecklistMaintenance CHECKLIST1_INCLUDED_MAINTENANCE_1 = new ChecklistMaintenance(
+            ChecklistFixture.CHECKLIST1_USER1, MaintenanceItem.ELECTRICITY
+    );
+
+    public static final ChecklistMaintenance CHECKLIST1_INCLUDED_MAINTENANCE_2 = new ChecklistMaintenance(
+            ChecklistFixture.CHECKLIST1_USER1, MaintenanceItem.GAS
+    );
 }

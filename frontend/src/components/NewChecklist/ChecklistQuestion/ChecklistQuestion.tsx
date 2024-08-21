@@ -1,61 +1,41 @@
 import styled from '@emotion/styled';
 
-import { QuestionDot } from '@/assets/assets';
-import FaceMark from '@/components/common/FaceMark/FaceMark';
-import { addAnswerProps } from '@/pages/ChecklistSummaryPage';
+import HighlightText from '@/components/_common/Highlight/HighlightText';
+import { useTabContext } from '@/components/_common/Tabs/TabContext';
+import AnswerIcon from '@/components/Answer/AnswerIcon';
+import { ANSWER_OPTIONS } from '@/constants/answer';
+import useChecklistAnswer from '@/hooks/useChecklistAnswer';
+import { flexCenter, flexRow, flexSpaceBetween } from '@/styles/common';
+import { Answer, AnswerType } from '@/types/answer';
 import { ChecklistQuestion } from '@/types/checklist';
-import { Emotion } from '@/types/emotionAnswer';
 
 interface Props {
   question: ChecklistQuestion;
-  addAnswer: ({ questionId, newAnswer }: addAnswerProps) => void;
-  deleteAnswer: (questionId: number) => void;
-  questionSelectedAnswer: (questionId: number) => number | void;
 }
 
-export const emotionPhrase: Record<Emotion, string> = {
-  BAD: '별로에요',
-  SOSO: '평범해요',
-  GOOD: '좋아요',
-};
+const ChecklistQuestion = ({ question }: Props) => {
+  const { questionId, title, highlights } = question;
 
-const ChecklistQuestion = ({ question, addAnswer, deleteAnswer, questionSelectedAnswer }: Props) => {
-  const handleClick = (newAnswer: number) => {
-    if (questionSelectedAnswer(question.questionId) === newAnswer) {
-      deleteAnswer(question.questionId);
-    } else {
-      addAnswer({ questionId: question.questionId, newAnswer });
-    }
+  const { updateAndToggleAnswer: updateAnswer, findCategoryQuestion } = useChecklistAnswer();
+  const { currentTabId } = useTabContext();
+
+  const { answer } = findCategoryQuestion({ categoryId: currentTabId, questionId });
+
+  const handleClick = (newAnswer: AnswerType) => {
+    updateAnswer({ categoryId: currentTabId, questionId: questionId, newAnswer });
   };
-
-  interface Emotions {
-    name: Emotion;
-    id: number;
-  }
-
-  const emotions: Emotions[] = [
-    { name: 'BAD', id: 1 },
-    { name: 'SOSO', id: 2 },
-    { name: 'GOOD', id: 3 },
-  ];
 
   return (
     <S.Container>
-      <S.Title>
-        <QuestionDot />
-        {question?.title}
-      </S.Title>
-      {question?.subtitle && <S.Subtitle>•{question?.subtitle}</S.Subtitle>}
+      <S.Question>
+        <HighlightText title={title} highlights={highlights} />
+      </S.Question>
       <S.Options>
-        {emotions.map(emotion => {
-          const { name: emotionName, id } = emotion;
-          return (
-            <FaceMark onClick={() => handleClick(id)} key={id}>
-              <FaceMark.FaceIcon emotion={emotionName} isFilled={questionSelectedAnswer(question.questionId) === id} />
-              <FaceMark.Footer>{emotionPhrase[emotionName]}</FaceMark.Footer>
-            </FaceMark>
-          );
-        })}
+        {ANSWER_OPTIONS.map((option: Answer) => (
+          <div key={option.id} onClick={() => handleClick(option.name)}>
+            <AnswerIcon answer={option.name} isSelected={answer === option.name} />
+          </div>
+        ))}
       </S.Options>
     </S.Container>
   );
@@ -65,31 +45,48 @@ export default ChecklistQuestion;
 
 const S = {
   Container: styled.div`
-    padding: 16px;
-  `,
-  Title: styled.div`
-    display: flex;
-    margin: 5px 0;
+    position: relative;
+    width: 100%;
+    ${flexRow}
+    ${flexSpaceBetween}
+    padding: 1.6rem;
+    gap: 0.5rem;
 
-    font-size: ${({ theme }) => theme.text.size.medium};
-    line-height: 1.5;
-    gap: 10px;
+    box-sizing: border-box;
+
+    background-color: ${({ theme }) => theme.palette.white};
+    border-radius: 0.8rem;
+  `,
+  Question: styled.div`
+    width: 80%;
   `,
   Subtitle: styled.div`
-    width: 80vw;
-    margin-bottom: 10px;
-    margin-left: 20px;
+    width: 100%;
 
     color: ${({ theme }) => theme.palette.grey500};
     font-size: ${({ theme }) => theme.text.size.small};
-    line-height: 1.5;
     word-break: keep-all;
   `,
   Options: styled.div`
-    display: flex;
-    width: 80%;
-    margin: 0 auto;
-    margin-top: 10px;
-    justify-content: space-between;
+    width: 8rem;
+
+    ${flexRow}
+    gap: 1.5rem;
+
+    ${flexSpaceBetween}
+    align-items: center;
+  `,
+  ButtonBox: styled.div`
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
+    ${flexCenter}
+
+    :hover {
+      background-color: ${({ theme }) => theme.palette.background};
+    }
   `,
 };

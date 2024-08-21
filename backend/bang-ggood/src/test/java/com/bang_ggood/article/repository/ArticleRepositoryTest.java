@@ -17,7 +17,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ArticleRepositoryTest extends IntegrationTestSupport {
 
-    @Autowired ArticleRepository articleRepository;
+    @Autowired
+    ArticleRepository articleRepository;
 
     @DisplayName("아티클 조회 성공")
     @Test

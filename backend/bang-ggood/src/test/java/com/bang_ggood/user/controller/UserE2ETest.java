@@ -29,7 +29,7 @@ class UserE2ETest extends AcceptanceTest {
 
         assertAll(
                 () -> assertThat(response.userId()).isEqualTo(UserFixture.USER1.getId()),
-                () -> assertThat(response.nickname()).isEqualTo(UserFixture.USER1.getName()),
+                () -> assertThat(response.userName()).isEqualTo(UserFixture.USER1.getName()),
                 () -> assertThat(response.userEmail()).isEqualTo(UserFixture.USER1.getEmail())
         );
     }

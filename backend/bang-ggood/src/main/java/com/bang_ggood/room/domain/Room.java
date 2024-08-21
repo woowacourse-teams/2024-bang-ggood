@@ -20,53 +20,58 @@ public class Room extends BaseEntity {
 
     private String name;
 
+    private String address;
+
+    private String buildingName;
+
     private String station;
 
     private Integer walkingTime;
 
-    private String address;
-
     @Enumerated(EnumType.STRING)
-    private Type type;
-
-    private Double size;
+    private FloorLevel floorLevel;
 
     private Integer floor;
 
     @Enumerated(EnumType.STRING)
-    private FloorLevel floorLevel;
-
-    @Enumerated(EnumType.STRING)
     private Structure structure;
+
+    private Double size;
 
     protected Room() {
     }
 
-    public Room(String name, String station, Integer walkingTime, String address, Type type, Double size,
-                Integer floor, FloorLevel floorLevel, Structure structure) {
+    public Room(String name, String address, String buildingName, String station, Integer walkingTime,
+                FloorLevel floorLevel, Integer floor, Structure structure, Double size) {
         this.name = name;
+        this.address = address;
+        this.buildingName = buildingName;
         this.station = station;
         this.walkingTime = walkingTime;
-        this.address = address;
-        this.type = type;
-        this.size = size;
-        this.floor = floor;
         this.floorLevel = floorLevel;
+        this.floor = floor;
         this.structure = structure;
+        this.size = size;
         validateFloorAndLevel();
     }
 
     public void change(Room room) {
         this.name = room.name;
+        this.address = room.address;
+        this.buildingName = room.buildingName;
         this.station = room.station;
         this.walkingTime = room.walkingTime;
-        this.address = room.address;
-        this.type = room.type;
-        this.size = room.size;
-        this.floor = room.floor;
         this.floorLevel = room.floorLevel;
+        this.floor = room.floor;
         this.structure = room.structure;
+        this.size = room.size;
         validateFloorAndLevel();
+    }
+
+    private void validateFloorAndLevel() {
+        if (floorLevel != FloorLevel.GROUND && floor != null) {
+            throw new BangggoodException(ExceptionCode.ROOM_FLOOR_AND_LEVEL_INVALID);
+        }
     }
 
     public Long getId() {
@@ -77,6 +82,14 @@ public class Room extends BaseEntity {
         return name;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public String getBuildingName() {
+        return buildingName;
+    }
+
     public String getStation() {
         return station;
     }
@@ -85,34 +98,20 @@ public class Room extends BaseEntity {
         return walkingTime;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public Double getSize() {
-        return size;
+    public FloorLevel getFloorLevel() {
+        return floorLevel;
     }
 
     public Integer getFloor() {
         return floor;
     }
 
-    public FloorLevel getFloorLevel() {
-        return floorLevel;
-    }
-
     public Structure getStructure() {
         return structure;
     }
 
-    private void validateFloorAndLevel() {
-        if (floorLevel != FloorLevel.GROUND && floor != null) {
-            throw new BangggoodException(ExceptionCode.ROOM_FLOOR_AND_LEVEL_INVALID);
-        }
+    public Double getSize() {
+        return size;
     }
 
     @Override
@@ -137,14 +136,14 @@ public class Room extends BaseEntity {
         return "Room{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", buildingName='" + buildingName + '\'' +
                 ", station='" + station + '\'' +
                 ", walkingTime=" + walkingTime +
-                ", address='" + address + '\'' +
-                ", type=" + type +
-                ", size=" + size +
-                ", floor=" + floor +
                 ", floorLevel=" + floorLevel +
+                ", floor=" + floor +
                 ", structure=" + structure +
+                ", size=" + size +
                 '}';
     }
 }

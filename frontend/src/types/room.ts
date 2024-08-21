@@ -1,23 +1,26 @@
-import { ChecklistFormAfterAnswer } from '@/types/checklist';
+export type OccupancyPeriod = '초' | '중순' | '말';
 
-export interface RoomInfo {
-  // TODO: roomName 이슈
-  roomName?: string;
-  name?: string;
-  address?: string;
-  deposit?: number;
-  rent?: number;
-  contractTerm?: number;
-  floor?: number;
-  station?: string;
-  walkingTime?: number;
-  realEstate?: string;
-}
-
+export type RoomInfo = Partial<{
+  roomName: string;
+  deposit: number;
+  rent: number;
+  maintenanceFee: number;
+  contractTerm: number;
+  floorLevel: string;
+  floor: number;
+  station: string;
+  walkingTime: number;
+  realEstate: string;
+  size: number;
+  structure: string;
+  occupancyMonth: number;
+  occupancyPeriod: OccupancyPeriod;
+  summary: string;
+  memo: string;
+  type: string;
+  createdAt?: string;
+  address: string;
+  buildingName: string;
+  includedMaintenances: number[]; // 관리비 포함항목
+}>;
 export type RoomInfoName = keyof RoomInfo;
-
-export interface ChecklistForm {
-  room: RoomInfo;
-  options: number[];
-  questions: ChecklistFormAfterAnswer[];
-}

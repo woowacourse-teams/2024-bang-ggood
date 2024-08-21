@@ -1,5 +1,5 @@
 export const ROUTE_PATH = {
-  home: '/',
+  root: '/',
   main: '/main',
   /*checklist */
   checklistList: '/checklist',
@@ -22,5 +22,4 @@ export const ROUTE_PATH = {
   /* etc */
   location: '/location',
   myPage: '/my-page',
-  login: '/login',
 };

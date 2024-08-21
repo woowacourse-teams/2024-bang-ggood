@@ -68,7 +68,7 @@ const router = createBrowserRouter([
   },
   {
     element: <LandingPage />,
-    path: ROUTE_PATH.home,
+    path: ROUTE_PATH.root,
   },
   {
     element: <NotFound />,

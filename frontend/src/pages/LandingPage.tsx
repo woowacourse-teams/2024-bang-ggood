@@ -43,7 +43,7 @@ const LandingPage = () => {
     const postLogin = async () => {
       if (code) {
         await postKakaoCode(code).then(async () => {
-          navigate(ROUTE_PATH.home);
+          navigate(ROUTE_PATH.root);
         });
       }
     };

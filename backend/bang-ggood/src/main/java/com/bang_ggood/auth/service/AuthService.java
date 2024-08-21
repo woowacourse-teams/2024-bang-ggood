@@ -77,7 +77,8 @@ public class AuthService {
         RoomRequest roomRequest = new RoomRequest(
                 "예시용 체크리스트", 2000, 50, 12, "서울특별시 송파구",
                 "잠실역", 10, "방끗 부동산", Type.VILLA.getName(), Structure.OPEN_ONE_ROOM.getName(),
-                5.0, 2, FloorLevel.GROUND.getName(), OccupancyMonth.SEPTEMBER.getMonth(), OccupancyPeriod.EARLY.getPeriod(),
+                5.0, 2, FloorLevel.GROUND.getName(), OccupancyMonth.SEPTEMBER.getMonth(),
+                OccupancyPeriod.EARLY.getPeriod(),
                 "집을 둘러보며 필요한 메모를 작성해보세요.", "한줄평 작성하는 곳");
 
         List<Integer> options = List.of(
@@ -106,7 +107,7 @@ public class AuthService {
     }
 
     private static void validateTokenOwnership(User user, AuthUser authUser) {
-        if(!user.getId().equals(authUser.id())) {
+        if (!user.getId().equals(authUser.id())) {
             throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER);
         }
     }
@@ -117,7 +118,13 @@ public class AuthService {
 
     public User extractUser(String token) {
         AuthUser authUser = jwtTokenProvider.resolveToken(token);
-
+        validateAccessTokenInBlacklist(token);
         return userRepository.getUserById(authUser.id());
+    }
+
+    private void validateAccessTokenInBlacklist(String token) {
+        if (isAccessTokenInBlackList(token)) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_IN_BLACKLIST);
+        }
     }
 }

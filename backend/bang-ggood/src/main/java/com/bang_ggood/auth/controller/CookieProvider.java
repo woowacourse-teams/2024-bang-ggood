@@ -27,4 +27,16 @@ public class CookieProvider {
                 .path("/")
                 .build();
     }
+
+    public ResponseCookie deleteCookie() {
+        return ResponseCookie
+                .from(TOKEN_COOKIE_NAME, "")
+                .domain(domain)
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("None")
+                .maxAge(0) // 즉시 만료
+                .path("/")
+                .build();
+    }
 }

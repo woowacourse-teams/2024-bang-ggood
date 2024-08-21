@@ -36,6 +36,8 @@ public class AuthController {
     public ResponseEntity<Void> logout(@AuthPrincipal User user,
                                        @RequestHeader(value = "Cookie") String accessToken) {
         authService.logout(accessToken, user);
-        return ResponseEntity.noContent().build();
+        ResponseCookie expiredCookie = cookieProvider.deleteCookie();
+
+        return ResponseEntity.noContent().header(HttpHeaders.SET_COOKIE, expiredCookie.toString()).build();
     }
 }

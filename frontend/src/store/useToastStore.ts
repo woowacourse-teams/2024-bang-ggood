@@ -26,7 +26,12 @@ const useToastStore = create<toastState>(set => ({
     set(state => ({ ...state, toast: null }));
   },
   setColorType: (newType: ToastType) => {
-    set({ colorType: newType });
+    set(state => {
+      if (state.colorType !== newType) {
+        return { colorType: newType };
+      }
+      return state;
+    });
   },
 }));
 

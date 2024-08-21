@@ -16,7 +16,7 @@ const useDefaultRoomName = () => {
     ).length;
     if (roomName !== initialRoomInfo.roomName) return;
     const date = new Date();
-    actions.set('roomName', `${date.getMonth()}월 ${date.getDay()}일 ${count + 1}번째 방`);
+    actions.set('roomName', `${date.getMonth()}월 ${date.getDay()}일 ${count}번째 방`);
   }, [checklistList]);
 };
 

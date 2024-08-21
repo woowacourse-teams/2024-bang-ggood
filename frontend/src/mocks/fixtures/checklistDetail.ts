@@ -20,6 +20,7 @@ export const checklistDetail: ChecklistInfo = {
     floorLevel: '지상',
     occupancyMonth: 9,
     occupancyPeriod: '중순',
+    includedMaintenances: [2],
     createdAt: '2024-02-01T10:00:00Z',
   },
   options: [

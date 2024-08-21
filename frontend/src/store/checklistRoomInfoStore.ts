@@ -70,7 +70,7 @@ const validatorSet: Record<string, Validator[]> = {
   structure: [],
   realEstate: [],
   occupancyMonth: [isNumericValidator, positiveValidator, inRangeValidator(1, 12)],
-  occupancyPeriod: [isNumericValidator, positiveValidator],
+  occupancyPeriod: [],
   summary: [],
   memo: [],
 };

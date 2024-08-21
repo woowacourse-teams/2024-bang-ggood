@@ -116,7 +116,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         String token = jwtTokenProvider.createToken(USER1_WITH_ID);
 
         //when & then
-        assertThatThrownBy(() -> authService.logout(token, USER2_WITH_ID))
+        assertThatThrownBy(() -> authService.logout("token=" + token, USER2_WITH_ID))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER.getMessage());
     }

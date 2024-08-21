@@ -6,15 +6,12 @@ import theme from '../styles/theme';
 export const baseStyle = css`
   ${normalize}
 
-  html, body {
-    font-family: 'SUITE Variable';
-  }
-
   html {
     font-size: 62.5%;
   }
 
   body {
+    font-family: 'SUITE Variable', sans-serif;
     line-height: normal;
     letter-spacing: 0.14rem;
 

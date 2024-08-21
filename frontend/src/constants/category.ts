@@ -1,25 +1,31 @@
+import homeUrl from '/public/image/home.png';
+import outdoorUrl from '/public/image/outdoor.png';
+import securityUrl from '/public/image/security.png';
+import toiletUrl from '/public/image/toilet.png';
+import windowUrl from '/public/image/window.png';
+
 export const CATEGORY_COUNT = 7;
 
 export const CATEGORY_WITH_EMOJI = [
   {
     name: '방 컨디션',
-    imgUrl: '/image/home.png',
+    imgUrl: homeUrl,
   },
   {
     name: '창문',
-    imgUrl: '/image/window.png',
+    imgUrl: windowUrl,
   },
   {
     name: '화장실',
-    imgUrl: '/image/toilet.png',
+    imgUrl: toiletUrl,
   },
   {
     name: '보안',
-    imgUrl: '/image/security.png',
+    imgUrl: securityUrl,
   },
   {
     name: '외부',
-    imgUrl: '/image/outdoor.png',
+    imgUrl: outdoorUrl,
   },
 ];
 

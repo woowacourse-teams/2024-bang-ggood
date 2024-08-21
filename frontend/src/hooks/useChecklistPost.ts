@@ -37,7 +37,7 @@ const useChecklistPost = (summaryModalClose: () => void) => {
     const fetchNewChecklist = () => {
       addChecklist(
         {
-          room: { ...roomInfoAnswer, ...{ addressData }, ...{ includedUtilities } },
+          room: { ...roomInfoAnswer, ...{ addressData }, ...{ includedMaintenances: includedUtilities.value } },
           options: selectedOptions,
           questions: transformQuestions(checklistCategoryQnA),
         },

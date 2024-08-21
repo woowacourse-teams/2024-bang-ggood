@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { postKakaoCode } from '@/apis/login';
+import { postLogin } from '@/apis/user';
 
 const useAddUserQuery = () => {
   return useMutation({
-    mutationFn: (code: string) => postKakaoCode(code),
+    mutationFn: (code: string) => postLogin(code),
   });
 };
 

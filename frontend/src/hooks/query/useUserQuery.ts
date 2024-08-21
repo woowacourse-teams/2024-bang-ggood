@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getUserInfo } from '@/apis/login';
+import { getUserInfo } from '@/apis/user';
 import { QUERY_KEYS } from '@/constants/queryKeys';
 import { User } from '@/types/user';
 

@@ -7,3 +7,9 @@ export const getArticleList = async () => {
   const data = await response.json();
   return data.articles as Article[];
 };
+
+export const getArticle = async (id: number) => {
+  const response = await fetcher.get({ url: BASE_URL + ENDPOINT.ARTICLE_ID(id) });
+  const data = await response.json();
+  return data as Article;
+};

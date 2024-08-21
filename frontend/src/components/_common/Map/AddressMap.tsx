@@ -18,17 +18,17 @@ const AddressMap = ({ location }: { location: string }) => {
       level: 3,
     };
 
-    // 지도를 생성합니다
+    // 지도 생성
     const map = new kakao.maps.Map(mapContainerRef.current, mapOption);
 
-    // 주소-좌표 변환 객체를 생성합니다
+    // 주소-좌표 변환 객체 생성
     const geocoder = new kakao.maps.services.Geocoder();
 
-    // 주소로 좌표를 검색합니다
+    // 주소로 좌표 검색
     geocoder.addressSearch(location, (result: any, status: any) => {
       if (status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-        /*첫 커스텀 마커 생성 */
+        // 첫 커스텀 마커 생성
         const imageSrc = 'https://github.com/user-attachments/assets/cdd2825b-407f-485a-8cc9-5d261acf815d ',
           imageSize = new kakao.maps.Size(32, 40),
           imageOption = { offset: new kakao.maps.Point(15, 45) };
@@ -57,7 +57,7 @@ const AddressMap = ({ location }: { location: string }) => {
 const S = {
   Box: styled.div`
     width: 100%;
-    height: 300px;
+    height: 30rem;
 
     background-color: ${({ theme }) => theme.palette.background};
   `,

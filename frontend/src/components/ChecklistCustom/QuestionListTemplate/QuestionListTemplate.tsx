@@ -14,7 +14,7 @@ const QuestionListTemplate = () => {
   return (
     <S.Container>
       <S.CounterBox>
-        <S.Span>선택 개수 </S.Span>
+        <S.Span>선택 개수 :</S.Span>
         <CounterBox currentCount={12} totalCount={13} />
       </S.CounterBox>
       <QuestionCardList
@@ -29,8 +29,8 @@ const QuestionListTemplate = () => {
 const S = {
   Container: styled.div`
     width: 100%;
-    margin-top: 10px;
-    border-radius: 8px;
+    margin-top: 1rem;
+    border-radius: 0.8rem;
 
     background-color: white;
   `,
@@ -39,11 +39,11 @@ const S = {
   `,
   CounterBox: styled.div`
     display: flex;
-    padding: 12px;
+    padding: 1.2rem;
     justify-content: right;
-    gap: 10px;
+    gap: 1rem;
     align-items: center;
-    border-bottom: 1px solid ${({ theme }) => theme.palette.grey200};
+    border-bottom: 0.1rem solid ${({ theme }) => theme.palette.grey200};
   `,
 };
 

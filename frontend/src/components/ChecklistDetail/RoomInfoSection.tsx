@@ -3,8 +3,9 @@ import styled from '@emotion/styled';
 import { Building, Calendar, LocationLineIcon, Room, Stairs, Subway } from '@/assets/assets';
 import LikeButton from '@/components/_common/Like/LikeButton';
 import AddressMap from '@/components/_common/Map/AddressMap';
-import { flexColumn, flexRow, title1 } from '@/styles/common';
+import { flexColumn, flexRow, flexSpaceBetween, title2 } from '@/styles/common';
 import { RoomInfo } from '@/types/room';
+import formattedDate from '@/utils/formattedDate';
 import formattedUndefined from '@/utils/formattedUndefined';
 
 interface Props {
@@ -15,7 +16,7 @@ interface Props {
 
 const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
   // TODO: 로딩 중일 때 스켈레톤표시
-  if (!room) return null;
+
   const {
     roomName,
     deposit,
@@ -30,6 +31,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
     realEstate,
     occupancyMonth,
     occupancyPeriod,
+    createdAt,
   } = room;
 
   return (
@@ -41,19 +43,24 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
         </S.Row>
         <S.Row>
           <S.MoneyText>
-            보증금 {formattedUndefined(deposit)} / 월세 {formattedUndefined(rent)} + 관리비{' '}
-            {formattedUndefined(maintenanceFee)}
+            <div>
+              보증금 {formattedUndefined(deposit)} / 월세 {formattedUndefined(rent)} + 관리비{' '}
+              {formattedUndefined(maintenanceFee)}
+            </div>
+            <div>{formattedDate(createdAt ?? '')}</div>
           </S.MoneyText>
         </S.Row>
       </S.GreenWrapper>
       <S.GapBox>
         <S.Row>
           <Room />
-          {room.structure}
+          {formattedUndefined(room.structure, 'string', '방 구조')}
         </S.Row>
         <S.Row>
           <Stairs />
-          {floorLevel === '지상' ? `${formattedUndefined(floor)}층` : floorLevel}
+          {floorLevel === '지상'
+            ? `${formattedUndefined(floor)}층`
+            : formattedUndefined(floorLevel, 'string', '방 종류')}
         </S.Row>
       </S.GapBox>
       <S.Row>
@@ -63,7 +70,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
       </S.Row>
       <S.Row>
         <LocationLineIcon height={20} width={20} />
-        {address?.address} <br /> {address?.buildingName}
+        {formattedUndefined(address?.address, 'string', '주소')} <br /> {address?.buildingName}
       </S.Row>
       <S.Row>
         <Subway />
@@ -85,47 +92,47 @@ const S = {
     box-sizing: border-box;
     width: 100%;
     ${flexColumn}
-    gap: 16px;
-    margin-bottom: 10px;
-    padding: 16px;
+    gap: 1.6rem;
+    margin-bottom: 1rem;
+    padding: 1.6rem;
 
     background-color: ${({ theme }) => theme.palette.white};
-    border-radius: 8px;
-
-    font-size: ${({ theme }) => theme.text.size.medium};
-    line-height: 1.5;
-    letter-spacing: 0.05rem;
-  `,
-  MoneyText: styled.div`
-    font-size: ${({ theme }) => theme.text.size.medium};
+    border-radius: 0.8rem;
   `,
   GreenWrapper: styled.div`
     width: 100%;
-    padding: 16px;
+    padding: 1.6rem;
 
     background-color: ${({ theme }) => theme.palette.green500};
 
     color: ${({ theme }) => theme.palette.white};
-    font-size: ${({ theme }) => theme.text.size.large};
+    font-size: ${({ theme }) => theme.text.size.medium};
     box-sizing: border-box;
-    border-radius: 16px;
+    border-radius: 1.6rem;
   `,
   Row: styled.div`
     ${flexRow}
-    gap: 10px;
+    gap: 1rem;
   `,
   GapBox: styled.div`
     display: flex;
     gap: 30%;
 
-    @media (width <= 440px) {
-      gap: 60px;
+    @media (width <= 44rem) {
+      gap: 6rem;
     }
   `,
   Title: styled.div`
     width: 100%;
-    ${title1}
-    min-height: 40px;
+    ${title2}
+    min-height: 4rem;
     word-break: keep-all;
+  `,
+  MoneyText: styled.div`
+    width: 100%;
+
+    font-size: ${({ theme }) => theme.text.size.small};
+    ${flexRow}
+    ${flexSpaceBetween}
   `,
 };

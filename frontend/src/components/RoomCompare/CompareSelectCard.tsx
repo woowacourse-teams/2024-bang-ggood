@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { LocationLineIcon } from '@/assets/assets';
 import Checkbox from '@/components/_common/Checkbox/Checkbox';
-import { flexColumn, flexRow, flexSpaceBetween } from '@/styles/common';
+import { flexColumn, flexRow, flexSpaceBetween, title2, title3 } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
 import formattedDate from '@/utils/formattedDate';
 
@@ -23,7 +23,7 @@ const CompareSelectCard = ({ isSelected, onClick, room }: Props) => {
         </div>
         <S.FlexColumn>
           <S.HeaderContainer>
-            <S.FlexRow gap="4px">
+            <S.FlexRow gap=".4rem">
               <LocationLineIcon />
               <p>{address}</p>
             </S.FlexRow>
@@ -40,13 +40,13 @@ const CompareSelectCard = ({ isSelected, onClick, room }: Props) => {
 const S = {
   Card: styled.div`
     ${flexColumn}
-    height: 80px;
-    padding: 14px 18px;
-    border: 2px solid ${({ theme }) => theme.palette.grey200};
-    border-radius: 10px;
+    height: 8rem;
+    padding: 1.4rem 1.8rem;
+    border: 0.2rem solid ${({ theme }) => theme.palette.grey200};
+    border-radius: 1rem;
 
-    background-color: white;
-    row-gap: 5px;
+    background-color: ${({ theme }) => theme.palette.white};
+    row-gap: 0.5rem;
     cursor: pointer;
   `,
   HeaderContainer: styled.div`
@@ -54,12 +54,10 @@ const S = {
     ${flexSpaceBetween}
   `,
   Title: styled.h4`
-    font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: ${({ theme }) => theme.text.size.large};
+    ${title2}
   `,
   RentPrice: styled.p`
-    font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: ${({ theme }) => theme.text.size.medium};
+    ${title3}
   `,
   FlexRow: styled.div<{ gap?: string; width?: string }>`
     ${flexRow}
@@ -71,7 +69,7 @@ const S = {
 
   FlexColumn: styled.div`
     ${flexColumn}
-    justify-content: space-between;
+    ${flexSpaceBetween}
     width: 100%;
     height: 100%;
   `,

@@ -23,8 +23,8 @@ const S = {
     display: flex;
 
     width: 50%;
-    height: 75px;
-    padding: 16px;
+    height: 7.5rem;
+    padding: 1.6rem;
     box-sizing: border-box;
 
     background-color: ${({ theme }) => theme.palette.subGreen400};
@@ -32,7 +32,7 @@ const S = {
     color: ${({ theme }) => theme.palette.black};
     justify-content: space-evenly;
     align-items: center;
-    gap: 10px;
+    gap: 1rem;
 
     &:hover,
     &:active {

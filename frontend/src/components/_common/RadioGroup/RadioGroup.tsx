@@ -3,6 +3,7 @@ import { HTMLAttributes, useContext } from 'react';
 
 import RadioContext from '@/components/_common/RadioGroup/RadioContext';
 import { flexCenter, flexRow } from '@/styles/common';
+import theme from '@/styles/theme';
 import { InputChangeEvent } from '@/types/event';
 
 interface Props extends HTMLAttributes<HTMLFieldSetElement> {
@@ -41,7 +42,7 @@ const RadioButton = ({ name, value, children, disabled = false, color, ...rest }
         disabled={disabled}
         checked={group.value !== undefined ? value === group.value : undefined}
         onChange={group.onChangeChild}
-        $color={color ?? 'green'}
+        $color={color ?? theme.palette.green500}
       />
       {children}
     </S.Label>

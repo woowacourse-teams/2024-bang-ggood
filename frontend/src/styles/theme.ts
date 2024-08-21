@@ -41,7 +41,7 @@ const palette = {
   /* original */
   black: '#363636',
   white: '#FFFFFF',
-  background: '#F5F4F2',
+  background: '#F5F5F5',
 
   /* etc */
   kakao: '#FEE500',
@@ -49,12 +49,12 @@ const palette = {
 
 const text = {
   size: {
-    xxSmall: '12px',
-    xSmall: '14px',
-    small: '16px',
-    medium: '18px',
-    large: '22px',
-    xLarge: '26px',
+    xxSmall: '1.2rem',
+    xSmall: '1.4rem',
+    small: '1.6rem',
+    medium: '1.8rem',
+    large: '2.2rem',
+    xLarge: '2.6rem',
   },
   weight: {
     thin: 200,
@@ -65,18 +65,20 @@ const text = {
 };
 
 const viewport = {
-  MOBILE: 576,
-  TABLET: 768,
-  DESKTOP: 769,
+  MOBILE: 57.6,
+  TABLET: 76.8,
+  DESKTOP: 76.9,
 };
 
 /*range: 10~50 */
 const zIndex = {
+  DROPDOWN: 5,
   FLOATING_BUTTON: 10,
   TABS: 10,
   HEADER: 10,
   MODAL: 20,
   TOAST: 30,
+  MAP_MESSAGE: 100,
 };
 
 const theme = {

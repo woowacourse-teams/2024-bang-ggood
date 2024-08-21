@@ -39,36 +39,33 @@ export default ArticlePreviewCard;
 const S = {
   Container: styled.div<{ bgColor: string }>`
     position: relative;
-    width: 190px;
-    height: 180px;
-    padding: 16px;
+    width: 19rem;
+    height: 18rem;
+    padding: 1.6rem;
 
     background-color: ${({ bgColor }) => bgColor};
 
     color: ${theme.palette.white};
     box-sizing: border-box;
-    border-radius: 24px;
+    border-radius: 2.4rem;
     ${boxShadowSpread}
   `,
   Keyword: styled.div<{ bgColor: string }>`
     display: inline-block;
-    padding: 4px 10px;
+    padding: 0.4rem 1rem;
 
     background-color: ${({ bgColor }) => bgColor};
     box-sizing: content-box;
-    border-radius: 6px;
+    border-radius: 0.6rem;
   `,
   Title: styled.div`
     ${title3}
-    margin-top: 10px;
+    margin-top: 1rem;
     word-break: keep-all;
-
-    line-height: 1.6rem;
-    letter-spacing: 0.05rem;
   `,
   ArrowButton: styled.div`
     position: absolute;
-    right: 16px;
-    bottom: 16px;
+    right: 1.6rem;
+    bottom: 1.6rem;
   `,
 };

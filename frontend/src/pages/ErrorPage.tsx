@@ -5,6 +5,7 @@ import HttpError from '@/apis/error/HttpError';
 import { BangBangCryIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
+import { ROUTE_PATH } from '@/constants/routePath';
 import { flexColumn } from '@/styles/common';
 
 const ErrorPage = () => {
@@ -12,7 +13,7 @@ const ErrorPage = () => {
   const navigate = useNavigate();
 
   const reset = () => {
-    navigate('/', { replace: true });
+    navigate(ROUTE_PATH.home, { replace: true });
   };
 
   const { message } = error as HttpError;
@@ -39,7 +40,7 @@ const S = {
     display: flex;
     width: 100%;
     height: 80vh;
-    gap: 10px;
+    gap: 1rem;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -52,10 +53,10 @@ const S = {
   TextWrapper: styled.div`
     ${flexColumn}
     align-items: center;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 1rem;
+    margin-top: 2rem;
   `,
   HomeButton: styled(Button)`
-    margin-top: 30px;
+    margin-top: 3rem;
   `,
 };

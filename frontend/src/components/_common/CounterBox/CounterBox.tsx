@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { title3 } from '@/styles/common';
+import { flexRow, title3 } from '@/styles/common';
 import theme from '@/styles/theme';
 
 interface Props {
@@ -15,7 +15,7 @@ const CounterBox = ({
   color = theme.palette.grey500,
   hasBracket = false,
   currentCount,
-  gap = 3,
+  gap = 0.03,
   totalCount,
 }: Props) => {
   return (
@@ -29,16 +29,13 @@ const CounterBox = ({
   );
 };
 
-const Container = styled.div<{ $color: string; $gap: number }>`
-  display: flex;
-
-  color: ${({ $color }) => $color};
-  gap: ${({ $gap }) => $gap}px;
-  ${title3}
-`;
-
 const S = {
-  Container,
+  Container: styled.div<{ $color: string; $gap: number }>`
+    ${flexRow}
+    color: ${({ $color }) => $color};
+    gap: ${({ $gap }) => $gap}rem;
+    ${title3}
+  `,
 };
 
 export default CounterBox;

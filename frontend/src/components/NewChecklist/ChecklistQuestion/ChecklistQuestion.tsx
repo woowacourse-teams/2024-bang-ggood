@@ -1,12 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import styled from '@emotion/styled';
 
+import HighlightText from '@/components/_common/Highlight/HighlightText';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import AnswerIcon from '@/components/Answer/AnswerIcon';
 import { ANSWER_OPTIONS } from '@/constants/answer';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';
 import { flexCenter, flexRow, flexSpaceBetween } from '@/styles/common';
-import { AnswerType } from '@/types/answer';
+import { Answer, AnswerType } from '@/types/answer';
 import { ChecklistQuestion } from '@/types/checklist';
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const ChecklistQuestion = ({ question }: Props) => {
-  const { questionId, title, subtitle } = question;
+  const { questionId, title, highlight } = question;
 
   const { updateAndToggleAnswer: updateAnswer, findCategoryQuestion } = useChecklistAnswer();
   const { currentTabId } = useTabContext();
@@ -28,11 +28,10 @@ const ChecklistQuestion = ({ question }: Props) => {
   return (
     <S.Container>
       <S.Question>
-        <S.Title>{title}</S.Title>
-        {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
+        <HighlightText title={title} highlight={highlight} />
       </S.Question>
       <S.Options>
-        {ANSWER_OPTIONS.map(option => (
+        {ANSWER_OPTIONS.map((option: Answer) => (
           <div key={option.id} onClick={() => handleClick(option.name)}>
             <AnswerIcon answer={option.name} isSelected={answer === option.name} />
           </div>
@@ -41,6 +40,7 @@ const ChecklistQuestion = ({ question }: Props) => {
     </S.Container>
   );
 };
+
 export default ChecklistQuestion;
 
 const S = {
@@ -49,52 +49,40 @@ const S = {
     width: 100%;
     ${flexRow}
     ${flexSpaceBetween}
-    padding: 16px;
-    gap: 5px;
+    padding: 1.6rem;
+    gap: 0.5rem;
 
     box-sizing: border-box;
 
     background-color: ${({ theme }) => theme.palette.white};
-    border-radius: 8px;
+    border-radius: 0.8rem;
   `,
   Question: styled.div`
     width: 80%;
-  `,
-  Title: styled.div`
-    display: flex;
-    width: 100%;
-    margin: 5px 0;
-
-    font-size: ${({ theme }) => theme.text.size.medium};
-    line-height: 1.5;
-    gap: 10px;
-    align-items: baseline;
   `,
   Subtitle: styled.div`
     width: 100%;
 
     color: ${({ theme }) => theme.palette.grey500};
     font-size: ${({ theme }) => theme.text.size.small};
-    line-height: 1.5;
     word-break: keep-all;
   `,
   Options: styled.div`
-    width: 80px;
+    width: 8rem;
 
     ${flexRow}
-    gap: 15px;
+    gap: 1.5rem;
 
     ${flexSpaceBetween}
     align-items: center;
   `,
-
   ButtonBox: styled.div`
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 1rem;
+    right: 1rem;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 4rem;
+    height: 4rem;
     ${flexCenter}
 
     :hover {

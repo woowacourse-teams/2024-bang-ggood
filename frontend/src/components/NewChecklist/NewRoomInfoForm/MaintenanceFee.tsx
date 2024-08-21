@@ -2,7 +2,7 @@ import { useStore } from 'zustand';
 
 import FormField from '@/components/_common/FormField/FormField';
 import Input from '@/components/_common/Input/Input';
-import IncludedUtilities from '@/components/NewChecklist/NewRoomInfoForm/IncludedUtilities';
+import IncludedMaintenances from '@/components/NewChecklist/NewRoomInfoForm/IncludedMaintenances';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
@@ -15,11 +15,11 @@ const MaintenanceFee = () => {
     <FormField>
       <FormField.Label label="관리비" />
       <FormStyled.FieldBox>
-        <Input width="medium" placeholder="" onChange={actions.onChange} name="size" value={maintenanceFee} />
+        <Input width="medium" placeholder="" onChange={actions.onChange} name="maintenanceFee" value={maintenanceFee} />
         <FormStyled.FlexLabel label="만원"></FormStyled.FlexLabel>
       </FormStyled.FieldBox>
       <FormField.ErrorMessage value={errorMessage ?? ''} />
-      <IncludedUtilities />
+      <IncludedMaintenances />
     </FormField>
   );
 };

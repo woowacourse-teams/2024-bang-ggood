@@ -10,6 +10,7 @@ const fs = require('fs');
 // env
 const dotenv = require('dotenv');
 const { sentryWebpackPlugin } = require('@sentry/webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const env = dotenv.config().parsed;
 const isProduction = process.env.NODE_ENV == 'production';
 
@@ -33,21 +34,12 @@ const config = {
     port: 3000,
     allowedHosts: 'all',
     historyApiFallback: true,
-    // server: {
-    //   type: 'https',
-    //   options: {
-    //     key: fs.readFileSync('./private.key'),
-    //     cert: fs.readFileSync('./private.pem'),
-    //   },
-    // },
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: 'index.html',
     }),
     new webpack.DefinePlugin(envKeys),
-    // Add your plugins here
-    // Learn more about plugins from https:/webpack.js.org/configuration/plugins/
   ],
   performance: {
     hints: false,
@@ -121,11 +113,31 @@ module.exports = () => {
     config.plugins.push(
       sentryWebpackPlugin({
         authToken: process.env.SENTRY_AUTH_TOKEN,
-        org: 'skiende74',
-        project: 'javascript-react',
+        org: process.env.SENTRY_ORG,
+        project: process.env.SENTRY_PROJECT,
       }),
     );
     config.devtool = 'source-map';
+    config.optimization = {
+      splitChunks: {
+        chunks: 'all',
+        minSize: 20000,
+        maxSize: 250000, // 250KB 단위로 청크를 나눔
+        cacheGroups: {
+          defaultVendors: {
+            test: /[\\/]node_modules[\\/]/,
+            priority: -10,
+            reuseExistingChunk: true,
+          },
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true,
+          },
+        },
+      },
+    };
+    config.plugins.push(new BundleAnalyzerPlugin()); /* 원할때만 켜기 */
   } else {
     config.mode = 'development';
   }

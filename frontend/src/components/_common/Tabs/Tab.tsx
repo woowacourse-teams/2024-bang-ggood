@@ -2,18 +2,22 @@ import styled from '@emotion/styled';
 
 import { flexCenter } from '@/styles/common';
 
-interface TabProps {
+interface Props {
   id: number;
   onMoveTab: (id: number) => void;
   name: string;
   active: boolean;
   hasIndicator: boolean | null;
+  imgUrl?: string;
 }
 
-const Tab = ({ id, onMoveTab, name, active, hasIndicator }: TabProps) => {
+const Tab = ({ id, onMoveTab, name, active, hasIndicator, imgUrl }: Props) => {
   return (
     <S.Container key={id} onClick={() => onMoveTab(id)} active={active}>
-      {name}
+      <S.TextBox>
+        {imgUrl && <img src={imgUrl} width={22} />}
+        <span>{name}</span>
+      </S.TextBox>
       {hasIndicator && hasIndicator !== null && <S.UncompletedIndicator />}
     </S.Container>
   );
@@ -21,33 +25,33 @@ const Tab = ({ id, onMoveTab, name, active, hasIndicator }: TabProps) => {
 
 export default Tab;
 
-const Container = styled.div<{ active: boolean }>`
-  position: relative;
-  z-index: ${({ theme }) => theme.zIndex.TABS};
-  ${flexCenter};
-  margin-top: 10px;
-  padding: 10px 16px;
+const S = {
+  Container: styled.div<{ active: boolean }>`
+    position: relative;
+    z-index: ${({ theme }) => theme.zIndex.TABS};
+    ${flexCenter};
+    margin-top: 1rem;
+    padding: 1rem 1.6rem;
 
-  color: ${({ theme, active }) => (active ? theme.palette.yellow600 : theme.palette.black)};
-  font-weight: ${({ theme }) => theme.text.weight.bold};
-  cursor: pointer;
-  border-bottom: ${({ active, theme }) =>
-    active ? `3px solid ${theme.palette.yellow400}` : `3px solid ${theme.palette.yellow100}`};
-`;
+    color: ${({ theme, active }) => (active ? theme.palette.yellow600 : theme.palette.black)};
+    font-weight: ${({ theme }) => theme.text.weight.bold};
+    cursor: pointer;
+    border-bottom: ${({ active, theme }) =>
+      active ? `.3rem solid ${theme.palette.yellow400}` : `.3rem solid ${theme.palette.yellow100}`};
+  `,
+  TextBox: styled.div`
+    display: flex;
+    gap: 5px;
+  `,
+  UncompletedIndicator: styled.div`
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-left: 0.8rem;
 
-const UncompletedIndicator = styled.div`
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 5px;
-  height: 5px;
-  margin-left: 8px;
-
-  background-color: ${({ theme }) => theme.palette.grey400};
-  border-radius: 50%;
-`;
-
-export const S = {
-  Container,
-  UncompletedIndicator,
+    background-color: ${({ theme }) => theme.palette.grey400};
+    border-radius: 50%;
+  `,
 };

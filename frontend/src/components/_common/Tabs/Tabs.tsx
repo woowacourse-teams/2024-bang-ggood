@@ -10,6 +10,7 @@ interface Props {
 export interface Tab {
   name: string;
   id: number;
+  imgUrl?: string;
 }
 
 export interface TabWithCompletion extends Tab {
@@ -24,15 +25,16 @@ const Tabs = ({ tabList }: Props) => {
   };
 
   return (
-    <VisibleContainer>
-      <Container>
-        <FlexContainer>
+    <S.VisibleContainer>
+      <S.Container>
+        <S.FlexContainer>
           {tabList?.map(tab => {
-            const { id, name } = tab;
+            const { id, name, imgUrl } = tab;
             const hasIndicator = 'hasIndicator' in tab ? tab.hasIndicator : null;
 
             return (
               <Tab
+                imgUrl={imgUrl}
                 id={id}
                 name={name}
                 onMoveTab={onMoveTab}
@@ -42,37 +44,41 @@ const Tabs = ({ tabList }: Props) => {
               />
             );
           })}
-        </FlexContainer>
-      </Container>
-    </VisibleContainer>
+        </S.FlexContainer>
+      </S.Container>
+      <S.EmptyBox />
+    </S.VisibleContainer>
   );
 };
 
 export default Tabs;
 
-const Container = styled.div`
-  position: fixed;
-  max-width: 600px;
+const S = {
+  VisibleContainer: styled.div`
+    max-width: 60rem;
+  `,
+  EmptyBox: styled.div`
+    height: 5.4rem;
+  `,
+  Container: styled.div`
+    position: fixed;
+    max-width: 60rem;
 
-  z-index: ${({ theme }) => theme.zIndex.TABS};
-  width: 100%;
+    z-index: ${({ theme }) => theme.zIndex.TABS};
+    width: 100%;
 
-  background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.palette.white};
 
-  white-space: nowrap;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
+    white-space: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-const VisibleContainer = styled.div`
-  max-width: 600px;
-`;
-
-const FlexContainer = styled.div`
-  display: inline-flex;
-`;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  `,
+  FlexContainer: styled.div`
+    display: inline-flex;
+  `,
+};

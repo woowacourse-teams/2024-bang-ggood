@@ -6,6 +6,7 @@ import Modal from '@/components/_common/Modal/Modal';
 import CompareItem from '@/components/RoomCompare/CompareItem';
 import { boxShadow, flexColumn, title1, title2, title3 } from '@/styles/common';
 import { ChecklistCompare } from '@/types/checklist';
+import { Option } from '@/types/option';
 
 interface Props {
   roomInfo: ChecklistCompare;
@@ -13,8 +14,7 @@ interface Props {
 }
 
 const CompareCard = ({ roomInfo, compareNum }: Props) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { score, rank, room, options, categories } = roomInfo;
+  const { rank, room, options } = roomInfo;
 
   const isHightestRoom = rank === 1 || compareNum === 2 ? true : false;
 
@@ -34,7 +34,7 @@ const CompareCard = ({ roomInfo, compareNum }: Props) => {
       <S.Title>{room.roomName}</S.Title>
       <S.RankWrapper>
         <S.Rank>{rank}등</S.Rank>
-        <S.Score>({score}점)</S.Score>
+        {/* <S.Score>({score}점)</S.Score> */}
       </S.RankWrapper>
       {/* 주소 / 층수 */}
       {/*TODO: 나중에 살리면 주소 수정 필요*/}
@@ -83,7 +83,7 @@ const CompareCard = ({ roomInfo, compareNum }: Props) => {
         <Modal.header title="옵션 종류" />
         <Modal.body>
           <S.Box>
-            {options.map(option => (
+            {options.map((option: Option) => (
               <Badge size="long" key={option.optionId} label={option.optionName} />
             ))}
           </S.Box>
@@ -91,7 +91,6 @@ const CompareCard = ({ roomInfo, compareNum }: Props) => {
       </Modal>
       {/* 체크리스트 카테고리별 모음 */}
       {/* <S.Subtitle isLabeled={isHightestRoom}>체크리스트</S.Subtitle> */}
-      {/* TODO: OX 답변 대체 필요 */}
     </S.Container>
   );
 };
@@ -101,23 +100,23 @@ export default CompareCard;
 const S = {
   Container: styled.div<{ isHightLight: boolean }>`
     width: 100%;
-    padding: 20px 4px;
+    padding: 2rem 0.4rem;
     box-sizing: border-box;
     ${flexColumn};
     align-items: center;
-    gap: 10px;
+    gap: 1rem;
 
     background-color: ${({ isHightLight }) => isHightLight && '#FBFBFB'};
   `,
   Title: styled.div`
     ${title2}
     text-align: center;
-    min-height: 40px;
+    min-height: 4rem;
     word-break: keep-all;
   `,
   RankWrapper: styled.div`
     ${flexColumn}
-    gap: 5px;
+    gap: .5rem;
   `,
   Rank: styled.div`
     ${title1}
@@ -128,35 +127,33 @@ const S = {
   Item: styled.div`
     display: flex;
     width: 100%;
-    min-height: 60px;
+    min-height: 6rem;
 
     font-size: ${({ theme }) => theme.text.size.medium};
-    line-height: 1.2rem;
-    letter-spacing: 0.05rem;
     text-align: center;
     justify-content: center;
     word-break: break-all;
   `,
   OptionButton: styled.button`
     ${title3}
-    padding: 12px 24px;
-    border: 1px solid ${({ theme }) => theme.palette.grey300};
-    border-radius: 8px;
+    padding: 1.2rem 2.4rem;
+    border: 0.1rem solid ${({ theme }) => theme.palette.grey300};
+    border-radius: 0.8rem;
     ${boxShadow}
   `,
   Box: styled.div`
     display: flex;
     width: 100%;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 1rem;
   `,
   Subtitle: styled.div<{ isLabeled: boolean }>`
     visibility: ${({ isLabeled }) => (isLabeled ? 'visible' : 'hidden')};
-    margin-top: 20px;
+    margin-top: 2rem;
 
     font-size: ${({ theme }) => theme.text.size.medium};
   `,
   MinBox: styled.div`
-    min-height: 60px;
+    min-height: 6rem;
   `,
 };

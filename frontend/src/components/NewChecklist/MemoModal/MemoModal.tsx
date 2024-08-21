@@ -19,9 +19,9 @@ const MemoModal = ({ isModalOpen, modalClose }: Props) => {
   const intervalRef = useRef<number | undefined>(undefined);
   const { actions, value: roomInfo } = useStore(checklistRoomInfoStore);
   const { value: memo, onChange } = useInput<string>(roomInfo.memo || '');
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e);
-
     if (intervalRef.current !== undefined) {
       clearTimeout(intervalRef.current);
     }
@@ -45,49 +45,54 @@ const MemoModal = ({ isModalOpen, modalClose }: Props) => {
   };
 
   return (
-    <Modal
-      hasCloseButton={false}
-      isOpen={isModalOpen}
-      onClose={modalClose}
-      hasDim={false}
-      position="bottom"
-      color={theme.palette.white}
-    >
-      <S.OpenBarBox onClick={modalClose}>
-        <S.OpenBar />
-      </S.OpenBarBox>
-      <S.TextareaBox>
-        <Textarea
-          placeholder="메모를 입력하세요."
-          autoFocus
-          height={'large'}
-          value={memo}
-          onChange={handleInputChange}
-          onBlur={handleBlur}
-        />
-        <S.ButtonBox>
-          <Button label="닫기" size="small" isSquare={true} color={'light'} onClick={() => handleSubmit(true)} />
-        </S.ButtonBox>
-      </S.TextareaBox>
-    </Modal>
+    <>
+      <S.EmptyBox />
+      <Modal
+        hasCloseButton={false}
+        isOpen={isModalOpen}
+        onClose={modalClose}
+        hasDim={false}
+        position="bottom"
+        color={theme.palette.white}
+      >
+        <S.OpenBarBox onClick={modalClose}>
+          <S.OpenBar />
+        </S.OpenBarBox>
+        <S.TextareaBox>
+          <Textarea
+            placeholder="메모를 입력하세요."
+            autoFocus
+            height={'large'}
+            value={memo}
+            onChange={handleInputChange}
+            onBlur={handleBlur}
+          />
+          <S.ButtonBox>
+            <Button label="닫기" size="small" isSquare={true} color={'light'} onClick={() => handleSubmit(true)} />
+          </S.ButtonBox>
+        </S.TextareaBox>
+      </Modal>
+    </>
   );
 };
+
+export default MemoModal;
 
 const S = {
   Title: styled.div`
     ${title3}
-    margin-top:10px;
+    margin-top:1rem;
   `,
   OpenBarBox: styled.div`
     ${flexCenter}
     width:100%;
-    height: 20px;
+    height: 2rem;
     flex-direction: column;
   `,
   OpenBar: styled.div`
     width: 100%;
-    height: 20px;
-    border-radius: 5px;
+    height: 2rem;
+    border-radius: 0.5rem;
 
     background-color: ${({ theme }) => theme.palette.yellow200};
   `,
@@ -98,9 +103,14 @@ const S = {
 
   ButtonBox: styled.div`
     position: absolute;
-    right: 10px;
-    bottom: 10px;
-    margin-top: 10px;
+    right: 1rem;
+    bottom: 1rem;
+    margin-top: 1rem;
+  `,
+  EmptyBox: styled.div`
+    width: 100%;
+    height: 30rem;
+
+    background-color: ${({ theme }) => theme.palette.background};
   `,
 };
-export default MemoModal;

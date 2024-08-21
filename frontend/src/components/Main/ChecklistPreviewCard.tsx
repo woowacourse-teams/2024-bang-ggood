@@ -1,8 +1,11 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 import HomeCircle from '@/assets/icons/common/HomeCircle';
+import { ROUTE_PATH } from '@/constants/routePath';
 import { flexColumn, flexRow, flexSpaceBetween, title3 } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
+import formattedUndefined from '@/utils/formattedUndefined';
 import getSeqColor from '@/utils/getSeqColor';
 
 interface Props {
@@ -11,20 +14,27 @@ interface Props {
 }
 
 const ChecklistPreviewCard = ({ index, checklist }: Props) => {
+  const navigate = useNavigate();
   const colorList = ['green', 'blue', 'red'];
   const { color200, color500 } = getSeqColor(index, colorList);
 
+  const { checklistId, station, walkingTime, roomName, deposit, rent } = checklist;
+
+  const handleClick = () => {
+    navigate(ROUTE_PATH.checklistOne(checklistId));
+  };
+
   return (
-    <S.Container>
+    <S.Container onClick={handleClick}>
       <HomeCircle color={color500} bgColor={color200} />
       <S.Column>
         <S.Label>
-          {checklist.station} · {checklist.walkingTime}분
+          {formattedUndefined(station)} · {formattedUndefined(walkingTime)}분
         </S.Label>
         <S.Row>
-          <S.Title> {checklist.roomName}</S.Title>
+          <S.Title>{roomName}</S.Title>
           <div>
-            {checklist.deposit} / {checklist.rent}
+            {formattedUndefined(deposit)} / {formattedUndefined(rent)}
           </div>
         </S.Row>
       </S.Column>
@@ -38,15 +48,15 @@ const S = {
   Container: styled.div`
     width: 100%;
     ${flexRow};
-    gap: 10px;
+    gap: 1rem;
 
-    padding: 4px 0;
+    padding: 0.4rem 0;
     align-items: center;
   `,
   Column: styled.div`
     width: 100%;
     ${flexColumn}
-    gap: 10px;
+    gap: 1rem;
   `,
   Label: styled.div`
     color: ${({ theme }) => theme.palette.grey500};

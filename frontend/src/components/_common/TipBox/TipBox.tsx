@@ -19,7 +19,7 @@ const TipBox = ({ tipType }: Props) => {
       <S.TipText>
         💡 <S.Bold>TIP</S.Bold> : {TIP_MESSAGE[tipType]}
       </S.TipText>
-      <CloseIcon onClick={closeTipBox} style={{ paddingRight: 10 }} />
+      <CloseIcon onClick={closeTipBox} style={{ paddingRight: 1 }} />
     </S.TipBox>
   );
 };
@@ -27,18 +27,17 @@ const TipBox = ({ tipType }: Props) => {
 const S = {
   TipBox: styled.div`
     width: 100%;
-    margin-top: 10px;
     ${flexCenter}
     justify-content: space-between;
 
     background-color: white;
 
     font-size: ${({ theme }) => theme.text.size.xSmall};
-    line-height: 1.3;
-    border-radius: 10px;
+    border-radius: 1rem;
   `,
   TipText: styled.div`
-    padding: 12px;
+    padding: 1.2rem;
+    word-break: keep-all;
   `,
   Bold: styled.span`
     ${title4}

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { TabWithCompletion } from '@/components/_common/Tabs/Tabs';
+import { findCategoryEmojiByName } from '@/constants/category';
 import useChecklistStore from '@/store/useChecklistStore';
 
 const useNewChecklistTabs = () => {
@@ -20,6 +21,7 @@ const useNewChecklistTabs = () => {
     const newChecklistTabsWithCompletion = validCategory.map(category => ({
       id: category.categoryId,
       name: category.categoryName,
+      imgUrl: findCategoryEmojiByName(category.categoryName),
       hasIndicator: !isCategoryQuestionAllCompleted(category.categoryId),
     }));
 

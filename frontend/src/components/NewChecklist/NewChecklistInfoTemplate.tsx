@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import Layout from '@/components/_common/layout/Layout';
 import Address from '@/components/NewChecklist/NewRoomInfoForm/Address';
 import DepositAndRent from '@/components/NewChecklist/NewRoomInfoForm/DepositAndRent';
 import MaintenanceFee from '@/components/NewChecklist/NewRoomInfoForm/MaintenanceFee';
@@ -15,41 +16,31 @@ import { flexColumn } from '@/styles/common';
 
 const NewChecklistInfoTemplate = () => {
   return (
-    <>
-      <S.EmptyBox />
-      <S.ContentWrapper>
-        <S.Container>
-          <RoomName />
-          <Address />
-          <NearTransportation />
-          <DepositAndRent />
-          <MaintenanceFee />
-          <RoomFloor />
-          <RoomStructure />
-          <RoomSize />
-          <RoomContractTerm />
-          <OccupancyMonth />
-          <RealEstate />
-        </S.Container>
-      </S.ContentWrapper>
-    </>
+    <Layout withHeader withTab>
+      <S.Container>
+        <RoomName />
+        <Address />
+        <NearTransportation />
+        <DepositAndRent />
+        <MaintenanceFee />
+        <RoomFloor />
+        <RoomStructure />
+        <RoomSize />
+        <RoomContractTerm />
+        <OccupancyMonth />
+        <RealEstate />
+      </S.Container>
+    </Layout>
   );
 };
 
 const S = {
-  EmptyBox: styled.div`
-    height: 64px;
-  `,
-  ContentWrapper: styled.div`
-    padding: 0 10px 30px;
-
-    background-color: white;
-  `,
   Container: styled.div`
     ${flexColumn}
-    padding: 28px 22px;
     justify-content: start;
-    row-gap: 28px;
+    row-gap: 2rem;
+
+    margin-bottom: 2rem;
   `,
 };
 

@@ -1,21 +1,23 @@
 import styled from '@emotion/styled';
 import { ChangeEvent, useCallback } from 'react';
 
+import { flexCenter } from '@/styles/common';
+
 interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   $color?: 'string';
   $borderRadius: string;
 }
 const widthSize: Record<string, string> = {
-  small: '45px',
-  medium: '110px',
-  large: '140px',
+  small: '4.5rem',
+  medium: '11rem',
+  large: '14rem',
   full: '100%',
 };
 
 const heightSize: Record<string, string> = {
-  small: '64px',
-  medium: '120px',
-  large: '300px',
+  small: '6.4rem',
+  medium: '12rem',
+  large: '30rem',
   full: '100%',
 };
 
@@ -32,7 +34,7 @@ const Textarea = ({
   width = 'full',
   height = 'small',
   onChange,
-  borderRadius = '5px',
+  borderRadius = '.5rem',
   hasBorder = false,
   ...rest
 }: Props) => {
@@ -56,15 +58,16 @@ const Textarea = ({
     </S.Box>
   );
 };
+
 const S = {
   Box: styled.div<{ hasBorder: boolean }>`
-    border: ${({ hasBorder, theme }) => hasBorder && `2px solid ${theme.palette.grey200}`};
-    border-radius: 5px;
+    border: ${({ hasBorder, theme }) => hasBorder && `.2rem solid ${theme.palette.grey200}`};
+    border-radius: 0.5rem;
   `,
   Textarea: styled.textarea<StyledProps>`
     ${({ width }) => width && `width: ${width};`};
     ${({ height }) => height && `height: ${height};`};
-    padding: 6px 11px;
+    padding: 0.6rem 1.1rem;
 
     background-color: ${({ theme }) => theme.palette.white};
 
@@ -72,8 +75,8 @@ const S = {
     font-weight: ${({ theme }) => theme.text.weight.medium};
     font-size: ${({ theme }) => theme.text.size.medium};
     outline-color: ${({ theme }) => theme.palette.grey300};
-    justify-content: center;
-    align-items: center;
+
+    ${flexCenter}
     box-sizing: border-box;
     border-radius: ${({ $borderRadius }) => $borderRadius && $borderRadius};
   `,

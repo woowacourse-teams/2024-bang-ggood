@@ -1,13 +1,15 @@
 import styled from '@emotion/styled';
 
+import Layout from '@/components/_common/layout/Layout';
 import TipBox from '@/components/_common/TipBox/TipBox';
 import OptionAllSelectBox from '@/components/NewChecklist/Option/OptionAllSelectBox';
 import { OptionList } from '@/components/NewChecklist/Option/OptionList';
-import { flexCenter, flexColumn, title4 } from '@/styles/common';
+import { flexCenter, flexColumn, flexRow, flexSpaceBetween, title4 } from '@/styles/common';
+import theme from '@/styles/theme';
 
 const OptionChecklistTemplate = () => {
   return (
-    <S.Container>
+    <Layout bgColor={theme.palette.background} withHeader withTab>
       <TipBox tipType={'OPTION'} />
       <S.InnerBox>
         <OptionAllSelectBox />
@@ -15,7 +17,7 @@ const OptionChecklistTemplate = () => {
           <OptionList />
         </S.OptionBox>
       </S.InnerBox>
-    </S.Container>
+    </Layout>
   );
 };
 
@@ -24,53 +26,50 @@ export default OptionChecklistTemplate;
 const S = {
   Container: styled.div`
     ${flexColumn}
-    margin-top: 40px;
-    padding: 16px;
+    padding: 1.6rem;
 
     background-color: ${({ theme }) => theme.palette.background};
-    min-height: calc(100vh - 64px);
+    min-height: calc(100vh - 6.4rem);
     align-items: center;
   `,
-
   InnerBox: styled.div`
     width: 100%;
     ${flexColumn}
-    margin-top: 10px;
+    margin-top: 1rem;
 
-    background-color: white;
+    background-color: ${({ theme }) => theme.palette.white};
 
-    border-radius: 10px;
+    border-radius: 1rem;
   `,
 
   OptionBox: styled.div`
-    display: flex;
-    padding: 30px;
+    ${flexRow}
+    padding: 3rem;
     padding-top: 0;
-    padding-left: 40px;
+    padding-left: 4rem;
 
     flex-wrap: wrap;
 
     ${flexCenter}
 
     justify-content: left;
-    gap: 13px;
+    gap: 1.3rem;
 
-    border-radius: 10px;
+    border-radius: 1rem;
   `,
   TipBox: styled.div`
     width: 100%;
-    margin-top: 10px;
+    margin-top: 1rem;
     ${flexCenter}
-    justify-content: space-between;
+    ${flexSpaceBetween}
 
-    background-color: white;
+    background-color: ${({ theme }) => theme.palette.white};
 
-    font-size: 14px;
-    line-height: 1.3;
-    border-radius: 10px;
+    font-size: 1.4rem;
+    border-radius: 1rem;
   `,
   TipText: styled.div`
-    padding: 12px;
+    padding: 1.2rem;
   `,
   Bold: styled.span`
     ${title4}

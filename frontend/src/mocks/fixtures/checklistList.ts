@@ -36,5 +36,17 @@ export const checklistList = {
       summary: '방은 좁으나 싼 가격이 장점!',
       isLiked: false,
     },
+    {
+      checklistId: 4,
+      roomName: '사당역 분리형',
+      address: '서울 동작구 사당동',
+      deposit: 500,
+      rent: 45,
+      station: '사당역',
+      walkingTime: 5,
+      createdAt: '2024-08-21T10:00:00Z',
+      summary: '방은 좁으나 싼 가격이 장점!',
+      isLiked: false,
+    },
   ],
 };

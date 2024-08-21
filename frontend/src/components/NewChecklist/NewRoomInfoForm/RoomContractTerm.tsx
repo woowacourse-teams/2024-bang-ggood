@@ -28,7 +28,7 @@ const S = {
     display: flex;
     justify-content: flex-start;
     width: 100%;
-    gap: 10px;
+    gap: 1rem;
   `,
 };
 

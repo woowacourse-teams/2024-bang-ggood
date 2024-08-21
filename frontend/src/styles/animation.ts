@@ -21,3 +21,12 @@ export const fadeOut = keyframes`
     transform: translateY(100%);
   }
 `;
+
+export const moveUpDown = keyframes`
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+`;

@@ -1,18 +1,28 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
-import { BangBangIcon } from '@/assets/assets';
+import { BangBangCryIcon } from '@/assets/assets';
+import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
-import { flexColumn } from '@/styles/common';
+import { ROUTE_PATH } from '@/constants/routePath';
+import { flexColumn, title1, title2 } from '@/styles/common';
 
 const NotFound = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(ROUTE_PATH.home);
+  };
+
   return (
     <>
       <Header left={<Header.Logo />} />
       <S.Wrapper>
-        <BangBangIcon />
+        <BangBangCryIcon width={100} height={100} />
         <S.TextWrapper>
-          <S.Text> 아직 열심히 작업 중이에요! ;)</S.Text>
-          <S.Text> 다음 스프린트에서 만나요~!! ☺️ </S.Text>
+          <S.NotFound>404</S.NotFound>
+          <S.Text> 접근할 수 없는 페이지입니다</S.Text>
+          <Button label="홈으로 돌아가기" color="dark" onClick={handleClick} />
         </S.TextWrapper>
       </S.Wrapper>
     </>
@@ -31,9 +41,12 @@ const S = {
     justify-content: center;
     align-items: center;
   `,
+  NotFound: styled.div`
+    ${title1}
+  `,
   Text: styled.div`
-    font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: ${({ theme }) => theme.text.size.large};
+    ${title2}
+    margin-bottom: 4rem;
   `,
   TextWrapper: styled.div`
     ${flexColumn}

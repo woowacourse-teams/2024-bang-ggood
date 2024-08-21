@@ -5,8 +5,8 @@ import S from '@/components/Landing/style';
 import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';
 import theme from '@/styles/theme';
-import checkScreenshotImgUrl from '/image/checkScreenShot.png';
 
+import checkScreenshotImgUrl from '../../../public/image/checkScreenShot.png';
 import homeImgUrl from '../../../public/image/home.png';
 import toiletImgUrl from '../../../public/image/toilet.png';
 import windowImgUrl from '../../../public/image/window.png';

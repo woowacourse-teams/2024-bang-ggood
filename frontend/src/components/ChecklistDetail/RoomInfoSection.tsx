@@ -30,6 +30,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
     walkingTime,
     realEstate,
     occupancyMonth,
+    buildingName,
     occupancyPeriod,
     createdAt,
   } = room;
@@ -70,7 +71,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
       </S.Row>
       <S.Row>
         <LocationLineIcon height={20} width={20} />
-        {formattedUndefined(address?.address, 'string', '주소')} <br /> {address?.buildingName}
+        {formattedUndefined(address, 'string', '주소')} <br /> {buildingName}
       </S.Row>
       <S.Row>
         <Subway />
@@ -80,7 +81,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
         <Building />
         {formattedUndefined(realEstate, 'string', '부동산')}
       </S.Row>
-      <AddressMap location={address?.address || ''} />
+      <AddressMap location={address || ''} />
     </S.Container>
   );
 };

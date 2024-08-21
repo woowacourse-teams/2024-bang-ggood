@@ -22,7 +22,7 @@ const scriptUrl = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js
 const DaumAddressModal = () => {
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
   const postcodeContainerRef = useRef<HTMLDivElement | null>(null);
-  const { setAddress, setBuildingName, setJibunAddress } = useStore(checklistAddressStore);
+  const { setAddress, setBuildingName } = useStore(checklistAddressStore);
 
   useEffect(() => {
     loadPostcode(scriptUrl).catch(error => {
@@ -40,7 +40,6 @@ const DaumAddressModal = () => {
           // TODO: 위도, 경도까지 보내주기
           setAddress(data.address);
           setBuildingName(data.buildingName);
-          setJibunAddress(data.jibunAddress);
           modalClose();
         },
       }).embed(postcodeContainerRef.current, { q: '' });

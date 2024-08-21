@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS checklist_option CASCADE;
 DROP TABLE IF EXISTS checklist_question CASCADE;
 DROP TABLE IF EXISTS article CASCADE;
 DROP TABLE IF EXISTS checklist_like CASCADE;
-DROP TABLE IF EXISTS checklist_included_maintenance CASCADE;
+DROP TABLE IF EXISTS checklist_maintenance CASCADE;
 DROP TABLE IF EXISTS checklist CASCADE;
 DROP TABLE IF EXISTS room CASCADE;
 DROP TABLE IF EXISTS custom_checklist_question CASCADE;

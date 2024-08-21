@@ -47,16 +47,16 @@ const S = {
   HeaderContainer: styled.div`
     display: flex;
     position: relative;
-    height: 45px;
+    height: 4.5rem;
 
     background-color: ${({ theme }) => theme.palette.white};
-    border-radius: 12px;
-    gap: 10px;
+    border-radius: 1.2rem;
+    gap: 1rem;
   `,
 
   FlexBox: styled.div`
     ${flexCenter}
-    gap:10px;
+    gap: 1rem;
   `,
 
   FlexBetween: styled.div`
@@ -67,23 +67,23 @@ const S = {
   HeaderTitle: styled.div`
     ${title3};
     display: flex;
-    padding-left: 15px;
+    padding-left: 1.5rem;
     align-items: center;
   `,
 
   HeaderMark: styled.div<{ isMarked: boolean; markColor?: string }>`
     opacity: ${({ isMarked }) => (isMarked ? 1 : 0)};
-    width: 12px;
+    width: 1.2rem;
 
     background-color: ${({ markColor }) => markColor};
-    border-radius: 8px 0 0 8px;
+    border-radius: 0.8rem 0 0 0.8rem;
     transition: opacity 0.3s ease;
   `,
 
   OpenBox: styled.div<{ onClick?: () => void }>`
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 1rem;
+    right: 1rem;
     ${flexCenter}
   `,
 };

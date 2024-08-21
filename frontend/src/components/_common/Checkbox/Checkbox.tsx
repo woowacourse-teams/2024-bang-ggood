@@ -41,10 +41,10 @@ const S = {
     display: inline-block;
     position: relative;
     cursor: pointer;
-    width: 20px;
-    height: 20px;
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
-    border: 2px solid ${({ $color }) => $color};
+    border: 0.2rem solid ${({ $color }) => $color};
 
     background-color: ${({ $color }) => $color};
 

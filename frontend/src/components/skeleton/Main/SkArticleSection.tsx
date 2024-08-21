@@ -26,46 +26,46 @@ const S = {
     width: 100%;
     box-sizing: border-box;
 
-    padding: 16px 16px 0;
+    padding: 1.6rem 1.6rem 0;
     ${flexRow};
     ${flexSpaceBetween};
   `,
   Title: styled.div`
-    width: 200px;
-    height: 25px;
+    width: 20rem;
+    height: 2.5rem;
     ${Skeleton}
   `,
   CardList: styled.div`
     box-sizing: border-box;
-    max-width: 600px;
+    max-width: 60rem;
     overflow: hidden;
 
     min-width: 100%;
     ${flexRow}
-    padding: 16px;
-    gap: 16px;
+    padding: 1.6rem;
+    gap: 1.6rem;
   `,
   CardWrapper: styled.div`
     ${Skeleton}
 
     display: inline-block;
     overflow: hidden;
-    width: 190px;
+    width: 19rem;
 
     flex: 0 0 auto;
 
     &:first-of-type {
-      padding-left: 16px;
+      padding-left: 1.6rem;
     }
   `,
   Card: styled.div`
     position: relative;
-    width: 190px;
-    height: 180px;
-    padding: 16px;
+    width: 19rem;
+    height: 18rem;
+    padding: 1.6rem;
     ${Skeleton}
 
     box-sizing: border-box;
-    border-radius: 24px;
+    border-radius: 2.4rem;
   `,
 };

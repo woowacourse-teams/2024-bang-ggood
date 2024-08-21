@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import theme from '@/styles/theme';
 
 type DirectionType = 'vertical' | 'horizontal';
+
 interface Props {
   direction?: DirectionType;
   size?: string;
@@ -18,10 +19,10 @@ export default Divider;
 
 const LINE_STYLE = {
   bold: css`
-    border-width: 1.5px;
+    border-width: 0.15rem;
   `,
   medium: css`
-    border-width: 1px;
+    border-width: 0.1rem;
   `,
   vertical: css`
     border-left: solid ${theme.palette.grey200};
@@ -31,15 +32,13 @@ const LINE_STYLE = {
   `,
 };
 
-const Container = styled.div<{ $direction: DirectionType; $size: string; $isBold: boolean }>`
-  width: ${({ $size, $direction }) => $direction === 'horizontal' && $size};
-  height: ${({ $size, $direction }) => $direction === 'vertical' && $size};
-  ${({ $direction, $isBold }) => css`
-    ${$isBold ? LINE_STYLE.bold : LINE_STYLE.medium};
-    ${$direction === 'horizontal' ? LINE_STYLE.horizontal : LINE_STYLE.vertical};
-  `}
-`;
-
 export const S = {
-  Container,
+  Container: styled.div<{ $direction: DirectionType; $size: string; $isBold: boolean }>`
+    width: ${({ $size, $direction }) => $direction === 'horizontal' && $size};
+    height: ${({ $size, $direction }) => $direction === 'vertical' && $size};
+    ${({ $direction, $isBold }) => css`
+      ${$isBold ? LINE_STYLE.bold : LINE_STYLE.medium};
+      ${$direction === 'horizontal' ? LINE_STYLE.horizontal : LINE_STYLE.vertical};
+    `}
+  `,
 };

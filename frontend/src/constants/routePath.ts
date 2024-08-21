@@ -1,18 +1,17 @@
 export const ROUTE_PATH = {
   root: '/',
-  main: '/main',
+  home: '/home',
   /*checklist */
   checklistList: '/checklist',
   checklistNew: '/checklist/new',
   checklistEdit: '/checklist/edit/:checklistId',
   checklistEditOne: (id: number) => `/checklist/edit/${id}`,
-
   checklistCustom: `/checklist/custom`,
   checklistId: '/checklist/:checklistId',
   checklistOne: (id: number) => `/checklist/${id}`,
-  /*category*/
+  /* category */
   categoryChoose: '/category-choose',
-  /*room*/
+  /* room */
   roomCompareSelect: '/room-compare/select',
   roomCompare: '/room-compare',
   /* article */

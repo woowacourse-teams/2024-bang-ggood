@@ -90,22 +90,22 @@ const S = {
   ModalInner: styled.div<{ isOpen: boolean }>`
     width: 100%;
 
-    background-color: ${({ color }) => color ?? 'white'};
+    background-color: ${({ color, theme }) => color ?? theme.palette.white};
 
     color: ${({ theme }) => theme.palette.black};
 
     animation: ${({ isOpen }) => (isOpen ? fadeIn : fadeOut)} 0.3s forwards;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgb(0 0 0 / 40%);
-    min-height: 150px;
+    border-radius: 1rem;
+    box-shadow: 0 0.2rem 1rem rgb(0 0 0 / 40%);
+    min-height: 15rem;
   `,
   CloseButton: styled.button`
     display: flex;
     position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 30px;
-    height: 30px;
+    top: 1rem;
+    right: 1rem;
+    width: 3rem;
+    height: 3rem;
     padding: 0;
     align-items: center;
     justify-content: center;
@@ -118,17 +118,17 @@ const positionStyles = {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 8px;
+    border-radius: 0.8rem;
     width: ${$size === 'small' ? '60%' : '85%'};
-    max-width: 500px;
+    max-width: 50rem;
   `,
   bottom: ($size: ModalSize) => css`
     bottom: 0;
     left: 50%;
     transform: translate(-50%, 0%);
-    border-radius: 16px 16px 0 0;
+    border-radius: 1.6rem 1.6rem 0 0;
     width: ${$size && '100%'};
-    max-width: 600px;
+    max-width: 60rem;
     box-sizing: border-box;
   `,
 };

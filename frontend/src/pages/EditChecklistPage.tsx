@@ -79,7 +79,7 @@ const EditChecklistPage = () => {
           onSuccess: () => {
             modalClose();
             showToast('체크리스트가 수정되었습니다.');
-            actions.reset();
+            actions.resetAll();
             navigate(ROUTE_PATH.checklistOne(Number(checklistId)));
           },
         },

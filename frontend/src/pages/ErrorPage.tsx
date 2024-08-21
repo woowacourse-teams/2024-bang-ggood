@@ -39,7 +39,7 @@ const S = {
     display: flex;
     width: 100%;
     height: 80vh;
-    gap: 10px;
+    gap: 1rem;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -52,10 +52,10 @@ const S = {
   TextWrapper: styled.div`
     ${flexColumn}
     align-items: center;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 1rem;
+    margin-top: 2rem;
   `,
   HomeButton: styled(Button)`
-    margin-top: 30px;
+    margin-top: 3rem;
   `,
 };

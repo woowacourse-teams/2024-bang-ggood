@@ -51,10 +51,11 @@ export default Dropdown;
 const S = {
   Wrapper: styled.div`
     flex: 0 0 auto;
+    position: relative;
   `,
   DropDownHeader: styled.div`
     cursor: pointer;
-    width: 125px;
+    width: 12.5rem;
     height: 100%;
   `,
   SelectedOption: styled.label`
@@ -62,26 +63,26 @@ const S = {
     position: relative;
     width: 100%;
     height: 100%;
-    min-height: 24px;
-    padding: 0 10px;
-    border: 1px solid ${theme.palette.grey400};
+    min-height: 2.4rem;
+    padding: 0 1rem;
+    border: 0.1rem solid ${theme.palette.grey400};
     align-items: center;
     box-sizing: border-box;
-    border-radius: 4px;
-    column-gap: 4px;
+    border-radius: 0.4rem;
+    column-gap: 0.4rem;
   `,
   OptionList: styled.ul`
     position: absolute;
     ${flexColumn}
     z-index: ${({ theme }) => theme.zIndex.DROPDOWN};
-    width: 125px;
-    max-height: 260px;
+    width: 12.5rem;
+    max-height: 26rem;
 
-    margin-top: 4px;
+    margin-top: 0.4rem;
     overflow-y: auto;
-    box-shadow: 0 0 10px 0 ${theme.palette.grey400};
+    box-shadow: 0 0 1rem 0 ${theme.palette.grey400};
 
-    border-radius: 8px;
+    border-radius: 0.8rem;
 
     background-color: ${theme.palette.white};
   `,
@@ -90,10 +91,10 @@ const S = {
     align-items: center;
     z-index: ${({ theme }) => theme.zIndex.DROPDOWN};
     width: 90%;
-    margin: 5px 5%;
-    padding: 5px 10px;
+    margin: 0.5rem 5%;
+    padding: 0.5rem 1rem;
     box-sizing: border-box;
-    border-radius: 4px;
+    border-radius: 0.4rem;
     cursor: pointer;
 
     &:hover,

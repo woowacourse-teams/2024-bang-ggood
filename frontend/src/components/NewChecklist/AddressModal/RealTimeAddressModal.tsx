@@ -23,7 +23,7 @@ const RealTimeAddressModal = () => {
             <S.InputBox>
               <Input
                 width={'full'}
-                style={{ width: '100%', fontSize: '14px' }}
+                style={{ width: '100%', fontSize: '1.4rem' }}
                 placeholder={'지도를 클릭하면 현재 위치를 움직일 수 있어요.'}
                 value={`${address} ${buildingName}`}
               />

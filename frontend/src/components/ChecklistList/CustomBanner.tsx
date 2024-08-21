@@ -23,19 +23,19 @@ const S = {
     ${flexCenter}
 
     width: 100%;
-    height: 80px;
-    padding: 16px;
+    height: 8rem;
+    padding: 1.6rem;
 
-    border-radius: 16px;
+    border-radius: 1.6rem;
 
     background-color: ${({ theme }) => theme.palette.green500};
 
     color: ${({ theme }) => theme.palette.white};
-    line-height: 1.3;
+
     box-sizing: border-box;
     justify-content: space-evenly;
     align-items: center;
-    gap: 5px;
+    gap: 0.5rem;
 
     ${boxShadow};
 

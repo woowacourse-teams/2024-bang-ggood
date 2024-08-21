@@ -40,6 +40,6 @@ const S = {
     ${flexColumn}
     justify-content: center;
     align-items: center;
-    row-gap: 10px;
+    row-gap: 1rem;
   `,
 };

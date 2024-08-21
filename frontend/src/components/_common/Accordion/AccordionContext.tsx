@@ -1,5 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 
+import { ERROR_MESSAGE } from '@/constants/errorMessage';
+
 interface AccordionProps {
   id: number;
   isOpen: boolean;
@@ -12,7 +14,12 @@ interface AccordionContextProps {
 
 export const AccordionContext = createContext({} as AccordionContextProps);
 
-export const AccordionProvider = ({ count, children }: { count: number; children: React.ReactNode }) => {
+interface AccordionProviderProps {
+  count: number;
+  children: React.ReactNode;
+}
+
+export const AccordionProvider = ({ count, children }: AccordionProviderProps) => {
   const [accordionOpens, setAccordionOpens] = useState<AccordionProps[]>(
     new Array(count).fill(0).map((e, i) => {
       return {
@@ -48,8 +55,9 @@ export const AccordionProvider = ({ count, children }: { count: number; children
 
 export const useAccordionContext = () => {
   const context = useContext(AccordionContext);
+
   if (!context) {
-    throw new Error('useAccordionContext는 AccordionProvider에서 사용해야 합니다.');
+    throw new Error(ERROR_MESSAGE.USEACCORDIONCONTEXT);
   }
   return context;
 };

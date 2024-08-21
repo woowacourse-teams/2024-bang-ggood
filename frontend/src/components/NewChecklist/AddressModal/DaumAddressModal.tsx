@@ -35,7 +35,7 @@ const DaumAddressModal = () => {
     if (window.daum?.Postcode && postcodeContainerRef.current) {
       new window.daum.Postcode({
         width: '100%',
-        height: '600px',
+        height: '60rem',
         oncomplete: (data: Address) => {
           // TODO: 위도, 경도까지 보내주기
           setAddress(data.address);
@@ -54,7 +54,7 @@ const DaumAddressModal = () => {
       <S.AddressButton size="xSmall" color="dark" label="주소 검색" isSquare={true} onClick={openPostcodeEmbed} />
       <Modal position="bottom" isOpen={isModalOpen} onClose={modalClose}>
         <Modal.body>
-          <div ref={postcodeContainerRef} style={{ width: '100%', marginTop: '10px' }} />
+          <div ref={postcodeContainerRef} style={{ width: '100%', marginTop: '1rem' }} />
         </Modal.body>
       </Modal>
     </>

@@ -53,14 +53,14 @@ export default Tabs;
 
 const S = {
   VisibleContainer: styled.div`
-    max-width: 600px;
+    max-width: 60rem;
   `,
   EmptyBox: styled.div`
-    height: 54px;
+    height: 5.4rem;
   `,
   Container: styled.div`
     position: fixed;
-    max-width: 600px;
+    max-width: 60rem;
 
     z-index: ${({ theme }) => theme.zIndex.TABS};
     width: 100%;

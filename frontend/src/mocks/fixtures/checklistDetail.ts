@@ -12,7 +12,7 @@ export const checklistDetail: ChecklistInfo = {
     maintenanceFee: 5,
     contractTerm: 12,
     floor: 5,
-    station: '강남역',
+    station: '강남',
     walkingTime: 10,
     realEstate: undefined,
     structure: '오픈형 원룸',

@@ -74,7 +74,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
       </S.Row>
       <S.Row>
         <Subway />
-        {formattedUndefined(station)}까지 도보 {formattedUndefined(walkingTime)}분
+        {formattedUndefined(station)}역까지 도보 {formattedUndefined(walkingTime)}분
       </S.Row>
       <S.Row>
         <Building />

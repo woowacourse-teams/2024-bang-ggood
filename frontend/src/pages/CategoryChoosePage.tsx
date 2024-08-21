@@ -4,12 +4,12 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { getCategory, postCategory } from '@/apis/category';
 import { CloseIcon, LampIcon } from '@/assets/assets';
-import Badge from '@/components/common/Badge/Badge';
-import Button from '@/components/common/Button/Button';
-import Header from '@/components/common/Header/Header';
-import Layout from '@/components/common/layout/Layout';
-import { useToastContext } from '@/components/common/Toast/ToastContext';
+import Badge from '@/components/_common/Badge/Badge';
+import Button from '@/components/_common/Button/Button';
+import Header from '@/components/_common/Header/Header';
+import Layout from '@/components/_common/layout/Layout';
 import { ROUTE_PATH } from '@/constants/routePath';
+import useToast from '@/hooks/useToast';
 import { flexColumn, flexRow, title2 } from '@/styles/common';
 import { Category } from '@/types/category';
 
@@ -18,7 +18,7 @@ const MAX_SELECT_CATEGORY_COUNT = 3;
 const CategoryChoosePage = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number[]>([]);
-  const { showToast } = useToastContext();
+  const { showToast } = useToast();
 
   const navigate = useNavigate();
 
@@ -37,7 +37,7 @@ const CategoryChoosePage = () => {
       } else if (prev.length < MAX_SELECT_CATEGORY_COUNT) {
         return [...prev, id];
       }
-      showToast('카테고리는 최대 3개까지만 선택 가능합니다.');
+      showToast(`카테고리는 최대 ${MAX_SELECT_CATEGORY_COUNT}개까지만 선택 가능합니다.`);
       return prev;
     });
   };
@@ -74,7 +74,7 @@ const CategoryChoosePage = () => {
                 <Badge
                   key={category.categoryId}
                   label={category.categoryName}
-                  type="button"
+                  size="button"
                   onClick={() => handleClick(category.categoryId)}
                   isSelected={selectedCategory.includes(category.categoryId)}
                 />
@@ -102,38 +102,36 @@ const S = {
     ${flexColumn}
     justify-content: space-around;
     height: 80vh;
-    padding: 4px;
+    padding: 0.4rem;
   `,
   Content: styled.div`
     ${flexColumn}
-    gap: 40px;
+    gap: 4rem;
   `,
   TitleSection: styled.div`
-    margin-top: 30px;
+    margin-top: 3rem;
 
     ${flexColumn}
-    letter-spacing: 0.05rem;
   `,
   Title: styled.h1`
     ${title2}
-    line-height: 1.4rem;
   `,
   SubTitle: styled.span`
-    margin-top: 10px;
+    margin-top: 1rem;
 
     font-size: ${({ theme }) => theme.text.size.medium};
   `,
   ButtonWrapper: styled.div`
     display: flex;
     width: 90%;
-    max-width: 350px;
+    max-width: 35rem;
     height: auto;
     flex-wrap: wrap;
-    gap: 15px 10px;
+    gap: 1.5rem 1rem;
   `,
   IconWrapper: styled.div`
     ${flexRow}
-    padding: 16px;
+    padding: 1.6rem;
     justify-content: flex-end;
   `,
 };

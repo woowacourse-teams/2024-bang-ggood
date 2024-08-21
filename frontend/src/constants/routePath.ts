@@ -1,11 +1,24 @@
 export const ROUTE_PATH = {
   root: '/',
-  checklistNew: '/checklist-new',
-  checklistList: '/checklist-list',
-  checklistOne: (id: number) => `/checklists/${id}`,
+  home: '/home',
+  /*checklist */
+  checklistList: '/checklist',
+  checklistNew: '/checklist/new',
+  checklistEdit: '/checklist/edit/:checklistId',
+  checklistEditOne: (id: number) => `/checklist/edit/${id}`,
+  checklistCustom: `/checklist/custom`,
+  checklistId: '/checklist/:checklistId',
+  checklistOne: (id: number) => `/checklist/${id}`,
+  /* category */
   categoryChoose: '/category-choose',
+  /* room */
+  roomCompareSelect: '/room-compare/select',
   roomCompare: '/room-compare',
-  /* TODO : 추후 추가될 페이지들의 라우트패스 */
+  /* article */
+  article: '/article',
+  articleId: '/article/:articleId',
+  articleOne: (id: number) => `/article/${id}`,
+  /* etc */
   location: '/location',
   myPage: '/my-page',
 };

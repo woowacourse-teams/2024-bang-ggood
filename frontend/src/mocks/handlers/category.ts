@@ -5,7 +5,7 @@ import { categories } from '@/mocks/fixtures/category';
 
 export const categoryHandlers = [
   http.get(BASE_URL + ENDPOINT.CATEGORY, () => {
-    return HttpResponse.json(categories.categories, { status: 200 });
+    return HttpResponse.json(categories, { status: 200 });
   }),
 
   http.post(BASE_URL + ENDPOINT.CATEGORY_ADD, () => {

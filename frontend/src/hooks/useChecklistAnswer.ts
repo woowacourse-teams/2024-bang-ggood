@@ -1,39 +1,52 @@
-import { useCallback, useState } from 'react';
+import useChecklistStore from '@/store/useChecklistStore';
+import { AnswerType } from '@/types/answer';
+import { CategoryAndQuestion } from '@/types/checklist';
 
-import { addAnswerProps } from '@/pages/ChecklistSummaryPage';
-import { ChecklistFormAnswer } from '@/types/checklist';
+interface UpdateAnswerProps extends CategoryAndQuestion {
+  newAnswer: AnswerType;
+}
 
 const useChecklistAnswer = () => {
-  const [checklistAnswers, setChecklistAnswers] = useState<ChecklistFormAnswer[]>([]);
+  const { checklistCategoryQnA, setAnswers, getCategoryQnA } = useChecklistStore();
 
-  const questionSelectedAnswer = (targetId: number) => {
-    const targetQuestion = checklistAnswers.filter(e => e.questionId === targetId);
-    if (!targetQuestion[0]) return;
-    return targetQuestion[0]?.answer;
+  const updateAndToggleAnswer = ({ categoryId, questionId, newAnswer }: UpdateAnswerProps) => {
+    const targetCategory = getCategoryQnA(categoryId);
+
+    if (targetCategory) {
+      const updatedCategory = {
+        ...targetCategory,
+        questions: targetCategory.questions.map(question => {
+          if (question.questionId === questionId) {
+            return { ...question, answer: question.answer === newAnswer ? 'NONE' : newAnswer };
+          }
+          return question;
+        }),
+      };
+
+      const newCategories = checklistCategoryQnA.map(category =>
+        category.categoryId === categoryId ? updatedCategory : category,
+      );
+
+      setAnswers(newCategories);
+    }
   };
 
-  const addAnswer = useCallback(
-    ({ questionId, newAnswer }: addAnswerProps) => {
-      const target = [...checklistAnswers].find(answer => answer.questionId === questionId);
-      if (target) {
-        const newAnswers = [...checklistAnswers].map(answer =>
-          answer.questionId === questionId ? { questionId, answer: newAnswer } : answer,
-        );
-        setChecklistAnswers(newAnswers);
-        return;
-      }
-      setChecklistAnswers(prev => [...prev, { questionId, answer: newAnswer }]);
-    },
-    [checklistAnswers],
-  );
+  const findCategoryQuestion = ({ categoryId, questionId }: CategoryAndQuestion) => {
+    const targetCategory = checklistCategoryQnA?.find(category => category.categoryId === categoryId);
 
-  const deleteAnswer = (questionId: number) => {
-    setChecklistAnswers(prevAnswers => {
-      return prevAnswers.filter(answer => answer.questionId !== questionId);
-    });
+    if (!targetCategory) {
+      throw new Error(`${categoryId}가 아이디인 카테고리를 찾을 수 없습니다.`);
+    }
+
+    const targetQuestion = targetCategory.questions.find(q => q.questionId === questionId);
+    if (!targetQuestion) {
+      throw new Error(`${categoryId}가 아이디인 카테고리 내에서 ${questionId}가 아이디인 질문을 찾을 수 없습니다.`);
+    }
+
+    return targetQuestion;
   };
 
-  return { addAnswer, deleteAnswer, questionSelectedAnswer, checklistAnswers };
+  return { updateAndToggleAnswer, findCategoryQuestion };
 };
 
 export default useChecklistAnswer;

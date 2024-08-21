@@ -5,6 +5,7 @@ import com.bang_ggood.category.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.category.dto.response.SelectedCategoryQuestionsResponse;
 import com.bang_ggood.checklist.domain.Answer;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.ChecklistMaintenance;
 import com.bang_ggood.checklist.domain.ChecklistLike;
 import com.bang_ggood.checklist.domain.ChecklistMaintenance;
 import com.bang_ggood.checklist.domain.ChecklistOption;
@@ -26,6 +27,7 @@ import com.bang_ggood.checklist.dto.response.SelectedOptionResponse;
 import com.bang_ggood.checklist.dto.response.SelectedQuestionResponse;
 import com.bang_ggood.checklist.dto.response.UserChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
+import com.bang_ggood.checklist.repository.ChecklistMaintenanceRepository;
 import com.bang_ggood.checklist.repository.ChecklistLikeRepository;
 import com.bang_ggood.checklist.repository.ChecklistMaintenanceRepository;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
@@ -264,7 +266,8 @@ public class ChecklistService {
         List<Integer> maintenanceIds = readChecklistMaintenancesByChecklist(checklist);
         SelectedRoomResponse selectedRoomResponse = SelectedRoomResponse.of(checklist, maintenanceIds);
         List<SelectedOptionResponse> options = readOptionsByChecklistId(id);
-        List<SelectedCategoryQuestionsResponse> selectedCategoryQuestionsResponse = readCategoryQuestionsByChecklistId(id);
+        List<SelectedCategoryQuestionsResponse> selectedCategoryQuestionsResponse = readCategoryQuestionsByChecklistId(
+                id);
 
         return new SelectedChecklistResponse(selectedRoomResponse, options, selectedCategoryQuestionsResponse);
     }

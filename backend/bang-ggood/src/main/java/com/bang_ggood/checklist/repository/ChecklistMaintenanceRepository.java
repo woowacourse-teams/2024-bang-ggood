@@ -15,6 +15,7 @@ public interface ChecklistMaintenanceRepository extends JpaRepository<ChecklistM
             + "WHERE cm.checklist =:checklist and cm.deleted = false ")
     List<ChecklistMaintenance> findAllByChecklist(@Param("checklist") Checklist checklist);
 
+
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Transactional
     @Query("UPDATE ChecklistMaintenance cm "

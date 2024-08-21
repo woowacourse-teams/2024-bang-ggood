@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -70,7 +71,6 @@ class ChecklistMaintenanceRepositoryTest extends IntegrationTestSupport {
         // then
         Assertions.assertThat(checklistMaintenances).isEmpty();
     }
-
 
     @DisplayName("관리 항목 체크리스트 ID로 논리적 삭제 성공")
     @Test

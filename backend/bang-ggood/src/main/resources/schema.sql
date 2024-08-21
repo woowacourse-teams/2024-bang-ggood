@@ -15,7 +15,7 @@ CREATE TABLE room
     id           BIGINT AUTO_INCREMENT PRIMARY KEY,
     name         VARCHAR(255),
     address      VARCHAR(255),
-    buildingName      VARCHAR(255),
+    building_name      VARCHAR(255),
     station      VARCHAR(255),
     walking_time INTEGER,
     floor_level  VARCHAR(255),

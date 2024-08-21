@@ -1,3 +1,4 @@
+import '@/assets/fonts/SUITE-Variable.css';
 import './index.css';
 import './sentry';
 

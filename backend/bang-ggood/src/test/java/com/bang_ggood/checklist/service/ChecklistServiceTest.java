@@ -389,7 +389,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         // then
         long selectedCount = response.categories().stream()
                 .flatMap(category -> category.questions().stream())
-                .filter(CustomChecklistQuestionResponse::isSelected)
+                .filter(CustomChecklistQuestionResponse::getIsSelected)
                 .count();
 
         Assertions.assertThat(selectedCount).isEqualTo(questions.size());

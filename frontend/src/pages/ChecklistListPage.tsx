@@ -66,6 +66,7 @@ const S = {
     ${flexColumn}
     gap: 1.2rem;
     overflow-y: scroll;
+    margin-bottom: 8rem;
   `,
   DefaultButton: styled.div`
     position: fixed;

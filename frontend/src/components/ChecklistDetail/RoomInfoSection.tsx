@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { Building, Calendar, LocationLineIcon, Room, Stairs, Subway } from '@/assets/assets';
+import { Building, Calendar, LocationLineIcon, Pencil, Room, Stairs, Subway } from '@/assets/assets';
 import LikeButton from '@/components/_common/Like/LikeButton';
 import AddressMap from '@/components/_common/Map/AddressMap';
 import { flexColumn, flexRow, flexSpaceBetween, title2 } from '@/styles/common';
@@ -47,7 +47,6 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
               보증금 {formattedUndefined(deposit)} / 월세 {formattedUndefined(rent)} + 관리비{' '}
               {formattedUndefined(maintenanceFee)}
             </div>
-            <div>{formattedDate(createdAt ?? '')}</div>
           </S.MoneyText>
         </S.Row>
       </S.GreenWrapper>
@@ -80,6 +79,11 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
         <Building />
         {formattedUndefined(realEstate, 'string', '부동산')}
       </S.Row>
+      <S.Row>
+        <Pencil />
+        {formattedDate(createdAt ?? '')}
+      </S.Row>
+      <div></div>
       <AddressMap location={address?.address || ''} />
     </S.Container>
   );

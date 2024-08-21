@@ -22,6 +22,7 @@ import Memo from '@/assets/icons/memo.svg';
 import Building from '@/assets/icons/room/building.svg';
 import Calendar from '@/assets/icons/room/calendar.svg';
 import Room from '@/assets/icons/room/house.svg';
+import Pencil from '@/assets/icons/room/pencil.svg';
 import Stairs from '@/assets/icons/room/stairs.svg';
 import Subway from '@/assets/icons/room/subway.svg';
 
@@ -60,6 +61,7 @@ export {
   Memo,
   MemoEmpty,
   MemoFilled,
+  Pencil,
   PencilIcon,
   PlusBlack,
   PlusSmall,

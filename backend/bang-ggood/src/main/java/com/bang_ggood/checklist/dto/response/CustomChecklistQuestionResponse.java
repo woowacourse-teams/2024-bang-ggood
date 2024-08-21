@@ -11,7 +11,7 @@ public class CustomChecklistQuestionResponse extends QuestionResponse {
         this.isSelected = isSelected;
     }
 
-    public boolean isSelected() {
+    public boolean getIsSelected() {
         return isSelected;
     }
 }

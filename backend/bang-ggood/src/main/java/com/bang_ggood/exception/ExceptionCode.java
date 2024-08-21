@@ -19,7 +19,7 @@ public enum ExceptionCode {
     QUESTION_DIFFERENT(HttpStatus.BAD_REQUEST, "수정할 질문 목록이 기존의 질문 목록과 동일하지 않습니다."),
 
     // User
-    USER_NOT_FOUND(HttpStatus.BAD_REQUEST, "유저가 존재하지 않습니다."),
+    USER_NOT_FOUND(HttpStatus.UNAUTHORIZED, "유저가 존재하지 않습니다."),
 
     // Answer
     ANSWER_INVALID(HttpStatus.BAD_REQUEST, "점수가 유효하지 않습니다."),

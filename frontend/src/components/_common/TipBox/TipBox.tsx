@@ -32,7 +32,7 @@ const S = {
 
     background-color: white;
 
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    font-size: ${({ theme }) => theme.text.size.small};
     border-radius: 1rem;
   `,
   TipText: styled.div`

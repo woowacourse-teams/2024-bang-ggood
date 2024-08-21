@@ -65,7 +65,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
       <S.Row>
         <Calendar />
         {formattedUndefined(contractTerm)}개월 계약 <br />
-        입주 가능일 : {occupancyMonth}월 {occupancyPeriod}
+        입주 가능일 : {formattedUndefined(occupancyMonth)}월 {occupancyPeriod}
       </S.Row>
       <S.Row>
         <LocationLineIcon height={20} width={20} />

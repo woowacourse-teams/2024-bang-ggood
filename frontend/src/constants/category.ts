@@ -1,8 +1,8 @@
-import homeUrl from '/public/image/home.png';
-import outdoorUrl from '/public/image/outdoor.png';
-import securityUrl from '/public/image/security.png';
-import toiletUrl from '/public/image/toilet.png';
-import windowUrl from '/public/image/window.png';
+import homeUrl from '@/assets/image/home.png';
+import outdoorUrl from '@/assets/image/outdoor.png';
+import securityUrl from '@/assets/image/security.png';
+import toiletUrl from '@/assets/image/toilet.png';
+import windowUrl from '@/assets/image/window.png';
 
 export const CATEGORY_COUNT = 7;
 

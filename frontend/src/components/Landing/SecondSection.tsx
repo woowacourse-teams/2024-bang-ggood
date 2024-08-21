@@ -1,6 +1,6 @@
-import MainScreenShot from 'public/image/mainScreenShot.png';
 import { useRef } from 'react';
 
+import MainScreenShot from '@/assets/image/checkScreenShot.png';
 import S from '@/components/Landing/style';
 import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';

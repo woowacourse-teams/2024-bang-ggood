@@ -1,7 +1,7 @@
-import MainScreenShot from 'public/image/mainScreenShot.png';
 import { useRef } from 'react';
 
 import { PencilIcon } from '@/assets/assets';
+import MainScreenShot from '@/assets/image/checkScreenShot.png';
 import S from '@/components/Landing/style';
 import { CATEGORY_WITH_EMOJI } from '@/constants/category';
 import { INTERSECTION_CONFIG } from '@/constants/system';
@@ -64,7 +64,7 @@ const ThirdSection = () => {
         <S.Observer ref={ref2} />
         <S.AnimationBox isIntersecting={isIntersecting2}>
           <S.ChecklistImgBox>
-            <img src={MainScreenShot} />
+            <img src={MainScreenShot} width="200px" />
             <S.PencilIconBox>
               <PencilIcon width={70} height={90} />
             </S.PencilIconBox>

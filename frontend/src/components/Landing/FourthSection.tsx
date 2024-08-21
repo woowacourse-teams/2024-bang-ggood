@@ -1,6 +1,6 @@
-import MainScreenShot from 'public/image/mainScreenShot.png';
 import { useRef } from 'react';
 
+import ScreenShot from '@/assets/image/mainScreenShot.png';
 import ArticleCard from '@/components/ArticleList/ArticleCard';
 import S from '@/components/Landing/style';
 import { INTERSECTION_CONFIG } from '@/constants/system';
@@ -29,7 +29,7 @@ const FourthSection = () => {
         <S.EmptyBox height={10} />
         <S.Observer ref={ref} />
         <S.AnimationBox isIntersecting={isIntersecting}>
-          <img src={MainScreenShot} width="200px" />
+          <img src={ScreenShot} width="200px" />
         </S.AnimationBox>
         <S.Text margin={30}>
           방 구하기 초보라 아무것도 모르겠다면,

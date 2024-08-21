@@ -50,7 +50,7 @@ const roomInfoType = {
   summary: 'string',
   memo: 'string',
   createdAt: 'string',
-  includedUtilities: '',
+  includedMaintenances: '',
 } as const;
 
 const validatorSet: Record<string, Validator[]> = {
@@ -59,7 +59,7 @@ const validatorSet: Record<string, Validator[]> = {
   deposit: [isNumericValidator, nonNegativeValidator],
   rent: [isNumericValidator, nonNegativeValidator],
   maintenanceFee: [isNumericValidator, nonNegativeValidator],
-  includedUtilities: [],
+  includedMaintenances: [],
   contractTerm: [isNumericValidator, nonNegativeValidator],
   station: [],
   walkingTime: [isIntegerValidator],

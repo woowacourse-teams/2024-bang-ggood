@@ -5,10 +5,10 @@ import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import { includedMaintenances } from '@/constants/includedMaintenances';
-import checklistIncludedUtilitiesStore from '@/store/checklistIncludedUtilitesStore';
+import checklistIncludedMaintenancesStore from '@/store/checklistIncludedMaintenancesStore';
 
 const IncludedMaintenances = () => {
-  const actions = useStore(checklistIncludedUtilitiesStore, state => state.actions);
+  const actions = useStore(checklistIncludedMaintenancesStore, state => state.actions);
 
   return (
     <FlexBox.Vertical>

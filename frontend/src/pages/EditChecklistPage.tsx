@@ -45,7 +45,7 @@ const EditChecklistPage = () => {
   useEffect(() => {
     const fetchChecklistAndSetToStore = async () => {
       const checklist = await getChecklistDetail(Number(checklistId));
-      actions.setAll({ rawValue: objectOmit(checklist.room, new Set('includedUtilities')), value: checklist.room });
+      actions.setAll({ rawValue: objectOmit(checklist.room, new Set('includedMaintenances')), value: checklist.room });
       setSelectedOptions(checklist.options.flatMap(option => option.optionId));
 
       setAnswers(checklist.categories);

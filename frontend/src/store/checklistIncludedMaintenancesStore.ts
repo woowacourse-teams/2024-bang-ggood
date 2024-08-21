@@ -17,7 +17,7 @@ interface Action {
   };
 }
 
-const checklistIncludedUtilitiesStore = createStore<IncludedMaintenances & Action>((set, get) => ({
+const checklistIncludedMaintenancesStore = createStore<IncludedMaintenances & Action>((set, get) => ({
   value: initialValue,
   actions: {
     set: a => set({ value: a }),
@@ -39,4 +39,4 @@ const checklistIncludedUtilitiesStore = createStore<IncludedMaintenances & Actio
     remove: id => set({ value: get().value.filter(i => i !== id) }),
   },
 }));
-export default checklistIncludedUtilitiesStore;
+export default checklistIncludedMaintenancesStore;

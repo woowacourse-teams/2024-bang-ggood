@@ -5,7 +5,7 @@ import { ROUTE_PATH } from '@/constants/routePath';
 import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
 import useToast from '@/hooks/useToast';
 import checklistAddressStore from '@/store/checklistAddressStore';
-import checklistIncludedUtilitiesStore from '@/store/checklistIncludedUtilitesStore';
+import checklistIncludedMaintenancesStore from '@/store/checklistIncludedMaintenancesStore';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useOptionStore from '@/store/useOptionStore';
@@ -19,7 +19,7 @@ const useChecklistPost = (summaryModalClose: () => void) => {
 
   // 방 기본 정보
   const { value: roomInfoAnswer, actions } = useStore(checklistRoomInfoStore);
-  const includedUtilities = useStore(checklistIncludedUtilitiesStore);
+  const includedMaintenances = useStore(checklistIncludedMaintenancesStore);
   const addressData = useStore(checklistAddressStore, ({ address, buildingName, jibunAddress, position }) => ({
     address,
     buildingName,
@@ -37,7 +37,7 @@ const useChecklistPost = (summaryModalClose: () => void) => {
     const fetchNewChecklist = () => {
       addChecklist(
         {
-          room: { ...roomInfoAnswer, ...{ addressData }, ...{ includedMaintenances: includedUtilities.value } },
+          room: { ...roomInfoAnswer, ...{ addressData }, ...{ includedMaintenances: includedMaintenances.value } },
           options: selectedOptions,
           questions: transformQuestions(checklistCategoryQnA),
         },

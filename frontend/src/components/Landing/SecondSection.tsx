@@ -1,4 +1,3 @@
-import MainScreenShot from 'public/image/mainScreenShot.png';
 import { useRef } from 'react';
 
 import S from '@/components/Landing/style';
@@ -32,7 +31,7 @@ const SecondSection = () => {
       </S.TextBox>
       <S.Observer ref={ref} />
       <S.AnimationBox isIntersecting={isIntersecting}>
-        <img src={MainScreenShot} width="200px" />
+        <img src="/image/mainScreenShot.png" width="200px" />
       </S.AnimationBox>
     </>
   );

@@ -6,8 +6,8 @@ import java.util.Arrays;
 
 public enum MaintenanceItem {
     WATERWORKS(1, "수도"),
-    ELECTRICITY(2, "전기"),
-    INTERNET(3, "인터넷"),
+    INTERNET(2, "인터넷"),
+    ELECTRICITY(3, "전기"),
     GAS(4, "가스");
 
     private final int id;

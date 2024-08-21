@@ -40,8 +40,12 @@ public class ChecklistMaintenance extends BaseEntity {
         return checklist;
     }
 
-    public MaintenanceItem getMaintenanceItem() {
-        return maintenanceItem;
+    public Integer getMaintenanceItemId() {
+        return maintenanceItem.getId();
+    }
+
+    public String getMaintenanceItemName() {
+        return maintenanceItem.getName();
     }
 
     @Override

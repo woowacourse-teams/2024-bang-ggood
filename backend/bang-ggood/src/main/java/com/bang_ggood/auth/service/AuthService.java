@@ -107,7 +107,7 @@ public class AuthService {
     public void logout(String accessToken, User user) {
         log.info("logout accessToken: {}", accessToken);
 
-        String splitToken = accessToken.substring(6);
+        String splitToken = accessToken.split("token=")[1];
         AuthUser authUser = jwtTokenProvider.resolveToken(splitToken);
         validateTokenOwnership(user, authUser);
         blackList.add(splitToken);

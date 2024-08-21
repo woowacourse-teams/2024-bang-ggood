@@ -6,16 +6,18 @@ import QuestionCardList from '@/components/ChecklistCustom/QuestionCardList/Ques
 import useChecklistCustomStore from '@/store/useChecklistCustomStore';
 
 const QuestionListTemplate = () => {
-  const { categoryQnA } = useChecklistCustomStore();
+  const { categoryQnA, checklistAllQuestionList, selectedQuestions } = useChecklistCustomStore();
   const { currentTabId } = useTabContext();
 
   const currentCategoryQnA = categoryQnA(currentTabId);
+
+  const allQuestionCount = checklistAllQuestionList.flatMap(category => category.questions);
 
   return (
     <S.Container>
       <S.CounterBox>
         <S.Span>선택 개수 :</S.Span>
-        <CounterBox currentCount={12} totalCount={13} />
+        <CounterBox currentCount={selectedQuestions.length} totalCount={allQuestionCount.length} />
       </S.CounterBox>
       <QuestionCardList
         key={`${currentTabId}-customlist`}

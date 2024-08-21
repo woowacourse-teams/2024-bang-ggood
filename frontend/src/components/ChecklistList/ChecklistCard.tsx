@@ -12,21 +12,18 @@ import formattedUndefined from '@/utils/formattedUndefined';
 interface Props {
   checklist: ChecklistPreview;
 }
-
 const ChecklistCard = ({ checklist }: Props) => {
   const navigate = useNavigate();
   const { checklistId, roomName, address, createdAt, deposit, rent, summary, isLiked } = checklist;
-
   const handleMoveToDetail = () => {
     navigate(ROUTE_PATH.checklistOne(checklist.checklistId));
   };
-
   return (
     <S.Container onClick={handleMoveToDetail}>
       <S.Row>
         <S.LocationWrapper>
           <LocationLineIcon />
-          {address}
+          {formattedUndefined(address, 'string', '주소')}
         </S.LocationWrapper>
         <LikeButton isLiked={isLiked} checklistId={checklistId} />
       </S.Row>
@@ -45,9 +42,7 @@ const ChecklistCard = ({ checklist }: Props) => {
     </S.Container>
   );
 };
-
 export default ChecklistCard;
-
 const S = {
   Container: styled.div`
     ${flexColumn}
@@ -55,7 +50,6 @@ const S = {
     gap: 1rem;
     box-sizing: border-box;
     border-radius: 0.8rem;
-
     padding: 1.2rem 1.6rem;
 
     background-color: ${({ theme }) => theme.palette.white};
@@ -63,7 +57,7 @@ const S = {
   `,
   Row: styled.div`
     ${flexSpaceBetween}
-    align-items: baseline;
+    align-items: center;
   `,
   Column: styled.div`
     ${flexColumn}
@@ -91,13 +85,11 @@ const S = {
 
     background-color: ${({ theme }) => theme.palette.grey50};
     border-radius: 0.6rem;
-
     box-sizing: content-box;
     max-width: 80%;
   `,
   SummaryBox: styled.div`
     box-sizing: content-box;
-
     ${omitText};
     border-radius: 0.4rem;
 

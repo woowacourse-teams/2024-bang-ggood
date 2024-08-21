@@ -12,7 +12,7 @@ import useOptionStore from '@/store/useOptionStore';
 import { ChecklistCategoryQnA } from '@/types/checklist';
 
 const useChecklistPost = (summaryModalClose: () => void) => {
-  const { showToast } = useToast();
+  const { showToast } = useToast({ type: 'positive' });
   const { mutate: addChecklist } = useAddChecklistQuery();
 
   const navigate = useNavigate();

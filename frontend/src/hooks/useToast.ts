@@ -9,13 +9,11 @@ interface Props {
 }
 
 const useToast = (props?: Props) => {
-  const { hideToast, toast, showToast, setColorType, colorType } = useToastStore();
+  const { hideToast, toast, showToast, colorType } = useToastStore();
 
-  const { durationMinute = DEFAULT_TOAST_DURATION, type = 'positive' } = props || {};
+  const { durationMinute = DEFAULT_TOAST_DURATION } = props || {};
 
   useEffect(() => {
-    setColorType(type);
-
     if (toast) {
       const timer = setTimeout(() => {
         hideToast();

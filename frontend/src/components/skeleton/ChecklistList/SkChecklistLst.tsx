@@ -5,7 +5,7 @@ import Layout from '@/components/_common/layout/Layout';
 import { boxShadow, flexCenter, flexColumn, Skeleton } from '@/styles/common';
 import theme from '@/styles/theme';
 
-const SHOW_MOCK_COUNT = 4;
+const SHOW_MOCK_COUNT = 3;
 
 const SkChecklistList = () => {
   return (

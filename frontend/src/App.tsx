@@ -13,9 +13,8 @@ const App = () => {
 
   const queryClient = new QueryClient({
     defaultOptions: {
-      //TODO: 에러 핸들링 끝나고 retry : 0 삭제 필요
-      mutations: { onError: error => showToast(error.message), retry: 0 },
-      queries: { throwOnError: true, retry: 0 },
+      mutations: { onError: error => showToast(error.message) },
+      queries: { throwOnError: true },
     },
     queryCache: new QueryCache({
       onError: error => showToast(error.message),

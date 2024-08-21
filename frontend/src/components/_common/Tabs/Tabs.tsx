@@ -10,6 +10,7 @@ interface Props {
 export interface Tab {
   name: string;
   id: number;
+  imgUrl?: string;
 }
 
 export interface TabWithCompletion extends Tab {
@@ -28,11 +29,12 @@ const Tabs = ({ tabList }: Props) => {
       <S.Container>
         <S.FlexContainer>
           {tabList?.map(tab => {
-            const { id, name } = tab;
+            const { id, name, imgUrl } = tab;
             const hasIndicator = 'hasIndicator' in tab ? tab.hasIndicator : null;
 
             return (
               <Tab
+                imgUrl={imgUrl}
                 id={id}
                 name={name}
                 onMoveTab={onMoveTab}

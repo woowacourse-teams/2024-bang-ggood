@@ -2,7 +2,7 @@ export const checklistQuestions = {
   categories: [
     {
       categoryId: 1,
-      categoryName: '🏠 방 컨디션',
+      categoryName: '방 컨디션',
       questions: [
         {
           questionId: 1,
@@ -63,7 +63,7 @@ export const checklistQuestions = {
 
     {
       categoryId: 2,
-      categoryName: '🪟 창문',
+      categoryName: '창문',
       questions: [
         {
           questionId: 1,
@@ -87,7 +87,7 @@ export const checklistQuestions = {
     },
     {
       categoryId: 3,
-      categoryName: '🛀 화장실',
+      categoryName: '화장실',
       questions: [
         {
           questionId: 1,
@@ -111,7 +111,7 @@ export const checklistQuestions = {
     },
     {
       categoryId: 4,
-      categoryName: '🚨 보안',
+      categoryName: '보안',
       questions: [
         {
           questionId: 1,
@@ -135,7 +135,7 @@ export const checklistQuestions = {
     },
     {
       categoryId: 5,
-      categoryName: '🏞️ 외부',
+      categoryName: '외부',
       questions: [
         {
           questionId: 1,

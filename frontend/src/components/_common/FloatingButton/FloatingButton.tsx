@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import { FOOTER_SIZE } from '@/constants/style';
 import { boxShadow, title3 } from '@/styles/common';
 import theme from '@/styles/theme';
 
@@ -94,7 +95,7 @@ const S = {
   Wrapper: styled.div`
     display: flex;
     position: fixed;
-    bottom: 10%;
+    bottom: calc(5% + ${FOOTER_SIZE}rem);
     left: 50%;
     z-index: ${theme.zIndex.FLOATING_BUTTON};
     transform: translateX(-50%);

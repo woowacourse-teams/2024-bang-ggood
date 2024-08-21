@@ -33,7 +33,7 @@ const FourthSection = () => {
         <S.Text margin={30}>
           방 구하기 초보라 아무것도 모르겠다면,
           <br />
-          <S.Highlight> 집 구하기 꿀팁이 담긴 아티클(article)</S.Highlight>을
+          <S.Highlight>집 구하기 꿀팁이 담긴 아티클</S.Highlight>을
           <br /> 읽으면서 방 구하기 고수가 되어보아요!
           <S.Observer ref={ref2} />
           <S.EmptyBox height={20} />

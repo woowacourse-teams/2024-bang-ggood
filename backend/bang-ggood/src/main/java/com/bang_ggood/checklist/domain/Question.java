@@ -4,7 +4,9 @@ import com.bang_ggood.category.domain.Category;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public enum Question {
 
@@ -58,6 +60,30 @@ public enum Question {
         this.subtitle = subtitle;
         this.highlights = highlights;
         this.isDefault = isDefault;
+    }
+
+    static {
+        validateQuestionIdDuplication();
+        validateQuestionHighlightsMisMatch();
+    }
+
+    private static void validateQuestionIdDuplication() {
+        Set<Integer> idSet = new HashSet<>();
+        for (Question question : Question.values()) {
+            if (!idSet.add(question.getId())) {
+                throw new BangggoodException(ExceptionCode.QUESTION_ID_ERROR);
+            }
+        }
+    }
+
+    private static void validateQuestionHighlightsMisMatch() {
+        for (Question question : Question.values()) {
+            for (String highlight : question.highlights) {
+                if (!question.getTitle().contains(highlight)) {
+                    throw new BangggoodException(ExceptionCode.QUESTION_HIGHLIGHT_ERROR);
+                }
+            }
+        }
     }
 
     public static Question fromId(int id) {

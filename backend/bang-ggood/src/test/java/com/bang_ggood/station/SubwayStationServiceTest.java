@@ -16,6 +16,16 @@ public class SubwayStationServiceTest extends IntegrationTestSupport {
     @Autowired
     SubwayStationService subwayStationService;
 
+    // check data in "https://apis.map.kakao.com/web/sample/addMapClickEventWithMarker/"
+    private static Stream<Arguments> provideStationData() {
+        return Stream.of(
+                Arguments.of(37.50495731889611, 126.7550884277559, "상동"),
+                Arguments.of(37.48352733443973, 126.80085909322227, "소사"),
+                Arguments.of(37.47909015564278, 126.9517354974442, "서울대입구(관악구청)"),
+                Arguments.of(37.516248619935034, 127.10303565244502, "잠실(송파구청)")
+        );
+    }
+
     @DisplayName("가까운 지하철 조회 성공")
     @ParameterizedTest
     @MethodSource("provideStationData")
@@ -25,15 +35,5 @@ public class SubwayStationServiceTest extends IntegrationTestSupport {
 
         // then
         assertThat(stationName).isEqualTo(nearestStationName);
-    }
-
-    // check data in "https://apis.map.kakao.com/web/sample/addMapClickEventWithMarker/"
-    private static Stream<Arguments> provideStationData() {
-        return Stream.of(
-                Arguments.of(37.50495731889611, 126.7550884277559, "상동"),
-                Arguments.of(37.48352733443973, 126.80085909322227, "소사"),
-                Arguments.of(37.47909015564278, 126.9517354974442, "서울대입구(관악구청)"),
-                Arguments.of(37.516248619935034, 127.10303565244502, "잠실(송파구청)")
-        );
     }
 }

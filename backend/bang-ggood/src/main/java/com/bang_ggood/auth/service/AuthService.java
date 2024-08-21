@@ -4,8 +4,6 @@ import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.response.OauthInfoApiResponse;
 import com.bang_ggood.checklist.domain.Answer;
 import com.bang_ggood.checklist.domain.CustomChecklistQuestion;
-import com.bang_ggood.checklist.domain.OccupancyMonth;
-import com.bang_ggood.checklist.domain.OccupancyPeriod;
 import com.bang_ggood.checklist.domain.Option;
 import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
@@ -14,9 +12,6 @@ import com.bang_ggood.checklist.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.checklist.service.ChecklistService;
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
-import com.bang_ggood.room.domain.FloorLevel;
-import com.bang_ggood.room.domain.Structure;
-import com.bang_ggood.room.domain.Type;
 import com.bang_ggood.room.dto.request.RoomRequest;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -47,6 +42,12 @@ public class AuthService {
         this.customChecklistQuestionRepository = customChecklistQuestionRepository;
     }
 
+    private static void validateTokenOwnership(User user, AuthUser authUser) {
+        if (!user.getId().equals(authUser.id())) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER);
+        }
+    }
+
     @Transactional
     public String login(OauthLoginRequest request) {
         OauthInfoApiResponse oauthInfoApiResponse = oauthClient.requestOauthInfo(request);
@@ -75,11 +76,10 @@ public class AuthService {
 
     private void createDefaultChecklist(User user) {
         RoomRequest roomRequest = new RoomRequest(
-                "예시용 체크리스트", 2000, 50, 12, "서울특별시 송파구",
-                "잠실역", 10, "방끗 부동산", Type.VILLA.getName(), Structure.OPEN_ONE_ROOM.getName(),
-                5.0, 2, FloorLevel.GROUND.getName(), OccupancyMonth.SEPTEMBER.getMonth(),
-                OccupancyPeriod.EARLY.getPeriod(),
-                "집을 둘러보며 필요한 메모를 작성해보세요.", "한줄평 작성하는 곳");
+                "예시용 체크리스트", "방끗시 집잘구하구 행복하동", "방방하우스", "잠실", 10,
+                3000, 60, 5, List.of(1, 3), "지상", 14, "분리형 원룸", 9.5,
+                12, 9, "초", "방끗공인중개사",
+                "이곳에 필요한 메모를 작성하세요.", "이곳에 한줄평을 남겨 보세요.");
 
         List<Integer> options = List.of(
                 Option.INDUCTION.getId(),
@@ -104,12 +104,6 @@ public class AuthService {
         AuthUser authUser = jwtTokenProvider.resolveToken(accessToken);
         validateTokenOwnership(user, authUser);
         blackList.add(accessToken);
-    }
-
-    private static void validateTokenOwnership(User user, AuthUser authUser) {
-        if (!user.getId().equals(authUser.id())) {
-            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER);
-        }
     }
 
     public boolean isAccessTokenInBlackList(String accessToken) {

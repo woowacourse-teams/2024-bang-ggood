@@ -1,7 +1,6 @@
 package com.bang_ggood.article.service;
 
 import com.bang_ggood.IntegrationTestSupport;
-import com.bang_ggood.article.domain.Article;
 import com.bang_ggood.article.dto.request.ArticleCreateRequest;
 import com.bang_ggood.article.dto.response.ArticlePreviewResponse;
 import com.bang_ggood.article.repository.ArticleRepository;

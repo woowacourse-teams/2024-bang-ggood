@@ -21,8 +21,8 @@ class ChecklistTest {
 
         // when & then
         assertThatThrownBy(
-                () -> new Checklist(RoomFixture.ROOM_1, UserFixture.USER1, 1000, 20, 12,
-                        "공인중개사", memo, "요약", OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY)
+                () -> new Checklist(RoomFixture.ROOM_1, UserFixture.USER1, 1000, 20, 10, 12,
+                        OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY, "공인중개사", memo, "요약")
         )
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_MEMO_INVALID_LENGTH.getMessage());

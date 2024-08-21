@@ -21,7 +21,7 @@ public interface ChecklistOptionRepository extends JpaRepository<ChecklistOption
             "AND co.deleted = false")
     Integer countByChecklist(@Param("checklist") Checklist checklist);
 
-    @Modifying
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Transactional
     @Query("UPDATE ChecklistOption co "
             + "SET co.deleted = true "

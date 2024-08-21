@@ -5,10 +5,12 @@ import com.bang_ggood.category.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.category.dto.response.SelectedCategoryQuestionsResponse;
 import com.bang_ggood.checklist.domain.Answer;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.ChecklistIncludedMaintenance;
 import com.bang_ggood.checklist.domain.ChecklistLike;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.CustomChecklistQuestion;
+import com.bang_ggood.checklist.domain.MaintenanceItem;
 import com.bang_ggood.checklist.domain.Option;
 import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
@@ -24,6 +26,7 @@ import com.bang_ggood.checklist.dto.response.SelectedOptionResponse;
 import com.bang_ggood.checklist.dto.response.SelectedQuestionResponse;
 import com.bang_ggood.checklist.dto.response.UserChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
+import com.bang_ggood.checklist.repository.ChecklistIncludedMaintenanceRepository;
 import com.bang_ggood.checklist.repository.ChecklistLikeRepository;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
@@ -54,18 +57,21 @@ public class ChecklistService {
     private final RoomRepository roomRepository;
     private final ChecklistOptionRepository checklistOptionRepository;
     private final ChecklistQuestionRepository checklistQuestionRepository;
+    private final ChecklistIncludedMaintenanceRepository checklistIncludedMaintenanceRepository;
     private final CustomChecklistQuestionRepository customChecklistQuestionRepository;
     private final ChecklistLikeRepository checklistLikeRepository;
 
     public ChecklistService(ChecklistRepository checklistRepository, RoomRepository roomRepository,
                             ChecklistOptionRepository checklistOptionRepository,
                             ChecklistQuestionRepository checklistQuestionRepository,
+                            ChecklistIncludedMaintenanceRepository checklistIncludedMaintenanceRepository,
                             CustomChecklistQuestionRepository customChecklistQuestionRepository,
                             ChecklistLikeRepository checklistLikeRepository) {
         this.checklistRepository = checklistRepository;
         this.roomRepository = roomRepository;
         this.checklistOptionRepository = checklistOptionRepository;
         this.checklistQuestionRepository = checklistQuestionRepository;
+        this.checklistIncludedMaintenanceRepository = checklistIncludedMaintenanceRepository;
         this.customChecklistQuestionRepository = customChecklistQuestionRepository;
         this.checklistLikeRepository = checklistLikeRepository;
     }
@@ -79,6 +85,7 @@ public class ChecklistService {
 
         createChecklistOptions(checklistRequest, checklist);
         createChecklistQuestions(checklistRequest, checklist);
+        createChecklistIncludedMaintenances(checklistRequest, checklist);
         return checklist.getId();
     }
 
@@ -122,6 +129,37 @@ public class ChecklistService {
                         Answer.from(question.answer())))
                 .collect(Collectors.toList());
         checklistQuestionRepository.saveAll(checklistQuestions);
+    }
+
+    private void createChecklistIncludedMaintenances(ChecklistRequest checklistRequest, Checklist checklist) {
+        validateIncludedMaintenance(checklistRequest.room().includedMaintenances());
+        List<ChecklistIncludedMaintenance> checklistIncludedMaintenances =
+                checklistRequest.room().includedMaintenances().stream()
+                        .map(maintenanceId -> new ChecklistIncludedMaintenance(checklist, MaintenanceItem.fromId(maintenanceId)))
+                        .collect(Collectors.toList());
+        checklistIncludedMaintenanceRepository.saveAll(checklistIncludedMaintenances);
+    }
+
+    private void validateIncludedMaintenance(List<Integer> includedMaintenances) {
+        validateIncludedMaintenanceDuplicate(includedMaintenances);
+        validateIncludedMaintenanceInvalid(includedMaintenances);
+    }
+
+    private void validateIncludedMaintenanceDuplicate(List<Integer> includedMaintenances) {
+        Set<Integer> set = new HashSet<>();
+        includedMaintenances.forEach(id -> {
+            if (!set.add(id)) {
+                throw new BangggoodException(ExceptionCode.MAINTENANCE_ITEM_DUPLICATE);
+            }
+        });
+    }
+
+    private void validateIncludedMaintenanceInvalid(List<Integer> includedMaintenances) {
+        for (Integer maintenancesId : includedMaintenances) {
+            if (!MaintenanceItem.contains(maintenancesId)) {
+                throw new BangggoodException(ExceptionCode.MAINTENANCE_ITEM_INVALID);
+            }
+        }
     }
 
     @Transactional
@@ -291,6 +329,7 @@ public class ChecklistService {
 
         updateChecklistOptions(checklistRequest, checklist);
         updateChecklistQuestions(checklistRequest, checklist);
+        updateChecklistIncludedMaintenances(checklistRequest, checklist);
     }
 
     private void updateChecklistOptions(ChecklistRequest checklistRequest, Checklist checklist) {
@@ -317,6 +356,16 @@ public class ChecklistService {
         validateSameQuestions(questions, updateQuestions);
         IntStream.range(0, questions.size())
                 .forEach(i -> questions.get(i).change(updateQuestions.get(i)));
+    }
+
+    private void updateChecklistIncludedMaintenances(ChecklistRequest checklistRequest, Checklist checklist) {
+        List<Integer> maintenanceIds = checklistRequest.room().includedMaintenances();
+        validateIncludedMaintenance(maintenanceIds);
+        List<ChecklistIncludedMaintenance> checklistIncludedMaintenances = maintenanceIds.stream()
+                .map(maintenanceId -> new ChecklistIncludedMaintenance(checklist, MaintenanceItem.fromId(maintenanceId)))
+                .toList();
+        checklistIncludedMaintenanceRepository.deleteAllByChecklistId(checklist.getId());
+        checklistIncludedMaintenanceRepository.saveAll(checklistIncludedMaintenances);
     }
 
     private void validateSameQuestions(List<ChecklistQuestion> questions, List<ChecklistQuestion> updateQuestions) {
@@ -360,8 +409,13 @@ public class ChecklistService {
 
     @Transactional
     public void deleteChecklistById(User user, long id) {
-        validateChecklistOwnership(user, checklistRepository.getById(id));
+        Checklist checklist = checklistRepository.getById(id);
+        validateChecklistOwnership(user, checklist);
+        checklistQuestionRepository.deleteAllByChecklistId(checklist.getId());
+        checklistOptionRepository.deleteAllByChecklistId(checklist.getId());
+        checklistIncludedMaintenanceRepository.deleteAllByChecklistId(checklist.getId());
         checklistRepository.deleteById(id);
+        roomRepository.deleteById(checklist.getRoom().getId());
     }
 
     @Transactional

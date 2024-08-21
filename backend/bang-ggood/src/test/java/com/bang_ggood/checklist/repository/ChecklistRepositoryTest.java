@@ -87,10 +87,27 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
         checklistRepository.deleteById(checklist1.getId());
 
         // when
-        List<Checklist> checklists = checklistRepository.findAllByUser(UserFixture.USER1);
+        List<Checklist> checklists = checklistRepository.findAllByUserOrderByLatest(UserFixture.USER1);
 
         // then
         Assertions.assertThat(checklists).containsOnly(checklist2);
+    }
+
+    @DisplayName("체크리스트 리스트 조회 성공 : 체크리스트를 최신순으로 조회한다.")
+    @Test
+    void findAllByUser_OrderByLatest() {
+        // given
+        Checklist checklist1 = ChecklistFixture.CHECKLIST1_USER1;
+        checklistRepository.save(checklist1);
+
+        Checklist checklist2 = ChecklistFixture.CHECKLIST2_USER1;
+        checklistRepository.save(checklist2);
+
+        // when
+        List<Checklist> checklists = checklistRepository.findAllByUserOrderByLatest(UserFixture.USER1);
+
+        // then
+        Assertions.assertThat(checklists).containsExactly(checklist2, checklist1);
     }
 
     @Transactional
@@ -108,7 +125,7 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
         checklistRepository.saveAll(List.of(checklist1, checklist2, checklist3));
 
         // when
-        List<Checklist> checklists = checklistRepository.findAllByUser(UserFixture.USER1);
+        List<Checklist> checklists = checklistRepository.findAllByUserOrderByLatest(UserFixture.USER1);
 
         // then
         Assertions.assertThat(checklists).containsOnly(checklist1, checklist2);

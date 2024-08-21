@@ -3,7 +3,12 @@ import { useRef } from 'react';
 
 import { useAccordionContext } from '@/components/_common/Accordion/AccordionContext';
 
-const AccordionBody = ({ children, id }: { children: React.ReactNode; id: number }) => {
+interface Props {
+  children: React.ReactNode;
+  id: number;
+}
+
+const AccordionBody = ({ children, id }: Props) => {
   const bodyRef = useRef(null);
   const { isAccordionOpen } = useAccordionContext();
 
@@ -22,11 +27,11 @@ const S = {
   Container: styled.div<{ isOpen: boolean }>`
     display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
     overflow: hidden;
-    margin-top: 10px;
+    margin-top: 1rem;
 
     background-color: ${({ theme }) => theme.palette.white};
-    max-height: ${({ isOpen }) => (isOpen ? '1000px' : '0')};
+    max-height: ${({ isOpen }) => (isOpen ? '100rem' : '0')};
     transition: max-height 0.2s cubic-bezier(0.15, 0.1, 0.25, 1);
-    border-radius: 12px;
+    border-radius: 1.2rem;
   `,
 };

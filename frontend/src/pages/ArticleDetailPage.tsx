@@ -45,7 +45,7 @@ const S = {
     ${flexSpaceBetween}
   `,
   Keyword: styled.span<{ bgColor: string }>`
-    padding: 4px 10px;
+    padding: 0.4rem 1rem;
 
     background-color: ${({ bgColor }) => bgColor};
 
@@ -54,19 +54,15 @@ const S = {
     align-self: flex-start;
 
     box-sizing: content-box;
-    border-radius: 6px;
+    border-radius: 0.6rem;
   `,
   Date: styled.div`
     font-size: ${({ theme }) => theme.text.size.xSmall};
   `,
   Title: styled.div`
-    margin: 36px;
+    margin: 3.6rem;
 
     ${title1}
     text-align: center;
-  `,
-  Contents: styled.div`
-    line-height: 1.6rem;
-    letter-spacing: 0.05rem;
   `,
 };

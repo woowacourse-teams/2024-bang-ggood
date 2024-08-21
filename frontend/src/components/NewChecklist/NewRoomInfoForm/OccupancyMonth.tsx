@@ -14,7 +14,7 @@ const OccupancyMonth = () => {
   const errorMessageOccupancyPeriod = useStore(checklistRoomInfoStore, state => state.errorMessage.occupancyPeriod);
 
   return (
-    <FlexBox.Vertical gap="15px">
+    <FlexBox.Vertical gap="1.5rem">
       <FormField.Label label="입주 가능 기간" />
       <FormStyled.FieldBox>
         <FormField.Input width="medium" onChange={actions.onChange} name="occupancyMonth" value={occupancyMonth} />

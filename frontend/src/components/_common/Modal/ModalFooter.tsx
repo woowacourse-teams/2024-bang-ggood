@@ -6,15 +6,13 @@ const ModalFooter = ({ children }: { children: React.ReactNode }) => {
 
 export default ModalFooter;
 
-const Container = styled.div`
-  display: flex;
-  width: calc(100% - 32px);
-  padding: 16px;
-  justify-content: end;
-
-  gap: 10px;
-`;
-
 const S = {
-  Container,
+  Container: styled.div`
+    display: flex;
+    width: calc(100% - 3.2rem);
+    padding: 1.6rem;
+    justify-content: end;
+
+    gap: 1rem;
+  `,
 };

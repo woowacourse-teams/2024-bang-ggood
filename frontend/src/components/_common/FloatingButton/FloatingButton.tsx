@@ -36,24 +36,24 @@ export default FloatingButton;
 
 const sizeStyle = {
   small: css`
-    width: 40px;
-    height: 40px;
+    width: 4rem;
+    height: 4rem;
 
-    font-size: 12px;
+    font-size: ${theme.text.size.xSmall};
   `,
   medium: css`
-    width: 50px;
-    height: 50px;
+    width: 5rem;
+    height: 5rem;
 
-    font-size: 16px;
+    font-size: ${theme.text.size.small};
   `,
   extends: css`
     display: flex;
-    width: 130px;
-    height: 50px;
+    width: 13rem;
+    height: 5rem;
 
-    font-size: 16px;
-    gap: 10px;
+    font-size: ${theme.text.size.small};
+    gap: 1rem;
   `,
 };
 
@@ -98,13 +98,13 @@ const S = {
     left: 50%;
     z-index: ${theme.zIndex.FLOATING_BUTTON};
     transform: translateX(-50%);
-    max-width: 600px;
+    max-width: 60rem;
     justify-content: flex-end;
     width: 100%;
     padding-right: 10%;
 
-    @media (min-width: ${theme.viewport.MOBILE}px) {
-      padding-right: 20px;
+    @media (min-width: ${theme.viewport.MOBILE}rem) {
+      padding-right: 2rem;
     }
   `,
   Button: styled.button<{ size: Size; color: Color }>`
@@ -112,7 +112,7 @@ const S = {
     align-items: center;
     justify-content: center;
     border: none;
-    border-radius: 50px;
+    border-radius: 5rem;
     ${({ size }) => sizeStyle[size]};
     ${({ color }) => colorStyle[color]};
     ${title3};

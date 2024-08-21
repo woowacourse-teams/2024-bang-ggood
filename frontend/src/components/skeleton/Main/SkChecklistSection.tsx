@@ -17,7 +17,7 @@ const SkChecklistSection = () => {
 
 const Sk = {
   Wrapper: styled.div`
-    padding: 16px 16px 0;
+    padding: 1.6rem 1.6rem 0;
   `,
   Row: styled.div`
     width: 100%;
@@ -27,13 +27,13 @@ const Sk = {
     ${flexSpaceBetween};
   `,
   Title: styled.div`
-    width: 200px;
-    height: 25px;
+    width: 20rem;
+    height: 2.5rem;
     ${Skeleton}
   `,
   CardBox: styled.div`
-    height: 280px;
-    margin-top: 20px;
+    height: 28rem;
+    margin-top: 2rem;
     ${flexColumn};
     ${Skeleton}
   `,

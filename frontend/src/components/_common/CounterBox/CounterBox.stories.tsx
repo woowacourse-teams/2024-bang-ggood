@@ -10,7 +10,7 @@ const meta = {
   component: CounterBox,
   parameters: {
     args: {
-      size: '400px',
+      size: '40rem',
     },
   },
 } satisfies Meta<typeof CounterBox>;

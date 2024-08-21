@@ -14,17 +14,17 @@ const SkChecklistAnswer = () => {
 const S = {
   Container: styled.div`
     ${flexColumn}
-    gap: 10px;
-    margin-top: 20px;
+    gap: 1rem;
+    margin-top: 2rem;
   `,
   AccordionHeader: styled.div`
     width: 100%;
-    height: 60px;
+    height: 6rem;
     ${Skeleton}
   `,
   AccordionBody: styled.div`
     width: 100%;
-    height: 300px;
+    height: 30rem;
     ${Skeleton}
   `,
 };

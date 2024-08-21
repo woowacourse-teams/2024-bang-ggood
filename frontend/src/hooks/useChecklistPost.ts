@@ -45,7 +45,7 @@ const useChecklistPost = (summaryModalClose: () => void) => {
           onSuccess: () => {
             summaryModalClose();
             showToast('체크리스트가 저장되었습니다.'); // TODO: 메세지 상수처리
-            actions.reset();
+            actions.resetAll();
             navigate(ROUTE_PATH.checklistList);
           },
         },

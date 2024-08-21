@@ -22,14 +22,14 @@ export default CompareItem;
 const S = {
   ItemContainer: styled.div`
     width: 100%;
-    min-height: 60px;
+    min-height: 6rem;
     ${flexColumn};
     align-items: center;
   `,
   Label: styled.div<{ isLabeled: boolean }>`
     visibility: ${({ isLabeled }) => (isLabeled ? 'visible' : 'hidden')};
-    height: 15px;
-    margin-bottom: 5px;
+    height: 1.5rem;
+    margin-bottom: 0.5rem;
 
     color: ${({ theme }) => theme.palette.grey400};
     font-size: ${({ theme }) => theme.text.size.small};

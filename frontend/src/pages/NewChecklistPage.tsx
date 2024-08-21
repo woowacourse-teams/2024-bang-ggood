@@ -12,6 +12,8 @@ import useModalOpen from '@/hooks/useModalOpen';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 
 const NewChecklistPage = () => {
+  useChecklistTemplate(); // 체크리스트 질문 가져오기 및 준비
+
   const { tabs } = useNewChecklistTabs();
   // 메모 모달
   const { isModalOpen: isMemoModalOpen, modalOpen: memoModalOpen, modalClose: memoModalClose } = useModalOpen();
@@ -22,7 +24,6 @@ const NewChecklistPage = () => {
     modalClose: summaryModalClose,
   } = useModalOpen();
 
-  useChecklistTemplate(); // 체크리스트 질문 가져오기 및 준비
   const { handleSubmitChecklist } = useChecklistPost(summaryModalClose); // 체크리스트 POST
 
   return (
@@ -30,9 +31,9 @@ const NewChecklistPage = () => {
       <Header
         left={<Header.Backward />}
         center={<Header.Text>{'새 체크리스트'}</Header.Text>}
-        right={<Button label={'저장'} size="small" color="dark" onClick={summaryModalOpen} />}
+        right={<Button label={'저장'} size="xSmall" color="dark" onClick={summaryModalOpen} />}
       />
-      <TabProvider defaultTab={-1}>
+      <TabProvider defaultTab={1}>
         <Tabs tabList={tabs} />
         <NewChecklistContent />
       </TabProvider>

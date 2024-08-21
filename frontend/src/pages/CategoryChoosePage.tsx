@@ -102,38 +102,36 @@ const S = {
     ${flexColumn}
     justify-content: space-around;
     height: 80vh;
-    padding: 4px;
+    padding: 0.4rem;
   `,
   Content: styled.div`
     ${flexColumn}
-    gap: 40px;
+    gap: 4rem;
   `,
   TitleSection: styled.div`
-    margin-top: 30px;
+    margin-top: 3rem;
 
     ${flexColumn}
-    letter-spacing: 0.05rem;
   `,
   Title: styled.h1`
     ${title2}
-    line-height: 1.4rem;
   `,
   SubTitle: styled.span`
-    margin-top: 10px;
+    margin-top: 1rem;
 
     font-size: ${({ theme }) => theme.text.size.medium};
   `,
   ButtonWrapper: styled.div`
     display: flex;
     width: 90%;
-    max-width: 350px;
+    max-width: 35rem;
     height: auto;
     flex-wrap: wrap;
-    gap: 15px 10px;
+    gap: 1.5rem 1rem;
   `,
   IconWrapper: styled.div`
     ${flexRow}
-    padding: 16px;
+    padding: 1.6rem;
     justify-content: flex-end;
   `,
 };

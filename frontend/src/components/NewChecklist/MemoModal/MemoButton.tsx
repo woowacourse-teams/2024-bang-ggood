@@ -29,9 +29,9 @@ const S = {
 
     justify-content: center;
 
-    @media (width >= 600px) {
+    @media (width >= 60rem) {
       left: 50%;
-      max-width: 600px;
+      max-width: 60rem;
       transform: translateX(-50%);
     }
 
@@ -39,13 +39,13 @@ const S = {
   `,
   Button: styled.button`
     display: flex;
-    width: 120px;
-    padding: 12px;
+    width: 12rem;
+    padding: 1.2rem;
     align-items: center;
     justify-content: center;
     border: none;
-    gap: 10px;
-    border-radius: 15px 15px 0 0;
+    gap: 1rem;
+    border-radius: 1.5rem 1.5rem 0 0;
     ${title3};
     ${boxShadow};
     outline: none;

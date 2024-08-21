@@ -42,11 +42,11 @@ const S = {
     width: 100%;
     padding-top: 100%;
     border-radius: 50%;
-    border: 2px solid ${({ borderColor }) => borderColor};
+    border: 0.2rem solid ${({ borderColor }) => borderColor};
 
     background-color: ${({ color }) => color};
 
-    font-size: 14px;
+    font-size: 1.4rem;
     ${flexCenter}
     flex-direction: column;
 
@@ -75,14 +75,14 @@ const S = {
 
     color: ${({ color }) => color};
     font-weight: bold;
-    font-size: 14px;
+    font-size: 1.4rem;
 
-    @media (width <= 344px) {
-      font-size: 12px;
+    @media (width <= 34.4rem) {
+      font-size: 1.2rem;
     }
 
-    @media (width >= 580px) {
-      font-size: 12px;
+    @media (width >= 58rem) {
+      font-size: 1.2rem;
     }
   `,
 };

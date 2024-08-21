@@ -10,6 +10,7 @@ const fs = require('fs');
 // env
 const dotenv = require('dotenv');
 const { sentryWebpackPlugin } = require('@sentry/webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const env = dotenv.config().parsed;
 const isProduction = process.env.NODE_ENV == 'production';
 
@@ -112,11 +113,17 @@ module.exports = () => {
     config.plugins.push(
       sentryWebpackPlugin({
         authToken: process.env.SENTRY_AUTH_TOKEN,
-        org: process.env.SENTRY_ID,
-        project: 'javascript-react',
+        org: process.env.SENTRY_ORG,
+        project: process.env.SENTRY_PROJECT,
       }),
     );
+    // config.plugins.push(new BundleAnalyzerPlugin()); /* 원할때만 켜기 */
     config.devtool = 'source-map';
+    config.optimization = {
+      splitChunks: {
+        chunks: 'all',
+      },
+    };
   } else {
     config.mode = 'development';
   }

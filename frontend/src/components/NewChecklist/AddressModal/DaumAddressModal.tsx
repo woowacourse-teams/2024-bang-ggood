@@ -37,7 +37,6 @@ const DaumAddressModal = () => {
         width: '100%',
         height: '60rem',
         oncomplete: (data: Address) => {
-          // TODO: 위도, 경도까지 보내주기
           setAddress(data.address);
           setBuildingName(data.buildingName);
           modalClose();

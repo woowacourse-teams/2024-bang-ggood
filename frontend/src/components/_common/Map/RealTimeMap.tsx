@@ -16,7 +16,7 @@ const RealTimeMap = () => {
 
   const [position, setPosition] = useState(DEFAULT_POSITION);
 
-  const { setAddress, setJibunAddress, setBuildingName } = useStore(checklistAddressStore);
+  const { setAddress, setBuildingName } = useStore(checklistAddressStore);
 
   const geocoder = new kakao.maps.services.Geocoder();
 
@@ -69,9 +69,6 @@ const RealTimeMap = () => {
 
   const getDetailAddress = (result: any, status: any) => {
     if (status === kakao.maps.services.Status.OK) {
-      if (result[0].address) {
-        setJibunAddress(result[0].address.address_name);
-      }
       if (result[0].road_address) {
         setAddress(result[0].road_address.address_name);
         setBuildingName(result[0].road_address.building_name);

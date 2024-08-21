@@ -1,5 +1,3 @@
-import { Address } from '@/types/address';
-
 export type OccupancyPeriod = '초' | '중순' | '말';
 
 export type RoomInfo = Partial<{
@@ -21,7 +19,8 @@ export type RoomInfo = Partial<{
   memo: string;
   type: string;
   createdAt?: string;
-  address: Address;
+  address: string;
+  buildingName: string;
   includedMaintenances: number[]; // 관리비 포함항목
 }>;
 export type RoomInfoName = keyof RoomInfo;

@@ -14,7 +14,7 @@ interface Props {
 }
 
 const ChecklistQuestion = ({ question }: Props) => {
-  const { questionId, title, highlight } = question;
+  const { questionId, title, highlights } = question;
 
   const { updateAndToggleAnswer: updateAnswer, findCategoryQuestion } = useChecklistAnswer();
   const { currentTabId } = useTabContext();
@@ -28,7 +28,7 @@ const ChecklistQuestion = ({ question }: Props) => {
   return (
     <S.Container>
       <S.Question>
-        <HighlightText title={title} highlight={highlight} />
+        <HighlightText title={title} highlights={highlights} />
       </S.Question>
       <S.Options>
         {ANSWER_OPTIONS.map((option: Answer) => (

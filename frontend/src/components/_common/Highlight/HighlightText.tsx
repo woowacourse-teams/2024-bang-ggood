@@ -5,18 +5,18 @@ import theme from '@/styles/theme';
 
 interface Props {
   title: string;
-  highlight: string[];
+  highlights: string[];
 }
 
-const highlightText = ({ title, highlight }: Props) => {
-  if (!highlight || highlight.length === 0) return title;
+const highlightText = ({ title, highlights }: Props) => {
+  if (!highlights || highlights.length === 0) return title;
 
-  const regex = new RegExp(`(${highlight.join('|')})`, 'gi');
+  const regex = new RegExp(`(${highlights.join('|')})`, 'gi');
 
   return title
     .split(regex)
     .map((part, index) =>
-      highlight.some(word => word.toLowerCase() === part.toLowerCase()) ? (
+      highlights.some(highlight => highlight.toLowerCase() === part.toLowerCase()) ? (
         <S.Highlight key={index}>{part}</S.Highlight>
       ) : (
         part
@@ -24,8 +24,8 @@ const highlightText = ({ title, highlight }: Props) => {
     );
 };
 
-const HighlightText = ({ title, highlight }: Props) => {
-  return <S.Title>{highlightText({ title, highlight })}</S.Title>;
+const HighlightText = ({ title, highlights }: Props) => {
+  return <S.Title>{highlightText({ title, highlights })}</S.Title>;
 };
 
 export default HighlightText;

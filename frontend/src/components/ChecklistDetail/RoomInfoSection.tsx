@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 import { Building, Calendar, LocationLineIcon, Pencil, Room, Stairs, Subway } from '@/assets/assets';
 import LikeButton from '@/components/_common/Like/LikeButton';
+import AddressMap from '@/components/_common/Map/AddressMap';
 import { flexColumn, flexRow, flexSpaceBetween, title2 } from '@/styles/common';
 import { RoomInfo } from '@/types/room';
 import formattedDate from '@/utils/formattedDate';
@@ -84,7 +85,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
         {formattedDate(createdAt ?? '', '.')}
       </S.Row>
       <div></div>
-      {/* <AddressMap location={address ?? ''} /> TODO: 카카오맵 API 에러 일단주석 */}
+      <AddressMap location={address ?? ''} />
     </S.Container>
   );
 };

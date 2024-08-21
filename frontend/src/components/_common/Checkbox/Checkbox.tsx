@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useCallback } from 'react';
 
-import { CheckIcon, PlusSmall } from '@/assets/assets';
+import { CheckIcon, PlusWhite } from '@/assets/assets';
 import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
 
@@ -30,7 +30,7 @@ const Checkbox = ({
 
   return (
     <S.Checkbox $color={checkedColor} $hoverColor={hoverColor} onClick={onClick}>
-      <S.FlexBox>{iconType === 'check' ? <CheckIcon /> : <PlusSmall />}</S.FlexBox>
+      <S.FlexBox>{iconType === 'check' ? <CheckIcon /> : <PlusWhite />}</S.FlexBox>
       <S.CheckboxInput type="checkbox" onChange={handleClick} checked={isChecked} />
     </S.Checkbox>
   );

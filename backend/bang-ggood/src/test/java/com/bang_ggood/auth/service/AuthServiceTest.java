@@ -7,10 +7,11 @@ import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
 import com.bang_ggood.checklist.service.ChecklistService;
+import com.bang_ggood.exception.BangggoodException;
+import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +21,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static com.bang_ggood.user.UserFixture.USER1;
+import static com.bang_ggood.user.UserFixture.USER1_WITH_ID;
+import static com.bang_ggood.user.UserFixture.USER2_WITH_ID;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,6 +39,8 @@ class AuthServiceTest extends IntegrationTestSupport {
     private ChecklistService checklistService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @DisplayName("로그인 성공 : 존재하지 않는 회원이면 데이터베이스에 새로운 유저를 추가하고 토큰을 반환한다.")
     @Test
@@ -46,7 +53,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         String token = authService.login(oauthLoginRequest);
 
         // then
-        Assertions.assertThat(token).isNotBlank();
+        assertThat(token).isNotBlank();
     }
 
     @DisplayName("로그인 성공 : 존재하는 회원이면 데이터베이스에 새로운 유저를 추가하지않고 토큰을 바로 반환한다.")
@@ -61,7 +68,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         String token = authService.login(oauthLoginRequest);
 
         // then
-        Assertions.assertThat(token).isNotBlank();
+        assertThat(token).isNotBlank();
     }
 
     @DisplayName("로그인 성공 : 회원 가입시 디폴트 체크리스트 질문을 추가한다.")
@@ -79,11 +86,11 @@ class AuthServiceTest extends IntegrationTestSupport {
         ChecklistQuestionsResponse checklistQuestions = checklistService.readChecklistQuestions(user);
 
         int sum = 0;
-        for (CategoryQuestionsResponse response: checklistQuestions.categories()) {
+        for (CategoryQuestionsResponse response : checklistQuestions.categories()) {
             sum += response.questions().size();
         }
 
-        Assertions.assertThat(sum).isEqualTo(Question.findDefaultQuestions().size());
+        assertThat(sum).isEqualTo(Question.findDefaultQuestions().size());
     }
 
     @DisplayName("로그인 성공 : 회원 가입시 디폴트 체크리스트를 추가한다.")
@@ -99,6 +106,18 @@ class AuthServiceTest extends IntegrationTestSupport {
         // then
         User user = authService.extractUser(token);
         UserChecklistsPreviewResponse response = checklistService.readChecklistsPreview(user);
-        Assertions.assertThat(response.checklists()).hasSize(1);
+        assertThat(response.checklists()).hasSize(1);
+    }
+
+    @DisplayName("로그아웃 실패 : 다른 유저의 토큰인 경우")
+    @Test
+    void logout_invalid_ownership_exception() {
+        // given
+        String token = jwtTokenProvider.createToken(USER1_WITH_ID);
+
+        //when & then
+        assertThatThrownBy(() -> authService.logout(token, USER2_WITH_ID))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER.getMessage());
     }
 }

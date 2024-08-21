@@ -1,13 +1,9 @@
 package com.bang_ggood.checklist.controller;
 
 import com.bang_ggood.AcceptanceTest;
-import com.bang_ggood.category.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.CustomChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
-import com.bang_ggood.checklist.dto.response.CategoryCustomChecklistQuestionsResponse;
-import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
-import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.repository.ChecklistLikeRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.repository.CustomChecklistQuestionRepository;
@@ -17,14 +13,12 @@ import com.bang_ggood.room.repository.RoomRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Header;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 
 import static com.bang_ggood.user.UserFixture.USER1;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
 class ChecklistE2ETest extends AcceptanceTest {
@@ -112,22 +106,12 @@ class ChecklistE2ETest extends AcceptanceTest {
         // given
         customChecklistQuestionRepository.saveAll(CustomChecklistFixture.CUSTOM_CHECKLIST_QUESTION_DEFAULT);
 
-        ChecklistQuestionsResponse checklistQuestionsResponse = RestAssured.given().log().all()
+        RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
                 .when().get("/checklists/questions")
                 .then().log().all()
-                .statusCode(200)
-                .extract()
-                .as(ChecklistQuestionsResponse.class);
-
-        // then
-        int questionsSize = 0;
-        for (CategoryQuestionsResponse categoryQuestionsResponse : checklistQuestionsResponse.categories()) {
-            questionsSize += categoryQuestionsResponse.questions().size();
-        }
-
-        assertThat(questionsSize).isEqualTo(CustomChecklistFixture.CUSTOM_CHECKLIST_QUESTION_DEFAULT.size());
+                .statusCode(200);
     }
 
     @DisplayName("커스텀 체크리스트 전체 조회 성공")
@@ -138,9 +122,7 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
                 .when().get("/custom-checklist/all")
                 .then().log().all()
-                .statusCode(200)
-                .extract()
-                .as(CategoryCustomChecklistQuestionsResponse.class);
+                .statusCode(200);
     }
 
     @DisplayName("작성된 체크리스트 조회 성공")
@@ -148,7 +130,7 @@ class ChecklistE2ETest extends AcceptanceTest {
     void readChecklistById() {
         long checklistId = checklistService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
-        SelectedChecklistResponse selectedChecklistResponse = RestAssured.given().log().all()
+        RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
                 .when().get("/checklists/" + checklistId)

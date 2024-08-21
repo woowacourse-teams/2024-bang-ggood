@@ -12,6 +12,8 @@ import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.QuestionRequest;
 import com.bang_ggood.checklist.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.checklist.service.ChecklistService;
+import com.bang_ggood.exception.BangggoodException;
+import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.domain.FloorLevel;
 import com.bang_ggood.room.domain.Structure;
 import com.bang_ggood.room.dto.request.RoomRequest;
@@ -19,10 +21,14 @@ import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class AuthService {
+
+    private static final Set<String> blackList = new HashSet<>();
 
     private final OauthClient oauthClient;
     private final JwtTokenProvider jwtTokenProvider;
@@ -92,9 +98,31 @@ public class AuthService {
         checklistService.createChecklist(user, checklistRequest);
     }
 
+    public void logout(String accessToken, User user) {
+        AuthUser authUser = jwtTokenProvider.resolveToken(accessToken);
+        validateTokenOwnership(user, authUser);
+        blackList.add(accessToken);
+    }
+
+    private static void validateTokenOwnership(User user, AuthUser authUser) {
+        if (!user.getId().equals(authUser.id())) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER);
+        }
+    }
+
+    public boolean isAccessTokenInBlackList(String accessToken) {
+        return blackList.contains(accessToken);
+    }
+
     public User extractUser(String token) {
         AuthUser authUser = jwtTokenProvider.resolveToken(token);
-
+        validateAccessTokenInBlacklist(token);
         return userRepository.getUserById(authUser.id());
+    }
+
+    private void validateAccessTokenInBlacklist(String token) {
+        if (isAccessTokenInBlackList(token)) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_IN_BLACKLIST);
+        }
     }
 }

@@ -200,7 +200,7 @@ public class ChecklistService {
                 .map(categoryQuestionEntry -> CategoryQuestionsResponse.of(
                         categoryQuestionEntry.getKey(),
                         categoryQuestionEntry.getValue().stream()
-                                .map(QuestionResponse::of)
+                                .map(QuestionResponse::new)
                                 .toList()))
                 .toList();
 
@@ -246,7 +246,7 @@ public class ChecklistService {
         for (Category category : Category.values()) {
             List<Question> categoryQuestions = Question.findQuestionsByCategory(category);
             List<CustomChecklistQuestionResponse> questions = categoryQuestions.stream()
-                    .map(question -> CustomChecklistQuestionResponse.of(question,
+                    .map(question -> new CustomChecklistQuestionResponse(question,
                             question.isSelected(customChecklistQuestions)))
                     .toList();
             response.add(new CategoryCustomChecklistQuestionResponse(category.getId(), category.getName(), questions));
@@ -286,7 +286,7 @@ public class ChecklistService {
                                                                       List<ChecklistQuestion> checklistQuestions) {
         List<SelectedQuestionResponse> selectedQuestionResponse =
                 Question.filterWithUnselectedGrade(category, checklistQuestions).stream()
-                        .map(SelectedQuestionResponse::of)
+                        .map(SelectedQuestionResponse::new)
                         .toList();
 
         return SelectedCategoryQuestionsResponse.of(category, selectedQuestionResponse);

@@ -12,6 +12,8 @@ public enum ExceptionCode {
     OPTION_DUPLICATED(HttpStatus.BAD_REQUEST, "중복된 옵션이 존재합니다."),
 
     // Question
+    QUESTION_ID_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "중복된 질문 ID가 존재해 질문을 생성할 수 없습니다."),
+    QUESTION_HIGHLIGHT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "잘못된 하이라이트 키워드가 존재해 질문을 생성할 수 없습니다."),
     QUESTION_INVALID(HttpStatus.BAD_REQUEST, "잘못된 질문 ID입니다."),
     QUESTION_DUPLICATED(HttpStatus.BAD_REQUEST, "중복된 질문이 존재합니다."),
     QUESTION_DIFFERENT(HttpStatus.BAD_REQUEST, "수정할 질문 목록이 기존의 질문 목록과 동일하지 않습니다."),
@@ -59,6 +61,8 @@ public enum ExceptionCode {
     AUTHENTICATION_COOKIE_INVALID(HttpStatus.UNAUTHORIZED, "인증 정보가 올바르지 않습니다."),
     AUTHENTICATION_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "토큰이 만료되었습니다."),
     AUTHENTICATION_TOKEN_INVALID(HttpStatus.UNAUTHORIZED, "토큰 정보가 올바르지 않습니다."),
+    AUTHENTICATION_TOKEN_IN_BLACKLIST(HttpStatus.UNAUTHORIZED, "이미 로그아웃되어 더 이상 사용할 수 없는 토큰입니다. 다시 로그인 해주세요."),
+    AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER(HttpStatus.UNAUTHORIZED, "해당 유저의 토큰이 아닙니다"),
     OAUTH_TOKEN_INTERNAL_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "카카오 서버와 통신하는 과정 중 예상치 못한 예외가 발생했습니다."),
 
     // Article

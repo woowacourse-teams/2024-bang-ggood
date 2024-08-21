@@ -2,13 +2,13 @@ import styled from '@emotion/styled';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { postKakaoCode } from '@/apis/login';
 import FifthSection from '@/components/Landing/FifthSection';
 import FirstSection from '@/components/Landing/FirstSection';
 import FourthSection from '@/components/Landing/FourthSection';
 import SecondSection from '@/components/Landing/SecondSection';
 import ThirdSection from '@/components/Landing/ThirdSection';
 import { ROUTE_PATH } from '@/constants/routePath';
+import useAddUserQuery from '@/hooks/query/useAddUserQuery';
 import { flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
 
@@ -27,7 +27,7 @@ const SectionColors: Record<string, Color> = {
     background: theme.palette.green100,
   },
   fourth: {
-    background: 'tranparent',
+    background: theme.palette.background,
   },
   fifth: {
     background: theme.palette.yellow200,
@@ -36,38 +36,36 @@ const SectionColors: Record<string, Color> = {
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const { mutate: addUser, isSuccess } = useAddUserQuery();
 
   useEffect(() => {
     const code = new URL(window.location.href).searchParams.get('code');
-
-    const postLogin = async () => {
-      if (code) {
-        await postKakaoCode(code).then(async () => {
-          navigate(ROUTE_PATH.root);
-        });
-      }
-    };
-
     if (code) {
-      postLogin();
+      addUser(code);
     }
-  }, []);
+  }, [addUser]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate(ROUTE_PATH.home);
+    }
+  }, [isSuccess, navigate]);
 
   return (
     <S.Container>
-      <S.Section height={570} color={SectionColors.first.background}>
+      <S.Section height={57} color={SectionColors.first.background}>
         <FirstSection />
       </S.Section>
-      <S.Section height={700} color={SectionColors.second.background}>
+      <S.Section height={70} color={SectionColors.second.background}>
         <SecondSection />
       </S.Section>
-      <S.Section height={820} color={SectionColors.third.background}>
+      <S.Section height={82} color={SectionColors.third.background}>
         <ThirdSection />
       </S.Section>
-      <S.Section height={950} color={SectionColors.fourth.background}>
+      <S.Section height={95} color={SectionColors.fourth.background}>
         <FourthSection />
       </S.Section>
-      <S.Section height={250} color={SectionColors.fifth.background}>
+      <S.Section height={25} color={SectionColors.fifth.background}>
         <FifthSection />
       </S.Section>
     </S.Container>
@@ -78,14 +76,13 @@ export default LandingPage;
 
 const S = {
   Section: styled.div<{ color: string; height: number }>`
-    display: flex;
+    ${flexColumn}
     width: 100%;
-    height: ${({ height }) => height}px;
+    height: ${({ height }) => height}rem;
 
     background-color: ${({ color }) => color};
 
     color: ${({ theme }) => theme.palette.black};
-    flex-direction: column;
   `,
   Container: styled.div`
     background-color: ${({ theme }) => theme.palette.background};

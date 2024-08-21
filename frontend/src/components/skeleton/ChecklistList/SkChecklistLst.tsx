@@ -57,15 +57,9 @@ const S = {
     ${Skeleton}
     border-radius: .8rem;
 
-<<<<<<< HEAD
-    height: 150px;
-    padding: 12px 16px;
-    border: 1px solid ${({ theme }) => theme.palette.grey200};
-=======
     height: 10rem;
     padding: 1.2rem 1.6rem;
     border: 0.1rem solid ${({ theme }) => theme.palette.grey200};
->>>>>>> c9415f752eb857b08f842b01412e9fad847c9dc7
 
     ${boxShadow}
   `,

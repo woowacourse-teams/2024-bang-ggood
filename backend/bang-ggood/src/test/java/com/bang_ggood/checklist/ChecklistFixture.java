@@ -2,8 +2,10 @@ package com.bang_ggood.checklist;
 
 import com.bang_ggood.checklist.domain.Answer;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.ChecklistIncludedMaintenance;
 import com.bang_ggood.checklist.domain.ChecklistLike;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
+import com.bang_ggood.checklist.domain.MaintenanceItem;
 import com.bang_ggood.checklist.domain.OccupancyMonth;
 import com.bang_ggood.checklist.domain.OccupancyPeriod;
 import com.bang_ggood.checklist.domain.Question;
@@ -196,4 +198,12 @@ public class ChecklistFixture {
     public static final ChecklistLike CHECKLIST1_LIKE = new ChecklistLike(CHECKLIST1_USER1);
 
     public static final ChecklistLike CHECKLIST2_LIKE = new ChecklistLike(CHECKLIST2_USER1);
+
+    public static final ChecklistIncludedMaintenance CHECKLIST1_INCLUDED_MAINTENANCE_1 = new ChecklistIncludedMaintenance(
+            ChecklistFixture.CHECKLIST1_USER1, MaintenanceItem.ELECTRICITY
+    );
+
+    public static final ChecklistIncludedMaintenance CHECKLIST1_INCLUDED_MAINTENANCE_2 = new ChecklistIncludedMaintenance(
+            ChecklistFixture.CHECKLIST1_USER1, MaintenanceItem.GAS
+    );
 }

@@ -3,17 +3,19 @@ package com.bang_ggood.room.dto.request;
 import com.bang_ggood.room.domain.FloorLevel;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.domain.Structure;
-import com.bang_ggood.room.domain.Type;
 import jakarta.validation.constraints.NotBlank;
+import java.util.List;
 
 public record RoomRequest(@NotBlank(message = "방 이름이 존재하지 않습니다.") String roomName,
-                          Integer deposit, Integer rent, Integer contractTerm, String address,
-                          String station, Integer walkingTime, String realEstate,
-                          String type, String structure, Double size, Integer floor, String floorLevel,
-                          Integer occupancyMonth, String occupancyPeriod, String memo, String summary) {
+                          String address, String buildingName, String station,
+                          Integer walkingTime, Integer deposit, Integer rent, Integer maintenanceFee,
+                          List<Integer> includedMaintenances, String floorLevel, Integer floor,
+                          String structure, Double size, Integer contractTerm, Integer occupancyMonth, String occupancyPeriod,
+                          String realEstate, String memo, String summary
+                          ) {
 
     public Room toRoomEntity() {
-        return new Room(roomName, station, walkingTime, address,
-                Type.from(type), size, floor, FloorLevel.from(floorLevel), Structure.from(structure));
+        return new Room(roomName, address, buildingName, station, walkingTime,
+                FloorLevel.from(floorLevel), floor, Structure.from(structure), size);
     }
 }

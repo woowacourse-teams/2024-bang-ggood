@@ -8,12 +8,16 @@ interface Props {
   name: string;
   active: boolean;
   hasIndicator: boolean | null;
+  imgUrl?: string;
 }
 
-const Tab = ({ id, onMoveTab, name, active, hasIndicator }: Props) => {
+const Tab = ({ id, onMoveTab, name, active, hasIndicator, imgUrl }: Props) => {
   return (
     <S.Container key={id} onClick={() => onMoveTab(id)} active={active}>
-      {name}
+      <S.TextBox>
+        {imgUrl && <img src={imgUrl} width={22} />}
+        <span>{name}</span>
+      </S.TextBox>
       {hasIndicator && hasIndicator !== null && <S.UncompletedIndicator />}
     </S.Container>
   );
@@ -34,6 +38,10 @@ const S = {
     cursor: pointer;
     border-bottom: ${({ active, theme }) =>
       active ? `.3rem solid ${theme.palette.yellow400}` : `.3rem solid ${theme.palette.yellow100}`};
+  `,
+  TextBox: styled.div`
+    display: flex;
+    gap: 5px;
   `,
   UncompletedIndicator: styled.div`
     position: absolute;

@@ -12,10 +12,10 @@ import { IncludedUtilities } from '@/types/room';
 type UtilityName = (typeof roomIncludedUtilites)[number];
 type UtilityValue = keyof IncludedUtilities;
 const nameToValue: Record<UtilityName, UtilityValue> = {
-  '💧수도': 'water',
-  '🛜인터넷': 'internet',
-  '⚡전기': 'electricity',
-  '⛽가스': 'gas',
+  수도: 'water',
+  인터넷: 'internet',
+  전기: 'electricity',
+  가스: 'gas',
 };
 
 const IncludedUtilities = () => {

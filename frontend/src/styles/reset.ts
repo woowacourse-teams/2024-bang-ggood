@@ -171,7 +171,7 @@ export const normalize = css`
 
   /* input */
   /* input 기본 스타일 초기화 */
-  input {
+  input:not([type]) {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -189,5 +189,15 @@ export const normalize = css`
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+  }
+
+  textarea {
+    border: none;
+    outline: none;
+    background: none;
+    box-shadow: none;
+    resize: none;
+    font: inherit;
+    color: inherit;
   }
 `;

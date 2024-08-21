@@ -1,72 +1,52 @@
-export const checklistList = [
-  {
-    checklistId: 1,
-    roomName: '스튜디오 아파트',
-    address: '미국 애니타운 메인 스트리트',
-    deposit: 500,
-    rent: 65,
-    createdAt: '2024-01-01T10:00:00Z',
-    badge: [
-      {
-        shortName: '✨ 편의시설',
-        longName: '다양한 편의시설 완비',
-      },
-      {
-        shortName: '🏠 경제적',
-        longName: '특별 할인 적용',
-      },
-      {
-        shortName: '⏰ 교통',
-        longName: '편리한 교통 접근성',
-      },
-      {
-        shortName: '🌱 주위환경',
-        longName: '쾌적한 주거 환경',
-      },
-    ],
-  },
-  {
-    checklistId: 2,
-    roomName: '베드룸 아파트',
-    address: '미국 아더타운 엘름 스트리트',
-    deposit: 800,
-    rent: 50,
-    createdAt: '2024-02-01T10:00:00Z',
-    badge: [
-      {
-        shortName: '✨ 청결',
-        longName: '최근 리모델링 완료',
-      },
-    ],
-  },
-  {
-    checklistId: 3,
-    roomName: '베스트 콘도',
-    address: '미국 썸타운 오크 스트리트',
-    deposit: 1000,
-    rent: 70,
-    createdAt: '2024-03-01T10:00:00Z',
-    badge: [
-      {
-        shortName: '⏰ 교통',
-        longName: '편리한 교통 접근성',
-      },
-      {
-        shortName: '🌱 주위환경',
-        longName: '쾌적한 주거 환경',
-      },
-      {
-        shortName: '✨ 편의시설',
-        longName: '다양한 편의시설 완비',
-      },
-      {
-        shortName: '🏠 경제적',
-        longName: '특별 할인 적용',
-      },
-      {
-        shortName: '📸 보안',
-        longName: '안전해요',
-      },
-    ],
-  },
-];
+export const checklistList = {
+  checklists: [
+    {
+      checklistId: 1,
+      roomName: '건대역 오픈형',
+      address: '서울 광진구 구의동 센트럴빌',
+      deposit: 800,
+      rent: 65,
+      station: '건대입구역',
+      walkingTime: 10,
+      createdAt: '2024-01-01T10:00:00Z',
+      summary: '전체적으로 무난, 방 크기는 평범',
+      isLiked: true,
+    },
+    {
+      checklistId: 2,
+      roomName: '설대입구 원룸',
+      address: '서울시 관악구 봉천동 관악로 23',
+      deposit: 1000,
+      rent: 50,
+      station: '서울대 입구역',
+      walkingTime: 10,
+      createdAt: '2024-02-01T10:00:00Z',
+      summary: '트리플 역세권이나 회사에서 조금 멀다.',
+      isLiked: false,
+    },
+    {
+      checklistId: 3,
+      roomName: '사당역 분리형',
+      address: '서울 동작구 사당동',
+      deposit: 500,
+      rent: 45,
+      station: '사당역',
+      walkingTime: 5,
+      createdAt: '2024-03-01T10:00:00Z',
+      summary: '방은 좁으나 싼 가격이 장점!',
+      isLiked: false,
+    },
+    {
+      checklistId: 4,
+      roomName: '사당역 분리형',
+      address: '서울 동작구 사당동',
+      deposit: 500,
+      rent: 45,
+      station: '사당역',
+      walkingTime: 5,
+      createdAt: '2024-08-21T10:00:00Z',
+      summary: '방은 좁으나 싼 가격이 장점!',
+      isLiked: false,
+    },
+  ],
+};

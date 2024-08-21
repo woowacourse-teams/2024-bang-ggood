@@ -14,3 +14,8 @@ stories
 *storybook.log
 
 .*cache
+# Sentry Config File
+.env.sentry-build-plugin
+
+
+private*

@@ -80,6 +80,7 @@
         "noEmptyLineBetween": true,
         "properties": ["animation"]
       }
-    ]
+    ],
+    "media-query-no-invalid": null
   }
 }

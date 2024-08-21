@@ -5,9 +5,12 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
+const fs = require('fs');
 
 // env
 const dotenv = require('dotenv');
+const { sentryWebpackPlugin } = require('@sentry/webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const env = dotenv.config().parsed;
 const isProduction = process.env.NODE_ENV == 'production';
 
@@ -37,8 +40,6 @@ const config = {
       template: 'index.html',
     }),
     new webpack.DefinePlugin(envKeys),
-    // Add your plugins here
-    // Learn more about plugins from https:/webpack.js.org/configuration/plugins/
   ],
   performance: {
     hints: false,
@@ -56,17 +57,44 @@ const config = {
         test: /\.css$/i,
         use: [stylesHandler, 'css-loader'],
       },
+      { test: /\.html$/i, use: ['html-loader'] },
       {
-        test: /\.(eot|ttf|woff|woff2|png|jpg|gif)$/i,
+        test: /\.(eot|ttf|woff|woff2)$/i,
         type: 'asset',
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'assets/fonts/[name].[hash:8].[ext]',
+            },
+          },
+        ],
       },
+      { test: /\.(png|jpg|gif)/i, type: 'asset/resource' },
       {
         test: /\.svg$/i,
         issuer: /\.[jt]sx?$/,
-        use: [{ loader: '@svgr/webpack', options: {} }],
+        use: [
+          {
+            loader: '@svgr/webpack',
+            options: {
+              svgoConfig: {
+                plugins: [
+                  {
+                    name: 'preset-default',
+                    params: {
+                      overrides: {
+                        removeViewBox: false,
+                      },
+                    },
+                  },
+                  'prefixIds',
+                ],
+              },
+            },
+          },
+        ],
       },
-      // Add your rules for custom modules here
-      // Learn more about loaders from https://webpack.js.org/loaders/
     ],
   },
   resolve: {
@@ -84,6 +112,34 @@ module.exports = () => {
     config.plugins.push(new MiniCssExtractPlugin());
 
     config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
+    config.plugins.push(
+      sentryWebpackPlugin({
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        org: process.env.SENTRY_ORG,
+        project: process.env.SENTRY_PROJECT,
+      }),
+    );
+    config.devtool = 'source-map';
+    config.optimization = {
+      splitChunks: {
+        chunks: 'all',
+        minSize: 20000,
+        maxSize: 250000, // 250KB 단위로 청크를 나눔
+        cacheGroups: {
+          defaultVendors: {
+            test: /[\\/]node_modules[\\/]/,
+            priority: -10,
+            reuseExistingChunk: true,
+          },
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true,
+          },
+        },
+      },
+    };
+    // config.plugins.push(new BundleAnalyzerPlugin()); /* 원할때만 켜기 */
   } else {
     config.mode = 'development';
   }

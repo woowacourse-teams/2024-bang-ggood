@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS checklist_option CASCADE;
 DROP TABLE IF EXISTS checklist_question CASCADE;
 DROP TABLE IF EXISTS article CASCADE;
 DROP TABLE IF EXISTS checklist_like CASCADE;
+DROP TABLE IF EXISTS checklist_included_maintenance CASCADE;
 DROP TABLE IF EXISTS checklist CASCADE;
 DROP TABLE IF EXISTS room CASCADE;
 DROP TABLE IF EXISTS custom_checklist_question CASCADE;
@@ -95,6 +96,17 @@ CREATE TABLE checklist_like
 (
     id           BIGINT AUTO_INCREMENT PRIMARY KEY,
     checklist_id BIGINT,
+    created_at   TIMESTAMP(6),
+    modified_at  TIMESTAMP(6),
+    deleted      BOOLEAN,
+    FOREIGN KEY (checklist_id) REFERENCES checklist (id)
+);
+
+CREATE TABLE checklist_included_maintenance
+(
+    id           BIGINT AUTO_INCREMENT PRIMARY KEY,
+    checklist_id BIGINT,
+    maintenance_item VARCHAR(255),
     created_at   TIMESTAMP(6),
     modified_at  TIMESTAMP(6),
     deleted      BOOLEAN,

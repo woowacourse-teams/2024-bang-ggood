@@ -2,7 +2,7 @@ import { useStore } from 'zustand';
 
 import FormField from '@/components/_common/FormField/FormField';
 import Input from '@/components/_common/Input/Input';
-import IncludedUtilities from '@/components/NewChecklist/NewRoomInfoForm/IncludedUtilities';
+import IncludedMaintenances from '@/components/NewChecklist/NewRoomInfoForm/IncludedMaintenances';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
@@ -19,7 +19,7 @@ const MaintenanceFee = () => {
         <FormStyled.FlexLabel label="만원"></FormStyled.FlexLabel>
       </FormStyled.FieldBox>
       <FormField.ErrorMessage value={errorMessage ?? ''} />
-      <IncludedUtilities />
+      <IncludedMaintenances />
     </FormField>
   );
 };

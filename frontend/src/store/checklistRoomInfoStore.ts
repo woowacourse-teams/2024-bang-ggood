@@ -11,7 +11,7 @@ import {
 } from '@/utils/validators';
 
 export const initialRoomInfo = {
-  roomName: '8월 14일 1번째 방', // TODO: N번째방 구현하기
+  roomName: '',
   deposit: undefined,
   rent: undefined,
   maintenanceFee: undefined,

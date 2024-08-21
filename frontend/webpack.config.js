@@ -58,7 +58,7 @@ const config = {
         use: [stylesHandler, 'css-loader'],
       },
       {
-        test: /\.(eot|ttf|woff|woff2)$/i,
+        test: /\.(eot|ttf|woff|woff2|png|jpg|gif)$/i,
         type: 'asset',
         use: [
           {
@@ -68,10 +68,6 @@ const config = {
             },
           },
         ],
-      },
-      {
-        test: /\.(png|jpg)$/i,
-        type: 'asset/resource',
       },
       {
         test: /\.svg$/i,

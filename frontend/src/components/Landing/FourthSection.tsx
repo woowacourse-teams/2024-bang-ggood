@@ -1,4 +1,3 @@
-import MainScreenShot from 'public/image/mainScreenShot.png';
 import { useRef } from 'react';
 
 import ArticleCard from '@/components/ArticleList/ArticleCard';
@@ -29,7 +28,7 @@ const FourthSection = () => {
         <S.EmptyBox height={10} />
         <S.Observer ref={ref} />
         <S.AnimationBox isIntersecting={isIntersecting}>
-          <img src={MainScreenShot} width="200px" />
+          <img src="/image/mainScreenShot.png" width="200px" />
         </S.AnimationBox>
         <S.Text margin={30}>
           방 구하기 초보라 아무것도 모르겠다면,

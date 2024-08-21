@@ -17,6 +17,7 @@ public enum ExceptionCode {
     QUESTION_INVALID(HttpStatus.BAD_REQUEST, "잘못된 질문 ID입니다."),
     QUESTION_DUPLICATED(HttpStatus.BAD_REQUEST, "중복된 질문이 존재합니다."),
     QUESTION_DIFFERENT(HttpStatus.BAD_REQUEST, "수정할 질문 목록이 기존의 질문 목록과 동일하지 않습니다."),
+
     // User
     USER_NOT_FOUND(HttpStatus.BAD_REQUEST, "유저가 존재하지 않습니다."),
 
@@ -32,9 +33,6 @@ public enum ExceptionCode {
     // CustomChecklist
     CUSTOM_CHECKLIST_QUESTION_EMPTY(HttpStatus.BAD_REQUEST, "커스텀 질문 개수가 유효하지 않습니다."),
 
-    // Type
-    TYPE_INVALID(HttpStatus.BAD_REQUEST, "타입이 유효하지 않습니다."),
-
     // FloorLevel
     FLOOR_LEVEL_INVALID(HttpStatus.BAD_REQUEST, "층 종류가 유효하지 않습니다."),
 
@@ -49,6 +47,10 @@ public enum ExceptionCode {
 
     // OccupancyPeriod
     OCCUPANCY_PERIOD_INVALID(HttpStatus.BAD_REQUEST, "입주 가능 기간은 초, 중, 말 혹은 null 값만 가능합니다."),
+
+    // MaintenanceItem
+    MAINTENANCE_ITEM_DUPLICATE(HttpStatus.BAD_REQUEST, "중복된 관리비 항목이 존재합니다."),
+    MAINTENANCE_ITEM_INVALID(HttpStatus.BAD_REQUEST, "유효하지 않은 관리비 항목이 입력되었습니다."),
 
     //like
     LIKE_ALREADY_EXISTS(HttpStatus.CONFLICT, "체크리스트가 이미 좋아요 상태입니다"),

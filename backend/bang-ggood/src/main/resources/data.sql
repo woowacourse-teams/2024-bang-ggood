@@ -2,8 +2,7 @@ INSERT INTO users(name, email, created_at, modified_at, deleted)
 VALUES ('방방이', 'bang-ggood@gmail.com', '2024-07-22 07:56:42', '2024-07-22 07:56:42', false);
 
 INSERT INTO custom_checklist_question(user_id, question, created_at, modified_at, deleted)
-VALUES
-       (1, 'ROOM_CONDITION_1', '2024-07-22 07:56:42', '2024-07-22 07:56:42', false),
+VALUES (1, 'ROOM_CONDITION_1', '2024-07-22 07:56:42', '2024-07-22 07:56:42', false),
        (1, 'ROOM_CONDITION_2', '2024-07-22 07:56:43', '2024-07-22 07:56:43', false),
        (1, 'ROOM_CONDITION_3', '2024-07-22 07:56:44', '2024-07-22 07:56:44', false),
        (1, 'ROOM_CONDITION_4', '2024-07-22 07:56:45', '2024-07-22 07:56:45', false),

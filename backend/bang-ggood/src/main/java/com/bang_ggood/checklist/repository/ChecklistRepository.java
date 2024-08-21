@@ -53,7 +53,7 @@ public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
     boolean existsById(@Param("id") long id);
 
     @Transactional
-    @Modifying
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("UPDATE Checklist c "
             + "SET c.deleted = true "
             + "WHERE c.id = :id")

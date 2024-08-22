@@ -28,6 +28,7 @@ const NewChecklistPage = () => {
   } = useModalOpen();
 
   const { handleSubmitChecklist } = useChecklistPost(summaryModalClose); // 체크리스트 POST
+
   return (
     <>
       <Header

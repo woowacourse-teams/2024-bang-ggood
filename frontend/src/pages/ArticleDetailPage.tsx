@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
+import SKArticleDetail from '@/components/skeleton/Article/SKArticleDetail';
 import useGetArticleQuery from '@/hooks/query/useGetArticleQuery';
 import { flexSpaceBetween, title1 } from '@/styles/common';
 import formattedDate from '@/utils/formattedDate';
@@ -19,9 +20,7 @@ const ArticleDetailPage = () => {
 
   const { color500 } = getSeqColor(article?.articleId ?? 0);
 
-  if (isLoading) {
-    return <div>ArticleDetailPage is Loading... </div>;
-  }
+  if (isLoading) return <SKArticleDetail />;
 
   return (
     <>

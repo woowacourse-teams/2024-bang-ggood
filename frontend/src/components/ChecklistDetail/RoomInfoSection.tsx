@@ -80,12 +80,12 @@ const RoomInfoSection = ({ room, options, checklistId, isLiked }: Props) => {
         </S.Row>
       </S.GapBox>
       <S.Row>
-        <Utils />
+        <Utils /> 관리비 포함 항목 :
         {includedMaintenances
           ?.map(id => IncludedMaintenancesData.find(item => item.id === id)?.displayName)
           .filter(Boolean)
-          .join(', ')}{' '}
-        관리비 포함
+          .join(', ')}
+        {!includedMaintenances?.length && formattedUndefined(includedMaintenances?.length, 'string', '')}
       </S.Row>
       <S.Row>
         <Calendar />
@@ -108,11 +108,13 @@ const RoomInfoSection = ({ room, options, checklistId, isLiked }: Props) => {
       </S.GapBox>
       <S.Row>
         <Options />
-        {options.map(option => `${option.optionName},`)}
+        {options.length
+          ? options.map(option => option.optionName).join(', ')
+          : formattedUndefined(options.length, 'string', '옵션')}
       </S.Row>
       <S.Row>
         <Summary />
-        {summary}
+        {formattedUndefined(summary, 'string', '한줄평')}
       </S.Row>
       <S.Row>
         <LocationLineIcon height={20} width={20} />

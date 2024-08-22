@@ -15,8 +15,6 @@ import com.bang_ggood.exception.ExceptionCode;
 import com.bang_ggood.room.dto.request.RoomRequest;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
@@ -26,8 +24,6 @@ import java.util.Set;
 @Service
 public class AuthService {
 
-
-    private static final Logger log = LoggerFactory.getLogger(AuthService.class);
     private static final Set<String> blackList = new HashSet<>();
 
     private final OauthClient oauthClient;
@@ -105,7 +101,6 @@ public class AuthService {
     }
 
     public void logout(String accessToken, User user) {
-        log.info("logout accessToken: {}", accessToken);
 
         String splitToken = accessToken.split("token=")[1];
         AuthUser authUser = jwtTokenProvider.resolveToken(splitToken);
@@ -118,9 +113,7 @@ public class AuthService {
     }
 
     public User extractUser(String token) {
-        log.info("extractUser token: {}", token);
         AuthUser authUser = jwtTokenProvider.resolveToken(token);
-        log.info("extractUser authUserId: {}", authUser.id());
         validateAccessTokenInBlacklist(token);
         return userRepository.getUserById(authUser.id());
     }

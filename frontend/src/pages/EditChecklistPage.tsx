@@ -10,8 +10,8 @@ import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
-import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
 import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery';
+import usePutChecklistQuery from '@/hooks/query/usePutCheclistQuery';
 import useModalOpen from '@/hooks/useModalOpen';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import useToast from '@/hooks/useToast';
@@ -34,7 +34,7 @@ const EditChecklistPage = () => {
 
   const { checklistId } = useParams() as RouteParams;
   const { data: checklist, isSuccess } = useGetChecklistDetailQuery(checklistId);
-  const { mutate: addChecklist } = useAddChecklistQuery();
+  const { mutate: putChecklist } = usePutChecklistQuery();
 
   /* roomInfo */
   const roomInfoAnswer = useStore(checklistRoomInfoStore, state => state.value);
@@ -77,11 +77,14 @@ const EditChecklistPage = () => {
 
   const handleSubmitChecklist = () => {
     const fetchNewChecklist = () => {
-      addChecklist(
+      putChecklist(
         {
-          room: roomInfoAnswer,
-          options: selectedOptions,
-          questions: transformQuestions(checklistCategoryQnA),
+          id: Number(checklistId),
+          checklist: {
+            room: roomInfoAnswer,
+            options: selectedOptions,
+            questions: transformQuestions(checklistCategoryQnA),
+          },
         },
         {
           onSuccess: () => {

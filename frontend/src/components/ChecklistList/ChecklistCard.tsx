@@ -15,9 +15,11 @@ interface Props {
 const ChecklistCard = ({ checklist }: Props) => {
   const navigate = useNavigate();
   const { checklistId, roomName, address, createdAt, deposit, rent, summary, isLiked } = checklist;
+
   const handleMoveToDetail = () => {
     navigate(ROUTE_PATH.checklistOne(checklist.checklistId));
   };
+
   return (
     <S.Container onClick={handleMoveToDetail}>
       <S.Row>
@@ -43,6 +45,7 @@ const ChecklistCard = ({ checklist }: Props) => {
   );
 };
 export default ChecklistCard;
+
 const S = {
   Container: styled.div`
     ${flexColumn}
@@ -86,7 +89,7 @@ const S = {
     background-color: ${({ theme }) => theme.palette.grey50};
     border-radius: 0.6rem;
     box-sizing: content-box;
-    max-width: 80%;
+    max-width: 70%;
   `,
   SummaryBox: styled.div`
     box-sizing: content-box;

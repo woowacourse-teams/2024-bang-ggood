@@ -26,14 +26,16 @@ type RouteParams = {
   checklistId: string;
 };
 const EditChecklistPage = () => {
-  const { isModalOpen, modalOpen, modalClose } = useModalOpen();
+  const navigate = useNavigate();
   const { showToast } = useToast();
+  const { tabs } = useNewChecklistTabs();
+
+  const { isModalOpen, modalOpen, modalClose } = useModalOpen();
 
   const { checklistId } = useParams() as RouteParams;
-  const navigate = useNavigate();
-
   const { data: checklist, isSuccess } = useGetChecklistDetailQuery(checklistId);
   const { mutate: addChecklist } = useAddChecklistQuery();
+
   /* roomInfo */
   const roomInfoAnswer = useStore(checklistRoomInfoStore, state => state.value);
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
@@ -44,8 +46,6 @@ const EditChecklistPage = () => {
   const { selectedOptions, setSelectedOptions } = useOptionStore();
   /* checklist */
   const { checklistCategoryQnA, setAnswers } = useChecklistStore();
-
-  const { tabs } = useNewChecklistTabs();
 
   useEffect(() => {
     const fetchChecklistAndSetToStore = async () => {
@@ -59,6 +59,7 @@ const EditChecklistPage = () => {
     };
     fetchChecklistAndSetToStore();
   }, [checklistId]);
+
   // TODO: fetch 시 로딩 상태일 때 스켈레톤처리. 성공할 떄만 return 문 보여주는 로직이 필요
   if (!roomName) {
     return <div>체크리스트가 없어요</div>;

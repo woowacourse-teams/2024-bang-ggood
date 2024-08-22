@@ -16,8 +16,10 @@ const NewChecklistPage = () => {
   useChecklistTemplate(); // 체크리스트 질문 가져오기 및 준비
 
   const { tabs } = useNewChecklistTabs();
+
   // 메모 모달
   const { isModalOpen: isMemoModalOpen, modalOpen: memoModalOpen, modalClose: memoModalClose } = useModalOpen();
+
   // 한줄평 모달
   const {
     isModalOpen: isSummaryModalOpen,

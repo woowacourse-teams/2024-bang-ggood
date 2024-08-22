@@ -10,13 +10,13 @@ import { ROUTE_PATH } from '@/constants/routePath';
 import { flexCenter, flexColumn } from '@/styles/common';
 
 const ErrorPage = () => {
-  const error = useRouteError() as Error;
   const navigate = useNavigate();
 
   const reset = () => {
     navigate(ROUTE_PATH.home, { replace: true });
   };
 
+  const error = useRouteError() as Error;
   const { message } = error as HttpError;
 
   return (

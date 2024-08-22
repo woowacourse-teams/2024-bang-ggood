@@ -24,14 +24,6 @@ const OptionChecklistTemplate = () => {
 export default OptionChecklistTemplate;
 
 const S = {
-  Container: styled.div`
-    ${flexColumn}
-    padding: 1.6rem;
-
-    background-color: ${({ theme }) => theme.palette.background};
-    min-height: calc(100vh - 6.4rem);
-    align-items: center;
-  `,
   InnerBox: styled.div`
     width: 100%;
     ${flexColumn}

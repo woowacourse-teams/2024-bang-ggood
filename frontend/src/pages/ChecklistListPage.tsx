@@ -22,13 +22,12 @@ const ChecklistListPage = () => {
   const handleClickMoveCustomPage = () => {
     navigate(ROUTE_PATH.checklistCustom);
   };
+
   const handleClickFloatingButton = () => {
     navigate(ROUTE_PATH.checklistNew);
   };
 
-  if (isLoading) {
-    return <SkChecklistList />;
-  }
+  if (isLoading) return <SkChecklistList />;
 
   return (
     <>

@@ -15,7 +15,7 @@ export const ROUTE_PATH = {
   roomCompareSelect: '/room-compare/select',
   roomCompare: '/room-compare',
   /* article */
-  article: '/article',
+  articleList: '/article',
   articleId: '/article/:articleId',
   articleOne: (id: number) => `/article/${id}`,
   /* etc */

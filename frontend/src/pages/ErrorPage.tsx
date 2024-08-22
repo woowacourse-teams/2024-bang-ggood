@@ -5,30 +5,33 @@ import HttpError from '@/apis/error/HttpError';
 import { BangBangCryIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
+import Layout from '@/components/_common/layout/Layout';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { flexColumn } from '@/styles/common';
+import { flexCenter, flexColumn } from '@/styles/common';
 
 const ErrorPage = () => {
-  const error = useRouteError() as Error;
   const navigate = useNavigate();
 
   const reset = () => {
     navigate(ROUTE_PATH.home, { replace: true });
   };
 
+  const error = useRouteError() as Error;
   const { message } = error as HttpError;
 
   return (
     <>
       <Header left={<Header.Logo />} />
-      <S.Wrapper>
-        <BangBangCryIcon width={300} height={100} />
-        <S.TextWrapper>
-          <S.Text>에러가 발생했습니다!</S.Text>
-          <S.Text>{message}</S.Text>
-          <S.HomeButton onClick={reset} label="홈페이지로 돌아가기" />
-        </S.TextWrapper>
-      </S.Wrapper>
+      <Layout withHeader>
+        <S.Wrapper>
+          <BangBangCryIcon width={300} height={100} />
+          <S.TextWrapper>
+            <S.Text>에러가 발생했습니다!</S.Text>
+            <S.Text>{message}</S.Text>
+            <S.HomeButton onClick={reset} label="홈페이지로 돌아가기" />
+          </S.TextWrapper>
+        </S.Wrapper>
+      </Layout>
     </>
   );
 };
@@ -39,11 +42,8 @@ const S = {
   Wrapper: styled.div`
     display: flex;
     width: 100%;
-    height: 80vh;
     gap: 1rem;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    ${flexCenter}
   `,
   Text: styled.div<{ $cursor?: boolean }>`
     font-weight: ${({ theme }) => theme.text.weight.bold};

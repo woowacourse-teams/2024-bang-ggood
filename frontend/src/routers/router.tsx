@@ -24,7 +24,10 @@ const router = createBrowserRouter([
       {
         element: <FooterLayout />,
         children: [
-          { element: <MainPage />, path: ROUTE_PATH.home },
+          {
+            element: <MainPage />,
+            path: ROUTE_PATH.home,
+          },
           {
             element: <ChecklistListPage />,
             path: ROUTE_PATH.checklistList,

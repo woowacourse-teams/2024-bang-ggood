@@ -5,6 +5,7 @@ import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import java.util.List;
 
 public record SelectedChecklistResponse(SelectedRoomResponse room,
+                                        boolean isLiked,
                                         List<SelectedOptionResponse> options,
                                         List<SelectedCategoryQuestionsResponse> categories) {
 }

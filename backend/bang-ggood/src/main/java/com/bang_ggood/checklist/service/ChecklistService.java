@@ -7,7 +7,6 @@ import com.bang_ggood.checklist.domain.Answer;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistMaintenance;
 import com.bang_ggood.checklist.domain.ChecklistLike;
-import com.bang_ggood.checklist.domain.ChecklistMaintenance;
 import com.bang_ggood.checklist.domain.ChecklistOption;
 import com.bang_ggood.checklist.domain.ChecklistQuestion;
 import com.bang_ggood.checklist.domain.CustomChecklistQuestion;
@@ -29,7 +28,6 @@ import com.bang_ggood.checklist.dto.response.UserChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
 import com.bang_ggood.checklist.repository.ChecklistMaintenanceRepository;
 import com.bang_ggood.checklist.repository.ChecklistLikeRepository;
-import com.bang_ggood.checklist.repository.ChecklistMaintenanceRepository;
 import com.bang_ggood.checklist.repository.ChecklistOptionRepository;
 import com.bang_ggood.checklist.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
@@ -266,10 +264,10 @@ public class ChecklistService {
         List<Integer> maintenanceIds = readChecklistMaintenancesByChecklist(checklist);
         SelectedRoomResponse selectedRoomResponse = SelectedRoomResponse.of(checklist, maintenanceIds);
         List<SelectedOptionResponse> options = readOptionsByChecklistId(id);
-        List<SelectedCategoryQuestionsResponse> selectedCategoryQuestionsResponse = readCategoryQuestionsByChecklistId(
-                id);
+        List<SelectedCategoryQuestionsResponse> selectedCategoryQuestionsResponse = readCategoryQuestionsByChecklistId(id);
+        boolean isLiked = checklistLikeRepository.existsByChecklist(checklist);
 
-        return new SelectedChecklistResponse(selectedRoomResponse, options, selectedCategoryQuestionsResponse);
+        return new SelectedChecklistResponse(selectedRoomResponse, isLiked, options, selectedCategoryQuestionsResponse);
     }
 
     private List<Integer> readChecklistMaintenancesByChecklist(Checklist checklist) {
@@ -305,7 +303,7 @@ public class ChecklistService {
 
     @Transactional
     public UserChecklistsPreviewResponse readChecklistsPreview(User user) {
-        List<Checklist> checklists = checklistRepository.findAllByUser(user);
+        List<Checklist> checklists = checklistRepository.findAllByUserOrderByLatest(user);
         List<UserChecklistPreviewResponse> responses = checklists.stream()
                 .map(this::getChecklistPreview)
                 .toList();

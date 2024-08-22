@@ -28,13 +28,13 @@ public class JwtTokenProvider {
     public String createToken(User user) {
         Date now = new Date();
         Date expiredDate = new Date(now.getTime() + tokenExpirationMills);
-
-        return Jwts.builder()
+        String token = Jwts.builder()
                 .setSubject(user.getId().toString())
                 .setIssuedAt(now)
                 .setExpiration(expiredDate)
                 .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
                 .compact();
+        return token;
     }
 
     public AuthUser resolveToken(String token) {
@@ -47,7 +47,6 @@ public class JwtTokenProvider {
 
             Long id = Long.valueOf(claims.getSubject());
             return AuthUser.from(id);
-
         } catch (ExpiredJwtException exception) {
             throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_EXPIRED);
         } catch (JwtException exception) {

@@ -39,7 +39,7 @@ const FormStyled = {
     display: flex;
     justify-content: flex-start;
     width: 100%;
-    gap: 1.5rem;
+    gap: 1rem;
   `,
   OptionButtonContainer: styled.div<{ gap?: number | string; flexWrap?: string }>`
     display: flex;

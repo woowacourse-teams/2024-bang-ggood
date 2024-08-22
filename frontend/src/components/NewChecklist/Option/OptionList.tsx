@@ -16,19 +16,19 @@ export default OptionList;
 const S = {
   GridContainer: styled.div`
     display: grid;
-    grid-template-columns: repeat(3, minmax(2.5rem, 8.5rem));
-    gap: 1.5rem;
     width: 100%;
+    grid-template-columns: repeat(3, minmax(25px, 85px));
+    gap: 15px;
 
-    @media (width >= 44rem) {
+    @media (width >= 440px) {
       grid-template-columns: repeat(4, 1fr);
     }
 
-    @media (width >= 48rem) {
+    @media (width >= 480px) {
       grid-template-columns: repeat(5, 1fr);
     }
 
-    @media (width >= 58rem) {
+    @media (width >= 580px) {
       grid-template-columns: repeat(6, 1fr);
     }
   `,

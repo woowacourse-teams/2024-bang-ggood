@@ -49,16 +49,6 @@ const S = {
     font-size: 1.4rem;
     ${flexCenter}
     flex-direction: column;
-
-    @media (width <= ${({ theme }) => theme.viewport.TABLET}) {
-      width: 100%;
-      padding-top: 100%;
-    }
-
-    @media (width <= ${({ theme }) => theme.viewport.MOBILE}) {
-      width: 100%;
-      padding-top: 100%;
-    }
   `,
   IconBox: styled.div`
     position: absolute;
@@ -67,25 +57,13 @@ const S = {
     height: 50%;
     aspect-ratio: 1 / 1;
 
-    @supports not (aspect-ratio: 1 / 1) {
-      &::before {
-        float: left;
-        padding-top: 100%;
-        content: '';
-      }
-
-      &::after {
-        display: block;
-        content: '';
-        clear: both;
-      }
-    }
-
-    ${flexCenter}
+    ${flexCenter};
   `,
   TextBox: styled.span<{ color: string }>`
     position: absolute;
     bottom: 15%;
+    width: 100%;
+    ${flexCenter}
 
     color: ${({ color }) => color};
     font-weight: bold;

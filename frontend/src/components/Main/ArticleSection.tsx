@@ -43,7 +43,7 @@ const S = {
     width: 100%;
     box-sizing: border-box;
 
-    padding: 1.6rem 1.6rem 0;
+    padding: 1rem 1.6rem 0;
     ${flexRow};
     ${flexSpaceBetween};
   `,

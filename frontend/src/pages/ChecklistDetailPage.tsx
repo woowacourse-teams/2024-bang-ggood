@@ -67,6 +67,7 @@ const ChecklistDetailPage = () => {
         <ChecklistAnswerSection categories={checklist?.categories} />
         <MemoSection memo={checklist?.room?.memo} />
       </Layout>
+
       {isModalOpen && (
         <AlertModal
           title={

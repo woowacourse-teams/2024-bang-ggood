@@ -53,7 +53,6 @@ const S = {
   IconBox: styled.div`
     position: absolute;
     top: 10%;
-    width: 50%;
     height: 50%;
     aspect-ratio: 1 / 1;
 
@@ -62,6 +61,7 @@ const S = {
   TextBox: styled.span<{ color: string }>`
     position: absolute;
     bottom: 15%;
+
     width: 100%;
     ${flexCenter}
 

@@ -20,15 +20,15 @@ const S = {
     grid-template-columns: repeat(3, minmax(25px, 85px));
     gap: 15px;
 
-    @media (width >= 440px) {
+    @media (width >= 44rem) {
       grid-template-columns: repeat(4, 1fr);
     }
 
-    @media (width >= 480px) {
+    @media (width >= 48rem) {
       grid-template-columns: repeat(5, 1fr);
     }
 
-    @media (width >= 580px) {
+    @media (width >= 58rem) {
       grid-template-columns: repeat(6, 1fr);
     }
   `,

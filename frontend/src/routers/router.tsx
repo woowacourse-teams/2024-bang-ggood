@@ -14,10 +14,11 @@ import MainPage from '@/pages/MainPage';
 import MyPage from '@/pages/MyPage';
 import NewChecklistPage from '@/pages/NewChecklistPage';
 import NotFound from '@/pages/NotFound';
+import AuthGuard from '@/routers/AuthGuard';
 
 const router = createBrowserRouter([
   {
-    // element: <AuthGuard />,
+    element: <AuthGuard />,
     errorElement: <ErrorPage />,
     children: [
       {

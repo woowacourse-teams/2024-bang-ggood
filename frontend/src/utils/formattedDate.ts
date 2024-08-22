@@ -6,7 +6,8 @@ const formattedDate = (stringDate: string, splitter: string = '/') => {
   const hourDifference = Math.floor((nowDate.getTime() - date.getTime()) / (1000 * 60 * 60));
   const minuteDifference = Math.floor((nowDate.getTime() - date.getTime()) / (1000 * 60));
 
-  if (hourDifference < 1) return `${minuteDifference}분 전`;
+  if (minuteDifference < 1) return '방금 전';
+  else if (hourDifference < 1) return `${minuteDifference}분 전`;
   else if (hourDifference < 24) return `${hourDifference}시간 전`;
   else if (dayDifference < 30) return `${dayDifference}일 전`;
 

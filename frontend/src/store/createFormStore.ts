@@ -13,6 +13,7 @@ const initialErrorMessages = <T extends object>(initial: Partial<T>) =>
 interface FormAction<T> {
   onChange: (event: InputChangeEvent) => void;
   set: (name: keyof T, value: string | undefined) => void;
+  setValueForced: (name: string, value: string | number) => void;
   setAll: (state: Partial<FormState<T>>) => void;
   resetAll: () => void;
   _reset: (name: keyof T) => void;
@@ -41,9 +42,7 @@ const createFormStore = <T extends object>(
         value: transformAll(initialRaw, valueType),
         errorMessage: initialErrorMessages(initialRaw),
         actions: {
-          onChange: event => {
-            get().actions.set(event.target.name as keyof T, event.target.value);
-          },
+          onChange: event => get().actions.set(event.target.name as keyof T, event.target.value),
           set: (name, value) => {
             if (value === '') {
               get().actions._reset(name);
@@ -52,6 +51,7 @@ const createFormStore = <T extends object>(
 
             get().actions._updateAfterValidation(name, value ?? '', validatorSet[name as string]);
           },
+          setValueForced: (name, value) => set({ value: { ...get().value, [name]: value } }),
 
           resetAll: () =>
             set({

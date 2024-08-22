@@ -42,11 +42,11 @@ const S = {
     width: 100%;
     padding-top: 100%;
     border-radius: 50%;
-    border: 2px solid ${({ borderColor }) => borderColor};
+    border: 0.2rem solid ${({ borderColor }) => borderColor};
 
     background-color: ${({ color }) => color};
 
-    font-size: 14px;
+    font-size: 1.4rem;
     ${flexCenter}
     flex-direction: column;
 

@@ -86,6 +86,7 @@ const Header = Object.assign(HeaderWrapper, {
   Backward: (props: React.SVGProps<SVGSVGElement>) => {
     const navigate = useNavigate();
     const handleClick = () => navigate(-1);
+
     return (
       <ArrowBack
         style={{
@@ -99,4 +100,5 @@ const Header = Object.assign(HeaderWrapper, {
   TextButton: S.TextButton,
   Text: S.Text,
 });
+
 export default Header;

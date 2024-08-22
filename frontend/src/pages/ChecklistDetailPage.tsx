@@ -5,6 +5,7 @@ import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import ChecklistAnswerSection from '@/components/ChecklistDetail/ChecklistAnswerSection';
+import MemoSection from '@/components/ChecklistDetail/MemoSection';
 import RoomInfoSection from '@/components/ChecklistDetail/RoomInfoSection';
 import SkChecklistDetail from '@/components/skeleton/ChecklistDetail/SkChecklistDetail';
 import { ROUTE_PATH } from '@/constants/routePath';
@@ -56,8 +57,14 @@ const ChecklistDetailPage = () => {
         }
       />
       <Layout bgColor={theme.palette.grey50} withHeader>
-        <RoomInfoSection room={checklist?.room} isLiked={checklist?.isLiked} checklistId={checklist?.checklistId} />
+        <RoomInfoSection
+          room={checklist?.room}
+          options={checklist?.options}
+          isLiked={checklist?.isLiked}
+          checklistId={Number(checklistId)}
+        />
         <ChecklistAnswerSection categories={checklist?.categories} />
+        <MemoSection memo={checklist?.room?.memo} />
       </Layout>
       {isModalOpen && <DeleteModal isOpen={isModalOpen} onClose={modalClose} handleDelete={handleDelete} />}
     </>

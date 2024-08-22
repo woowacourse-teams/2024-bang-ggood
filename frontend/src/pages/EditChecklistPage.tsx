@@ -6,6 +6,8 @@ import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import Tabs from '@/components/_common/Tabs/Tabs';
+import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
+import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
 import { ROUTE_PATH } from '@/constants/routePath';
@@ -31,6 +33,7 @@ const EditChecklistPage = () => {
   const { tabs } = useNewChecklistTabs();
 
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
+  const { isModalOpen: isMemoModalOpen, modalOpen: memoModalOpen, modalClose: memoModalClose } = useModalOpen(); // 메모 모달
 
   const { checklistId } = useParams() as RouteParams;
   const { data: checklist, isSuccess } = useGetChecklistDetailQuery(checklistId);
@@ -50,7 +53,6 @@ const EditChecklistPage = () => {
   useEffect(() => {
     const fetchChecklistAndSetToStore = async () => {
       if (!isSuccess) return;
-
       actions.setAll({ rawValue: objectOmit(checklist.room, new Set('includedMaintenances')), value: checklist.room });
       IncludedMaintenancesActions.set(checklist.room.includedMaintenances ?? []);
       setSelectedOptions(checklist.options.flatMap(option => option.optionId));
@@ -114,6 +116,12 @@ const EditChecklistPage = () => {
         <NewChecklistContent />
       </TabProvider>
 
+      {/* 메모 모달 */}
+      {isMemoModalOpen ? (
+        <MemoModal isModalOpen={isMemoModalOpen} modalClose={memoModalClose} />
+      ) : (
+        <MemoButton onClick={memoModalOpen} />
+      )}
       {/* 한줄평 모달*/}
       {isModalOpen && (
         <SummaryModal isModalOpen={isModalOpen} modalClose={modalClose} submitChecklist={handleSubmitChecklist} />

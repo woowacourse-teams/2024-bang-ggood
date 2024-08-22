@@ -51,6 +51,7 @@ const DaumAddressModal = () => {
     <>
       <S.AddressButton size="xSmall" color="dark" label="주소 검색" isSquare={true} onClick={openPostcodeEmbed} />
       <Modal position="bottom" isOpen={isModalOpen} onClose={modalClose}>
+        <Modal.header>주소 검색</Modal.header>
         <Modal.body>
           <div ref={postcodeContainerRef} style={{ width: '100%', marginTop: '1rem' }} />
         </Modal.body>

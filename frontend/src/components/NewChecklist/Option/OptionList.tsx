@@ -16,9 +16,9 @@ export default OptionList;
 const S = {
   GridContainer: styled.div`
     display: grid;
-    grid-template-columns: repeat(3, minmax(2.5rem, 8.5rem));
-    gap: 1.5rem;
     width: 100%;
+    grid-template-columns: repeat(3, minmax(25px, 85px));
+    gap: 15px;
 
     @media (width >= 44rem) {
       grid-template-columns: repeat(4, 1fr);

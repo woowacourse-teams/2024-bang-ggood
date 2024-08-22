@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useStore } from 'zustand';
 
 import AlertModal from '@/components/_common/AlertModal/AlertModal';
@@ -9,6 +10,7 @@ import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
 import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
+import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useChecklistPost from '@/hooks/useChecklistPost';
 import useChecklistTemplate from '@/hooks/useInitialChecklist';
@@ -18,6 +20,7 @@ import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
 const NewChecklistPage = () => {
   useChecklistTemplate(); // 체크리스트 질문 가져오기 및 준비
+  const navigate = useNavigate();
 
   const { tabs } = useNewChecklistTabs();
 
@@ -39,6 +42,11 @@ const NewChecklistPage = () => {
   //뒤로가기 내용 삭제 경고 모달
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
 
+  const handleNavigateBack = () => {
+    actions.resetAll();
+    navigate(ROUTE_PATH.checklistList);
+  };
+
   return (
     <>
       {isModalOpen && (
@@ -52,7 +60,7 @@ const NewChecklistPage = () => {
           }
           isOpen={isModalOpen}
           onClose={modalClose}
-          handleApprove={actions.resetAll}
+          handleApprove={handleNavigateBack}
           approveButtonName="나가기"
         />
       )}

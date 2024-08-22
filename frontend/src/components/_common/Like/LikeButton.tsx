@@ -16,8 +16,8 @@ const LikeButton = ({ isLiked = false, checklistId }: Props) => {
 
   const handleClickLike = (e: React.MouseEvent<SVGSVGElement>) => {
     e.stopPropagation();
-    setIsSelected(prev => !prev);
     toggleLike({ checklistId, isLiked });
+    setIsSelected(prev => !prev);
   };
 
   return (

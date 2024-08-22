@@ -130,7 +130,6 @@ const RealTimeMap = () => {
         lon: latlng.getLng(),
       });
     });
-    searchDetailAddrFromCoords(mapRef.current.getCenter(), getDetailAddress);
   }, []);
 
   /* 좌표로 법정동 상세 주소 정보를 요청*/

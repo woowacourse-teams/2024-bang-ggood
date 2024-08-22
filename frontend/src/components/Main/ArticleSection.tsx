@@ -14,7 +14,7 @@ const ArticleSection = () => {
   const { data: articles, isLoading } = useGetArticleListQuery();
 
   const handleClickShowMore = () => {
-    navigate(ROUTE_PATH.article);
+    navigate(ROUTE_PATH.articleList);
   };
 
   if (isLoading) return <SkArticleSection />;

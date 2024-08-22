@@ -27,13 +27,9 @@ const ChecklistDetailPage = () => {
 
   const { mutate: deleteChecklist } = useDeleteChecklistQuery();
 
-  if (isError) {
-    navigate(ROUTE_PATH.checklistList);
-  }
+  if (isError) navigate(ROUTE_PATH.checklistList);
 
-  if (isLoading) {
-    return <SkChecklistDetail />;
-  }
+  if (isLoading) return <SkChecklistDetail />;
 
   if (!checklist) return;
 

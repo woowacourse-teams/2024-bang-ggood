@@ -101,7 +101,7 @@ const S = {
   Wrapper: styled.div`
     ${flexColumn}
     justify-content: space-around;
-    height: 80vh;
+    height: 80dvh;
     padding: 0.4rem;
   `,
   Content: styled.div`

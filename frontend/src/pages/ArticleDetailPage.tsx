@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
 import MarkdownPreview from '@uiw/react-markdown-preview';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
+import SKArticleDetail from '@/components/skeleton/Article/SKArticleDetail';
+import { ROUTE_PATH } from '@/constants/routePath';
 import useGetArticleQuery from '@/hooks/query/useGetArticleQuery';
 import { flexSpaceBetween, title1 } from '@/styles/common';
 import formattedDate from '@/utils/formattedDate';
@@ -15,13 +17,15 @@ type RouteParams = {
 
 const ArticleDetailPage = () => {
   const { articleId } = useParams() as RouteParams;
-  const { data: article, isLoading } = useGetArticleQuery(articleId);
+  const { data: article, isError, isLoading } = useGetArticleQuery(articleId);
+
+  const navigate = useNavigate();
 
   const { color500 } = getSeqColor(article?.articleId ?? 0);
 
-  if (isLoading) {
-    return <div>ArticleDetailPage is Loading... </div>;
-  }
+  if (isError) navigate(ROUTE_PATH.articleList);
+
+  if (isLoading) return <SKArticleDetail />;
 
   return (
     <>

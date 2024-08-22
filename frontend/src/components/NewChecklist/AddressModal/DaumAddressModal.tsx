@@ -53,6 +53,7 @@ const DaumAddressModal = () => {
       <Modal position="bottom" isOpen={isModalOpen} onClose={modalClose}>
         <Modal.header>주소 검색</Modal.header>
         <Modal.body>
+          <S.EmptyBox />
           <div ref={postcodeContainerRef} style={{ width: '100%', marginTop: '1rem' }} />
         </Modal.body>
       </Modal>
@@ -67,5 +68,9 @@ const S = {
     width: 50%;
 
     font-size: ${({ theme }) => theme.text.size.xSmall};
+  `,
+  EmptyBox: styled.div`
+    width: 100%;
+    height: 20px;
   `,
 };

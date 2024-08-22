@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useStore } from 'zustand';
 
-import { DEFAULT_POSITION } from '@/constants/map';
 import checklistAddressStore from '@/store/checklistAddressStore';
 import { flexCenter } from '@/styles/common';
 
@@ -14,9 +13,7 @@ const RealTimeMap = () => {
   const markerRef = useRef<any | null>(null);
   const infoWindowRef = useRef<any | null>(null);
 
-  const [position, setPosition] = useState(DEFAULT_POSITION);
-
-  const { setAddress, setBuildingName } = useStore(checklistAddressStore);
+  const { setAddress, setBuildingName, setPosition, position } = useStore(checklistAddressStore);
 
   const geocoder = new kakao.maps.services.Geocoder();
 

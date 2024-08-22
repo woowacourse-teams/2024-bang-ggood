@@ -1,6 +1,7 @@
+import styled from '@emotion/styled';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import DeleteModal from '@/components/_common/DeleteModal/DeleteModal';
+import AlertModal from '@/components/_common/AlertModal/AlertModal';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
@@ -66,9 +67,26 @@ const ChecklistDetailPage = () => {
         <ChecklistAnswerSection categories={checklist?.categories} />
         <MemoSection memo={checklist?.room?.memo} />
       </Layout>
-      {isModalOpen && <DeleteModal isOpen={isModalOpen} onClose={modalClose} handleDelete={handleDelete} />}
+      {isModalOpen && (
+        <AlertModal
+          title={
+            <div>
+              정말 <S.AccentText>체크리스트</S.AccentText>를 삭제하시겠습니까?
+            </div>
+          }
+          subtTitle="삭제한 체크리스트는 다시 확인할 수 없습니다."
+          isOpen={isModalOpen}
+          onClose={modalClose}
+          handleApprove={handleDelete}
+        />
+      )}
     </>
   );
 };
 
+const S = {
+  AccentText: styled.span`
+    color: ${({ theme }) => theme.palette.green600};
+  `,
+};
 export default ChecklistDetailPage;

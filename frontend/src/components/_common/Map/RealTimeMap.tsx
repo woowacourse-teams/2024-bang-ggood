@@ -52,7 +52,16 @@ const RealTimeMap = () => {
     const message = `<span id="info-title">이 위치가 맞나요?</span>`;
 
     displayMarker(locPosition, message);
-    searchDetailAddrFromCoords(mapRef.current.getCenter(), getDetailAddress);
+
+    /* 좌표로부터 상세 주소 정보를 요청하고, 주소 상태 업데이트 */
+    geocoder.coord2Address(lon, lat, (result: any, status: any) => {
+      if (status === kakao.maps.services.Status.OK) {
+        if (result[0].road_address) {
+          setAddress(result[0].road_address.address_name);
+          setBuildingName(result[0].road_address.building_name);
+        }
+      }
+    });
   };
 
   const errorGeolocation = () => {
@@ -62,7 +71,71 @@ const RealTimeMap = () => {
     displayMarker(locPosition, message);
   };
 
-  /* 좌표로 법정동 상세 주소 정보를 요청합니다*/
+  // 첫 지도 생성
+  const makeMap = () => {
+    const mapContainer = document.getElementById('map');
+    if (!mapContainer) return;
+
+    const mapOption = {
+      center: new kakao.maps.LatLng(position.lat, position.lon),
+      level: 3,
+    };
+
+    const map = new kakao.maps.Map(mapContainer, mapOption);
+    mapRef.current = map;
+    return map;
+  };
+
+  //현재 위치 표기하는 커스텀 마커 생성
+  const makeCustomMarker = (map: any) => {
+    const imageSrc = 'https://github.com/user-attachments/assets/cdd2825b-407f-485a-8cc9-5d261acf815d ',
+      imageSize = new kakao.maps.Size(32, 40),
+      imageOption = { offset: new kakao.maps.Point(15, 45) };
+
+    const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+    const marker = new kakao.maps.Marker({
+      map: map,
+      position: new kakao.maps.LatLng(position.lat, position.lon),
+      image: markerImage,
+    });
+    markerRef.current = marker;
+  };
+
+  // 첫 인포윈도우 생성
+  const makeInfoWindow = () => {
+    infoWindowRef.current = new kakao.maps.InfoWindow({
+      content: '<span id="info-title">이 위치가 맞나요?</span>',
+      removable: true,
+    });
+  };
+
+  useEffect(() => {
+    const map = makeMap();
+
+    makeCustomMarker(map);
+
+    makeInfoWindow();
+
+    // geolocation으로 현재 실시간 위치 받아오기
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(successGeolocation, errorGeolocation);
+    } else {
+      errorGeolocation();
+    }
+
+    //클릭시 해당 위치로 위치 상태 변경
+    kakao.maps.event.addListener(map, 'click', (mouseEvent: any) => {
+      const latlng = mouseEvent.latLng;
+
+      setPosition({
+        lat: latlng.getLat(),
+        lon: latlng.getLng(),
+      });
+    });
+  }, []);
+
+  /* 좌표로 법정동 상세 주소 정보를 요청*/
   const searchDetailAddrFromCoords = (coords: any, callback: any) => {
     geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
   };
@@ -76,57 +149,7 @@ const RealTimeMap = () => {
     }
   };
 
-  useEffect(() => {
-    // 첫 지도 생성
-    const mapContainer = document.getElementById('map');
-    if (!mapContainer) return;
-
-    const mapOption = {
-      center: new kakao.maps.LatLng(position.lat, position.lon),
-      level: 3,
-    };
-
-    const map = new kakao.maps.Map(mapContainer, mapOption);
-    mapRef.current = map;
-
-    // 첫 커스텀 마커 생성
-    const imageSrc = 'https://github.com/user-attachments/assets/cdd2825b-407f-485a-8cc9-5d261acf815d ',
-      imageSize = new kakao.maps.Size(32, 40),
-      imageOption = { offset: new kakao.maps.Point(15, 45) };
-
-    const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-
-    const marker = new kakao.maps.Marker({
-      map: map,
-      position: new kakao.maps.LatLng(position.lat, position.lon),
-      image: markerImage,
-    });
-    markerRef.current = marker;
-
-    // 첫 인포윈도우 생성
-    infoWindowRef.current = new kakao.maps.InfoWindow({
-      content: '<span id="info-title">이 위치가 맞나요?</span>',
-      removable: true,
-    });
-
-    // geolocation으로 현재 실시간 위치 받아오기
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(successGeolocation, errorGeolocation);
-    } else {
-      errorGeolocation();
-    }
-
-    kakao.maps.event.addListener(map, 'click', (mouseEvent: any) => {
-      const latlng = mouseEvent.latLng;
-
-      setPosition({
-        lat: latlng.getLat(),
-        lon: latlng.getLng(),
-      });
-    });
-  }, []);
-
-  // 위치가 수정될 때마다 마커의 위치를 옮기기
+  /* 위치가 수정될 때마다 마커의 위치를 옮기기 */
   useEffect(() => {
     if (markerRef.current && mapRef.current) {
       const locPosition = new kakao.maps.LatLng(position.lat, position.lon);

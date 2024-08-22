@@ -62,9 +62,25 @@ const S = {
   `,
   IconBox: styled.div`
     position: absolute;
-    top: 35%;
+    top: 10%;
     width: 50%;
-    height: 0;
+    height: 50%;
+    aspect-ratio: 1 / 1;
+
+    @supports not (aspect-ratio: 1 / 1) {
+      &::before {
+        float: left;
+        padding-top: 100%;
+        content: '';
+      }
+
+      &::after {
+        display: block;
+        content: '';
+        clear: both;
+      }
+    }
+
     ${flexCenter}
   `,
   TextBox: styled.span<{ color: string }>`

@@ -51,6 +51,7 @@ const S = {
     width: 100%;
     ${flexRow}
     justify-content: space-around;
+    gap: 1rem;
   `,
   IconBox: styled.div`
     display: flex;

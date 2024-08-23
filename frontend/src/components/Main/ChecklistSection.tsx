@@ -50,7 +50,7 @@ export default ChecklistSection;
 const S = {
   Title: styled.div`
     ${title4};
-    margin: 1.6rem 0 0 1.6rem;
+    margin: 1rem 1.6rem 0;
   `,
   Container: styled.div`
     max-width: 100%;

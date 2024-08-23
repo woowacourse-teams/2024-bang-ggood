@@ -6,40 +6,39 @@ import ArrowRightYellow from '@/assets/icons/arrow/arrow-right-yellow.svg';
 import ArrowUpSmall from '@/assets/icons/arrow/arrow-up-small.svg';
 
 // common-icons
-import CheckIcon from '@/assets/icons/check.svg';
-import CloseIcon from '@/assets/icons/close.svg';
-import LocationLineIcon from '@/assets/icons/location-lined.svg';
+import CheckIcon from '@/assets/icons/common/check.svg';
+import CloseIcon from '@/assets/icons/common/close.svg';
+import InputRequiredDot from '@/assets/icons/common/input-required-dot.svg';
+import LocationLineIcon from '@/assets/icons/common/location-lined.svg';
+import Memo from '@/assets/icons/common/memo.svg';
+import SmallCheck from '@/assets/icons/common/small-check.svg';
 import PlusBlack from '@/assets/icons/plusMinus/plus-black.svg';
-import PlusSmall from '@/assets/icons/plusMinus/plus-small.svg';
 import PlusWhite from '@/assets/icons/plusMinus/plus-white.svg';
-
-// memo
-import MemoEmpty from '@/assets/icons/memo-empty.svg';
-import MemoFilled from '@/assets/icons/memo-filled.svg';
-import Memo from '@/assets/icons/memo.svg';
 
 // room
 import Building from '@/assets/icons/room/building.svg';
 import Calendar from '@/assets/icons/room/calendar.svg';
 import Room from '@/assets/icons/room/house.svg';
+import Options from '@/assets/icons/room/options.svg';
 import Pencil from '@/assets/icons/room/pencil.svg';
 import Stairs from '@/assets/icons/room/stairs.svg';
 import Subway from '@/assets/icons/room/subway.svg';
+import Summary from '@/assets/icons/room/summary.svg';
+import Utils from '@/assets/icons/room/utils.svg';
 
 // Select Tag
 import DropdownMark from '@/assets/icons/dropdown/dropdown-mark.svg';
 
-// etc
-import BangBangCryIcon from '@/assets/icons/bang-bang-cry-icon.svg';
-import BangBangIcon from '@/assets/icons/bang-bang-icon.svg';
-import InputRequiredDot from '@/assets/icons/input-required-dot.svg';
-import KakaoLogo from '@/assets/icons/kakao-logo.svg';
-import LampIcon from '@/assets/icons/lamp-icon.svg';
-import BangGgoodTextIcon from '@/assets/icons/logo.svg';
-import PencilIcon from '@/assets/icons/pencil-icon.svg';
-import QuestionDot from '@/assets/icons/question-dot.svg';
-import SmallCheck from '@/assets/icons/small-check.svg';
-import SmileMessageIcon from '@/assets/icons/smile-message-icon.svg';
+// mascot
+import BangBangCryIcon from '@/assets/icons/mascot/bang-bang-cry-icon.svg';
+import BangBangIcon from '@/assets/icons/mascot/bang-bang-icon.svg';
+import LampIcon from '@/assets/icons/mascot/lamp-icon.svg';
+import BangGgoodTextIcon from '@/assets/icons/mascot/logo.svg';
+import PencilIcon from '@/assets/icons/mascot/pencil-icon.svg';
+
+// kakao
+import KakaoLogo from '@/assets/icons/kakao/kakao-logo.svg';
+
 export {
   ArrowBack,
   ArrowDownSmall,
@@ -59,17 +58,15 @@ export {
   LampIcon,
   LocationLineIcon,
   Memo,
-  MemoEmpty,
-  MemoFilled,
+  Options,
   Pencil,
   PencilIcon,
   PlusBlack,
-  PlusSmall,
   PlusWhite,
-  QuestionDot,
   Room,
   SmallCheck,
-  SmileMessageIcon,
   Stairs,
   Subway,
+  Summary,
+  Utils,
 };

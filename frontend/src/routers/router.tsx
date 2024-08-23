@@ -14,8 +14,6 @@ import MainPage from '@/pages/MainPage';
 import MyPage from '@/pages/MyPage';
 import NewChecklistPage from '@/pages/NewChecklistPage';
 import NotFound from '@/pages/NotFound';
-import RoomComparePage from '@/pages/RoomComparePage';
-import RoomCompareSelectPage from '@/pages/RoomCompareSelectPage';
 import AuthGuard from '@/routers/AuthGuard';
 
 const router = createBrowserRouter([
@@ -26,14 +24,17 @@ const router = createBrowserRouter([
       {
         element: <FooterLayout />,
         children: [
-          { element: <MainPage />, path: ROUTE_PATH.home },
+          {
+            element: <MainPage />,
+            path: ROUTE_PATH.home,
+          },
           {
             element: <ChecklistListPage />,
             path: ROUTE_PATH.checklistList,
           },
           {
             element: <ArticleListPage />,
-            path: ROUTE_PATH.article,
+            path: ROUTE_PATH.articleList,
           },
           {
             element: <MyPage />,
@@ -56,14 +57,6 @@ const router = createBrowserRouter([
       {
         element: <ChecklistCustomPage />,
         path: ROUTE_PATH.checklistCustom,
-      },
-      {
-        element: <RoomCompareSelectPage />,
-        path: ROUTE_PATH.roomCompareSelect,
-      },
-      {
-        element: <RoomComparePage />,
-        path: ROUTE_PATH.roomCompare,
       },
       {
         element: <ArticleDetailPage />,

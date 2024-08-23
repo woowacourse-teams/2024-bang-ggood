@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { CloseIcon } from '@/assets/assets';
 import { TIP_MESSAGE } from '@/constants/message';
 import useHandleTipBox, { TipType } from '@/hooks/useHandleTipBox';
-import { flexCenter, title4 } from '@/styles/common';
+import { flexCenter, flexSpaceBetween, title4 } from '@/styles/common';
 
 interface Props {
   tipType: TipType;
@@ -28,15 +28,16 @@ const S = {
   TipBox: styled.div`
     width: 100%;
     ${flexCenter}
-    justify-content: space-between;
+    ${flexSpaceBetween}
+    padding: 1.2rem;
 
-    background-color: white;
+    background-color: ${({ theme }) => theme.palette.white};
 
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    font-size: ${({ theme }) => theme.text.size.small};
     border-radius: 1rem;
+    box-sizing: border-box;
   `,
   TipText: styled.div`
-    padding: 1.2rem;
     word-break: keep-all;
   `,
   Bold: styled.span`

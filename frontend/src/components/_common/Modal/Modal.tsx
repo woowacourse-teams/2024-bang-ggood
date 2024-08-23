@@ -69,7 +69,7 @@ const S = {
     z-index: ${({ theme }) => theme.zIndex.MODAL};
 
     width: 100%;
-    height: 100vh;
+    height: 100dvh;
   `,
   ModalBackground: styled.div<{ hasDim: boolean }>`
     position: fixed;

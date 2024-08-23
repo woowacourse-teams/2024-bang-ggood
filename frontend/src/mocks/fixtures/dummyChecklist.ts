@@ -5,7 +5,7 @@ export const dummyChecklist = {
     rent: 50,
     contractTerm: 12,
     address: '인천광역시 부평구',
-    station: '잠실역',
+    station: '잠실',
     walkingTime: 10,
     realEstate: '방끗공인중개사',
     type: '빌라',

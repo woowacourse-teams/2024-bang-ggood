@@ -8,5 +8,5 @@ export const TIP_MESSAGE: Record<TipType, string> = {
 type ModalMessageType = 'SUMMARY';
 
 export const MODAL_MESSAGE: Record<ModalMessageType, string> = {
-  SUMMARY: '방에 대한 한줄평을 적어주세요.',
+  SUMMARY: '방에 대한 한줄평을 적어주세요',
 };

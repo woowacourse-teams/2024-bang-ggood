@@ -14,7 +14,7 @@ const ArticleSection = () => {
   const { data: articles, isLoading } = useGetArticleListQuery();
 
   const handleClickShowMore = () => {
-    navigate(ROUTE_PATH.article);
+    navigate(ROUTE_PATH.articleList);
   };
 
   if (isLoading) return <SkArticleSection />;
@@ -43,7 +43,7 @@ const S = {
     width: 100%;
     box-sizing: border-box;
 
-    padding: 1.6rem 1.6rem 0;
+    padding: 1rem 1.6rem 0;
     ${flexRow};
     ${flexSpaceBetween};
   `,

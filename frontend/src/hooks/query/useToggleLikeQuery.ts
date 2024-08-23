@@ -1,24 +1,21 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { deleteLike, postLike } from '@/apis/like';
+import { QUERY_KEYS } from '@/constants/queryKeys';
 import useRefetchGetChecklistList from '@/hooks/query/useRefetchGetChecklistList';
 
 const useToggleLikeQuery = () => {
+  const queryClient = useQueryClient();
   const { invalidateChecklistListQuery } = useRefetchGetChecklistList();
 
   return useMutation({
     mutationFn: async ({ checklistId, isLiked }: { checklistId: number; isLiked: boolean }) => {
-      if (isLiked) {
-        return deleteLike(checklistId);
-      } else {
-        return postLike(checklistId);
-      }
+      if (isLiked) return deleteLike(checklistId);
+      return postLike(checklistId);
     },
     onSuccess: () => {
       invalidateChecklistListQuery();
-    },
-    onError: error => {
-      console.error('Error toggling like status:', error);
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CHECKLIST] });
     },
   });
 };

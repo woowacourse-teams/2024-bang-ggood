@@ -4,6 +4,11 @@ export interface Address {
   jibunAddress: string;
 }
 
+export interface Position {
+  lat: number;
+  lon: number;
+}
+
 export interface OpenOptions {
   q?: string;
 }

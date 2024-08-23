@@ -12,9 +12,7 @@ import { Article } from '@/types/article';
 const ArticleListPage = () => {
   const { data: articles, isLoading } = useGetArticleListQuery();
 
-  if (isLoading) {
-    return <SkArticleList />;
-  }
+  if (isLoading) return <SkArticleList />;
 
   return (
     <>

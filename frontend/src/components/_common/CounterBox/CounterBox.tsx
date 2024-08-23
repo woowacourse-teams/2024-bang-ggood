@@ -29,6 +29,8 @@ const CounterBox = ({
   );
 };
 
+export default CounterBox;
+
 const S = {
   Container: styled.div<{ $color: string; $gap: number }>`
     ${flexRow}
@@ -37,5 +39,3 @@ const S = {
     ${title3}
   `,
 };
-
-export default CounterBox;

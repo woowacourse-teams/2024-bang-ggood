@@ -8,7 +8,7 @@ public record SelectedRoomResponse(String roomName, Integer deposit, Integer ren
                                    String address, String buildingName, String station, Integer walkingTime, String realEstate,
                                    Double size, String floorLevel, String structure,
                                    Integer occupancyMonth, String occupancyPeriod, String memo, String summary,
-                                   List<Integer> includedMaintenances, LocalDateTime createdAt) {
+                                   List<Integer> includedMaintenances, Integer maintenanceFee, LocalDateTime createdAt) {
 
     public static SelectedRoomResponse of(Checklist checklist, List<Integer> includedMaintenances) {
         return new SelectedRoomResponse(checklist.getRoomName(), checklist.getDeposit(), checklist.getRent(),
@@ -16,6 +16,6 @@ public record SelectedRoomResponse(String roomName, Integer deposit, Integer ren
                 checklist.getRoomStation(), checklist.getRoomWalkingTime(), checklist.getRealEstate(),
                 checklist.getRoomSize(), checklist.getRoomFloorLevel().getName(),
                 checklist.getRoomStructure().getName(), checklist.getOccupancyMonth(), checklist.getOccupancyPeriod(),
-                checklist.getMemo(), checklist.getSummary(), includedMaintenances, checklist.getCreatedAt());
+                checklist.getMemo(), checklist.getSummary(), includedMaintenances, checklist.getMaintenanceFee(), checklist.getCreatedAt());
     }
 }

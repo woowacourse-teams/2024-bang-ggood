@@ -38,7 +38,7 @@ const NearTransportation = () => {
         />
         <FormStyled.FlexLabel label=" 분" />
       </FormStyled.FieldBox>
-      <Button label="자동" isSquare={true} size="xSmall" onClick={findNearSubway} />
+      <Button label="근처 역 찾기" isSquare={true} size="xSmall" onClick={findNearSubway} />
       <FormField.ErrorMessage value={errorMessageStation || errorMessageWalkingTime || ''} />
     </FlexBox.Vertical>
   );

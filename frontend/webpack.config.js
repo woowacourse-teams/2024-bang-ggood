@@ -27,6 +27,7 @@ const config = {
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
+    clean: true,
   },
   devServer: {
     open: true,
@@ -37,7 +38,7 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'index.html',
+      template: './public/index.html',
     }),
     new webpack.DefinePlugin(envKeys),
   ],
@@ -57,7 +58,24 @@ const config = {
         test: /\.css$/i,
         use: [stylesHandler, 'css-loader'],
       },
-      { test: /\.html$/i, use: ['html-loader'] },
+      {
+        test: /\.html$/i,
+        use: [
+          {
+            loader: 'html-loader',
+            options: {
+              postprocessor: (content, loaderContext) => {
+                // When you environment supports template literals (using browserslist or options) we will generate code using them
+                const isTemplateLiteralSupported = content[0] === '`';
+
+                return content
+                  .replace(/<%=/g, isTemplateLiteralSupported ? `\${` : '" +')
+                  .replace(/%>/g, isTemplateLiteralSupported ? '}' : '+ "');
+              },
+            },
+          },
+        ],
+      },
       {
         test: /\.(eot|ttf|woff|woff2)$/i,
         type: 'asset',

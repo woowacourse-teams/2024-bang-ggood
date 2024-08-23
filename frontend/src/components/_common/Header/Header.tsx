@@ -38,7 +38,7 @@ const S = {
     z-index: ${({ theme }) => theme.zIndex.HEADER};
     width: 100%;
     height: ${HEADER_SIZE}rem;
-    padding: 1.6rem;
+    padding: 2rem 1.6rem 1.2rem;
 
     background-color: ${({ theme }) => theme.palette.white};
     max-width: 60rem;
@@ -86,6 +86,7 @@ const Header = Object.assign(HeaderWrapper, {
   Backward: (props: React.SVGProps<SVGSVGElement>) => {
     const navigate = useNavigate();
     const handleClick = () => navigate(-1);
+
     return (
       <ArrowBack
         style={{
@@ -99,4 +100,5 @@ const Header = Object.assign(HeaderWrapper, {
   TextButton: S.TextButton,
   Text: S.Text,
 });
+
 export default Header;

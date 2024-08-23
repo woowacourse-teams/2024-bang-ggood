@@ -19,9 +19,12 @@ import PlusWhite from '@/assets/icons/plusMinus/plus-white.svg';
 import Building from '@/assets/icons/room/building.svg';
 import Calendar from '@/assets/icons/room/calendar.svg';
 import Room from '@/assets/icons/room/house.svg';
+import Options from '@/assets/icons/room/options.svg';
 import Pencil from '@/assets/icons/room/pencil.svg';
 import Stairs from '@/assets/icons/room/stairs.svg';
 import Subway from '@/assets/icons/room/subway.svg';
+import Summary from '@/assets/icons/room/summary.svg';
+import Utils from '@/assets/icons/room/utils.svg';
 
 // Select Tag
 import DropdownMark from '@/assets/icons/dropdown/dropdown-mark.svg';
@@ -55,6 +58,7 @@ export {
   LampIcon,
   LocationLineIcon,
   Memo,
+  Options,
   Pencil,
   PencilIcon,
   PlusBlack,
@@ -63,4 +67,6 @@ export {
   SmallCheck,
   Stairs,
   Subway,
+  Summary,
+  Utils,
 };

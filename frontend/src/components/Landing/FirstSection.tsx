@@ -23,7 +23,7 @@ const FirstSection = () => {
       <S.ButtonWrapper>
         <S.KakaoLoginButton onClick={handleMoveLogin}>
           <KakaoLogo />
-          <S.Text>카카오로 로그인</S.Text>
+          <S.Text>카카오톡으로 로그인</S.Text>
         </S.KakaoLoginButton>
       </S.ButtonWrapper>
       <S.MoreBox>

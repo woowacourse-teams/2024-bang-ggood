@@ -1,26 +1,40 @@
 import styled from '@emotion/styled';
 
-import { Building, Calendar, LocationLineIcon, Pencil, Room, Stairs, Subway } from '@/assets/assets';
+import {
+  Building,
+  Calendar,
+  LocationLineIcon,
+  Options,
+  Pencil,
+  Room,
+  Stairs,
+  Subway,
+  Summary,
+  Utils,
+} from '@/assets/assets';
 import LikeButton from '@/components/_common/Like/LikeButton';
+import AddressMap from '@/components/_common/Map/AddressMap';
+import { IncludedMaintenancesData } from '@/constants/roomInfo';
 import { flexColumn, flexRow, flexSpaceBetween, title2 } from '@/styles/common';
+import { Option } from '@/types/option';
 import { RoomInfo } from '@/types/room';
 import formattedDate from '@/utils/formattedDate';
 import formattedUndefined from '@/utils/formattedUndefined';
 
 interface Props {
   room: RoomInfo;
+  options: Option[];
   checklistId: number;
   isLiked: boolean;
 }
 
-const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
-  // TODO: 로딩 중일 때 스켈레톤표시
-
+const RoomInfoSection = ({ room, options, checklistId, isLiked }: Props) => {
   const {
     roomName,
     deposit,
     rent,
     maintenanceFee,
+    size,
     address,
     contractTerm,
     floor,
@@ -31,6 +45,9 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
     occupancyMonth,
     buildingName,
     occupancyPeriod,
+    structure,
+    includedMaintenances,
+    summary,
     createdAt,
   } = room;
 
@@ -53,7 +70,7 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
       <S.GapBox>
         <S.Row>
           <Room />
-          {formattedUndefined(room.structure, 'string', '방 구조')}
+          {formattedUndefined(structure, 'string', '방 구조')} / {formattedUndefined(size)} 평
         </S.Row>
         <S.Row>
           <Stairs />
@@ -63,28 +80,47 @@ const RoomInfoSection = ({ room, checklistId, isLiked }: Props) => {
         </S.Row>
       </S.GapBox>
       <S.Row>
-        <Calendar />
-        {formattedUndefined(contractTerm)}개월 계약 <br />
-        입주 가능일 : {occupancyMonth}월 {occupancyPeriod}
+        <Utils /> 관리비 포함 항목 :
+        {includedMaintenances
+          ?.map(id => IncludedMaintenancesData.find(item => item.id === id)?.displayName)
+          .filter(Boolean)
+          .join(', ')}
+        {!includedMaintenances?.length && formattedUndefined(includedMaintenances?.length, 'string', '')}
       </S.Row>
       <S.Row>
-        <LocationLineIcon height={20} width={20} />
-        {formattedUndefined(address, 'string', '주소')} <br /> {buildingName}
+        <Calendar />
+        {formattedUndefined(contractTerm)}개월 계약 <br />
+        입주 가능일 : {formattedUndefined(occupancyMonth)}월 {occupancyPeriod}
       </S.Row>
       <S.Row>
         <Subway />
         {formattedUndefined(station)}역까지 도보 {formattedUndefined(walkingTime)}분
       </S.Row>
+      <S.GapBox>
+        <S.Row>
+          <Building />
+          {formattedUndefined(realEstate, 'string', '부동산')}
+        </S.Row>
+        <S.Row>
+          <Pencil />
+          {formattedDate(createdAt ?? '', '.')}
+        </S.Row>
+      </S.GapBox>
       <S.Row>
-        <Building />
-        {formattedUndefined(realEstate, 'string', '부동산')}
+        <Options />
+        {options.length
+          ? options.map(option => option.optionName).join(', ')
+          : formattedUndefined(options.length, 'string', '옵션')}
       </S.Row>
       <S.Row>
-        <Pencil />
-        {formattedDate(createdAt ?? '', '.')}
+        <Summary />
+        {formattedUndefined(summary, 'string', '한줄평')}
       </S.Row>
-      <div></div>
-      {/* <AddressMap location={address ?? ''} /> TODO: 카카오맵 API 에러 일단주석 */}
+      <S.Row>
+        <LocationLineIcon height={20} width={20} />
+        {formattedUndefined(address, 'string', '주소')} <br /> {buildingName}
+      </S.Row>
+      <AddressMap location={address ?? ''} />
     </S.Container>
   );
 };

@@ -12,6 +12,7 @@ const NewChecklistTemplate = () => {
   const { getCategoryQnA } = useChecklistStore();
 
   const questions = getCategoryQnA(currentTabId);
+
   return (
     <Layout bgColor={theme.palette.background} withHeader withTab>
       <S.ContentBox>

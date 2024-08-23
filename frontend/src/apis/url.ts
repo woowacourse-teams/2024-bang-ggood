@@ -1,4 +1,5 @@
 import { API_URL } from '@/apis/config';
+import { Position } from '@/types/address';
 
 export const BASE_URL = API_URL;
 
@@ -26,4 +27,6 @@ export const ENDPOINT = {
   LOGIN: '/oauth/login',
   LOGOUT: '/oauth/logout',
   USER_INFO: '/user/me',
+  //subway
+  SUBWAY: (position: Position) => `/stations/nearest?latitude=${position.lat}&longitude=${position.lon}`,
 };

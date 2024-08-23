@@ -1,8 +1,5 @@
-import { useNavigate } from 'react-router-dom';
-
 import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
-import { ROUTE_PATH } from '@/constants/routePath';
 import useLogoutQuery from '@/hooks/query/useLogoutQuery';
 
 interface Props {
@@ -11,13 +8,10 @@ interface Props {
 }
 
 const LogoutModal = ({ isOpen, onClose }: Props) => {
-  const navigate = useNavigate();
-
-  const { mutate: userLogout, isSuccess } = useLogoutQuery();
+  const { mutate: userLogout } = useLogoutQuery();
 
   const handleLogout = () => {
     userLogout();
-    if (isSuccess) navigate(ROUTE_PATH.home);
   };
 
   return (

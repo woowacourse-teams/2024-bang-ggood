@@ -50,7 +50,7 @@ const Footer = Object.assign(FooterWrapper, {
   Article: FooterLinkButton(
     <FooterButton logo="article" />,
     <FooterButton logo="article" isActive />,
-    ROUTE_PATH.article,
+    ROUTE_PATH.articleList,
   ),
   Profile: FooterLinkButton(
     <FooterButton logo="profile" />,

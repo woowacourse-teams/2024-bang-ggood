@@ -2,7 +2,7 @@ export const checklistAllQuestions = {
   categories: [
     {
       categoryId: 1,
-      categoryName: '청결도',
+      categoryName: '보안',
       questions: [
         {
           questionId: 1,

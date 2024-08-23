@@ -1,4 +1,5 @@
 import { createStore } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 import { InputChangeEvent } from '@/types/event';
 import { objectMap } from '@/utils/typeFunctions';
@@ -12,6 +13,7 @@ const initialErrorMessages = <T extends object>(initial: Partial<T>) =>
 interface FormAction<T> {
   onChange: (event: InputChangeEvent) => void;
   set: (name: keyof T, value: string | undefined) => void;
+  setValueForced: (name: string, value: string | number) => void;
   setAll: (state: Partial<FormState<T>>) => void;
   resetAll: () => void;
   _reset: (name: keyof T) => void;
@@ -27,61 +29,74 @@ const createFormStore = <T extends object>(
   initialRaw: Partial<AllString<T>>,
   validatorSet: Record<string, Validator[]>,
   valueType: AllString<T>,
+  storageName: string,
 ) =>
   createStore<
     FormState<T> & {
       actions: FormAction<T>;
     }
-  >((set, get) => ({
-    rawValue: initialRaw,
-    value: transformAll(initialRaw, valueType),
-    errorMessage: initialErrorMessages(initialRaw),
-    actions: {
-      onChange: event => {
-        get().actions.set(event.target.name as keyof T, event.target.value);
-      },
-      set: (name, value) => {
-        if (value === '') {
-          get().actions._reset(name);
-          return;
-        }
+  >()(
+    persist(
+      (set, get) => ({
+        rawValue: initialRaw,
+        value: transformAll(initialRaw, valueType),
+        errorMessage: initialErrorMessages(initialRaw),
+        actions: {
+          onChange: event => get().actions.set(event.target.name as keyof T, event.target.value),
+          set: (name, value) => {
+            if (value === '') {
+              get().actions._reset(name);
+              return;
+            }
 
-        get().actions._updateAfterValidation(name, value ?? '', validatorSet[name as string]);
-      },
+            get().actions._updateAfterValidation(name, value ?? '', validatorSet[name as string]);
+          },
+          setValueForced: (name, value) => set({ value: { ...get().value, [name]: value } }),
 
-      resetAll: () =>
-        set({
-          rawValue: initialRaw,
-          value: transformAll(initialRaw, valueType),
-          errorMessage: initialErrorMessages(initialRaw),
+          resetAll: () =>
+            set({
+              rawValue: initialRaw,
+              value: transformAll(initialRaw, valueType),
+              errorMessage: initialErrorMessages(initialRaw),
+            }),
+          setAll: set,
+          _reset: name => {
+            get().actions._updateErrorMsg(name, '');
+            get().actions._update(name, '');
+          },
+          _update: (name, value) => {
+            set({ rawValue: { ...get().rawValue, [name]: value } });
+            get().actions._transform(name as string, value ?? '');
+          },
+          _updateErrorMsg: (name, value) => set({ errorMessage: { ...get().errorMessage, [name]: value } }),
+          _updateAfterValidation: (name, value, validators) => {
+            validation(
+              name as string,
+              value,
+              validators,
+              (name: string, value: string) => {
+                get().actions._update(name as keyof AllString<T>, value);
+              },
+              (name: string, errorMessage: string) => {
+                get().actions._updateErrorMsg(name as keyof T, errorMessage);
+              },
+            );
+          },
+          _transform: (name, value) =>
+            set({ value: { ...get().value, [name]: valueType[name as keyof T] === 'number' ? Number(value) : value } }),
+        },
+      }),
+      {
+        name: storageName,
+        partialize: state => ({
+          rawValue: state.rawValue,
+          value: state.value,
+          errorMessage: state.errorMessage,
+          // actions는 저장하지 않음
         }),
-      setAll: set,
-      _reset: name => {
-        get().actions._updateErrorMsg(name, '');
-        get().actions._update(name, '');
       },
-      _update: (name, value) => {
-        set({ rawValue: { ...get().rawValue, [name]: value } });
-        get().actions._transform(name as string, value ?? '');
-      },
-      _updateErrorMsg: (name, value) => set({ errorMessage: { ...get().errorMessage, [name]: value } }),
-      _updateAfterValidation: (name, value, validators) => {
-        validation(
-          name as string,
-          value,
-          validators,
-          (name: string, value: string) => {
-            get().actions._update(name as keyof AllString<T>, value);
-          },
-          (name: string, errorMessage: string) => {
-            get().actions._updateErrorMsg(name as keyof T, errorMessage);
-          },
-        );
-      },
-      _transform: (name, value) =>
-        set({ value: { ...get().value, [name]: valueType[name as keyof T] === 'number' ? Number(value) : value } }),
-    },
-  }));
+    ),
+  );
 
 const transformAll = <T>(rawValues: Partial<AllString<T>>, valueType: AllString<T>) =>
   objectMap(rawValues, ([key, value]) => [

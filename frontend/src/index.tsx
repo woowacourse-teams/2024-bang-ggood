@@ -10,6 +10,7 @@ async function enableMocking() {
   if (process.env.DEV_MODE !== 'on') {
     return;
   }
+
   const { worker } = await import('./mocks/browser');
   await worker.start({
     serviceWorker: {

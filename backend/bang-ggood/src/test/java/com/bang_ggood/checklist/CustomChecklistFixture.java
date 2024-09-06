@@ -1,8 +1,8 @@
 package com.bang_ggood.checklist;
 
-import com.bang_ggood.checklist.domain.CustomChecklistQuestion;
-import com.bang_ggood.checklist.domain.Question;
-import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
+import com.bang_ggood.question.domain.CustomChecklistQuestion;
+import com.bang_ggood.question.domain.Question;
+import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import java.util.ArrayList;
 import java.util.List;
 

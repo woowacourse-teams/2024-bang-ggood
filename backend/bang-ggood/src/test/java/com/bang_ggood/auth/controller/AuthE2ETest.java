@@ -4,7 +4,7 @@ import com.bang_ggood.AcceptanceTest;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.service.AuthService;
 import com.bang_ggood.checklist.ChecklistFixture;
-import com.bang_ggood.exception.ExceptionCode;
+import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.user.UserFixture;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;

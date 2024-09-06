@@ -1,16 +1,16 @@
 package com.bang_ggood.checklist;
 
-import com.bang_ggood.checklist.domain.Answer;
+import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.checklist.domain.Checklist;
-import com.bang_ggood.checklist.domain.ChecklistMaintenance;
-import com.bang_ggood.checklist.domain.ChecklistLike;
-import com.bang_ggood.checklist.domain.ChecklistQuestion;
-import com.bang_ggood.checklist.domain.MaintenanceItem;
-import com.bang_ggood.checklist.domain.OccupancyMonth;
-import com.bang_ggood.checklist.domain.OccupancyPeriod;
-import com.bang_ggood.checklist.domain.Question;
+import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
+import com.bang_ggood.like.domain.ChecklistLike;
+import com.bang_ggood.question.domain.ChecklistQuestion;
+import com.bang_ggood.maintenance.domain.MaintenanceItem;
+import com.bang_ggood.contract.domain.OccupancyMonth;
+import com.bang_ggood.contract.domain.OccupancyPeriod;
+import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
-import com.bang_ggood.checklist.dto.request.QuestionRequest;
+import com.bang_ggood.question.dto.request.QuestionRequest;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.user.UserFixture;
 import java.util.List;

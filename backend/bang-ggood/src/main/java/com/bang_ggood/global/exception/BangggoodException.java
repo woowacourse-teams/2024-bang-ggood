@@ -1,4 +1,4 @@
-package com.bang_ggood.exception;
+package com.bang_ggood.global.exception;
 
 import org.springframework.http.HttpStatusCode;
 

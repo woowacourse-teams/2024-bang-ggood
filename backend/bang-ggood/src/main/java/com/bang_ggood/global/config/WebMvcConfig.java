@@ -1,4 +1,4 @@
-package com.bang_ggood.config;
+package com.bang_ggood.global.config;
 
 import com.bang_ggood.auth.config.AuthPrincipalArgumentResolver;
 import com.bang_ggood.auth.service.AuthService;

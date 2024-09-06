@@ -1,4 +1,4 @@
-package com.bang_ggood.exception.dto;
+package com.bang_ggood.global.exception.dto;
 
 public record ExceptionResponse(String httpMethod, String path, String message) {
 }

@@ -1,6 +1,6 @@
-package com.bang_ggood.exception;
+package com.bang_ggood.global.exception;
 
-import com.bang_ggood.exception.dto.OauthExceptionResponse;
+import com.bang_ggood.global.exception.dto.OauthExceptionResponse;
 
 public class OauthException extends RuntimeException {
 

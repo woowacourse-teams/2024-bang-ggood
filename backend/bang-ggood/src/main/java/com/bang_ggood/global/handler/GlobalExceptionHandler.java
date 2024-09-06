@@ -1,9 +1,9 @@
-package com.bang_ggood.handler;
+package com.bang_ggood.global.handler;
 
-import com.bang_ggood.exception.BangggoodException;
-import com.bang_ggood.exception.OauthException;
-import com.bang_ggood.exception.dto.ExceptionResponse;
-import com.bang_ggood.exception.dto.OauthExceptionResponse;
+import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.OauthException;
+import com.bang_ggood.global.exception.dto.ExceptionResponse;
+import com.bang_ggood.global.exception.dto.OauthExceptionResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

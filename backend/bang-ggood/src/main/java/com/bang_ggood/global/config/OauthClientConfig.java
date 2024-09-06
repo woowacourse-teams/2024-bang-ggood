@@ -1,6 +1,6 @@
-package com.bang_ggood.config;
+package com.bang_ggood.global.config;
 
-import com.bang_ggood.handler.OauthClientExceptionHandler;
+import com.bang_ggood.global.handler.OauthClientExceptionHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;

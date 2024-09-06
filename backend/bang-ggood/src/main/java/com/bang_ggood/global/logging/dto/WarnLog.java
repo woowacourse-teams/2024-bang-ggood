@@ -1,4 +1,4 @@
-package com.bang_ggood.logging.dto;
+package com.bang_ggood.global.logging.dto;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;

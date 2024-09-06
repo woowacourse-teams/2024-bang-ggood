@@ -1,9 +1,9 @@
-package com.bang_ggood.handler;
+package com.bang_ggood.global.handler;
 
-import com.bang_ggood.exception.BangggoodException;
-import com.bang_ggood.exception.ExceptionCode;
-import com.bang_ggood.exception.OauthException;
-import com.bang_ggood.exception.dto.OauthExceptionResponse;
+import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
+import com.bang_ggood.global.exception.OauthException;
+import com.bang_ggood.global.exception.dto.OauthExceptionResponse;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.client.ClientHttpResponse;

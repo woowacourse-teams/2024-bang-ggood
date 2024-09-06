@@ -1,4 +1,4 @@
-package com.bang_ggood.config;
+package com.bang_ggood.global.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

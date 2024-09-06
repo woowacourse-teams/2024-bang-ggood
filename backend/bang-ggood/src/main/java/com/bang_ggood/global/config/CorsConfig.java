@@ -1,4 +1,4 @@
-package com.bang_ggood.config;
+package com.bang_ggood.global.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;

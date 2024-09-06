@@ -1,8 +1,8 @@
-package com.bang_ggood.logging;
+package com.bang_ggood.global.logging;
 
-import com.bang_ggood.logging.dto.ErrorLog;
-import com.bang_ggood.logging.dto.InfoLog;
-import com.bang_ggood.logging.dto.WarnLog;
+import com.bang_ggood.global.logging.dto.ErrorLog;
+import com.bang_ggood.global.logging.dto.WarnLog;
+import com.bang_ggood.global.logging.dto.InfoLog;
 import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -32,8 +32,8 @@ public class LoggingAspect {
         }
     }
 
-    @Before("execution(* com.bang_ggood.handler.GlobalExceptionHandler.*(..)) &&"
-            + "!execution(* com.bang_ggood.handler.GlobalExceptionHandler.handleRuntimeException(..)))")
+    @Before("execution(* com.bang_ggood.global.handler.GlobalExceptionHandler.*(..)) &&"
+            + "!execution(* com.bang_ggood.global.handler.GlobalExceptionHandler.handleRuntimeException(..)))")
     public void loggingWarn(JoinPoint joinPoint) {
         Optional<Exception> exceptionOptional = Arrays.stream(joinPoint.getArgs())
                 .filter(arg -> arg instanceof Exception)
@@ -48,7 +48,7 @@ public class LoggingAspect {
         }
     }
 
-    @Before("execution(* com.bang_ggood.handler.GlobalExceptionHandler.handleRuntimeException(..)))")
+    @Before("execution(* com.bang_ggood.global.handler.GlobalExceptionHandler.handleRuntimeException(..)))")
     public void loggingError(JoinPoint joinPoint) {
         Optional<Exception> exceptionOptional = Arrays.stream(joinPoint.getArgs())
                 .filter(arg -> arg instanceof Exception)

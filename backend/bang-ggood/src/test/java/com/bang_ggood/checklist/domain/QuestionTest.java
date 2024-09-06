@@ -2,6 +2,7 @@ package com.bang_ggood.checklist.domain;
 
 import com.bang_ggood.exception.BangggoodException;
 import com.bang_ggood.exception.ExceptionCode;
+import com.bang_ggood.question.domain.Question;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;

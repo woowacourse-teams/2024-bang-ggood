@@ -1,7 +1,7 @@
 package com.bang_ggood.room;
 
-import com.bang_ggood.checklist.domain.OccupancyMonth;
-import com.bang_ggood.checklist.domain.OccupancyPeriod;
+import com.bang_ggood.contract.domain.OccupancyMonth;
+import com.bang_ggood.contract.domain.OccupancyPeriod;
 import com.bang_ggood.room.domain.FloorLevel;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.domain.Structure;

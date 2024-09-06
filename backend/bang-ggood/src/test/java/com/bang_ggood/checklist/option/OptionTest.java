@@ -1,6 +1,6 @@
 package com.bang_ggood.checklist.option;
 
-import com.bang_ggood.checklist.domain.Option;
+import com.bang_ggood.option.domain.Option;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

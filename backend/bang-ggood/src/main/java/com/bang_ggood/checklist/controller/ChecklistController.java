@@ -2,9 +2,9 @@ package com.bang_ggood.checklist.controller;
 
 import com.bang_ggood.auth.config.AuthPrincipal;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
-import com.bang_ggood.checklist.dto.request.CustomChecklistUpdateRequest;
-import com.bang_ggood.checklist.dto.response.CategoryCustomChecklistQuestionsResponse;
-import com.bang_ggood.checklist.dto.response.ChecklistQuestionsResponse;
+import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
+import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
+import com.bang_ggood.question.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
 import com.bang_ggood.checklist.service.ChecklistService;

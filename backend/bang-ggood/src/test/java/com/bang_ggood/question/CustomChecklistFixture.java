@@ -1,4 +1,4 @@
-package com.bang_ggood.checklist;
+package com.bang_ggood.question;
 
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;

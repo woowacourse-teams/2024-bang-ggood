@@ -2,6 +2,7 @@ package com.bang_ggood.checklist.controller;
 
 import com.bang_ggood.auth.config.AuthPrincipal;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
+import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.ChecklistQuestionsResponse;
@@ -23,16 +24,18 @@ import java.net.URI;
 @RestController
 public class ChecklistController {
 
+    private final ChecklistManageService checklistManageService;
     private final ChecklistService checklistService;
 
-    public ChecklistController(ChecklistService checklistService) {
+    public ChecklistController(ChecklistManageService checklistManageService, ChecklistService checklistService) {
+        this.checklistManageService = checklistManageService;
         this.checklistService = checklistService;
     }
 
     @PostMapping("/checklists")
     public ResponseEntity<Void> createChecklist(@AuthPrincipal User user,
                                                 @Valid @RequestBody ChecklistRequest checklistRequest) {
-        long checklistId = checklistService.createChecklist(user, checklistRequest);
+        long checklistId = checklistManageService.createChecklist(user, checklistRequest);
         return ResponseEntity.created(URI.create("/checklists/" + checklistId)).build();
     }
 

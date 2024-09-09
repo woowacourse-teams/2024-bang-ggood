@@ -4,6 +4,7 @@ import com.bang_ggood.AcceptanceTest;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.CustomChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
@@ -23,6 +24,8 @@ import static org.hamcrest.Matchers.containsString;
 
 class ChecklistE2ETest extends AcceptanceTest {
 
+    @Autowired
+    private ChecklistManageService checklistManageService;
     @Autowired
     private ChecklistService checklistService;
     @Autowired
@@ -76,7 +79,7 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 좋아요 추가 성공")
     @Test
     void createChecklistLike() {
-        long checklistId = checklistService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistManageService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
@@ -89,7 +92,7 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 좋아요 추가 실패 : 이미 좋아요가 추가가 된 체크리스트인 경우")
     @Test
     void createChecklistLike_checklistAlreadyLiked_exception() {
-        long checklistId = checklistService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistManageService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
         checklistService.createChecklistLike(USER1, checklistId);
 
         RestAssured.given().log().all()
@@ -128,7 +131,7 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("작성된 체크리스트 조회 성공")
     @Test
     void readChecklistById() {
-        long checklistId = checklistService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistManageService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
@@ -160,7 +163,7 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 수정 성공")
     @Test
     void updateChecklist() {
-        long checklistId = checklistService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistManageService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
@@ -174,7 +177,7 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 수정 실패: 방 이름을 넣지 않은 경우")
     @Test
     void updateChecklist_noRoomName_exception() {
-        long checklistId = checklistService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistManageService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
@@ -189,7 +192,7 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 수정 실패: 질문 ID를 넣지 않은 경우")
     @Test
     void updateChecklist_noQuestionId_exception() {
-        long checklistId = checklistService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistManageService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)

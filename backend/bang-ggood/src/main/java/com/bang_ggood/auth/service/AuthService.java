@@ -2,6 +2,7 @@ package com.bang_ggood.auth.service;
 
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.response.OauthInfoApiResponse;
+import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.option.domain.Option;
@@ -32,16 +33,17 @@ public class AuthService {
 
     private final OauthClient oauthClient;
     private final JwtTokenProvider jwtTokenProvider;
-    private final ChecklistService checklistService;
+    private final ChecklistManageService checklistManageService;
     private final UserRepository userRepository;
     private final CustomChecklistQuestionRepository customChecklistQuestionRepository;
 
-    public AuthService(OauthClient oauthClient, JwtTokenProvider jwtTokenProvider, ChecklistService checklistService,
+    public AuthService(OauthClient oauthClient, JwtTokenProvider jwtTokenProvider,
+                       ChecklistManageService checklistManageService,
                        UserRepository userRepository,
                        CustomChecklistQuestionRepository customChecklistQuestionRepository) {
         this.oauthClient = oauthClient;
         this.jwtTokenProvider = jwtTokenProvider;
-        this.checklistService = checklistService;
+        this.checklistManageService = checklistManageService;
         this.userRepository = userRepository;
         this.customChecklistQuestionRepository = customChecklistQuestionRepository;
     }
@@ -101,7 +103,7 @@ public class AuthService {
                 new QuestionRequest(Question.BATHROOM_2.getId(), Answer.GOOD.name()));
 
         ChecklistRequest checklistRequest = new ChecklistRequest(roomRequest, options, questionRequests);
-        checklistService.createChecklist(user, checklistRequest);
+        checklistManageService.createChecklist(user, checklistRequest);
     }
 
     public void logout(String accessToken, User user) {

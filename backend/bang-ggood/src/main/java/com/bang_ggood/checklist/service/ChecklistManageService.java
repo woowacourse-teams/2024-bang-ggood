@@ -2,8 +2,6 @@ package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
-import com.bang_ggood.global.exception.BangggoodException;
-import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.domain.MaintenanceItem;
 import com.bang_ggood.maintenance.service.ChecklistMaintenanceService;
@@ -18,9 +16,7 @@ import com.bang_ggood.room.service.RoomService;
 import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -76,6 +72,6 @@ public class ChecklistManageService {
                         .map(maintenanceId -> new ChecklistMaintenance(checklist,
                                 MaintenanceItem.fromId(maintenanceId)))
                         .collect(Collectors.toList());
-        checklistMaintenanceService.createMaintenance(checklistMaintenances);
+        checklistMaintenanceService.createMaintenances(checklistMaintenances);
     }
 }

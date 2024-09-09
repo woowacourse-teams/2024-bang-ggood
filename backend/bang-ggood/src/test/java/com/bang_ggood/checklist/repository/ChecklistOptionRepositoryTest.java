@@ -39,9 +39,9 @@ class ChecklistOptionRepositoryTest extends IntegrationTestSupport {
 
     @DisplayName("체크리스트 ID로 옵션 찾기 성공")
     @Test
-    void findByChecklistId() {
+    void findAllByChecklistId() {
         // given & when
-        List<ChecklistOption> checklistOptions = checklistOptionRepository.findByChecklistId(checklistId);
+        List<ChecklistOption> checklistOptions = checklistOptionRepository.findAllByChecklistId(checklistId);
 
         // then
         assertThat(checklistOptions)
@@ -65,7 +65,7 @@ class ChecklistOptionRepositoryTest extends IntegrationTestSupport {
     @Test
     void deleteAllByChecklistId() {
         // given
-        List<ChecklistOption> checklistOptions = checklistOptionRepository.findByChecklistId(checklistId);
+        List<ChecklistOption> checklistOptions = checklistOptionRepository.findAllByChecklistId(checklistId);
 
         // when
         checklistOptionRepository.deleteAllByChecklistId(checklistId);

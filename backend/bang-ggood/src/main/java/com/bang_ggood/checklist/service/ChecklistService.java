@@ -239,7 +239,7 @@ public class ChecklistService {
     }
 
     private List<SelectedOptionResponse> readOptionsByChecklistId(long checklistId) {
-        return checklistOptionRepository.findByChecklistId(checklistId)
+        return checklistOptionRepository.findAllByChecklistId(checklistId)
                 .stream()
                 .map(checklistOption -> SelectedOptionResponse.of(checklistOption.getOptionId()))
                 .toList();

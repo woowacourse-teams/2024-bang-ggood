@@ -8,7 +8,6 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.like.domain.ChecklistLike;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
-import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.ChecklistQuestionsResponse;
@@ -18,7 +17,6 @@ import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.dto.response.UserChecklistPreviewResponse;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.option.repository.ChecklistOptionRepository;
-import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.global.exception.BangggoodException;
@@ -264,7 +262,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         assertAll(
                 () -> assertThat(checklist.getRoom().getStructure()).isEqualTo(Structure.OPEN_ONE_ROOM),
                 () -> assertThat(
-                        checklistOptionRepository.findByChecklistId(checklistId).get(3).getOptionId()).isEqualTo(4)
+                        checklistOptionRepository.findAllByChecklistId(checklistId).get(3).getOptionId()).isEqualTo(4)
         );
     }
 

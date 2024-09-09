@@ -3,7 +3,6 @@ package com.bang_ggood.maintenance.service;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
-import com.bang_ggood.maintenance.domain.MaintenanceItem;
 import com.bang_ggood.maintenance.repository.ChecklistMaintenanceRepository;
 import org.springframework.stereotype.Service;
 import java.util.HashSet;
@@ -19,12 +18,12 @@ public class ChecklistMaintenanceService {
         this.checklistMaintenanceRepository = checklistMaintenanceRepository;
     }
 
-    public void createMaintenance(List<ChecklistMaintenance> maintenances) {
-        validateMaintenanceDuplicate(maintenances);
+    public void createMaintenances(List<ChecklistMaintenance> maintenances) {
+        validateMaintenancesDuplicate(maintenances);
         checklistMaintenanceRepository.saveAll(maintenances);
     }
 
-    private void validateMaintenanceDuplicate(List<ChecklistMaintenance> maintenances) {
+    private void validateMaintenancesDuplicate(List<ChecklistMaintenance> maintenances) {
         Set<Integer> set = new HashSet<>();
         maintenances.forEach(maintenance -> {
             Integer id = maintenance.getMaintenanceItemId();

@@ -69,7 +69,7 @@ const validatorSet: Record<string, Validator[]> = {
   floorLevel: [],
   structure: [],
   realEstate: [],
-  occupancyMonth: [isNumericValidator, positiveValidator, inRangeValidator(1, 12)],
+  occupancyMonth: [isIntegerValidator, positiveValidator, inRangeValidator(1, 12)],
   occupancyPeriod: [],
   summary: [],
   memo: [],

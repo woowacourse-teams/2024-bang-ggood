@@ -59,6 +59,10 @@ public class ChecklistQuestion extends BaseEntity {
         return question;
     }
 
+    public Integer getQuestionId() {
+        return question.getId();
+    }
+
     public Answer getAnswer() {
         return answer;
     }

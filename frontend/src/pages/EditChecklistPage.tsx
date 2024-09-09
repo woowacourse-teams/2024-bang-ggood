@@ -18,18 +18,24 @@ type RouteParams = {
 
 const EditChecklistPage = () => {
   const { checklistId } = useParams() as RouteParams;
-
   const { tabs } = useNewChecklistTabs();
 
-  const { isModalOpen, modalOpen, modalClose } = useModalOpen(); // 한줄평 모달
-  const { isModalOpen: isMemoModalOpen, modalOpen: memoModalOpen, modalClose: memoModalClose } = useModalOpen(); // 메모 모달
+  // 한줄평 모달
+  const {
+    isModalOpen: isSummaryModalOpen,
+    modalOpen: summaryModalOpen,
+    modalClose: summaryModalClose,
+  } = useModalOpen();
+
+  // 메모 모달
+  const { isModalOpen: isMemoModalOpen, modalOpen: memoModalOpen, modalClose: memoModalClose } = useModalOpen();
 
   return (
     <>
       <Header
         left={<Header.Backward />}
         center={<Header.Text>체크리스트 편집</Header.Text>}
-        right={<Button label="저장" size="small" color="dark" onClick={modalOpen} />}
+        right={<Button label="저장" size="small" color="dark" onClick={summaryModalOpen} />}
       />
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
         {/* 체크리스트 작성의 탭 */}
@@ -46,10 +52,10 @@ const EditChecklistPage = () => {
       )}
 
       {/* 한줄평 모달*/}
-      {isModalOpen && (
+      {isSummaryModalOpen && (
         <SummaryModal
-          isModalOpen={isModalOpen}
-          modalClose={modalClose}
+          isModalOpen={isSummaryModalOpen}
+          modalClose={summaryModalClose}
           mutateType="edit"
           checklistId={Number(checklistId)}
         />

@@ -13,7 +13,7 @@ public interface ChecklistQuestionRepository extends JpaRepository<ChecklistQues
     @Query("SELECT cq FROM ChecklistQuestion cq "
             + "WHERE cq.checklist.id = :checklistId "
             + "AND cq.deleted = false")
-    List<ChecklistQuestion> findByChecklistId(@Param("checklistId") long checklistId);
+    List<ChecklistQuestion> findAllByChecklistId(@Param("checklistId") long checklistId);
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Transactional

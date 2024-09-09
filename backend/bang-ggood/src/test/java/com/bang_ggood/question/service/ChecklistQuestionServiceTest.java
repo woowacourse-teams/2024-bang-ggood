@@ -1,4 +1,4 @@
-package com.bang_ggood.option.service;
+package com.bang_ggood.question.service;
 
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
@@ -6,11 +6,11 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
-import com.bang_ggood.maintenance.ChecklistMaintenanceFixture;
-import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.option.ChecklistOptionFixture;
 import com.bang_ggood.option.domain.ChecklistOption;
-import com.bang_ggood.option.repository.ChecklistOptionRepository;
+import com.bang_ggood.question.ChecklistQuestionFixture;
+import com.bang_ggood.question.domain.ChecklistQuestion;
+import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
@@ -24,14 +24,15 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 
-class ChecklistOptionServiceTest extends IntegrationTestSupport {
-
-    @Autowired
-    private ChecklistOptionService checklistOptionService;
+class ChecklistQuestionServiceTest extends IntegrationTestSupport {
 
     @Autowired
-    private ChecklistOptionRepository checklistOptionRepository;
+    private ChecklistQuestionService checklistQuestionService;
+
+    @Autowired
+    private ChecklistQuestionRepository checklistQuestionRepository;
 
     @Autowired
     private ChecklistRepository checklistRepository;
@@ -51,35 +52,36 @@ class ChecklistOptionServiceTest extends IntegrationTestSupport {
         checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
     }
 
-    @DisplayName("옵션 작성 성공")
+    @DisplayName("질문 작성 성공")
     @Test
-    void createOptions() {
+    void createQuestions() {
         //given
-        List<ChecklistOption> checklistOptions = List.of(
-                ChecklistOptionFixture.CHECKLIST1_OPTION_CLOSET,
-                ChecklistOptionFixture.CHECKLIST1_OPTION_BED
+        List<ChecklistQuestion> checklistQuestions = List.of(
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1,
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION10
         );
 
         //when
-        checklistOptionService.createOptions(checklistOptions);
+        checklistQuestionService.createQuestions(checklistQuestions);
 
         //then
-        assertThat(checklistOptionRepository.findAllByChecklistId(checklist.getId())).hasSize(checklistOptions.size());
+        assertThat(checklistQuestionRepository.findAllByChecklistId(checklist.getId())).hasSize(checklistQuestions.size());
     }
 
-    @DisplayName("옵션 작성 실패: 옵션 id가 중복일 경우")
+    @DisplayName("질문 작성 실패: 옵션 id가 중복일 경우")
     @Test
-    void createOption_duplicateId_exception() {
+    void createQuestions_duplicateId_exception() {
         //given
-        List<ChecklistOption> checklistOptions = List.of(
-                ChecklistOptionFixture.CHECKLIST1_OPTION_CLOSET,
-                ChecklistOptionFixture.CHECKLIST1_OPTION_CLOSET
+        List<ChecklistQuestion> checklistQuestions = List.of(
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1,
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1
         );
 
         // when & then
         assertThatThrownBy(
-                () -> checklistOptionService.createOptions(checklistOptions))
+                () -> checklistQuestionService.createQuestions(checklistQuestions))
                 .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.OPTION_DUPLICATED.getMessage());
+                .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
     }
+
 }

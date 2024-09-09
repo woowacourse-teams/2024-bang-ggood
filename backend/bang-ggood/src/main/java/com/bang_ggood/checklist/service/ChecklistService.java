@@ -246,7 +246,7 @@ public class ChecklistService {
     }
 
     private List<SelectedCategoryQuestionsResponse> readCategoryQuestionsByChecklistId(long checklistId) {
-        List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findByChecklistId(checklistId);
+        List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findAllByChecklistId(checklistId);
 
         return Arrays.stream(Category.values())
                 .map(category -> readQuestionsByCategory(category, checklistQuestions))

@@ -27,6 +27,7 @@ const config = {
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
+    filename: '[name].js',
     clean: true,
   },
   devServer: {
@@ -88,7 +89,7 @@ const config = {
           },
         ],
       },
-      { test: /\.(png|jpg|gif)/i, type: 'asset/resource' },
+      { test: /\.(png|jpg|gif|webp|mp4)/i, type: 'asset/resource' },
       {
         test: /\.svg$/i,
         issuer: /\.[jt]sx?$/,
@@ -138,6 +139,7 @@ module.exports = () => {
       }),
     );
     config.devtool = 'source-map';
+
     config.optimization = {
       splitChunks: {
         chunks: 'all',
@@ -148,6 +150,7 @@ module.exports = () => {
             test: /[\\/]node_modules[\\/]/,
             priority: -10,
             reuseExistingChunk: true,
+            filename: '[name].js',
           },
           default: {
             minChunks: 2,
@@ -157,7 +160,7 @@ module.exports = () => {
         },
       },
     };
-    // config.plugins.push(new BundleAnalyzerPlugin()); /* 원할때만 켜기 */
+    config.plugins.push(new BundleAnalyzerPlugin()); /* 원할때만 켜기 */
   } else {
     config.mode = 'development';
   }

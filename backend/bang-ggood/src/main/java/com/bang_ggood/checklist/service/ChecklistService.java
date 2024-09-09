@@ -77,25 +77,8 @@ public class ChecklistService {
     }
 
     @Transactional
-    public long createChecklist(User user, ChecklistRequest checklistRequest) {
-        Room room = roomRepository.save(checklistRequest.toRoomEntity());
-
-        Checklist checklist = checklistRequest.toChecklistEntity(room, user);
-        checklistRepository.save(checklist);
-
-        createChecklistOptions(checklistRequest, checklist);
-        createChecklistQuestions(checklistRequest, checklist);
-        createChecklistIncludedMaintenances(checklistRequest, checklist);
-        return checklist.getId();
-    }
-
-    private void createChecklistOptions(ChecklistRequest checklistRequest, Checklist checklist) {
-        List<Integer> optionIds = checklistRequest.options();
-        validateOptions(optionIds);
-        List<ChecklistOption> checklistOptions = optionIds.stream()
-                .map(option -> new ChecklistOption(checklist, option))
-                .toList();
-        checklistOptionRepository.saveAll(checklistOptions);
+    public Checklist createChecklist(Checklist checklist) {
+        return checklistRepository.save(checklist);
     }
 
     private void validateOptions(List<Integer> optionIds) {
@@ -118,27 +101,6 @@ public class ChecklistService {
                 throw new BangggoodException(ExceptionCode.OPTION_INVALID);
             }
         }
-    }
-
-    private void createChecklistQuestions(ChecklistRequest checklistRequest, Checklist checklist) {
-        validateQuestion(checklistRequest.questions());
-        List<ChecklistQuestion> checklistQuestions = checklistRequest.questions().stream()
-                .map(question -> new ChecklistQuestion(
-                        checklist,
-                        Question.fromId(question.questionId()),
-                        Answer.from(question.answer())))
-                .collect(Collectors.toList());
-        checklistQuestionRepository.saveAll(checklistQuestions);
-    }
-
-    private void createChecklistIncludedMaintenances(ChecklistRequest checklistRequest, Checklist checklist) {
-        validateIncludedMaintenance(checklistRequest.room().includedMaintenances());
-        List<ChecklistMaintenance> checklistMaintenances =
-                checklistRequest.room().includedMaintenances().stream()
-                        .map(maintenanceId -> new ChecklistMaintenance(checklist,
-                                MaintenanceItem.fromId(maintenanceId)))
-                        .collect(Collectors.toList());
-        checklistMaintenanceRepository.saveAll(checklistMaintenances);
     }
 
     private void validateIncludedMaintenance(List<Integer> includedMaintenances) {

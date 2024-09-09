@@ -56,9 +56,6 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     private ChecklistRepository checklistRepository;
 
     @Autowired
-    private ChecklistQuestionRepository checklistQuestionRepository;
-
-    @Autowired
     private RoomRepository roomRepository;
 
     @Autowired
@@ -85,19 +82,19 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void createChecklist() {
         //given
-        ChecklistRequest checklist = ChecklistFixture.CHECKLIST_CREATE_REQUEST;
+        Checklist checklist = ChecklistFixture.CHECKLIST1_USER1;
 
-        // when
-        long checklistId = checklistService.createChecklist(UserFixture.USER1, checklist);
+        //when
+        Checklist savedChecklist = checklistService.createChecklist(checklist);
 
         //then
-        assertAll(
-                () -> assertThat(checklistId).isEqualTo(1),
-                () -> assertThat(checklistQuestionRepository.findByChecklistId(1).size()).isEqualTo(
-                        checklist.questions().size())
-        );
-
+        assertThat(savedChecklist)
+                .usingRecursiveComparison()
+                .ignoringFields("id")
+                .isEqualTo(checklist);
     }
+
+
 
     @DisplayName("체크리스트 작성 실패: 질문 id가 유효하지 않을 경우")
     @Test
@@ -142,6 +139,8 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.OPTION_DUPLICATED.getMessage());
     }
+
+
 
     @DisplayName("체크리스트 좋아요 추가 성공")
     @Test

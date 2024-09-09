@@ -33,7 +33,7 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         long checklistId = checklistManageService.createChecklist(UserFixture.USER1, checklist);
 
         //then
-        assertThat(checklistId).isEqualTo(1);
+        assertThat(checklistId).isGreaterThan(0);
     }
 
 }

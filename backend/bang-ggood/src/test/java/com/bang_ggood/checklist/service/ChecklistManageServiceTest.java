@@ -35,5 +35,4 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         //then
         assertThat(checklistId).isGreaterThan(0);
     }
-
 }

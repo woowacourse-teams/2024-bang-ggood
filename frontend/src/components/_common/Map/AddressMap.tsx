@@ -42,12 +42,20 @@ const AddressMap = ({ location }: { location: string }) => {
     });
   }, [location]);
 
+  const handleOpenKakaoMap = () => {
+    window.location.href = `https://map.kakao.com/?q=${location}`;
+  };
+
+  const handleOpenNaverMap = () => {
+    window.location.href = `https://map.naver.com/v5/search/${location}`;
+  };
+
   return (
     <S.Box>
       <S.Map ref={mapContainerRef}>
         <S.LinkButtonBox>
-          <S.LinkButton src={kakaoMapImg} />
-          <S.LinkButton src={naverMapImg} />
+          <S.LinkButton onClick={handleOpenKakaoMap} src={kakaoMapImg} />
+          <S.LinkButton onClick={handleOpenNaverMap} src={naverMapImg} />
         </S.LinkButtonBox>
       </S.Map>
     </S.Box>

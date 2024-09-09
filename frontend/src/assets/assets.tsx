@@ -39,8 +39,6 @@ import PencilIcon from '@/assets/icons/mascot/pencil-icon.svg';
 // kakao
 import KakaoLogo from '@/assets/icons/kakao/kakao-logo.svg';
 
-//map
-
 export {
   ArrowBack,
   ArrowDownSmall,

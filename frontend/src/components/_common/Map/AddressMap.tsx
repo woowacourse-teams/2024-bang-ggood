@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useEffect, useRef } from 'react';
 
-import kakaoMapImg from '@/assets/icons/map/kakaomap.png';
+import kakaoMapImg from '@/assets/icons/map/kakaomap.webp';
 import naverMapImg from '@/assets/icons/map/navermap.webp';
 import { DEFAULT_POSITION } from '@/constants/map';
 import makeMap from '@/utils/makeMap';

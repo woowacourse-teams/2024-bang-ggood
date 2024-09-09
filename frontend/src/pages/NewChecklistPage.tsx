@@ -12,7 +12,6 @@ import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
-import useChecklistPost from '@/hooks/useChecklistPost';
 import useChecklistTemplate from '@/hooks/useInitialChecklist';
 import useModalOpen from '@/hooks/useModalOpen';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
@@ -33,9 +32,6 @@ const NewChecklistPage = () => {
     modalOpen: summaryModalOpen,
     modalClose: summaryModalClose,
   } = useModalOpen();
-
-  // 체크리스트 POST
-  const { handleSubmitChecklist } = useChecklistPost(summaryModalClose);
 
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
 
@@ -81,11 +77,7 @@ const NewChecklistPage = () => {
       )}
 
       {isSummaryModalOpen && (
-        <SummaryModal
-          isModalOpen={isSummaryModalOpen}
-          modalClose={summaryModalClose}
-          submitChecklist={handleSubmitChecklist}
-        />
+        <SummaryModal isModalOpen={isSummaryModalOpen} modalClose={summaryModalClose} mutateType="add" />
       )}
     </>
   );

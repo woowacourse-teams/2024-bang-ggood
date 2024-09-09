@@ -51,7 +51,7 @@ class ChecklistMaintenanceRepositoryTest extends IntegrationTestSupport {
 
         // when
         List<ChecklistMaintenance> checklistMaintenances = checklistMaintenanceRepository
-                .findAllByChecklist(ChecklistFixture.CHECKLIST1_USER1);
+                .findAllByChecklistId(ChecklistFixture.CHECKLIST1_USER1.getId());
 
         // then
         Assertions.assertThat(checklistMaintenances).containsExactly(saved1, saved2);
@@ -67,7 +67,7 @@ class ChecklistMaintenanceRepositoryTest extends IntegrationTestSupport {
 
         // when
         List<ChecklistMaintenance> checklistMaintenances = checklistMaintenanceRepository
-                .findAllByChecklist(ChecklistFixture.CHECKLIST1_USER1);
+                .findAllByChecklistId(ChecklistFixture.CHECKLIST1_USER1.getId());
 
         // then
         Assertions.assertThat(checklistMaintenances).isEmpty();

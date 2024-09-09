@@ -12,8 +12,8 @@ import java.util.List;
 public interface ChecklistMaintenanceRepository extends JpaRepository<ChecklistMaintenance, Long> {
 
     @Query("SELECT cm FROM ChecklistMaintenance cm "
-            + "WHERE cm.checklist =:checklist and cm.deleted = false ")
-    List<ChecklistMaintenance> findAllByChecklist(@Param("checklist") Checklist checklist);
+            + "WHERE cm.checklist.id =:checklistId and cm.deleted = false ")
+    List<ChecklistMaintenance> findAllByChecklistId(@Param("checklistId") Long checklistId);
 
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)

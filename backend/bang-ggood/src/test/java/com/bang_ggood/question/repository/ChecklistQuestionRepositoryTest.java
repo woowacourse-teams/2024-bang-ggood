@@ -1,9 +1,9 @@
-package com.bang_ggood.checklist.repository;
+package com.bang_ggood.question.repository;
 
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.question.domain.ChecklistQuestion;
-import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;

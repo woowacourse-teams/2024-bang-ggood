@@ -1,8 +1,7 @@
-package com.bang_ggood.checklist.domain;
+package com.bang_ggood.maintenance.domain;
 
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
-import com.bang_ggood.maintenance.domain.MaintenanceItem;
 import com.bang_ggood.option.domain.Option;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

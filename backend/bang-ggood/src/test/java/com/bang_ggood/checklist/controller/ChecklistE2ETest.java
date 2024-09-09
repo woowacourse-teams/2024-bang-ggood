@@ -2,7 +2,7 @@ package com.bang_ggood.checklist.controller;
 
 import com.bang_ggood.AcceptanceTest;
 import com.bang_ggood.checklist.ChecklistFixture;
-import com.bang_ggood.checklist.CustomChecklistFixture;
+import com.bang_ggood.question.CustomChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;

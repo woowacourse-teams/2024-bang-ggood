@@ -44,7 +44,7 @@ const useMutateChecklist = (mutateType: MutateType, checklistId?: number) => {
   };
 
   const handleSubmitChecklist = () => {
-    const fetchNewChecklist = () => {
+    const postNewChecklist = () => {
       addChecklist(postData, {
         onSuccess: () => {
           showToast('체크리스트가 저장되었습니다.'); // TODO: 메세지 상수처리
@@ -62,7 +62,7 @@ const useMutateChecklist = (mutateType: MutateType, checklistId?: number) => {
       });
     };
 
-    mutateType === 'add' && fetchNewChecklist();
+    mutateType === 'add' && postNewChecklist();
     mutateType === 'edit' && putEditedChecklist();
   };
 

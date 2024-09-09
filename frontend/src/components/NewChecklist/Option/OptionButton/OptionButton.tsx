@@ -38,6 +38,7 @@ const OptionButton = ({ option }: { option: OptionWithIcon }) => {
 
 const S = {
   Box: styled.div<{ color: string; borderColor: string }>`
+    cursor: pointer;
     position: relative;
     width: 100%;
     padding-top: 100%;

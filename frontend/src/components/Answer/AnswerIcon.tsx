@@ -31,9 +31,9 @@ const AnswerIcon = ({ answer, isSelected = false, ...rest }: Props) => {
 
   return (
     <>
-      {answer === 'GOOD' && <Good color={color} {...rest} />}
-      {answer === 'BAD' && <Bad color={color} {...rest} />}
-      {answer === 'NONE' && <None color={color} {...rest} />}
+      {answer === 'GOOD' && <Good style={{ cursor: 'pointer' }} color={color} {...rest} />}
+      {answer === 'BAD' && <Bad style={{ cursor: 'pointer' }} color={color} {...rest} />}
+      {answer === 'NONE' && <None style={{ cursor: 'pointer' }} color={color} {...rest} />}
     </>
   );
 };

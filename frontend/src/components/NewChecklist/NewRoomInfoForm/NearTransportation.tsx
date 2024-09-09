@@ -1,11 +1,8 @@
 import { useStore } from 'zustand';
 
-import { getNearSubway } from '@/apis/subway';
-import Button from '@/components/_common/Button/Button';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
-import checklistAddressStore from '@/store/checklistAddressStore';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
 const NearTransportation = () => {
@@ -15,13 +12,19 @@ const NearTransportation = () => {
   const errorMessageStation = useStore(checklistRoomInfoStore, state => state.errorMessage.station);
   const errorMessageWalkingTime = useStore(checklistRoomInfoStore, state => state.errorMessage.walkingTime);
 
-  const position = useStore(checklistAddressStore, state => state.position);
+  // const position = useStore(checklistAddressStore, state => state.position);
 
-  const findNearSubway = async () => {
-    const newSubway = await getNearSubway(position);
-    actions.set('station', newSubway.stationName);
-    actions.set('walkingTime', newSubway.walkingTime);
-  };
+  // // const findNearSubway = async () => {
+  // //   const newSubway = await getNearSubway(position);
+  // //   actions.set('station', newSubway.stationName);
+  // //   actions.set('walkingTime', newSubway.walkingTime);
+  // // };
+
+  // // useEffect(() => {
+  // //   if (position) {
+  // //     findNearSubway();
+  // //   }
+  // // }, [position]);
 
   return (
     <FlexBox.Vertical gap="1.5rem">
@@ -38,7 +41,7 @@ const NearTransportation = () => {
         />
         <FormStyled.FlexLabel label=" 분" />
       </FormStyled.FieldBox>
-      <Button label="자동" isSquare={true} size="xSmall" onClick={findNearSubway} />
+      {/* <Button label="자동" isSquare={true} size="xSmall" onClick={findNearSubway} /> */}
       <FormField.ErrorMessage value={errorMessageStation || errorMessageWalkingTime || ''} />
     </FlexBox.Vertical>
   );

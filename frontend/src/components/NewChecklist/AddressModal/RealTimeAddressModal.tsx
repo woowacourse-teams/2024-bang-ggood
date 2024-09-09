@@ -5,12 +5,19 @@ import Button from '@/components/_common/Button/Button';
 import Input from '@/components/_common/Input/Input';
 import RealTimeMap from '@/components/_common/Map/RealTimeMap';
 import Modal from '@/components/_common/Modal/Modal';
+import useFindNearSubway from '@/hooks/useFindNearSubway';
 import useModalOpen from '@/hooks/useModalOpen';
 import checklistAddressStore from '@/store/checklistAddressStore';
 
 const RealTimeAddressModal = () => {
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
   const { address, buildingName } = useStore(checklistAddressStore);
+  const { findNearSubway } = useFindNearSubway();
+
+  const handleSubmitAddress = async () => {
+    modalClose();
+    await findNearSubway();
+  };
 
   return (
     <>
@@ -27,7 +34,7 @@ const RealTimeAddressModal = () => {
                 placeholder={'지도를 클릭하면 현재 위치를 움직일 수 있어요.'}
                 value={`${address} ${buildingName}`}
               />
-              <Button label="확인" size="xSmall" isSquare={true} onClick={modalClose} />
+              <Button label="확인" size="xSmall" isSquare={true} onClick={handleSubmitAddress} />
             </S.InputBox>
             {/* 지도 */}
             <RealTimeMap />

@@ -74,7 +74,6 @@ const S = {
     width: 100%;
     height: 100%;
   `,
-
   LinkButtonBox: styled.div`
     display: flex;
     position: absolute;
@@ -88,7 +87,6 @@ const S = {
     gap: 10px;
     border-radius: 3px;
   `,
-
   LinkButton: styled.img`
     z-index: 10;
     box-shadow: 0 4px 15px rgb(0 0 0 / 30%);

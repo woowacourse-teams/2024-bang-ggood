@@ -61,7 +61,7 @@ public class Checklist extends BaseEntity {
     @OneToMany(mappedBy = "checklist")
     private List<ChecklistQuestion> questions;
 
-  
+
     public Checklist(Room room, User user, Integer deposit, Integer rent, Integer maintenanceFee,
                      Integer contractTerm, OccupancyMonth occupancyMonth, OccupancyPeriod occupancyPeriod,
                      String realEstate, String memo, String summary) {

@@ -3,7 +3,6 @@ package com.bang_ggood.option.service;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.option.domain.ChecklistOption;
-import com.bang_ggood.option.domain.Option;
 import com.bang_ggood.option.repository.ChecklistOptionRepository;
 import org.springframework.stereotype.Service;
 import java.util.HashSet;

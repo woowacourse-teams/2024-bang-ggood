@@ -3,8 +3,6 @@ package com.bang_ggood.question.service;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.question.domain.ChecklistQuestion;
-import com.bang_ggood.question.domain.Question;
-import com.bang_ggood.question.dto.request.QuestionRequest;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import org.springframework.stereotype.Service;
 import java.util.HashSet;

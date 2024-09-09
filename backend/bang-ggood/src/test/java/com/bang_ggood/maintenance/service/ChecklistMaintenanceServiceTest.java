@@ -17,7 +17,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -62,8 +61,10 @@ class ChecklistMaintenanceServiceTest extends IntegrationTestSupport {
         checklistMaintenanceService.createMaintenances(checklistMaintenances);
 
         //then
-        assertThat(checklistMaintenanceRepository.findAllByChecklistId(checklist.getId())).hasSize(checklistMaintenances.size());
+        assertThat(checklistMaintenanceRepository.findAllByChecklistId(checklist.getId())).hasSize(
+                checklistMaintenances.size());
     }
+
     @DisplayName("관리비 포함 항목 작성 실패: 관리 항목 id가 중복일 경우")
     @Test
     void createChecklistMaintenance_duplicatedId_exception() {

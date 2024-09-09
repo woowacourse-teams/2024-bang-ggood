@@ -6,8 +6,6 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
-import com.bang_ggood.maintenance.ChecklistMaintenanceFixture;
-import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.option.ChecklistOptionFixture;
 import com.bang_ggood.option.domain.ChecklistOption;
 import com.bang_ggood.option.repository.ChecklistOptionRepository;
@@ -19,7 +17,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;

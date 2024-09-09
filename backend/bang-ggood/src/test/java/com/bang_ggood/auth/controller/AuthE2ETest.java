@@ -62,7 +62,7 @@ class AuthE2ETest extends AcceptanceTest {
     @DisplayName("인증 실패 : 블랙리스트에 들어간 토큰일 경우")
     @Test
     void authentication_token_blacklist_exception() {
-        authService.logout(this.responseCookie.getName() + "="+ this.responseCookie.getValue(), UserFixture.USER1);
+        authService.logout(this.responseCookie.getName() + "=" + this.responseCookie.getValue(), UserFixture.USER1);
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)

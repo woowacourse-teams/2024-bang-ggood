@@ -1,6 +1,5 @@
 package com.bang_ggood.maintenance.repository;
 
-import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

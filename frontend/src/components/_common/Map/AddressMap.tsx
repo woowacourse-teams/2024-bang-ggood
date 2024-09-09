@@ -1,7 +1,10 @@
 import styled from '@emotion/styled';
 import { useEffect, useRef } from 'react';
 
+import kakaoMapImg from '@/assets/icons/map/kakaomap.png';
+import naverMapImg from '@/assets/icons/map/navermap.webp';
 import { DEFAULT_POSITION } from '@/constants/map';
+import makeMap from '@/utils/makeMap';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const { kakao } = window as any;
@@ -9,6 +12,8 @@ const { kakao } = window as any;
 const AddressMap = ({ location }: { location: string }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const markerRef = useRef<any | null>(null);
+
+  const mapUtils = makeMap();
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
@@ -28,18 +33,8 @@ const AddressMap = ({ location }: { location: string }) => {
     geocoder.addressSearch(location, (result: any, status: any) => {
       if (status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-        // 첫 커스텀 마커 생성
-        const imageSrc = 'https://github.com/user-attachments/assets/cdd2825b-407f-485a-8cc9-5d261acf815d ',
-          imageSize = new kakao.maps.Size(32, 40),
-          imageOption = { offset: new kakao.maps.Point(15, 45) };
 
-        const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-
-        const marker = new kakao.maps.Marker({
-          map: map,
-          position: coords,
-          image: markerImage,
-        });
+        const marker = mapUtils.makeCustomMarker(map, { lat: result[0].y, lon: result[0].x });
         markerRef.current = marker;
 
         map.setCenter(coords);
@@ -49,7 +44,12 @@ const AddressMap = ({ location }: { location: string }) => {
 
   return (
     <S.Box>
-      <S.Map ref={mapContainerRef}></S.Map>
+      <S.Map ref={mapContainerRef}>
+        <S.LinkButtonBox>
+          <S.LinkButton src={kakaoMapImg} />
+          <S.LinkButton src={naverMapImg} />
+        </S.LinkButtonBox>
+      </S.Map>
     </S.Box>
   );
 };
@@ -62,8 +62,31 @@ const S = {
     background-color: ${({ theme }) => theme.palette.background};
   `,
   Map: styled.div`
+    position: relative;
     width: 100%;
     height: 100%;
+  `,
+
+  LinkButtonBox: styled.div`
+    display: flex;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+
+    padding: 5px;
+
+    color: ${({ theme }) => theme.palette.white};
+    gap: 6px;
+    border-radius: 3px;
+  `,
+
+  LinkButton: styled.img`
+    z-index: 10;
+    box-shadow: 0 4px 15px rgb(0 0 0 / 30%);
+    width: 35px;
+    border-radius: 50%;
+    height: 35px;
   `,
 };
 

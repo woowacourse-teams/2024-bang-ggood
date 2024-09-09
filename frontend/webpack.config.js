@@ -78,7 +78,7 @@ const config = {
         ],
       },
       {
-        test: /\.(eot|ttf|woff|woff2|mp4)$/i,
+        test: /\.(eot|ttf|woff|woff2)$/i,
         type: 'asset',
         use: [
           {
@@ -89,7 +89,7 @@ const config = {
           },
         ],
       },
-      { test: /\.(png|jpg|gif)/i, type: 'asset/resource' },
+      { test: /\.(png|jpg|gif|webp)/i, type: 'asset/resource' },
       {
         test: /\.svg$/i,
         issuer: /\.[jt]sx?$/,

@@ -137,7 +137,6 @@ const RealTimeMap = () => {
     <S.Container>
       <>
         <S.MapBox id="map">
-          {!isRealTimeLocationLoading && <S.LoadingSpinner>실시간 위치 추적중...</S.LoadingSpinner>}
           <S.MapEmptyBox>지도 준비 중</S.MapEmptyBox>
         </S.MapBox>
         <div id="message"></div>

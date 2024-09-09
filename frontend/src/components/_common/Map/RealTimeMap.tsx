@@ -129,7 +129,13 @@ const RealTimeMap = () => {
       const locPosition = new kakao.maps.LatLng(position.lat, position.lon);
       markerRef.current.setPosition(locPosition);
       mapRef.current.setCenter(locPosition);
-      infoWindowRef.current.open(mapRef.current, markerRef.current);
+
+      /* infoWindow가 존재할 경우 닫고 제거 */
+      if (infoWindowRef.current) {
+        infoWindowRef.current.close();
+        infoWindowRef.current = null;
+      }
+
       searchDetailAddrFromCoords(mapRef.current.getCenter());
     }
   }, [position, markerRef]);

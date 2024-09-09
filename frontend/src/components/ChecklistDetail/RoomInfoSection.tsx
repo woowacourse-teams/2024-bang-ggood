@@ -132,7 +132,7 @@ const S = {
     box-sizing: border-box;
     width: 100%;
     ${flexColumn}
-    gap: 1.6rem;
+    gap: 2rem;
     margin-bottom: 1rem;
     padding: 1.6rem;
 

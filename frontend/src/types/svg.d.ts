@@ -5,7 +5,6 @@ declare module '*.svg' {
   export default ReactComponent;
 }
 
-declare module '*.png' {
-  const value: string;
-  export default value;
-}
+declare module '*.png';
+declare module '*.webp';
+declare module '*.mp4';

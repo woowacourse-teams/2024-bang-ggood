@@ -233,7 +233,7 @@ public class ChecklistService {
     }
 
     private List<Integer> readChecklistMaintenancesByChecklist(Checklist checklist) {
-        return checklistMaintenanceRepository.findAllByChecklist(checklist).stream()
+        return checklistMaintenanceRepository.findAllByChecklistId(checklist.getId()).stream()
                 .map(ChecklistMaintenance::getMaintenanceItemId)
                 .toList();
     }

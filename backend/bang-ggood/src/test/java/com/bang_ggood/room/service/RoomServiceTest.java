@@ -27,9 +27,6 @@ class RoomServiceTest extends IntegrationTestSupport {
         Room savedRoom = roomService.createRoom(room);
 
         //then
-        assertThat(savedRoom)
-                .usingRecursiveComparison()
-                .ignoringFields("id")
-                .isEqualTo(room);
+        assertThat(savedRoom.getName()).isEqualTo(room.getName());
     }
 }

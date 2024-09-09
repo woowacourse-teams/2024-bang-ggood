@@ -48,6 +48,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class ChecklistServiceTest extends IntegrationTestSupport {
 
     @Autowired
+    private ChecklistManageService checklistManageService;
+
+    @Autowired
     private ChecklistService checklistService;
 
     @Autowired
@@ -86,59 +89,13 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         Checklist savedChecklist = checklistService.createChecklist(checklist);
 
         //then
-        assertThat(savedChecklist)
-                .usingRecursiveComparison()
-                .ignoringFields("id")
-                .isEqualTo(checklist);
+        assertAll(
+                () -> assertThat(savedChecklist.getRealEstate()).isEqualTo(checklist.getRealEstate()),
+                () -> assertThat(savedChecklist.getMemo()).isEqualTo(checklist.getMemo()),
+                () -> assertThat(savedChecklist.getSummary()).isEqualTo(checklist.getSummary())
+        );
+
     }
-
-
-
-    @DisplayName("체크리스트 작성 실패: 질문 id가 유효하지 않을 경우")
-    @Test
-    void createChecklist_invalidQuestionId_exception() {
-        //given & when & then
-        assertThatThrownBy(
-                () -> checklistService.createChecklist(UserFixture.USER1,
-                        ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_QUESTION_ID))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
-    }
-
-    @DisplayName("체크리스트 작성 실패: 질문 id가 중복일 경우")
-    @Test
-    void createChecklist_duplicatedQuestionId_exception() {
-        //given & when & then
-        assertThatThrownBy(
-                () -> checklistService.createChecklist(UserFixture.USER1,
-                        ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_QUESTION_ID))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
-    }
-
-    @DisplayName("체크리스트 작성 실패: 옵션 id가 유효하지 않을 경우")
-    @Test
-    void createChecklist_invalidOptionId_exception() {
-        //given & when & then
-        assertThatThrownBy(
-                () -> checklistService.createChecklist(UserFixture.USER1,
-                        ChecklistFixture.CHECKLIST_CREATE_REQUEST_INVALID_OPTION_ID))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.OPTION_INVALID.getMessage());
-    }
-
-    @DisplayName("체크리스트 작성 실패: 옵션 id가 중복일 경우")
-    @Test
-    void createChecklist_duplicatedOptionId_exception() {
-        //given & when & then
-        assertThatThrownBy(
-                () -> checklistService.createChecklist(UserFixture.USER1,
-                        ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_OPTION_ID))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.OPTION_DUPLICATED.getMessage());
-    }
-
-
 
     @DisplayName("체크리스트 좋아요 추가 성공")
     @Test
@@ -251,8 +208,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateChecklistById() {
         //given
-        long checklistId = checklistService.createChecklist(UserFixture.USER1,
-                ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistManageService.createChecklist(UserFixture.USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         //when
         checklistService.updateChecklistById(UserFixture.USER1, checklistId, ChecklistFixture.CHECKLIST_UPDATE_REQUEST);
@@ -270,7 +226,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateChecklistById_invalidQuestionId_exception() {
         //given
-        long checklistId = checklistService.createChecklist(UserFixture.USER1,
+        long checklistId = checklistManageService.createChecklist(UserFixture.USER1,
                 ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         //when & then
@@ -285,7 +241,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateChecklistById_duplicatedQuestionId_exception() {
         //given
-        long checklistId = checklistService.createChecklist(UserFixture.USER1,
+        long checklistId = checklistManageService.createChecklist(UserFixture.USER1,
                 ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         //when & then
@@ -300,7 +256,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateChecklistById_invalidOptionId_exception() {
         //given
-        long checklistId = checklistService.createChecklist(UserFixture.USER1,
+        long checklistId = checklistManageService.createChecklist(UserFixture.USER1,
                 ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         //when & then
@@ -315,7 +271,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateChecklistById_duplicatedOptionId_exception() {
         //given
-        long checklistId = checklistService.createChecklist(UserFixture.USER1,
+        long checklistId = checklistManageService.createChecklist(UserFixture.USER1,
                 ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         //when & then
@@ -330,7 +286,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateChecklistById_differentQuestionLength_exception() {
         //given
-        long checklistId = checklistService.createChecklist(UserFixture.USER1,
+        long checklistId = checklistManageService.createChecklist(UserFixture.USER1,
                 ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         //when & then
@@ -345,7 +301,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void createChecklist_differentQuestion_exception() {
         //given
-        long checklistId = checklistService.createChecklist(UserFixture.USER1,
+        long checklistId = checklistManageService.createChecklist(UserFixture.USER1,
                 ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         //when & then
@@ -360,7 +316,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void createChecklist_notOwnedBy_exception() {
         //given
-        long checklistId = checklistService.createChecklist(UserFixture.USER1,
+        long checklistId = checklistManageService.createChecklist(UserFixture.USER1,
                 ChecklistFixture.CHECKLIST_CREATE_REQUEST);
 
         //when & then

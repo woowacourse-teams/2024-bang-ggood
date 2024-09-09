@@ -2,6 +2,7 @@ package com.bang_ggood.checklist.repository;
 
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.option.domain.ChecklistOption;
 import com.bang_ggood.checklist.service.ChecklistService;
 import com.bang_ggood.option.repository.ChecklistOptionRepository;
@@ -19,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ChecklistOptionRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
-    private ChecklistService checklistService;
+    private ChecklistManageService checklistManageService;
 
     @Autowired
     private ChecklistRepository checklistRepository;
@@ -34,7 +35,7 @@ class ChecklistOptionRepositoryTest extends IntegrationTestSupport {
     @BeforeEach
     void setUp() {
         User user = userRepository.save(UserFixture.USER1);
-        checklistId = checklistService.createChecklist(user, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        checklistId = checklistManageService.createChecklist(user, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
     }
 
     @DisplayName("체크리스트 ID로 옵션 찾기 성공")

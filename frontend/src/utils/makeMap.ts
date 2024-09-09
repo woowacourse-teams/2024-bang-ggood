@@ -35,7 +35,7 @@ const makeMap = () => {
 
   const makeInfoWindow = () => {
     const infoWindow = new kakao.maps.InfoWindow({
-      content: '<span id="info-title">이 위치가 맞나요?</span>',
+      content: '',
       removable: true,
     });
 

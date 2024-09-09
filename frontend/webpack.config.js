@@ -141,24 +141,24 @@ module.exports = () => {
     config.devtool = 'source-map';
 
     config.optimization = {
-      // splitChunks: {
-      //   chunks: 'all',
-      //   minSize: 20000,
-      //   maxSize: 250000, // 250KB 단위로 청크를 나눔
-      //   cacheGroups: {
-      //     defaultVendors: {
-      //       test: /[\\/]node_modules[\\/]/,
-      //       priority: -10,
-      //       reuseExistingChunk: true,
-      //       filename: '[name].js',
-      //     },
-      //     default: {
-      //       minChunks: 2,
-      //       priority: -20,
-      //       reuseExistingChunk: true,
-      //     },
-      //   },
-      // },
+      splitChunks: {
+        chunks: 'all',
+        minSize: 20000,
+        maxSize: 250000, // 250KB 단위로 청크를 나눔
+        cacheGroups: {
+          defaultVendors: {
+            test: /[\\/]node_modules[\\/]/,
+            priority: -10,
+            reuseExistingChunk: true,
+            filename: '[name].js',
+          },
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true,
+          },
+        },
+      },
     };
     config.plugins.push(new BundleAnalyzerPlugin()); /* 원할때만 켜기 */
   } else {

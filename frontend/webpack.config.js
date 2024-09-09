@@ -89,7 +89,7 @@ const config = {
           },
         ],
       },
-      { test: /\.(png|jpg|gif|webp)/i, type: 'asset/resource' },
+      { test: /\.(png|jpg|gif|webp|mp4)/i, type: 'asset/resource' },
       {
         test: /\.svg$/i,
         issuer: /\.[jt]sx?$/,

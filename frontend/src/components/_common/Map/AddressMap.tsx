@@ -85,7 +85,7 @@ const S = {
     padding: 5px;
 
     color: ${({ theme }) => theme.palette.white};
-    gap: 6px;
+    gap: 10px;
     border-radius: 3px;
   `,
 

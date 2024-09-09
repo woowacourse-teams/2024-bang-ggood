@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
 import { useStore } from 'zustand';
 
+import { LoadingSpinner } from '@/components/_common/LoadingSpinner/LoadingSpinner';
 import checklistAddressStore from '@/store/checklistAddressStore';
 import { flexCenter } from '@/styles/common';
 import makeMap from '@/utils/makeMap';
@@ -135,21 +136,26 @@ const RealTimeMap = () => {
 
   return (
     <S.Container>
-      <>
-        <S.MapBox id="map">
-          <S.MapEmptyBox>지도 준비 중</S.MapEmptyBox>
-        </S.MapBox>
-        <div id="message"></div>
-      </>
+      <S.MapBox id="map">
+        {isRealTimeLocationLoading && (
+          <S.MapEmptyBox>
+            <S.LoadingBox>
+              <LoadingSpinner />
+              <S.LoadingMessage>현재 위치를 찾고 있어요.</S.LoadingMessage>
+            </S.LoadingBox>
+          </S.MapEmptyBox>
+        )}
+      </S.MapBox>
+      <div id="message"></div>
     </S.Container>
   );
 };
-
 const S = {
   Container: styled.div`
     width: 100%;
   `,
   MapBox: styled.div`
+    position: relative;
     width: 100%;
     min-height: 40rem;
   `,
@@ -159,15 +165,27 @@ const S = {
     height: 5rem;
   `,
   MapEmptyBox: styled.div`
+    position: relative;
+    z-index: 10;
     width: 100%;
     min-height: 40rem;
 
     background-color: ${({ theme }) => theme.palette.background};
+
     ${flexCenter}
   `,
-  LoadingSpinner: styled.div`
-    z-index: 100;
+  LoadingBox: styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 100;
+    height: 20px;
+
+    text-align: center;
+  `,
+  LoadingMessage: styled.div`
+    padding-top: 20px;
   `,
 };
 

@@ -8,6 +8,7 @@ import useChecklistStore from '@/store/useChecklistStore';
 describe('useChecklistAnswer 테스트', () => {
   beforeEach(() => {
     const { result } = renderHook(() => useChecklistStore());
+    act(() => result.current.reset());
     act(() => result.current.initAnswerSheetIfEmpty(checklistQuestions.categories));
   });
 

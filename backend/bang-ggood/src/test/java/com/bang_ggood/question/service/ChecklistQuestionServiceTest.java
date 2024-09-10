@@ -90,7 +90,7 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
     }
 
-    @DisplayName("커스텀 체크리스트 조회 성공")
+    @DisplayName("커스텀 체크리스트 질문 조회 성공")
     @Test
     void readCustomChecklistQuestions() {
         // given

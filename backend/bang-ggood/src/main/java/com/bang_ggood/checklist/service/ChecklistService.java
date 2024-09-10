@@ -20,16 +20,11 @@ import com.bang_ggood.option.repository.ChecklistOptionRepository;
 import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestion;
-import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.request.QuestionRequest;
-import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
-import com.bang_ggood.question.dto.response.ChecklistQuestionsResponse;
-import com.bang_ggood.question.dto.response.QuestionResponse;
 import com.bang_ggood.question.dto.response.SelectedCategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.SelectedQuestionResponse;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
-import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import com.bang_ggood.room.repository.RoomRepository;
@@ -38,11 +33,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
@@ -53,21 +45,18 @@ public class ChecklistService {
     private final ChecklistOptionRepository checklistOptionRepository;
     private final ChecklistQuestionRepository checklistQuestionRepository;
     private final ChecklistMaintenanceRepository checklistMaintenanceRepository;
-    private final CustomChecklistQuestionRepository customChecklistQuestionRepository;
     private final ChecklistLikeRepository checklistLikeRepository;
 
     public ChecklistService(ChecklistRepository checklistRepository, RoomRepository roomRepository,
                             ChecklistOptionRepository checklistOptionRepository,
                             ChecklistQuestionRepository checklistQuestionRepository,
                             ChecklistMaintenanceRepository checklistMaintenanceRepository,
-                            CustomChecklistQuestionRepository customChecklistQuestionRepository,
                             ChecklistLikeRepository checklistLikeRepository) {
         this.checklistRepository = checklistRepository;
         this.roomRepository = roomRepository;
         this.checklistOptionRepository = checklistOptionRepository;
         this.checklistQuestionRepository = checklistQuestionRepository;
         this.checklistMaintenanceRepository = checklistMaintenanceRepository;
-        this.customChecklistQuestionRepository = customChecklistQuestionRepository;
         this.checklistLikeRepository = checklistLikeRepository;
     }
 
@@ -101,25 +90,6 @@ public class ChecklistService {
         if (checklistLikeRepository.existsByChecklist(checklist)) {
             throw new BangggoodException(ExceptionCode.LIKE_ALREADY_EXISTS);
         }
-    }
-
-    @Transactional
-    public ChecklistQuestionsResponse readChecklistQuestions(User user) {
-        List<CustomChecklistQuestion> customChecklistQuestions = customChecklistQuestionRepository.findAllByUser(user);
-
-        Map<Category, List<Question>> categoryQuestions = customChecklistQuestions.stream()
-                .map(CustomChecklistQuestion::getQuestion)
-                .collect(Collectors.groupingBy(Question::getCategory, LinkedHashMap::new, Collectors.toList()));
-
-        List<CategoryQuestionsResponse> categoryQuestionsResponses = categoryQuestions.entrySet().stream()
-                .map(categoryQuestionEntry -> CategoryQuestionsResponse.of(
-                        categoryQuestionEntry.getKey(),
-                        categoryQuestionEntry.getValue().stream()
-                                .map(QuestionResponse::new)
-                                .toList()))
-                .toList();
-
-        return new ChecklistQuestionsResponse(categoryQuestionsResponses);
     }
 
     private void validateQuestion(List<QuestionRequest> questions) {

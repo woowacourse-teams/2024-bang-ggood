@@ -5,7 +5,14 @@ import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
+import com.bang_ggood.question.CustomChecklistFixture;
+import com.bang_ggood.question.domain.CustomChecklistQuestion;
+import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
+import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
+import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
+import com.bang_ggood.question.dto.response.QuestionResponse;
+import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +20,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collection;
+import java.util.List;
+
+import static com.bang_ggood.question.CustomChecklistFixture.CUSTOM_CHECKLIST_QUESTION_DEFAULT;
 import static com.bang_ggood.question.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST;
 import static com.bang_ggood.question.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED;
 import static com.bang_ggood.question.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_EMPTY;
@@ -26,6 +37,8 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private ChecklistManageService checklistManageService;
+    @Autowired
+    private CustomChecklistQuestionRepository customChecklistQuestionRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -46,6 +59,29 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
 
         //then
         assertThat(checklistId).isGreaterThan(0);
+    }
+
+    @DisplayName("커스텀 체크리스트 질문 조회 성공")
+    @Test
+    void readChecklistQuestions() {
+        // given
+        customChecklistQuestionRepository.saveAll(CustomChecklistFixture.CUSTOM_CHECKLIST_QUESTION_DEFAULT);
+
+        // when
+        CustomChecklistQuestionsResponse customChecklistQuestionsResponse = checklistManageService.readCustomChecklistQuestions(USER1);
+
+        // then
+        List<Integer> defaultQuestionsIds = CUSTOM_CHECKLIST_QUESTION_DEFAULT.stream()
+                .map(CustomChecklistQuestion::getQuestion)
+                .map(Question::getId)
+                .toList();
+        List<Integer> responseQuestionsIds = customChecklistQuestionsResponse.categories().stream()
+                .map(CategoryQuestionsResponse::questions)
+                .flatMap(Collection::stream)
+                .map(QuestionResponse::getQuestionId)
+                .toList();
+
+        assertThat(responseQuestionsIds).containsExactlyElementsOf(defaultQuestionsIds);
     }
 
     @DisplayName("커스텀 체크리스트 업데이트 성공")

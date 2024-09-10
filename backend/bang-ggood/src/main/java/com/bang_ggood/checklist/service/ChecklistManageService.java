@@ -15,7 +15,10 @@ import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionResponse;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
+import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
+import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.CustomChecklistQuestionResponse;
+import com.bang_ggood.question.dto.response.QuestionResponse;
 import com.bang_ggood.question.service.ChecklistQuestionService;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.service.RoomService;
@@ -23,7 +26,9 @@ import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -82,12 +87,32 @@ public class ChecklistManageService {
         checklistMaintenanceService.createMaintenances(checklistMaintenances);
     }
 
-    public CategoryCustomChecklistQuestionsResponse readAllCustomChecklistQuestions(User user) {
+    public CustomChecklistQuestionsResponse readCustomChecklistQuestions(User user) {
         List<CustomChecklistQuestion> customChecklistQuestions = checklistQuestionService.readCustomChecklistQuestions(user);
-        return categorizeCustomChecklistQuestions(customChecklistQuestions);
+        List<CategoryQuestionsResponse> categoryQuestionsResponses = categorizeCustomChecklistQuestions(customChecklistQuestions);
+        return new CustomChecklistQuestionsResponse(categoryQuestionsResponses);
     }
 
-    private CategoryCustomChecklistQuestionsResponse categorizeCustomChecklistQuestions(
+    private List<CategoryQuestionsResponse> categorizeCustomChecklistQuestions(List<CustomChecklistQuestion> customChecklistQuestions) {
+        Map<Category, List<Question>> categoryQuestions = customChecklistQuestions.stream()
+                .map(CustomChecklistQuestion::getQuestion)
+                .collect(Collectors.groupingBy(Question::getCategory, LinkedHashMap::new, Collectors.toList()));
+
+        return categoryQuestions.entrySet().stream()
+                .map(categoryQuestionEntry -> CategoryQuestionsResponse.of(
+                        categoryQuestionEntry.getKey(),
+                        categoryQuestionEntry.getValue().stream()
+                                .map(QuestionResponse::new)
+                                .toList()))
+                .toList();
+    }
+
+    public CategoryCustomChecklistQuestionsResponse readAllCustomChecklistQuestions(User user) {
+        List<CustomChecklistQuestion> customChecklistQuestions = checklistQuestionService.readCustomChecklistQuestions(user);
+        return categorizeAllQuestionsWithSelected(customChecklistQuestions);
+    }
+
+    private CategoryCustomChecklistQuestionsResponse categorizeAllQuestionsWithSelected(
             List<CustomChecklistQuestion> customChecklistQuestions) {
         List<CategoryCustomChecklistQuestionResponse> response = new ArrayList<>();
 

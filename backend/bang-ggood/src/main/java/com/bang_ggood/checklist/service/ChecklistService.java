@@ -81,49 +81,6 @@ public class ChecklistService {
         return checklistRepository.save(checklist);
     }
 
-    private void validateOptions(List<Integer> optionIds) {
-        validateOptionDuplicate(optionIds);
-        validateOptionInvalid(optionIds);
-    }
-
-    private void validateOptionDuplicate(List<Integer> optionIds) {
-        Set<Integer> set = new HashSet<>();
-        optionIds.forEach(id -> {
-            if (!set.add(id)) {
-                throw new BangggoodException(ExceptionCode.OPTION_DUPLICATED);
-            }
-        });
-    }
-
-    private void validateOptionInvalid(List<Integer> optionIds) {
-        for (Integer optionId : optionIds) {
-            if (!Option.contains(optionId)) {
-                throw new BangggoodException(ExceptionCode.OPTION_INVALID);
-            }
-        }
-    }
-
-    private void validateIncludedMaintenance(List<Integer> includedMaintenances) {
-        validateIncludedMaintenanceDuplicate(includedMaintenances);
-        validateIncludedMaintenanceInvalid(includedMaintenances);
-    }
-
-    private void validateIncludedMaintenanceDuplicate(List<Integer> includedMaintenances) {
-        Set<Integer> set = new HashSet<>();
-        includedMaintenances.forEach(id -> {
-            if (!set.add(id)) {
-                throw new BangggoodException(ExceptionCode.MAINTENANCE_ITEM_DUPLICATE);
-            }
-        });
-    }
-
-    private void validateIncludedMaintenanceInvalid(List<Integer> includedMaintenances) {
-        for (Integer maintenancesId : includedMaintenances) {
-            if (!MaintenanceItem.contains(maintenancesId)) {
-                throw new BangggoodException(ExceptionCode.MAINTENANCE_ITEM_INVALID);
-            }
-        }
-    }
 
     @Transactional
     public void createChecklistLike(User user, long id) {
@@ -302,6 +259,50 @@ public class ChecklistService {
         updateChecklistOptions(checklistRequest, checklist);
         updateChecklistQuestions(checklistRequest, checklist);
         updateChecklistIncludedMaintenances(checklistRequest, checklist);
+    }
+
+    private void validateOptions(List<Integer> optionIds) {
+        validateOptionDuplicate(optionIds);
+        validateOptionInvalid(optionIds);
+    }
+
+    private void validateOptionDuplicate(List<Integer> optionIds) {
+        Set<Integer> set = new HashSet<>();
+        optionIds.forEach(id -> {
+            if (!set.add(id)) {
+                throw new BangggoodException(ExceptionCode.OPTION_DUPLICATED);
+            }
+        });
+    }
+
+    private void validateOptionInvalid(List<Integer> optionIds) {
+        for (Integer optionId : optionIds) {
+            if (!Option.contains(optionId)) {
+                throw new BangggoodException(ExceptionCode.OPTION_INVALID);
+            }
+        }
+    }
+
+    private void validateIncludedMaintenance(List<Integer> includedMaintenances) {
+        validateIncludedMaintenanceDuplicate(includedMaintenances);
+        validateIncludedMaintenanceInvalid(includedMaintenances);
+    }
+
+    private void validateIncludedMaintenanceDuplicate(List<Integer> includedMaintenances) {
+        Set<Integer> set = new HashSet<>();
+        includedMaintenances.forEach(id -> {
+            if (!set.add(id)) {
+                throw new BangggoodException(ExceptionCode.MAINTENANCE_ITEM_DUPLICATE);
+            }
+        });
+    }
+
+    private void validateIncludedMaintenanceInvalid(List<Integer> includedMaintenances) {
+        for (Integer maintenancesId : includedMaintenances) {
+            if (!MaintenanceItem.contains(maintenancesId)) {
+                throw new BangggoodException(ExceptionCode.MAINTENANCE_ITEM_INVALID);
+            }
+        }
     }
 
     private void updateChecklistOptions(ChecklistRequest checklistRequest, Checklist checklist) {

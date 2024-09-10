@@ -103,6 +103,7 @@ public class AuthService {
 
         ChecklistRequest checklistRequest = new ChecklistRequest(roomRequest, options, questionRequests);
         checklistManageService.createChecklist(user, checklistRequest);
+        //TODO: 로직 리팩토링 필요
     }
 
     public void logout(String accessToken, User user) {

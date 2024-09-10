@@ -10,8 +10,6 @@ import com.bang_ggood.question.ChecklistQuestionFixture;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
-import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
-import com.bang_ggood.question.dto.response.CustomChecklistQuestionResponse;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.room.RoomFixture;
@@ -102,15 +100,10 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
         customChecklistQuestionRepository.saveAll(questions);
 
         // when
-        CategoryCustomChecklistQuestionsResponse response = checklistQuestionService.readAllCustomChecklistQuestions(USER1);
+        List<CustomChecklistQuestion> customChecklistQuestions = checklistQuestionService.readCustomChecklistQuestions(USER1);
 
         // then
-        long selectedCount = response.categories().stream()
-                .flatMap(category -> category.questions().stream())
-                .filter(CustomChecklistQuestionResponse::getIsSelected)
-                .count();
-
-        Assertions.assertThat(selectedCount).isEqualTo(questions.size());
+        Assertions.assertThat(customChecklistQuestions).hasSize(questions.size());
     }
 
     @DisplayName("커스텀 체크리스트 업데이트 성공")

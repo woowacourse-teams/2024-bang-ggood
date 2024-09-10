@@ -2,20 +2,27 @@ package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
+import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.domain.MaintenanceItem;
 import com.bang_ggood.maintenance.service.ChecklistMaintenanceService;
 import com.bang_ggood.option.domain.ChecklistOption;
+import com.bang_ggood.option.dto.response.SelectedOptionResponse;
 import com.bang_ggood.option.service.ChecklistOptionService;
 import com.bang_ggood.question.domain.Answer;
+import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
+import com.bang_ggood.question.dto.response.SelectedCategoryQuestionsResponse;
+import com.bang_ggood.question.dto.response.SelectedQuestionResponse;
 import com.bang_ggood.question.service.ChecklistQuestionService;
 import com.bang_ggood.room.domain.Room;
+import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import com.bang_ggood.room.service.RoomService;
 import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,7 +47,7 @@ public class ChecklistManageService {
     }
 
     @Transactional
-    public long createChecklist(User user, ChecklistRequest checklistRequest) {
+    public Long createChecklist(User user, ChecklistRequest checklistRequest) {
         Room room = roomService.createRoom(checklistRequest.toRoomEntity());
         Checklist checklist = checklistService.createChecklist(checklistRequest.toChecklistEntity(room, user));
         createChecklistOptions(checklistRequest, checklist);
@@ -73,5 +80,49 @@ public class ChecklistManageService {
                                 MaintenanceItem.fromId(maintenanceId)))
                         .collect(Collectors.toList());
         checklistMaintenanceService.createMaintenances(checklistMaintenances);
+    }
+
+    @Transactional(readOnly = true)
+    public SelectedChecklistResponse readChecklist(User user, Long checklistId) {
+        Checklist checklist = checklistService.readChecklist(user, checklistId);
+
+        List<Integer> maintenances = readChecklistMaintenances(checklist);
+        List<SelectedOptionResponse> options = readChecklistOptions(checklist);
+        List<SelectedCategoryQuestionsResponse> questions = readChecklistQuestions(checklist);
+        SelectedRoomResponse room = SelectedRoomResponse.of(checklist, maintenances);
+        boolean isLiked = false; // TODO 좋아요 이후 리팩토링 필요
+
+        return SelectedChecklistResponse.of(room, options, questions, isLiked);
+    }
+
+    private List<Integer> readChecklistMaintenances(Checklist checklist) {
+        return checklistMaintenanceService.readChecklistMaintenances(checklist)
+                .stream()
+                .map(ChecklistMaintenance::getMaintenanceItemId)
+                .toList();
+    }
+
+    private List<SelectedOptionResponse> readChecklistOptions(Checklist checklist) {
+        return checklistOptionService.readChecklistOptions(checklist)
+                .stream()
+                .map(SelectedOptionResponse::from)
+                .toList();
+    }
+
+    private List<SelectedCategoryQuestionsResponse> readChecklistQuestions(Checklist checklist) {
+        List<ChecklistQuestion> checklistQuestions = checklistQuestionService.readChecklistQuestions(checklist);
+
+        return Arrays.stream(Category.values())
+                .map(category -> categorizeChecklistQuestions(category, checklistQuestions))
+                .toList();
+    }
+
+    private SelectedCategoryQuestionsResponse categorizeChecklistQuestions(Category category, List<ChecklistQuestion> checklistQuestions) {
+        List<SelectedQuestionResponse> selectedQuestionResponse = Question.filter(category, checklistQuestions)
+                        .stream()
+                        .map(SelectedQuestionResponse::new)
+                        .toList();
+
+        return SelectedCategoryQuestionsResponse.of(category, selectedQuestionResponse);
     }
 }

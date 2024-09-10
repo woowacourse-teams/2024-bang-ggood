@@ -1,5 +1,6 @@
 package com.bang_ggood.question.service;
 
+import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.question.domain.ChecklistQuestion;
@@ -68,5 +69,10 @@ public class ChecklistQuestionService {
         if (questions.size() != Set.copyOf(questions).size()) {
             throw new BangggoodException(ExceptionCode.QUESTION_DUPLICATED);
         }
+    }
+
+    @Transactional(readOnly = true)
+    public List<ChecklistQuestion> readChecklistQuestions(Checklist checklist) {
+        return checklistQuestionRepository.findAllByChecklistId(checklist.getId());
     }
 }

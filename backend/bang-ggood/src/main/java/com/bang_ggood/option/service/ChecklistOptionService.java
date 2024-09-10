@@ -1,5 +1,6 @@
 package com.bang_ggood.option.service;
 
+import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.option.domain.ChecklistOption;
@@ -35,4 +36,8 @@ public class ChecklistOptionService {
         });
     }
 
+    @Transactional(readOnly = true)
+    public List<ChecklistOption> readChecklistOptions(Checklist checklist) {
+        return checklistOptionRepository.findAllByChecklistId(checklist.getId());
+    }
 }

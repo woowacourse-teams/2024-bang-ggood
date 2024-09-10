@@ -12,18 +12,26 @@ import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
+import useHandleTipBox from '@/hooks/useHandleTipBox';
+import useChecklistTemplate from '@/hooks/useInitialChecklist';
 import useModal from '@/hooks/useModalOpen';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import useChecklistStore from '@/store/useChecklistStore';
+import useOptionStore from '@/store/useOptionStore';
 
 const NewChecklistPage = () => {
   const navigate = useNavigate();
+  useChecklistTemplate(); // 체크리스트 질문 가져오기 및 준비
 
   const { tabs } = useNewChecklistTabs();
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
+  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
+  const resetChecklist = useChecklistStore(state => state.reset);
+  const resetOption = useOptionStore(state => state.reset);
+  const { resetShowTipBox } = useHandleTipBox('OPTION'); // TODO: 상수화 처리
 
   // 메모 모달
-  const { isModalOpen: isMemoModalOpen, openModal: memoModalOpen, closeModal: memoModalClose } = useModal();
+  const { isModalOpen: isMemoModalOpen, openModal: openMemoModal, closeModal: closeMemoModal } = useModal();
 
   // 한줄평 모달
   const { isModalOpen: isSummaryModalOpen, openModal: openSummaryModal, closeModal: closeSummaryModal } = useModal();
@@ -31,8 +39,11 @@ const NewChecklistPage = () => {
   //뒤로가기시 휘발 경고 모달
   const { isModalOpen: isAlertModalOpen, openModal: openAlertModal, closeModal: closeAlertModal } = useModal();
 
-  const handleNavigateBack = () => {
-    actions.resetAll();
+  const resetAndGoHome = () => {
+    roomInfoActions.resetAll();
+    resetChecklist();
+    resetOption();
+    resetShowTipBox(); // 옵션의 팁박스 다시표시
     navigate(ROUTE_PATH.checklistList);
   };
 
@@ -49,13 +60,18 @@ const NewChecklistPage = () => {
       </TabProvider>
 
       {isMemoModalOpen ? (
-        <MemoModal isModalOpen={isMemoModalOpen} modalClose={memoModalClose} />
+        <MemoModal isModalOpen={isMemoModalOpen} modalClose={closeMemoModal} />
       ) : (
-        <MemoButton onClick={memoModalOpen} />
+        <MemoButton onClick={openMemoModal} />
       )}
 
       {isSummaryModalOpen && (
-        <SummaryModal isModalOpen={isSummaryModalOpen} modalClose={closeSummaryModal} mutateType="add" />
+        <SummaryModal
+          isModalOpen={isSummaryModalOpen}
+          onConfirm={resetAndGoHome}
+          modalClose={closeSummaryModal}
+          mutateType="add"
+        />
       )}
       {isAlertModalOpen && (
         <AlertModal
@@ -68,7 +84,7 @@ const NewChecklistPage = () => {
           }
           isOpen={isAlertModalOpen}
           onClose={closeAlertModal}
-          handleApprove={handleNavigateBack}
+          handleApprove={resetAndGoHome}
           approveButtonName="나가기"
         />
       )}

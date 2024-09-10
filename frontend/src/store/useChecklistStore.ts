@@ -8,10 +8,11 @@ interface ChecklistState {
   basicInfo: Record<string, unknown>;
   checklistCategoryQnA: ChecklistCategoryQnA[];
   validCategory: Category[];
+  reset: () => void;
   getCategoryQnA: (categoryId: number) => ChecklistCategoryQnA | undefined;
-  _setValidCategory: () => void;
   initAnswerSheetIfEmpty: (questions: ChecklistCategoryQuestions[]) => void;
   setAnswers: (answers: ChecklistCategoryQnA[]) => void;
+  _setValidCategory: () => void;
   _isEmptyCategoryQnA: () => boolean;
 }
 
@@ -57,6 +58,9 @@ const useChecklistStore = create<ChecklistState>()(
       setAnswers: (answers: ChecklistCategoryQnA[]) => {
         set({ checklistCategoryQnA: answers });
         get()._setValidCategory();
+      },
+      reset: () => {
+        set({ basicInfo: {}, checklistCategoryQnA: [], validCategory: [] });
       },
     }),
     {

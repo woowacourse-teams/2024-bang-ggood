@@ -16,11 +16,12 @@ import { MutateType } from '@/types/checklist';
 interface Props {
   isModalOpen: boolean;
   modalClose: () => void;
+  onConfirm?: () => void;
   mutateType: MutateType;
   checklistId?: number;
 }
 
-const SummaryModal = ({ isModalOpen, modalClose, mutateType, checklistId }: Props) => {
+const SummaryModal = ({ isModalOpen, modalClose, onConfirm = () => {}, mutateType, checklistId }: Props) => {
   const navigate = useNavigate();
   const { rawValue: roomInfo, actions } = useStore(checklistRoomInfoStore);
 
@@ -29,6 +30,7 @@ const SummaryModal = ({ isModalOpen, modalClose, mutateType, checklistId }: Prop
 
   const handleCloseModal = () => {
     handleSubmitChecklist();
+    onConfirm();
     modalClose();
 
     if (mutateType === 'edit' && checklistId !== undefined) {
@@ -36,8 +38,6 @@ const SummaryModal = ({ isModalOpen, modalClose, mutateType, checklistId }: Prop
 
       return;
     }
-
-    navigate(ROUTE_PATH.checklistList);
   };
 
   return (

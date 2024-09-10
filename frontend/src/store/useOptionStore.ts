@@ -8,11 +8,11 @@ interface OptionState {
   addOption: (option: number) => void;
   removeOption: (option: number) => void;
   isSelectedOption: (optionId: number) => boolean;
-  setSelectedOptions: (options: number[]) => void;
+  setOption: (options: number[]) => void;
   isAllSelected: () => boolean;
   addAllOptions: () => void;
   removeAllOptions: () => void;
-  resetToDefaultOptions: () => void;
+  reset: () => void;
   getSelectedOptionsName: () => (string | undefined)[];
 }
 
@@ -30,11 +30,11 @@ const useOptionStore = create<OptionState>()(
         return optionsNames;
       },
 
-      resetToDefaultOptions: () => {
+      reset: () => {
         set({ selectedOptions: DEFAULT_OPTIONS });
       },
 
-      setSelectedOptions: (options: number[]) => set({ selectedOptions: options }),
+      setOption: (options: number[]) => set({ selectedOptions: options }),
 
       isSelectedOption: optionId => get().selectedOptions.includes(optionId),
 

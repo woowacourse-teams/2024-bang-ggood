@@ -3,13 +3,13 @@ package com.bang_ggood.auth.service;
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
-import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.checklist.service.ChecklistService;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
+import com.bang_ggood.question.service.QuestionManageService;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -39,7 +39,7 @@ class AuthServiceTest extends IntegrationTestSupport {
     @Autowired
     private ChecklistService checklistService;
     @Autowired
-    private ChecklistManageService checklistManageService;
+    private QuestionManageService questionManageService;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -86,7 +86,7 @@ class AuthServiceTest extends IntegrationTestSupport {
 
         // then
         User user = authService.extractUser(token);
-        CustomChecklistQuestionsResponse customChecklistQuestions = checklistManageService.readCustomChecklistQuestions(user);
+        CustomChecklistQuestionsResponse customChecklistQuestions = questionManageService.readCustomChecklistQuestions(user);
 
         int sum = 0;
         for (CategoryQuestionsResponse response : customChecklistQuestions.categories()) {

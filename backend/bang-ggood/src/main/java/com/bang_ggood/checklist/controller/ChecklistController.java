@@ -6,9 +6,6 @@ import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
 import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.checklist.service.ChecklistService;
-import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
-import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
-import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
 import com.bang_ggood.user.domain.User;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -45,12 +42,6 @@ public class ChecklistController {
         return ResponseEntity.noContent().build();
     }
 
-    // TODO : 엔드포인트 통일 with CustomChecklist
-    @GetMapping("/checklists/questions")
-    public ResponseEntity<CustomChecklistQuestionsResponse> readCustomChecklistQuestions(@AuthPrincipal User user) {
-        return ResponseEntity.ok(checklistManageService.readCustomChecklistQuestions(user));
-    }
-
     @GetMapping("/checklists/{id}")
     public ResponseEntity<SelectedChecklistResponse> readChecklistById(@AuthPrincipal User user,
                                                                        @PathVariable("id") long id) {
@@ -60,12 +51,6 @@ public class ChecklistController {
     @GetMapping("/checklists")
     public ResponseEntity<UserChecklistsPreviewResponse> readChecklistsPreview(@AuthPrincipal User user) {
         return ResponseEntity.ok(checklistService.readChecklistsPreview(user));
-    }
-
-    @GetMapping("/custom-checklist/all")
-    public ResponseEntity<CategoryCustomChecklistQuestionsResponse> readAllCustomChecklistQuestions(
-            @AuthPrincipal User user) {
-        return ResponseEntity.ok(checklistManageService.readAllCustomChecklistQuestions(user));
     }
 
     @GetMapping("/checklists/like")
@@ -79,13 +64,6 @@ public class ChecklistController {
             @PathVariable("id") long id,
             @Valid @RequestBody ChecklistRequest checklistRequest) {
         checklistService.updateChecklistById(user, id, checklistRequest);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PutMapping("/custom-checklist")
-    public ResponseEntity<Void> updateCustomChecklist(@AuthPrincipal User user,
-                                                      @RequestBody CustomChecklistUpdateRequest request) {
-        checklistManageService.updateCustomChecklist(user, request);
         return ResponseEntity.noContent().build();
     }
 

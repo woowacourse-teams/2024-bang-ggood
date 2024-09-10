@@ -117,17 +117,6 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .statusCode(200);
     }
 
-    @DisplayName("커스텀 체크리스트 전체 조회 성공")
-    @Test
-    void readAllCustomChecklistQuestion() {
-        RestAssured.given().log().all()
-                .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
-                .when().get("/custom-checklist/all")
-                .then().log().all()
-                .statusCode(200);
-    }
-
     @DisplayName("작성된 체크리스트 조회 성공")
     @Test
     void readChecklistById() {
@@ -202,18 +191,6 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .then().log().all()
                 .statusCode(400)
                 .body("message", containsString("질문 아이디가 존재하지 않습니다."));
-    }
-
-    @DisplayName("커스텀 체크리스트 업데이트 성공")
-    @Test
-    void updateCustomChecklist() {
-        RestAssured.given().log().all()
-                .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
-                .body(CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST)
-                .when().put("/custom-checklist")
-                .then().log().all()
-                .statusCode(204);
     }
 
     @DisplayName("체크리스트 삭제 성공")

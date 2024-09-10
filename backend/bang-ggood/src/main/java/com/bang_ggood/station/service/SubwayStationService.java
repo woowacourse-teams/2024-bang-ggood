@@ -13,7 +13,8 @@ import java.util.List;
 public class SubwayStationService {
 
     private static final int METER_PER_DEGREE = 111_320;
-    private static final double AVERAGE_WALKING_SPEED = 1.3 * 60; // meter per minute
+    // meter per second * minute unit * decreasing speed on open street
+    private static final double AVERAGE_WALKING_SPEED = 1.3 * 60 * 0.4;
     private static final List<SubwayStation> SUBWAY_STATIONS = SubwayReader.readSubwayStationData();
 
     public SubwayStationResponse readNearestStation(double latitude, double longitude) {

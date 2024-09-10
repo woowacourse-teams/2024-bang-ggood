@@ -2,12 +2,12 @@ package com.bang_ggood.checklist.controller;
 
 import com.bang_ggood.AcceptanceTest;
 import com.bang_ggood.checklist.ChecklistFixture;
-import com.bang_ggood.question.CustomChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.checklist.service.ChecklistService;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
+import com.bang_ggood.question.CustomChecklistFixture;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.repository.RoomRepository;

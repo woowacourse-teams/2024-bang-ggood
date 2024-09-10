@@ -23,6 +23,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Collections;
 import java.util.List;
 
 import static com.bang_ggood.user.UserFixture.USER1;
@@ -110,5 +111,43 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
                 .count();
 
         Assertions.assertThat(selectedCount).isEqualTo(questions.size());
+    }
+
+    @DisplayName("커스텀 체크리스트 업데이트 성공")
+    @Test
+    void updateCustomChecklist() {
+        // given
+        List<Question> questions = List.of(Question.OUTSIDE_1, Question.BATHROOM_2, Question.SECURITY_1);
+
+        // when
+        checklistQuestionService.updateCustomChecklist(USER1, questions);
+
+        // then
+        assertThat(customChecklistQuestionRepository.findAllByUser(USER1))
+                .hasSize(questions.size());
+    }
+
+    @DisplayName("커스텀 체크리스트 업데이트 실패 : 선택한 질문 개수가 0개일 때")
+    @Test
+    void updateCustomChecklist_empty_exception() {
+        // given
+        List<Question> questions = Collections.emptyList();
+
+        // when & then
+        assertThatThrownBy(() -> checklistQuestionService.updateCustomChecklist(USER1, questions))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.CUSTOM_CHECKLIST_QUESTION_EMPTY.getMessage());
+    }
+
+    @DisplayName("커스텀 체크리스트 업데이트 실패 : 질문이 중복될 때")
+    @Test
+    void updateCustomChecklist_duplicatedQuestion_exception() {
+        // given
+        List<Question> questions = List.of(Question.OUTSIDE_1, Question.OUTSIDE_1);
+
+        // when & then
+        assertThatThrownBy(() -> checklistQuestionService.updateCustomChecklist(USER1, questions))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
     }
 }

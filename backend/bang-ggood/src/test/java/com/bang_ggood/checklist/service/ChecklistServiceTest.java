@@ -14,11 +14,8 @@ import com.bang_ggood.option.repository.ChecklistOptionRepository;
 import com.bang_ggood.question.CustomChecklistFixture;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
-import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
-import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.ChecklistQuestionsResponse;
-import com.bang_ggood.question.dto.response.CustomChecklistQuestionResponse;
 import com.bang_ggood.question.dto.response.QuestionResponse;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.room.RoomFixture;
@@ -26,7 +23,6 @@ import com.bang_ggood.room.domain.Structure;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.repository.UserRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,10 +31,6 @@ import java.util.Collection;
 import java.util.List;
 
 import static com.bang_ggood.question.CustomChecklistFixture.CUSTOM_CHECKLIST_QUESTION_DEFAULT;
-import static com.bang_ggood.question.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST;
-import static com.bang_ggood.question.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED;
-import static com.bang_ggood.question.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_EMPTY;
-import static com.bang_ggood.question.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_INVALID;
 import static com.bang_ggood.user.UserFixture.USER1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -352,56 +344,6 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 () -> assertThat(checklists.get(0).checklistId()).isEqualTo(ChecklistFixture.CHECKLIST1_USER1.getId()),
                 () -> assertThat(checklists.get(1).checklistId()).isEqualTo(ChecklistFixture.CHECKLIST2_USER1.getId())
         );
-    }
-
-    @DisplayName("커스텀 체크리스트 업데이트 성공")
-    @Test
-    void updateCustomChecklist() {
-        // given
-        CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST;
-
-        // when
-        checklistService.updateCustomChecklist(USER1, request);
-
-        // then
-        assertThat(customChecklistQuestionRepository.findAllByUser(USER1))
-                .hasSize(request.questionIds().size());
-    }
-
-    @DisplayName("커스텀 체크리스트 업데이트 실패 : 선택한 질문 개수가 0개일 때")
-    @Test
-    void updateCustomChecklist_empty_exception() {
-        // given
-        CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_EMPTY;
-
-        // when & then
-        assertThatThrownBy(() -> checklistService.updateCustomChecklist(USER1, request))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.CUSTOM_CHECKLIST_QUESTION_EMPTY.getMessage());
-    }
-
-    @DisplayName("커스텀 체크리스트 업데이트 실패 : 질문이 중복될 때")
-    @Test
-    void updateCustomChecklist_duplicatedQuestion_exception() {
-        // given
-        CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED;
-
-        // when & then
-        assertThatThrownBy(() -> checklistService.updateCustomChecklist(USER1, request))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
-    }
-
-    @DisplayName("커스텀 체크리스트 업데이트 실패 : 질문 id가 유효하지 않을 때")
-    @Test
-    void updateCustomChecklist_invalidQuestionId_exception() {
-        // given
-        CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_INVALID;
-
-        // when & then
-        assertThatThrownBy(() -> checklistService.updateCustomChecklist(USER1, request))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
     }
 
     @DisplayName("체크리스트 삭제 성공")

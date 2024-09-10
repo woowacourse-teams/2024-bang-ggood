@@ -69,4 +69,29 @@ public class ChecklistQuestionService {
 
         return response;
     }
+
+    @Transactional
+    public void updateCustomChecklist(User user, List<Question> questions) {
+        validateCustomChecklistQuestionsIsNotEmpty(questions);
+        validateCustomChecklistQuestionsDuplication(questions);
+
+        customChecklistQuestionRepository.deleteAllByUser(user);
+
+        List<CustomChecklistQuestion> customChecklistQuestions = questions.stream()
+                .map(question -> new CustomChecklistQuestion(user, question))
+                .toList();
+        customChecklistQuestionRepository.saveAll(customChecklistQuestions);
+    }
+
+    private void validateCustomChecklistQuestionsIsNotEmpty(List<Question> questions) {
+        if (questions.isEmpty()) {
+            throw new BangggoodException(ExceptionCode.CUSTOM_CHECKLIST_QUESTION_EMPTY);
+        }
+    }
+
+    private void validateCustomChecklistQuestionsDuplication(List<Question> questions) {
+        if (questions.size() != Set.copyOf(questions).size()) {
+            throw new BangggoodException(ExceptionCode.QUESTION_DUPLICATED);
+        }
+    }
 }

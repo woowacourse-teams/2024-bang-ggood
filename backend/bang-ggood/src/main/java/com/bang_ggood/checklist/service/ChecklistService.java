@@ -22,13 +22,9 @@ import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
-import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.request.QuestionRequest;
-import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionResponse;
-import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.ChecklistQuestionsResponse;
-import com.bang_ggood.question.dto.response.CustomChecklistQuestionResponse;
 import com.bang_ggood.question.dto.response.QuestionResponse;
 import com.bang_ggood.question.dto.response.SelectedCategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.SelectedQuestionResponse;
@@ -40,7 +36,6 @@ import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -326,33 +321,6 @@ public class ChecklistService {
                 .ifPresent(i -> {
                     throw new BangggoodException(ExceptionCode.QUESTION_DIFFERENT);
                 });
-    }
-
-    @Transactional
-    public void updateCustomChecklist(User user, CustomChecklistUpdateRequest request) {
-        List<Integer> questionIds = request.questionIds();
-        validateCustomChecklistQuestionsIsNotEmpty(questionIds);
-        validateCustomChecklistQuestionsDuplication(questionIds);
-
-        customChecklistQuestionRepository.deleteAllByUser(user);
-
-        List<CustomChecklistQuestion> customChecklistQuestions = questionIds.stream()
-                .map(Question::fromId)
-                .map(question -> new CustomChecklistQuestion(user, question))
-                .toList();
-        customChecklistQuestionRepository.saveAll(customChecklistQuestions);
-    }
-
-    private void validateCustomChecklistQuestionsIsNotEmpty(List<Integer> questionIds) {
-        if (questionIds.isEmpty()) {
-            throw new BangggoodException(ExceptionCode.CUSTOM_CHECKLIST_QUESTION_EMPTY);
-        }
-    }
-
-    private void validateCustomChecklistQuestionsDuplication(List<Integer> questionIds) {
-        if (questionIds.size() != Set.copyOf(questionIds).size()) {
-            throw new BangggoodException(ExceptionCode.QUESTION_DUPLICATED);
-        }
     }
 
     @Transactional

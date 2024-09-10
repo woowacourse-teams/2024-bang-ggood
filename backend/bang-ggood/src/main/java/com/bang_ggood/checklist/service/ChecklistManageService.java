@@ -10,6 +10,7 @@ import com.bang_ggood.option.service.ChecklistOptionService;
 import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
+import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.question.service.ChecklistQuestionService;
 import com.bang_ggood.room.domain.Room;
@@ -78,5 +79,13 @@ public class ChecklistManageService {
 
     public CategoryCustomChecklistQuestionsResponse readAllCustomChecklistQuestions(User user) {
         return checklistQuestionService.readAllCustomChecklistQuestions(user);
+    }
+
+    public void updateCustomChecklist(User user, CustomChecklistUpdateRequest request) {
+        List<Question> questions = request.questionIds().stream()
+                .map(Question::fromId)
+                .toList();
+
+        checklistQuestionService.updateCustomChecklist(user, questions);
     }
 }

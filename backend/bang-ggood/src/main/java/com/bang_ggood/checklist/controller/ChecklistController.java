@@ -84,7 +84,7 @@ public class ChecklistController {
     @PutMapping("/custom-checklist")
     public ResponseEntity<Void> updateCustomChecklist(@AuthPrincipal User user,
                                                       @RequestBody CustomChecklistUpdateRequest request) {
-        checklistService.updateCustomChecklist(user, request);
+        checklistManageService.updateCustomChecklist(user, request);
         return ResponseEntity.noContent().build();
     }
 

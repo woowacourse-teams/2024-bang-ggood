@@ -15,6 +15,7 @@ public class CustomChecklistFixture {
                     new CustomChecklistQuestion(USER1, Question.WINDOW_1),
                     new CustomChecklistQuestion(USER1, Question.BATHROOM_1),
                     new CustomChecklistQuestion(USER1, Question.SECURITY_1));
+
     public static CustomChecklistUpdateRequest CUSTOM_CHECKLIST_UPDATE_REQUEST =
             new CustomChecklistUpdateRequest(List.of(Question.ROOM_CONDITION_1.getId(),
                     Question.WINDOW_6.getId(),

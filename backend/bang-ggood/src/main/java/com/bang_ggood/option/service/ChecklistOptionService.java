@@ -5,6 +5,7 @@ import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.option.domain.ChecklistOption;
 import com.bang_ggood.option.repository.ChecklistOptionRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +19,7 @@ public class ChecklistOptionService {
         this.checklistOptionRepository = checklistOptionRepository;
     }
 
+    @Transactional
     public void createOptions(List<ChecklistOption> options) {
         validateOptionDuplicate(options);
         checklistOptionRepository.saveAll(options);

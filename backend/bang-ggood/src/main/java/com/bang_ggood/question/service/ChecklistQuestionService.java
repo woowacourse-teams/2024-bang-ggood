@@ -5,6 +5,7 @@ import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +19,7 @@ public class ChecklistQuestionService {
         this.checklistQuestionRepository = checklistQuestionRepository;
     }
 
+    @Transactional
     public void createQuestions(List<ChecklistQuestion> checklistQuestions) {
         validateQuestionDuplicate(checklistQuestions);
         checklistQuestionRepository.saveAll(checklistQuestions);

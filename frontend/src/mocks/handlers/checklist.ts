@@ -13,7 +13,7 @@ export const checklistHandlers = [
   }),
 
   http.get(BASE_URL + ENDPOINT.CHECKLIST_ID(1), () => {
-    return HttpResponse.json(checklistDetail, { status: 200 });
+    return HttpResponse.json(Object.assign(checklistDetail, { isLiked: getLike(1) }), { status: 200 });
   }),
   http.put(BASE_URL + ENDPOINT.CHECKLIST_ID(1), () => {
     return HttpResponse.json({}, { status: 200 });
@@ -55,3 +55,4 @@ export const checklistHandlers = [
 const checklist = new Map();
 const addLike = (id: number) => checklist.set(id, true);
 const removeLike = (id: number) => checklist.set(id, false);
+const getLike = (id: number) => checklist.get(id);

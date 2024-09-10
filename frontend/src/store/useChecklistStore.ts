@@ -10,8 +10,9 @@ interface ChecklistState {
   validCategory: Category[];
   getCategoryQnA: (categoryId: number) => ChecklistCategoryQnA | undefined;
   _setValidCategory: () => void;
-  makeAnswerSheet: (questions: ChecklistCategoryQuestions[]) => void;
+  initAnswerSheetIfEmpty: (questions: ChecklistCategoryQuestions[]) => void;
   setAnswers: (answers: ChecklistCategoryQnA[]) => void;
+  _isEmptyCategoryQnA: () => boolean;
 }
 
 const useChecklistStore = create<ChecklistState>()(
@@ -21,7 +22,10 @@ const useChecklistStore = create<ChecklistState>()(
       checklistCategoryQnA: [],
       validCategory: [],
 
-      makeAnswerSheet: (questions: ChecklistCategoryQuestions[]) => {
+      _isEmptyCategoryQnA: () => get().checklistCategoryQnA.length === 0,
+      initAnswerSheetIfEmpty: (questions: ChecklistCategoryQuestions[]) => {
+        if (!get()._isEmptyCategoryQnA()) return;
+
         const checklistCategoryQnA: ChecklistCategoryQnA[] = questions.map(category => ({
           categoryId: category.categoryId,
           categoryName: category.categoryName,

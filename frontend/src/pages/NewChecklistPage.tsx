@@ -12,13 +12,11 @@ import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
-import useChecklistTemplate from '@/hooks/useInitialChecklist';
 import useModal from '@/hooks/useModalOpen';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
 const NewChecklistPage = () => {
-  useChecklistTemplate(); // 체크리스트 질문 가져오기 및 준비
   const navigate = useNavigate();
 
   const { tabs } = useNewChecklistTabs();

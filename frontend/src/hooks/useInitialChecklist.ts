@@ -7,7 +7,7 @@ import useChecklistStore from '@/store/useChecklistStore';
 import useOptionStore from '@/store/useOptionStore';
 
 const useInitialChecklist = () => {
-  const setAnswerInQuestion = useChecklistStore(state => state.setAnswerInQuestion);
+  const setAnswerInQuestion = useChecklistStore(state => state.makeAnswerSheet);
   const resetToDefaultOptions = useOptionStore(state => state.resetToDefaultOptions);
   const { resetShowTipBox } = useHandleTipBox('OPTION'); // TODO: 상수화 처리
 

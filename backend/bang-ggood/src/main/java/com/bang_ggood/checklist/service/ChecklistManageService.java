@@ -10,6 +10,7 @@ import com.bang_ggood.option.service.ChecklistOptionService;
 import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
+import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.question.service.ChecklistQuestionService;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.service.RoomService;
@@ -73,5 +74,9 @@ public class ChecklistManageService {
                                 MaintenanceItem.fromId(maintenanceId)))
                         .collect(Collectors.toList());
         checklistMaintenanceService.createMaintenances(checklistMaintenances);
+    }
+
+    public CategoryCustomChecklistQuestionsResponse readAllCustomChecklistQuestions(User user) {
+        return checklistQuestionService.readAllCustomChecklistQuestions(user);
     }
 }

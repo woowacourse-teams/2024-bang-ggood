@@ -150,32 +150,6 @@ public class ChecklistService {
     }
 
     @Transactional
-    public CategoryCustomChecklistQuestionsResponse readAllCustomChecklistQuestions(
-            User user) { // TODO custom-checklist 도메인 분리 및 리팩토링
-        List<CustomChecklistQuestion> customChecklistQuestions = customChecklistQuestionRepository.findAllByUser(user);
-        List<CategoryCustomChecklistQuestionResponse> allCategoryCustomChecklistQuestions = getAllCategoryCustomChecklistQuestions(
-                customChecklistQuestions);
-
-        return new CategoryCustomChecklistQuestionsResponse(allCategoryCustomChecklistQuestions);
-    }
-
-    private List<CategoryCustomChecklistQuestionResponse> getAllCategoryCustomChecklistQuestions(
-            List<CustomChecklistQuestion> customChecklistQuestions) {
-        List<CategoryCustomChecklistQuestionResponse> response = new ArrayList<>();
-
-        for (Category category : Category.values()) {
-            List<Question> categoryQuestions = Question.findQuestionsByCategory(category);
-            List<CustomChecklistQuestionResponse> questions = categoryQuestions.stream()
-                    .map(question -> new CustomChecklistQuestionResponse(question,
-                            question.isSelected(customChecklistQuestions)))
-                    .toList();
-            response.add(new CategoryCustomChecklistQuestionResponse(category.getId(), category.getName(), questions));
-        }
-
-        return response;
-    }
-
-    @Transactional
     public SelectedChecklistResponse readChecklistById(User user, long id) {
         Checklist checklist = checklistRepository.getById(id);
         validateChecklistOwnership(user, checklist);

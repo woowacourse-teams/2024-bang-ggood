@@ -328,27 +328,6 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER.getMessage());
     }
 
-    @DisplayName("커스텀 체크리스트 조회 성공")
-    @Test
-    void readCustomChecklistQuestions() {
-        // given
-        CustomChecklistQuestion question1 = new CustomChecklistQuestion(USER1, Question.ROOM_CONDITION_5);
-        CustomChecklistQuestion question2 = new CustomChecklistQuestion(USER1, Question.BATHROOM_1);
-        List<CustomChecklistQuestion> questions = List.of(question1, question2);
-        customChecklistQuestionRepository.saveAll(questions);
-
-        // when
-        CategoryCustomChecklistQuestionsResponse response = checklistService.readAllCustomChecklistQuestions(USER1);
-
-        // then
-        long selectedCount = response.categories().stream()
-                .flatMap(category -> category.questions().stream())
-                .filter(CustomChecklistQuestionResponse::getIsSelected)
-                .count();
-
-        Assertions.assertThat(selectedCount).isEqualTo(questions.size());
-    }
-
     @DisplayName("좋아요된 체크리스트 리스트 조회 성공")
     @Test
     void readLikedChecklistsPreview() {

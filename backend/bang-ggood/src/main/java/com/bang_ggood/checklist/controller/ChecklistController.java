@@ -64,7 +64,7 @@ public class ChecklistController {
     @GetMapping("/custom-checklist/all")
     public ResponseEntity<CategoryCustomChecklistQuestionsResponse> readAllCustomChecklistQuestions(
             @AuthPrincipal User user) {
-        return ResponseEntity.ok(checklistService.readAllCustomChecklistQuestions(user));
+        return ResponseEntity.ok(checklistManageService.readAllCustomChecklistQuestions(user));
     }
 
     @GetMapping("/checklists/like")

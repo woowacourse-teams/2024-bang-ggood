@@ -8,17 +8,24 @@ import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.question.ChecklistQuestionFixture;
 import com.bang_ggood.question.domain.ChecklistQuestion;
+import com.bang_ggood.question.domain.CustomChecklistQuestion;
+import com.bang_ggood.question.domain.Question;
+import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
+import com.bang_ggood.question.dto.response.CustomChecklistQuestionResponse;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
+import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.repository.UserRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
+import static com.bang_ggood.user.UserFixture.USER1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -29,6 +36,9 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private ChecklistQuestionRepository checklistQuestionRepository;
+
+    @Autowired
+    private CustomChecklistQuestionRepository customChecklistQuestionRepository;
 
     @Autowired
     private ChecklistRepository checklistRepository;
@@ -81,4 +91,24 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
     }
 
+    @DisplayName("커스텀 체크리스트 조회 성공")
+    @Test
+    void readCustomChecklistQuestions() {
+        // given
+        CustomChecklistQuestion question1 = new CustomChecklistQuestion(USER1, Question.ROOM_CONDITION_5);
+        CustomChecklistQuestion question2 = new CustomChecklistQuestion(USER1, Question.BATHROOM_1);
+        List<CustomChecklistQuestion> questions = List.of(question1, question2);
+        customChecklistQuestionRepository.saveAll(questions);
+
+        // when
+        CategoryCustomChecklistQuestionsResponse response = checklistQuestionService.readAllCustomChecklistQuestions(USER1);
+
+        // then
+        long selectedCount = response.categories().stream()
+                .flatMap(category -> category.questions().stream())
+                .filter(CustomChecklistQuestionResponse::getIsSelected)
+                .count();
+
+        Assertions.assertThat(selectedCount).isEqualTo(questions.size());
+    }
 }

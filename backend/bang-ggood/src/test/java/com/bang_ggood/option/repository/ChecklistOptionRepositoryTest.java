@@ -1,10 +1,10 @@
-package com.bang_ggood.checklist.repository;
+package com.bang_ggood.option.repository;
 
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.option.domain.ChecklistOption;
-import com.bang_ggood.option.repository.ChecklistOptionRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;

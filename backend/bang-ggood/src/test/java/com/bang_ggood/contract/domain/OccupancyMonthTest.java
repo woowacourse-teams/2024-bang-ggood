@@ -1,6 +1,5 @@
-package com.bang_ggood.checklist.domain;
+package com.bang_ggood.contract.domain;
 
-import com.bang_ggood.contract.domain.OccupancyPeriod;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import org.junit.jupiter.api.DisplayName;
@@ -9,26 +8,26 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class OccupancyPeriodTest {
+class OccupancyMonthTest {
 
     @DisplayName("생성 성공")
     @Test
     void constructor() {
-        assertThat(OccupancyPeriod.from("초")).isEqualTo(OccupancyPeriod.EARLY);
+        assertThat(OccupancyMonth.from(1)).isEqualTo(OccupancyMonth.JANUARY);
     }
 
     @DisplayName("생성 성공: null인 경우")
     @Test
     void constructor_null() {
-        assertThat(OccupancyPeriod.from(null)).isEqualTo(OccupancyPeriod.NONE);
+        assertThat(OccupancyMonth.from(null)).isEqualTo(OccupancyMonth.NONE);
     }
 
-    @DisplayName("생성 실패: 유효하지 않은 기간인 경우")
+    @DisplayName("생성 실패: 유효하지 않은 달인 경우")
     @Test
-    void constructor_invalidPeriod_exception() {
+    void constructor_invalidMonth_exception() {
         assertThatThrownBy(
-                () -> OccupancyPeriod.from("기간")
+                () -> OccupancyMonth.from(13)
         ).isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.OCCUPANCY_PERIOD_INVALID.getMessage());
+                .hasMessage(ExceptionCode.OCCUPANCY_MONTH_INVALID.getMessage());
     }
 }

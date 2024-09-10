@@ -1,7 +1,6 @@
-package com.bang_ggood.checklist.domain;
+package com.bang_ggood.question.domain;
 
 import com.bang_ggood.checklist.ChecklistFixture;
-import com.bang_ggood.question.domain.ChecklistQuestion;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

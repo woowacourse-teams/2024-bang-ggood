@@ -30,6 +30,13 @@ const SummaryModal = ({ isModalOpen, modalClose, mutateType, checklistId }: Prop
   const handleCloseModal = () => {
     handleSubmitChecklist();
     modalClose();
+
+    if (mutateType === 'edit' && checklistId !== undefined) {
+      navigate(ROUTE_PATH.checklistOne(checklistId));
+
+      return;
+    }
+
     navigate(ROUTE_PATH.checklistList);
   };
 

@@ -40,13 +40,13 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
 
     @DisplayName("질문 답변을 체크리스트 ID로 조회 성공")
     @Test
-    void findByChecklistId() {
+    void findAllByChecklistId() {
         //given
         checklistQuestionRepository.save(ChecklistFixture.CHECKLIST_QUESTION_1);
         checklistQuestionRepository.save(ChecklistFixture.CHECKLIST_QUESTION_2);
 
         // when
-        List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findByChecklistId(
+        List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findAllByChecklistId(
                 ChecklistFixture.CHECKLIST_QUESTION_1.getId());
 
         //then

@@ -1,8 +1,8 @@
 package com.bang_ggood.global.logging;
 
 import com.bang_ggood.global.logging.dto.ErrorLog;
-import com.bang_ggood.global.logging.dto.WarnLog;
 import com.bang_ggood.global.logging.dto.InfoLog;
+import com.bang_ggood.global.logging.dto.WarnLog;
 import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;

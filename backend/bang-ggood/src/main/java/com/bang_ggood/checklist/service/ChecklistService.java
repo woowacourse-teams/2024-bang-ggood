@@ -1,39 +1,39 @@
 package com.bang_ggood.checklist.service;
 
-import com.bang_ggood.question.domain.Category;
-import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
-import com.bang_ggood.question.dto.response.SelectedCategoryQuestionsResponse;
-import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.checklist.domain.Checklist;
-import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
+import com.bang_ggood.checklist.dto.request.ChecklistRequest;
+import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.dto.response.UserChecklistPreviewResponse;
+import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
+import com.bang_ggood.checklist.repository.ChecklistRepository;
+import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.like.domain.ChecklistLike;
+import com.bang_ggood.like.repository.ChecklistLikeRepository;
+import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
+import com.bang_ggood.maintenance.domain.MaintenanceItem;
+import com.bang_ggood.maintenance.repository.ChecklistMaintenanceRepository;
 import com.bang_ggood.option.domain.ChecklistOption;
+import com.bang_ggood.option.domain.Option;
+import com.bang_ggood.option.dto.response.SelectedOptionResponse;
+import com.bang_ggood.option.repository.ChecklistOptionRepository;
+import com.bang_ggood.question.domain.Answer;
+import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
-import com.bang_ggood.maintenance.domain.MaintenanceItem;
-import com.bang_ggood.option.domain.Option;
 import com.bang_ggood.question.domain.Question;
-import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.request.QuestionRequest;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionResponse;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
+import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.ChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.CustomChecklistQuestionResponse;
 import com.bang_ggood.question.dto.response.QuestionResponse;
-import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
-import com.bang_ggood.option.dto.response.SelectedOptionResponse;
+import com.bang_ggood.question.dto.response.SelectedCategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.SelectedQuestionResponse;
-import com.bang_ggood.checklist.dto.response.UserChecklistPreviewResponse;
-import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
-import com.bang_ggood.maintenance.repository.ChecklistMaintenanceRepository;
-import com.bang_ggood.like.repository.ChecklistLikeRepository;
-import com.bang_ggood.option.repository.ChecklistOptionRepository;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
-import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
-import com.bang_ggood.global.exception.BangggoodException;
-import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import com.bang_ggood.room.repository.RoomRepository;
@@ -77,91 +77,10 @@ public class ChecklistService {
     }
 
     @Transactional
-    public long createChecklist(User user, ChecklistRequest checklistRequest) {
-        Room room = roomRepository.save(checklistRequest.toRoomEntity());
-
-        Checklist checklist = checklistRequest.toChecklistEntity(room, user);
-        checklistRepository.save(checklist);
-
-        createChecklistOptions(checklistRequest, checklist);
-        createChecklistQuestions(checklistRequest, checklist);
-        createChecklistIncludedMaintenances(checklistRequest, checklist);
-        return checklist.getId();
+    public Checklist createChecklist(Checklist checklist) {
+        return checklistRepository.save(checklist);
     }
 
-    private void createChecklistOptions(ChecklistRequest checklistRequest, Checklist checklist) {
-        List<Integer> optionIds = checklistRequest.options();
-        validateOptions(optionIds);
-        List<ChecklistOption> checklistOptions = optionIds.stream()
-                .map(option -> new ChecklistOption(checklist, option))
-                .toList();
-        checklistOptionRepository.saveAll(checklistOptions);
-    }
-
-    private void validateOptions(List<Integer> optionIds) {
-        validateOptionDuplicate(optionIds);
-        validateOptionInvalid(optionIds);
-    }
-
-    private void validateOptionDuplicate(List<Integer> optionIds) {
-        Set<Integer> set = new HashSet<>();
-        optionIds.forEach(id -> {
-            if (!set.add(id)) {
-                throw new BangggoodException(ExceptionCode.OPTION_DUPLICATED);
-            }
-        });
-    }
-
-    private void validateOptionInvalid(List<Integer> optionIds) {
-        for (Integer optionId : optionIds) {
-            if (!Option.contains(optionId)) {
-                throw new BangggoodException(ExceptionCode.OPTION_INVALID);
-            }
-        }
-    }
-
-    private void createChecklistQuestions(ChecklistRequest checklistRequest, Checklist checklist) {
-        validateQuestion(checklistRequest.questions());
-        List<ChecklistQuestion> checklistQuestions = checklistRequest.questions().stream()
-                .map(question -> new ChecklistQuestion(
-                        checklist,
-                        Question.fromId(question.questionId()),
-                        Answer.from(question.answer())))
-                .collect(Collectors.toList());
-        checklistQuestionRepository.saveAll(checklistQuestions);
-    }
-
-    private void createChecklistIncludedMaintenances(ChecklistRequest checklistRequest, Checklist checklist) {
-        validateIncludedMaintenance(checklistRequest.room().includedMaintenances());
-        List<ChecklistMaintenance> checklistMaintenances =
-                checklistRequest.room().includedMaintenances().stream()
-                        .map(maintenanceId -> new ChecklistMaintenance(checklist,
-                                MaintenanceItem.fromId(maintenanceId)))
-                        .collect(Collectors.toList());
-        checklistMaintenanceRepository.saveAll(checklistMaintenances);
-    }
-
-    private void validateIncludedMaintenance(List<Integer> includedMaintenances) {
-        validateIncludedMaintenanceDuplicate(includedMaintenances);
-        validateIncludedMaintenanceInvalid(includedMaintenances);
-    }
-
-    private void validateIncludedMaintenanceDuplicate(List<Integer> includedMaintenances) {
-        Set<Integer> set = new HashSet<>();
-        includedMaintenances.forEach(id -> {
-            if (!set.add(id)) {
-                throw new BangggoodException(ExceptionCode.MAINTENANCE_ITEM_DUPLICATE);
-            }
-        });
-    }
-
-    private void validateIncludedMaintenanceInvalid(List<Integer> includedMaintenances) {
-        for (Integer maintenancesId : includedMaintenances) {
-            if (!MaintenanceItem.contains(maintenancesId)) {
-                throw new BangggoodException(ExceptionCode.MAINTENANCE_ITEM_INVALID);
-            }
-        }
-    }
 
     @Transactional
     public void createChecklistLike(User user, long id) {
@@ -264,27 +183,28 @@ public class ChecklistService {
         List<Integer> maintenanceIds = readChecklistMaintenancesByChecklist(checklist);
         SelectedRoomResponse selectedRoomResponse = SelectedRoomResponse.of(checklist, maintenanceIds);
         List<SelectedOptionResponse> options = readOptionsByChecklistId(id);
-        List<SelectedCategoryQuestionsResponse> selectedCategoryQuestionsResponse = readCategoryQuestionsByChecklistId(id);
+        List<SelectedCategoryQuestionsResponse> selectedCategoryQuestionsResponse = readCategoryQuestionsByChecklistId(
+                id);
         boolean isLiked = checklistLikeRepository.existsByChecklist(checklist);
 
         return new SelectedChecklistResponse(selectedRoomResponse, isLiked, options, selectedCategoryQuestionsResponse);
     }
 
     private List<Integer> readChecklistMaintenancesByChecklist(Checklist checklist) {
-        return checklistMaintenanceRepository.findAllByChecklist(checklist).stream()
+        return checklistMaintenanceRepository.findAllByChecklistId(checklist.getId()).stream()
                 .map(ChecklistMaintenance::getMaintenanceItemId)
                 .toList();
     }
 
     private List<SelectedOptionResponse> readOptionsByChecklistId(long checklistId) {
-        return checklistOptionRepository.findByChecklistId(checklistId)
+        return checklistOptionRepository.findAllByChecklistId(checklistId)
                 .stream()
                 .map(checklistOption -> SelectedOptionResponse.of(checklistOption.getOptionId()))
                 .toList();
     }
 
     private List<SelectedCategoryQuestionsResponse> readCategoryQuestionsByChecklistId(long checklistId) {
-        List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findByChecklistId(checklistId);
+        List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findAllByChecklistId(checklistId);
 
         return Arrays.stream(Category.values())
                 .map(category -> readQuestionsByCategory(category, checklistQuestions))
@@ -339,6 +259,50 @@ public class ChecklistService {
         updateChecklistOptions(checklistRequest, checklist);
         updateChecklistQuestions(checklistRequest, checklist);
         updateChecklistIncludedMaintenances(checklistRequest, checklist);
+    }
+
+    private void validateOptions(List<Integer> optionIds) {
+        validateOptionDuplicate(optionIds);
+        validateOptionInvalid(optionIds);
+    }
+
+    private void validateOptionDuplicate(List<Integer> optionIds) {
+        Set<Integer> set = new HashSet<>();
+        optionIds.forEach(id -> {
+            if (!set.add(id)) {
+                throw new BangggoodException(ExceptionCode.OPTION_DUPLICATED);
+            }
+        });
+    }
+
+    private void validateOptionInvalid(List<Integer> optionIds) {
+        for (Integer optionId : optionIds) {
+            if (!Option.contains(optionId)) {
+                throw new BangggoodException(ExceptionCode.OPTION_INVALID);
+            }
+        }
+    }
+
+    private void validateIncludedMaintenance(List<Integer> includedMaintenances) {
+        validateIncludedMaintenanceDuplicate(includedMaintenances);
+        validateIncludedMaintenanceInvalid(includedMaintenances);
+    }
+
+    private void validateIncludedMaintenanceDuplicate(List<Integer> includedMaintenances) {
+        Set<Integer> set = new HashSet<>();
+        includedMaintenances.forEach(id -> {
+            if (!set.add(id)) {
+                throw new BangggoodException(ExceptionCode.MAINTENANCE_ITEM_DUPLICATE);
+            }
+        });
+    }
+
+    private void validateIncludedMaintenanceInvalid(List<Integer> includedMaintenances) {
+        for (Integer maintenancesId : includedMaintenances) {
+            if (!MaintenanceItem.contains(maintenancesId)) {
+                throw new BangggoodException(ExceptionCode.MAINTENANCE_ITEM_INVALID);
+            }
+        }
     }
 
     private void updateChecklistOptions(ChecklistRequest checklistRequest, Checklist checklist) {

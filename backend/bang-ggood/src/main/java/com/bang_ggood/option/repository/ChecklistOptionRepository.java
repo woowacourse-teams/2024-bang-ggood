@@ -14,7 +14,7 @@ public interface ChecklistOptionRepository extends JpaRepository<ChecklistOption
     @Query("SELECT co FROM ChecklistOption co " +
             "WHERE co.checklist.id = :checklistId " +
             "AND co.deleted = false")
-    List<ChecklistOption> findByChecklistId(@Param("checklistId") Long checklistId);
+    List<ChecklistOption> findAllByChecklistId(@Param("checklistId") Long checklistId);
 
     @Query("SELECT COUNT(co) FROM ChecklistOption co " +
             "WHERE co.checklist = :checklist " +

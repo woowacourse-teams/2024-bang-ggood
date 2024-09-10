@@ -13,7 +13,7 @@ import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useChecklistTemplate from '@/hooks/useInitialChecklist';
-import useModalOpen from '@/hooks/useModalOpen';
+import useModal from '@/hooks/useModalOpen';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
@@ -22,21 +22,16 @@ const NewChecklistPage = () => {
   const navigate = useNavigate();
 
   const { tabs } = useNewChecklistTabs();
-
-  // 메모 모달
-  const { isModalOpen: isMemoModalOpen, modalOpen: memoModalOpen, modalClose: memoModalClose } = useModalOpen();
-
-  // 한줄평 모달
-  const {
-    isModalOpen: isSummaryModalOpen,
-    modalOpen: summaryModalOpen,
-    modalClose: summaryModalClose,
-  } = useModalOpen();
-
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
 
-  //뒤로가기 내용 삭제 경고 모달
-  const { isModalOpen, modalOpen, modalClose } = useModalOpen();
+  // 메모 모달
+  const { isModalOpen: isMemoModalOpen, openModal: memoModalOpen, closeModal: memoModalClose } = useModal();
+
+  // 한줄평 모달
+  const { isModalOpen: isSummaryModalOpen, openModal: openSummaryModal, closeModal: closeSummaryModal } = useModal();
+
+  //뒤로가기시 휘발 경고 모달
+  const { isModalOpen: isAlertModalOpen, openModal: openAlertModal, closeModal: closeAlertModal } = useModal();
 
   const handleNavigateBack = () => {
     actions.resetAll();
@@ -45,25 +40,10 @@ const NewChecklistPage = () => {
 
   return (
     <>
-      {isModalOpen && (
-        <AlertModal
-          title={
-            <div>
-              나가면 작성하던 내용이 다 지워집니다.
-              <br />
-              괜찮으신가요?
-            </div>
-          }
-          isOpen={isModalOpen}
-          onClose={modalClose}
-          handleApprove={handleNavigateBack}
-          approveButtonName="나가기"
-        />
-      )}
       <Header
-        left={<Header.Backward onClick={modalOpen} />}
+        left={<Header.Backward onClick={openAlertModal} />}
         center={<Header.Text>새 체크리스트</Header.Text>}
-        right={<Button label="저장" size="xSmall" color="dark" onClick={summaryModalOpen} />}
+        right={<Button label="저장" size="xSmall" color="dark" onClick={openSummaryModal} />}
       />
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
         <Tabs tabList={tabs} />
@@ -77,7 +57,22 @@ const NewChecklistPage = () => {
       )}
 
       {isSummaryModalOpen && (
-        <SummaryModal isModalOpen={isSummaryModalOpen} modalClose={summaryModalClose} mutateType="add" />
+        <SummaryModal isModalOpen={isSummaryModalOpen} modalClose={closeSummaryModal} mutateType="add" />
+      )}
+      {isAlertModalOpen && (
+        <AlertModal
+          title={
+            <div>
+              나가면 작성하던 내용이 다 지워집니다.
+              <br />
+              괜찮으신가요?
+            </div>
+          }
+          isOpen={isAlertModalOpen}
+          onClose={closeAlertModal}
+          handleApprove={handleNavigateBack}
+          approveButtonName="나가기"
+        />
       )}
     </>
   );

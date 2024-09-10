@@ -12,7 +12,7 @@ import SkChecklistDetail from '@/components/skeleton/ChecklistDetail/SkChecklist
 import { ROUTE_PATH } from '@/constants/routePath';
 import useDeleteChecklistQuery from '@/hooks/query/useDeleteChecklistQuery';
 import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery';
-import useModalOpen from '@/hooks/useModalOpen';
+import useModal from '@/hooks/useModalOpen';
 import theme from '@/styles/theme';
 
 type RouteParams = {
@@ -21,7 +21,7 @@ type RouteParams = {
 
 const ChecklistDetailPage = () => {
   const navigate = useNavigate();
-  const { isModalOpen, modalOpen, modalClose } = useModalOpen();
+  const { isModalOpen, openModal: modalOpen, closeModal: modalClose } = useModal();
 
   const { checklistId } = useParams() as RouteParams;
   const { data: checklist, isLoading, isError } = useGetChecklistDetailQuery(checklistId);

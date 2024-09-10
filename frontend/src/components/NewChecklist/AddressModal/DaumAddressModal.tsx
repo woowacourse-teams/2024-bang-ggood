@@ -5,7 +5,7 @@ import { useStore } from 'zustand';
 import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
 import loadPostcode from '@/components/NewChecklist/AddressModal/loadPostcode';
-import useModalOpen from '@/hooks/useModalOpen';
+import useModal from '@/hooks/useModalOpen';
 import checklistAddressStore from '@/store/checklistAddressStore';
 import { Address, Postcode, PostcodeOptions } from '@/types/address';
 
@@ -20,7 +20,7 @@ declare global {
 const scriptUrl = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
 
 const DaumAddressModal = () => {
-  const { isModalOpen, modalOpen, modalClose } = useModalOpen();
+  const { isModalOpen, openModal: modalOpen, closeModal: modalClose } = useModal();
   const postcodeContainerRef = useRef<HTMLDivElement | null>(null);
   const { setAddress, setBuildingName } = useStore(checklistAddressStore);
 

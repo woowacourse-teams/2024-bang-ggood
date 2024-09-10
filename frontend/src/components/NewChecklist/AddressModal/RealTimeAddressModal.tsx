@@ -5,11 +5,11 @@ import Button from '@/components/_common/Button/Button';
 import Input from '@/components/_common/Input/Input';
 import RealTimeMap from '@/components/_common/Map/RealTimeMap';
 import Modal from '@/components/_common/Modal/Modal';
-import useModalOpen from '@/hooks/useModalOpen';
+import useModal from '@/hooks/useModalOpen';
 import checklistAddressStore from '@/store/checklistAddressStore';
 
 const RealTimeAddressModal = () => {
-  const { isModalOpen, modalOpen, modalClose } = useModalOpen();
+  const { isModalOpen, openModal: modalOpen, closeModal: modalClose } = useModal();
   const { address, buildingName } = useStore(checklistAddressStore);
 
   return (

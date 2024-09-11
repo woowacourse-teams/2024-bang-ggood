@@ -107,10 +107,8 @@ const RealTimeMap = ({ setPosition, position }: { position: Position; setPositio
           actions.set('address', result[0].road_address.address_name);
           if (result[0].road_address?.building_name) {
             actions.set('buildingName', result[0].road_address.building_name);
-            // setBuildingName(result[0]?.road_address?.building_name);
           } else {
             actions.set('buildingName', '');
-            // setBuildingName('');
           }
           return;
         }
@@ -120,7 +118,6 @@ const RealTimeMap = ({ setPosition, position }: { position: Position; setPositio
 
           if (result[0].road_address?.building_name) {
             actions.set('buildingName', result[0].road_address.building_name);
-            //setBuildingName(result[0].road_address.building_name);
           } else {
             actions.set('buildingName', '');
           }

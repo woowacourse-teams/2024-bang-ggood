@@ -16,10 +16,7 @@ const NearTransportation = () => {
       <FormField.Label label="가까운 교통편" />
       {station ? (
         <>
-          <FormStyled.FieldBox>
-            <span>{station}</span>역까지 도보
-            <span>{walkingTime}</span>분
-          </FormStyled.FieldBox>
+          <FormStyled.FieldBox>{`${station}역까지 도보 ${walkingTime}분`}</FormStyled.FieldBox>
         </>
       ) : (
         <span>보신 방과 가장 가까운 지하철역을 찾아드릴게요!</span>

@@ -7,12 +7,12 @@ import RealTimeAddressModal from '@/components/NewChecklist/AddressModal/RealTim
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
 const Address = () => {
-  const { address } = useStore(checklistRoomInfoStore, state => state.rawValue);
+  const { address, buildingName } = useStore(checklistRoomInfoStore, state => state.rawValue);
 
   return (
     <FormField>
       <FormField.Label label="주소" />
-      <FormField.Input name="address" value={address} />
+      {address && <FormField.Input name="address" value={`${address} ${buildingName}`} />}
       <FlexBox.Horizontal>
         {/*실시간 위치 모달*/}
         <RealTimeAddressModal />

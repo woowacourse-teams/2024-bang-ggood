@@ -34,14 +34,12 @@ const NewChecklistPage = () => {
   } = useModalOpen();
 
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  // const addressActions = useStore(checklistAddressStore);
 
   //뒤로가기 내용 삭제 경고 모달
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
 
   const handleNavigateBack = () => {
     actions.resetAll();
-    // addressActions.reset();
     navigate(ROUTE_PATH.checklistList);
   };
 

@@ -61,7 +61,7 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     @DisplayName("아이디를 통해 체크리스트 갖고 오기 실패 : 해당하는 체크리스트가 없을 경우")
     @Test
     void findById_notFound_exception() {
-        assertThatThrownBy(() -> checklistRepository.getById(1))
+        assertThatThrownBy(() -> checklistRepository.getById(1L))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
     }

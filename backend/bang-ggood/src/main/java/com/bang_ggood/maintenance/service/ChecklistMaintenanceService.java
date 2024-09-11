@@ -1,5 +1,6 @@
 package com.bang_ggood.maintenance.service;
 
+import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
@@ -33,5 +34,10 @@ public class ChecklistMaintenanceService {
                 throw new BangggoodException(ExceptionCode.MAINTENANCE_ITEM_DUPLICATE);
             }
         });
+    }
+
+    @Transactional(readOnly = true)
+    public List<ChecklistMaintenance> readChecklistMaintenances(Checklist checklist) {
+        return checklistMaintenanceRepository.findAllByChecklistId(checklist.getId());
     }
 }

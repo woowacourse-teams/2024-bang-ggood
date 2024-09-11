@@ -2,7 +2,6 @@ package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
-import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.dto.response.UserChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
@@ -15,23 +14,17 @@ import com.bang_ggood.maintenance.domain.MaintenanceItem;
 import com.bang_ggood.maintenance.repository.ChecklistMaintenanceRepository;
 import com.bang_ggood.option.domain.ChecklistOption;
 import com.bang_ggood.option.domain.Option;
-import com.bang_ggood.option.dto.response.SelectedOptionResponse;
 import com.bang_ggood.option.repository.ChecklistOptionRepository;
 import com.bang_ggood.question.domain.Answer;
-import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.request.QuestionRequest;
-import com.bang_ggood.question.dto.response.SelectedCategoryQuestionsResponse;
-import com.bang_ggood.question.dto.response.SelectedQuestionResponse;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.room.domain.Room;
-import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -114,50 +107,12 @@ public class ChecklistService {
         }
     }
 
-    @Transactional
-    public SelectedChecklistResponse readChecklistById(User user, long id) {
-        Checklist checklist = checklistRepository.getById(id);
+    @Transactional(readOnly = true)
+    public Checklist readChecklist(User user, Long checklistId) {
+        Checklist checklist = checklistRepository.getById(checklistId);
         validateChecklistOwnership(user, checklist);
 
-        List<Integer> maintenanceIds = readChecklistMaintenancesByChecklist(checklist);
-        SelectedRoomResponse selectedRoomResponse = SelectedRoomResponse.of(checklist, maintenanceIds);
-        List<SelectedOptionResponse> options = readOptionsByChecklistId(id);
-        List<SelectedCategoryQuestionsResponse> selectedCategoryQuestionsResponse = readCategoryQuestionsByChecklistId(
-                id);
-        boolean isLiked = checklistLikeRepository.existsByChecklist(checklist);
-
-        return new SelectedChecklistResponse(selectedRoomResponse, isLiked, options, selectedCategoryQuestionsResponse);
-    }
-
-    private List<Integer> readChecklistMaintenancesByChecklist(Checklist checklist) {
-        return checklistMaintenanceRepository.findAllByChecklistId(checklist.getId()).stream()
-                .map(ChecklistMaintenance::getMaintenanceItemId)
-                .toList();
-    }
-
-    private List<SelectedOptionResponse> readOptionsByChecklistId(long checklistId) {
-        return checklistOptionRepository.findAllByChecklistId(checklistId)
-                .stream()
-                .map(checklistOption -> SelectedOptionResponse.of(checklistOption.getOptionId()))
-                .toList();
-    }
-
-    private List<SelectedCategoryQuestionsResponse> readCategoryQuestionsByChecklistId(long checklistId) {
-        List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findAllByChecklistId(checklistId);
-
-        return Arrays.stream(Category.values())
-                .map(category -> readQuestionsByCategory(category, checklistQuestions))
-                .toList();
-    }
-
-    private SelectedCategoryQuestionsResponse readQuestionsByCategory(Category category,
-                                                                      List<ChecklistQuestion> checklistQuestions) {
-        List<SelectedQuestionResponse> selectedQuestionResponse =
-                Question.filterWithUnselectedGrade(category, checklistQuestions).stream()
-                        .map(SelectedQuestionResponse::new)
-                        .toList();
-
-        return SelectedCategoryQuestionsResponse.of(category, selectedQuestionResponse);
+        return checklist;
     }
 
     @Transactional
@@ -185,8 +140,8 @@ public class ChecklistService {
     }
 
     @Transactional
-    public void updateChecklistById(User user, long id, ChecklistRequest checklistRequest) {
-        Checklist checklist = checklistRepository.getById(id);
+    public void updateChecklistById(User user, Long checklistId, ChecklistRequest checklistRequest) {
+        Checklist checklist = checklistRepository.getById(checklistId);
         validateChecklistOwnership(user, checklist);
 
         Room room = checklist.getRoom();

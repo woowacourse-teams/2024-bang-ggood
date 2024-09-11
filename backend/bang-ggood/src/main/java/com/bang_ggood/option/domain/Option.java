@@ -31,13 +31,11 @@ public enum Option {
                 .anyMatch(option -> option.id == id);
     }
 
-    public static Option fromId(int id) {
-        for (Option option : values()) {
-            if (option.id == id) {
-                return option;
-            }
-        }
-        throw new BangggoodException(ExceptionCode.OPTION_INVALID);
+    public static Option from(ChecklistOption checklistOption) {
+        return Arrays.stream(values())
+                .filter(option -> option.id == checklistOption.getOptionId())
+                .findAny()
+                .orElseThrow(() -> new BangggoodException(ExceptionCode.OPTION_INVALID));
     }
 
     public int getId() {

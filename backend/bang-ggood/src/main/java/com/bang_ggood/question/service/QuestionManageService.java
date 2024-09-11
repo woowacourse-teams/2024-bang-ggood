@@ -65,10 +65,10 @@ public class QuestionManageService {
                     .map(question -> new CustomChecklistQuestionResponse(question,
                             question.isSelected(customChecklistQuestions)))
                     .toList();
-            response.add(new CategoryCustomChecklistQuestionResponse(category.getId(), category.getName(), questions));
+            response.add(CategoryCustomChecklistQuestionResponse.of(category, questions));
         }
 
-        return new CategoryCustomChecklistQuestionsResponse(response);
+        return CategoryCustomChecklistQuestionsResponse.from(response);
     }
 
     @Transactional

@@ -20,34 +20,21 @@ import com.bang_ggood.option.repository.ChecklistOptionRepository;
 import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestion;
-import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
-import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.request.QuestionRequest;
-import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionResponse;
-import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
-import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
-import com.bang_ggood.question.dto.response.ChecklistQuestionsResponse;
-import com.bang_ggood.question.dto.response.CustomChecklistQuestionResponse;
-import com.bang_ggood.question.dto.response.QuestionResponse;
 import com.bang_ggood.question.dto.response.SelectedCategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.SelectedQuestionResponse;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
-import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
@@ -58,21 +45,18 @@ public class ChecklistService {
     private final ChecklistOptionRepository checklistOptionRepository;
     private final ChecklistQuestionRepository checklistQuestionRepository;
     private final ChecklistMaintenanceRepository checklistMaintenanceRepository;
-    private final CustomChecklistQuestionRepository customChecklistQuestionRepository;
     private final ChecklistLikeRepository checklistLikeRepository;
 
     public ChecklistService(ChecklistRepository checklistRepository, RoomRepository roomRepository,
                             ChecklistOptionRepository checklistOptionRepository,
                             ChecklistQuestionRepository checklistQuestionRepository,
                             ChecklistMaintenanceRepository checklistMaintenanceRepository,
-                            CustomChecklistQuestionRepository customChecklistQuestionRepository,
                             ChecklistLikeRepository checklistLikeRepository) {
         this.checklistRepository = checklistRepository;
         this.roomRepository = roomRepository;
         this.checklistOptionRepository = checklistOptionRepository;
         this.checklistQuestionRepository = checklistQuestionRepository;
         this.checklistMaintenanceRepository = checklistMaintenanceRepository;
-        this.customChecklistQuestionRepository = customChecklistQuestionRepository;
         this.checklistLikeRepository = checklistLikeRepository;
     }
 
@@ -108,25 +92,6 @@ public class ChecklistService {
         }
     }
 
-    @Transactional
-    public ChecklistQuestionsResponse readChecklistQuestions(User user) {
-        List<CustomChecklistQuestion> customChecklistQuestions = customChecklistQuestionRepository.findAllByUser(user);
-
-        Map<Category, List<Question>> categoryQuestions = customChecklistQuestions.stream()
-                .map(CustomChecklistQuestion::getQuestion)
-                .collect(Collectors.groupingBy(Question::getCategory, LinkedHashMap::new, Collectors.toList()));
-
-        List<CategoryQuestionsResponse> categoryQuestionsResponses = categoryQuestions.entrySet().stream()
-                .map(categoryQuestionEntry -> CategoryQuestionsResponse.of(
-                        categoryQuestionEntry.getKey(),
-                        categoryQuestionEntry.getValue().stream()
-                                .map(QuestionResponse::new)
-                                .toList()))
-                .toList();
-
-        return new ChecklistQuestionsResponse(categoryQuestionsResponses);
-    }
-
     private void validateQuestion(List<QuestionRequest> questions) {
         validateQuestionDuplicate(questions);
         validateQuestionInvalid(questions);
@@ -147,32 +112,6 @@ public class ChecklistService {
                 throw new BangggoodException(ExceptionCode.QUESTION_INVALID);
             }
         }
-    }
-
-    @Transactional
-    public CategoryCustomChecklistQuestionsResponse readAllCustomChecklistQuestions(
-            User user) { // TODO custom-checklist 도메인 분리 및 리팩토링
-        List<CustomChecklistQuestion> customChecklistQuestions = customChecklistQuestionRepository.findAllByUser(user);
-        List<CategoryCustomChecklistQuestionResponse> allCategoryCustomChecklistQuestions = getAllCategoryCustomChecklistQuestions(
-                customChecklistQuestions);
-
-        return new CategoryCustomChecklistQuestionsResponse(allCategoryCustomChecklistQuestions);
-    }
-
-    private List<CategoryCustomChecklistQuestionResponse> getAllCategoryCustomChecklistQuestions(
-            List<CustomChecklistQuestion> customChecklistQuestions) {
-        List<CategoryCustomChecklistQuestionResponse> response = new ArrayList<>();
-
-        for (Category category : Category.values()) {
-            List<Question> categoryQuestions = Question.findQuestionsByCategory(category);
-            List<CustomChecklistQuestionResponse> questions = categoryQuestions.stream()
-                    .map(question -> new CustomChecklistQuestionResponse(question,
-                            question.isSelected(customChecklistQuestions)))
-                    .toList();
-            response.add(new CategoryCustomChecklistQuestionResponse(category.getId(), category.getName(), questions));
-        }
-
-        return response;
     }
 
     @Transactional
@@ -352,33 +291,6 @@ public class ChecklistService {
                 .ifPresent(i -> {
                     throw new BangggoodException(ExceptionCode.QUESTION_DIFFERENT);
                 });
-    }
-
-    @Transactional
-    public void updateCustomChecklist(User user, CustomChecklistUpdateRequest request) {
-        List<Integer> questionIds = request.questionIds();
-        validateCustomChecklistQuestionsIsNotEmpty(questionIds);
-        validateCustomChecklistQuestionsDuplication(questionIds);
-
-        customChecklistQuestionRepository.deleteAllByUser(user);
-
-        List<CustomChecklistQuestion> customChecklistQuestions = questionIds.stream()
-                .map(Question::fromId)
-                .map(question -> new CustomChecklistQuestion(user, question))
-                .toList();
-        customChecklistQuestionRepository.saveAll(customChecklistQuestions);
-    }
-
-    private void validateCustomChecklistQuestionsIsNotEmpty(List<Integer> questionIds) {
-        if (questionIds.isEmpty()) {
-            throw new BangggoodException(ExceptionCode.CUSTOM_CHECKLIST_QUESTION_EMPTY);
-        }
-    }
-
-    private void validateCustomChecklistQuestionsDuplication(List<Integer> questionIds) {
-        if (questionIds.size() != Set.copyOf(questionIds).size()) {
-            throw new BangggoodException(ExceptionCode.QUESTION_DUPLICATED);
-        }
     }
 
     @Transactional

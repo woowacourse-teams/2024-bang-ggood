@@ -11,34 +11,17 @@ import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.like.domain.ChecklistLike;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.option.repository.ChecklistOptionRepository;
-import com.bang_ggood.question.CustomChecklistFixture;
-import com.bang_ggood.question.domain.CustomChecklistQuestion;
-import com.bang_ggood.question.domain.Question;
-import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
-import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
-import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
-import com.bang_ggood.question.dto.response.ChecklistQuestionsResponse;
-import com.bang_ggood.question.dto.response.CustomChecklistQuestionResponse;
-import com.bang_ggood.question.dto.response.QuestionResponse;
-import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Structure;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.repository.UserRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.util.Collection;
 import java.util.List;
 
-import static com.bang_ggood.question.CustomChecklistFixture.CUSTOM_CHECKLIST_QUESTION_DEFAULT;
-import static com.bang_ggood.question.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST;
-import static com.bang_ggood.question.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED;
-import static com.bang_ggood.question.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_EMPTY;
-import static com.bang_ggood.question.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_INVALID;
 import static com.bang_ggood.user.UserFixture.USER1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -58,9 +41,6 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private RoomRepository roomRepository;
-
-    @Autowired
-    private CustomChecklistQuestionRepository customChecklistQuestionRepository;
 
     @Autowired
     private ChecklistOptionRepository checklistOptionRepository;
@@ -123,29 +103,6 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         assertThatThrownBy(() -> checklistService.createChecklistLike(USER1, checklist.getId()))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.LIKE_ALREADY_EXISTS.getMessage());
-    }
-
-    @DisplayName("체크리스트 질문 조회 성공")
-    @Test
-    void readChecklistQuestions() {
-        // given
-        customChecklistQuestionRepository.saveAll(CustomChecklistFixture.CUSTOM_CHECKLIST_QUESTION_DEFAULT);
-
-        // given & when
-        ChecklistQuestionsResponse checklistQuestionsResponse = checklistService.readChecklistQuestions(USER1);
-
-        // then
-        List<Integer> defaultQuestionsIds = CUSTOM_CHECKLIST_QUESTION_DEFAULT.stream()
-                .map(CustomChecklistQuestion::getQuestion)
-                .map(Question::getId)
-                .toList();
-        List<Integer> responseQuestionsIds = checklistQuestionsResponse.categories().stream()
-                .map(CategoryQuestionsResponse::questions)
-                .flatMap(Collection::stream)
-                .map(QuestionResponse::getQuestionId)
-                .toList();
-
-        assertThat(responseQuestionsIds).containsExactlyElementsOf(defaultQuestionsIds);
     }
 
     @DisplayName("작성된 체크리스트 조회 성공")
@@ -328,27 +285,6 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER.getMessage());
     }
 
-    @DisplayName("커스텀 체크리스트 조회 성공")
-    @Test
-    void readCustomChecklistQuestions() {
-        // given
-        CustomChecklistQuestion question1 = new CustomChecklistQuestion(USER1, Question.ROOM_CONDITION_5);
-        CustomChecklistQuestion question2 = new CustomChecklistQuestion(USER1, Question.BATHROOM_1);
-        List<CustomChecklistQuestion> questions = List.of(question1, question2);
-        customChecklistQuestionRepository.saveAll(questions);
-
-        // when
-        CategoryCustomChecklistQuestionsResponse response = checklistService.readAllCustomChecklistQuestions(USER1);
-
-        // then
-        long selectedCount = response.categories().stream()
-                .flatMap(category -> category.questions().stream())
-                .filter(CustomChecklistQuestionResponse::getIsSelected)
-                .count();
-
-        Assertions.assertThat(selectedCount).isEqualTo(questions.size());
-    }
-
     @DisplayName("좋아요된 체크리스트 리스트 조회 성공")
     @Test
     void readLikedChecklistsPreview() {
@@ -373,56 +309,6 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 () -> assertThat(checklists.get(0).checklistId()).isEqualTo(ChecklistFixture.CHECKLIST1_USER1.getId()),
                 () -> assertThat(checklists.get(1).checklistId()).isEqualTo(ChecklistFixture.CHECKLIST2_USER1.getId())
         );
-    }
-
-    @DisplayName("커스텀 체크리스트 업데이트 성공")
-    @Test
-    void updateCustomChecklist() {
-        // given
-        CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST;
-
-        // when
-        checklistService.updateCustomChecklist(USER1, request);
-
-        // then
-        assertThat(customChecklistQuestionRepository.findAllByUser(USER1))
-                .hasSize(request.questionIds().size());
-    }
-
-    @DisplayName("커스텀 체크리스트 업데이트 실패 : 선택한 질문 개수가 0개일 때")
-    @Test
-    void updateCustomChecklist_empty_exception() {
-        // given
-        CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_EMPTY;
-
-        // when & then
-        assertThatThrownBy(() -> checklistService.updateCustomChecklist(USER1, request))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.CUSTOM_CHECKLIST_QUESTION_EMPTY.getMessage());
-    }
-
-    @DisplayName("커스텀 체크리스트 업데이트 실패 : 질문이 중복될 때")
-    @Test
-    void updateCustomChecklist_duplicatedQuestion_exception() {
-        // given
-        CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED;
-
-        // when & then
-        assertThatThrownBy(() -> checklistService.updateCustomChecklist(USER1, request))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
-    }
-
-    @DisplayName("커스텀 체크리스트 업데이트 실패 : 질문 id가 유효하지 않을 때")
-    @Test
-    void updateCustomChecklist_invalidQuestionId_exception() {
-        // given
-        CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_INVALID;
-
-        // when & then
-        assertThatThrownBy(() -> checklistService.updateCustomChecklist(USER1, request))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
     }
 
     @DisplayName("체크리스트 삭제 성공")

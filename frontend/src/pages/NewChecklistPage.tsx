@@ -12,43 +12,47 @@ import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
+import useHandleTipBox from '@/hooks/useHandleTipBox';
 import useChecklistTemplate from '@/hooks/useInitialChecklist';
-import useModalOpen from '@/hooks/useModalOpen';
+import useModal from '@/hooks/useModalOpen';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import useChecklistStore from '@/store/useChecklistStore';
+import useSelectedOptionStore from '@/store/useOptionStore';
 
 const NewChecklistPage = () => {
-  useChecklistTemplate(); // 체크리스트 질문 가져오기 및 준비
   const navigate = useNavigate();
+  useChecklistTemplate(); // 체크리스트 질문 가져오기 및 준비
 
   const { tabs } = useNewChecklistTabs();
+  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
+  const resetChecklist = useChecklistStore(state => state.reset);
+  const selectedOptionActions = useSelectedOptionStore(state => state.actions);
+  const { resetShowTipBox } = useHandleTipBox('OPTION'); // TODO: 상수화 처리
 
   // 메모 모달
-  const { isModalOpen: isMemoModalOpen, modalOpen: memoModalOpen, modalClose: memoModalClose } = useModalOpen();
+  const { isModalOpen: isMemoModalOpen, openModal: openMemoModal, closeModal: closeMemoModal } = useModal();
 
   // 한줄평 모달
-  const {
-    isModalOpen: isSummaryModalOpen,
-    modalOpen: summaryModalOpen,
-    modalClose: summaryModalClose,
-  } = useModalOpen();
+  const { isModalOpen: isSummaryModalOpen, openModal: openSummaryModal, closeModal: closeSummaryModal } = useModal();
 
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
+  //뒤로가기시 휘발 경고 모달
+  const { isModalOpen: isAlertModalOpen, openModal: openAlertModal, closeModal: closeAlertModal } = useModal();
 
-  // 뒤로가기 내용 삭제 경고 모달
-  const { isModalOpen, modalOpen, modalClose } = useModalOpen();
-
-  const handleNavigateBack = () => {
-    actions.resetAll();
+  const resetAndGoHome = () => {
+    roomInfoActions.resetAll();
+    resetChecklist();
+    selectedOptionActions.reset();
+    resetShowTipBox(); // 옵션의 팁박스 다시표시
     navigate(ROUTE_PATH.checklistList);
   };
 
   return (
     <>
       <Header
-        left={<Header.Backward onClick={modalOpen} />}
+        left={<Header.Backward onClick={openAlertModal} />}
         center={<Header.Text>새 체크리스트</Header.Text>}
-        right={<Button label="저장" size="xSmall" color="dark" onClick={summaryModalOpen} />}
+        right={<Button label="저장" size="xSmall" color="dark" onClick={openSummaryModal} />}
       />
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
         <Tabs tabList={tabs} />
@@ -56,16 +60,20 @@ const NewChecklistPage = () => {
       </TabProvider>
 
       {isMemoModalOpen ? (
-        <MemoModal isModalOpen={isMemoModalOpen} modalClose={memoModalClose} />
+        <MemoModal isModalOpen={isMemoModalOpen} modalClose={closeMemoModal} />
       ) : (
-        <MemoButton onClick={memoModalOpen} />
+        <MemoButton onClick={openMemoModal} />
       )}
 
       {isSummaryModalOpen && (
-        <SummaryModal isModalOpen={isSummaryModalOpen} modalClose={summaryModalClose} mutateType="add" />
+        <SummaryModal
+          isModalOpen={isSummaryModalOpen}
+          onConfirm={resetAndGoHome}
+          modalClose={closeSummaryModal}
+          mutateType="add"
+        />
       )}
-
-      {isModalOpen && (
+      {isAlertModalOpen && (
         <AlertModal
           title={
             <div>
@@ -74,9 +82,9 @@ const NewChecklistPage = () => {
               괜찮으신가요?
             </div>
           }
-          isOpen={isModalOpen}
-          onClose={modalClose}
-          handleApprove={handleNavigateBack}
+          isOpen={isAlertModalOpen}
+          onClose={closeAlertModal}
+          handleApprove={resetAndGoHome}
           approveButtonName="나가기"
         />
       )}

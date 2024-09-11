@@ -13,7 +13,7 @@ export const checklistHandlers = [
   }),
 
   http.get(BASE_URL + ENDPOINT.CHECKLIST_ID(1), () => {
-    return HttpResponse.json(checklistDetail, { status: 200 });
+    return HttpResponse.json(Object.assign(checklistDetail, { isLiked: getLike(1) }), { status: 200 });
   }),
 
   http.put(BASE_URL + ENDPOINT.CHECKLIST_ID(1), () => {
@@ -39,4 +39,21 @@ export const checklistHandlers = [
   http.get(BASE_URL + ENDPOINT.CHECKLIST_ALL_QUESTION, () => {
     return HttpResponse.json(checklistAllQuestions, { status: 200 });
   }),
+  http.post(BASE_URL + ENDPOINT.LIKE(1), () => {
+    const id = 1;
+    addLike(id);
+    return HttpResponse.json(null, { status: 200 });
+  }),
+  http.delete(BASE_URL + ENDPOINT.LIKE(1), () => {
+    removeLike(1);
+    return HttpResponse.json(null, { status: 200 });
+  }),
+  http.get(BASE_URL + ENDPOINT.LIKE(1), () => {
+    return HttpResponse.json(checklist.get(1), { status: 200 });
+  }),
 ];
+
+const checklist = new Map();
+const addLike = (id: number) => checklist.set(id, true);
+const removeLike = (id: number) => checklist.set(id, false);
+const getLike = (id: number) => checklist.get(id);

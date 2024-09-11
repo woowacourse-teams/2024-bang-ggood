@@ -15,6 +15,7 @@ export const checklistHandlers = [
   http.get(BASE_URL + ENDPOINT.CHECKLIST_ID(1), () => {
     return HttpResponse.json(checklistDetail, { status: 200 });
   }),
+
   http.put(BASE_URL + ENDPOINT.CHECKLIST_ID(1), () => {
     return HttpResponse.json({}, { status: 200 });
   }),

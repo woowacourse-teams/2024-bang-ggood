@@ -102,6 +102,7 @@ const S = {
     background-color: ${({ theme }) => theme.palette.kakao};
 
     font-size: ${({ theme }) => theme.text.size.large};
+    cursor: pointer;
   `,
   MoreBox: styled.div`
     width: 100%;

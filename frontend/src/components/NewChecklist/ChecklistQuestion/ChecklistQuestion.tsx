@@ -77,6 +77,7 @@ const S = {
 
     ${flexSpaceBetween}
     align-items: center;
+    cursor: pointer;
   `,
   ButtonBox: styled.div`
     position: absolute;

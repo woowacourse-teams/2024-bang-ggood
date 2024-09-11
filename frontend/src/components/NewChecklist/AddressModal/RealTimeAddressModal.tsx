@@ -5,7 +5,7 @@ import Button from '@/components/_common/Button/Button';
 import Input from '@/components/_common/Input/Input';
 import RealTimeMap from '@/components/_common/Map/RealTimeMap';
 import Modal from '@/components/_common/Modal/Modal';
-import useModal from '@/hooks/useModalOpen';
+import useModal from '@/hooks/useModal';
 import checklistAddressStore from '@/store/checklistAddressStore';
 
 const RealTimeAddressModal = () => {

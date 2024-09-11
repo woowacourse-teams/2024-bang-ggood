@@ -12,7 +12,7 @@ import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery';
-import useModal from '@/hooks/useModalOpen';
+import useModal from '@/hooks/useModal';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import checklistIncludedMaintenancesStore from '@/store/checklistIncludedMaintenancesStore';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';

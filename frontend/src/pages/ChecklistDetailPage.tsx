@@ -12,7 +12,7 @@ import SkChecklistDetail from '@/components/skeleton/ChecklistDetail/SkChecklist
 import { ROUTE_PATH } from '@/constants/routePath';
 import useDeleteChecklistQuery from '@/hooks/query/useDeleteChecklistQuery';
 import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery';
-import useModal from '@/hooks/useModalOpen';
+import useModal from '@/hooks/useModal';
 import theme from '@/styles/theme';
 
 type RouteParams = {

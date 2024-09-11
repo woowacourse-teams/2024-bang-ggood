@@ -9,7 +9,7 @@ import LogoutModal from '@/components/MyPage/LogoutModal';
 import SKMyPage from '@/components/skeleton/MyPage/SKMyPage';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useUserQuery from '@/hooks/query/useUserQuery';
-import useModal from '@/hooks/useModalOpen';
+import useModal from '@/hooks/useModal';
 import { boxShadow, boxShadowSpread, flexCenter, flexColumn, title2 } from '@/styles/common';
 import theme from '@/styles/theme';
 

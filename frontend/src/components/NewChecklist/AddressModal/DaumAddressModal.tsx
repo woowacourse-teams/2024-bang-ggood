@@ -5,7 +5,7 @@ import { useStore } from 'zustand';
 import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
 import loadPostcode from '@/components/NewChecklist/AddressModal/loadPostcode';
-import useModal from '@/hooks/useModalOpen';
+import useModal from '@/hooks/useModal';
 import checklistAddressStore from '@/store/checklistAddressStore';
 import { Address, Postcode, PostcodeOptions } from '@/types/address';
 

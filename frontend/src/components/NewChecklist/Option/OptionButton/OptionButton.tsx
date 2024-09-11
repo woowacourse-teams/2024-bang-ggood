@@ -11,6 +11,10 @@ const OptionButton = ({ option }: { option: OptionWithIcon }) => {
   useSelectedOptionStore(); // 옵션 변경시 리렌더를 위해 불가피하게 전체구독
   const selectedOptionActions = useSelectedOptionStore(state => state.actions); //isSelectedOption, addOption,
 
+  const handleClick = selectedOptionActions.isSelectedOption(id)
+    ? () => selectedOptionActions.remove(id)
+    : () => selectedOptionActions.add(id);
+
   if (!option) {
     return null;
   }
@@ -27,15 +31,7 @@ const OptionButton = ({ option }: { option: OptionWithIcon }) => {
   const currentColor = selectedOptionActions.isSelectedOption(id) ? BUTTON_COLOR.selected : BUTTON_COLOR.unSelected;
 
   return (
-    <S.Box
-      color={currentColor.fill}
-      borderColor={currentColor.border}
-      onClick={
-        selectedOptionActions.isSelectedOption(id)
-          ? () => selectedOptionActions.remove(id)
-          : () => selectedOptionActions.add(id)
-      }
-    >
+    <S.Box color={currentColor.fill} borderColor={currentColor.border} onClick={handleClick}>
       <S.IconBox>{selectedOptionActions.isSelectedOption(id) ? <FilledIcon /> : <UnFilledIcon />}</S.IconBox>
       <S.TextBox color={currentColor.text}>{displayName}</S.TextBox>
     </S.Box>

@@ -27,6 +27,7 @@ public class QuestionManageService {
         this.checklistQuestionService = checklistQuestionService;
     }
 
+    @Transactional(readOnly = true)
     public CustomChecklistQuestionsResponse readCustomChecklistQuestions(User user) {
         List<CustomChecklistQuestion> customChecklistQuestions = checklistQuestionService.readCustomChecklistQuestions(user);
         List<CategoryQuestionsResponse> categoryQuestionsResponses = categorizeCustomChecklistQuestions(customChecklistQuestions);
@@ -47,6 +48,7 @@ public class QuestionManageService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public CategoryCustomChecklistQuestionsResponse readAllCustomChecklistQuestions(User user) {
         List<CustomChecklistQuestion> customChecklistQuestions = checklistQuestionService.readCustomChecklistQuestions(user);
         return categorizeAllQuestionsWithSelected(customChecklistQuestions);
@@ -62,12 +64,13 @@ public class QuestionManageService {
                     .map(question -> new CustomChecklistQuestionResponse(question,
                             question.isSelected(customChecklistQuestions)))
                     .toList();
-            response.add(new CategoryCustomChecklistQuestionResponse(category.getId(), category.getName(), questions));
+            response.add(CategoryCustomChecklistQuestionResponse.of(category, questions));
         }
 
-        return new CategoryCustomChecklistQuestionsResponse(response);
+        return CategoryCustomChecklistQuestionsResponse.from(response);
     }
 
+    @Transactional
     public void updateCustomChecklist(User user, CustomChecklistUpdateRequest request) {
         List<Question> questions = request.questionIds().stream()
                 .map(Question::fromId)

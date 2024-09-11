@@ -1,6 +1,5 @@
 package com.bang_ggood.question.service;
 
-import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.question.domain.ChecklistQuestion;

@@ -18,10 +18,6 @@ const useMutateChecklist = (mutateType: MutateType, checklistId?: number) => {
   // 방 기본 정보
   const { value: roomInfoAnswer, actions } = useStore(checklistRoomInfoStore);
   const includedMaintenances = useStore(checklistIncludedMaintenancesStore);
-  // const { address, buildingName } = useStore(checklistAddressStore, ({ address, buildingName }) => ({
-  //   address,
-  //   buildingName,
-  // }));
 
   // 선택된 옵션
   const selectedOptions = useOptionStore(state => state.selectedOptions);

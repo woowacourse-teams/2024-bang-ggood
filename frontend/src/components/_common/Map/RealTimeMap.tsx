@@ -17,7 +17,6 @@ const RealTimeMap = ({ setPosition, position }: { position: Position; setPositio
   const markerRef = useRef<any | null>(null);
   const infoWindowRef = useRef<any | null>(null);
 
-  // const { setAddress, setBuildingName } = useStore(checklistAddressStore);
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
 
   const [isRealTimeLocationLoading, setIsRealTimeLocationLoading] = useState(true);

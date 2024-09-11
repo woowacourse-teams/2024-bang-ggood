@@ -12,7 +12,11 @@ const Address = () => {
   return (
     <FormField>
       <FormField.Label label="주소" />
-      {address && <FormField.Input name="address" value={`${address} ${buildingName}`} />}
+      {address ? (
+        <FormField.Input name="address" value={`${address} ${buildingName}`} />
+      ) : (
+        <FormField.TextBox text={'주소를 추가해 주세요.'} />
+      )}
       <FlexBox.Horizontal>
         {/*실시간 위치 모달*/}
         <RealTimeAddressModal />

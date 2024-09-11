@@ -9,7 +9,7 @@ import Tabs from '@/components/_common/Tabs/Tabs';
 import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
 import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
-import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
+import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useHandleTipBox from '@/hooks/useHandleTipBox';
@@ -26,6 +26,7 @@ const NewChecklistPage = () => {
 
   const { tabs } = useNewChecklistTabs();
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
+  // TODO: action 분리 필요
   const resetChecklist = useChecklistStore(state => state.reset);
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);
   const { resetShowTipBox } = useHandleTipBox('OPTION'); // TODO: 상수화 처리
@@ -34,9 +35,9 @@ const NewChecklistPage = () => {
   const { isModalOpen: isMemoModalOpen, openModal: openMemoModal, closeModal: closeMemoModal } = useModal();
 
   // 한줄평 모달
-  const { isModalOpen: isSummaryModalOpen, openModal: openSummaryModal, closeModal: closeSummaryModal } = useModal();
+  const { isModalOpen: isSubmitModalOpen, openModal: openSummaryModal, closeModal: closeSummaryModal } = useModal();
 
-  //뒤로가기시 휘발 경고 모달
+  // 뒤로가기시 휘발 경고 모달
   const { isModalOpen: isAlertModalOpen, openModal: openAlertModal, closeModal: closeAlertModal } = useModal();
 
   const resetAndGoHome = () => {
@@ -65,9 +66,9 @@ const NewChecklistPage = () => {
         <MemoButton onClick={openMemoModal} />
       )}
 
-      {isSummaryModalOpen && (
-        <SummaryModal
-          isModalOpen={isSummaryModalOpen}
+      {isSubmitModalOpen && (
+        <SubmitModalWithSummary
+          isModalOpen={isSubmitModalOpen}
           onConfirm={resetAndGoHome}
           modalClose={closeSummaryModal}
           mutateType="add"

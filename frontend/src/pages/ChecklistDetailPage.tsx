@@ -21,7 +21,7 @@ type RouteParams = {
 
 const ChecklistDetailPage = () => {
   const navigate = useNavigate();
-  const { isModalOpen, openModal: modalOpen, closeModal: modalClose } = useModal();
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   const { checklistId } = useParams() as RouteParams;
   const { data: checklist, isLoading, isError } = useGetChecklistDetailQuery(checklistId);
@@ -36,7 +36,7 @@ const ChecklistDetailPage = () => {
   const handleDelete = async () => {
     deleteChecklist(Number(checklistId), {
       onSuccess: () => {
-        modalClose();
+        closeModal();
         navigate(ROUTE_PATH.checklistList);
       },
     });
@@ -53,7 +53,7 @@ const ChecklistDetailPage = () => {
         right={
           <FlexBox.Horizontal gap="1.5rem">
             <Header.TextButton onClick={handleEditButton}>편집</Header.TextButton>
-            <Header.TextButton onClick={modalOpen}>삭제</Header.TextButton>
+            <Header.TextButton onClick={openModal}>삭제</Header.TextButton>
           </FlexBox.Horizontal>
         }
       />
@@ -77,7 +77,7 @@ const ChecklistDetailPage = () => {
           }
           subtTitle="삭제한 체크리스트는 다시 확인할 수 없습니다."
           isOpen={isModalOpen}
-          onClose={modalClose}
+          onClose={closeModal}
           handleApprove={handleDelete}
         />
       )}

@@ -15,7 +15,7 @@ import theme from '@/styles/theme';
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const { isModalOpen, openModal: modalOpen, closeModal: modalClose } = useModal();
+  const { isModalOpen, openModal, closeModal } = useModal();
   const { data: user, isError, isLoading } = useUserQuery();
 
   if (isError) navigate(ROUTE_PATH.root);
@@ -35,10 +35,10 @@ const MyPage = () => {
               {`안녕하세요 ${user?.userName}님`}
             </S.Profile>
           </S.Container>
-          <S.Button label="로그아웃" size="small" color="dark" onClick={modalOpen}></S.Button>
+          <S.Button label="로그아웃" size="small" color="dark" onClick={openModal}></S.Button>
         </S.Inner>
       </Layout>
-      <LogoutModal isOpen={isModalOpen} onClose={modalClose} />
+      <LogoutModal isOpen={isModalOpen} onClose={closeModal} />
     </>
   );
 };

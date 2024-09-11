@@ -9,14 +9,14 @@ import useModal from '@/hooks/useModalOpen';
 import checklistAddressStore from '@/store/checklistAddressStore';
 
 const RealTimeAddressModal = () => {
-  const { isModalOpen, openModal: modalOpen, closeModal: modalClose } = useModal();
+  const { isModalOpen, openModal, closeModal } = useModal();
   const { address, buildingName } = useStore(checklistAddressStore);
 
   return (
     <>
-      <S.AddressButton onClick={modalOpen} label="실시간 주소" size="small" isSquare={true} color="light" />
+      <S.AddressButton onClick={openModal} label="실시간 주소" size="small" isSquare={true} color="light" />
       {isModalOpen && (
-        <Modal size="large" position="bottom" isOpen={isModalOpen} onClose={modalClose}>
+        <Modal size="large" position="bottom" isOpen={isModalOpen} onClose={closeModal}>
           <Modal.header>실시간 주소</Modal.header>
           <Modal.body>
             <div>지도를 클릭하면 현재 위치를 움직일 수 있어요.</div>
@@ -27,7 +27,7 @@ const RealTimeAddressModal = () => {
                 placeholder={'지도를 클릭하면 현재 위치를 움직일 수 있어요.'}
                 value={`${address} ${buildingName}`}
               />
-              <Button label="확인" size="xSmall" isSquare={true} onClick={modalClose} />
+              <Button label="확인" size="xSmall" isSquare={true} onClick={closeModal} />
             </S.InputBox>
             {/* 지도 */}
             <RealTimeMap />

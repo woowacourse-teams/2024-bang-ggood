@@ -58,7 +58,9 @@ const S = {
     border-radius: 0.8rem;
   `,
   Question: styled.div`
+    display: flex;
     width: 80%;
+    flex-flow: column wrap;
   `,
   Subtitle: styled.div`
     width: 100%;
@@ -75,6 +77,7 @@ const S = {
 
     ${flexSpaceBetween}
     align-items: center;
+    cursor: pointer;
   `,
   ButtonBox: styled.div`
     position: absolute;

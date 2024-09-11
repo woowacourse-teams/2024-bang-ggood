@@ -53,6 +53,7 @@ const S = {
   ShowMore: styled.div`
     color: ${({ theme }) => theme.palette.grey400};
     font-size: ${({ theme }) => theme.text.size.small};
+    cursor: pointer;
   `,
   CardList: styled.div`
     box-sizing: border-box;

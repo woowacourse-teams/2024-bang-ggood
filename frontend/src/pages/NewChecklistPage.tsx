@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useStore } from 'zustand';
 
-import AlertModal from '@/components/_common/AlertModal/AlertModal';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
+import AlertModal from '@/components/_common/Modal/AlertModal/AlertModal';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import Tabs from '@/components/_common/Tabs/Tabs';
 import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';

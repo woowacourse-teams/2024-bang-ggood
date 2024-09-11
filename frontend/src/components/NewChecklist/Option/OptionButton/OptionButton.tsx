@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import useSelectedOptionStore from '@/store/useOptionStore';
-import { flexCenter } from '@/styles/common';
+import { flexCenter, flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
 import { OptionWithIcon } from '@/types/option';
 
@@ -40,7 +40,6 @@ const OptionButton = ({ option }: { option: OptionWithIcon }) => {
 
 const S = {
   Box: styled.div<{ color: string; borderColor: string }>`
-    cursor: pointer;
     position: relative;
     width: 100%;
     padding-top: 100%;
@@ -51,7 +50,9 @@ const S = {
 
     font-size: 1.4rem;
     ${flexCenter}
-    flex-direction: column;
+    ${flexColumn}
+
+    cursor: pointer;
   `,
   IconBox: styled.div`
     position: absolute;
@@ -69,15 +70,15 @@ const S = {
     ${flexCenter}
 
     color: ${({ color }) => color};
-    font-weight: bold;
-    font-size: 1.4rem;
+    font-weight: ${({ theme }) => theme.text.weight.bold};
+    font-size: ${({ theme }) => theme.text.size.small};
 
     @media (width <= 34.4rem) {
-      font-size: 1.2rem;
+      font-size: ${({ theme }) => theme.text.size.xSmall};
     }
 
     @media (width >= 58rem) {
-      font-size: 1.2rem;
+      font-size: ${({ theme }) => theme.text.size.xSmall};
     }
   `,
 };

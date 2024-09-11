@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import AlertModal from '@/components/_common/AlertModal/AlertModal';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
+import AlertModal from '@/components/_common/Modal/AlertModal/AlertModal';
 import ChecklistAnswerSection from '@/components/ChecklistDetail/ChecklistAnswerSection';
 import MemoSection from '@/components/ChecklistDetail/MemoSection';
 import RoomInfoSection from '@/components/ChecklistDetail/RoomInfoSection';

@@ -27,7 +27,6 @@ const checklistIncludedMaintenancesStore = createStore<IncludedMaintenances & Ac
         get().actions.remove(id);
         return;
       }
-
       get().actions.add(id);
     },
     includes: id => get().value.includes(id),
@@ -39,4 +38,5 @@ const checklistIncludedMaintenancesStore = createStore<IncludedMaintenances & Ac
     remove: id => set({ value: get().value.filter(i => i !== id) }),
   },
 }));
+
 export default checklistIncludedMaintenancesStore;

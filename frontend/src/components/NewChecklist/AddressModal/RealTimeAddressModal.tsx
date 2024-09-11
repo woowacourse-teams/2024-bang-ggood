@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useEffect, useState } from 'react';
 import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
@@ -7,17 +8,33 @@ import RealTimeMap from '@/components/_common/Map/RealTimeMap';
 import Modal from '@/components/_common/Modal/Modal';
 import useFindNearSubway from '@/hooks/useFindNearSubway';
 import useModalOpen from '@/hooks/useModalOpen';
-import checklistAddressStore from '@/store/checklistAddressStore';
+import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import { Position } from '@/types/address';
 
 const RealTimeAddressModal = () => {
+  const DEFAULT_POSITION = { lat: 0, lon: 0 };
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
-  const { address, buildingName } = useStore(checklistAddressStore);
+
+  const [position, setPosition] = useState<Position>(DEFAULT_POSITION);
+  const { address, buildingName } = useStore(checklistRoomInfoStore, state => state.rawValue);
+  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
+
   const { findNearSubway } = useFindNearSubway();
 
-  const handleSubmitAddress = async () => {
-    modalClose();
-    await findNearSubway();
+  const handleSubmitAddress = () => {
+    if (position.lat && position.lon) {
+      findNearSubway(position);
+      modalClose();
+    }
   };
+
+  /* 모달 열릴 때 주소 정보 리셋 */
+  useEffect(() => {
+    if (isModalOpen) {
+      roomInfoActions.set('address', '');
+      roomInfoActions.set('buildingName', '');
+    }
+  }, [isModalOpen]);
 
   return (
     <>
@@ -34,10 +51,10 @@ const RealTimeAddressModal = () => {
                 placeholder={'지도를 클릭하면 현재 위치를 움직일 수 있어요.'}
                 value={`${address} ${buildingName}`}
               />
-              <Button label="확인" size="xSmall" isSquare={true} onClick={handleSubmitAddress} />
+              <Button label="확인" size="xSmall" isSquare={true} onClick={() => handleSubmitAddress()} />
             </S.InputBox>
             {/* 지도 */}
-            <RealTimeMap />
+            <RealTimeMap position={position} setPosition={setPosition} />
           </Modal.body>
         </Modal>
       )}

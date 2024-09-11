@@ -7,7 +7,7 @@ import { OptionWithIcon } from '@/types/option';
 
 const OptionButton = ({ option }: { option: OptionWithIcon }) => {
   const { FilledIcon, UnFilledIcon, displayName, id } = option;
-  const { addOption, removeOption, isSelectedOption } = useOptionStore(); //isSelectedOption, addOption,
+  const { addOption, removeOption, isSelectedOption } = useOptionStore(state => state); //isSelectedOption, addOption,
 
   if (!option) {
     return null;

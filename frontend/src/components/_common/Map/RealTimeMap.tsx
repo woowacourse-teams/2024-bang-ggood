@@ -3,19 +3,22 @@ import { useEffect, useRef, useState } from 'react';
 import { useStore } from 'zustand';
 
 import { LoadingSpinner } from '@/components/_common/LoadingSpinner/LoadingSpinner';
-import checklistAddressStore from '@/store/checklistAddressStore';
+import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+// import checklistAddressStore from '@/store/checklistAddressStore';
 import { flexCenter } from '@/styles/common';
+import { Position } from '@/types/address';
 import makeMap from '@/utils/makeMap';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const { kakao } = window as any;
 
-const RealTimeMap = () => {
+const RealTimeMap = ({ setPosition, position }: { position: Position; setPosition: any }) => {
   const mapRef = useRef<any | null>(null);
   const markerRef = useRef<any | null>(null);
   const infoWindowRef = useRef<any | null>(null);
 
-  const { setAddress, setBuildingName, setPosition, position } = useStore(checklistAddressStore);
+  // const { setAddress, setBuildingName } = useStore(checklistAddressStore);
+  const actions = useStore(checklistRoomInfoStore, state => state.actions);
 
   const [isRealTimeLocationLoading, setIsRealTimeLocationLoading] = useState(true);
   const mapUtils = makeMap();
@@ -53,6 +56,7 @@ const RealTimeMap = () => {
     const locPosition = new kakao.maps.LatLng(lat, lon);
     const message = `<span id="info-title">이 위치가 맞나요?</span>`;
 
+    setPosition({ lat, lon });
     displayMarker(locPosition, message);
     searchDetailAddrFromCoords(mapRef.current.getCenter());
     setIsRealTimeLocationLoading(false);
@@ -100,21 +104,25 @@ const RealTimeMap = () => {
       if (status === kakao.maps.services.Status.OK) {
         /*1순위 : 도로명 주소 */
         if (result[0].road_address) {
-          setAddress(result[0].road_address.address_name);
+          actions.set('address', result[0].road_address.address_name);
           if (result[0].road_address?.building_name) {
-            setBuildingName(result[0]?.road_address?.building_name);
+            actions.set('buildingName', result[0].road_address.building_name);
+            // setBuildingName(result[0]?.road_address?.building_name);
           } else {
-            setBuildingName('');
+            actions.set('buildingName', '');
+            // setBuildingName('');
           }
           return;
         }
         /*2순위 : 지번 주소 */
         if (result[0].address.address_name) {
-          setAddress(result[0].address.address_name);
+          actions.set('address', result[0].address.address_name);
+
           if (result[0].road_address?.building_name) {
-            setBuildingName(result[0].road_address.building_name);
+            actions.set('buildingName', result[0].road_address.building_name);
+            //setBuildingName(result[0].road_address.building_name);
           } else {
-            setBuildingName('');
+            actions.set('buildingName', '');
           }
         }
       }

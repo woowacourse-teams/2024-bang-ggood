@@ -7,7 +7,8 @@ import Modal from '@/components/_common/Modal/Modal';
 import loadPostcode from '@/components/NewChecklist/AddressModal/loadPostcode';
 import useFindNearSubway from '@/hooks/useFindNearSubway';
 import useModalOpen from '@/hooks/useModalOpen';
-import checklistAddressStore from '@/store/checklistAddressStore';
+import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+// import checklistAddressStore from '@/store/checklistAddressStore';
 import { Address, Postcode, PostcodeOptions } from '@/types/address';
 
 declare global {
@@ -26,7 +27,8 @@ const scriptUrl = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js
 const DaumAddressModal = () => {
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
   const postcodeContainerRef = useRef<HTMLDivElement | null>(null);
-  const { setAddress, setBuildingName, setPosition } = useStore(checklistAddressStore);
+  const actions = useStore(checklistRoomInfoStore, state => state.actions);
+
   const { findNearSubway } = useFindNearSubway();
 
   useEffect(() => {
@@ -42,21 +44,18 @@ const DaumAddressModal = () => {
         width: '100%',
         height: '60rem',
         oncomplete: async (data: Address) => {
-          setAddress(data.address);
-          setBuildingName(data.buildingName);
+          actions.set('address', data.address);
+          actions.set('buildingName', data.buildingName);
 
           const geocoder = new kakao.maps.services.Geocoder();
 
           geocoder.addressSearch(data.address, function (result: any, status: any) {
             // 정상적으로 검색이 완료됐으면
             if (status === kakao.maps.services.Status.OK) {
-              setPosition({ lat: result[0].y, lon: result[0].x });
+              findNearSubway({ lat: result[0].y, lon: result[0].x });
             }
           });
-
           modalClose();
-
-          await findNearSubway();
         },
       }).embed(postcodeContainerRef.current, { q: '' });
     } else {

@@ -12,7 +12,6 @@ import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
-import useChecklistPost from '@/hooks/useChecklistPost';
 import useChecklistTemplate from '@/hooks/useInitialChecklist';
 import useModalOpen from '@/hooks/useModalOpen';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
@@ -34,16 +33,15 @@ const NewChecklistPage = () => {
     modalClose: summaryModalClose,
   } = useModalOpen();
 
-  // 체크리스트 POST
-  const { handleSubmitChecklist } = useChecklistPost(summaryModalClose);
-
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
+  // const addressActions = useStore(checklistAddressStore);
 
   //뒤로가기 내용 삭제 경고 모달
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
 
   const handleNavigateBack = () => {
     actions.resetAll();
+    // addressActions.reset();
     navigate(ROUTE_PATH.checklistList);
   };
 
@@ -81,11 +79,7 @@ const NewChecklistPage = () => {
       )}
 
       {isSummaryModalOpen && (
-        <SummaryModal
-          isModalOpen={isSummaryModalOpen}
-          modalClose={summaryModalClose}
-          submitChecklist={handleSubmitChecklist}
-        />
+        <SummaryModal isModalOpen={isSummaryModalOpen} modalClose={summaryModalClose} mutateType="add" />
       )}
     </>
   );

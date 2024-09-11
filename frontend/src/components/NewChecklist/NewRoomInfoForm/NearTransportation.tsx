@@ -6,42 +6,25 @@ import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
 const NearTransportation = () => {
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
   const station = useStore(checklistRoomInfoStore, state => state.rawValue.station);
   const walkingTime = useStore(checklistRoomInfoStore, state => state.rawValue.walkingTime);
   const errorMessageStation = useStore(checklistRoomInfoStore, state => state.errorMessage.station);
   const errorMessageWalkingTime = useStore(checklistRoomInfoStore, state => state.errorMessage.walkingTime);
 
-  // const position = useStore(checklistAddressStore, state => state.position);
-
-  // // const findNearSubway = async () => {
-  // //   const newSubway = await getNearSubway(position);
-  // //   actions.set('station', newSubway.stationName);
-  // //   actions.set('walkingTime', newSubway.walkingTime);
-  // // };
-
-  // // useEffect(() => {
-  // //   if (position) {
-  // //     findNearSubway();
-  // //   }
-  // // }, [position]);
-
   return (
     <FlexBox.Vertical gap="1.5rem">
       <FormField.Label label="가까운 교통편" />
-      <FormStyled.FieldBox>
-        <FormField.Input width="medium" onChange={actions.onChange} name="station" value={station} />
-        <FormStyled.FlexLabel label=" 역까지 도보" />
-        <FormField.Input
-          width="small"
-          placeholder=""
-          onChange={actions.onChange}
-          name="walkingTime"
-          value={walkingTime}
-        />
-        <FormStyled.FlexLabel label=" 분" />
-      </FormStyled.FieldBox>
-      {/* <Button label="자동" isSquare={true} size="xSmall" onClick={findNearSubway} /> */}
+      {station ? (
+        <>
+          <FormStyled.FieldBox>
+            <span>{station}</span>역까지 도보
+            <span>{walkingTime}</span>분
+          </FormStyled.FieldBox>
+        </>
+      ) : (
+        <span>보신 방과 가장 가까운 지하철역을 찾아드릴게요!</span>
+      )}
+
       <FormField.ErrorMessage value={errorMessageStation || errorMessageWalkingTime || ''} />
     </FlexBox.Vertical>
   );

@@ -62,7 +62,7 @@ const validatorSet: Record<string, Validator[]> = {
   includedMaintenances: [],
   contractTerm: [isNumericValidator, nonNegativeValidator],
   station: [],
-  walkingTime: [isIntegerValidator],
+  walkingTime: [],
   type: [],
   size: [isNumericValidator],
   floor: [isIntegerValidator, positiveValidator],

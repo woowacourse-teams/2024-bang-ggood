@@ -18,7 +18,7 @@ import useModal from '@/hooks/useModalOpen';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
-import useOptionStore from '@/store/useOptionStore';
+import useSelectedOptionStore from '@/store/useOptionStore';
 
 const NewChecklistPage = () => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const NewChecklistPage = () => {
   const { tabs } = useNewChecklistTabs();
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
   const resetChecklist = useChecklistStore(state => state.reset);
-  const resetOption = useOptionStore(state => state.reset);
+  const selectedOptionActions = useSelectedOptionStore(state => state.actions);
   const { resetShowTipBox } = useHandleTipBox('OPTION'); // TODO: 상수화 처리
 
   // 메모 모달
@@ -42,7 +42,7 @@ const NewChecklistPage = () => {
   const resetAndGoHome = () => {
     roomInfoActions.resetAll();
     resetChecklist();
-    resetOption();
+    selectedOptionActions.reset();
     resetShowTipBox(); // 옵션의 팁박스 다시표시
     navigate(ROUTE_PATH.checklistList);
   };

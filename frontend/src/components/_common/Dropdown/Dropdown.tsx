@@ -54,12 +54,12 @@ const S = {
     position: relative;
   `,
   DropDownHeader: styled.div`
-    cursor: pointer;
     width: 12.5rem;
     height: 100%;
   `,
   SelectedOption: styled.label`
     ${flexSpaceBetween}
+    cursor:pointer;
     position: relative;
     width: 100%;
     height: 100%;

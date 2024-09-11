@@ -1,64 +1,77 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 import { DEFAULT_OPTIONS, OPTION_COUNT, OPTIONS } from '@/constants/options';
 
-interface OptionState {
-  selectedOptions: number[];
-  addOption: (option: number) => void;
-  removeOption: (option: number) => void;
+interface OptionAction {
+  add: (option: number) => void;
+  remove: (option: number) => void;
+  set: (options: number[]) => void;
+  reset: () => void;
   isSelectedOption: (optionId: number) => boolean;
-  setSelectedOptions: (options: number[]) => void;
   isAllSelected: () => boolean;
   addAllOptions: () => void;
-  removeAllOptions: () => void;
-  resetToDefaultOptions: () => void;
+  removeAll: () => void;
   getSelectedOptionsName: () => (string | undefined)[];
 }
+interface OptionState {
+  selectedOptions: number[];
+}
 
-const useOptionStore = create<OptionState>((set, get) => ({
-  selectedOptions: DEFAULT_OPTIONS,
+const useSelectedOptionStore = create<OptionState & { actions: OptionAction }>()(
+  persist(
+    (set, get) => ({
+      selectedOptions: DEFAULT_OPTIONS,
 
-  getSelectedOptionsName: () => {
-    const state = get();
-    const optionsNames = state.selectedOptions.map(optionId => {
-      const target = OPTIONS.find(option => option.id === optionId);
-      return target?.displayName;
-    });
-    return optionsNames;
-  },
+      actions: {
+        set: (options: number[]) => set({ selectedOptions: options }),
+        reset: () => {
+          set({ selectedOptions: DEFAULT_OPTIONS });
+        },
+        add: option =>
+          set(state => ({
+            selectedOptions: [...state.selectedOptions, option],
+          })),
 
-  resetToDefaultOptions: () => {
-    set({ selectedOptions: DEFAULT_OPTIONS });
-  },
+        isSelectedOption: optionId => get().selectedOptions.includes(optionId),
 
-  setSelectedOptions: (options: number[]) => set({ selectedOptions: options }),
+        remove: option =>
+          set(state => ({
+            selectedOptions: state.selectedOptions.filter(o => o !== option),
+          })),
 
-  isSelectedOption: optionId => get().selectedOptions.includes(optionId),
+        getSelectedOptionsName: () => {
+          const state = get();
+          const optionsNames = state.selectedOptions.map(optionId => {
+            const target = OPTIONS.find(option => option.id === optionId);
+            return target?.displayName;
+          });
+          return optionsNames;
+        },
 
-  addOption: option =>
-    set(state => ({
-      selectedOptions: [...state.selectedOptions, option],
-    })),
+        removeAll: () => {
+          set({ selectedOptions: [] });
+        },
 
-  removeOption: option =>
-    set(state => ({
-      selectedOptions: state.selectedOptions.filter(o => o !== option),
-    })),
+        isAllSelected: () => {
+          const state = get();
+          return state.selectedOptions.length === OPTION_COUNT;
+        },
+        addAllOptions: () => {
+          set(() => ({
+            selectedOptions: Array.from({ length: OPTION_COUNT }, (_, i) => i + 1),
+          }));
+        },
+      },
+    }),
+    {
+      name: 'checklist-answer-option',
+      partialize: state => ({
+        selectedOptions: state.selectedOptions,
+        // actions는 저장하지 않음
+      }),
+    },
+  ),
+);
 
-  addAllOptions: () => {
-    set(() => ({
-      selectedOptions: Array.from({ length: OPTION_COUNT }, (_, i) => i + 1),
-    }));
-  },
-
-  removeAllOptions: () => {
-    set({ selectedOptions: [] });
-  },
-
-  isAllSelected: () => {
-    const state = get();
-    return state.selectedOptions.length === OPTION_COUNT;
-  },
-}));
-
-export default useOptionStore;
+export default useSelectedOptionStore;

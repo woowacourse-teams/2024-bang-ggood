@@ -12,6 +12,7 @@ import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.QuestionResponse;
 import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -27,6 +28,7 @@ public class QuestionManageService {
         this.checklistQuestionService = checklistQuestionService;
     }
 
+    @Transactional(readOnly = true)
     public CustomChecklistQuestionsResponse readCustomChecklistQuestions(User user) {
         List<CustomChecklistQuestion> customChecklistQuestions = checklistQuestionService.readCustomChecklistQuestions(user);
         List<CategoryQuestionsResponse> categoryQuestionsResponses = categorizeCustomChecklistQuestions(customChecklistQuestions);
@@ -47,6 +49,7 @@ public class QuestionManageService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public CategoryCustomChecklistQuestionsResponse readAllCustomChecklistQuestions(User user) {
         List<CustomChecklistQuestion> customChecklistQuestions = checklistQuestionService.readCustomChecklistQuestions(user);
         return categorizeAllQuestionsWithSelected(customChecklistQuestions);
@@ -68,6 +71,7 @@ public class QuestionManageService {
         return new CategoryCustomChecklistQuestionsResponse(response);
     }
 
+    @Transactional
     public void updateCustomChecklist(User user, CustomChecklistUpdateRequest request) {
         List<Question> questions = request.questionIds().stream()
                 .map(Question::fromId)

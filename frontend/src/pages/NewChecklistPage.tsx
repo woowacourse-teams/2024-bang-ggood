@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useStore } from 'zustand';
 
-import AlertModal from '@/components/_common/AlertModal/AlertModal';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
+import AlertModal from '@/components/_common/Modal/AlertModal/AlertModal';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import Tabs from '@/components/_common/Tabs/Tabs';
 import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
@@ -35,7 +35,7 @@ const NewChecklistPage = () => {
 
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
 
-  //뒤로가기 내용 삭제 경고 모달
+  // 뒤로가기 내용 삭제 경고 모달
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
 
   const handleNavigateBack = () => {
@@ -45,21 +45,6 @@ const NewChecklistPage = () => {
 
   return (
     <>
-      {isModalOpen && (
-        <AlertModal
-          title={
-            <div>
-              나가면 작성하던 내용이 다 지워집니다.
-              <br />
-              괜찮으신가요?
-            </div>
-          }
-          isOpen={isModalOpen}
-          onClose={modalClose}
-          handleApprove={handleNavigateBack}
-          approveButtonName="나가기"
-        />
-      )}
       <Header
         left={<Header.Backward onClick={modalOpen} />}
         center={<Header.Text>새 체크리스트</Header.Text>}
@@ -78,6 +63,22 @@ const NewChecklistPage = () => {
 
       {isSummaryModalOpen && (
         <SummaryModal isModalOpen={isSummaryModalOpen} modalClose={summaryModalClose} mutateType="add" />
+      )}
+
+      {isModalOpen && (
+        <AlertModal
+          title={
+            <div>
+              나가면 작성하던 내용이 다 지워집니다.
+              <br />
+              괜찮으신가요?
+            </div>
+          }
+          isOpen={isModalOpen}
+          onClose={modalClose}
+          handleApprove={handleNavigateBack}
+          approveButtonName="나가기"
+        />
       )}
     </>
   );

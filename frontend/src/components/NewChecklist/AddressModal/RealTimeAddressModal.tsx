@@ -8,14 +8,14 @@ import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import RealTimeMap from '@/components/_common/Map/RealTimeMap';
 import Modal from '@/components/_common/Modal/Modal';
 import useFindNearSubway from '@/hooks/useFindNearSubway';
-import useModalOpen from '@/hooks/useModalOpen';
+import useModal from '@/hooks/useModal';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { title4 } from '@/styles/common';
 import { Position } from '@/types/address';
 
 const RealTimeAddressModal = () => {
   const DEFAULT_POSITION = { lat: 0, lon: 0 };
-  const { isModalOpen, modalOpen, modalClose } = useModalOpen();
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   const [position, setPosition] = useState<Position>(DEFAULT_POSITION);
   const { address, buildingName } = useStore(checklistRoomInfoStore, state => state.rawValue);
@@ -26,7 +26,7 @@ const RealTimeAddressModal = () => {
   const handleSubmitAddress = () => {
     if (position.lat && position.lon) {
       findNearSubway(position);
-      modalClose();
+      closeModal();
     }
   };
 
@@ -40,9 +40,9 @@ const RealTimeAddressModal = () => {
 
   return (
     <>
-      <S.AddressButton onClick={modalOpen} label="실시간 주소" size="small" isSquare={true} color="light" />
+      <S.AddressButton onClick={openModal} label="실시간 주소" size="small" isSquare={true} color="light" />
       {isModalOpen && (
-        <Modal size="large" position="bottom" isOpen={isModalOpen} onClose={modalClose}>
+        <Modal size="large" position="bottom" isOpen={isModalOpen} onClose={closeModal}>
           <Modal.header>실시간 주소</Modal.header>
           <Modal.body>
             <div>

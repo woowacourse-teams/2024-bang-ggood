@@ -6,9 +6,8 @@ import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
 import loadPostcode from '@/components/NewChecklist/AddressModal/loadPostcode';
 import useFindNearSubway from '@/hooks/useFindNearSubway';
-import useModalOpen from '@/hooks/useModalOpen';
+import useModal from '@/hooks/useModal';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
-// import checklistAddressStore from '@/store/checklistAddressStore';
 import { Address, Postcode, PostcodeOptions } from '@/types/address';
 
 declare global {
@@ -25,7 +24,7 @@ const { kakao } = window as any;
 const scriptUrl = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
 
 const DaumAddressModal = () => {
-  const { isModalOpen, modalOpen, modalClose } = useModalOpen();
+  const { isModalOpen, openModal, closeModal } = useModal();
   const postcodeContainerRef = useRef<HTMLDivElement | null>(null);
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
 
@@ -38,7 +37,7 @@ const DaumAddressModal = () => {
   }, []);
 
   const openPostcodeEmbed = useCallback(() => {
-    modalOpen();
+    openModal();
     if (window.daum?.Postcode && postcodeContainerRef.current) {
       new window.daum.Postcode({
         width: '100%',
@@ -55,7 +54,7 @@ const DaumAddressModal = () => {
               findNearSubway({ lat: result[0].y, lon: result[0].x });
             }
           });
-          modalClose();
+          closeModal();
         },
       }).embed(postcodeContainerRef.current, { q: '' });
     } else {
@@ -66,7 +65,7 @@ const DaumAddressModal = () => {
   return (
     <>
       <S.AddressButton size="xSmall" color="dark" label="주소 검색" isSquare={true} onClick={openPostcodeEmbed} />
-      <Modal position="bottom" isOpen={isModalOpen} onClose={modalClose}>
+      <Modal position="bottom" isOpen={isModalOpen} onClose={closeModal}>
         <Modal.header>주소 검색</Modal.header>
         <Modal.body>
           <S.EmptyBox />

@@ -24,7 +24,14 @@ const RoomFloor = () => {
             actions.set('floorLevel', level);
           }}
         />
-        <Input width="medium" placeholder="" name="floor" value={floor} onChange={actions.onChange} />
+        <Input
+          width="medium"
+          disabled={floorLevel === '반지하/지하'}
+          placeholder=""
+          name="floor"
+          value={floor}
+          onChange={actions.onChange}
+        />
         <FormStyled.FlexLabel label="층"></FormStyled.FlexLabel>
       </FormStyled.FieldBox>
       <FormField.ErrorMessage value={errorMessageFloor ?? ''} />

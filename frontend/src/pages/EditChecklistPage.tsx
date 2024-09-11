@@ -9,7 +9,7 @@ import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
-import useModalOpen from '@/hooks/useModalOpen';
+import useModal from '@/hooks/useModal';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 
 type RouteParams = {
@@ -21,14 +21,10 @@ const EditChecklistPage = () => {
   const { tabs } = useNewChecklistTabs();
 
   // 한줄평 모달
-  const {
-    isModalOpen: isSummaryModalOpen,
-    modalOpen: summaryModalOpen,
-    modalClose: summaryModalClose,
-  } = useModalOpen();
+  const { isModalOpen: isSummaryModalOpen, openModal: summaryModalOpen, closeModal: summaryModalClose } = useModal();
 
   // 메모 모달
-  const { isModalOpen: isMemoModalOpen, modalOpen: memoModalOpen, modalClose: memoModalClose } = useModalOpen();
+  const { isModalOpen: isMemoModalOpen, openModal: memoModalOpen, closeModal: memoModalClose } = useModal();
 
   return (
     <>

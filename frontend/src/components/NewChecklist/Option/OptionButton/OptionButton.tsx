@@ -1,13 +1,19 @@
 import styled from '@emotion/styled';
 
-import useOptionStore from '@/store/useOptionStore';
-import { flexCenter } from '@/styles/common';
+import useSelectedOptionStore from '@/store/useOptionStore';
+import { flexCenter, flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
 import { OptionWithIcon } from '@/types/option';
 
 const OptionButton = ({ option }: { option: OptionWithIcon }) => {
   const { FilledIcon, UnFilledIcon, displayName, id } = option;
-  const { addOption, removeOption, isSelectedOption } = useOptionStore(state => state); //isSelectedOption, addOption,
+
+  useSelectedOptionStore(); // 옵션 변경시 리렌더를 위해 불가피하게 전체구독
+  const selectedOptionActions = useSelectedOptionStore(state => state.actions); //isSelectedOption, addOption,
+
+  const handleClick = selectedOptionActions.isSelectedOption(id)
+    ? () => selectedOptionActions.remove(id)
+    : () => selectedOptionActions.add(id);
 
   if (!option) {
     return null;
@@ -22,15 +28,11 @@ const OptionButton = ({ option }: { option: OptionWithIcon }) => {
     selected: { border: theme.palette.yellow600, fill: theme.palette.yellow100, text: theme.palette.yellow700 },
   };
 
-  const currentColor = isSelectedOption(id) ? BUTTON_COLOR.selected : BUTTON_COLOR.unSelected;
+  const currentColor = selectedOptionActions.isSelectedOption(id) ? BUTTON_COLOR.selected : BUTTON_COLOR.unSelected;
 
   return (
-    <S.Box
-      color={currentColor.fill}
-      borderColor={currentColor.border}
-      onClick={isSelectedOption(id) ? () => removeOption(id) : () => addOption(id)}
-    >
-      <S.IconBox>{isSelectedOption(id) ? <FilledIcon /> : <UnFilledIcon />}</S.IconBox>
+    <S.Box color={currentColor.fill} borderColor={currentColor.border} onClick={handleClick}>
+      <S.IconBox>{selectedOptionActions.isSelectedOption(id) ? <FilledIcon /> : <UnFilledIcon />}</S.IconBox>
       <S.TextBox color={currentColor.text}>{displayName}</S.TextBox>
     </S.Box>
   );
@@ -48,7 +50,9 @@ const S = {
 
     font-size: 1.4rem;
     ${flexCenter}
-    flex-direction: column;
+    ${flexColumn}
+
+    cursor: pointer;
   `,
   IconBox: styled.div`
     position: absolute;
@@ -66,15 +70,15 @@ const S = {
     ${flexCenter}
 
     color: ${({ color }) => color};
-    font-weight: bold;
-    font-size: 1.4rem;
+    font-weight: ${({ theme }) => theme.text.weight.bold};
+    font-size: ${({ theme }) => theme.text.size.small};
 
     @media (width <= 34.4rem) {
-      font-size: 1.2rem;
+      font-size: ${({ theme }) => theme.text.size.xSmall};
     }
 
     @media (width >= 58rem) {
-      font-size: 1.2rem;
+      font-size: ${({ theme }) => theme.text.size.xSmall};
     }
   `,
 };

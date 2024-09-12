@@ -58,7 +58,13 @@ const RealTimeAddressModal = () => {
             {/* 지도 */}
             <RealTimeMap position={position} setPosition={setPosition} />
             <S.ButtonBox>
-              <Button label="이 위치로 설정할게요." size="full" isSquare={true} onClick={() => handleSubmitAddress()} />
+              <Button
+                label="이 위치로 설정할게요."
+                size="full"
+                isSquare={true}
+                onClick={() => handleSubmitAddress()}
+                disabled={!address}
+              />
             </S.ButtonBox>
           </Modal.body>
         </Modal>

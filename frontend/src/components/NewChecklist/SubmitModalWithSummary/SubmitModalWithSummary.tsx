@@ -20,7 +20,6 @@ interface Props {
 }
 
 const SubmitModalWithSummary = ({ isModalOpen, modalClose, onConfirm = () => {}, mutateType, checklistId }: Props) => {
-  // const navigate = useNavigate();
   const { rawValue: roomInfo, actions } = useStore(checklistRoomInfoStore);
 
   // 체크리스트 작성 / 수정
@@ -30,12 +29,6 @@ const SubmitModalWithSummary = ({ isModalOpen, modalClose, onConfirm = () => {},
     handleSubmitChecklist();
     onConfirm();
     modalClose();
-
-    // if (mutateType === 'edit' && checklistId !== undefined) {
-    //   navigate(ROUTE_PATH.checklistOne(checklistId));
-
-    //   return;
-    // }
   };
 
   return (

@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom/client';
 import App from '@/App';
 
 async function enableMocking() {
-  if (process.env.DEV_MODE !== 'on') {
+  if (process.env.API_ENV !== 'msw') {
     return;
   }
   const { worker } = await import('./mocks/browser');

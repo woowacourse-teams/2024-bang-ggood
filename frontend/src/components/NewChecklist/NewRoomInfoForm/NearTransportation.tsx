@@ -17,7 +17,7 @@ const NearTransportation = () => {
       {station ? (
         <FormStyled.FieldBox>{`${station}역까지 도보 ${walkingTime}분`}</FormStyled.FieldBox>
       ) : (
-        <FormField.TextBox text={'보신 방과 가장 가까운 지하철역을 찾아드릴게요.'} />
+        <FormField.TextBox text={'보신 방과 가까운 지하철역을 찾아드릴게요.'} />
       )}
 
       <FormField.ErrorMessage value={errorMessageStation || errorMessageWalkingTime || ''} />

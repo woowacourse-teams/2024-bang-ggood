@@ -4,7 +4,7 @@
   "main": "index.tsx",
   "license": "MIT",
   "scripts": {
-    "build": "webpack --mode=production --node-env=production",
+    "build": "cross-env NODE_ENV=production API_ENV=production webpack --mode=production",
     "prod": "cross-env NODE_ENV=production API_ENV=production webpack serve --mode=production --open",
     "dev": "cross-env NODE_ENV=development API_ENV=development webpack serve --mode=development --open",
     "msw": "cross-env NODE_ENV=development API_ENV=msw webpack serve --mode=development --open",

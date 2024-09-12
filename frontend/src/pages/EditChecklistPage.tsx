@@ -9,7 +9,7 @@ import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
-import useModal from '@/hooks/useModalOpen';
+import useModal from '@/hooks/useModal';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 
 type RouteParams = {

@@ -14,7 +14,7 @@ import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useHandleTipBox from '@/hooks/useHandleTipBox';
 import useChecklistTemplate from '@/hooks/useInitialChecklist';
-import useModal from '@/hooks/useModalOpen';
+import useModal from '@/hooks/useModal';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';

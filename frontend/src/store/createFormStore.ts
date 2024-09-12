@@ -25,12 +25,24 @@ interface FormAction<T> {
 
 type FormState<T> = { rawValue: Partial<AllString<T>>; value: Partial<T>; errorMessage: AllString<T> };
 
-const createFormStore = <T extends object>(
-  initialRaw: Partial<AllString<T>>,
-  validatorSet: Record<string, Validator[]>,
-  valueType: AllString<T>,
-  storageName: string,
-) =>
+export interface UnitFormSpec {
+  initialValue: string;
+  type: 'string' | 'number';
+  validators: Validator[];
+}
+
+export type FormSpec<T> = {
+  [k in keyof T as string]: UnitFormSpec;
+};
+
+const getInitialRaw = <T extends object>(formSpec: FormSpec<T>) =>
+  objectMap(formSpec, ([name, { initialValue }]) => [name, initialValue]) as Partial<AllString<T>>;
+const getValueType = <T extends object>(formSpec: FormSpec<T>) =>
+  objectMap(formSpec, ([name, { type }]) => [name, type]) as Partial<AllString<T>>;
+const getValidationSet = <T extends object>(formSpec: FormSpec<T>) =>
+  objectMap(formSpec, ([name, { validators }]) => [name, validators]) as Record<keyof T, Validator[]>;
+
+const createFormStore = <T extends object>(formSpec: FormSpec<T>, storageName: string) =>
   createStore<
     FormState<T> & {
       actions: FormAction<T>;
@@ -38,9 +50,9 @@ const createFormStore = <T extends object>(
   >()(
     persist(
       (set, get) => ({
-        rawValue: initialRaw,
-        value: transformAll(initialRaw, valueType),
-        errorMessage: initialErrorMessages(initialRaw),
+        rawValue: getInitialRaw(formSpec),
+        value: transformAll(getInitialRaw(formSpec), getValueType(formSpec)),
+        errorMessage: initialErrorMessages(getInitialRaw(formSpec)),
         actions: {
           onChange: event => get().actions.set(event.target.name as keyof T, event.target.value),
           set: (name, value) => {
@@ -49,15 +61,15 @@ const createFormStore = <T extends object>(
               return;
             }
 
-            get().actions._updateAfterValidation(name, value ?? '', validatorSet[name as string]);
+            get().actions._updateAfterValidation(name, value ?? '', getValidationSet(formSpec)[name]);
           },
           setValueForced: (name, value) => set({ value: { ...get().value, [name]: value } }),
 
           resetAll: () =>
             set({
-              rawValue: initialRaw,
-              value: transformAll(initialRaw, valueType),
-              errorMessage: initialErrorMessages(initialRaw),
+              rawValue: getInitialRaw(formSpec),
+              value: transformAll(getInitialRaw(formSpec), getValueType(formSpec)),
+              errorMessage: initialErrorMessages(getInitialRaw(formSpec)),
             }),
           setAll: set,
           _reset: name => {
@@ -83,7 +95,12 @@ const createFormStore = <T extends object>(
             );
           },
           _transform: (name, value) =>
-            set({ value: { ...get().value, [name]: valueType[name as keyof T] === 'number' ? Number(value) : value } }),
+            set({
+              value: {
+                ...get().value,
+                [name]: getValueType(formSpec)[name as keyof T] === 'number' ? Number(value) : value,
+              },
+            }),
         },
       }),
       {
@@ -98,7 +115,7 @@ const createFormStore = <T extends object>(
     ),
   );
 
-const transformAll = <T>(rawValues: Partial<AllString<T>>, valueType: AllString<T>) =>
+const transformAll = <T>(rawValues: Partial<AllString<T>>, valueType: Partial<AllString<T>>) =>
   objectMap(rawValues, ([key, value]) => [
     key,
     valueType[key as keyof T] === 'number' ? Number(value) : value,

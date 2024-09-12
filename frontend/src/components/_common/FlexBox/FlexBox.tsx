@@ -11,7 +11,7 @@ const FlexBox = {
   `,
   Horizontal: styled.div<{ gap?: number | string; flexWrap?: string; width?: string; type?: 'spaceBetween' | 'row' }>`
     ${flexRow}
-    gap: .8rem ${({ gap: gap }) => gap ?? '6%'};
+    gap:  ${({ gap }) => gap ?? '6%'};
     ${({ flexWrap }) => flexWrap && `flex-wrap:${flexWrap};`}
     ${({ width }) => width && `width:${width};`}
   `,

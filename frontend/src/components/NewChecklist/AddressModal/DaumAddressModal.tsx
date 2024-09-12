@@ -5,8 +5,9 @@ import { useStore } from 'zustand';
 import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
 import loadPostcode from '@/components/NewChecklist/AddressModal/loadPostcode';
+import useFindNearSubway from '@/hooks/useFindNearSubway';
 import useModal from '@/hooks/useModal';
-import checklistAddressStore from '@/store/checklistAddressStore';
+import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { Address, Postcode, PostcodeOptions } from '@/types/address';
 
 declare global {
@@ -17,12 +18,17 @@ declare global {
   }
 }
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const { kakao } = window as any;
+
 const scriptUrl = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
 
 const DaumAddressModal = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const postcodeContainerRef = useRef<HTMLDivElement | null>(null);
-  const { setAddress, setBuildingName } = useStore(checklistAddressStore);
+  const actions = useStore(checklistRoomInfoStore, state => state.actions);
+
+  const { findNearSubway } = useFindNearSubway();
 
   useEffect(() => {
     loadPostcode(scriptUrl).catch(error => {
@@ -36,9 +42,18 @@ const DaumAddressModal = () => {
       new window.daum.Postcode({
         width: '100%',
         height: '60rem',
-        oncomplete: (data: Address) => {
-          setAddress(data.address);
-          setBuildingName(data.buildingName);
+        oncomplete: async (data: Address) => {
+          actions.set('address', data.address);
+          actions.set('buildingName', data.buildingName);
+
+          const geocoder = new kakao.maps.services.Geocoder();
+
+          geocoder.addressSearch(data.address, function (result: any, status: any) {
+            // 정상적으로 검색이 완료됐으면
+            if (status === kakao.maps.services.Status.OK) {
+              findNearSubway({ lat: result[0].y, lon: result[0].x });
+            }
+          });
           closeModal();
         },
       }).embed(postcodeContainerRef.current, { q: '' });

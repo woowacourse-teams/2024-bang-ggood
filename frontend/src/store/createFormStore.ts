@@ -25,14 +25,14 @@ interface FormAction<T> {
 
 type FormState<T> = { rawValue: Partial<AllString<T>>; value: Partial<T>; errorMessage: AllString<T> };
 
-export interface UnitFormSpec {
+export interface FormFieldSpec {
   initialValue: string;
   type: 'string' | 'number';
   validators: Validator[];
 }
 
 export type FormSpec<T> = {
-  [k in keyof T as string]: UnitFormSpec;
+  [k in keyof T as string]: FormFieldSpec;
 };
 
 const getInitialRaw = <T extends object>(formSpec: FormSpec<T>) =>

@@ -10,10 +10,11 @@ import com.bang_ggood.maintenance.ChecklistMaintenanceFixture;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.repository.ChecklistMaintenanceRepository;
 import com.bang_ggood.room.RoomFixture;
+import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
+import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,22 +40,16 @@ class ChecklistMaintenanceServiceTest extends IntegrationTestSupport {
     @Autowired
     private UserRepository userRepository;
 
-    private Checklist checklist;
-
-    @BeforeEach
-    void setUp() {
-        userRepository.save(UserFixture.USER1);
-        roomRepository.save(RoomFixture.ROOM_1);
-        checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
-    }
-
     @DisplayName("관리비 포함 항목 작성 성공")
     @Test
     void createChecklistMaintenance() {
         //given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
         List<ChecklistMaintenance> checklistMaintenances = List.of(
-                ChecklistMaintenanceFixture.CHECKLIST1_MAINTENANCE_WATERWORKS,
-                ChecklistMaintenanceFixture.CHECKLIST1_MAINTENANCE_INTERNET
+                ChecklistMaintenanceFixture.CHECKLIST1_MAINTENANCE_WATERWORKS(checklist),
+                ChecklistMaintenanceFixture.CHECKLIST1_MAINTENANCE_INTERNET(checklist)
         );
 
         //when
@@ -69,9 +64,12 @@ class ChecklistMaintenanceServiceTest extends IntegrationTestSupport {
     @Test
     void createChecklistMaintenance_duplicatedId_exception() {
         //given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
         List<ChecklistMaintenance> checklistMaintenances = List.of(
-                ChecklistMaintenanceFixture.CHECKLIST1_MAINTENANCE_WATERWORKS,
-                ChecklistMaintenanceFixture.CHECKLIST1_MAINTENANCE_WATERWORKS
+                ChecklistMaintenanceFixture.CHECKLIST1_MAINTENANCE_WATERWORKS(checklist),
+                ChecklistMaintenanceFixture.CHECKLIST1_MAINTENANCE_WATERWORKS(checklist)
         );
 
         // when & then

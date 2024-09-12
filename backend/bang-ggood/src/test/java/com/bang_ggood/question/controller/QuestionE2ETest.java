@@ -39,7 +39,7 @@ public class QuestionE2ETest extends AcceptanceTest {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
-                .body(CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST)
+                .body(CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST())
                 .when().put("/custom-checklist")
                 .then().log().all()
                 .statusCode(204);

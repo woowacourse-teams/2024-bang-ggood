@@ -13,12 +13,12 @@ class RoomServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private RoomService roomService;
-    
+
     @DisplayName("방 작성 성공")
     @Test
     void createRoom() {
         //given
-        Room room = RoomFixture.ROOM_1;
+        Room room = RoomFixture.ROOM_1();
 
         //when
         Room savedRoom = roomService.createRoom(room);

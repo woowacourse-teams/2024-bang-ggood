@@ -13,18 +13,18 @@ import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.room.RoomFixture;
+import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
+import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Collections;
 import java.util.List;
 
-import static com.bang_ggood.user.UserFixture.USER1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -48,22 +48,16 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
     @Autowired
     private UserRepository userRepository;
 
-    private Checklist checklist;
-
-    @BeforeEach
-    void setUp() {
-        userRepository.save(UserFixture.USER1);
-        roomRepository.save(RoomFixture.ROOM_1);
-        checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
-    }
-
     @DisplayName("질문 작성 성공")
     @Test
     void createQuestions() {
         //given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
         List<ChecklistQuestion> checklistQuestions = List.of(
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION1,
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION10
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist),
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION10(checklist)
         );
 
         //when
@@ -78,9 +72,12 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
     @Test
     void createQuestions_duplicateId_exception() {
         //given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
         List<ChecklistQuestion> checklistQuestions = List.of(
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION1,
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION1
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist),
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist)
         );
 
         // when & then
@@ -94,13 +91,15 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
     @Test
     void readCustomChecklistQuestions() {
         // given
-        CustomChecklistQuestion question1 = new CustomChecklistQuestion(USER1, Question.ROOM_CONDITION_5);
-        CustomChecklistQuestion question2 = new CustomChecklistQuestion(USER1, Question.BATHROOM_1);
+        User user = userRepository.save(UserFixture.USER1());
+        CustomChecklistQuestion question1 = new CustomChecklistQuestion(user, Question.ROOM_CONDITION_5);
+        CustomChecklistQuestion question2 = new CustomChecklistQuestion(user, Question.BATHROOM_1);
         List<CustomChecklistQuestion> questions = List.of(question1, question2);
         customChecklistQuestionRepository.saveAll(questions);
 
         // when
-        List<CustomChecklistQuestion> customChecklistQuestions = checklistQuestionService.readCustomChecklistQuestions(USER1);
+        List<CustomChecklistQuestion> customChecklistQuestions = checklistQuestionService.readCustomChecklistQuestions(
+                user);
 
         // then
         Assertions.assertThat(customChecklistQuestions).hasSize(questions.size());
@@ -110,13 +109,14 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
     @Test
     void updateCustomChecklist() {
         // given
+        User user = userRepository.save(UserFixture.USER1());
         List<Question> questions = List.of(Question.OUTSIDE_1, Question.BATHROOM_2, Question.SECURITY_1);
 
         // when
-        checklistQuestionService.updateCustomChecklist(USER1, questions);
+        checklistQuestionService.updateCustomChecklist(user, questions);
 
         // then
-        assertThat(customChecklistQuestionRepository.findAllByUser(USER1))
+        assertThat(customChecklistQuestionRepository.findAllByUser(user))
                 .hasSize(questions.size());
     }
 
@@ -127,7 +127,7 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
         List<Question> questions = Collections.emptyList();
 
         // when & then
-        assertThatThrownBy(() -> checklistQuestionService.updateCustomChecklist(USER1, questions))
+        assertThatThrownBy(() -> checklistQuestionService.updateCustomChecklist(UserFixture.USER1(), questions))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CUSTOM_CHECKLIST_QUESTION_EMPTY.getMessage());
     }
@@ -139,7 +139,7 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
         List<Question> questions = List.of(Question.OUTSIDE_1, Question.OUTSIDE_1);
 
         // when & then
-        assertThatThrownBy(() -> checklistQuestionService.updateCustomChecklist(USER1, questions))
+        assertThatThrownBy(() -> checklistQuestionService.updateCustomChecklist(UserFixture.USER1(), questions))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
     }

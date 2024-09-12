@@ -11,16 +11,16 @@ import com.bang_ggood.like.domain.ChecklistLike;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.option.repository.ChecklistOptionRepository;
 import com.bang_ggood.room.RoomFixture;
+import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
+import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
-import static com.bang_ggood.user.UserFixture.USER1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -49,19 +49,13 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Autowired
     private ChecklistLikeRepository checklistLikeRepository;
 
-    @BeforeEach()
-    public void setUp() {
-        userRepository.save(UserFixture.USER1);
-        roomRepository.save(RoomFixture.ROOM_1);
-        roomRepository.save(RoomFixture.ROOM_2);
-        roomRepository.save(RoomFixture.ROOM_3);
-    }
-
     @DisplayName("체크리스트 작성 성공")
     @Test
     void createChecklist() {
         //given
-        Checklist checklist = ChecklistFixture.CHECKLIST1_USER1;
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = ChecklistFixture.CHECKLIST1_USER1(room, user);
 
         //when
         Checklist savedChecklist = checklistService.createChecklist(checklist);
@@ -79,10 +73,12 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void createChecklistLike() {
         //given
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
 
         // when
-        checklistService.createChecklistLike(USER1, checklist.getId());
+        checklistService.createChecklistLike(user, checklist.getId());
 
         //then
         assertThat(checklistLikeRepository.existsByChecklist(checklist)).isTrue();
@@ -92,13 +88,15 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void createChecklistLike_checklistAlreadyLiked_exception() {
         //given
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
 
         // when
-        checklistService.createChecklistLike(USER1, checklist.getId());
+        checklistService.createChecklistLike(user, checklist.getId());
 
         //then
-        assertThatThrownBy(() -> checklistService.createChecklistLike(USER1, checklist.getId()))
+        assertThatThrownBy(() -> checklistService.createChecklistLike(user, checklist.getId()))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.LIKE_ALREADY_EXISTS.getMessage());
     }
@@ -108,7 +106,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 //    void readUserChecklistsPreview() {
 //        // given
 //        User user = new User(1L, "방방이");
-//        Room room = RoomFixture.ROOM_1;
+//        Room room = RoomFixture.ROOM_1();
 //        Checklist checklist = createChecklist(user, room);
 //        List<ChecklistQuestion> questions = List.of(
 //                new ChecklistQuestion(checklist, Question.CLEAN_1, Answer.GOOD),
@@ -137,11 +135,11 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 //    @Test
 //    void updateChecklistById() {
 //        //given
-//        long checklistId = checklistManageService.createChecklist(UserFixture.USER1,
-//                ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+//        long checklistId = checklistManageService.createChecklist(UserFixture.USER1(),
+//                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
 //
 //        //when
-//        checklistService.updateChecklistById(UserFixture.USER1, checklistId, ChecklistFixture.CHECKLIST_UPDATE_REQUEST);
+//        checklistService.updateChecklistById(UserFixture.USER1(), checklistId, ChecklistFixture.CHECKLIST_UPDATE_REQUEST);
 //
 //        //then
 //        Checklist checklist = checklistRepository.getById(checklistId);
@@ -156,13 +154,14 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateChecklistById_invalidQuestionId_exception() {
         //given
-        long checklistId = checklistManageService.createChecklist(UserFixture.USER1,
-                ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        User user = userRepository.save(UserFixture.USER1());
+        long checklistId = checklistManageService.createChecklist(user,
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
 
         //when & then
         assertThatThrownBy(
-                () -> checklistService.updateChecklistById(UserFixture.USER1, checklistId,
-                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_INVALID_QUESTION_ID))
+                () -> checklistService.updateChecklistById(user, checklistId,
+                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_INVALID_QUESTION_ID()))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
     }
@@ -171,13 +170,14 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateChecklistById_duplicatedQuestionId_exception() {
         //given
-        long checklistId = checklistManageService.createChecklist(UserFixture.USER1,
-                ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        User user = userRepository.save(UserFixture.USER1());
+        long checklistId = checklistManageService.createChecklist(user,
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
 
         //when & then
         assertThatThrownBy(
-                () -> checklistService.updateChecklistById(UserFixture.USER1, checklistId,
-                        ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_QUESTION_ID))
+                () -> checklistService.updateChecklistById(user, checklistId,
+                        ChecklistFixture.CHECKLIST_CREATE_REQUEST_DUPLICATED_QUESTION_ID()))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
     }
@@ -186,13 +186,14 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateChecklistById_invalidOptionId_exception() {
         //given
-        long checklistId = checklistManageService.createChecklist(UserFixture.USER1,
-                ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        User user = userRepository.save(UserFixture.USER1());
+        long checklistId = checklistManageService.createChecklist(user,
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
 
         //when & then
         assertThatThrownBy(
-                () -> checklistService.updateChecklistById(UserFixture.USER1, checklistId,
-                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_INVALID_OPTION_ID))
+                () -> checklistService.updateChecklistById(user, checklistId,
+                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_INVALID_OPTION_ID()))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.OPTION_INVALID.getMessage());
     }
@@ -201,13 +202,14 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateChecklistById_duplicatedOptionId_exception() {
         //given
-        long checklistId = checklistManageService.createChecklist(UserFixture.USER1,
-                ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        User user = userRepository.save(UserFixture.USER1());
+        long checklistId = checklistManageService.createChecklist(user,
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
 
         //when & then
         assertThatThrownBy(
-                () -> checklistService.updateChecklistById(UserFixture.USER1, checklistId,
-                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DUPLICATED_OPTION_ID))
+                () -> checklistService.updateChecklistById(user, checklistId,
+                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DUPLICATED_OPTION_ID()))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.OPTION_DUPLICATED.getMessage());
     }
@@ -217,12 +219,12 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 //    @Test
 //    void updateChecklistById_differentQuestionLength_exception() {
 //        //given
-//        long checklistId = checklistManageService.createChecklist(UserFixture.USER1,
-//                ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+//        long checklistId = checklistManageService.createChecklist(UserFixture.USER1(),
+//                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
 //
 //        //when & then
 //        assertThatThrownBy(
-//                () -> checklistService.updateChecklistById(UserFixture.USER1, checklistId,
+//                () -> checklistService.updateChecklistById(UserFixture.USER1(), checklistId,
 //                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION_LENGTH))
 //                .isInstanceOf(BangggoodException.class)
 //                .hasMessage(ExceptionCode.QUESTION_DIFFERENT.getMessage());
@@ -232,13 +234,13 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 //    @Test
 //    void createChecklist_differentQuestion_exception() {
 //        //given
-//        long checklistId = checklistManageService.createChecklist(UserFixture.USER1,
-//                ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+//        long checklistId = checklistManageService.createChecklist(UserFixture.USER1(),
+//                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
 //
 //        //when & then
 //        assertThatThrownBy(
-//                () -> checklistService.updateChecklistById(UserFixture.USER1, checklistId,
-//                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION))
+//                () -> checklistService.updateChecklistById(UserFixture.USER1(), checklistId,
+//                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION()))
 //                .isInstanceOf(BangggoodException.class)
 //                .hasMessage(ExceptionCode.QUESTION_DIFFERENT.getMessage());
 //    }
@@ -247,13 +249,15 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void createChecklist_notOwnedBy_exception() {
         //given
-        long checklistId = checklistManageService.createChecklist(UserFixture.USER1,
-                ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        User user1 = userRepository.save(UserFixture.USER1());
+        User user2 = userRepository.save(UserFixture.USER2());
+        long checklistId = checklistManageService.createChecklist(user1,
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
 
         //when & then
         assertThatThrownBy(
-                () -> checklistService.updateChecklistById(UserFixture.USER2, checklistId,
-                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION))
+                () -> checklistService.updateChecklistById(user2, checklistId,
+                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION()))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER.getMessage());
     }
@@ -262,25 +266,30 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void readLikedChecklistsPreview() {
         //given
+        User user = userRepository.save(UserFixture.USER1());
+        Room room1 = roomRepository.save(RoomFixture.ROOM_1());
+        Room room2 = roomRepository.save(RoomFixture.ROOM_2());
+        Room room3 = roomRepository.save(RoomFixture.ROOM_3());
+        Checklist checklist1 = ChecklistFixture.CHECKLIST1_USER1(room1, user);
+        Checklist checklist2 = ChecklistFixture.CHECKLIST2_USER1(room2, user);
+        Checklist checklist3 = ChecklistFixture.CHECKLIST3_USER1(room3, user);
         checklistRepository.saveAll(
-                List.of(ChecklistFixture.CHECKLIST1_USER1,
-                        ChecklistFixture.CHECKLIST2_USER1,
-                        ChecklistFixture.CHECKLIST3_USER1)
+                List.of(checklist1, checklist2, checklist3)
         );
         checklistLikeRepository.saveAll(
-                List.of(ChecklistFixture.CHECKLIST1_LIKE,
-                        ChecklistFixture.CHECKLIST2_LIKE)
+                List.of(ChecklistFixture.CHECKLIST1_LIKE(checklist1),
+                        ChecklistFixture.CHECKLIST2_LIKE(checklist2))
         );
 
         //when
         List<UserChecklistPreviewResponse> checklists =
-                checklistService.readLikedChecklistsPreview(USER1).checklists();
+                checklistService.readLikedChecklistsPreview(user).checklists();
 
         //then
         assertAll(
                 () -> assertThat(checklists.size()).isEqualTo(2),
-                () -> assertThat(checklists.get(0).checklistId()).isEqualTo(ChecklistFixture.CHECKLIST1_USER1.getId()),
-                () -> assertThat(checklists.get(1).checklistId()).isEqualTo(ChecklistFixture.CHECKLIST2_USER1.getId())
+                () -> assertThat(checklists.get(0).checklistId()).isEqualTo(checklist1.getId()),
+                () -> assertThat(checklists.get(1).checklistId()).isEqualTo(checklist2.getId())
         );
     }
 
@@ -288,11 +297,12 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void deleteChecklistById() {
         // given
-        roomRepository.save(RoomFixture.ROOM_1);
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
 
         // when
-        checklistService.deleteChecklistById(UserFixture.USER1, checklist.getId());
+        checklistService.deleteChecklistById(user, checklist.getId());
 
         // then
         assertThat(checklistRepository.existsById(checklist.getId().longValue())).isFalse();
@@ -302,12 +312,14 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void deleteChecklistById_notOwnedByUser_exception() {
         // given
-        roomRepository.save(RoomFixture.ROOM_1);
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user1 = userRepository.save(UserFixture.USER1());
+        User user2 = userRepository.save(UserFixture.USER2());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user1));
 
         // when & then
         assertThatThrownBy(
-                () -> checklistService.deleteChecklistById(UserFixture.USER2, checklist.getId())
+                () -> checklistService.deleteChecklistById(user2, checklist.getId())
         )
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER.getMessage());
@@ -317,11 +329,13 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void deleteChecklistLikeByChecklistId() {
         // given
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
-        ChecklistLike checklistLike = checklistLikeRepository.save(ChecklistFixture.CHECKLIST1_LIKE);
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        ChecklistLike checklistLike = checklistLikeRepository.save(ChecklistFixture.CHECKLIST1_LIKE(checklist));
 
         // when
-        checklistService.deleteChecklistLikeByChecklistId(USER1, checklist.getId());
+        checklistService.deleteChecklistLikeByChecklistId(user, checklist.getId());
 
         // then
         assertThat(checklistLikeRepository.existsById(checklistLike.getId())).isFalse();
@@ -331,10 +345,12 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void deleteChecklistLikeByChecklistId_notFound_exception() {
         // given
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
 
         // when & then
-        assertThatThrownBy(() -> checklistService.deleteChecklistLikeByChecklistId(USER1, checklist.getId()))
+        assertThatThrownBy(() -> checklistService.deleteChecklistLikeByChecklistId(user, checklist.getId()))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.LIKE_NOT_EXISTS.getMessage());
     }

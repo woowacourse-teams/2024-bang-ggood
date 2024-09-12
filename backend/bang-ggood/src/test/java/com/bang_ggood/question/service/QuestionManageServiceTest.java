@@ -12,20 +12,14 @@ import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.QuestionResponse;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.user.UserFixture;
+import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Collection;
 import java.util.List;
 
-import static com.bang_ggood.question.CustomChecklistFixture.CUSTOM_CHECKLIST_QUESTION_DEFAULT;
-import static com.bang_ggood.question.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST;
-import static com.bang_ggood.question.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED;
-import static com.bang_ggood.question.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_EMPTY;
-import static com.bang_ggood.question.CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_INVALID;
-import static com.bang_ggood.user.UserFixture.USER1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -41,22 +35,20 @@ public class QuestionManageServiceTest extends IntegrationTestSupport {
     @Autowired
     private UserRepository userRepository;
 
-    @BeforeEach
-    void setUp() {
-        userRepository.save(UserFixture.USER1);
-    }
-
     @DisplayName("커스텀 체크리스트 질문 조회 성공")
     @Test
     void readChecklistQuestions() {
         // given
-        customChecklistQuestionRepository.saveAll(CustomChecklistFixture.CUSTOM_CHECKLIST_QUESTION_DEFAULT);
+        User user = userRepository.save(UserFixture.USER1());
+        List<CustomChecklistQuestion> customChecklistQuestions = customChecklistQuestionRepository.saveAll(
+                CustomChecklistFixture.CUSTOM_CHECKLIST_QUESTION_DEFAULT(user));
 
         // when
-        CustomChecklistQuestionsResponse customChecklistQuestionsResponse = questionManageService.readCustomChecklistQuestions(USER1);
+        CustomChecklistQuestionsResponse customChecklistQuestionsResponse =
+                questionManageService.readCustomChecklistQuestions(user);
 
         // then
-        List<Integer> defaultQuestionsIds = CUSTOM_CHECKLIST_QUESTION_DEFAULT.stream()
+        List<Integer> defaultQuestionsIds = customChecklistQuestions.stream()
                 .map(CustomChecklistQuestion::getQuestion)
                 .map(Question::getId)
                 .toList();
@@ -73,10 +65,11 @@ public class QuestionManageServiceTest extends IntegrationTestSupport {
     @Test
     void updateCustomChecklist() {
         // given
-        CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST;
+        User user = userRepository.save(UserFixture.USER1());
+        CustomChecklistUpdateRequest request = CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST();
 
         // when & then
-        assertThatCode(() -> questionManageService.updateCustomChecklist(USER1, request))
+        assertThatCode(() -> questionManageService.updateCustomChecklist(user, request))
                 .doesNotThrowAnyException();
     }
 
@@ -84,10 +77,10 @@ public class QuestionManageServiceTest extends IntegrationTestSupport {
     @Test
     void updateCustomChecklist_empty_exception() {
         // given
-        CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_EMPTY;
+        CustomChecklistUpdateRequest request = CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_EMPTY();
 
         // when & then
-        assertThatThrownBy(() -> questionManageService.updateCustomChecklist(USER1, request))
+        assertThatThrownBy(() -> questionManageService.updateCustomChecklist(UserFixture.USER1(), request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CUSTOM_CHECKLIST_QUESTION_EMPTY.getMessage());
     }
@@ -96,10 +89,10 @@ public class QuestionManageServiceTest extends IntegrationTestSupport {
     @Test
     void updateCustomChecklist_duplicatedQuestion_exception() {
         // given
-        CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED;
+        CustomChecklistUpdateRequest request = CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED();
 
         // when & then
-        assertThatThrownBy(() -> questionManageService.updateCustomChecklist(USER1, request))
+        assertThatThrownBy(() -> questionManageService.updateCustomChecklist(UserFixture.USER1(), request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
     }
@@ -108,10 +101,10 @@ public class QuestionManageServiceTest extends IntegrationTestSupport {
     @Test
     void updateCustomChecklist_invalidQuestionId_exception() {
         // given
-        CustomChecklistUpdateRequest request = CUSTOM_CHECKLIST_UPDATE_REQUEST_INVALID;
+        CustomChecklistUpdateRequest request = CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_INVALID();
 
         // when & then
-        assertThatThrownBy(() -> questionManageService.updateCustomChecklist(USER1, request))
+        assertThatThrownBy(() -> questionManageService.updateCustomChecklist(UserFixture.USER1(), request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
     }

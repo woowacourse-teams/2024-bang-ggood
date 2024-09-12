@@ -5,7 +5,6 @@ import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.service.AuthService;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.global.exception.ExceptionCode;
-import com.bang_ggood.user.UserFixture;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Header;
@@ -62,12 +61,13 @@ class AuthE2ETest extends AcceptanceTest {
     @DisplayName("인증 실패 : 블랙리스트에 들어간 토큰일 경우")
     @Test
     void authentication_token_blacklist_exception() {
-        authService.logout(this.responseCookie.getName() + "=" + this.responseCookie.getValue(), UserFixture.USER1);
+        authService.logout(this.responseCookie.getName() + "=" + this.responseCookie.getValue(),
+                this.getAuthenticatedUser());
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
-                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST)
+                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST())
                 .when().post("/checklists")
                 .then().log().all()
                 .statusCode(401)

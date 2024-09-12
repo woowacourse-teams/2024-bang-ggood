@@ -94,3 +94,5 @@ export interface ChecklistPostForm {
   options: number[];
   questions: AnswerPostForm[];
 }
+
+export type MutateType = 'add' | 'edit';

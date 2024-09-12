@@ -1,5 +1,6 @@
 import { Global, ThemeProvider } from '@emotion/react';
 import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider } from 'react-router-dom';
 
 import Toast from '@/components/_common/Toast/Toast';
@@ -26,7 +27,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <Global styles={baseStyle} />
         <RouterProvider router={router} />
-        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+        <ReactQueryDevtools initialIsOpen={false} />
         <Toast />
       </ThemeProvider>
     </QueryClientProvider>

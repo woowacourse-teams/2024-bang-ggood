@@ -48,10 +48,18 @@ const S = {
   Container: styled.div`
     width: 100%;
     ${flexRow};
+    align-items: center;
     gap: 1rem;
 
     padding: 0.4rem 0;
-    align-items: center;
+
+    background-color: ${({ theme }) => theme.palette.white};
+    cursor: pointer;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.palette.grey50};
+      border-radius: 8px;
+    }
   `,
   Column: styled.div`
     width: 100%;

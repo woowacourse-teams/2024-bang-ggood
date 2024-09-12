@@ -31,4 +31,8 @@ export const baseStyle = css`
       min-height: -webkit-fill-available;
     }
   }
+
+  input {
+    font-family: 'SUITE Variable', sans-serif;
+  }
 `;

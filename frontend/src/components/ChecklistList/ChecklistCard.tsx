@@ -57,6 +57,7 @@ const S = {
 
     background-color: ${({ theme }) => theme.palette.white};
     ${boxShadow};
+    cursor: pointer;
   `,
   Row: styled.div`
     ${flexSpaceBetween}

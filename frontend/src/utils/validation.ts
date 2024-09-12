@@ -8,10 +8,12 @@ export const validation = (
   updateErrorMessage: (name: string, errorMessage: string) => void,
 ) => {
   // 에러 검증
-  const newErrorMessage = validators
-    .slice()
-    .reverse()
-    .reduce((acc, { validate, errorMessage }) => (!validate(value) ? errorMessage : acc), '');
+  //validatiors 가 런타임 때 undefined 일 경우를 대비해 ? 로 처리
+  const newErrorMessage =
+    validators
+      ?.slice()
+      .reverse()
+      .reduce((acc, { validate, errorMessage }) => (!validate(value) ? errorMessage : acc), '') ?? '';
 
   // 에러메시지 업데이트
   updateErrorMessage(name, newErrorMessage);

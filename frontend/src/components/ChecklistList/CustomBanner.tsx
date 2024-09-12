@@ -36,8 +36,8 @@ const S = {
     justify-content: space-evenly;
     align-items: center;
     gap: 0.5rem;
-
     ${boxShadow};
+    cursor: pointer;
 
     &:hover,
     &:active {

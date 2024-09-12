@@ -52,25 +52,23 @@ const S = {
     background-color: ${({ theme }) => theme.palette.white};
     border-radius: 1.2rem;
     gap: 1rem;
-  `,
 
+    cursor: pointer;
+  `,
   FlexBox: styled.div`
     ${flexCenter}
     gap: 1rem;
   `,
-
   FlexBetween: styled.div`
     ${flexSpaceBetween}
     height: 100%;
   `,
-
   HeaderTitle: styled.div`
     ${title3};
     display: flex;
     padding-left: 1.5rem;
     align-items: center;
   `,
-
   HeaderMark: styled.div<{ isMarked: boolean; markColor?: string }>`
     opacity: ${({ isMarked }) => (isMarked ? 1 : 0)};
     width: 1.2rem;
@@ -79,7 +77,6 @@ const S = {
     border-radius: 0.8rem 0 0 0.8rem;
     transition: opacity 0.3s ease;
   `,
-
   OpenBox: styled.div<{ onClick?: () => void }>`
     position: absolute;
     top: 1rem;

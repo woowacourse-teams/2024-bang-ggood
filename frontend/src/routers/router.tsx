@@ -14,11 +14,10 @@ import MainPage from '@/pages/MainPage';
 import MyPage from '@/pages/MyPage';
 import NewChecklistPage from '@/pages/NewChecklistPage';
 import NotFound from '@/pages/NotFound';
-import AuthGuard from '@/routers/AuthGuard';
 
 const router = createBrowserRouter([
   {
-    element: <AuthGuard />,
+    //element: <AuthGuard />,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -47,12 +46,12 @@ const router = createBrowserRouter([
         path: ROUTE_PATH.checklistNew,
       },
       {
-        element: <EditChecklistPage />,
-        path: ROUTE_PATH.checklistEdit,
-      },
-      {
         element: <ChecklistDetailPage />,
         path: ROUTE_PATH.checklistId,
+      },
+      {
+        element: <EditChecklistPage />,
+        path: ROUTE_PATH.checklistEdit,
       },
       {
         element: <ChecklistCustomPage />,

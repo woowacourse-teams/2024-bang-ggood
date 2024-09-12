@@ -7,11 +7,12 @@ import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.room.RoomFixture;
+import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
+import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,25 +38,19 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     @Autowired
     private ChecklistLikeRepository checklistLikeRepository;
 
-    @BeforeEach
-    void setUp() {
-        userRepository.save(UserFixture.USER1);
-        roomRepository.save(RoomFixture.ROOM_1);
-        roomRepository.save(RoomFixture.ROOM_2);
-        roomRepository.save(RoomFixture.ROOM_3);
-    }
-
     @DisplayName("아이디를 통해 체크리스트 갖고 오기 성공")
     @Test
     void findById() {
         //given
-        Checklist savedChecklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist savedChecklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
 
         //when
-        Checklist foundChecklist = checklistRepository.getById(savedChecklist.getId().longValue());
+        Checklist foundChecklist = checklistRepository.getById(savedChecklist.getId());
 
         //then
-        assertThat(foundChecklist.getId()).isEqualTo(ChecklistFixture.CHECKLIST1_USER1.getId());
+        assertThat(foundChecklist.getId()).isEqualTo(savedChecklist.getId());
     }
 
     @DisplayName("아이디를 통해 체크리스트 갖고 오기 실패 : 해당하는 체크리스트가 없을 경우")
@@ -70,9 +65,11 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     @Test
     void findByUserAndIdIn() {
         //given
-        Checklist savedChecklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist savedChecklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
 
-        assertThat(checklistRepository.findByUserAndIdIn(UserFixture.USER1, List.of(savedChecklist.getId())))
+        assertThat(checklistRepository.findByUserAndIdIn(user, List.of(savedChecklist.getId())))
                 .isEqualTo(List.of(savedChecklist));
     }
 
@@ -81,14 +78,17 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     @Test
     void findAllByUser() {
         // given
-        Checklist checklist1 = ChecklistFixture.CHECKLIST1_USER1;
-        Checklist checklist2 = ChecklistFixture.CHECKLIST2_USER1;
+        Room room1 = roomRepository.save(RoomFixture.ROOM_1());
+        Room room2 = roomRepository.save(RoomFixture.ROOM_2());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist1 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room1, user));
+        Checklist checklist2 = checklistRepository.save(ChecklistFixture.CHECKLIST2_USER1(room2, user));
         checklistRepository.saveAll(List.of(checklist1, checklist2));
 
         checklistRepository.deleteById(checklist1.getId());
 
         // when
-        List<Checklist> checklists = checklistRepository.findAllByUserOrderByLatest(UserFixture.USER1);
+        List<Checklist> checklists = checklistRepository.findAllByUserOrderByLatest(user);
 
         // then
         Assertions.assertThat(checklists).containsOnly(checklist2);
@@ -98,14 +98,17 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     @Test
     void findAllByUser_OrderByLatest() {
         // given
-        Checklist checklist1 = ChecklistFixture.CHECKLIST1_USER1;
+        Room room1 = roomRepository.save(RoomFixture.ROOM_1());
+        Room room2 = roomRepository.save(RoomFixture.ROOM_2());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist1 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room1, user));
         checklistRepository.save(checklist1);
 
-        Checklist checklist2 = ChecklistFixture.CHECKLIST2_USER1;
+        Checklist checklist2 = checklistRepository.save(ChecklistFixture.CHECKLIST2_USER1(room2, user));
         checklistRepository.save(checklist2);
 
         // when
-        List<Checklist> checklists = checklistRepository.findAllByUserOrderByLatest(UserFixture.USER1);
+        List<Checklist> checklists = checklistRepository.findAllByUserOrderByLatest(user);
 
         // then
         Assertions.assertThat(checklists).containsExactly(checklist2, checklist1);
@@ -116,17 +119,20 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     @Test
     void findAllByUser_OnlyUserChecklists() {
         // given
-        Checklist checklist1 = ChecklistFixture.CHECKLIST1_USER1;
-        Checklist checklist2 = ChecklistFixture.CHECKLIST2_USER1;
+        Room room1 = roomRepository.save(RoomFixture.ROOM_1());
+        Room room2 = roomRepository.save(RoomFixture.ROOM_2());
+        User user1 = userRepository.save(UserFixture.USER1());
+        Checklist checklist1 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room1, user1));
+        Checklist checklist2 = checklistRepository.save(ChecklistFixture.CHECKLIST2_USER1(room2, user1));
 
-        userRepository.save(UserFixture.USER2);
-        roomRepository.save(RoomFixture.ROOM_3);
-        Checklist checklist3 = ChecklistFixture.CHECKLIST3_USER2;
+        User user2 = userRepository.save(UserFixture.USER2());
+        Room room3 = roomRepository.save(RoomFixture.ROOM_3());
+        Checklist checklist3 = ChecklistFixture.CHECKLIST3_USER2(room3, user2);
 
         checklistRepository.saveAll(List.of(checklist1, checklist2, checklist3));
 
         // when
-        List<Checklist> checklists = checklistRepository.findAllByUserOrderByLatest(UserFixture.USER1);
+        List<Checklist> checklists = checklistRepository.findAllByUserOrderByLatest(user1);
 
         // then
         Assertions.assertThat(checklists).containsOnly(checklist1, checklist2);
@@ -137,29 +143,31 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     @Test
     void findAllByUserAndIsLiked() {
         // given
-        checklistRepository.saveAll(
-                List.of(ChecklistFixture.CHECKLIST1_USER1,
-                        ChecklistFixture.CHECKLIST2_USER1,
-                        ChecklistFixture.CHECKLIST3_USER1)
-        );
-        checklistLikeRepository.saveAll(
-                List.of(ChecklistFixture.CHECKLIST1_LIKE,
-                        ChecklistFixture.CHECKLIST2_LIKE)
-        );
+        Room room1 = roomRepository.save(RoomFixture.ROOM_1());
+        Room room2 = roomRepository.save(RoomFixture.ROOM_2());
+        Room room3 = roomRepository.save(RoomFixture.ROOM_3());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist1 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room1, user));
+        Checklist checklist2 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room2, user));
+        Checklist checklist3 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room3, user));
+        checklistLikeRepository.save(ChecklistFixture.CHECKLIST1_LIKE(checklist1));
+        checklistLikeRepository.save(ChecklistFixture.CHECKLIST2_LIKE(checklist2));
 
         // when
-        List<Checklist> checklists = checklistRepository.findAllByUserAndIsLiked(UserFixture.USER1);
+        List<Checklist> checklists = checklistRepository.findAllByUserAndIsLiked(user);
 
         // then
         Assertions.assertThat(checklists)
-                .containsOnly(ChecklistFixture.CHECKLIST1_USER1, ChecklistFixture.CHECKLIST2_USER1);
+                .containsOnly(checklist1, checklist2);
     }
 
     @DisplayName("아이디를 통해 체크리스트 존재 확인 성공 : 존재하는 경우")
     @Test
     void existsById_true() {
         //given & when
-        Checklist savedChecklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist savedChecklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
 
         //then
         assertThat(checklistRepository.existsById(savedChecklist.getId().longValue())).isTrue();
@@ -176,7 +184,9 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     @Test
     void deleteById() {
         //given
-        Checklist savedChecklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist savedChecklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
 
         //when
         checklistRepository.deleteById(savedChecklist.getId().longValue());

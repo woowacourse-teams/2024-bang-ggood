@@ -10,7 +10,9 @@ import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.question.CustomChecklistFixture;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.room.RoomFixture;
+import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
+import com.bang_ggood.user.repository.UserRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Header;
@@ -19,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 
-import static com.bang_ggood.user.UserFixture.USER1;
 import static org.hamcrest.Matchers.containsString;
 
 class ChecklistE2ETest extends AcceptanceTest {
@@ -36,6 +37,8 @@ class ChecklistE2ETest extends AcceptanceTest {
     private CustomChecklistQuestionRepository customChecklistQuestionRepository;
     @Autowired
     private ChecklistLikeRepository checklistLikeRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @DisplayName("체크리스트 작성 성공")
     @Test
@@ -43,7 +46,7 @@ class ChecklistE2ETest extends AcceptanceTest {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
-                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST)
+                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST())
                 .when().post("/checklists")
                 .then().log().all()
                 .statusCode(201);
@@ -55,7 +58,7 @@ class ChecklistE2ETest extends AcceptanceTest {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
-                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_ROOM_NAME)
+                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_ROOM_NAME())
                 .when().post("/checklists")
                 .then().log().all()
                 .statusCode(400)
@@ -68,7 +71,7 @@ class ChecklistE2ETest extends AcceptanceTest {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
-                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_QUESTION_ID)
+                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_QUESTION_ID())
                 .when().post("/checklists")
                 .then().log().all()
                 .statusCode(400)
@@ -79,7 +82,8 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 좋아요 추가 성공")
     @Test
     void createChecklistLike() {
-        long checklistId = checklistManageService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistManageService.createChecklist(this.getAuthenticatedUser(),
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
@@ -92,8 +96,9 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 좋아요 추가 실패 : 이미 좋아요가 추가가 된 체크리스트인 경우")
     @Test
     void createChecklistLike_checklistAlreadyLiked_exception() {
-        long checklistId = checklistManageService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
-        checklistService.createChecklistLike(USER1, checklistId);
+        long checklistId = checklistManageService.createChecklist(this.getAuthenticatedUser(),
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+        checklistService.createChecklistLike(this.getAuthenticatedUser(), checklistId);
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
@@ -107,7 +112,8 @@ class ChecklistE2ETest extends AcceptanceTest {
     @Test
     void readChecklistQuestions() {
         // given
-        customChecklistQuestionRepository.saveAll(CustomChecklistFixture.CUSTOM_CHECKLIST_QUESTION_DEFAULT);
+        customChecklistQuestionRepository.saveAll(
+                CustomChecklistFixture.CUSTOM_CHECKLIST_QUESTION_DEFAULT(this.getAuthenticatedUser()));
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
@@ -120,7 +126,8 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("작성된 체크리스트 조회 성공")
     @Test
     void readChecklistById() {
-        long checklistId = checklistManageService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistManageService.createChecklist(this.getAuthenticatedUser(),
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
@@ -132,8 +139,8 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .as(SelectedChecklistResponse.class);
 
         Assertions.assertAll(
-                () -> assertThat(selectedChecklistResponse.room().roomName()).isEqualTo(ChecklistFixture.CHECKLIST_CREATE_REQUEST.room().roomName()),
-                () -> assertThat(selectedChecklistResponse.room().address()).isEqualTo(ChecklistFixture.CHECKLIST_CREATE_REQUEST.room().address())
+                () -> assertThat(selectedChecklistResponse.room().roomName()).isEqualTo(ChecklistFixture.CHECKLIST_CREATE_REQUEST().room().roomName()),
+                () -> assertThat(selectedChecklistResponse.room().address()).isEqualTo(ChecklistFixture.CHECKLIST_CREATE_REQUEST().room().address())
         );*/
         //TODO 수정
     }
@@ -153,7 +160,7 @@ class ChecklistE2ETest extends AcceptanceTest {
 //    @DisplayName("체크리스트 수정 성공")
 //    @Test
 //    void updateChecklist() {
-//        Long checklistId = checklistManageService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+//        Long checklistId = checklistManageService.createChecklist(USER1(), ChecklistFixture.CHECKLIST_CREATE_REQUEST());
 //
 //        RestAssured.given().log().all()
 //                .contentType(ContentType.JSON)
@@ -167,12 +174,13 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 수정 실패: 방 이름을 넣지 않은 경우")
     @Test
     void updateChecklist_noRoomName_exception() {
-        long checklistId = checklistManageService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistManageService.createChecklist(this.getAuthenticatedUser(),
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
-                .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST_NO_ROOM_NAME)
+                .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST_NO_ROOM_NAME())
                 .when().put("/checklists/" + checklistId)
                 .then().log().all()
                 .statusCode(400)
@@ -182,12 +190,13 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 수정 실패: 질문 ID를 넣지 않은 경우")
     @Test
     void updateChecklist_noQuestionId_exception() {
-        long checklistId = checklistManageService.createChecklist(USER1, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        long checklistId = checklistManageService.createChecklist(this.getAuthenticatedUser(),
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
-                .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST_NO_QUESTION_ID)
+                .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST_NO_QUESTION_ID())
                 .when().put("/checklists/" + checklistId)
                 .then().log().all()
                 .statusCode(400)
@@ -197,8 +206,9 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 삭제 성공")
     @Test
     void deleteChecklistById() {
-        roomRepository.save(RoomFixture.ROOM_1);
-        Checklist saved = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        Checklist saved = checklistRepository.save(
+                ChecklistFixture.CHECKLIST1_USER1(room, this.getAuthenticatedUser()));
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
@@ -211,14 +221,15 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 좋아요 삭제 성공")
     @Test
     void deleteChecklistLikeByChecklistId() {
-        roomRepository.save(RoomFixture.ROOM_1);
-        Checklist saved = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
-        checklistLikeRepository.save(ChecklistFixture.CHECKLIST1_LIKE);
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        Checklist checklist = checklistRepository.save(
+                ChecklistFixture.CHECKLIST1_USER1(room, this.getAuthenticatedUser()));
+        checklistLikeRepository.save(ChecklistFixture.CHECKLIST1_LIKE(checklist));
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
-                .when().delete("/checklists/" + saved.getId() + "/like")
+                .when().delete("/checklists/" + checklist.getId() + "/like")
                 .then().log().all()
                 .statusCode(204);
     }

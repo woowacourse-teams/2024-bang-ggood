@@ -1,6 +1,10 @@
 package com.bang_ggood.question.domain;
 
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.room.RoomFixture;
+import com.bang_ggood.room.domain.Room;
+import com.bang_ggood.user.UserFixture;
+import com.bang_ggood.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,8 +16,12 @@ class ChecklistQuestionTest {
     @Test
     void isDifferentQuestionId_true() {
         //given
-        ChecklistQuestion checklistQuestion1 = ChecklistFixture.CHECKLIST_QUESTION_1;
-        ChecklistQuestion checklistQuestion2 = ChecklistFixture.CHECKLIST_QUESTION_2;
+        Room room = RoomFixture.ROOM_1();
+        User user = UserFixture.USER1();
+        ChecklistQuestion checklistQuestion1 = ChecklistFixture.CHECKLIST_QUESTION_1(
+                ChecklistFixture.CHECKLIST1_USER1(room, user));
+        ChecklistQuestion checklistQuestion2 = ChecklistFixture.CHECKLIST_QUESTION_2(
+                ChecklistFixture.CHECKLIST1_USER1(room, user));
 
         //when & then
         assertThat(checklistQuestion1.isDifferentQuestionId(checklistQuestion2)).isTrue();
@@ -23,8 +31,12 @@ class ChecklistQuestionTest {
     @Test
     void isDifferentQuestionId_false() {
         //given
-        ChecklistQuestion checklistQuestion = ChecklistFixture.CHECKLIST_QUESTION_1;
-        ChecklistQuestion compareChecklistQuestion = ChecklistFixture.CHECKLIST_QUESTION_1;
+        Room room = RoomFixture.ROOM_1();
+        User user = UserFixture.USER1();
+        ChecklistQuestion checklistQuestion = ChecklistFixture.CHECKLIST_QUESTION_1(
+                ChecklistFixture.CHECKLIST1_USER1(room, user));
+        ChecklistQuestion compareChecklistQuestion = ChecklistFixture.CHECKLIST_QUESTION_1(
+                ChecklistFixture.CHECKLIST1_USER1(room, user));
 
         //when & then
         assertThat(checklistQuestion.isDifferentQuestionId(compareChecklistQuestion)).isFalse();

@@ -10,10 +10,11 @@ import com.bang_ggood.option.ChecklistOptionFixture;
 import com.bang_ggood.option.domain.ChecklistOption;
 import com.bang_ggood.option.repository.ChecklistOptionRepository;
 import com.bang_ggood.room.RoomFixture;
+import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
+import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,22 +40,16 @@ class ChecklistOptionServiceTest extends IntegrationTestSupport {
     @Autowired
     private UserRepository userRepository;
 
-    private Checklist checklist;
-
-    @BeforeEach
-    void setUp() {
-        userRepository.save(UserFixture.USER1);
-        roomRepository.save(RoomFixture.ROOM_1);
-        checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1);
-    }
-
     @DisplayName("옵션 작성 성공")
     @Test
     void createOptions() {
         //given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
         List<ChecklistOption> checklistOptions = List.of(
-                ChecklistOptionFixture.CHECKLIST1_OPTION_CLOSET,
-                ChecklistOptionFixture.CHECKLIST1_OPTION_BED
+                ChecklistOptionFixture.CHECKLIST1_OPTION_CLOSET(checklist),
+                ChecklistOptionFixture.CHECKLIST1_OPTION_BED(checklist)
         );
 
         //when
@@ -68,9 +63,12 @@ class ChecklistOptionServiceTest extends IntegrationTestSupport {
     @Test
     void createOption_duplicateId_exception() {
         //given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
         List<ChecklistOption> checklistOptions = List.of(
-                ChecklistOptionFixture.CHECKLIST1_OPTION_CLOSET,
-                ChecklistOptionFixture.CHECKLIST1_OPTION_CLOSET
+                ChecklistOptionFixture.CHECKLIST1_OPTION_CLOSET(checklist),
+                ChecklistOptionFixture.CHECKLIST1_OPTION_CLOSET(checklist)
         );
 
         // when & then

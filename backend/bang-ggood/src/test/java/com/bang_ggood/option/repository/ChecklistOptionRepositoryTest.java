@@ -33,8 +33,8 @@ class ChecklistOptionRepositoryTest extends IntegrationTestSupport {
 
     @BeforeEach
     void setUp() {
-        User user = userRepository.save(UserFixture.USER1);
-        checklistId = checklistManageService.createChecklist(user, ChecklistFixture.CHECKLIST_CREATE_REQUEST);
+        User user = userRepository.save(UserFixture.USER1());
+        checklistId = checklistManageService.createChecklist(user, ChecklistFixture.CHECKLIST_CREATE_REQUEST());
     }
 
     @DisplayName("체크리스트 ID로 옵션 찾기 성공")
@@ -57,7 +57,7 @@ class ChecklistOptionRepositoryTest extends IntegrationTestSupport {
         int optionCount = checklistOptionRepository.countByChecklist(checklistRepository.getById(checklistId));
 
         // then
-        assertThat(optionCount).isEqualTo(ChecklistFixture.CHECKLIST_CREATE_REQUEST.options().size());
+        assertThat(optionCount).isEqualTo(ChecklistFixture.CHECKLIST_CREATE_REQUEST().options().size());
 
     }
 

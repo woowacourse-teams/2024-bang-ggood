@@ -21,9 +21,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import static com.bang_ggood.user.UserFixture.USER1;
-import static com.bang_ggood.user.UserFixture.USER1_WITH_ID;
-import static com.bang_ggood.user.UserFixture.USER2_WITH_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -50,7 +47,7 @@ class AuthServiceTest extends IntegrationTestSupport {
     void login_signup() {
         // given
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
-                .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2);
+                .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
         String token = authService.login(oauthLoginRequest);
@@ -63,9 +60,9 @@ class AuthServiceTest extends IntegrationTestSupport {
     @Test
     void login() {
         // given
-        userRepository.save(USER1);
+        userRepository.save(UserFixture.USER1());
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
-                .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER1);
+                .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER1());
 
         // when
         String token = authService.login(oauthLoginRequest);
@@ -79,14 +76,15 @@ class AuthServiceTest extends IntegrationTestSupport {
     void login_default_checklist_question() {
         // given
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
-                .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2);
+                .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
         String token = authService.login(oauthLoginRequest);
 
         // then
         User user = authService.extractUser(token);
-        CustomChecklistQuestionsResponse customChecklistQuestions = questionManageService.readCustomChecklistQuestions(user);
+        CustomChecklistQuestionsResponse customChecklistQuestions = questionManageService.readCustomChecklistQuestions(
+                user);
 
         int sum = 0;
         for (CategoryQuestionsResponse response : customChecklistQuestions.categories()) {
@@ -101,7 +99,7 @@ class AuthServiceTest extends IntegrationTestSupport {
     void login_default_checklist() {
         // given
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
-                .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2);
+                .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
         String token = authService.login(oauthLoginRequest);
@@ -116,10 +114,10 @@ class AuthServiceTest extends IntegrationTestSupport {
     @Test
     void logout_invalid_ownership_exception() {
         // given
-        String token = jwtTokenProvider.createToken(USER1_WITH_ID);
+        String token = jwtTokenProvider.createToken(UserFixture.USER1_WITH_ID());
 
         //when & then
-        assertThatThrownBy(() -> authService.logout("token=" + token, USER2_WITH_ID))
+        assertThatThrownBy(() -> authService.logout("token=" + token, UserFixture.USER2_WITH_ID()))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER.getMessage());
     }

@@ -3,7 +3,6 @@ import { useStore } from 'zustand';
 import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
 import usePutChecklistQuery from '@/hooks/query/usePutCheclistQuery';
 import useToast from '@/hooks/useToast';
-// import checklistAddressStore from '@/store/checklistAddressStore';
 import checklistIncludedMaintenancesStore from '@/store/checklistIncludedMaintenancesStore';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';

@@ -16,6 +16,7 @@ export const initialRoomInfo = {
   rent: '',
   maintenanceFee: '',
   station: '',
+  address: '',
   walkingTime: '',
   size: '',
   floor: '',

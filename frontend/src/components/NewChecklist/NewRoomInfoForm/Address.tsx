@@ -13,7 +13,7 @@ const Address = () => {
     <FormField>
       <FormField.Label label="주소" />
       {address ? (
-        <FormField.Input name="address" value={`${address} ${buildingName}`} />
+        <FormField.TextBox text={`${address} ${buildingName}`} />
       ) : (
         <FormField.TextBox text={'주소를 추가해 주세요.'} />
       )}

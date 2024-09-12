@@ -167,9 +167,7 @@ module.exports = () => {
       },
     };
 
-    if (process.env.ANALYZE_BUNDLE === 'true') {
-      config.plugins.push(new BundleAnalyzerPlugin());
-    }
+    // config.plugins.push(new BundleAnalyzerPlugin()); /* 원할때만 켜기 */
   } else {
     config.mode = 'development';
   }

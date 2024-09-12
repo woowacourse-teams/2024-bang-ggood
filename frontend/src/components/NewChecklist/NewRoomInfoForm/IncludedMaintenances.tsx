@@ -8,6 +8,7 @@ import { IncludedMaintenancesData } from '@/constants/roomInfo';
 import checklistIncludedMaintenancesStore from '@/store/checklistIncludedMaintenancesStore';
 
 const IncludedMaintenances = () => {
+  useStore(checklistIncludedMaintenancesStore);
   const actions = useStore(checklistIncludedMaintenancesStore, state => state.actions);
 
   return (

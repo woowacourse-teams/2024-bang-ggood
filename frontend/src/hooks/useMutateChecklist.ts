@@ -1,5 +1,6 @@
 import { useStore } from 'zustand';
 
+import { TOAST_MESSAGE } from '@/constants/message';
 import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
 import usePutChecklistQuery from '@/hooks/query/usePutCheclistQuery';
 import useToast from '@/hooks/useToast';
@@ -47,7 +48,7 @@ const useMutateChecklist = (mutateType: MutateType, checklistId?: number) => {
     const postNewChecklist = () => {
       addChecklist(postData, {
         onSuccess: () => {
-          showToast('체크리스트가 저장되었습니다.'); // TODO: 메세지 상수처리
+          showToast(TOAST_MESSAGE.ADD);
           actions.resetAll();
         },
       });
@@ -56,7 +57,7 @@ const useMutateChecklist = (mutateType: MutateType, checklistId?: number) => {
     const putEditedChecklist = () => {
       putChecklist(putData, {
         onSuccess: () => {
-          showToast('체크리스트가 수정되었습니다.'); // TODO: 메세지 상수처리
+          showToast(TOAST_MESSAGE.EDIT);
           actions.resetAll();
         },
       });

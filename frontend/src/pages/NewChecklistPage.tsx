@@ -29,7 +29,7 @@ const NewChecklistPage = () => {
   // TODO: action 분리 필요
   const resetChecklist = useChecklistStore(state => state.reset);
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);
-  const { resetShowTipBox } = useHandleTipBox('OPTION'); // TODO: 상수화 처리
+  const { resetShowTipBox } = useHandleTipBox('OPTION');
 
   // 메모 모달
   const { isModalOpen: isMemoModalOpen, openModal: openMemoModal, closeModal: closeMemoModal } = useModal();

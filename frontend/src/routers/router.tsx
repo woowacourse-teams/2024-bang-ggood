@@ -1,23 +1,30 @@
-import { createBrowserRouter } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 import FooterLayout from '@/components/_common/layout/FooterLayout';
 import { ROUTE_PATH } from '@/constants/routePath';
-import ArticleDetailPage from '@/pages/ArticleDetailPage';
-import ArticleListPage from '@/pages/ArticleListPage';
-import ChecklistCustomPage from '@/pages/ChecklistCustomPage';
-import ChecklistDetailPage from '@/pages/ChecklistDetailPage';
-import ChecklistListPage from '@/pages/ChecklistListPage';
-import EditChecklistPage from '@/pages/EditChecklistPage';
-import ErrorPage from '@/pages/ErrorPage';
-import LandingPage from '@/pages/LandingPage';
-import MainPage from '@/pages/MainPage';
-import MyPage from '@/pages/MyPage';
-import NewChecklistPage from '@/pages/NewChecklistPage';
-import NotFound from '@/pages/NotFound';
+
+const ArticleDetailPage = React.lazy(() => import('@/pages/ArticleDetailPage'));
+const NotFound = React.lazy(() => import('@/pages/NotFound'));
+const ArticleListPage = React.lazy(() => import('@/pages/ArticleListPage'));
+const ChecklistCustomPage = React.lazy(() => import('@/pages/ChecklistCustomPage'));
+const ChecklistDetailPage = React.lazy(() => import('@/pages/ChecklistDetailPage'));
+const ChecklistListPage = React.lazy(() => import('@/pages/ChecklistListPage'));
+const EditChecklistPage = React.lazy(() => import('@/pages/EditChecklistPage'));
+const LandingPage = React.lazy(() => import('@/pages/LandingPage'));
+const MainPage = React.lazy(() => import('@/pages/MainPage'));
+const MyPage = React.lazy(() => import('@/pages/MyPage'));
+const NewChecklistPage = React.lazy(() => import('@/pages/NewChecklistPage'));
+
+const ErrorPage = React.lazy(() => import('@/pages/ErrorPage'));
 
 const router = createBrowserRouter([
   {
-    // element: <AuthGuard />,
+    element: (
+      <Suspense>
+        <Outlet />
+      </Suspense>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {

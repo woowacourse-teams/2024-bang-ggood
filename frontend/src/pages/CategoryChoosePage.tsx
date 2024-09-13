@@ -8,12 +8,12 @@ import Badge from '@/components/_common/Badge/Badge';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
+import { TOAST_MESSAGE } from '@/constants/message';
 import { ROUTE_PATH } from '@/constants/routePath';
+import { MAX_SELECT_CATEGORY_COUNT } from '@/constants/system';
 import useToast from '@/hooks/useToast';
 import { flexColumn, flexRow, title2 } from '@/styles/common';
 import { Category } from '@/types/category';
-
-const MAX_SELECT_CATEGORY_COUNT = 3;
 
 const CategoryChoosePage = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -37,7 +37,7 @@ const CategoryChoosePage = () => {
       } else if (prev.length < MAX_SELECT_CATEGORY_COUNT) {
         return [...prev, id];
       }
-      showToast(`카테고리는 최대 ${MAX_SELECT_CATEGORY_COUNT}개까지만 선택 가능합니다.`);
+      showToast(TOAST_MESSAGE.MAX_SELECT);
       return prev;
     });
   };

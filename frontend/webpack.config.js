@@ -1,32 +1,38 @@
-// Generated using webpack-cli https://github.com/webpack/webpack-cli
-
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
-const fs = require('fs');
-
-// env
+const { merge } = require('webpack-merge');
 const dotenv = require('dotenv');
 const { sentryWebpackPlugin } = require('@sentry/webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const env = dotenv.config().parsed;
-const isProduction = process.env.NODE_ENV == 'production';
 
+// 공통 환경 변수 로드
+const commonEnv = dotenv.config({ path: path.resolve(__dirname, '.env') }).parsed || {};
+
+// API 모드에 따른 환경 변수 파일 로드
+const apiEnv = process.env.API_ENV;
+const envFilePath = `.env.${apiEnv}`;
+const specificEnv = dotenv.config({ path: path.resolve(__dirname, envFilePath) }).parsed || {};
+
+// 공통 환경 변수와 특정 환경 변수를 병합
+const env = merge(commonEnv, specificEnv);
+
+const isProduction = process.env.NODE_ENV === 'production';
 const stylesHandler = isProduction ? MiniCssExtractPlugin.loader : 'style-loader';
 
-const envKeys = env
-  ? Object.keys(env).reduce((prev, next) => {
-      prev[`process.env.${next}`] = JSON.stringify(env[next]);
-      return prev;
-    }, {})
-  : {};
+// 환경 변수를 Webpack DefinePlugin에 적용할 형태로 변환
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
 
 const config = {
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
+    filename: '[name].js',
     clean: true,
   },
   devServer: {
@@ -65,9 +71,7 @@ const config = {
             loader: 'html-loader',
             options: {
               postprocessor: (content, loaderContext) => {
-                // When you environment supports template literals (using browserslist or options) we will generate code using them
                 const isTemplateLiteralSupported = content[0] === '`';
-
                 return content
                   .replace(/<%=/g, isTemplateLiteralSupported ? `\${` : '" +')
                   .replace(/%>/g, isTemplateLiteralSupported ? '}' : '+ "');
@@ -88,7 +92,7 @@ const config = {
           },
         ],
       },
-      { test: /\.(png|jpg|gif)/i, type: 'asset/resource' },
+      { test: /\.(png|jpg|gif|webp|mp4)/i, type: 'asset/resource' },
       {
         test: /\.svg$/i,
         issuer: /\.[jt]sx?$/,
@@ -128,26 +132,31 @@ module.exports = () => {
     config.mode = 'production';
 
     config.plugins.push(new MiniCssExtractPlugin());
-
     config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
-    config.plugins.push(
-      sentryWebpackPlugin({
-        authToken: process.env.SENTRY_AUTH_TOKEN,
-        org: process.env.SENTRY_ORG,
-        project: process.env.SENTRY_PROJECT,
-      }),
-    );
+
+    if (process.env.SENTRY_AUTH_TOKEN) {
+      config.plugins.push(
+        sentryWebpackPlugin({
+          authToken: process.env.SENTRY_AUTH_TOKEN,
+          org: process.env.SENTRY_ORG,
+          project: process.env.SENTRY_PROJECT,
+        }),
+      );
+    }
+
     config.devtool = 'source-map';
+
     config.optimization = {
       splitChunks: {
         chunks: 'all',
         minSize: 20000,
-        maxSize: 250000, // 250KB 단위로 청크를 나눔
+        maxSize: 250000,
         cacheGroups: {
           defaultVendors: {
             test: /[\\/]node_modules[\\/]/,
             priority: -10,
             reuseExistingChunk: true,
+            filename: '[name].js',
           },
           default: {
             minChunks: 2,
@@ -157,9 +166,11 @@ module.exports = () => {
         },
       },
     };
+
     // config.plugins.push(new BundleAnalyzerPlugin()); /* 원할때만 켜기 */
   } else {
     config.mode = 'development';
   }
+
   return config;
 };

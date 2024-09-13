@@ -1,80 +1,38 @@
-import createFormStore from '@/store/createFormStore';
+import createFormStore, { FormSpec } from '@/store/createFormStore';
 import { RoomInfo } from '@/types/room';
+import { objectMap } from '@/utils/typeFunctions';
 import {
-  inRangeValidator,
   isIntegerValidator,
   isNumericValidator,
   lengthValidator,
   nonNegativeValidator,
   positiveValidator,
-  Validator,
 } from '@/utils/validators';
 
-export const initialRoomInfo = {
-  roomName: '',
-  deposit: undefined,
-  rent: undefined,
-  maintenanceFee: undefined,
-  station: undefined,
-  walkingTime: undefined,
-  size: undefined,
-  floor: undefined,
-  floorLevel: '지상',
-  type: undefined,
-  structure: undefined,
-  contractTerm: undefined,
-  realEstate: undefined,
-  occupancyMonth: undefined,
-  occupancyPeriod: '초',
-  summary: undefined,
-  memo: undefined,
-} as const;
-
-const roomInfoType = {
-  roomName: 'string',
-  address: 'string',
-  station: 'string',
-  deposit: 'number',
-  rent: 'number',
-  maintenanceFee: 'number',
-  walkingTime: 'number',
-  size: 'number',
-  floor: 'number',
-  floorLevel: 'string',
-  type: 'string',
-  structure: 'string',
-  contractTerm: 'number',
-  realEstate: 'string',
-  occupancyMonth: 'number',
-  occupancyPeriod: 'string',
-  summary: 'string',
-  memo: 'string',
-  createdAt: 'string',
-  includedMaintenances: '',
-} as const;
-
-const validatorSet: Record<string, Validator[]> = {
-  roomName: [lengthValidator(20)],
-  address: [],
-  deposit: [isNumericValidator, nonNegativeValidator],
-  rent: [isNumericValidator, nonNegativeValidator],
-  maintenanceFee: [isNumericValidator, nonNegativeValidator],
-  includedMaintenances: [],
-  contractTerm: [isNumericValidator, nonNegativeValidator],
-  station: [],
-  walkingTime: [isIntegerValidator],
-  type: [],
-  size: [isNumericValidator],
-  floor: [isIntegerValidator, positiveValidator],
-  floorLevel: [],
-  structure: [],
-  realEstate: [],
-  occupancyMonth: [isNumericValidator, positiveValidator, inRangeValidator(1, 12)],
-  occupancyPeriod: [],
-  summary: [],
-  memo: [],
+const formSpec: FormSpec<RoomInfo> = {
+  roomName: { initialValue: '', type: 'string', validators: [lengthValidator(20)] },
+  address: { initialValue: '', type: 'string', validators: [] },
+  station: { initialValue: '', type: 'string', validators: [] },
+  walkingTime: { initialValue: '', type: 'number', validators: [] },
+  deposit: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
+  rent: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
+  maintenanceFee: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
+  // includedMaintenances: { initialValue: '', type: 'string', validators: [isNumericValidator, nonNegativeValidator] }, //TODO 따로 관리되고있을건데, 아마도 store에 편입하는 게 나을 것.
+  contractTerm: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
+  type: { initialValue: '', type: 'string', validators: [] },
+  size: { initialValue: '', type: 'number', validators: [isNumericValidator] },
+  floor: { initialValue: '', type: 'number', validators: [isIntegerValidator, positiveValidator] },
+  floorLevel: { initialValue: '지상', type: 'string', validators: [] },
+  structure: { initialValue: '', type: 'string', validators: [] },
+  realEstate: { initialValue: '', type: 'string', validators: [] },
+  occupancyMonth: { initialValue: '', type: 'number', validators: [isIntegerValidator, positiveValidator] },
+  occupancyPeriod: { initialValue: '초', type: 'string', validators: [] },
+  summary: { initialValue: '', type: 'string', validators: [] },
+  memo: { initialValue: '', type: 'string', validators: [] },
 };
 
-const checklistRoomInfoStore = createFormStore<RoomInfo>(initialRoomInfo, validatorSet, roomInfoType, 'roomInfoForm');
+export const initialRoomInfo = objectMap(formSpec, ([key, val]) => [key, val.initialValue]);
+
+const checklistRoomInfoStore = createFormStore<RoomInfo>(formSpec, 'roomInfoForm');
 
 export default checklistRoomInfoStore;

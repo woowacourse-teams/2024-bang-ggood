@@ -6,17 +6,30 @@ import CounterBox from '@/components/_common/CounterBox/CounterBox';
 import FormField from '@/components/_common/FormField/FormField';
 import Modal from '@/components/_common/Modal/Modal';
 import { MODAL_MESSAGE } from '@/constants/message';
+import useMutateChecklist from '@/hooks/useMutateChecklist';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { flexColumn, title3 } from '@/styles/common';
+import { MutateType } from '@/types/checklist';
 
 interface Props {
   isModalOpen: boolean;
   modalClose: () => void;
-  submitChecklist: () => void;
+  onConfirm?: () => void;
+  mutateType: MutateType;
+  checklistId?: number;
 }
 
-const SummaryModal = ({ isModalOpen, modalClose, submitChecklist }: Props) => {
+const SubmitModalWithSummary = ({ isModalOpen, modalClose, onConfirm = () => {}, mutateType, checklistId }: Props) => {
   const { rawValue: roomInfo, actions } = useStore(checklistRoomInfoStore);
+
+  // 체크리스트 작성 / 수정
+  const { handleSubmitChecklist } = useMutateChecklist(mutateType, checklistId);
+
+  const handleSaveChecklist = () => {
+    handleSubmitChecklist();
+    onConfirm();
+    modalClose();
+  };
 
   return (
     <Modal isOpen={isModalOpen} onClose={modalClose}>
@@ -37,14 +50,14 @@ const SummaryModal = ({ isModalOpen, modalClose, submitChecklist }: Props) => {
           <S.CounterContainer>
             <CounterBox currentCount={roomInfo.summary?.length || 0} totalCount={15} />
           </S.CounterContainer>
-          <Button size="full" color="dark" onClick={submitChecklist} isSquare label="체크리스트 저장하기" />
+          <Button size="full" color="dark" onClick={handleSaveChecklist} isSquare label="체크리스트 저장하기" />
         </S.Wrapper>
       </Modal.body>
     </Modal>
   );
 };
 
-export default SummaryModal;
+export default SubmitModalWithSummary;
 
 const S = {
   Title: styled.div`

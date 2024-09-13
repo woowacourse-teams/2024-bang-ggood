@@ -47,12 +47,12 @@ const router = createBrowserRouter([
         path: ROUTE_PATH.checklistNew,
       },
       {
-        element: <EditChecklistPage />,
-        path: ROUTE_PATH.checklistEdit,
-      },
-      {
         element: <ChecklistDetailPage />,
         path: ROUTE_PATH.checklistId,
+      },
+      {
+        element: <EditChecklistPage />,
+        path: ROUTE_PATH.checklistEdit,
       },
       {
         element: <ChecklistCustomPage />,

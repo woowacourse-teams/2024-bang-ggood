@@ -46,6 +46,7 @@ const S = {
 
     background-color: ${({ theme }) => theme.palette.white};
     ${boxShadow};
+    cursor: pointer;
   `,
   Keyword: styled.span<{ bgColor: string }>`
     padding: 0.4rem 0.8rem;

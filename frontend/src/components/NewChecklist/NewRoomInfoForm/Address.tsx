@@ -4,15 +4,19 @@ import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import DaumAddressModal from '@/components/NewChecklist/AddressModal/DaumAddressModal';
 import RealTimeAddressModal from '@/components/NewChecklist/AddressModal/RealTimeAddressModal';
-import checklistAddressStore from '@/store/checklistAddressStore';
+import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
 const Address = () => {
-  const address = useStore(checklistAddressStore, state => state.address);
+  const { address, buildingName } = useStore(checklistRoomInfoStore, state => state.rawValue);
 
   return (
     <FormField>
       <FormField.Label label="주소" />
-      <FormField.Input name="address" value={address} />
+      {address ? (
+        <FormField.TextBox text={`${address} ${buildingName}`} />
+      ) : (
+        <FormField.TextBox text={'주소를 추가해 주세요.'} />
+      )}
       <FlexBox.Horizontal>
         {/*실시간 위치 모달*/}
         <RealTimeAddressModal />

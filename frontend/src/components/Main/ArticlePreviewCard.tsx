@@ -24,7 +24,7 @@ const ArticlePreviewCard = ({ index, article }: Props) => {
   };
 
   return (
-    <S.Container bgColor={color500} onClick={handleClickArticle}>
+    <S.Container bgColor={color500} hoverColor={color600} onClick={handleClickArticle}>
       <S.Keyword bgColor={color600}>{keyword}</S.Keyword>
       <S.Title>{title}</S.Title>
       <S.ArrowButton>
@@ -37,7 +37,7 @@ const ArticlePreviewCard = ({ index, article }: Props) => {
 export default ArticlePreviewCard;
 
 const S = {
-  Container: styled.div<{ bgColor: string }>`
+  Container: styled.div<{ bgColor: string; hoverColor: string }>`
     position: relative;
     width: 19rem;
     height: 18rem;
@@ -49,6 +49,12 @@ const S = {
     box-sizing: border-box;
     border-radius: 2.4rem;
     ${boxShadowSpread}
+    cursor: pointer;
+
+    &:hover,
+    &:active {
+      background-color: ${({ hoverColor }) => hoverColor};
+    }
   `,
   Keyword: styled.div<{ bgColor: string }>`
     display: inline-block;

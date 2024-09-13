@@ -10,6 +10,7 @@ import checklistIncludedMaintenancesStore from '@/store/checklistIncludedMainten
 const IncludedMaintenances = () => {
   useStore(checklistIncludedMaintenancesStore);
   const actions = useStore(checklistIncludedMaintenancesStore, state => state.actions);
+  const includedMaintenances = useStore(checklistIncludedMaintenancesStore, state => state.value);
 
   return (
     <FlexBox.Vertical>
@@ -21,7 +22,7 @@ const IncludedMaintenances = () => {
             label={displayName}
             name={displayName}
             size="button"
-            isSelected={actions.includes(id)}
+            isSelected={includedMaintenances.includes(id)}
             onClick={() => actions.toggle(id)}
           />
         ))}

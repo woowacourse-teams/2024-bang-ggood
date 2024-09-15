@@ -52,7 +52,7 @@ public class ArticleE2ETest extends AcceptanceTest {
     @DisplayName("아티클 생성 실패: 제목이 비어있는 경우")
     @Test
     void createArticle_titleBlank_exception() {
-        ArticleCreateRequest request = new ArticleCreateRequest("", "내용", "키워드", "요약");
+        ArticleCreateRequest request = new ArticleCreateRequest("", "내용", "키워드", "요약", "썸네일");
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)

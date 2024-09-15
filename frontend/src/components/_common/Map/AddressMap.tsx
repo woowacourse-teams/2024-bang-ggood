@@ -3,10 +3,12 @@ import { useEffect, useRef } from 'react';
 
 import kakaoMapImg from '@/assets/icons/map/kakaomap.webp';
 import naverMapImg from '@/assets/icons/map/navermap.webp';
+import { DEFAULT_POSITION } from '@/constants/map';
 import createKakaoMapElements from '@/utils/createKakaoMapElements';
 
+import loadExternalScriptWithCallback from '../../../utils/loadScript';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const { kakao } = window as any;
 
 const AddressMap = ({ location }: { location: string }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -15,24 +17,30 @@ const AddressMap = ({ location }: { location: string }) => {
   const { createMarker } = createKakaoMapElements();
 
   useEffect(() => {
-    // if (!mapContainerRef.current) return;
-    // const mapOption = {
-    //   center: new kakao.maps.LatLng(DEFAULT_POSITION.lat, DEFAULT_POSITION.lon),
-    //   level: 3,
-    // };
-    // // 지도 생성
-    // const map = new kakao.maps.Map(mapContainerRef.current, mapOption);
-    // // 주소-좌표 변환 객체 생성
-    // const geocoder = new kakao.maps.services.Geocoder();
-    // // 주소로 좌표 검색
-    // geocoder.addressSearch(location, (result: any, status: any) => {
-    //   if (status === kakao.maps.services.Status.OK) {
-    //     const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-    //     const marker = createMarker(map, { lat: result[0].y, lon: result[0].x });
-    //     markerRef.current = marker;
-    //     map.setCenter(coords);
-    //   }
-    // });
+    const initializeMap = () => {
+      const { kakao } = window as any;
+
+      if (!mapContainerRef.current) return;
+      const mapOption = {
+        center: new kakao.maps.LatLng(DEFAULT_POSITION.lat, DEFAULT_POSITION.lon),
+        level: 3,
+      };
+      // 지도 생성
+      const map = new kakao.maps.Map(mapContainerRef.current, mapOption);
+      // 주소-좌표 변환 객체 생성
+      const geocoder = new kakao.maps.services.Geocoder();
+      // 주소로 좌표 검색
+      geocoder.addressSearch(location, (result: any, status: any) => {
+        if (status === kakao.maps.services.Status.OK) {
+          const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+          const marker = createMarker(kakao, map, coords);
+          markerRef.current = marker;
+          map.setCenter(coords);
+        }
+      });
+    };
+
+    loadExternalScriptWithCallback('kakaoMap', initializeMap);
   }, [location]);
 
   const handleOpenKakaoMap = () => {

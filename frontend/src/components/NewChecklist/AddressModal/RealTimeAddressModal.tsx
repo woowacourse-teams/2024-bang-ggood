@@ -30,13 +30,11 @@ const RealTimeAddressModal = () => {
     }
   };
 
-  /* 모달 열릴 때 주소 정보 리셋 */
+  /* 모달 열릴 때 주소 정보 리셋 및 스크립트 로드 */
   useEffect(() => {
-    if (isModalOpen) {
-      roomInfoActions.set('address', '');
-      roomInfoActions.set('buildingName', '');
-    }
-  }, [isModalOpen]);
+    roomInfoActions.set('address', '');
+    roomInfoActions.set('buildingName', '');
+  }, []);
 
   return (
     <>
@@ -57,6 +55,7 @@ const RealTimeAddressModal = () => {
 
             {/* 지도 */}
             <RealTimeMap position={position} setPosition={setPosition} />
+
             <S.ButtonBox>
               <Button
                 label="이 위치로 설정할게요."

@@ -3,23 +3,23 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useStore } from 'zustand';
 
 import { BangBangCryIcon } from '@/assets/assets';
+import Button from '@/components/_common/Button/Button';
 import { LoadingSpinner } from '@/components/_common/LoadingSpinner/LoadingSpinner';
-import DaumAddressModal from '@/components/NewChecklist/AddressModal/DaumAddressModal';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { flexCenter } from '@/styles/common';
 import { Position } from '@/types/address';
 import createKakaoMapElements from '@/utils/createKakaoMapElements';
+import loadExternalScriptWithCallback from '@/utils/loadScript';
 
 type RealTimeLocationState = 'loading' | 'failure' | 'success';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const RealTimeMap = ({
-  position,
-  setPosition,
-}: {
+interface Props {
   position: Position;
   setPosition: React.Dispatch<React.SetStateAction<Position>>;
-}) => {
+}
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const RealTimeMap = ({ position, setPosition }: Props) => {
   const mapRef = useRef<any | null>(null);
   const markerRef = useRef<any | null>(null);
   const infoWindowRef = useRef<any | null>(null);
@@ -30,13 +30,7 @@ const RealTimeMap = ({
   const [realTimeLocationState, setRealTimeLocationState] = useState<RealTimeLocationState>('loading');
 
   useEffect(() => {
-    /*카카오 맵 스크립트 불러오기*/
-    const script = document.createElement('script');
-    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.KAKAO_MAP_KEY}&autoload=false&libraries=services`;
-    script.async = true;
-    document.head.appendChild(script);
-
-    script.onload = () => {
+    const initializeMap = () => {
       const { kakao } = window as any;
 
       kakao.maps.load(() => {
@@ -94,9 +88,8 @@ const RealTimeMap = ({
       });
     };
 
-    script.onerror = () => {
-      console.error('카카오맵 스크립트를 불러오는데 실패하였습니다.');
-    };
+    /*카카오 맵 스크립트 불러오고 콜백 실행*/
+    loadExternalScriptWithCallback('kakaoMap', initializeMap);
   }, []);
 
   const updateAddressFromCoords = (coords: any) => {
@@ -156,7 +149,7 @@ const RealTimeMap = ({
               <div>위치를 허용하셨나요?</div>
               <div>주소 검색으로 위치를 찾으시겠어요?</div>
               <div>
-                <DaumAddressModal />
+                <S.AddressButton label="주소 검색" size="small" isSquare={true} color="dark" />
               </div>
             </S.InfoTextBox>
           </S.MapEmptyBox>
@@ -207,6 +200,11 @@ const S = {
     width: 100%;
     ${flexCenter}
     margin-bottom:10px;
+  `,
+  AddressButton: styled(Button)`
+    width: 50%;
+
+    font-size: ${({ theme }) => theme.text.size.xSmall};
   `,
 };
 

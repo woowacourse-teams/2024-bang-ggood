@@ -147,12 +147,8 @@ const RealTimeMap = ({ setCurrentAddress, setCurrentBuildingName, position, setP
               <S.FailureIcon>
                 <BangBangCryIcon />
               </S.FailureIcon>
-              <div>위치를 찾을 수 없어요.</div>
+              <div>현재 위치를 찾을 수 없어요.</div>
               <div>위치를 허용하셨나요?</div>
-              <div>주소 검색으로 위치를 찾으시겠어요?</div>
-              <div>
-                <S.AddressButton label="주소 검색" size="small" isSquare={true} color="dark" />
-              </div>
             </S.InfoTextBox>
           </S.MapEmptyBox>
         )}

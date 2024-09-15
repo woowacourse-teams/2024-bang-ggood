@@ -22,7 +22,6 @@ const RealTimeAddressModal = () => {
   const [currentAddress, setCurrentAddress] = useState('');
   const [currentBuildingName, setCurrentBuildingName] = useState('');
 
-  //TODO: 확인 누를 때 주소가 전역변수에 설정되도록 하기
   const { findNearSubway } = useFindNearSubway();
 
   const handleSubmitAddress = () => {

@@ -20,23 +20,25 @@ const AddressMap = ({ location }: { location: string }) => {
     const initializeMap = () => {
       const { kakao } = window as any;
 
-      if (!mapContainerRef.current) return;
-      const mapOption = {
-        center: new kakao.maps.LatLng(DEFAULT_POSITION.lat, DEFAULT_POSITION.lon),
-        level: 3,
-      };
-      // 지도 생성
-      const map = new kakao.maps.Map(mapContainerRef.current, mapOption);
-      // 주소-좌표 변환 객체 생성
-      const geocoder = new kakao.maps.services.Geocoder();
-      // 주소로 좌표 검색
-      geocoder.addressSearch(location, (result: any, status: any) => {
-        if (status === kakao.maps.services.Status.OK) {
-          const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-          const marker = createMarker(kakao, map, coords);
-          markerRef.current = marker;
-          map.setCenter(coords);
-        }
+      kakao.maps.load(() => {
+        if (!mapContainerRef.current) return;
+        const mapOption = {
+          center: new kakao.maps.LatLng(DEFAULT_POSITION.lat, DEFAULT_POSITION.lon),
+          level: 3,
+        };
+        // 지도 생성
+        const map = new kakao.maps.Map(mapContainerRef.current, mapOption);
+        // 주소-좌표 변환 객체 생성
+        const geocoder = new kakao.maps.services.Geocoder();
+        // 주소로 좌표 검색
+        geocoder.addressSearch(location, (result: any, status: any) => {
+          if (status === kakao.maps.services.Status.OK) {
+            const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+            const marker = createMarker(kakao, map, coords);
+            markerRef.current = marker;
+            map.setCenter(coords);
+          }
+        });
       });
     };
 

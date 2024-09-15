@@ -2,6 +2,7 @@ package com.bang_ggood.article.service;
 
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.article.dto.request.ArticleCreateRequest;
+import com.bang_ggood.article.dto.response.ArticleDetailPreviewResponse;
 import com.bang_ggood.article.dto.response.ArticlePreviewResponse;
 import com.bang_ggood.article.repository.ArticleRepository;
 import com.bang_ggood.global.exception.BangggoodException;
@@ -67,7 +68,7 @@ public class ArticleServiceTest extends IntegrationTestSupport {
 
     @DisplayName("최신 아티클 3건 조회 성공")
     @Test
-    void readLatestArticles() {
+    void readArticlePreviews() {
         // given
         articleRepository.save(ARTICLE_1);
         articleRepository.save(ARTICLE_2);
@@ -75,12 +76,30 @@ public class ArticleServiceTest extends IntegrationTestSupport {
         articleRepository.save(ARTICLE_4);
 
         // when
-        List<String> articleTitles = articleService.readLatestArticles().articles().stream()
+        List<String> articleTitles = articleService.readArticlePreviews().articles().stream()
                 .map(ArticlePreviewResponse::title)
                 .toList();
 
         // then
         assertThat(articleTitles).containsExactly(ARTICLE_4.getTitle(), ARTICLE_3.getTitle(), ARTICLE_2.getTitle());
+    }
+
+    @DisplayName("최신 아티클 전체 조회 성공")
+    @Test
+    void readArticleDetailPreviews() {
+        // given
+        articleRepository.save(ARTICLE_1);
+        articleRepository.save(ARTICLE_2);
+        articleRepository.save(ARTICLE_3);
+        articleRepository.save(ARTICLE_4);
+
+        // when
+        List<String> articleTitles = articleService.readArticleDetailPreviews().articles().stream()
+                .map(ArticleDetailPreviewResponse::title)
+                .toList();
+
+        // then
+        assertThat(articleTitles).containsExactly(ARTICLE_4.getTitle(), ARTICLE_3.getTitle(), ARTICLE_2.getTitle(), ARTICLE_1.getTitle());
     }
 
     @DisplayName("아티클 삭제 성공")

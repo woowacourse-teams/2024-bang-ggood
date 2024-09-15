@@ -22,8 +22,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     Optional<Article> findById(@Param("id") Long id);
 
     @Query("SELECT a FROM Article a " +
-            "WHERE a.deleted = false")
-    List<Article> findAll();
+            "WHERE a.deleted = false " +
+            "ORDER BY a.createdAt DESC ")
+    List<Article> findLatest();
 
     @Query("SELECT a FROM Article a " +
             "WHERE a.deleted = false " +

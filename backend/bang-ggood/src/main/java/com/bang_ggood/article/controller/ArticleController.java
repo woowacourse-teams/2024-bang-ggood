@@ -39,13 +39,13 @@ public class ArticleController {
     }
 
     @GetMapping("/articles")
-    public ResponseEntity<ArticlesDetailPreviewResponse> readArticles() {
-        return ResponseEntity.ok(articleService.readArticles());
+    public ResponseEntity<ArticlesPreviewResponse> readArticles() {
+        return ResponseEntity.ok(articleService.readArticlePreviews());
     }
 
-    @GetMapping("/articles/latest")
-    public ResponseEntity<ArticlesPreviewResponse> readLatestArticles() {
-        return ResponseEntity.ok(articleService.readLatestArticles());
+    @GetMapping("/articles/detail")
+    public ResponseEntity<ArticlesDetailPreviewResponse> readArticlesDetail() {
+        return ResponseEntity.ok(articleService.readArticleDetailPreviews());
     }
 
     @DeleteMapping("/articles/{id}")

@@ -105,12 +105,12 @@ public class ArticleE2ETest extends AcceptanceTest {
                 .statusCode(200);
     }
 
-    @DisplayName("최신 아티클 조회 성공")
+    @DisplayName("상세 아티클 목록 조회 성공")
     @Test
-    void readLatestArticles() {
+    void readArticlesDetail() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .when().get("/articles/latest")
+                .when().get("/articles/detail")
                 .then().log().all()
                 .statusCode(200);
     }

@@ -18,13 +18,18 @@ const RealTimeAddressModal = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const [position, setPosition] = useState<Position>(DEFAULT_POSITION);
-  const { address, buildingName } = useStore(checklistRoomInfoStore, state => state.rawValue);
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
+  const [currentAddress, setCurrentAddress] = useState('');
+  const [currentBuildingName, setCurrentBuildingName] = useState('');
 
+  //TODO: 확인 누를 때 주소가 전역변수에 설정되도록 하기
   const { findNearSubway } = useFindNearSubway();
 
   const handleSubmitAddress = () => {
     if (position.lat && position.lon) {
+      roomInfoActions.set('address', currentAddress);
+      roomInfoActions.set('buildingName', currentBuildingName);
+
       findNearSubway(position);
       closeModal();
     }
@@ -50,11 +55,18 @@ const RealTimeAddressModal = () => {
               <span>
                 <LocationLineIcon height={20} width={20} />
               </span>
-              <S.AddressText>{address ? `${address} ${buildingName}` : '주소가 여기에 표시됩니다.'}</S.AddressText>
+              <S.AddressText>
+                {currentAddress ? `${currentAddress} ${currentBuildingName}` : '주소가 여기에 표시됩니다.'}
+              </S.AddressText>
             </FlexBox.Horizontal>
 
             {/* 지도 */}
-            <RealTimeMap position={position} setPosition={setPosition} />
+            <RealTimeMap
+              position={position}
+              setPosition={setPosition}
+              setCurrentAddress={setCurrentAddress}
+              setCurrentBuildingName={setCurrentBuildingName}
+            />
 
             <S.ButtonBox>
               <Button
@@ -62,7 +74,7 @@ const RealTimeAddressModal = () => {
                 size="full"
                 isSquare={true}
                 onClick={() => handleSubmitAddress()}
-                disabled={!address}
+                disabled={!currentAddress}
               />
             </S.ButtonBox>
           </Modal.body>

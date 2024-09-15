@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
@@ -22,6 +22,7 @@ const DaumAddressModal = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const postcodeContainerRef = useRef<HTMLDivElement | null>(null);
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
+  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
 
   const { findNearSubway } = useFindNearSubway();
 
@@ -29,6 +30,11 @@ const DaumAddressModal = () => {
     openModal();
     loadExternalScriptWithCallback('daumAddress', openPostcodeEmbed);
   };
+
+  useEffect(() => {
+    roomInfoActions.set('address', '');
+    roomInfoActions.set('buildingName', '');
+  }, []);
 
   const openPostcodeEmbed = () => {
     if (window.daum?.Postcode && postcodeContainerRef.current) {

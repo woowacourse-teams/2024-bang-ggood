@@ -1,158 +1,164 @@
 import styled from '@emotion/styled';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useStore } from 'zustand';
 
+import { BangBangCryIcon } from '@/assets/assets';
 import { LoadingSpinner } from '@/components/_common/LoadingSpinner/LoadingSpinner';
+import DaumAddressModal from '@/components/NewChecklist/AddressModal/DaumAddressModal';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
-// import checklistAddressStore from '@/store/checklistAddressStore';
 import { flexCenter } from '@/styles/common';
 import { Position } from '@/types/address';
-import makeMap from '@/utils/makeMap';
+import createKakaoMapElements from '@/utils/createKakaoMapElements';
+
+type RealTimeLocationState = 'loading' | 'failure' | 'success';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const { kakao } = window as any;
-
-const RealTimeMap = ({ setPosition, position }: { position: Position; setPosition: any }) => {
+const RealTimeMap = ({
+  position,
+  setPosition,
+}: {
+  position: Position;
+  setPosition: React.Dispatch<React.SetStateAction<Position>>;
+}) => {
   const mapRef = useRef<any | null>(null);
   const markerRef = useRef<any | null>(null);
   const infoWindowRef = useRef<any | null>(null);
-
+  const mapElement = useRef(null);
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
 
-  const [isRealTimeLocationLoading, setIsRealTimeLocationLoading] = useState(true);
-  const mapUtils = makeMap();
-
-  const geocoder = new kakao.maps.services.Geocoder();
-
-  const displayMarker = (locPosition: any, message: string) => {
-    if (markerRef.current) {
-      markerRef.current.setPosition(locPosition);
-    } else {
-      markerRef.current = new kakao.maps.Marker({
-        map: mapRef.current,
-        position: locPosition,
-      });
-    }
-
-    if (infoWindowRef.current) {
-      infoWindowRef.current.setContent(message);
-      infoWindowRef.current.open(mapRef.current, markerRef.current);
-    } else {
-      infoWindowRef.current = new kakao.maps.InfoWindow({
-        content: message,
-        removable: true,
-      });
-      infoWindowRef.current.open(mapRef.current, markerRef.current);
-    }
-
-    mapRef.current.setCenter(locPosition);
-  };
-
-  const successGeolocation = (position: GeolocationPosition) => {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
-
-    const locPosition = new kakao.maps.LatLng(lat, lon);
-    const message = `<span id="info-title">이 위치가 맞나요?</span>`;
-
-    setPosition({ lat, lon });
-    displayMarker(locPosition, message);
-    searchDetailAddrFromCoords(mapRef.current.getCenter());
-    setIsRealTimeLocationLoading(false);
-  };
-
-  const errorGeolocation = () => {
-    const locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
-    const message = `<span id="info-title">현재 위치를 불러올 수 없어요.</span>`;
-
-    displayMarker(locPosition, message);
-    setIsRealTimeLocationLoading(false);
-  };
+  const { createMap, createMarker, createInfoWindow } = createKakaoMapElements();
+  const [realTimeLocationState, setRealTimeLocationState] = useState<RealTimeLocationState>('loading');
 
   useEffect(() => {
-    /* geolocation으로 현재 실시간 위치 받아오기*/
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(successGeolocation, errorGeolocation);
-    } else {
-      errorGeolocation();
-    }
+    /*카카오 맵 스크립트 불러오기*/
+    const script = document.createElement('script');
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.KAKAO_MAP_KEY}&autoload=false&libraries=services`;
+    script.async = true;
+    document.head.appendChild(script);
 
-    /*기본 지도, 마커, 인포윈도우 생성*/
-    const map = mapUtils.makeInitialMap(position);
-    const customMarker = mapUtils.makeCustomMarker(map, position);
-    const infoWindow = mapUtils.makeInfoWindow();
+    script.onload = () => {
+      const { kakao } = window as any;
 
-    mapRef.current = map;
-    markerRef.current = customMarker;
-    infoWindowRef.current = infoWindow;
+      kakao.maps.load(() => {
+        /*카카오 맵 생성 */
+        const map = createMap(kakao);
+        mapRef.current = map;
 
-    /*클릭시 해당 위치로 위치 상태 변경*/
-    kakao.maps.event.addListener(map, 'click', (mouseEvent: any) => {
-      const latlng = mouseEvent.latLng;
+        /*마커 생성*/
+        const marker = createMarker(kakao, map, new kakao.maps.LatLng(position.lat, position.lon));
+        markerRef.current = marker;
 
-      setPosition({
-        lat: latlng.getLat(),
-        lon: latlng.getLng(),
+        /*인포윈도우 생성*/
+        const infoWindow = createInfoWindow(kakao, map, marker);
+        infoWindowRef.current = infoWindow;
+
+        /*클릭할때 위치 변경*/
+        kakao.maps.event.addListener(map, 'click', (mouseEvent: any) => {
+          const latlng = mouseEvent.latLng;
+          map.setCenter(latlng);
+          setPosition({ lat: latlng.getLat(), lon: latlng.getLng() });
+
+          if (markerRef.current) {
+            markerRef.current.setPosition(latlng);
+          }
+
+          updateAddressFromCoords(latlng);
+        });
+
+        /* 실시간 위치 찾기 */
+        const successGeolocation = (position: GeolocationPosition) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+
+          const locPosition = new kakao.maps.LatLng(lat, lon);
+          const message = `<span id="info-title">이 위치가 맞나요?</span>`;
+
+          setPosition({ lat, lon });
+          map.setCenter(locPosition);
+
+          infoWindowRef.current.setContent(message);
+          infoWindowRef.current.open(mapRef.current, markerRef.current);
+          setRealTimeLocationState('success');
+          updateAddressFromCoords(mapRef.current.getCenter());
+        };
+
+        const errorGeolocation = () => {
+          setRealTimeLocationState('failure');
+        };
+
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(successGeolocation, errorGeolocation);
+        } else {
+          errorGeolocation();
+        }
       });
-    });
+    };
+
+    script.onerror = () => {
+      console.error('카카오맵 스크립트를 불러오는데 실패하였습니다.');
+    };
   }, []);
 
-  /* 좌표로 법정동 상세 주소 정보를 요청*/
-  const searchDetailAddrFromCoords = (coords: any) => {
-    const getDetailAddress = (result: any, status: any) => {
+  const updateAddressFromCoords = (coords: any) => {
+    const { kakao } = window as any;
+
+    const geocoder = new kakao.maps.services.Geocoder();
+
+    geocoder.coord2Address(coords.getLng(), coords.getLat(), (result: any, status: any) => {
       if (status === kakao.maps.services.Status.OK) {
         /*1순위 : 도로명 주소 */
         if (result[0].road_address) {
           actions.set('address', result[0].road_address.address_name);
-          if (result[0].road_address?.building_name) {
-            actions.set('buildingName', result[0].road_address.building_name);
-          } else {
-            actions.set('buildingName', '');
-          }
-          return;
-        }
-        /*2순위 : 지번 주소 */
-        if (result[0].address.address_name) {
+          actions.set('buildingName', result[0].road_address?.building_name || '');
+        } else if (result[0].address.address_name) {
+          /*2순위 : 지번 주소 */
           actions.set('address', result[0].address.address_name);
-
-          if (result[0].road_address?.building_name) {
-            actions.set('buildingName', result[0].road_address.building_name);
-          } else {
-            actions.set('buildingName', '');
-          }
+          actions.set('buildingName', result[0].road_address?.building_name || '');
         }
       }
-    };
-
-    geocoder.coord2Address(coords.getLng(), coords.getLat(), getDetailAddress);
+    });
   };
 
-  /* 위치가 수정될 때마다 마커의 위치를 옮기기 */
   useEffect(() => {
-    if (markerRef.current && mapRef.current && !isRealTimeLocationLoading) {
+    if (markerRef.current && mapRef.current && realTimeLocationState !== 'loading') {
+      const { kakao } = window as any;
+
       const locPosition = new kakao.maps.LatLng(position.lat, position.lon);
       markerRef.current.setPosition(locPosition);
       mapRef.current.setCenter(locPosition);
 
-      /* infoWindow가 존재할 경우 닫고 제거 */
       if (infoWindowRef.current) {
-        infoWindowRef.current.close();
-        infoWindowRef.current = null;
+        infoWindowRef.current.open(mapRef.current, markerRef.current);
       }
 
-      searchDetailAddrFromCoords(mapRef.current.getCenter());
+      updateAddressFromCoords(locPosition);
     }
-  }, [position, markerRef]);
+  }, [position]);
 
   return (
     <S.Container>
-      <S.MapBox id="map">
-        {isRealTimeLocationLoading && (
+      <S.MapBox id="map" ref={mapElement}>
+        {realTimeLocationState === 'loading' && (
           <S.MapEmptyBox>
-            <S.LoadingBox>
+            <S.InfoTextBox>
               <LoadingSpinner />
               <S.LoadingMessage>현재 위치를 찾고 있어요.</S.LoadingMessage>
-            </S.LoadingBox>
+            </S.InfoTextBox>
+          </S.MapEmptyBox>
+        )}
+        {realTimeLocationState === 'failure' && (
+          <S.MapEmptyBox>
+            <S.InfoTextBox>
+              <S.FailureIcon>
+                <BangBangCryIcon />
+              </S.FailureIcon>
+              <div>위치를 찾을 수 없어요.</div>
+              <div>위치를 허용하셨나요?</div>
+              <div>주소 검색으로 위치를 찾으시겠어요?</div>
+              <div>
+                <DaumAddressModal />
+              </div>
+            </S.InfoTextBox>
           </S.MapEmptyBox>
         )}
       </S.MapBox>
@@ -160,6 +166,7 @@ const RealTimeMap = ({ setPosition, position }: { position: Position; setPositio
     </S.Container>
   );
 };
+
 const S = {
   Container: styled.div`
     width: 100%;
@@ -184,18 +191,22 @@ const S = {
 
     ${flexCenter}
   `,
-  LoadingBox: styled.div`
+  InfoTextBox: styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 100;
-    height: 20px;
 
     text-align: center;
   `,
   LoadingMessage: styled.div`
     padding-top: 20px;
+  `,
+  FailureIcon: styled.div`
+    width: 100%;
+    ${flexCenter}
+    margin-bottom:10px;
   `,
 };
 

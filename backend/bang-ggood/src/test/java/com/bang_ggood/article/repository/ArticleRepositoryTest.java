@@ -51,30 +51,6 @@ public class ArticleRepositoryTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.ARTICLE_NOT_FOUND.getMessage());
     }
 
-    @DisplayName("아티클 목록 조회 성공")
-    @Test
-    void findAll() {
-        // given
-        Article article1 = articleRepository.save(ArticleFixture.ARTICLE_1());
-        Article article2 = articleRepository.save(ArticleFixture.ARTICLE_2());
-
-        // when & then
-        assertThat(articleRepository.findAll()).containsExactly(article1, article2);
-    }
-
-    @DisplayName("아티클 목록 조회 성공: 삭제된 아티클 제외")
-    @Test
-    void findAll_exceptDeletedArticle() {
-        // given
-        Article article1 = articleRepository.save(ArticleFixture.ARTICLE_1());
-        Article article2 = articleRepository.save(ArticleFixture.ARTICLE_2());
-        Article article3 = articleRepository.save(ArticleFixture.ARTICLE_3());
-        articleRepository.deleteById(ArticleFixture.ARTICLE_1().getId());
-
-        // when & then
-        assertThat(articleRepository.findAll()).containsExactly(article1, article2, article3);
-    }
-
     @DisplayName("아티클 목록 최신순 조회 성공")
     @Test
     void findLatest() {
@@ -83,12 +59,36 @@ public class ArticleRepositoryTest extends IntegrationTestSupport {
         Article article2 = articleRepository.save(ArticleFixture.ARTICLE_2());
 
         // when & then
-        assertThat(articleRepository.findLatest(1)).containsExactly(article2);
+        assertThat(articleRepository.findLatest()).containsExactly(article2, article1);
     }
 
     @DisplayName("아티클 목록 최신순 조회 성공: 삭제된 아티클 제외")
     @Test
     void findLatest_exceptDeletedArticle() {
+        // given
+        Article article1 = articleRepository.save(ArticleFixture.ARTICLE_1());
+        Article article2 = articleRepository.save(ArticleFixture.ARTICLE_2());
+        Article article3 = articleRepository.save(ArticleFixture.ARTICLE_3());
+        articleRepository.deleteById(ArticleFixture.ARTICLE_1().getId());
+
+        // when & then
+        assertThat(articleRepository.findLatest()).containsExactly(article3, article2, article1);
+    }
+
+    @DisplayName("아티클 목록 제한된 개수 최신순 조회 성공")
+    @Test
+    void findLatest_limit() {
+        // given
+        Article article1 = articleRepository.save(ArticleFixture.ARTICLE_1());
+        Article article2 = articleRepository.save(ArticleFixture.ARTICLE_2());
+
+        // when & then
+        assertThat(articleRepository.findLatest(1)).containsExactly(article2);
+    }
+
+    @DisplayName("아티클 목록 제한된 개수 최신순 조회 성공: 삭제된 아티클 제외")
+    @Test
+    void findLatest_limit_exceptDeletedArticle() {
         // given
         Article article1 = articleRepository.save(ArticleFixture.ARTICLE_1());
         Article article2 = articleRepository.save(ArticleFixture.ARTICLE_2());

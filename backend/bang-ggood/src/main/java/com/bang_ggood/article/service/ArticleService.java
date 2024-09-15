@@ -36,15 +36,15 @@ public class ArticleService {
     }
 
     @Transactional(readOnly = true)
-    public ArticlesDetailPreviewResponse readArticles() {
-        List<ArticleDetailPreviewResponse> articles = articleRepository.findAll().stream()
+    public ArticlesDetailPreviewResponse readArticleDetailPreviews() {
+        List<ArticleDetailPreviewResponse> articles = articleRepository.findLatest().stream()
                 .map(ArticleDetailPreviewResponse::from)
                 .toList();
         return new ArticlesDetailPreviewResponse(articles);
     }
 
     @Transactional(readOnly = true)
-    public ArticlesPreviewResponse readLatestArticles() {
+    public ArticlesPreviewResponse readArticlePreviews() {
         List<ArticlePreviewResponse> articles = articleRepository.findLatest(MAX_ARTICLE_CARDS).stream()
                 .map(ArticlePreviewResponse::from)
                 .toList();

@@ -22,11 +22,14 @@ public class Article extends BaseEntity {
 
     private String summary;
 
-    public Article(String title, String content, String keyword, String summary) {
+    private String thumbnail;
+
+    public Article(String title, String content, String keyword, String summary, String thumbnail) {
         this.title = title;
         this.content = content;
         this.keyword = keyword;
         this.summary = summary;
+        this.thumbnail = thumbnail;
     }
 
     protected Article() {
@@ -50,6 +53,10 @@ public class Article extends BaseEntity {
 
     public String getSummary() {
         return summary;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
     }
 
     @Override
@@ -77,6 +84,7 @@ public class Article extends BaseEntity {
                 ", content='" + content + '\'' +
                 ", keyword='" + keyword + '\'' +
                 ", summary='" + summary + '\'' +
+                ", thumbnail='" + thumbnail + '\'' +
                 '}';
     }
 }

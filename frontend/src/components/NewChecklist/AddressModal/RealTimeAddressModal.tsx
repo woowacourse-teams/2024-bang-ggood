@@ -38,6 +38,8 @@ const RealTimeAddressModal = () => {
   useEffect(() => {
     roomInfoActions.set('address', '');
     roomInfoActions.set('buildingName', '');
+    setCurrentBuildingName('');
+    setCurrentAddress('');
   }, []);
 
   return (

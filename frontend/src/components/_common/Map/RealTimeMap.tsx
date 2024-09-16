@@ -28,65 +28,65 @@ const RealTimeMap = ({ setCurrentAddress, setCurrentBuildingName, position, setP
   const { createMap, createMarker, createInfoWindow } = createKakaoMapElements();
   const [realTimeLocationState, setRealTimeLocationState] = useState<RealTimeLocationState>('loading');
 
-  useEffect(() => {
-    const initializeMap = () => {
-      const { kakao } = window as any;
+  const initializeMap = () => {
+    const { kakao } = window as any;
 
-      kakao.maps.load(() => {
-        /*카카오 맵 생성 */
-        const map = createMap(kakao);
-        mapRef.current = map;
+    kakao.maps.load(() => {
+      /*카카오 맵 생성 */
+      const map = createMap(kakao);
+      mapRef.current = map;
 
-        /*마커 생성*/
-        const marker = createMarker(kakao, map, new kakao.maps.LatLng(position.lat, position.lon));
-        markerRef.current = marker;
+      /*마커 생성*/
+      const marker = createMarker(kakao, map, new kakao.maps.LatLng(position.lat, position.lon));
+      markerRef.current = marker;
 
-        /*인포윈도우 생성*/
-        const infoWindow = createInfoWindow(kakao, map, marker);
-        infoWindowRef.current = infoWindow;
+      /*인포윈도우 생성*/
+      const infoWindow = createInfoWindow(kakao, map, marker);
+      infoWindowRef.current = infoWindow;
 
-        /*클릭할때 위치 변경*/
-        kakao.maps.event.addListener(map, 'click', (mouseEvent: any) => {
-          const latlng = mouseEvent.latLng;
-          map.setCenter(latlng);
-          setPosition({ lat: latlng.getLat(), lon: latlng.getLng() });
+      /*클릭할때 위치 변경*/
+      kakao.maps.event.addListener(map, 'click', (mouseEvent: any) => {
+        const latlng = mouseEvent.latLng;
+        map.setCenter(latlng);
+        setPosition({ lat: latlng.getLat(), lon: latlng.getLng() });
 
-          if (markerRef.current) {
-            markerRef.current.setPosition(latlng);
-          }
-
-          updateAddressFromCoords(latlng);
-        });
-
-        /* 실시간 위치 찾기 */
-        const successGeolocation = (position: GeolocationPosition) => {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
-
-          const locPosition = new kakao.maps.LatLng(lat, lon);
-          const message = `<span id="info-title">이 위치가 맞나요?</span>`;
-
-          setPosition({ lat, lon });
-          map.setCenter(locPosition);
-
-          infoWindowRef.current.setContent(message);
-          infoWindowRef.current.open(mapRef.current, markerRef.current);
-          setRealTimeLocationState('success');
-          updateAddressFromCoords(mapRef.current.getCenter());
-        };
-
-        const errorGeolocation = () => {
-          setRealTimeLocationState('failure');
-        };
-
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(successGeolocation, errorGeolocation);
-        } else {
-          errorGeolocation();
+        if (markerRef.current) {
+          markerRef.current.setPosition(latlng);
         }
-      });
-    };
 
+        updateAddressFromCoords(latlng);
+      });
+
+      /* 실시간 위치 찾기 */
+      const successGeolocation = (position: GeolocationPosition) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        const locPosition = new kakao.maps.LatLng(lat, lon);
+        const message = `<span id="info-title">이 위치가 맞나요?</span>`;
+
+        setPosition({ lat, lon });
+        map.setCenter(locPosition);
+
+        infoWindowRef.current.setContent(message);
+        infoWindowRef.current.open(mapRef.current, markerRef.current);
+        setRealTimeLocationState('success');
+        updateAddressFromCoords(mapRef.current.getCenter());
+      };
+
+      const errorGeolocation = () => {
+        setRealTimeLocationState('failure');
+      };
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(successGeolocation, errorGeolocation);
+      } else {
+        errorGeolocation();
+      }
+    });
+  };
+
+  useEffect(() => {
     /*카카오 맵 스크립트 불러오고 콜백 실행*/
     loadExternalScriptWithCallback('kakaoMap', initializeMap);
   }, []);
@@ -101,13 +101,9 @@ const RealTimeMap = ({ setCurrentAddress, setCurrentBuildingName, position, setP
         /*1순위 : 도로명 주소 */
         if (result[0].road_address) {
           setCurrentAddress(result[0].road_address.address_name);
-          // actions.set('address', result[0].road_address.address_name);
-          // actions.set('buildingName', result[0].road_address?.building_name || '');
         } else if (result[0].address.address_name) {
           /*2순위 : 지번 주소 */
           setCurrentAddress(result[0].address.address_name);
-          // actions.set('address', result[0].address.address_name);
-          // actions.set('buildingName', result[0].road_address?.building_name || '');
         }
         setCurrentBuildingName(result[0].road_address?.building_name || '');
       }
@@ -130,6 +126,8 @@ const RealTimeMap = ({ setCurrentAddress, setCurrentBuildingName, position, setP
     }
   }, [position]);
 
+  const onClickKakaoMap = () => loadExternalScriptWithCallback('kakaoMap', initializeMap);
+
   return (
     <S.Container>
       <S.MapBox id="map" ref={mapElement}>
@@ -137,7 +135,10 @@ const RealTimeMap = ({ setCurrentAddress, setCurrentBuildingName, position, setP
           <S.MapEmptyBox>
             <S.InfoTextBox>
               <LoadingSpinner />
-              <S.LoadingMessage>현재 위치를 찾고 있어요.</S.LoadingMessage>
+              <S.LoadingMessage>
+                <div>현재 위치를 찾고 있어요.</div>
+                <div>위치 권한을 허용해 주세요.</div>
+              </S.LoadingMessage>
             </S.InfoTextBox>
           </S.MapEmptyBox>
         )}
@@ -148,7 +149,9 @@ const RealTimeMap = ({ setCurrentAddress, setCurrentBuildingName, position, setP
                 <BangBangCryIcon />
               </S.FailureIcon>
               <div>현재 위치를 찾을 수 없어요.</div>
-              <div>위치를 허용하셨나요?</div>
+              <div>위치를 허용하셨는지 확인 후,</div>
+              <div>다시 시도해 주세요.</div>
+              <S.RetryButtonBox size={'xSmall'} color={'dark'} onClick={onClickKakaoMap} label="다시 시도" />
             </S.InfoTextBox>
           </S.MapEmptyBox>
         )}
@@ -181,6 +184,9 @@ const S = {
     background-color: ${({ theme }) => theme.palette.background};
 
     ${flexCenter}
+  `,
+  RetryButtonBox: styled(Button)`
+    margin-top: 20px;
   `,
   InfoTextBox: styled.div`
     position: absolute;

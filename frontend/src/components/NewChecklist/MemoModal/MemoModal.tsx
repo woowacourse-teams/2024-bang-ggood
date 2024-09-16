@@ -61,7 +61,6 @@ const MemoModal = ({ isModalOpen, modalClose }: Props) => {
         <S.TextareaBox>
           <Textarea
             placeholder="메모를 입력하세요."
-            autoFocus
             height={'large'}
             value={memo}
             onChange={handleInputChange}

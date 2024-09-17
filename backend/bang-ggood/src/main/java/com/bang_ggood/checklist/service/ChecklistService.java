@@ -58,7 +58,7 @@ public class ChecklistService {
         return checklistRepository.save(checklist);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Checklist readChecklist(User user, Long checklistId) {
         Checklist checklist = checklistRepository.getById(checklistId);
         validateChecklistOwnership(user, checklist);

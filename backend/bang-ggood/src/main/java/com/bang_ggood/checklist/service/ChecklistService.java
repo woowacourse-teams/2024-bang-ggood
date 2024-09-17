@@ -87,13 +87,9 @@ public class ChecklistService {
         return UserChecklistPreviewResponse.of(checklist, isLiked);
     }
 
-    @Transactional
-    public UserChecklistsPreviewResponse readLikedChecklistsPreview(User user) {
-        List<Checklist> likedChecklists = checklistRepository.findAllByUserAndIsLiked(user);
-        List<UserChecklistPreviewResponse> responses = likedChecklists.stream()
-                .map(checklist -> UserChecklistPreviewResponse.of(checklist, true))
-                .toList();
-        return new UserChecklistsPreviewResponse(responses);
+    @Transactional(readOnly = true)
+    public List<Checklist> readLikedChecklistsPreview(User user) {
+        return checklistRepository.findAllByUserAndIsLiked(user);
     }
 
     @Transactional

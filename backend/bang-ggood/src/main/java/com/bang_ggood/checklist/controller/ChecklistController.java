@@ -49,7 +49,7 @@ public class ChecklistController {
 
     @GetMapping("/checklists/like")
     public ResponseEntity<UserChecklistsPreviewResponse> readLikedChecklistsPreview(@AuthPrincipal User user) {
-        return ResponseEntity.ok(checklistService.readLikedChecklistsPreview(user));
+        return ResponseEntity.ok(checklistManageService.readLikedChecklistsPreview(user));
     }
 
     @PutMapping("/checklists/{id}")

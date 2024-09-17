@@ -249,14 +249,13 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         );
 
         //when
-        List<UserChecklistPreviewResponse> checklists =
-                checklistService.readLikedChecklistsPreview(user).checklists();
+        List<Checklist> checklists = checklistService.readLikedChecklistsPreview(user);
 
         //then
         assertAll(
                 () -> assertThat(checklists.size()).isEqualTo(2),
-                () -> assertThat(checklists.get(0).checklistId()).isEqualTo(checklist1.getId()),
-                () -> assertThat(checklists.get(1).checklistId()).isEqualTo(checklist2.getId())
+                () -> assertThat(checklists.get(0).getId()).isEqualTo(checklist1.getId()),
+                () -> assertThat(checklists.get(1).getId()).isEqualTo(checklist2.getId())
         );
     }
 

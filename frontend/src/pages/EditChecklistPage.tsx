@@ -15,11 +15,10 @@ import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery';
 import useModal from '@/hooks/useModal';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
-import checklistIncludedMaintenancesStore from '@/store/checklistIncludedMaintenancesStore';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useOptionStore';
-import { objectOmit } from '@/utils/typeFunctions';
+import { objectMap } from '@/utils/typeFunctions';
 
 type RouteParams = {
   checklistId: string;
@@ -32,7 +31,7 @@ const EditChecklistPage = () => {
 
   const { data: checklist, isSuccess } = useGetChecklistDetailQuery(checklistId);
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const IncludedMaintenancesActions = useStore(checklistIncludedMaintenancesStore, state => state.actions);
+  // const IncludedMaintenancesActions = useStore(checklistIncludedMaintenancesStore, state => state.actions);
 
   // 한줄평 모달
   const { isModalOpen: isSubmitModalOpen, openModal: summaryModalOpen, closeModal: summaryModalClose } = useModal();
@@ -55,8 +54,11 @@ const EditChecklistPage = () => {
   useEffect(() => {
     const fetchChecklistAndSetToStore = async () => {
       if (!isSuccess) return;
-      actions.setAll({ rawValue: objectOmit(checklist.room, new Set('includedMaintenances')), value: checklist.room });
-      IncludedMaintenancesActions.set(checklist.room.includedMaintenances ?? []);
+
+      actions.setAll({
+        rawValue: objectMap(checklist.room, ([key, value]) => [key, value]),
+        value: checklist.room,
+      });
     };
     fetchChecklistAndSetToStore();
   }, [checklistId]);

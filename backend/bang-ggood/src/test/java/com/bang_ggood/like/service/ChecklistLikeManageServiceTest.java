@@ -21,10 +21,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class ChecklistLikeServiceTest extends IntegrationTestSupport {
+class ChecklistLikeManageServiceTest extends IntegrationTestSupport {
 
     @Autowired
-    private ChecklistLikeService checklistLikeService;
+    private ChecklistLikeManageService checklistLikeManageService;
 
     @Autowired
     private ChecklistRepository checklistRepository;
@@ -47,7 +47,7 @@ class ChecklistLikeServiceTest extends IntegrationTestSupport {
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
 
         // when
-        checklistLikeService.createLike(user, checklist);
+        checklistLikeManageService.createLike(user, checklist.getId());
 
         //then
         assertThat(checklistLikeRepository.existsByChecklist(checklist)).isTrue();
@@ -60,11 +60,12 @@ class ChecklistLikeServiceTest extends IntegrationTestSupport {
         Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+
         // when
-        checklistLikeService.createLike(user, checklist);
+        checklistLikeManageService.createLike(user, checklist.getId());
 
         //then
-        assertThatThrownBy(() -> checklistLikeService.createLike(user, checklist))
+        assertThatThrownBy(() -> checklistLikeManageService.createLike(user, checklist.getId()))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.LIKE_ALREADY_EXISTS.getMessage());
     }
@@ -79,7 +80,7 @@ class ChecklistLikeServiceTest extends IntegrationTestSupport {
         ChecklistLike checklistLike = checklistLikeRepository.save(ChecklistFixture.CHECKLIST1_LIKE(checklist));
 
         // when
-        checklistLikeService.deleteLike(user, checklist);
+        checklistLikeManageService.deleteLike(user, checklist.getId());
 
         // then
         assertThat(checklistLikeRepository.existsById(checklistLike.getId())).isFalse();
@@ -94,7 +95,7 @@ class ChecklistLikeServiceTest extends IntegrationTestSupport {
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
 
         // when & then
-        assertThatThrownBy(() -> checklistLikeService.deleteLike(user, checklist))
+        assertThatThrownBy(() -> checklistLikeManageService.deleteLike(user, checklist.getId()))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.LIKE_NOT_EXISTS.getMessage());
     }

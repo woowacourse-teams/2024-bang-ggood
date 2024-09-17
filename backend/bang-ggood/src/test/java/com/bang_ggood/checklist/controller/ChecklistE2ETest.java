@@ -187,20 +187,4 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .then().log().all()
                 .statusCode(204);
     }
-
-    @DisplayName("체크리스트 좋아요 삭제 성공")
-    @Test
-    void deleteChecklistLikeByChecklistId() {
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
-        Checklist checklist = checklistRepository.save(
-                ChecklistFixture.CHECKLIST1_USER1(room, this.getAuthenticatedUser()));
-        checklistLikeRepository.save(ChecklistFixture.CHECKLIST1_LIKE(checklist));
-
-        RestAssured.given().log().all()
-                .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
-                .when().delete("/checklists/" + checklist.getId() + "/like")
-                .then().log().all()
-                .statusCode(204);
-    }
 }

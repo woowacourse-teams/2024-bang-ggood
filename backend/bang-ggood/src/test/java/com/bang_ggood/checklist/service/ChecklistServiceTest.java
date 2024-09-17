@@ -7,7 +7,6 @@ import com.bang_ggood.checklist.dto.response.UserChecklistPreviewResponse;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
-import com.bang_ggood.like.domain.ChecklistLike;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.option.repository.ChecklistOptionRepository;
 import com.bang_ggood.room.RoomFixture;
@@ -291,35 +290,5 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         )
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER.getMessage());
-    }
-
-    @DisplayName("체크리스트 좋아요 삭제 성공")
-    @Test
-    void deleteChecklistLikeByChecklistId() {
-        // given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
-        User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-        ChecklistLike checklistLike = checklistLikeRepository.save(ChecklistFixture.CHECKLIST1_LIKE(checklist));
-
-        // when
-        checklistService.deleteChecklistLikeByChecklistId(user, checklist.getId());
-
-        // then
-        assertThat(checklistLikeRepository.existsById(checklistLike.getId())).isFalse();
-    }
-
-    @DisplayName("체크리스트 좋아요 삭제 실패 : 체크리스트 좋아요가 없는 경우")
-    @Test
-    void deleteChecklistLikeByChecklistId_notFound_exception() {
-        // given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
-        User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-
-        // when & then
-        assertThatThrownBy(() -> checklistService.deleteChecklistLikeByChecklistId(user, checklist.getId()))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.LIKE_NOT_EXISTS.getMessage());
     }
 }

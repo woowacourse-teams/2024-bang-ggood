@@ -41,4 +41,12 @@ public class ChecklistLikeService {
             throw new BangggoodException(ExceptionCode.LIKE_ALREADY_EXISTS);
         }
     }
+
+    @Transactional
+    public void deleteLike(User user, Checklist checklist) {
+        validateChecklistOwnership(user, checklist);
+        ChecklistLike checklistLike = checklistLikeRepository.getByChecklistId(checklist.getId());
+
+        checklistLikeRepository.deleteById(checklistLike.getId());
+    }
 }

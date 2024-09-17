@@ -22,4 +22,10 @@ public class ChecklistLikeManageService {
         Checklist checklist = checklistService.readChecklist(user, checklistId);
         checklistLikeService.createLike(user, checklist);
     }
+
+    @Transactional
+    public void deleteLike(User user, Long checklistId) {
+        Checklist checklist = checklistService.readChecklist(user, checklistId);
+        checklistLikeService.deleteLike(user, checklist);
+    }
 }

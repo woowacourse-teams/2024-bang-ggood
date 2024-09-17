@@ -1,6 +1,7 @@
 package com.bang_ggood.article.service;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.article.domain.Article;
 import com.bang_ggood.article.dto.request.ArticleCreateRequest;
 import com.bang_ggood.article.dto.response.ArticleDetailPreviewResponse;
 import com.bang_ggood.article.dto.response.ArticlePreviewResponse;
@@ -33,24 +34,24 @@ public class ArticleServiceTest extends IntegrationTestSupport {
     @Test
     void createArticle() {
         // given
-        ArticleCreateRequest request = ARTICLE_CREATE_REQUEST;
+        ArticleCreateRequest request = ARTICLE_CREATE_REQUEST();
 
         // when
         Long articleId = articleService.createArticle(request);
 
         // then
         assertThat(articleRepository.getById(articleId).getTitle())
-                .isEqualTo(ARTICLE_CREATE_REQUEST.title());
+                .isEqualTo(ARTICLE_CREATE_REQUEST().title());
     }
 
     @DisplayName("아티클 조회 성공")
     @Test
     void readArticle() {
         // given
-        articleRepository.save(ARTICLE);
+        Article article = articleRepository.save(ARTICLE());
 
         // when & then
-        assertThatCode(() -> articleService.readArticle(ARTICLE.getId()))
+        assertThatCode(() -> articleService.readArticle(article.getId()))
                 .doesNotThrowAnyException();
     }
 
@@ -70,10 +71,10 @@ public class ArticleServiceTest extends IntegrationTestSupport {
     @Test
     void readArticlePreviews() {
         // given
-        articleRepository.save(ARTICLE_1);
-        articleRepository.save(ARTICLE_2);
-        articleRepository.save(ARTICLE_3);
-        articleRepository.save(ARTICLE_4);
+        articleRepository.save(ARTICLE_1());
+        articleRepository.save(ARTICLE_2());
+        articleRepository.save(ARTICLE_3());
+        articleRepository.save(ARTICLE_4());
 
         // when
         List<String> articleTitles = articleService.readArticlePreviews().articles().stream()
@@ -81,17 +82,17 @@ public class ArticleServiceTest extends IntegrationTestSupport {
                 .toList();
 
         // then
-        assertThat(articleTitles).containsExactly(ARTICLE_4.getTitle(), ARTICLE_3.getTitle(), ARTICLE_2.getTitle());
+        assertThat(articleTitles).containsExactly(ARTICLE_4().getTitle(), ARTICLE_3().getTitle(), ARTICLE_2().getTitle());
     }
 
     @DisplayName("최신 아티클 전체 조회 성공")
     @Test
     void readArticleDetailPreviews() {
         // given
-        articleRepository.save(ARTICLE_1);
-        articleRepository.save(ARTICLE_2);
-        articleRepository.save(ARTICLE_3);
-        articleRepository.save(ARTICLE_4);
+        articleRepository.save(ARTICLE_1());
+        articleRepository.save(ARTICLE_2());
+        articleRepository.save(ARTICLE_3());
+        articleRepository.save(ARTICLE_4());
 
         // when
         List<String> articleTitles = articleService.readArticleDetailPreviews().articles().stream()
@@ -99,20 +100,20 @@ public class ArticleServiceTest extends IntegrationTestSupport {
                 .toList();
 
         // then
-        assertThat(articleTitles).containsExactly(ARTICLE_4.getTitle(), ARTICLE_3.getTitle(), ARTICLE_2.getTitle(), ARTICLE_1.getTitle());
+        assertThat(articleTitles).containsExactly(ARTICLE_4().getTitle(), ARTICLE_3().getTitle(), ARTICLE_2().getTitle(), ARTICLE_1().getTitle());
     }
 
     @DisplayName("아티클 삭제 성공")
     @Test
     void deleteArticle() {
         // given
-        articleRepository.save(ARTICLE);
+        articleRepository.save(ARTICLE());
 
         // when
-        articleService.deleteArticle(ARTICLE.getId());
+        articleService.deleteArticle(ARTICLE().getId());
 
         //then
-        assertThatThrownBy(() -> articleService.readArticle(ARTICLE.getId()))
+        assertThatThrownBy(() -> articleService.readArticle(ARTICLE().getId()))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.ARTICLE_NOT_FOUND.getMessage());
     }

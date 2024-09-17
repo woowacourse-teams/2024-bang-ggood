@@ -1,6 +1,7 @@
 package com.bang_ggood.article.controller;
 
 import com.bang_ggood.AcceptanceTest;
+import com.bang_ggood.article.domain.Article;
 import com.bang_ggood.article.dto.request.ArticleCreateRequest;
 import com.bang_ggood.article.repository.ArticleRepository;
 import com.bang_ggood.global.exception.ExceptionCode;
@@ -23,9 +24,11 @@ public class ArticleE2ETest extends AcceptanceTest {
     @Autowired
     ArticleRepository articleRepository;
 
+    Article article;
+
     @BeforeEach
     void saveArticle() {
-        articleRepository.save(ARTICLE);
+        article = articleRepository.save(ARTICLE());
     }
 
     @DisplayName("아티클 생성 성공")
@@ -34,7 +37,7 @@ public class ArticleE2ETest extends AcceptanceTest {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
-                .body(ARTICLE_CREATE_REQUEST)
+                .body(ARTICLE_CREATE_REQUEST())
                 .when().post("/articles")
                 .then().log().all()
                 .statusCode(201);
@@ -45,7 +48,7 @@ public class ArticleE2ETest extends AcceptanceTest {
     void createArticle_notUser_exception() {
         ExceptionResponse response = RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .body(ARTICLE_CREATE_REQUEST)
+                .body(ARTICLE_CREATE_REQUEST())
                 .when().post("/articles")
                 .then().log().all()
                 .statusCode(401)
@@ -74,7 +77,7 @@ public class ArticleE2ETest extends AcceptanceTest {
     void readArticle() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .when().get("/articles/" + ARTICLE.getId())
+                .when().get("/articles/" + article.getId())
                 .then().log().all()
                 .statusCode(200);
     }
@@ -121,7 +124,7 @@ public class ArticleE2ETest extends AcceptanceTest {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
-                .when().delete("/articles/" + ARTICLE.getId())
+                .when().delete("/articles/" + article.getId())
                 .then().log().all()
                 .statusCode(204);
     }
@@ -131,7 +134,7 @@ public class ArticleE2ETest extends AcceptanceTest {
     void deleteArticle_notUser_exception() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .when().delete("/articles/" + ARTICLE.getId())
+                .when().delete("/articles/" + ARTICLE().getId())
                 .then().log().all()
                 .statusCode(401);
     }

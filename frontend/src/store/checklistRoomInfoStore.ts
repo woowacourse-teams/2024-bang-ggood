@@ -9,7 +9,7 @@ import {
   positiveValidator,
 } from '@/utils/validators';
 
-const formSpec: FormSpec<RoomInfo> = {
+export const roomFormSpec: FormSpec<RoomInfo> = {
   roomName: { initialValue: '', type: 'string', validators: [lengthValidator(20)] },
   address: { initialValue: '', type: 'string', validators: [] },
   station: { initialValue: '', type: 'string', validators: [] },
@@ -31,8 +31,8 @@ const formSpec: FormSpec<RoomInfo> = {
   memo: { initialValue: '', type: 'string', validators: [] },
 };
 
-export const initialRoomInfo = objectMap(formSpec, ([key, val]) => [key, val.initialValue]);
+export const initialRoomInfo = objectMap(roomFormSpec, ([key, val]) => [key, val.initialValue]);
 
-const checklistRoomInfoStore = createFormStore<RoomInfo>(formSpec, 'roomInfoForm');
+const checklistRoomInfoStore = createFormStore<RoomInfo>(roomFormSpec, 'roomInfoForm');
 
 export default checklistRoomInfoStore;

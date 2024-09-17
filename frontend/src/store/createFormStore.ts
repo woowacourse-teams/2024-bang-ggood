@@ -32,7 +32,7 @@ export interface FormFieldSpec {
 }
 
 export type FormSpec<T> = {
-  [k in keyof T as string]: FormFieldSpec;
+  [k in keyof T]: FormFieldSpec;
 };
 
 const getInitialRaw = <T extends object>(formSpec: FormSpec<T>) =>

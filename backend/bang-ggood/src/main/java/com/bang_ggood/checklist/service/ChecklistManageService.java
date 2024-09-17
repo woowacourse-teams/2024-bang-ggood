@@ -128,7 +128,7 @@ public class ChecklistManageService {
         return SelectedCategoryQuestionsResponse.of(category, selectedQuestionResponse);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public UserChecklistsPreviewResponse readLikedChecklistsPreview(User user) {
         List<Checklist> likedChecklists = checklistService.readLikedChecklistsPreview(user);
         List<UserChecklistPreviewResponse> responses = mapToChecklistPreviewResponses(

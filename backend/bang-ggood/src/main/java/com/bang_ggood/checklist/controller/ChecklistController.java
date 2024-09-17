@@ -36,12 +36,6 @@ public class ChecklistController {
         return ResponseEntity.created(URI.create("/checklists/" + checklistId)).build();
     }
 
-    @PostMapping("/checklists/{id}/like")
-    public ResponseEntity<Void> createChecklistLike(@AuthPrincipal User user, @PathVariable("id") long id) {
-        checklistService.createChecklistLike(user, id);
-        return ResponseEntity.noContent().build();
-    }
-
     @GetMapping("/checklists/{id}")
     public ResponseEntity<SelectedChecklistResponse> readChecklistById(@AuthPrincipal User user,
                                                                        @PathVariable("id") Long checklistId) {

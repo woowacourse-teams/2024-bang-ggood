@@ -69,38 +69,6 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 
     }
 
-    @DisplayName("체크리스트 좋아요 추가 성공")
-    @Test
-    void createChecklistLike() {
-        //given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
-        User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-
-        // when
-        checklistService.createChecklistLike(user, checklist.getId());
-
-        //then
-        assertThat(checklistLikeRepository.existsByChecklist(checklist)).isTrue();
-    }
-
-    @DisplayName("체크리스트 좋아요 추가 실패 : 이미 좋아요가 추가가 된 체크리스트인 경우")
-    @Test
-    void createChecklistLike_checklistAlreadyLiked_exception() {
-        //given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
-        User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-
-        // when
-        checklistService.createChecklistLike(user, checklist.getId());
-
-        //then
-        assertThatThrownBy(() -> checklistService.createChecklistLike(user, checklist.getId()))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.LIKE_ALREADY_EXISTS.getMessage());
-    }
-
 //    @DisplayName("체크리스트 리스트 조회 성공")
 //    @Test
 //    void readUserChecklistsPreview() {

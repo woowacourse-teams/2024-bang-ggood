@@ -12,18 +12,15 @@ const IncludedMaintenances = () => {
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
   const includedMaintenances = useStore(checklistRoomInfoStore, state => state.value.includedMaintenances);
 
-  const handleCheckIncluded = (id: number) => {
-    if (includedMaintenances?.includes(id)) return true;
-    return false;
-  };
+  const handleCheckIncluded = (id: number) => !!includedMaintenances?.includes(id);
 
   const handleToggleButton = useCallback(
     (value: number) => {
       const isIncluded = handleCheckIncluded(value);
-      let updatedValue;
 
-      if (isIncluded) updatedValue = includedMaintenances?.filter(id => id !== value);
-      else updatedValue = includedMaintenances ? [...includedMaintenances, value] : [value];
+      const updatedValue = isIncluded
+        ? includedMaintenances?.filter(id => id !== value)
+        : [...(includedMaintenances || []), value];
 
       actions.set('includedMaintenances', updatedValue);
     },

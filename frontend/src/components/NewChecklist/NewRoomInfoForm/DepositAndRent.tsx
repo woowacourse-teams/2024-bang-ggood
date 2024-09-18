@@ -3,14 +3,14 @@ import { useStore } from 'zustand';
 import FormField from '@/components/_common/FormField/FormField';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import { checklistRoomInfostores } from '@/store/checklistRoomInfoStoreTwo';
 
 const DepositAndRent = () => {
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const deposit = useStore(checklistRoomInfoStore, state => state.rawValue.deposit);
   const rent = useStore(checklistRoomInfoStore, state => state.rawValue.rent);
-  const errorMessageDeposit = useStore(checklistRoomInfoStore, state => state.errorMessage.deposit);
   const errorMessageRent = useStore(checklistRoomInfoStore, state => state.errorMessage.rent);
 
+  const {actions, rawValue:deposit, errorMessage:errorMessageDeposit}=useStore(checklistRoomInfostores.findByName('deposit'))
+  
   return (
     <FormField>
       <FormField.Label label="보증금 / 월세 (만원)" />

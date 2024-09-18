@@ -18,7 +18,6 @@ import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useOptionStore';
-import { objectMap } from '@/utils/typeFunctions';
 
 type RouteParams = {
   checklistId: string;
@@ -30,8 +29,7 @@ const EditChecklistPage = () => {
   const { tabs } = useNewChecklistTabs();
 
   const { data: checklist, isSuccess } = useGetChecklistDetailQuery(checklistId);
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  // const IncludedMaintenancesActions = useStore(checklistIncludedMaintenancesStore, state => state.actions);
+  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
 
   // 한줄평 모달
   const { isModalOpen: isSubmitModalOpen, openModal: summaryModalOpen, closeModal: summaryModalClose } = useModal();
@@ -39,7 +37,6 @@ const EditChecklistPage = () => {
   // 메모 모달
   const { isModalOpen: isMemoModalOpen, openModal: memoModalOpen, closeModal: memoModalClose } = useModal();
 
-  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
   // TODO: action 분리 필요
   const resetChecklist = useChecklistStore(state => state.reset);
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);
@@ -52,15 +49,15 @@ const EditChecklistPage = () => {
   };
 
   useEffect(() => {
-    const fetchChecklistAndSetToStore = async () => {
+    const setChecklistDataToStore = async () => {
       if (!isSuccess) return;
 
-      actions.setAll({
-        rawValue: objectMap(checklist.room, ([key, value]) => [key, value]),
+      roomInfoActions.setAll({
+        rawValue: checklist.room,
         value: checklist.room,
       });
     };
-    fetchChecklistAndSetToStore();
+    setChecklistDataToStore();
   }, [checklistId]);
 
   return (

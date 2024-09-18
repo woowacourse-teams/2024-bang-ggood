@@ -1,10 +1,10 @@
 import { useStore } from 'zustand';
 
 import { getNearSubway } from '@/apis/subway';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import checklistRoomInfoStores from '@/store/checklistRoomInfoStore';
 
 const useFindNearSubway = () => {
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
+  const actions = useStore(checklistRoomInfoStores, state => state.actions);
 
   const findNearSubway = async ({ lat, lon }: { lat: number; lon: number }) => {
     const newSubway = await getNearSubway({ lat, lon });

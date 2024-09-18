@@ -9,7 +9,7 @@ import RealTimeMap from '@/components/_common/Map/RealTimeMap';
 import Modal from '@/components/_common/Modal/Modal';
 import useFindNearSubway from '@/hooks/useFindNearSubway';
 import useModal from '@/hooks/useModal';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import checklistRoomInfoStores from '@/store/checklistRoomInfoStore';
 import { title4 } from '@/styles/common';
 import { Position } from '@/types/address';
 
@@ -18,8 +18,8 @@ const RealTimeAddressModal = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const [position, setPosition] = useState<Position>(DEFAULT_POSITION);
-  const { address, buildingName } = useStore(checklistRoomInfoStore, state => state.rawValue);
-  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
+  const { address, buildingName } = useStore(checklistRoomInfoStores, state => state.rawValue);
+  const roomInfoActions = useStore(checklistRoomInfoStores, state => state.actions);
 
   const { findNearSubway } = useFindNearSubway();
 

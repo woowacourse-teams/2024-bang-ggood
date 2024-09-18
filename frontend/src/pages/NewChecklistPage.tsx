@@ -16,7 +16,7 @@ import useHandleTipBox from '@/hooks/useHandleTipBox';
 import useChecklistTemplate from '@/hooks/useInitialChecklist';
 import useModal from '@/hooks/useModal';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import checklistRoomInfoStores from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useOptionStore';
 
@@ -25,7 +25,7 @@ const NewChecklistPage = () => {
   useChecklistTemplate(); // 체크리스트 질문 가져오기 및 준비
 
   const { tabs } = useNewChecklistTabs();
-  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
+  const roomInfoActions = useStore(checklistRoomInfoStores, state => state.actions);
   // TODO: action 분리 필요
   const resetChecklist = useChecklistStore(state => state.reset);
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);

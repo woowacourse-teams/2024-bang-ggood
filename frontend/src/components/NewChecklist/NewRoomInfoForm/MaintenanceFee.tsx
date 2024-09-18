@@ -4,12 +4,12 @@ import FormField from '@/components/_common/FormField/FormField';
 import Input from '@/components/_common/Input/Input';
 import IncludedMaintenances from '@/components/NewChecklist/NewRoomInfoForm/IncludedMaintenances';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import checklistRoomInfoStores from '@/store/checklistRoomInfoStore';
 
 const MaintenanceFee = () => {
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const maintenanceFee = useStore(checklistRoomInfoStore, state => state.rawValue.maintenanceFee);
-  const errorMessage = useStore(checklistRoomInfoStore, state => state.errorMessage.maintenanceFee);
+  const actions = useStore(checklistRoomInfoStores, state => state.actions);
+  const maintenanceFee = useStore(checklistRoomInfoStores, state => state.rawValue.maintenanceFee);
+  const errorMessage = useStore(checklistRoomInfoStores, state => state.errorMessage.maintenanceFee);
 
   return (
     <FormField>

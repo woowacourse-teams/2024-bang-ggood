@@ -4,14 +4,14 @@ import Dropdown from '@/components/_common/Dropdown/Dropdown';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import checklistRoomInfoStores from '@/store/checklistRoomInfoStore';
 
 const OccupancyMonth = () => {
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const occupancyMonth = useStore(checklistRoomInfoStore, state => state.rawValue.occupancyMonth);
-  const occupancyPeriod = useStore(checklistRoomInfoStore, state => state.rawValue.occupancyPeriod);
-  const errorMessageOccupancyMonth = useStore(checklistRoomInfoStore, state => state.errorMessage.occupancyMonth);
-  const errorMessageOccupancyPeriod = useStore(checklistRoomInfoStore, state => state.errorMessage.occupancyPeriod);
+  const actions = useStore(checklistRoomInfoStores, state => state.actions);
+  const occupancyMonth = useStore(checklistRoomInfoStores, state => state.rawValue.occupancyMonth);
+  const occupancyPeriod = useStore(checklistRoomInfoStores, state => state.rawValue.occupancyPeriod);
+  const errorMessageOccupancyMonth = useStore(checklistRoomInfoStores, state => state.errorMessage.occupancyMonth);
+  const errorMessageOccupancyPeriod = useStore(checklistRoomInfoStores, state => state.errorMessage.occupancyPeriod);
 
   return (
     <FlexBox.Vertical gap="1.5rem">

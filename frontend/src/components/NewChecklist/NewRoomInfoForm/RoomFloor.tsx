@@ -5,13 +5,13 @@ import FormField from '@/components/_common/FormField/FormField';
 import Input from '@/components/_common/Input/Input';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import { roomFloorLevels } from '@/constants/roomInfo';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import checklistRoomInfoStores from '@/store/checklistRoomInfoStore';
 
 const RoomFloor = () => {
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const floor = useStore(checklistRoomInfoStore, state => state.rawValue.floor);
-  const floorLevel = useStore(checklistRoomInfoStore, state => state.rawValue.floorLevel);
-  const errorMessageFloor = useStore(checklistRoomInfoStore, state => state.errorMessage.floor);
+  const actions = useStore(checklistRoomInfoStores, state => state.actions);
+  const floor = useStore(checklistRoomInfoStores, state => state.rawValue.floor);
+  const floorLevel = useStore(checklistRoomInfoStores, state => state.rawValue.floorLevel);
+  const errorMessageFloor = useStore(checklistRoomInfoStores, state => state.errorMessage.floor);
 
   return (
     <FormField>

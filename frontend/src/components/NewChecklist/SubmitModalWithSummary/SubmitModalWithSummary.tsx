@@ -7,7 +7,7 @@ import FormField from '@/components/_common/FormField/FormField';
 import Modal from '@/components/_common/Modal/Modal';
 import { MODAL_MESSAGE } from '@/constants/message';
 import useMutateChecklist from '@/hooks/useMutateChecklist';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import checklistRoomInfoStores from '@/store/checklistRoomInfoStore';
 import { flexColumn, title3 } from '@/styles/common';
 import { MutateType } from '@/types/checklist';
 
@@ -20,7 +20,7 @@ interface Props {
 }
 
 const SubmitModalWithSummary = ({ isModalOpen, modalClose, onConfirm = () => {}, mutateType, checklistId }: Props) => {
-  const { rawValue: roomInfo, actions } = useStore(checklistRoomInfoStore);
+  const { rawValue: roomInfo, actions } = useStore(checklistRoomInfoStores);
 
   // 체크리스트 작성 / 수정
   const { handleSubmitChecklist } = useMutateChecklist(mutateType, checklistId);

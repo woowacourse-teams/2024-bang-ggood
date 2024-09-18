@@ -13,6 +13,7 @@ interface InputFieldNumericState {
 
 interface Action {
   setInputWithValidation:(rawValue:string)=>void;
+  set:(rawValue:string)=>void;
   onChange:ChangeEventHandler<HTMLInputElement>;
   _setAndParse:(rawValue:string)=>void;
   reset:() => void;
@@ -27,6 +28,7 @@ export const createFormFieldSlice = (initialRawValue:string,validators:Validator
   value:parseValue(initialRawValue, type),
   actions:{
     onChange: (e)=>get().actions.setInputWithValidation(e.target.value),
+    set: (rawValue)=>get().actions.setInputWithValidation(rawValue),
 
     setInputWithValidation:(rawValue:string)=>{
       const newErrorMessage = rawValue==='' ? '':validation(rawValue, validators);
@@ -46,17 +48,19 @@ type FormSpec<T> = {
   [k in keyof T]: FormFieldSpec;
 };
 
-export const createInputFieldStores = <T>(formSpec:FormSpec<T>)=>{
+export const createInputFieldStores = <T extends object>(formSpec:FormSpec<T>)=>{
   const storeList = Object.entries<FormFieldSpec>(formSpec).map(([key, value])=>({name:key, store:createStore(createFormFieldSlice(value.initialValue,value.validators,value.type)) }));
   
-  const findByName = (name:keyof T)=> storeList.find(store=>store.name === name)!.store; // 존재함이 보장됨.
+  const findByName = (name:keyof T)=> storeList.find(store=>store.name === name)!.store; // 존재함이 보장되므로 ! 사용.
   const setByName = (name:keyof T, rawValue:string)=>{
     const foundStore = findByName(name);
     foundStore.getState().actions.setInputWithValidation(rawValue);
   }; 
-  const setAll = (rawValueObj:object)=> Object.entries(rawValueObj).forEach(([name, rawValue])=> setByName(name as keyof T,rawValue)); // 인자 - (키: name, 밸류: rawValue인 객체)
-  const resetAll = ()=>Object.entries(formSpec).map(([name])=> findByName(name as keyof T)?.getState().actions.reset());
-  const getStates = ()=>Object.fromEntries(storeList.map(store=>[store.name,store.store.getState()]))
+
+  // as 쓴 이유 : JS의 Object.entries 함수가 key에 대한 제네릭을 지원하지 않아서 써줘야 함.
+  const setAll = (rawValueObj:T)=> Object.entries(rawValueObj).forEach(([name, rawValue])=> setByName(name as keyof T, rawValue)); // 인자 - (키: name, 밸류: rawValue인 객체)
+  const resetAll = ()=>Object.entries(formSpec).map(([name])=> findByName(name as keyof T).getState().actions.reset());
+  const getStates = ()=>Object.fromEntries(storeList.map(store=>[store.name, store.store.getState()]))
   
   const onChange:ChangeEventHandler<HTMLInputElement> = (e)=>{
     setByName(e.target.name as keyof T, e.target.value);

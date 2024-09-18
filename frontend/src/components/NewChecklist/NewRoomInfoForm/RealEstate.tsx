@@ -1,12 +1,12 @@
 import { useStore } from 'zustand';
 
 import { NewChecklistFormField } from '@/components/NewChecklist/NewChecklistFormField';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import checklistRoomInfoStores from '@/store/checklistRoomInfoStore';
 
 const RealEstate = () => {
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const realEstate = useStore(checklistRoomInfoStore, state => state.rawValue.realEstate);
-  const errorMessage = useStore(checklistRoomInfoStore, state => state.errorMessage.realEstate);
+  const actions = useStore(checklistRoomInfoStores, state => state.actions);
+  const realEstate = useStore(checklistRoomInfoStores, state => state.rawValue.realEstate);
+  const errorMessage = useStore(checklistRoomInfoStores, state => state.errorMessage.realEstate);
 
   return (
     <NewChecklistFormField

@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { useStore } from 'zustand';
 
 import useGetChecklistListQuery from '@/hooks/query/useGetChecklistListQuery';
-import checklistRoomInfoStore, { initialRoomInfo } from '@/store/checklistRoomInfoStore';
+import checklistRoomInfoStores, { initialRoomInfo } from '@/store/checklistRoomInfoStore';
 
 const useDefaultRoomName = () => {
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const roomName = useStore(checklistRoomInfoStore, state => state.rawValue.roomName);
+  const actions = useStore(checklistRoomInfoStores, state => state.actions);
+  const roomName = useStore(checklistRoomInfoStores, state => state.rawValue.roomName);
 
   const { data: checklistList } = useGetChecklistListQuery();
 

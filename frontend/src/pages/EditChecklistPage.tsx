@@ -16,7 +16,7 @@ import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery
 import useModal from '@/hooks/useModal';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import checklistIncludedMaintenancesStore from '@/store/checklistIncludedMaintenancesStore';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import checklistRoomInfoStores from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useOptionStore';
 import { objectOmit } from '@/utils/typeFunctions';
@@ -31,7 +31,7 @@ const EditChecklistPage = () => {
   const { tabs } = useNewChecklistTabs();
 
   const { data: checklist, isSuccess } = useGetChecklistDetailQuery(checklistId);
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
+  const actions = useStore(checklistRoomInfoStores, state => state.actions);
   const IncludedMaintenancesActions = useStore(checklistIncludedMaintenancesStore, state => state.actions);
 
   // 한줄평 모달
@@ -40,7 +40,7 @@ const EditChecklistPage = () => {
   // 메모 모달
   const { isModalOpen: isMemoModalOpen, openModal: memoModalOpen, closeModal: memoModalClose } = useModal();
 
-  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
+  const roomInfoActions = useStore(checklistRoomInfoStores, state => state.actions);
   // TODO: action 분리 필요
   const resetChecklist = useChecklistStore(state => state.reset);
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);

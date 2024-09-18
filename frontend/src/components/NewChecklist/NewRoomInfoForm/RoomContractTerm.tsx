@@ -4,12 +4,12 @@ import { useStore } from 'zustand';
 import FormField from '@/components/_common/FormField/FormField';
 import Input from '@/components/_common/Input/Input';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import checklistRoomInfoStores from '@/store/checklistRoomInfoStore';
 
 const RoomContractTerm = () => {
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const contractTerm = useStore(checklistRoomInfoStore, state => state.rawValue.contractTerm);
-  const errorMessage = useStore(checklistRoomInfoStore, state => state.errorMessage.contractTerm);
+  const actions = useStore(checklistRoomInfoStores, state => state.actions);
+  const contractTerm = useStore(checklistRoomInfoStores, state => state.rawValue.contractTerm);
+  const errorMessage = useStore(checklistRoomInfoStores, state => state.errorMessage.contractTerm);
 
   return (
     <FormField>

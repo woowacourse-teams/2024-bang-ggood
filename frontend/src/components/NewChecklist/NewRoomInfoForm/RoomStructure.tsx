@@ -6,11 +6,11 @@ import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import { roomStructures } from '@/constants/roomInfo';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import checklistRoomInfoStores from '@/store/checklistRoomInfoStore';
 
 const RoomStructure = () => {
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const roomStructure = useStore(checklistRoomInfoStore, state => state.rawValue.structure);
+  const actions = useStore(checklistRoomInfoStores, state => state.actions);
+  const roomStructure = useStore(checklistRoomInfoStores, state => state.rawValue.structure);
 
   const handleClickTagButton = useCallback(
     (value: string) => {

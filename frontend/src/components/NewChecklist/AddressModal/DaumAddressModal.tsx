@@ -7,7 +7,7 @@ import Modal from '@/components/_common/Modal/Modal';
 import loadPostcode from '@/components/NewChecklist/AddressModal/loadPostcode';
 import useFindNearSubway from '@/hooks/useFindNearSubway';
 import useModal from '@/hooks/useModal';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import checklistRoomInfoStores from '@/store/checklistRoomInfoStore';
 import { Address, Postcode, PostcodeOptions } from '@/types/address';
 
 declare global {
@@ -26,7 +26,7 @@ const scriptUrl = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js
 const DaumAddressModal = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const postcodeContainerRef = useRef<HTMLDivElement | null>(null);
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
+  const actions = useStore(checklistRoomInfoStores.findByName('address'), state => state.actions);
 
   const { findNearSubway } = useFindNearSubway();
 

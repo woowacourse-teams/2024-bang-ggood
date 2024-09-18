@@ -2,12 +2,12 @@ import { useStore } from 'zustand';
 
 import FormField from '@/components/_common/FormField/FormField';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import checklistRoomInfoStores from '@/store/checklistRoomInfoStore';
 import { checklistRoomInfostores } from '@/store/checklistRoomInfoStoreTwo';
 
 const DepositAndRent = () => {
-  const rent = useStore(checklistRoomInfoStore, state => state.rawValue.rent);
-  const errorMessageRent = useStore(checklistRoomInfoStore, state => state.errorMessage.rent);
+  const rent = useStore(checklistRoomInfoStores, state => state.rawValue.rent);
+  const errorMessageRent = useStore(checklistRoomInfoStores, state => state.errorMessage.rent);
 
   const {actions, rawValue:deposit, errorMessage:errorMessageDeposit}=useStore(checklistRoomInfostores.findByName('deposit'))
   

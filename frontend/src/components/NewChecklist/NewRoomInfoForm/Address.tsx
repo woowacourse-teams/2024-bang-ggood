@@ -4,10 +4,10 @@ import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import DaumAddressModal from '@/components/NewChecklist/AddressModal/DaumAddressModal';
 import RealTimeAddressModal from '@/components/NewChecklist/AddressModal/RealTimeAddressModal';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import checklistRoomInfoStores from '@/store/checklistRoomInfoStore';
 
 const Address = () => {
-  const { address, buildingName } = useStore(checklistRoomInfoStore, state => state.rawValue);
+  const { address, buildingName } = useStore(checklistRoomInfoStores, state => state.rawValue);
 
   return (
     <FormField>

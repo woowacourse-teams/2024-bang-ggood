@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useStore } from 'zustand';
 
 import { LoadingSpinner } from '@/components/_common/LoadingSpinner/LoadingSpinner';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import checklistRoomInfoStores from '@/store/checklistRoomInfoStore';
 // import checklistAddressStore from '@/store/checklistAddressStore';
 import { flexCenter } from '@/styles/common';
 import { Position } from '@/types/address';
@@ -17,7 +17,8 @@ const RealTimeMap = ({ setPosition, position }: { position: Position; setPositio
   const markerRef = useRef<any | null>(null);
   const infoWindowRef = useRef<any | null>(null);
 
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
+  const addressActions = useStore(checklistRoomInfoStores.findByName('address'), state => state.actions);
+  const buildingNameActions = useStore(checklistRoomInfoStores.findByName('buildingName'), state => state.actions);
 
   const [isRealTimeLocationLoading, setIsRealTimeLocationLoading] = useState(true);
   const mapUtils = makeMap();
@@ -103,22 +104,22 @@ const RealTimeMap = ({ setPosition, position }: { position: Position; setPositio
       if (status === kakao.maps.services.Status.OK) {
         /*1순위 : 도로명 주소 */
         if (result[0].road_address) {
-          actions.set('address', result[0].road_address.address_name);
+          addressActions.set(result[0].road_address.address_name);
           if (result[0].road_address?.building_name) {
-            actions.set('buildingName', result[0].road_address.building_name);
+            buildingNameActions.set(result[0].road_address.building_name);
           } else {
-            actions.set('buildingName', '');
+            buildingNameActions.set('');
           }
           return;
         }
         /*2순위 : 지번 주소 */
         if (result[0].address.address_name) {
-          actions.set('address', result[0].address.address_name);
+          addressActions.set(result[0].address.address_name);
 
           if (result[0].road_address?.building_name) {
-            actions.set('buildingName', result[0].road_address.building_name);
+            buildingNameActions.set(result[0].road_address.building_name);
           } else {
-            actions.set('buildingName', '');
+            buildingNameActions.set('');
           }
         }
       }

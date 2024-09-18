@@ -1,4 +1,5 @@
-import createFormStore, { FormSpec } from '@/store/createFormStore';
+import { FormSpec } from '@/store/createFormStore';
+import { createInputFieldStores } from '@/store/createFormStoreNew';
 import { RoomInfo } from '@/types/room';
 import { objectMap } from '@/utils/typeFunctions';
 import {
@@ -33,6 +34,6 @@ export const roomFormSpec: FormSpec<RoomInfo> = {
 
 export const initialRoomInfo = objectMap(roomFormSpec, ([key, val]) => [key, val.initialValue]);
 
-const checklistRoomInfoStore = createFormStore<RoomInfo>(roomFormSpec, 'roomInfoForm');
-
-export default checklistRoomInfoStore;
+// const checklistRoomInfoStore = createFormStore<RoomInfo>(roomFormSpec, 'roomInfoForm');
+export const checklistRoomInfoStores = createInputFieldStores<RoomInfo>(roomFormSpec);
+export default checklistRoomInfoStores;

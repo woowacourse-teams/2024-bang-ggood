@@ -3,12 +3,12 @@ import { useStore } from 'zustand';
 import FormField from '@/components/_common/FormField/FormField';
 import Input from '@/components/_common/Input/Input';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import checklistRoomInfoStores from '@/store/checklistRoomInfoStore';
 
 const RoomSize = () => {
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const roomSize = useStore(checklistRoomInfoStore, state => state.rawValue.size);
-  const errorMessage = useStore(checklistRoomInfoStore, state => state.errorMessage.size);
+  const actions = useStore(checklistRoomInfoStores, state => state.actions);
+  const roomSize = useStore(checklistRoomInfoStores, state => state.rawValue.size);
+  const errorMessage = useStore(checklistRoomInfoStores, state => state.errorMessage.size);
 
   return (
     <FormField>

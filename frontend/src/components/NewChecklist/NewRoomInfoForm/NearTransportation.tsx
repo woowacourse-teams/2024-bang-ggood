@@ -3,13 +3,13 @@ import { useStore } from 'zustand';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import checklistRoomInfoStores from '@/store/checklistRoomInfoStore';
 
 const NearTransportation = () => {
-  const station = useStore(checklistRoomInfoStore, state => state.rawValue.station);
-  const walkingTime = useStore(checklistRoomInfoStore, state => state.rawValue.walkingTime);
-  const errorMessageStation = useStore(checklistRoomInfoStore, state => state.errorMessage.station);
-  const errorMessageWalkingTime = useStore(checklistRoomInfoStore, state => state.errorMessage.walkingTime);
+  const station = useStore(checklistRoomInfoStores, state => state.rawValue.station);
+  const walkingTime = useStore(checklistRoomInfoStores, state => state.rawValue.walkingTime);
+  const errorMessageStation = useStore(checklistRoomInfoStores, state => state.errorMessage.station);
+  const errorMessageWalkingTime = useStore(checklistRoomInfoStores, state => state.errorMessage.walkingTime);
 
   return (
     <FlexBox.Vertical gap="1.5rem">

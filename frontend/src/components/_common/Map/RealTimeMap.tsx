@@ -14,12 +14,19 @@ type RealTimeLocationState = 'loading' | 'failure' | 'success';
 interface Props {
   position: Position;
   setPosition: React.Dispatch<React.SetStateAction<Position>>;
-  setCurrentBuildingName: React.Dispatch<React.SetStateAction<string>>;
   setCurrentAddress: React.Dispatch<React.SetStateAction<string>>;
+  setCurrentBuildingName: React.Dispatch<React.SetStateAction<string>>;
+  handleSubmitAddress: () => void;
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const RealTimeMap = ({ setCurrentAddress, setCurrentBuildingName, position, setPosition }: Props) => {
+const RealTimeMap = ({
+  position,
+  setPosition,
+  setCurrentAddress,
+  setCurrentBuildingName,
+  handleSubmitAddress,
+}: Props) => {
   const mapRef = useRef<any | null>(null);
   const markerRef = useRef<any | null>(null);
   const infoWindowRef = useRef<any | null>(null);
@@ -67,10 +74,10 @@ const RealTimeMap = ({ setCurrentAddress, setCurrentBuildingName, position, setP
 
         setPosition({ lat, lon });
         map.setCenter(locPosition);
+        setRealTimeLocationState('success');
 
         infoWindowRef.current.setContent(message);
         infoWindowRef.current.open(mapRef.current, markerRef.current);
-        setRealTimeLocationState('success');
         updateAddressFromCoords(mapRef.current.getCenter());
       };
 
@@ -130,7 +137,7 @@ const RealTimeMap = ({ setCurrentAddress, setCurrentBuildingName, position, setP
 
   return (
     <S.Container>
-      <S.MapBox id="map" ref={mapElement}>
+      <S.Map id="map" ref={mapElement}>
         {realTimeLocationState === 'loading' && (
           <S.MapEmptyBox>
             <S.InfoTextBox>
@@ -155,8 +162,13 @@ const RealTimeMap = ({ setCurrentAddress, setCurrentBuildingName, position, setP
             </S.InfoTextBox>
           </S.MapEmptyBox>
         )}
-      </S.MapBox>
+      </S.Map>
       <div id="message"></div>
+      {realTimeLocationState === 'success' && (
+        <S.ButtonBox>
+          <Button label="이 위치로 설정할게요." size="full" isSquare={true} onClick={() => handleSubmitAddress()} />
+        </S.ButtonBox>
+      )}
     </S.Container>
   );
 };
@@ -165,7 +177,7 @@ const S = {
   Container: styled.div`
     width: 100%;
   `,
-  MapBox: styled.div`
+  Map: styled.div`
     position: relative;
     width: 100%;
     min-height: 40rem;
@@ -209,6 +221,10 @@ const S = {
     width: 50%;
 
     font-size: ${({ theme }) => theme.text.size.xSmall};
+  `,
+  ButtonBox: styled.div`
+    display: flex;
+    margin-top: 10px;
   `,
 };
 

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
@@ -22,7 +22,6 @@ const DaumAddressModal = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const postcodeContainerRef = useRef<HTMLDivElement | null>(null);
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
 
   const { findNearSubway } = useFindNearSubway();
 
@@ -31,10 +30,22 @@ const DaumAddressModal = () => {
     loadExternalScriptWithCallback('daumAddress', openPostcodeEmbed);
   };
 
-  useEffect(() => {
-    roomInfoActions.set('address', '');
-    roomInfoActions.set('buildingName', '');
-  }, []);
+  const findPosition = (data: Address) => {
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    const { kakao } = window as any;
+
+    new kakao.maps.load(() => {
+      const geocoder = new kakao.maps.services.Geocoder();
+
+      geocoder.addressSearch(data.address, function (result: any, status: any) {
+        /* 정상적으로 검색이 완료됐으면*/
+        if (status === kakao.maps.services.Status.OK) {
+          findNearSubway({ lat: result[0].y, lon: result[0].x });
+        }
+        closeModal();
+      });
+    });
+  };
 
   const openPostcodeEmbed = () => {
     if (window.daum?.Postcode && postcodeContainerRef.current) {
@@ -45,24 +56,7 @@ const DaumAddressModal = () => {
           actions.set('address', data.address);
           actions.set('buildingName', data.buildingName);
 
-          const findPosition = () => {
-            /* eslint-disable @typescript-eslint/no-explicit-any */
-            const { kakao } = window as any;
-
-            new kakao.maps.load(() => {
-              const geocoder = new kakao.maps.services.Geocoder();
-
-              geocoder.addressSearch(data.address, function (result: any, status: any) {
-                /* 정상적으로 검색이 완료됐으면*/
-                if (status === kakao.maps.services.Status.OK) {
-                  findNearSubway({ lat: result[0].y, lon: result[0].x });
-                }
-                closeModal();
-              });
-            });
-          };
-
-          loadExternalScriptWithCallback('kakaoMap', findPosition);
+          loadExternalScriptWithCallback('kakaoMap', () => findPosition(data));
         },
       }).embed(postcodeContainerRef.current, { q: '' });
     } else {

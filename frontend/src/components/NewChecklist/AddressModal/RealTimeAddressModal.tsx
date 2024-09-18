@@ -36,8 +36,6 @@ const RealTimeAddressModal = () => {
 
   /* 모달 열릴 때 주소 정보 리셋 및 스크립트 로드 */
   useEffect(() => {
-    roomInfoActions.set('address', '');
-    roomInfoActions.set('buildingName', '');
     setCurrentBuildingName('');
     setCurrentAddress('');
   }, []);
@@ -67,17 +65,8 @@ const RealTimeAddressModal = () => {
               setPosition={setPosition}
               setCurrentAddress={setCurrentAddress}
               setCurrentBuildingName={setCurrentBuildingName}
+              handleSubmitAddress={handleSubmitAddress}
             />
-
-            <S.ButtonBox>
-              <Button
-                label="이 위치로 설정할게요."
-                size="full"
-                isSquare={true}
-                onClick={() => handleSubmitAddress()}
-                disabled={!currentAddress}
-              />
-            </S.ButtonBox>
           </Modal.body>
         </Modal>
       )}
@@ -92,9 +81,6 @@ const S = {
     width: 50%;
 
     font-size: ${({ theme }) => theme.text.size.xSmall};
-  `,
-  ButtonBox: styled.div`
-    display: flex;
   `,
   AddressText: styled.span`
     ${title4}

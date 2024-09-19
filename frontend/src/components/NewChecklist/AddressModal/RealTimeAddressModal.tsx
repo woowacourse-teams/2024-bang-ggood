@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useStore } from 'zustand';
 
-import { LocationLineIcon } from '@/assets/assets';
+import { Location, LocationLineIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import RealTimeMap from '@/components/_common/Map/RealTimeMap';
@@ -42,7 +42,14 @@ const RealTimeAddressModal = () => {
 
   return (
     <>
-      <S.AddressButton onClick={openModal} label="실시간 주소" size="small" isSquare={true} color="light" />
+      <S.AddressButton
+        onClick={openModal}
+        label="실시간 주소"
+        size="full"
+        isSquare={true}
+        color="light"
+        Icon={Location}
+      />
       {isModalOpen && (
         <Modal size="large" position="bottom" isOpen={isModalOpen} onClose={closeModal}>
           <Modal.header>실시간 주소</Modal.header>
@@ -79,8 +86,10 @@ export default RealTimeAddressModal;
 const S = {
   AddressButton: styled(Button)`
     width: 50%;
+    height: 4.5rem;
+    padding: 0.4rem;
 
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    font-size: ${({ theme }) => theme.text.size.small};
   `,
   AddressText: styled.span`
     ${title4}

@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useRef } from 'react';
 import { useStore } from 'zustand';
 
+import { Search } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
 import useFindNearSubway from '@/hooks/useFindNearSubway';
@@ -66,7 +67,14 @@ const DaumAddressModal = () => {
 
   return (
     <>
-      <S.AddressButton size="xSmall" color="dark" label="주소 검색" isSquare={true} onClick={handleAddress} />
+      <S.AddressButton
+        onClick={handleAddress}
+        label="주소 검색"
+        size="full"
+        isSquare={true}
+        color="dark"
+        Icon={Search}
+      />
       <Modal position="bottom" isOpen={isModalOpen} onClose={closeModal}>
         <Modal.header>주소 검색</Modal.header>
         <Modal.body>
@@ -82,8 +90,10 @@ export default DaumAddressModal;
 const S = {
   AddressButton: styled(Button)`
     width: 50%;
+    height: 4.5rem;
+    padding: 0.4rem;
 
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    font-size: ${({ theme }) => theme.text.size.small};
   `,
   EmptyBox: styled.div`
     width: 100%;

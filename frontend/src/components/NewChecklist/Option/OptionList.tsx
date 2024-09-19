@@ -24,12 +24,8 @@ const S = {
       grid-template-columns: repeat(4, 1fr);
     }
 
-    @media (width >= 40rem) {
+    @media (width >= 32rem) {
       grid-template-columns: repeat(5, 1fr);
-    }
-
-    @media (width >= 60rem) {
-      grid-template-columns: repeat(6, 1fr);
     }
   `,
 };

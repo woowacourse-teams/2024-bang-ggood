@@ -18,8 +18,8 @@ public class SubwayStationController {
     }
 
     @GetMapping("/stations/nearest")
-    public ResponseEntity<List<SubwayStationResponse>> readNearestStation(@RequestParam("latitude") double latitude,
-                                                                          @RequestParam("longitude") double longitude) {
+    public ResponseEntity<List<SubwayStationResponse>> readNearestStation(@RequestParam("latitude") Double latitude,
+                                                                          @RequestParam("longitude") Double longitude) {
 
         List<SubwayStationResponse> response = subwayStationService.readNearestStation(latitude, longitude);
         return ResponseEntity.ok(response);

@@ -86,16 +86,16 @@ const sizeStyles = {
     min-width:7rem;
   `,
   small: css`
-    padding: 1rem 2.4rem;
+    padding: 1rem 2rem;
     ${title4}
   `,
   medium: css`
-    padding: 1.2rem 4.8rem;
+    padding: 1.2rem 2.4rem;
     ${title3}
   `,
   full: css`
     width: 100%;
-    padding: 1rem 4.8rem;
+    padding: 1rem 3.6rem;
     ${title3}
   `,
 };

@@ -42,6 +42,7 @@ const EditChecklistPage = () => {
   const { isModalOpen: isMemoModalOpen, openModal: memoModalOpen, closeModal: memoModalClose } = useModal();
 
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
+
   // TODO: action 분리 필요
   const resetChecklist = useChecklistStore(state => state.reset);
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);
@@ -63,10 +64,17 @@ const EditChecklistPage = () => {
     fetchChecklistAndSetToStore();
   }, [checklistId]);
 
+  const resetAndGoHome = () => {
+    roomInfoActions.resetAll();
+    resetChecklist();
+    selectedOptionActions.reset();
+    navigate(ROUTE_PATH.checklistList);
+  };
+
   return (
     <>
       <Header
-        left={<Header.Backward />}
+        left={<Header.Backward onClick={resetAndGoHome} />}
         center={<Header.Text>체크리스트 편집</Header.Text>}
         right={<Button label="저장" size="small" color="dark" onClick={summaryModalOpen} />}
       />

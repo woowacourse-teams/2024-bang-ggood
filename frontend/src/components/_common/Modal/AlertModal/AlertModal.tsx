@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import { BangBangCryIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
-import { flexCenter, flexColumn, flexRow, title3 } from '@/styles/common';
+import { flexCenter, flexColumn, flexRow, title4 } from '@/styles/common';
 
 interface Props {
   isOpen: boolean;
@@ -13,24 +13,37 @@ interface Props {
   approveButtonName?: string;
   title: ReactNode | string;
   subtTitle?: string;
+  hasIcon?: boolean;
 }
 
-const AlertModal = ({ isOpen, onClose, handleApprove, approveButtonName = '삭제하기', title, subtTitle }: Props) => {
+const AlertModal = ({
+  isOpen,
+  onClose,
+  handleApprove,
+  approveButtonName = '삭제하기',
+  title,
+  subtTitle,
+  hasIcon = true,
+}: Props) => {
   return (
-    <Modal size={'large'} isOpen={isOpen} onClose={onClose} hasCloseButton={false}>
+    <Modal size={hasIcon ? 'large' : 'small'} isOpen={isOpen} onClose={onClose} hasCloseButton={false}>
       <Modal.body>
         <S.Container>
-          <S.IconBox>
-            <BangBangCryIcon width={80} height={80} />
-          </S.IconBox>
+          <S.IconBox>{hasIcon && <BangBangCryIcon width={70} height={70} />}</S.IconBox>
           <S.Title>{title}</S.Title>
           {subtTitle && <S.subtitle>{subtTitle}</S.subtitle>}
         </S.Container>
       </Modal.body>
       <Modal.footer>
         <S.FlexBetween>
-          <Button label="취소하기" isSquare={true} onClick={onClose} />
-          <Button label={approveButtonName} color="dark" isSquare={true} onClick={handleApprove} />
+          <S.AlertModalButton size="full" label="취소하기" isSquare={true} onClick={onClose} />
+          <S.AlertModalButton
+            size="full"
+            label={approveButtonName}
+            color="dark"
+            isSquare={true}
+            onClick={handleApprove}
+          />
         </S.FlexBetween>
       </Modal.footer>
     </Modal>
@@ -51,6 +64,7 @@ const S = {
     width: 100%;
     ${flexRow}
     justify-content: space-around;
+    gap: 10px;
   `,
   IconBox: styled.div`
     display: flex;
@@ -58,9 +72,14 @@ const S = {
     margin: 20px 0;
   `,
   Title: styled.div`
-    ${title3}
+    ${title4}
   `,
   subtitle: styled.div`
     color: ${({ theme }) => theme.palette.grey500};
+  `,
+  AlertModalButton: styled(Button)`
+    size: calc(100% - 10px);
+    ${title4}
+    height:40px;
   `,
 };

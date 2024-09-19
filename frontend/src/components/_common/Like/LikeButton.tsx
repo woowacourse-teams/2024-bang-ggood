@@ -20,7 +20,7 @@ const LikeButton = ({ isLiked = false, checklistId }: Props) => {
     if (debouncedIsLiked !== isLiked) {
       toggleLike({ checklistId, isLiked: debouncedIsLiked });
     }
-  }, [debouncedIsLiked, checklistId, isLiked, toggleLike]);
+  }, [debouncedIsLiked]);
 
   const handleClickLike = (e: React.MouseEvent<SVGSVGElement>) => {
     setLocalIsLiked(prev => !prev);

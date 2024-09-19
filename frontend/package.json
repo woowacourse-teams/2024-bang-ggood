@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "cross-env NODE_ENV=production API_ENV=production webpack --mode=production",
+    "build:dev": "cross-env NODE_ENV=production API_ENV=development webpack --mode=development",
     "build:analyze": "cross-env NODE_ENV=production API_ENV=production BUNDLE_ANALYZE=on webpack --mode=production",
     "prod": "cross-env NODE_ENV=production API_ENV=production webpack serve --mode=production --open",
     "dev": "cross-env NODE_ENV=development API_ENV=development webpack serve --mode=development --open",

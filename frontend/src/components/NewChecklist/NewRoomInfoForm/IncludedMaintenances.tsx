@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useStore } from 'zustand';
 
 import Badge from '@/components/_common/Badge/Badge';
@@ -5,12 +6,26 @@ import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import { IncludedMaintenancesData } from '@/constants/roomInfo';
-import checklistIncludedMaintenancesStore from '@/store/checklistIncludedMaintenancesStore';
+import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
 const IncludedMaintenances = () => {
-  useStore(checklistIncludedMaintenancesStore);
-  const actions = useStore(checklistIncludedMaintenancesStore, state => state.actions);
-  const includedMaintenances = useStore(checklistIncludedMaintenancesStore, state => state.value);
+  const actions = useStore(checklistRoomInfoStore, state => state.actions);
+  const includedMaintenances = useStore(checklistRoomInfoStore, state => state.value.includedMaintenances);
+
+  const handleCheckIncluded = (id: number) => !!includedMaintenances?.includes(id);
+
+  const handleToggleButton = useCallback(
+    (value: number) => {
+      const isIncluded = handleCheckIncluded(value);
+
+      const updatedValue = isIncluded
+        ? includedMaintenances?.filter(id => id !== value)
+        : [...(includedMaintenances || []), value];
+
+      actions.set('includedMaintenances', updatedValue);
+    },
+    [includedMaintenances, actions],
+  );
 
   return (
     <FlexBox.Vertical>
@@ -22,8 +37,8 @@ const IncludedMaintenances = () => {
             label={displayName}
             name={displayName}
             size="button"
-            isSelected={includedMaintenances.includes(id)}
-            onClick={() => actions.toggle(id)}
+            isSelected={handleCheckIncluded(id)}
+            onClick={() => handleToggleButton(id)}
           />
         ))}
       </FormStyled.OptionButtonContainer>

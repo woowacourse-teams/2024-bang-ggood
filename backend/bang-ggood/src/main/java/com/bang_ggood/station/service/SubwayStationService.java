@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 @Service
 public class SubwayStationService {
 
-    private static final int METER_PER_DEGREE = 111_320;
     // meter per second * minute unit * decreasing speed on open street
     private static final double AVERAGE_WALKING_SPEED = 1.3 * 60 * 0.4;
     private static final int MAX_NESTING_STATION_NUMBER = 4;
@@ -23,10 +22,7 @@ public class SubwayStationService {
     public List<SubwayStationResponse> readNearestStation(double latitude, double longitude) {
         return SUBWAY_STATIONS.stream()
                 .map(station -> {
-                    double dx = (station.getLatitude() - latitude) * METER_PER_DEGREE;
-                    double dy =
-                            (station.getLongitude() - longitude) * METER_PER_DEGREE * Math.cos(station.getLatitude());
-                    double distance = Math.sqrt(dx * dx + dy * dy);
+                    double distance = station.getDistance(latitude, longitude);
                     return SubwayStationResponse.of(station, (int) Math.round(distance / AVERAGE_WALKING_SPEED));
                 })
                 .sorted(Comparator.comparing(SubwayStationResponse::getWalkingTime))

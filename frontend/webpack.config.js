@@ -166,8 +166,10 @@ module.exports = () => {
         },
       },
     };
-
-    // config.plugins.push(new BundleAnalyzerPlugin()); /* 원할때만 켜기 */
+    console.log(typeof process.env.BUNDLE_ANALYZE, process.env.BUNDLE_ANALYZE);
+    if (process.env.BUNDLE_ANALYZE) {
+      config.plugins.push(new BundleAnalyzerPlugin());
+    }
   } else {
     config.mode = 'development';
   }

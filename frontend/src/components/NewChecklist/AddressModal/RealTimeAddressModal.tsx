@@ -18,25 +18,27 @@ const RealTimeAddressModal = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const [position, setPosition] = useState<Position>(DEFAULT_POSITION);
-  const { address, buildingName } = useStore(checklistRoomInfoStore, state => state.rawValue);
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
+  const [currentAddress, setCurrentAddress] = useState('');
+  const [currentBuildingName, setCurrentBuildingName] = useState('');
 
   const { findNearSubway } = useFindNearSubway();
 
   const handleSubmitAddress = () => {
     if (position.lat && position.lon) {
+      roomInfoActions.set('address', currentAddress);
+      roomInfoActions.set('buildingName', currentBuildingName);
+
       findNearSubway(position);
       closeModal();
     }
   };
 
-  /* 모달 열릴 때 주소 정보 리셋 */
+  /* 모달 열릴 때 주소 정보 리셋 및 스크립트 로드 */
   useEffect(() => {
-    if (isModalOpen) {
-      roomInfoActions.set('address', '');
-      roomInfoActions.set('buildingName', '');
-    }
-  }, [isModalOpen]);
+    setCurrentBuildingName('');
+    setCurrentAddress('');
+  }, []);
 
   return (
     <>
@@ -52,20 +54,19 @@ const RealTimeAddressModal = () => {
               <span>
                 <LocationLineIcon height={20} width={20} />
               </span>
-              <S.AddressText>{address ? `${address} ${buildingName}` : '주소가 여기에 표시됩니다.'}</S.AddressText>
+              <S.AddressText>
+                {currentAddress ? `${currentAddress} ${currentBuildingName}` : '주소가 여기에 표시됩니다.'}
+              </S.AddressText>
             </FlexBox.Horizontal>
 
             {/* 지도 */}
-            <RealTimeMap position={position} setPosition={setPosition} />
-            <S.ButtonBox>
-              <Button
-                label="이 위치로 설정할게요."
-                size="full"
-                isSquare={true}
-                onClick={() => handleSubmitAddress()}
-                disabled={!address}
-              />
-            </S.ButtonBox>
+            <RealTimeMap
+              position={position}
+              setPosition={setPosition}
+              setCurrentAddress={setCurrentAddress}
+              setCurrentBuildingName={setCurrentBuildingName}
+              handleSubmitAddress={handleSubmitAddress}
+            />
           </Modal.body>
         </Modal>
       )}
@@ -80,9 +81,6 @@ const S = {
     width: 50%;
 
     font-size: ${({ theme }) => theme.text.size.xSmall};
-  `,
-  ButtonBox: styled.div`
-    display: flex;
   `,
   AddressText: styled.span`
     ${title4}

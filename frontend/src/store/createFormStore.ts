@@ -51,18 +51,22 @@ const createFormStore = <T extends object>(formSpec: FormSpec<T>, storageName: s
     persist(
       (set, get) => ({
         rawValue: getInitialRaw(formSpec),
+
         value: transformAll(getInitialRaw(formSpec), getValueType(formSpec)),
+
         errorMessage: initialErrorMessages(getInitialRaw(formSpec)),
+
         actions: {
           onChange: event => get().actions.set(event.target.name as keyof T, event.target.value),
+
           set: (name, value) => {
             if (value === '') {
               get().actions._reset(name);
               return;
             }
-
             get().actions._updateAfterValidation(name, value ?? '', getValidationSet(formSpec)[name]);
           },
+
           setValueForced: (name, value) => set({ value: { ...get().value, [name]: value } }),
 
           resetAll: () =>
@@ -71,7 +75,9 @@ const createFormStore = <T extends object>(formSpec: FormSpec<T>, storageName: s
               value: transformAll(getInitialRaw(formSpec), getValueType(formSpec)),
               errorMessage: initialErrorMessages(getInitialRaw(formSpec)),
             }),
+
           setAll: set,
+
           _reset: name => {
             get().actions._updateErrorMsg(name, '');
             get().actions._update(name, '');

@@ -13,7 +13,7 @@ export const checklistHandlers = [
   }),
 
   http.get(BASE_URL + ENDPOINT.CHECKLIST_ID(1), () => {
-    return HttpResponse.json(Object.assign(checklistDetail, { isLiked: getLike(1) }), { status: 200 });
+    return HttpResponse.json(Object.assign(checklistDetail, { isLiked: getLike(1) }), { status: 500 });
   }),
 
   http.put(BASE_URL + ENDPOINT.CHECKLIST_ID(1), () => {

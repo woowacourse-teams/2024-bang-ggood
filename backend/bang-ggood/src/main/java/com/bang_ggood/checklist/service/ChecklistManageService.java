@@ -3,6 +3,9 @@ package com.bang_ggood.checklist.service;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.dto.response.UserChecklistPreviewResponse;
+import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
+import com.bang_ggood.like.service.ChecklistLikeService;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.domain.MaintenanceItem;
 import com.bang_ggood.maintenance.service.ChecklistMaintenanceService;
@@ -34,16 +37,19 @@ public class ChecklistManageService {
     private final ChecklistOptionService checklistOptionService;
     private final ChecklistQuestionService checklistQuestionService;
     private final ChecklistMaintenanceService checklistMaintenanceService;
+    private final ChecklistLikeService checklistLikeService;
 
     public ChecklistManageService(RoomService roomService, ChecklistService checklistService,
                                   ChecklistOptionService checklistOptionService,
                                   ChecklistQuestionService checklistQuestionService,
-                                  ChecklistMaintenanceService checklistMaintenanceService) {
+                                  ChecklistMaintenanceService checklistMaintenanceService,
+                                  ChecklistLikeService checklistLikeService) {
         this.roomService = roomService;
         this.checklistService = checklistService;
         this.checklistOptionService = checklistOptionService;
         this.checklistQuestionService = checklistQuestionService;
         this.checklistMaintenanceService = checklistMaintenanceService;
+        this.checklistLikeService = checklistLikeService;
     }
 
     @Transactional
@@ -124,5 +130,24 @@ public class ChecklistManageService {
                         .toList();
 
         return SelectedCategoryQuestionsResponse.of(category, selectedQuestionResponse);
+    }
+
+    @Transactional(readOnly = true)
+    public UserChecklistsPreviewResponse readAllChecklistsPreview(User user) {
+        List<Checklist> checklists = checklistService.readAllChecklistsOrderByLatest(user);
+
+        List<UserChecklistPreviewResponse> responses = convertToChecklistsPreview(checklists);
+        return UserChecklistsPreviewResponse.from(responses);
+    }
+
+    private List<UserChecklistPreviewResponse> convertToChecklistsPreview(List<Checklist> checklists) {
+        return checklists.stream()
+                .map(this::convertToChecklistPreview)
+                .toList();
+    }
+
+    private UserChecklistPreviewResponse convertToChecklistPreview(Checklist checklist) {
+        boolean isLiked = checklistLikeService.hasUserLikedChecklist(checklist);
+        return UserChecklistPreviewResponse.of(checklist, isLiked);
     }
 }

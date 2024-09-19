@@ -5,6 +5,8 @@ import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.dto.response.UserChecklistPreviewResponse;
+import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
@@ -74,5 +76,27 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         assertThatThrownBy(() -> checklistManageService.readChecklist(user, 0L))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
+    }
+
+    @DisplayName("체크리스트 리스트 조회 성공")
+    @Test
+    void readUserChecklistsPreview() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        ChecklistRequest checklistRequest1 = ChecklistFixture.CHECKLIST_CREATE_REQUEST();
+        ChecklistRequest checklistRequest2 = ChecklistFixture.CHECKLIST_CREATE_REQUEST2();
+
+        Long checklist1 = checklistManageService.createChecklist(user, checklistRequest1);
+        Long checklist2 = checklistManageService.createChecklist(user, checklistRequest2);
+
+        // when
+        UserChecklistsPreviewResponse response = checklistManageService.readAllChecklistsPreview(user);
+
+        // then
+        UserChecklistPreviewResponse previewResponse1 = response.checklists().get(0);
+        UserChecklistPreviewResponse previewResponse2 = response.checklists().get(1);
+        
+        assertThat(previewResponse1.checklistId()).isEqualTo(checklist2); // 최신순으로 조회
+        assertThat(previewResponse2.checklistId()).isEqualTo(checklist1);
     }
 }

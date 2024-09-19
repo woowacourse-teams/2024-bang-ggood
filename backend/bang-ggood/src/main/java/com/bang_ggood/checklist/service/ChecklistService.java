@@ -116,18 +116,8 @@ public class ChecklistService {
     }
 
     @Transactional
-    public UserChecklistsPreviewResponse readChecklistsPreview(User user) {
-        List<Checklist> checklists = checklistRepository.findAllByUserOrderByLatest(user);
-        List<UserChecklistPreviewResponse> responses = checklists.stream()
-                .map(this::getChecklistPreview)
-                .toList();
-
-        return new UserChecklistsPreviewResponse(responses);
-    }
-
-    private UserChecklistPreviewResponse getChecklistPreview(Checklist checklist) {
-        boolean isLiked = checklistLikeRepository.existsByChecklist(checklist);
-        return UserChecklistPreviewResponse.of(checklist, isLiked);
+    public List<Checklist> readAllChecklistsOrderByLatest(User user) {
+        return checklistRepository.findAllByUserOrderByLatest(user);
     }
 
     @Transactional

@@ -42,7 +42,7 @@ describe('useChecklistBasicInfoStore 테스트', () => {
   });
 
   describe('관리비', () => {
-    it.only('관리비 입력 필드에는 숫자만 입력 가능하다.', () => {
+    it('관리비 입력 필드에는 숫자만 입력 가능하다.', () => {
       store.getState().actions.onChange(makeEvent('maintenanceFee', '관리비'));
       expect(store.getState().rawValue.maintenanceFee).toBe('');
 
@@ -52,7 +52,7 @@ describe('useChecklistBasicInfoStore 테스트', () => {
   });
 
   describe('관리비 포함 항목', () => {
-    it.only('선택한 관리비 항목 종류만을 가지고 있는다.', () => {
+    it('선택한 관리비 항목 종류만을 가지고 있는다.', () => {
       store.getState().actions.set('includedMaintenances', [1]);
       expect(store.getState().value.includedMaintenances).toStrictEqual([1]);
 

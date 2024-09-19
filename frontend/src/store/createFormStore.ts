@@ -12,22 +12,22 @@ const initialErrorMessages = <T extends object>(initial: Partial<T>) =>
 
 interface FormAction<T> {
   onChange: (event: InputChangeEvent) => void;
-  set: (name: keyof T, value: string | undefined) => void;
-  setValueForced: (name: string, value: string | number) => void;
+  set: <V>(name: keyof T, value: V) => void;
+  setValueForced: <V>(name: string, value: V) => void;
   setAll: (state: Partial<FormState<T>>) => void;
   resetAll: () => void;
   _reset: (name: keyof T) => void;
-  _update: (name: keyof AllString<T>, value: string | undefined) => void;
+  _update: <V>(name: keyof AllString<T>, value: V) => void;
   _updateErrorMsg: (field: keyof T, value: string) => void;
   _updateAfterValidation: (field: keyof T, value: string, validators: Validator[]) => void;
-  _transform: (name: string, value: string) => void;
+  _transform: <V>(name: string, value: V) => void;
 }
 
-type FormState<T> = { rawValue: Partial<AllString<T>>; value: Partial<T>; errorMessage: AllString<T> };
+type FormState<T> = { rawValue: Partial<T>; value: Partial<T>; errorMessage: AllString<T> };
 
 export interface FormFieldSpec {
   initialValue: string;
-  type: 'string' | 'number';
+  type: 'string' | 'number' | 'number[]';
   validators: Validator[];
 }
 
@@ -36,7 +36,7 @@ export type FormSpec<T> = {
 };
 
 const getInitialRaw = <T extends object>(formSpec: FormSpec<T>) =>
-  objectMap(formSpec, ([name, { initialValue }]) => [name, initialValue]) as Partial<AllString<T>>;
+  objectMap(formSpec, ([name, { initialValue }]) => [name, initialValue]) as Partial<T>;
 const getValueType = <T extends object>(formSpec: FormSpec<T>) =>
   objectMap(formSpec, ([name, { type }]) => [name, type]) as Partial<AllString<T>>;
 const getValidationSet = <T extends object>(formSpec: FormSpec<T>) =>
@@ -55,14 +55,23 @@ const createFormStore = <T extends object>(formSpec: FormSpec<T>, storageName: s
         errorMessage: initialErrorMessages(getInitialRaw(formSpec)),
         actions: {
           onChange: event => get().actions.set(event.target.name as keyof T, event.target.value),
-          set: (name, value) => {
+
+          set: <V>(name: keyof T, value: V) => {
             if (value === '') {
               get().actions._reset(name);
               return;
             }
 
-            get().actions._updateAfterValidation(name, value ?? '', getValidationSet(formSpec)[name]);
+            // 타입에 따라 다르게 처리
+            if (Array.isArray(value)) {
+              get().actions._update(name, value);
+            } else if (typeof value === 'number') {
+              get().actions._updateAfterValidation(name, value.toString(), getValidationSet(formSpec)[name]);
+            } else {
+              get().actions._updateAfterValidation(name, value as string, getValidationSet(formSpec)[name]);
+            }
           },
+
           setValueForced: (name, value) => set({ value: { ...get().value, [name]: value } }),
 
           resetAll: () =>
@@ -71,16 +80,20 @@ const createFormStore = <T extends object>(formSpec: FormSpec<T>, storageName: s
               value: transformAll(getInitialRaw(formSpec), getValueType(formSpec)),
               errorMessage: initialErrorMessages(getInitialRaw(formSpec)),
             }),
+
           setAll: set,
           _reset: name => {
             get().actions._updateErrorMsg(name, '');
             get().actions._update(name, '');
           },
+
           _update: (name, value) => {
             set({ rawValue: { ...get().rawValue, [name]: value } });
             get().actions._transform(name as string, value ?? '');
           },
+
           _updateErrorMsg: (name, value) => set({ errorMessage: { ...get().errorMessage, [name]: value } }),
+
           _updateAfterValidation: (name, value, validators) => {
             validation(
               name as string,
@@ -94,6 +107,7 @@ const createFormStore = <T extends object>(formSpec: FormSpec<T>, storageName: s
               },
             );
           },
+
           _transform: (name, value) =>
             set({
               value: {
@@ -115,10 +129,21 @@ const createFormStore = <T extends object>(formSpec: FormSpec<T>, storageName: s
     ),
   );
 
-const transformAll = <T>(rawValues: Partial<AllString<T>>, valueType: Partial<AllString<T>>) =>
-  objectMap(rawValues, ([key, value]) => [
-    key,
-    valueType[key as keyof T] === 'number' ? Number(value) : value,
-  ]) as Partial<T>;
-
 export default createFormStore;
+
+const transformAll = <T>(rawValues: Partial<T>, valueType: Partial<AllString<T>>) =>
+  objectMap(rawValues, ([key, value]) => {
+    const valueTypeForKey = valueType[key as keyof T];
+    if (valueTypeForKey === 'number') {
+      return [key, typeof value === 'number' ? value : Number(value)];
+    }
+
+    if (valueTypeForKey === 'number[]') {
+      try {
+        return [key, Array.isArray(value) ? value : JSON.parse(value as string)];
+      } catch (e) {
+        return [key, []];
+      }
+    }
+    return [key, value];
+  }) as Partial<T>;

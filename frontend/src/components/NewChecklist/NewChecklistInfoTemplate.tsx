@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import Layout from '@/components/_common/layout/Layout';
 import Address from '@/components/NewChecklist/NewRoomInfoForm/Address';
 import DepositAndRent from '@/components/NewChecklist/NewRoomInfoForm/DepositAndRent';
+import IncludedMaintenances from '@/components/NewChecklist/NewRoomInfoForm/IncludedMaintenances';
 import MaintenanceFee from '@/components/NewChecklist/NewRoomInfoForm/MaintenanceFee';
 import NearTransportation from '@/components/NewChecklist/NewRoomInfoForm/NearTransportation';
 import OccupancyMonth from '@/components/NewChecklist/NewRoomInfoForm/OccupancyMonth';
@@ -23,6 +24,7 @@ const NewChecklistInfoTemplate = () => {
         <NearTransportation />
         <DepositAndRent />
         <MaintenanceFee />
+        <IncludedMaintenances />
         <RoomFloor />
         <RoomStructure />
         <RoomSize />

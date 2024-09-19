@@ -115,7 +115,7 @@ public class ChecklistService {
         return checklist;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Checklist> readAllChecklistsOrderByLatest(User user) {
         return checklistRepository.findAllByUserOrderByLatest(user);
     }

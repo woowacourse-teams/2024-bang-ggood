@@ -17,7 +17,7 @@ const formSpec: FormSpec<RoomInfo> = {
   deposit: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
   rent: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
   maintenanceFee: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
-  // includedMaintenances: { initialValue: '', type: 'string', validators: [isNumericValidator, nonNegativeValidator] }, //TODO 따로 관리되고있을건데, 아마도 store에 편입하는 게 나을 것.
+  includedMaintenances: { initialValue: '', type: 'number[]', validators: [] },
   contractTerm: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
   type: { initialValue: '', type: 'string', validators: [] },
   size: { initialValue: '', type: 'number', validators: [isNumericValidator] },

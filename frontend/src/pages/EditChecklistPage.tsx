@@ -15,11 +15,9 @@ import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery';
 import useModal from '@/hooks/useModal';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
-import checklistIncludedMaintenancesStore from '@/store/checklistIncludedMaintenancesStore';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
-import useSelectedOptionStore from '@/store/useSelectedOptionStore';
-import { objectOmit } from '@/utils/typeFunctions';
+import useSelectedOptionStore from '@/store/useOptionStore';
 
 type RouteParams = {
   checklistId: string;
@@ -31,17 +29,13 @@ const EditChecklistPage = () => {
   const { tabs } = useNewChecklistTabs();
 
   const { data: checklist, isSuccess } = useGetChecklistDetailQuery(checklistId);
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const IncludedMaintenancesActions = useStore(checklistIncludedMaintenancesStore, state => state.actions);
-  const optionActions = useSelectedOptionStore(state => state.actions);
+  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
 
   // 한줄평 모달
   const { isModalOpen: isSubmitModalOpen, openModal: summaryModalOpen, closeModal: summaryModalClose } = useModal();
 
   // 메모 모달
   const { isModalOpen: isMemoModalOpen, openModal: memoModalOpen, closeModal: memoModalClose } = useModal();
-
-  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
 
   // TODO: action 분리 필요
   const resetChecklist = useChecklistStore(state => state.reset);
@@ -55,13 +49,16 @@ const EditChecklistPage = () => {
   };
 
   useEffect(() => {
-    const fetchChecklistAndSetToStore = async () => {
+    const setChecklistDataToStore = async () => {
       if (!isSuccess) return;
-      actions.setAll({ rawValue: objectOmit(checklist.room, new Set('includedMaintenances')), value: checklist.room });
-      optionActions.set(checklist.options.map(option => option.optionId));
-      IncludedMaintenancesActions.set(checklist.room.includedMaintenances ?? []);
+
+      roomInfoActions.setAll({
+        rawValue: checklist.room,
+        value: checklist.room,
+      });
+      selectedOptionActions.set(checklist.options.map(option => option.optionId));
     };
-    fetchChecklistAndSetToStore();
+    setChecklistDataToStore();
   }, [checklistId]);
 
   const resetAndGoHome = () => {

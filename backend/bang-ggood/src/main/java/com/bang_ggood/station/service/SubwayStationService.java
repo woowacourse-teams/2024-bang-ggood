@@ -8,6 +8,8 @@ import com.bang_ggood.station.dto.SubwayStationResponse;
 import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,7 +22,7 @@ public class SubwayStationService {
     private static final List<SubwayStation> SUBWAY_STATIONS = SubwayReader.readSubwayStationData();
 
     public List<SubwayStationResponse> readNearestStation(double latitude, double longitude) {
-        return SUBWAY_STATIONS.stream()
+        Map<String, Optional<SubwayStationResponse>> responseMap = SUBWAY_STATIONS.stream()
                 .map(station -> {
                     double distance = station.getDistance(latitude, longitude);
                     return SubwayStationResponse.of(station, (int) Math.round(distance / AVERAGE_WALKING_SPEED));
@@ -30,9 +32,9 @@ public class SubwayStationService {
                 .collect(Collectors.groupingBy(
                         SubwayStationResponse::getStationName,
                         Collectors.reducing(SubwayStationResponse::merge)
-                ))
-                .values()
-                .stream()
+                ));
+
+        return responseMap.values().stream()
                 .map(optional -> optional.orElseThrow(() -> new BangggoodException(ExceptionCode.STATION_NOT_FOUND)))
                 .sorted(Comparator.comparing(SubwayStationResponse::getWalkingTime))
                 .limit(REQUESTED_STATION_NUMBER)

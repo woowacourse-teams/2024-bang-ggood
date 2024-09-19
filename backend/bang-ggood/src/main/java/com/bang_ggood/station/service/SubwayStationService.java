@@ -1,12 +1,13 @@
 package com.bang_ggood.station.service;
 
+import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.station.SubwayReader;
 import com.bang_ggood.station.domain.SubwayStation;
 import com.bang_ggood.station.dto.SubwayStationResponse;
 import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,7 +37,7 @@ public class SubwayStationService {
                 ))
                 .values()
                 .stream()
-                .map(Optional::orElseThrow)
+                .map(optional -> optional.orElseThrow(() -> new BangggoodException(ExceptionCode.STATION_NOT_FOUND)))
                 .sorted(Comparator.comparing(SubwayStationResponse::getWalkingTime))
                 .limit(REQUESTED_STATION_NUMBER)
                 .toList();

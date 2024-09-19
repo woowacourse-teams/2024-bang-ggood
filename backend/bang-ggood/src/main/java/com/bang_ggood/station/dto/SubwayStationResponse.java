@@ -26,7 +26,7 @@ public class SubwayStationResponse {
 
     public SubwayStationResponse merge(SubwayStationResponse response) {
         if (!stationName.equals(response.stationName)) {
-            throw new BangggoodException(ExceptionCode.STATION_NOT_SAME);
+            throw new BangggoodException(ExceptionCode.STATION_NAME_NOT_SAME);
         }
 
         stationLine.addAll(response.stationLine);

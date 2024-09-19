@@ -19,21 +19,6 @@ public class SubwayStationServiceTest extends IntegrationTestSupport {
     @Autowired
     SubwayStationService subwayStationService;
 
-    // check data in "https://apis.map.kakao.com/web/sample/addMapClickEventWithMarker/"
-    private static Stream<Arguments> provideStationData() {
-        return Stream.of(
-                Arguments.of(37.517406150696104, 127.10333134512422,
-                        new Station("잠실(송파구청)", List.of("2호선", "8호선")),
-                        new Station("잠실나루", List.of("2호선"))),
-                Arguments.of(37.50808977595056, 127.04649615866747,
-                        new Station("선정릉", List.of("9호선", "분당선")),
-                        new Station("선릉", List.of("2호선", "분당선"))),
-                Arguments.of(37.538999998345446, 126.97201837726666,
-                        new Station("남영", List.of("1호선")),
-                        new Station("삼각지", List.of("4호선", "6호선")))
-        );
-    }
-
     @DisplayName("가까운 지하철 2개 조회 성공")
     @ParameterizedTest
     @MethodSource("provideStationData")
@@ -51,6 +36,21 @@ public class SubwayStationServiceTest extends IntegrationTestSupport {
                     assertThat(nextNearest.getStationName()).isEqualTo(nextNearestStation.name);
                     assertThat(nextNearest.getStationLine()).containsAll(nextNearestStation.lines);
                 }
+        );
+    }
+
+    // check data in "https://apis.map.kakao.com/web/sample/addMapClickEventWithMarker/"
+    private static Stream<Arguments> provideStationData() {
+        return Stream.of(
+                Arguments.of(37.517406150696104, 127.10333134512422,
+                        new Station("잠실(송파구청)", List.of("2호선", "8호선")),
+                        new Station("잠실나루", List.of("2호선"))),
+                Arguments.of(37.50808977595056, 127.04649615866747,
+                        new Station("선정릉", List.of("9호선", "분당선")),
+                        new Station("선릉", List.of("2호선", "분당선"))),
+                Arguments.of(37.538999998345446, 126.97201837726666,
+                        new Station("남영", List.of("1호선")),
+                        new Station("삼각지", List.of("4호선", "6호선")))
         );
     }
 

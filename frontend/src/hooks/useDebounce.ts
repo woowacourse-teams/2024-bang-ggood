@@ -12,7 +12,6 @@ const useDebounce = <T>({ value, delay = 1000 }: Props<T>) => {
     const timer = setTimeout(() => {
       setDebouncedValue(value);
     }, delay);
-
     return () => clearTimeout(timer);
   }, [value, delay]);
 

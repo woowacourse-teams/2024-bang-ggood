@@ -74,6 +74,10 @@ const S = {
     font-weight: ${({ theme }) => theme.text.weight.bold};
     font-size: ${({ theme }) => theme.text.size.small};
 
+    @media (width <= 36rem) {
+      font-size: ${({ theme }) => theme.text.size.xxSmall};
+    }
+
     @media (width <= 30rem) {
       font-size: ${({ theme }) => theme.text.size.xSmall};
     }

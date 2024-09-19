@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 
-import OptionButton from '@/components/NewChecklist/Option/OptionButton/OptionButton';
+import MemoziedOptionButton from '@/components/NewChecklist/Option/OptionButton/OptionButton';
 import { OPTIONS } from '@/constants/options';
 
 export const OptionList = () => {
   const icons = OPTIONS.map(option => {
-    return <OptionButton option={option} key={option.id} />;
+    return <MemoziedOptionButton option={option} key={option.id} />;
   });
 
   return <S.GridContainer>{icons}</S.GridContainer>;

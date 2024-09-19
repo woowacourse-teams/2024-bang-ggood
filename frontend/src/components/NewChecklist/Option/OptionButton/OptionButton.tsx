@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
+import React from 'react';
 
-import useSelectedOptionStore from '@/store/useOptionStore';
+import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 import { flexCenter, flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
 import { OptionWithIcon } from '@/types/option';
@@ -73,14 +74,16 @@ const S = {
     font-weight: ${({ theme }) => theme.text.weight.bold};
     font-size: ${({ theme }) => theme.text.size.small};
 
-    @media (width <= 34.4rem) {
+    @media (width <= 30rem) {
       font-size: ${({ theme }) => theme.text.size.xSmall};
     }
 
-    @media (width >= 58rem) {
-      font-size: ${({ theme }) => theme.text.size.xSmall};
+    @media (width <= 22rem) {
+      font-size: ${({ theme }) => theme.text.size.xxSmall};
     }
   `,
 };
 
-export default OptionButton;
+const MemoziedOptionButton = React.memo(OptionButton);
+
+export default MemoziedOptionButton;

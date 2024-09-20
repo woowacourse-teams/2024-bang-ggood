@@ -2,10 +2,14 @@ import styled from '@emotion/styled';
 
 import MemoziedOptionButton from '@/components/NewChecklist/Option/OptionButton/OptionButton';
 import { OPTIONS } from '@/constants/options';
+import useSelectedOptionStore from '@/store/useOptionStore';
 
 export const OptionList = () => {
+  const OptionStoreActions = useSelectedOptionStore(state => state.actions);
+
   const icons = OPTIONS.map(option => {
-    return <MemoziedOptionButton option={option} key={option.id} />;
+    const isCurrentOptionSelected = OptionStoreActions.isSelectedOption(option.id);
+    return <MemoziedOptionButton option={option} key={option.id} isSelected={isCurrentOptionSelected} />;
   });
 
   return <S.GridContainer>{icons}</S.GridContainer>;

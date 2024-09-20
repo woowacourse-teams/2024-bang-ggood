@@ -20,14 +20,10 @@ public class ChecklistLikeService {
 
     @Transactional
     public void createLike(User user, Checklist checklist) {
-        validateChecklistLike(user, checklist);
-
-        checklistLikeRepository.save(new ChecklistLike(checklist));
-    }
-
-    private void validateChecklistLike(User user, Checklist checklist) {
         validateChecklistOwnership(user, checklist);
         validateChecklistAlreadyLiked(checklist);
+
+        checklistLikeRepository.save(new ChecklistLike(checklist));
     }
 
     private void validateChecklistOwnership(User user, Checklist checklist) {

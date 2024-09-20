@@ -59,7 +59,7 @@ const S = {
   `,
   Text: styled.span<{ size: ButtonSize }>`
     ${flexCenter}
-    min-width: ${({ size }) => size === 'full' && 80}px;
+    min-width: ${({ size }) => size === 'full' && 8}rem;
   `,
 };
 

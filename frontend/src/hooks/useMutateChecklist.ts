@@ -6,7 +6,7 @@ import usePutChecklistQuery from '@/hooks/query/usePutCheclistQuery';
 import useToast from '@/hooks/useToast';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
-import useSelectedOptionStore from '@/store/useOptionStore';
+import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 import { ChecklistCategoryQnA, MutateType } from '@/types/checklist';
 
 const useMutateChecklist = (mutateType: MutateType, checklistId?: number) => {

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import useSelectedOptionStore from '@/store/useOptionStore';
+import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 import { flexCenter, flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
 import { OptionWithIcon } from '@/types/option';

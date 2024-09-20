@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import MemoziedOptionButton from '@/components/NewChecklist/Option/OptionButton/OptionButton';
 import { OPTIONS } from '@/constants/options';
-import useSelectedOptionStore from '@/store/useOptionStore';
+import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 
 export const OptionList = () => {
   const OptionStoreActions = useSelectedOptionStore(state => state.actions);

@@ -61,17 +61,10 @@ const EditChecklistPage = () => {
     setChecklistDataToStore();
   }, [checklistId]);
 
-  const resetAndGoHome = () => {
-    roomInfoActions.resetAll();
-    resetChecklist();
-    selectedOptionActions.reset();
-    navigate(ROUTE_PATH.checklistList);
-  };
-
   return (
     <>
       <Header
-        left={<Header.Backward onClick={resetAndGoHome} />}
+        left={<Header.Backward onClick={resetAndGoDetailPage} />}
         center={<Header.Text>체크리스트 편집</Header.Text>}
         right={<Button label="저장" size="small" color="dark" onClick={summaryModalOpen} />}
       />

@@ -78,8 +78,8 @@ const S = {
     color: ${({ theme }) => theme.palette.grey500};
   `,
   AlertModalButton: styled(Button)`
-    size: calc(100% - 10px);
+    width: calc(100% - 10px);
+    height: 40px;
     ${title4}
-    height:40px;
   `,
 };

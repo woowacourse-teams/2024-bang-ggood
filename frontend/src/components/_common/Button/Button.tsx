@@ -107,7 +107,7 @@ const sizeStyles = {
   `,
   full: css`
     width: 100%;
-    padding: 1.4rem 3.6rem;
+    padding: 1.4rem 2rem;
     ${title3}
   `,
 };

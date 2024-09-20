@@ -24,7 +24,7 @@ public class SubwayStationService {
     public List<SubwayStationResponse> readNearestStation(double latitude, double longitude) {
         Map<String, Optional<SubwayStationResponse>> responseMap = SUBWAY_STATIONS.stream()
                 .map(station -> {
-                    double distance = station.getDistance(latitude, longitude);
+                    double distance = station.calculateDistance(latitude, longitude);
                     return SubwayStationResponse.of(station, (int) Math.round(distance / AVERAGE_WALKING_SPEED));
                 })
                 .sorted(Comparator.comparing(SubwayStationResponse::getWalkingTime))

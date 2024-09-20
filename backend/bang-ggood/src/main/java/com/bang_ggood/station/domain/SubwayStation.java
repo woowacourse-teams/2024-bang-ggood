@@ -18,7 +18,7 @@ public class SubwayStation {
         this.longitude = longitude;
     }
 
-    public double getDistance(double latitude, double longitude) {
+    public double calculateDistance(double latitude, double longitude) {
         double dx = (this.latitude - latitude) * METER_PER_DEGREE;
         double dy =
                 (this.longitude - longitude) * METER_PER_DEGREE * Math.cos(this.latitude);

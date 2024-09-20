@@ -86,6 +86,7 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
     @Test
     void readLikedChecklistsPreview() {
         //given
+        int EXPECTED_LIKE_COUNT = 2;
         User user = userRepository.save(UserFixture.USER1());
         Room room1 = roomRepository.save(RoomFixture.ROOM_1());
         Room room2 = roomRepository.save(RoomFixture.ROOM_2());
@@ -106,7 +107,7 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
 
         //then
         assertAll(
-                () -> assertThat(response.checklists().size()).isEqualTo(2),
+                () -> assertThat(response.checklists()).hasSize(EXPECTED_LIKE_COUNT),
                 () -> assertThat(response.checklists().get(0).checklistId()).isEqualTo(checklist1.getId()),
                 () -> assertThat(response.checklists().get(1).checklistId()).isEqualTo(checklist2.getId())
         );

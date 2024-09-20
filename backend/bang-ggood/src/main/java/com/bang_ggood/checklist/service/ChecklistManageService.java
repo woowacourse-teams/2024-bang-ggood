@@ -3,8 +3,8 @@ package com.bang_ggood.checklist.service;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
-import com.bang_ggood.checklist.dto.response.UserChecklistPreviewResponse;
-import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.domain.MaintenanceItem;
 import com.bang_ggood.maintenance.service.ChecklistMaintenanceService;
@@ -129,17 +129,17 @@ public class ChecklistManageService {
     }
 
     @Transactional(readOnly = true)
-    public UserChecklistsPreviewResponse readLikedChecklistsPreview(User user) {
+    public ChecklistsPreviewResponse readLikedChecklistsPreview(User user) {
         List<Checklist> likedChecklists = checklistService.readLikedChecklistsPreview(user);
-        List<UserChecklistPreviewResponse> responses = mapToChecklistPreviewResponses(
+        List<ChecklistPreviewResponse> responses = mapToChecklistPreviewResponses(
                 likedChecklists);
-        return new UserChecklistsPreviewResponse(responses);
+        return new ChecklistsPreviewResponse(responses);
     }
 
-    private List<UserChecklistPreviewResponse> mapToChecklistPreviewResponses(
+    private List<ChecklistPreviewResponse> mapToChecklistPreviewResponses(
             List<Checklist> likedChecklists) {
         return likedChecklists.stream()
-                .map(checklist -> UserChecklistPreviewResponse.of(checklist, true))
+                .map(checklist -> ChecklistPreviewResponse.of(checklist, true))
                 .toList();
     }
 }

@@ -5,7 +5,7 @@ import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
-import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
@@ -103,7 +103,7 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         );
 
         //when
-        UserChecklistsPreviewResponse response = checklistManageService.readLikedChecklistsPreview(user);
+        ChecklistsPreviewResponse response = checklistManageService.readLikedChecklistsPreview(user);
 
         //then
         assertAll(

@@ -214,36 +214,37 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.OPTION_DUPLICATED.getMessage());
     }
 
-    //TODO 체크리스트 수정 API 리팩토링 완료후 확인 필요
-//    @DisplayName("체크리스트 수정 실패 : 기존의 체크리스트와 질문 길이가 다를 경우")
-//    @Test
-//    void updateChecklistById_differentQuestionLength_exception() {
-//        //given
-//        long checklistId = checklistManageService.createChecklist(UserFixture.USER1(),
-//                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
-//
-//        //when & then
-//        assertThatThrownBy(
-//                () -> checklistService.updateChecklistById(UserFixture.USER1(), checklistId,
-//                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION_LENGTH))
-//                .isInstanceOf(BangggoodException.class)
-//                .hasMessage(ExceptionCode.QUESTION_DIFFERENT.getMessage());
-//    }
-//
-//    @DisplayName("체크리스트 수정 실패 : 기존의 체크리스트와 질문이 다를 경우")
-//    @Test
-//    void createChecklist_differentQuestion_exception() {
-//        //given
-//        long checklistId = checklistManageService.createChecklist(UserFixture.USER1(),
-//                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
-//
-//        //when & then
-//        assertThatThrownBy(
-//                () -> checklistService.updateChecklistById(UserFixture.USER1(), checklistId,
-//                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION()))
-//                .isInstanceOf(BangggoodException.class)
-//                .hasMessage(ExceptionCode.QUESTION_DIFFERENT.getMessage());
-//    }
+    @DisplayName("체크리스트 수정 실패 : 기존의 체크리스트와 질문 길이가 다를 경우")
+    @Test
+    void updateChecklistById_differentQuestionLength_exception() {
+        //given
+        User user = userRepository.save(UserFixture.USER1());
+        Long checklistId = checklistManageService.createChecklist(user,
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+
+        //when & then
+        assertThatThrownBy(
+                () -> checklistService.updateChecklistById(user, checklistId,
+                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION_LENGTH()))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.QUESTION_DIFFERENT.getMessage());
+    }
+
+    @DisplayName("체크리스트 수정 실패 : 기존의 체크리스트와 질문이 다를 경우")
+    @Test
+    void createChecklist_differentQuestion_exception() {
+        //given
+        User user = userRepository.save(UserFixture.USER1());
+        Long checklistId = checklistManageService.createChecklist(user,
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+
+        //when & then
+        assertThatThrownBy(
+                () -> checklistService.updateChecklistById(user, checklistId,
+                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION()))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.QUESTION_DIFFERENT.getMessage());
+    }
 
     @DisplayName("체크리스트 수정 실패 : 해당 유저의 체크리스트가 아닐 경우")
     @Test

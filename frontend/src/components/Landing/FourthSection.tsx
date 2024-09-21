@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-import customPageScreen from '@/assets/images/customPageScreen.png';
+import customPageScreen from '@/assets/images/customPageScreen.webp';
 import ArticleCard from '@/components/ArticleList/ArticleCard';
 import S from '@/components/Landing/style';
 import { INTERSECTION_CONFIG } from '@/constants/system';

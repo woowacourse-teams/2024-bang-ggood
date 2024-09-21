@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-import mainPageScreen from '@/assets/images/mainPageScreen.png';
+import mainPageScreen from '@/assets/images/mainPageScreen.webp';
 import S from '@/components/Landing/style';
 import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';

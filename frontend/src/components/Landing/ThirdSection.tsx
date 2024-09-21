@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 
 import { PencilIcon } from '@/assets/assets';
-import checkingPageScreen from '@/assets/images/checkingPageScreen.png';
+import checkingPageScreen from '@/assets/images/checkingPageScreen.webp';
 import S from '@/components/Landing/style';
 import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';

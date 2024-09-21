@@ -12,7 +12,6 @@ import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
-import com.bang_ggood.user.repository.UserRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Header;
@@ -37,8 +36,6 @@ class ChecklistE2ETest extends AcceptanceTest {
     private CustomChecklistQuestionRepository customChecklistQuestionRepository;
     @Autowired
     private ChecklistLikeRepository checklistLikeRepository;
-    @Autowired
-    private UserRepository userRepository;
 
     @DisplayName("체크리스트 작성 성공")
     @Test

@@ -1,29 +1,21 @@
 .sprite-icon::before {
   content: '';
   display: inline-block;
+  width: 22px;
+  height: 22px;
 }
 .sprite-home::before {
-  width: 22px;
-  height: 23px;
-  background: url('@/assets/images/category-icon-sprite.png') -10px -10px;
+  background: url('@/assets/images/category-sprite.webp') -10px -10px;
 }
 .sprite-window::before {
-  width: 22px;
-  height: 23px;
-  background: url('@/assets/images/category-icon-sprite.png') -52px -10px;
+  background: url('@/assets/images/category-sprite.webp') -52px -10px;
 }
 .sprite-toilet::before {
-  width: 22px;
-  height: 23px;
-  background: url('@/assets/images/category-icon-sprite.png') -94px -10px;
+  background: url('@/assets/images/category-sprite.webp') -10px -52px;
 }
 .sprite-security::before {
-  width: 22px;
-  height: 23px;
-  background: url('@/assets/images/category-icon-sprite.png') -10px -53px;
+  background: url('@/assets/images/category-sprite.webp') -52px -52px;
 }
 .sprite-outdoor::before {
-  width: 22px;
-  height: 23px;
-  background: url('@/assets/images/category-icon-sprite.png') -52px -53px;
+  background: url('@/assets/images/category-sprite.webp') -94px -10px;
 }

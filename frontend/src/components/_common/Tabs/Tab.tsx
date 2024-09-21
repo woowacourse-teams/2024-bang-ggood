@@ -16,7 +16,7 @@ interface Props {
 const Tab = ({ id, onMoveTab, name, active, hasIndicator, className }: Props) => {
   return (
     <S.Container key={id} onClick={() => onMoveTab(id)} active={active}>
-      <S.TextBox className={`sprite-icon ${className}`}>{name}</S.TextBox>
+      <S.TextBox className={className && `sprite-icon ${className}`}>{name}</S.TextBox>
       {hasIndicator && hasIndicator !== null && <S.UncompletedIndicator />}
     </S.Container>
   );
@@ -41,7 +41,7 @@ const S = {
   TextBox: styled.div`
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
   `,
   UncompletedIndicator: styled.div`
     position: absolute;

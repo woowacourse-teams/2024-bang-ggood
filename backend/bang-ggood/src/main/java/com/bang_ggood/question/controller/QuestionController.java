@@ -1,6 +1,7 @@
 package com.bang_ggood.question.controller;
 
 import com.bang_ggood.auth.config.AuthPrincipal;
+import com.bang_ggood.auth.config.UserPrincipal;
 import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
@@ -23,13 +24,13 @@ public class QuestionController {
 
     // TODO : 엔드포인트 통일 with CustomChecklist
     @GetMapping("/checklists/questions")
-    public ResponseEntity<CustomChecklistQuestionsResponse> readCustomChecklistQuestions(@AuthPrincipal User user) {
+    public ResponseEntity<CustomChecklistQuestionsResponse> readCustomChecklistQuestions(@UserPrincipal User user) {
         return ResponseEntity.ok(questionManageService.readCustomChecklistQuestions(user));
     }
 
     @GetMapping("/custom-checklist/all")
     public ResponseEntity<CategoryCustomChecklistQuestionsResponse> readAllCustomChecklistQuestions(
-            @AuthPrincipal User user) {
+            @UserPrincipal User user) {
         return ResponseEntity.ok(questionManageService.readAllCustomChecklistQuestions(user));
     }
 

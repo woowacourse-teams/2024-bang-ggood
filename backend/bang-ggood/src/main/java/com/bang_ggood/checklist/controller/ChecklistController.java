@@ -1,6 +1,7 @@
 package com.bang_ggood.checklist.controller;
 
 import com.bang_ggood.auth.config.AuthPrincipal;
+import com.bang_ggood.auth.config.UserPrincipal;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
@@ -49,7 +50,7 @@ public class ChecklistController {
     }
 
     @GetMapping("/checklists")
-    public ResponseEntity<UserChecklistsPreviewResponse> readChecklistsPreview(@AuthPrincipal User user) {
+    public ResponseEntity<UserChecklistsPreviewResponse> readChecklistsPreview(@UserPrincipal User user) {
         return ResponseEntity.ok(checklistService.readChecklistsPreview(user));
     }
 

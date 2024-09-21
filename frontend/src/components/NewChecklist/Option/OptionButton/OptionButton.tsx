@@ -40,15 +40,11 @@ const OptionButton = ({ option, isSelected }: { option: OptionWithIcon; isSelect
   );
 };
 
-const arePropsEqual = (prevProps: { isSelected: boolean }, nextProps: { isSelected: boolean }) => {
-  return prevProps.isSelected === nextProps.isSelected;
-};
-
 /*사용자가 누른 옵션 버튼만 리렌더링*/
 const MemoizedOptionButton = React.memo((props: { option: OptionWithIcon; isSelected: boolean }) => {
   const isSelected = useSelectedOptionStore(state => state.actions.isSelectedOption(props.option.id));
   return <OptionButton option={props.option} isSelected={isSelected} />;
-}, arePropsEqual);
+});
 
 export default MemoizedOptionButton;
 

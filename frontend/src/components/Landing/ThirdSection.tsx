@@ -1,12 +1,12 @@
 import { useRef } from 'react';
 
 import { PencilIcon } from '@/assets/assets';
+import checkingPageScreen from '@/assets/images/checkingPageScreen.png';
 import S from '@/components/Landing/style';
 import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';
 import theme from '@/styles/theme';
 
-import checkScreenshotImgUrl from '../../../public/image/checkScreenShot.png';
 import homeImgUrl from '../../../public/image/home.png';
 import toiletImgUrl from '../../../public/image/toilet.png';
 import windowImgUrl from '../../../public/image/window.png';
@@ -67,7 +67,7 @@ const ThirdSection = () => {
         <S.Observer ref={ref2} />
         <S.AnimationBox isIntersecting={isIntersecting2}>
           <S.ChecklistImgBox>
-            <img src={checkScreenshotImgUrl} />
+            <img src={checkingPageScreen} />
             <S.PencilIconBox>
               <PencilIcon width={70} height={90} />
             </S.PencilIconBox>

@@ -6,7 +6,7 @@ import usePutChecklistQuery from '@/hooks/query/usePutCheclistQuery';
 import useToast from '@/hooks/useToast';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
-import useOptionStore from '@/store/useOptionStore';
+import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 import { ChecklistCategoryQnA, MutateType } from '@/types/checklist';
 
 const useMutateChecklist = (mutateType: MutateType, checklistId?: number) => {
@@ -18,7 +18,7 @@ const useMutateChecklist = (mutateType: MutateType, checklistId?: number) => {
   const { value: roomInfoAnswer, actions } = useStore(checklistRoomInfoStore);
 
   // 선택된 옵션
-  const selectedOptions = useOptionStore(state => state.selectedOptions);
+  const selectedOptions = useSelectedOptionStore(state => state.selectedOptions);
   // 체크리스트 답변
   const checklistCategoryQnA = useChecklistStore(state => state.checklistCategoryQnA);
 

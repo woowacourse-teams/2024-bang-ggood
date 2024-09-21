@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import Checkbox from '@/components/_common/Checkbox/Checkbox';
 import CounterBox from '@/components/_common/CounterBox/CounterBox';
 import { OPTION_COUNT } from '@/constants/options';
-import useSelectedOptionStore from '@/store/useOptionStore';
+import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 import { flexCenter, flexSpaceBetween, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
 

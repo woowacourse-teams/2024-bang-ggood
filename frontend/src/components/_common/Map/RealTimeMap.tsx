@@ -204,10 +204,11 @@ const S = {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
     z-index: 100;
+    width: 80%;
 
     text-align: center;
+    transform: translate(-50%, -50%);
   `,
   LoadingMessage: styled.div`
     padding-top: 20px;

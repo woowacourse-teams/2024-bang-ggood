@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { DEFAULT_POSITION } from '@/constants/map';
 
 const createKakaoMapElements = () => {

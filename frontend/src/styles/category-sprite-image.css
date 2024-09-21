@@ -1,0 +1,29 @@
+.sprite-icon::before {
+  content: '';
+  display: inline-block;
+}
+.sprite-home::before {
+  width: 22px;
+  height: 23px;
+  background: url('@/assets/images/category-icon-sprite.png') -10px -10px;
+}
+.sprite-window::before {
+  width: 22px;
+  height: 23px;
+  background: url('@/assets/images/category-icon-sprite.png') -52px -10px;
+}
+.sprite-toilet::before {
+  width: 22px;
+  height: 23px;
+  background: url('@/assets/images/category-icon-sprite.png') -94px -10px;
+}
+.sprite-security::before {
+  width: 22px;
+  height: 23px;
+  background: url('@/assets/images/category-icon-sprite.png') -10px -53px;
+}
+.sprite-outdoor::before {
+  width: 22px;
+  height: 23px;
+  background: url('@/assets/images/category-icon-sprite.png') -52px -53px;
+}

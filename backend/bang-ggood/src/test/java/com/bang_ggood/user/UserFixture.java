@@ -16,6 +16,10 @@ public class UserFixture {
         return new User("빵빵이", "bbang-bbang@gmail.com", UserType.USER);
     }
 
+    public static User GUEST_USER() {
+        return new User("빵빵이", "bbang-bbang@gmail.com", UserType.GUEST);
+    }
+
     public static User USER1_WITH_ID() {
         return new User(1L, "방방이", "bang-bang@gmail.com");
     }

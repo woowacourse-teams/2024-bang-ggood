@@ -1,8 +1,6 @@
 package com.bang_ggood.auth.config;
 
 import com.bang_ggood.auth.service.AuthService;
-import com.bang_ggood.global.exception.BangggoodException;
-import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.user.domain.User;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.MethodParameter;
@@ -13,12 +11,12 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 @Component
-public class AuthPrincipalArgumentResolver implements HandlerMethodArgumentResolver {
+public class UserPrincipalArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final CookieResolver cookieResolver;
     private final AuthService authService;
 
-    public AuthPrincipalArgumentResolver(CookieResolver cookieResolver, AuthService authService) {
+    public UserPrincipalArgumentResolver(CookieResolver cookieResolver, AuthService authService) {
         this.cookieResolver = cookieResolver;
         this.authService = authService;
     }
@@ -26,16 +24,16 @@ public class AuthPrincipalArgumentResolver implements HandlerMethodArgumentResol
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return User.class.isAssignableFrom(parameter.getParameterType())
-                && parameter.hasParameterAnnotation(AuthPrincipal.class);
+                && parameter.hasParameterAnnotation(UserPrincipal.class);
     }
 
     @Override
-    public User resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-                                NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
+    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
+                                  NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
 
         if (request.getCookies() == null) {
-            throw new BangggoodException(ExceptionCode.AUTHENTICATION_COOKIE_EMPTY);
+            return authService.assignGuestUser();
         }
 
         String token = cookieResolver.extractToken(request.getCookies());

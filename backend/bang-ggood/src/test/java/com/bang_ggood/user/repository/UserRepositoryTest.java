@@ -3,6 +3,7 @@ package com.bang_ggood.user.repository;
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
+import com.bang_ggood.user.domain.UserType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,5 +28,18 @@ class UserRepositoryTest extends IntegrationTestSupport {
 
         // then
         Assertions.assertThat(findUser).isEmpty();
+    }
+
+    @DisplayName("유저 타입으로 조회 성공")
+    @Test
+    void findByType() {
+        // given
+        User expectedUser = userRepository.save(UserFixture.GUEST_USER());
+
+        // when
+        User user = userRepository.getUserByType(UserType.GUEST);
+
+        // then
+        Assertions.assertThat(user).isEqualTo(expectedUser);
     }
 }

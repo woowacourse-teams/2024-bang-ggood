@@ -82,7 +82,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         String token = authService.login(oauthLoginRequest);
 
         // then
-        User user = authService.extractUser(token);
+        User user = authService.getAuthUser(token);
         CustomChecklistQuestionsResponse customChecklistQuestions = questionManageService.readCustomChecklistQuestions(
                 user);
 
@@ -105,7 +105,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         String token = authService.login(oauthLoginRequest);
 
         // then
-        User user = authService.extractUser(token);
+        User user = authService.getAuthUser(token);
         UserChecklistsPreviewResponse response = checklistService.readChecklistsPreview(user);
         assertThat(response.checklists()).hasSize(1);
     }

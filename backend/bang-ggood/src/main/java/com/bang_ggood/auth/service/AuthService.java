@@ -14,6 +14,7 @@ import com.bang_ggood.question.dto.request.QuestionRequest;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.room.dto.request.RoomRequest;
 import com.bang_ggood.user.domain.User;
+import com.bang_ggood.user.domain.UserType;
 import com.bang_ggood.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,6 @@ import java.util.Set;
 
 @Service
 public class AuthService {
-
 
     private static final Logger log = LoggerFactory.getLogger(AuthService.class);
     private static final Set<String> blackList = new HashSet<>();
@@ -106,6 +106,11 @@ public class AuthService {
         //TODO: 로직 리팩토링 필요
     }
 
+    @Transactional(readOnly = true)
+    public User assignGuestUser() {
+        return userRepository.getUserByType(UserType.GUEST);
+    }
+
     public void logout(String accessToken, User user) {
         log.info("logout accessToken: {}", accessToken);
 
@@ -119,7 +124,7 @@ public class AuthService {
         return blackList.contains(accessToken);
     }
 
-    public User extractUser(String token) {
+    public User getAuthUser(String token) {
         log.info("extractUser token: {}", token);
         AuthUser authUser = jwtTokenProvider.resolveToken(token);
         log.info("extractUser authUserId: {}", authUser.id());

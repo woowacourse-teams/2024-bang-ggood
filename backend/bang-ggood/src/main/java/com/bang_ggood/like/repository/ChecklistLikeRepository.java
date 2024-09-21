@@ -11,10 +11,10 @@ public interface ChecklistLikeRepository extends JpaRepository<ChecklistLike, Lo
 
     boolean existsByChecklist(Checklist checklist);
 
-    default ChecklistLike getByChecklistId(long checklistId) {
+    default ChecklistLike getByChecklistId(Long checklistId) {
         return findByChecklistId(checklistId)
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.LIKE_NOT_EXISTS));
     }
 
-    Optional<ChecklistLike> findByChecklistId(long checklistId);
+    Optional<ChecklistLike> findByChecklistId(Long checklistId);
 }

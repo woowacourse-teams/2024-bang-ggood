@@ -17,7 +17,7 @@ import useModal from '@/hooks/useModal';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
-import useSelectedOptionStore from '@/store/useOptionStore';
+import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 
 type RouteParams = {
   checklistId: string;
@@ -56,6 +56,7 @@ const EditChecklistPage = () => {
         rawValue: checklist.room,
         value: checklist.room,
       });
+      selectedOptionActions.set(checklist.options.map(option => option.optionId));
     };
     setChecklistDataToStore();
   }, [checklistId]);
@@ -63,7 +64,7 @@ const EditChecklistPage = () => {
   return (
     <>
       <Header
-        left={<Header.Backward />}
+        left={<Header.Backward onClick={resetAndGoDetailPage} />}
         center={<Header.Text>체크리스트 편집</Header.Text>}
         right={<Button label="저장" size="small" color="dark" onClick={summaryModalOpen} />}
       />

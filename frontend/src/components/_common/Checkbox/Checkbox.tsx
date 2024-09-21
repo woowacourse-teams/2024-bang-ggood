@@ -17,7 +17,7 @@ interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const Checkbox = ({
   isChecked = false,
   color = theme.palette.green500,
-  hoverColor = theme.palette.green300,
+  hoverColor,
   iconType = 'check',
   setIsChecked,
   onClick,
@@ -37,22 +37,24 @@ const Checkbox = ({
 };
 
 const S = {
-  Checkbox: styled.label<{ $color: string; $hoverColor: string }>`
+  Checkbox: styled.label<{ $color: string; $hoverColor?: string }>`
     display: inline-block;
     position: relative;
     cursor: pointer;
-    width: 2rem;
-    height: 2rem;
+    width: 2.4rem;
+    height: 2.4rem;
     border-radius: 50%;
     border: 0.2rem solid ${({ $color }) => $color};
 
     background-color: ${({ $color }) => $color};
 
-    &:hover {
-      border-color: ${({ $hoverColor }) => $hoverColor};
-
-      background-color: ${({ $hoverColor }) => $hoverColor};
-    }
+    ${({ $hoverColor }) =>
+      $hoverColor &&
+      `&:hover {
+      border-color:  ${$hoverColor};
+      background-color: ${$hoverColor};
+    }   
+      `}
   `,
   CheckboxInput: styled.input`
     opacity: 0;

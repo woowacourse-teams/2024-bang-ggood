@@ -51,8 +51,11 @@ const createFormStore = <T extends object>(formSpec: FormSpec<T>, storageName: s
     persist(
       (set, get) => ({
         rawValue: getInitialRaw(formSpec),
+
         value: transformAll(getInitialRaw(formSpec), getValueType(formSpec)),
+
         errorMessage: initialErrorMessages(getInitialRaw(formSpec)),
+
         actions: {
           onChange: event => get().actions.set(event.target.name as keyof T, event.target.value),
 
@@ -82,6 +85,7 @@ const createFormStore = <T extends object>(formSpec: FormSpec<T>, storageName: s
             }),
 
           setAll: set,
+
           _reset: name => {
             get().actions._updateErrorMsg(name, '');
             get().actions._update(name, '');

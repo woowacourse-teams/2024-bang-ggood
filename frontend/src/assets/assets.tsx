@@ -39,6 +39,10 @@ import PencilIcon from '@/assets/icons/mascot/pencil-icon.svg';
 // kakao
 import KakaoLogo from '@/assets/icons/kakao/kakao-logo.svg';
 
+//map
+import Location from '@/assets/icons/map/location.svg';
+import Search from '@/assets/icons/map/search.svg';
+
 export {
   ArrowBack,
   ArrowDownSmall,
@@ -56,6 +60,7 @@ export {
   InputRequiredDot,
   KakaoLogo,
   LampIcon,
+  Location,
   LocationLineIcon,
   Memo,
   Options,
@@ -64,6 +69,7 @@ export {
   PlusBlack,
   PlusWhite,
   Room,
+  Search,
   SmallCheck,
   Stairs,
   Subway,

@@ -54,10 +54,4 @@ const S = {
     background-color: ${({ theme }) => theme.palette.grey400};
     border-radius: 50%;
   `,
-  Icon: styled.div`
-    width: 22px;
-    height: 22px;
-    background-size: contain;
-    background-repeat: no-repeat;
-  `,
 };

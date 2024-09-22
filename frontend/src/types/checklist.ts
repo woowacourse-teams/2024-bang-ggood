@@ -1,4 +1,5 @@
 import { AnswerType } from '@/types/answer';
+import { CategoryName } from '@/types/category';
 // import { CategoryScore } from '@/types/category';
 import { Option } from '@/types/option';
 import { RoomInfo } from '@/types/room';
@@ -10,7 +11,7 @@ export interface CategoryAndQuestion {
 
 interface ChecklistCategoryBase {
   categoryId: number;
-  categoryName: string;
+  categoryName: CategoryName;
 }
 
 export interface ChecklistQuestion {
@@ -27,11 +28,11 @@ export interface ChecklistCategoryQuestions extends ChecklistCategoryBase {
 
 // 체크리스트 작성: 모든 질문 + 답변
 export interface ChecklistCategoryQnA extends ChecklistCategoryBase {
-  questions: OneQuestionWithAnswer[];
+  questions: ChecklistQuestionWithAnswer[];
 }
 
 // 하나의 질문 + 답변 컴포넌트
-export interface OneQuestionWithAnswer extends ChecklistQuestion {
+export interface ChecklistQuestionWithAnswer extends ChecklistQuestion {
   answer: AnswerType;
 }
 

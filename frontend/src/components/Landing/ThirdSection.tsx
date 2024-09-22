@@ -2,8 +2,7 @@ import '@/styles/category-sprite-image.css';
 
 import { useRef } from 'react';
 
-import { PencilIcon } from '@/assets/assets';
-import checkingPageScreen from '@/assets/images/checkingPageScreen.webp';
+import { checkingPageScreen, PencilIcon } from '@/assets/assets';
 import S from '@/components/Landing/style';
 import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';

@@ -46,10 +46,14 @@ const ChecklistDetailPage = () => {
     navigate(ROUTE_PATH.checklistEditOne(Number(checklistId)));
   };
 
+  const handleClickBackward = () => {
+    navigate(ROUTE_PATH.checklistList);
+  };
+
   return (
     <>
       <Header
-        left={<Header.Backward />}
+        left={<Header.Backward onClick={handleClickBackward} />}
         right={
           <FlexBox.Horizontal gap="1.5rem">
             <Header.TextButton onClick={handleEditButton}>편집</Header.TextButton>

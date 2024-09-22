@@ -5,7 +5,7 @@ import { findCategoryClassNameByName } from '@/constants/category';
 import useChecklistStore from '@/store/useChecklistStore';
 
 const useNewChecklistTabs = () => {
-  const { getCategoryQnA, categories: validCategory, checklistCategoryQnA } = useChecklistStore();
+  const { getCategory: getCategoryQnA, categories, checklistCategoryQnA } = useChecklistStore();
 
   const [tabs, setTabs] = useState<TabWithCompletion[]>([]);
 
@@ -18,7 +18,7 @@ const useNewChecklistTabs = () => {
   );
 
   useEffect(() => {
-    const newChecklistTabsWithCompletion = validCategory.map(category => ({
+    const newChecklistTabsWithCompletion = categories.map(category => ({
       id: category.categoryId,
       name: category.categoryName,
       className: findCategoryClassNameByName(category.categoryName),
@@ -36,7 +36,7 @@ const useNewChecklistTabs = () => {
     if (newTabsString !== prevTabsString) {
       setTabs(tabsWithBasicInfoAndOptions);
     }
-  }, [validCategory, checklistCategoryQnA, isCategoryQuestionAllCompleted]);
+  }, [categories, checklistCategoryQnA, isCategoryQuestionAllCompleted]);
 
   return { tabs };
 };

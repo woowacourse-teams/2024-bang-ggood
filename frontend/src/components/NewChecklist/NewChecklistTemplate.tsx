@@ -9,7 +9,7 @@ import theme from '@/styles/theme';
 
 const NewChecklistTemplate = () => {
   const { currentTabId } = useTabContext();
-  const { getCategoryQnA } = useChecklistStore();
+  const { getCategory: getCategoryQnA } = useChecklistStore();
 
   const questions = getCategoryQnA(currentTabId);
 

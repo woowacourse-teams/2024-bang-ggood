@@ -1,18 +1,17 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { Category, CategoryName } from '@/types/category';
+import { Category } from '@/types/category';
 import { ChecklistCategoryQnA, ChecklistCategoryQuestions } from '@/types/checklist';
 
 interface ChecklistState {
   checklistCategoryQnA: ChecklistCategoryQnA[];
   categories: Category[];
   reset: () => void;
-  getCategoryQnA: (categoryId: number) => ChecklistCategoryQnA | undefined;
+  getCategory: (categoryId: number) => ChecklistCategoryQnA | undefined;
   initAnswerSheetIfEmpty: (questions: ChecklistCategoryQuestions[]) => void;
   set: (answers: ChecklistCategoryQnA[]) => void;
   _parseCategory: () => void;
-  _isEmptyCategoryQnA: () => boolean;
 }
 
 const useChecklistStore = create<ChecklistState>()(
@@ -22,7 +21,7 @@ const useChecklistStore = create<ChecklistState>()(
       categories: [],
 
       initAnswerSheetIfEmpty: (questions: ChecklistCategoryQuestions[]) => {
-        if (!get()._isEmptyCategoryQnA()) return;
+        if (get().checklistCategoryQnA.length !== 0) return;
 
         const checklistCategoryQnA: ChecklistCategoryQnA[] = questions.map(category => ({
           categoryId: category.categoryId,
@@ -37,7 +36,7 @@ const useChecklistStore = create<ChecklistState>()(
         get()._parseCategory();
       },
 
-      getCategoryQnA: (categoryId: number) => {
+      getCategory: (categoryId: number) => {
         const { checklistCategoryQnA } = get();
         return checklistCategoryQnA.find(category => category.categoryId === categoryId);
       },
@@ -50,12 +49,11 @@ const useChecklistStore = create<ChecklistState>()(
         set({ checklistCategoryQnA: [], categories: [] });
       },
 
-      _isEmptyCategoryQnA: () => get().checklistCategoryQnA.length === 0,
       _parseCategory: () => {
         const { checklistCategoryQnA } = get();
         const categories = checklistCategoryQnA.map(category => ({
           categoryId: category.categoryId,
-          categoryName: category.categoryName as CategoryName,
+          categoryName: category.categoryName,
         }));
 
         set({ categories });

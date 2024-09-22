@@ -183,6 +183,14 @@ public class ChecklistFixture {
         );
     }
 
+    public static ChecklistRequest CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION_LENGTH() {
+        return new ChecklistRequest(
+                RoomFixture.ROOM_UPDATE_REQUEST(), List.of(1, 2, 3, 4),
+                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
+                        QUESTION_3_CREATE_REQUEST())
+        );
+    }
+
 
     public static ChecklistRequest CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION() {
         return new ChecklistRequest(

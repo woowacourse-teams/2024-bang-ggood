@@ -58,61 +58,18 @@ public class ChecklistService {
         return checklistRepository.save(checklist);
     }
 
-
-    @Transactional
-    public void createChecklistLike(User user, long id) {
-        Checklist checklist = checklistRepository.getById(id);
-
-        validateChecklistLike(user, checklist);
-
-        checklistLikeRepository.save(new ChecklistLike(checklist));
-    }
-
-    private void validateChecklistLike(User user, Checklist checklist) {
-        validateChecklistOwnership(user, checklist);
-        validateChecklistAlreadyLiked(checklist);
-    }
-
-    private void validateChecklistOwnership(User user, Checklist checklist) {
-        if (!checklist.isOwnedBy(user)) {
-            throw new BangggoodException(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER);
-        }
-    }
-
-    private void validateChecklistAlreadyLiked(Checklist checklist) {
-        if (checklistLikeRepository.existsByChecklist(checklist)) {
-            throw new BangggoodException(ExceptionCode.LIKE_ALREADY_EXISTS);
-        }
-    }
-
-    private void validateQuestion(List<QuestionRequest> questions) {
-        validateQuestionDuplicate(questions);
-        validateQuestionInvalid(questions);
-    }
-
-    private void validateQuestionDuplicate(List<QuestionRequest> questions) {
-        Set<Integer> set = new HashSet<>();
-        questions.forEach(question -> {
-            if (!set.add(question.questionId())) {
-                throw new BangggoodException(ExceptionCode.QUESTION_DUPLICATED);
-            }
-        });
-    }
-
-    private void validateQuestionInvalid(List<QuestionRequest> questions) {
-        for (QuestionRequest questionRequest : questions) {
-            if (!Question.contains(questionRequest.questionId())) {
-                throw new BangggoodException(ExceptionCode.QUESTION_INVALID);
-            }
-        }
-    }
-
     @Transactional(readOnly = true)
     public Checklist readChecklist(User user, Long checklistId) {
         Checklist checklist = checklistRepository.getById(checklistId);
         validateChecklistOwnership(user, checklist);
 
         return checklist;
+    }
+
+    private void validateChecklistOwnership(User user, Checklist checklist) {
+        if (!checklist.isOwnedBy(user)) {
+            throw new BangggoodException(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER);
+        }
     }
 
     @Transactional(readOnly = true)
@@ -127,6 +84,11 @@ public class ChecklistService {
                 .map(checklist -> UserChecklistPreviewResponse.of(checklist, true))
                 .toList();
         return new UserChecklistsPreviewResponse(responses);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Checklist> readLikedChecklistsPreview(User user) {
+        return checklistRepository.findAllByUserAndIsLiked(user);
     }
 
     @Transactional
@@ -213,6 +175,28 @@ public class ChecklistService {
         validateSameQuestions(questions, updateQuestions);
         IntStream.range(0, questions.size())
                 .forEach(i -> questions.get(i).change(updateQuestions.get(i)));
+    }
+
+    private void validateQuestion(List<QuestionRequest> questions) {
+        validateQuestionDuplicate(questions);
+        validateQuestionInvalid(questions);
+    }
+
+    private void validateQuestionDuplicate(List<QuestionRequest> questions) {
+        Set<Integer> set = new HashSet<>();
+        questions.forEach(question -> {
+            if (!set.add(question.questionId())) {
+                throw new BangggoodException(ExceptionCode.QUESTION_DUPLICATED);
+            }
+        });
+    }
+
+    private void validateQuestionInvalid(List<QuestionRequest> questions) {
+        for (QuestionRequest questionRequest : questions) {
+            if (!Question.contains(questionRequest.questionId())) {
+                throw new BangggoodException(ExceptionCode.QUESTION_INVALID);
+            }
+        }
     }
 
     private void updateChecklistIncludedMaintenances(ChecklistRequest checklistRequest, Checklist checklist) {

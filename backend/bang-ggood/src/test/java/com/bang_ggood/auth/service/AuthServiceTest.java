@@ -3,7 +3,7 @@ package com.bang_ggood.auth.service;
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
-import com.bang_ggood.checklist.service.ChecklistManageService;
+import com.bang_ggood.checklist.service.ChecklistService;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.question.domain.Question;
@@ -106,7 +106,7 @@ class AuthServiceTest extends IntegrationTestSupport {
 
         // then
         User user = authService.extractUser(token);
-        UserChecklistsPreviewResponse response = checklistManageService.readAllChecklistsPreview(user);
+        ChecklistsPreviewResponse response = checklistService.readChecklistsPreview(user);
         assertThat(response.checklists()).hasSize(1);
     }
 

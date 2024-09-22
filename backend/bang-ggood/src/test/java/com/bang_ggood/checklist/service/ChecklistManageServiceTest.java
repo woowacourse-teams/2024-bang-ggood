@@ -5,8 +5,6 @@ import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
-import com.bang_ggood.checklist.dto.response.UserChecklistPreviewResponse;
-import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
@@ -19,6 +17,8 @@ import com.bang_ggood.user.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -34,6 +34,8 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
     private ChecklistRepository checklistRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ChecklistLikeRepository checklistLikeRepository;
 
     @DisplayName("체크리스트 작성 성공")
     @Test
@@ -95,8 +97,39 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         // then
         UserChecklistPreviewResponse previewResponse1 = response.checklists().get(0);
         UserChecklistPreviewResponse previewResponse2 = response.checklists().get(1);
-        
+
         assertThat(previewResponse1.checklistId()).isEqualTo(checklist2); // 최신순으로 조회
         assertThat(previewResponse2.checklistId()).isEqualTo(checklist1);
+    }
+
+    @DisplayName("좋아요된 체크리스트 리스트 조회 성공")
+    @Test
+    void readLikedChecklistsPreview() {
+        //given
+        int EXPECTED_LIKE_COUNT = 2;
+        User user = userRepository.save(UserFixture.USER1());
+        Room room1 = roomRepository.save(RoomFixture.ROOM_1());
+        Room room2 = roomRepository.save(RoomFixture.ROOM_2());
+        Room room3 = roomRepository.save(RoomFixture.ROOM_3());
+        Checklist checklist1 = ChecklistFixture.CHECKLIST1_USER1(room1, user);
+        Checklist checklist2 = ChecklistFixture.CHECKLIST2_USER1(room2, user);
+        Checklist checklist3 = ChecklistFixture.CHECKLIST3_USER1(room3, user);
+        checklistRepository.saveAll(
+                List.of(checklist1, checklist2, checklist3)
+        );
+        checklistLikeRepository.saveAll(
+                List.of(ChecklistFixture.CHECKLIST1_LIKE(checklist1),
+                        ChecklistFixture.CHECKLIST2_LIKE(checklist2))
+        );
+
+        //when
+        ChecklistsPreviewResponse response = checklistManageService.readLikedChecklistsPreview(user);
+
+        //then
+        assertAll(
+                () -> assertThat(response.checklists()).hasSize(EXPECTED_LIKE_COUNT),
+                () -> assertThat(response.checklists().get(0).checklistId()).isEqualTo(checklist1.getId()),
+                () -> assertThat(response.checklists().get(1).checklistId()).isEqualTo(checklist2.getId())
+        );
     }
 }

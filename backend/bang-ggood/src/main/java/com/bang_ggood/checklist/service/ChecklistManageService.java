@@ -161,7 +161,7 @@ public class ChecklistManageService {
     }
 
     private ChecklistPreviewResponse mapToChecklistPreview(Checklist checklist) {
-        boolean isLiked = checklistLikeService.hasUserLikedChecklist(checklist);
+        boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
         return ChecklistPreviewResponse.of(checklist, isLiked);
     }
 }

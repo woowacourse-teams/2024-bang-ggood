@@ -39,7 +39,7 @@ public class ChecklistLikeService {
     }
 
     @Transactional
-    public boolean hasUserLikedChecklist(Checklist checklist) {
+    public boolean isLikedChecklist(Checklist checklist) {
         return checklistLikeRepository.existsByChecklist(checklist);
     }
 

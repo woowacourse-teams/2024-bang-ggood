@@ -4,10 +4,13 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
+import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
+import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
@@ -17,7 +20,6 @@ import com.bang_ggood.user.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -92,11 +94,11 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         Long checklist2 = checklistManageService.createChecklist(user, checklistRequest2);
 
         // when
-        UserChecklistsPreviewResponse response = checklistManageService.readAllChecklistsPreview(user);
+        ChecklistsPreviewResponse response = checklistManageService.readAllChecklistsPreview(user);
 
         // then
-        UserChecklistPreviewResponse previewResponse1 = response.checklists().get(0);
-        UserChecklistPreviewResponse previewResponse2 = response.checklists().get(1);
+        ChecklistPreviewResponse previewResponse1 = response.checklists().get(0);
+        ChecklistPreviewResponse previewResponse2 = response.checklists().get(1);
 
         assertThat(previewResponse1.checklistId()).isEqualTo(checklist2); // 최신순으로 조회
         assertThat(previewResponse2.checklistId()).isEqualTo(checklist1);

@@ -2,9 +2,10 @@ package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
+import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
-import com.bang_ggood.checklist.dto.response.UserChecklistPreviewResponse;
-import com.bang_ggood.checklist.dto.response.UserChecklistsPreviewResponse;
+import com.bang_ggood.like.service.ChecklistLikeService;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.domain.MaintenanceItem;
 import com.bang_ggood.maintenance.service.ChecklistMaintenanceService;
@@ -136,32 +137,31 @@ public class ChecklistManageService {
         List<Checklist> likedChecklists = checklistService.readLikedChecklistsPreview(user);
         List<ChecklistPreviewResponse> responses = mapToChecklistPreviewResponses(
                 likedChecklists);
-        return new ChecklistsPreviewResponse(responses);
+        return ChecklistsPreviewResponse.from(responses);
     }
 
-    private List<ChecklistPreviewResponse> mapToChecklistPreviewResponses(
-            List<Checklist> likedChecklists) {
+    private List<ChecklistPreviewResponse> mapToChecklistPreviewResponses(List<Checklist> likedChecklists) {
         return likedChecklists.stream()
                 .map(checklist -> ChecklistPreviewResponse.of(checklist, true))
                 .toList();
     }
 
     @Transactional(readOnly = true)
-    public UserChecklistsPreviewResponse readAllChecklistsPreview(User user) {
+    public ChecklistsPreviewResponse readAllChecklistsPreview(User user) {
         List<Checklist> checklists = checklistService.readAllChecklistsOrderByLatest(user);
 
-        List<UserChecklistPreviewResponse> responses = convertToChecklistsPreview(checklists);
-        return UserChecklistsPreviewResponse.from(responses);
+        List<ChecklistPreviewResponse> responses = mapToChecklistsPreview(checklists);
+        return ChecklistsPreviewResponse.from(responses);
     }
 
-    private List<UserChecklistPreviewResponse> convertToChecklistsPreview(List<Checklist> checklists) {
+    private List<ChecklistPreviewResponse> mapToChecklistsPreview(List<Checklist> checklists) {
         return checklists.stream()
-                .map(this::convertToChecklistPreview)
+                .map(this::mapToChecklistPreview)
                 .toList();
     }
 
-    private UserChecklistPreviewResponse convertToChecklistPreview(Checklist checklist) {
+    private ChecklistPreviewResponse mapToChecklistPreview(Checklist checklist) {
         boolean isLiked = checklistLikeService.hasUserLikedChecklist(checklist);
-        return UserChecklistPreviewResponse.of(checklist, isLiked);
+        return ChecklistPreviewResponse.of(checklist, isLiked);
     }
 }

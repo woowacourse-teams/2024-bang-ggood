@@ -27,6 +27,7 @@ const EditChecklistPage = () => {
   const navigate = useNavigate();
   const { checklistId } = useParams() as RouteParams;
   const { tabs } = useNewChecklistTabs();
+  const { set } = useChecklistStore();
 
   const { data: checklist, isSuccess } = useGetChecklistDetailQuery(checklistId);
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
@@ -57,7 +58,9 @@ const EditChecklistPage = () => {
         value: checklist.room,
       });
       selectedOptionActions.set(checklist.options.map(option => option.optionId));
+      set(checklist.categories);
     };
+
     setChecklistDataToStore();
   }, [checklistId]);
 

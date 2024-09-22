@@ -5,7 +5,7 @@ import { findCategoryClassNameByName } from '@/constants/category';
 import useChecklistStore from '@/store/useChecklistStore';
 
 const useNewChecklistTabs = () => {
-  const { getCategoryQnA, validCategory, checklistCategoryQnA } = useChecklistStore();
+  const { getCategoryQnA, categories: validCategory, checklistCategoryQnA } = useChecklistStore();
 
   const [tabs, setTabs] = useState<TabWithCompletion[]>([]);
 

@@ -38,7 +38,7 @@ const NewChecklistPage = () => {
   // 한줄평 모달
   const { isModalOpen: isSubmitModalOpen, openModal: openSummaryModal, closeModal: closeSummaryModal } = useModal();
 
-  // 뒤로가기시 휘발 경고 모달
+  // 뒤로가기 시 휘발 경고 모달
   const { isModalOpen: isAlertModalOpen, openModal: openAlertModal, closeModal: closeAlertModal } = useModal();
 
   const resetAndGoHome = () => {

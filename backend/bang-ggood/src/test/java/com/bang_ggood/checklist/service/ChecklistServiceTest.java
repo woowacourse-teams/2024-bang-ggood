@@ -229,6 +229,23 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER.getMessage());
     }
 
+    @DisplayName("체크리스트 삭제 성공")
+    @Test
+    void deleteById() {
+        //given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = ChecklistFixture.CHECKLIST1_USER1(room, user);
+        Checklist savedChecklist = checklistService.createChecklist(checklist);
+
+        //when
+        checklistService.deleteById(checklist.getId());
+
+        //then
+        assertThat(checklistRepository.findById(checklist.getId()).isEmpty()).isTrue();
+
+    }
+
     @DisplayName("좋아요된 체크리스트 리스트 조회 성공")
     @Test
     void readLikedChecklistsPreview() {

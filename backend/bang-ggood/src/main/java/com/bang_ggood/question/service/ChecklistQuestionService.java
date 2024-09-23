@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 @Service
 public class ChecklistQuestionService {
@@ -74,5 +75,26 @@ public class ChecklistQuestionService {
     @Transactional(readOnly = true)
     public List<ChecklistQuestion> readChecklistQuestions(Checklist checklist) {
         return checklistQuestionRepository.findAllByChecklistId(checklist.getId());
+    }
+
+    @Transactional
+    public void updateQuestions(List<ChecklistQuestion> questions, List<ChecklistQuestion> updateQuestions) {
+        validateQuestionDuplicate(updateQuestions);
+        validateSameQuestions(questions, updateQuestions);
+        IntStream.range(0, questions.size())
+                .forEach(i -> questions.get(i).change(updateQuestions.get(i)));
+    }
+
+    private void validateSameQuestions(List<ChecklistQuestion> questions, List<ChecklistQuestion> updateQuestions) {
+        if (questions.size() != updateQuestions.size()) {
+            throw new BangggoodException(ExceptionCode.QUESTION_DIFFERENT);
+        }
+
+        IntStream.range(0, questions.size())
+                .filter(i -> questions.get(i).isDifferentQuestionId(updateQuestions.get(i)))
+                .findAny()
+                .ifPresent(i -> {
+                    throw new BangggoodException(ExceptionCode.QUESTION_DIFFERENT);
+                });
     }
 }

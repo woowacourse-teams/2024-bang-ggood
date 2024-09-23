@@ -97,10 +97,6 @@ public class ChecklistFixture {
         return new QuestionRequest(null, "NONE");
     }
 
-    public static QuestionRequest QUESTION_CREATE_REQUEST_INVALID_ID() {
-        return new QuestionRequest(9999, "GOOD");
-    }
-
     public static ChecklistRequest CHECKLIST_CREATE_REQUEST() {
         return new ChecklistRequest(
                 RoomFixture.ROOM_CREATE_REQUEST(), List.of(1, 2, 3, 5),
@@ -149,14 +145,6 @@ public class ChecklistFixture {
         );
     }
 
-    public static ChecklistRequest CHECKLIST_UPDATE_REQUEST_INVALID_QUESTION_ID() {
-        return new ChecklistRequest(
-                RoomFixture.ROOM_UPDATE_REQUEST(), List.of(1, 2, 3, 4),
-                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
-                        QUESTION_3_CREATE_REQUEST(), QUESTION_CREATE_REQUEST_INVALID_ID())
-        );
-    }
-
     public static ChecklistRequest CHECKLIST_UPDATE_REQUEST_INVALID_OPTION_ID() {
         return new ChecklistRequest(
                 RoomFixture.ROOM_UPDATE_REQUEST(), List.of(1, 2, 4, 9999),
@@ -179,14 +167,6 @@ public class ChecklistFixture {
                 RoomFixture.ROOM_UPDATE_REQUEST(), List.of(1, 2, 4, 4),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
                         QUESTION_3_CREATE_REQUEST(), QUESTION_5_UPDATE_REQUEST())
-        );
-    }
-
-    public static ChecklistRequest CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION_LENGTH() {
-        return new ChecklistRequest(
-                RoomFixture.ROOM_UPDATE_REQUEST(), List.of(1, 2, 3, 4),
-                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
-                        QUESTION_3_CREATE_REQUEST())
         );
     }
 

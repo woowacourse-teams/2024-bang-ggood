@@ -17,6 +17,10 @@ import java.util.List;
 @Service
 public class DefaultChecklistService {
 
+    private static final RoomRequest DEFAULT_ROOM_REQUEST = createDefaultRoomRequest();
+    private static final List<Integer> DEFAULT_OPTIONS = createDefaultOptions();
+    private static final List<QuestionRequest> DEFAULT_QUESTION_REQUEST = createDefaultQuestionRequest();
+
     private final CustomChecklistQuestionRepository customChecklistQuestionRepository;
     private final ChecklistManageService checklistManageService;
 
@@ -24,6 +28,33 @@ public class DefaultChecklistService {
                                    ChecklistManageService checklistManageService) {
         this.customChecklistQuestionRepository = customChecklistQuestionRepository;
         this.checklistManageService = checklistManageService;
+    }
+
+    private static RoomRequest createDefaultRoomRequest() {
+        return new RoomRequest(
+                "예시용 체크리스트", "방끗시 집잘구하구 행복하동", "방방하우스", "잠실", 10,
+                3000, 60, 5, List.of(1, 3), "지상", 14, "분리형 원룸", 9.5,
+                12, 9, "초", "방끗공인중개사",
+                "이곳에 필요한 메모를 작성하세요.", "이곳에 한줄평을 남겨 보세요.");
+    }
+
+    private static List<Integer> createDefaultOptions() {
+        return List.of(
+                Option.INDUCTION.getId(),
+                Option.AIR_CONDITIONER.getId(),
+                Option.SINK.getId(),
+                Option.BED.getId());
+    }
+
+    private static List<QuestionRequest> createDefaultQuestionRequest() {
+        return List.of(
+                new QuestionRequest(Question.ROOM_CONDITION_1.getId(), Answer.GOOD.name()),
+                new QuestionRequest(Question.ROOM_CONDITION_2.getId(), Answer.BAD.name()),
+                new QuestionRequest(Question.ROOM_CONDITION_3.getId(), Answer.GOOD.name()),
+                new QuestionRequest(Question.WINDOW_1.getId(), Answer.GOOD.name()),
+                new QuestionRequest(Question.WINDOW_2.getId(), Answer.BAD.name()),
+                new QuestionRequest(Question.BATHROOM_1.getId(), Answer.GOOD.name()),
+                new QuestionRequest(Question.BATHROOM_2.getId(), Answer.GOOD.name()));
     }
 
     @Transactional
@@ -38,38 +69,8 @@ public class DefaultChecklistService {
 
     @Transactional
     public void createDefaultChecklist(User user) {
-        RoomRequest roomRequest = createDefaultRoomRequest();
-        List<Integer> options = createDefaultOptions();
-        List<QuestionRequest> questionRequests = createDefaultQuestionRequest();
-
-        ChecklistRequest checklistRequest = new ChecklistRequest(roomRequest, options, questionRequests);
+        ChecklistRequest checklistRequest = new ChecklistRequest(
+                DEFAULT_ROOM_REQUEST, DEFAULT_OPTIONS, DEFAULT_QUESTION_REQUEST);
         checklistManageService.createChecklist(user, checklistRequest);
-    }
-
-    private RoomRequest createDefaultRoomRequest() {
-        return new RoomRequest(
-                "예시용 체크리스트", "방끗시 집잘구하구 행복하동", "방방하우스", "잠실", 10,
-                3000, 60, 5, List.of(1, 3), "지상", 14, "분리형 원룸", 9.5,
-                12, 9, "초", "방끗공인중개사",
-                "이곳에 필요한 메모를 작성하세요.", "이곳에 한줄평을 남겨 보세요.");
-    }
-
-    private List<Integer> createDefaultOptions() {
-        return List.of(
-                Option.INDUCTION.getId(),
-                Option.AIR_CONDITIONER.getId(),
-                Option.SINK.getId(),
-                Option.BED.getId());
-    }
-
-    private List<QuestionRequest> createDefaultQuestionRequest() {
-        return List.of(
-                new QuestionRequest(Question.ROOM_CONDITION_1.getId(), Answer.GOOD.name()),
-                new QuestionRequest(Question.ROOM_CONDITION_2.getId(), Answer.BAD.name()),
-                new QuestionRequest(Question.ROOM_CONDITION_3.getId(), Answer.GOOD.name()),
-                new QuestionRequest(Question.WINDOW_1.getId(), Answer.GOOD.name()),
-                new QuestionRequest(Question.WINDOW_2.getId(), Answer.BAD.name()),
-                new QuestionRequest(Question.BATHROOM_1.getId(), Answer.GOOD.name()),
-                new QuestionRequest(Question.BATHROOM_2.getId(), Answer.GOOD.name()));
     }
 }

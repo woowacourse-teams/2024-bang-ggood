@@ -13,7 +13,7 @@ public enum Question {
             List.of("곰팡이"), true),
     ROOM_CONDITION_2(2, Category.ROOM_CONDITION, "불쾌한 냄새 없이 쾌적한가요?", null, List.of("불쾌한 냄새"),
             true),
-    ROOM_CONDITION_3(3, Category.ROOM_CONDITION, "벌레가 나온 흔적 없이 깔끔한가요??", "벌레 퇴치약이 부착되어 있는지 확인하세요.", List.of("벌레"),
+    ROOM_CONDITION_3(3, Category.ROOM_CONDITION, "벌레가 나온 흔적 없이 깔끔한가요?", "벌레 퇴치약이 부착되어 있는지 확인하세요.", List.of("벌레"),
             true),
     ROOM_CONDITION_4(4, Category.ROOM_CONDITION, "물건을 충분히 수납할 수 있는 공간이 있나요?", null, List.of("수납할 수 있는 공간"), true),
     ROOM_CONDITION_5(5, Category.ROOM_CONDITION, "방 인테리어는 괜찮나요?", null, List.of("방 인테리어"), true),

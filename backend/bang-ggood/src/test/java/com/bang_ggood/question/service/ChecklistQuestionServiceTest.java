@@ -87,6 +87,27 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
     }
 
+    @DisplayName("체크리스트 아이디로 모든 질문 삭제 성공")
+    @Test
+    void deleteAllByChecklistId() {
+        //given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        List<ChecklistQuestion> checklistQuestions = List.of(
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist),
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION10(checklist)
+        );
+        checklistQuestionService.createQuestions(checklistQuestions);
+
+        // when
+        checklistQuestionService.deleteAllByChecklistId(checklist.getId());
+
+        // then
+        assertThat(checklistQuestionRepository.findAllByChecklistId(checklist.getId())).hasSize(0);
+
+    }
+
     @DisplayName("커스텀 체크리스트 질문 조회 성공")
     @Test
     void readCustomChecklistQuestions() {

@@ -75,4 +75,9 @@ public class ChecklistQuestionService {
     public List<ChecklistQuestion> readChecklistQuestions(Checklist checklist) {
         return checklistQuestionRepository.findAllByChecklistId(checklist.getId());
     }
+
+    @Transactional
+    public void deleteAllByChecklistId(Long id) {
+        checklistQuestionRepository.deleteAllByChecklistId(id);
+    }
 }

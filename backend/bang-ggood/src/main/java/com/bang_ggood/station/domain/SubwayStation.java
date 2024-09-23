@@ -3,6 +3,8 @@ package com.bang_ggood.station.domain;
 public class SubwayStation {
 
     private static final int METER_PER_DEGREE = 111_320;
+    // meter per second * minute unit * decreasing speed on open street
+    private static final double AVERAGE_WALKING_SPEED = 1.3 * 60 * 0.4;
 
     private final Integer id;
     private final String name;
@@ -18,11 +20,12 @@ public class SubwayStation {
         this.longitude = longitude;
     }
 
-    public double calculateDistance(double latitude, double longitude) {
+    public int calculateWalkingTime(double latitude, double longitude) {
         double dx = (this.latitude - latitude) * METER_PER_DEGREE;
-        double dy =
-                (this.longitude - longitude) * METER_PER_DEGREE * Math.cos(this.latitude);
-        return Math.sqrt(dx * dx + dy * dy);
+        double dy = (this.longitude - longitude) * METER_PER_DEGREE * Math.cos(this.latitude);
+        double distance = Math.sqrt(dx * dx + dy * dy);
+
+        return (int) (Math.round(distance) / AVERAGE_WALKING_SPEED);
     }
 
     public Integer getId() {

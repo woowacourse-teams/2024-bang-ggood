@@ -18,10 +18,10 @@ public class SubwayStationResponse {
         this.walkingTime = walkingTime;
     }
 
-    public static SubwayStationResponse of(SubwayStation station, Integer walkingTime) {
+    public static SubwayStationResponse of(SubwayStation station, double latitude, double longitude) {
         List<String> stationLine = new ArrayList<>();
         stationLine.add(station.getLine());
-        return new SubwayStationResponse(station.getName(), stationLine, walkingTime);
+        return new SubwayStationResponse(station.getName(), stationLine, station.calculateWalkingTime(latitude, longitude));
     }
 
     public SubwayStationResponse merge(SubwayStationResponse response) {

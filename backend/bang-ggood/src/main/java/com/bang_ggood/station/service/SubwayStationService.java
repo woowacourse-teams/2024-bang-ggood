@@ -15,18 +15,13 @@ import java.util.stream.Collectors;
 @Service
 public class SubwayStationService {
 
-    // meter per second * minute unit * decreasing speed on open street
-    private static final double AVERAGE_WALKING_SPEED = 1.3 * 60 * 0.4;
     private static final int MAX_NESTING_STATION_NUMBER = 4;
     private static final int REQUESTED_STATION_NUMBER = 2;
     private static final List<SubwayStation> SUBWAY_STATIONS = SubwayReader.readSubwayStationData();
 
     public List<SubwayStationResponse> readNearestStation(double latitude, double longitude) {
         Map<String, Optional<SubwayStationResponse>> responseMap = SUBWAY_STATIONS.stream()
-                .map(station -> {
-                    double distance = station.calculateDistance(latitude, longitude);
-                    return SubwayStationResponse.of(station, (int) Math.round(distance / AVERAGE_WALKING_SPEED));
-                })
+                .map(station -> SubwayStationResponse.of(station, latitude, longitude))
                 .sorted(Comparator.comparing(SubwayStationResponse::getWalkingTime))
                 .limit(MAX_NESTING_STATION_NUMBER * REQUESTED_STATION_NUMBER)
                 .collect(Collectors.groupingBy(

@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const dotenv = require('dotenv');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // 추가
 
 // 공통 환경 변수 로드
 const commonEnv = dotenv.config({ path: path.resolve(__dirname, '.env') }).parsed || {};
@@ -20,9 +19,6 @@ const envKeys = Object.keys(env).reduce((prev, next) => {
   prev[`process.env.${next}`] = JSON.stringify(env[next]);
   return prev;
 }, {});
-
-const isProduction = process.env.NODE_ENV === 'production'; // 환경 변수로 production 여부 확인
-const stylesHandler = isProduction ? MiniCssExtractPlugin.loader : 'style-loader'; // stylesHandler 정의
 
 module.exports = {
   entry: './src/index.tsx',
@@ -45,31 +41,38 @@ module.exports = {
         exclude: ['/node_modules/'],
       },
       {
-        test: /\.css$/i,
-        use: [stylesHandler, 'css-loader'], // stylesHandler 사용
-      },
-      {
         test: /\.html$/i,
         use: [
           {
             loader: 'html-loader',
-            options: {
-              postprocessor: content => {
-                const isTemplateLiteralSupported = content[0] === '`';
-                return content
-                  .replace(/<%=/g, isTemplateLiteralSupported ? `\${` : '" +')
-                  .replace(/%>/g, isTemplateLiteralSupported ? '}' : '+ "');
-              },
-            },
           },
         ],
       },
       { test: /\.(eot|ttf|woff|woff2)$/i, type: 'asset' },
-      { test: /\.(png|jpg|gif|webp|mp4)$/i, type: 'asset/resource' },
+      { test: /\.(png|jpg|gif|webp|mp4)/i, type: 'asset/resource' },
       {
         test: /\.svg$/i,
         issuer: /\.[jt]sx?$/,
-        use: ['@svgr/webpack'],
+        use: [
+          {
+            loader: '@svgr/webpack',
+            options: {
+              svgoConfig: {
+                plugins: [
+                  {
+                    name: 'preset-default',
+                    params: {
+                      overrides: {
+                        removeViewBox: false,
+                      },
+                    },
+                  },
+                  'prefixIds',
+                ],
+              },
+            },
+          },
+        ],
       },
     ],
   },

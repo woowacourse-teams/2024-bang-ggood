@@ -68,12 +68,11 @@ public class User extends BaseEntity {
             return false;
         }
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(name, user.name)
-                && Objects.equals(email, user.email) && type == user.type;
+        return Objects.equals(id, user.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email, type);
+        return Objects.hash(id);
     }
 }

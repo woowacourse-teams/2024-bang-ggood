@@ -40,4 +40,11 @@ public class ChecklistMaintenanceService {
     public List<ChecklistMaintenance> readChecklistMaintenances(Checklist checklist) {
         return checklistMaintenanceRepository.findAllByChecklistId(checklist.getId());
     }
+
+    @Transactional
+    public void updateMaintenances(Long checklistId, List<ChecklistMaintenance> checklistMaintenances) {
+        validateMaintenancesDuplicate(checklistMaintenances);
+        checklistMaintenanceRepository.deleteAllByChecklistId(checklistId);
+        checklistMaintenanceRepository.saveAll(checklistMaintenances);
+    }
 }

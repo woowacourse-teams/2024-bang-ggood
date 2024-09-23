@@ -144,7 +144,7 @@ public class ChecklistFixture {
                         QUESTION_3_CREATE_REQUEST(), QUESTION_CREATE_REQUEST_NO_ID())
         );
     }
-    
+
     public static ChecklistQuestion CHECKLIST_QUESTION_1(Checklist checklist) {
         return new ChecklistQuestion(checklist, Question.fromId(1), Answer.BAD);
     }

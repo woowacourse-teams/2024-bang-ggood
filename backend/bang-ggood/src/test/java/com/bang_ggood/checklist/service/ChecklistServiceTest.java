@@ -3,11 +3,9 @@ package com.bang_ggood.checklist.service;
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
-import com.bang_ggood.checklist.dto.response.UserChecklistPreviewResponse;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
-import com.bang_ggood.like.domain.ChecklistLike;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.option.repository.ChecklistOptionRepository;
 import com.bang_ggood.room.RoomFixture;
@@ -67,38 +65,6 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 () -> assertThat(savedChecklist.getSummary()).isEqualTo(checklist.getSummary())
         );
 
-    }
-
-    @DisplayName("체크리스트 좋아요 추가 성공")
-    @Test
-    void createChecklistLike() {
-        //given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
-        User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-
-        // when
-        checklistService.createChecklistLike(user, checklist.getId());
-
-        //then
-        assertThat(checklistLikeRepository.existsByChecklist(checklist)).isTrue();
-    }
-
-    @DisplayName("체크리스트 좋아요 추가 실패 : 이미 좋아요가 추가가 된 체크리스트인 경우")
-    @Test
-    void createChecklistLike_checklistAlreadyLiked_exception() {
-        //given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
-        User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-
-        // when
-        checklistService.createChecklistLike(user, checklist.getId());
-
-        //then
-        assertThatThrownBy(() -> checklistService.createChecklistLike(user, checklist.getId()))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.LIKE_ALREADY_EXISTS.getMessage());
     }
 
 //    @DisplayName("체크리스트 리스트 조회 성공")
@@ -214,36 +180,37 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.OPTION_DUPLICATED.getMessage());
     }
 
-    //TODO 체크리스트 수정 API 리팩토링 완료후 확인 필요
-//    @DisplayName("체크리스트 수정 실패 : 기존의 체크리스트와 질문 길이가 다를 경우")
-//    @Test
-//    void updateChecklistById_differentQuestionLength_exception() {
-//        //given
-//        long checklistId = checklistManageService.createChecklist(UserFixture.USER1(),
-//                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
-//
-//        //when & then
-//        assertThatThrownBy(
-//                () -> checklistService.updateChecklistById(UserFixture.USER1(), checklistId,
-//                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION_LENGTH))
-//                .isInstanceOf(BangggoodException.class)
-//                .hasMessage(ExceptionCode.QUESTION_DIFFERENT.getMessage());
-//    }
-//
-//    @DisplayName("체크리스트 수정 실패 : 기존의 체크리스트와 질문이 다를 경우")
-//    @Test
-//    void createChecklist_differentQuestion_exception() {
-//        //given
-//        long checklistId = checklistManageService.createChecklist(UserFixture.USER1(),
-//                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
-//
-//        //when & then
-//        assertThatThrownBy(
-//                () -> checklistService.updateChecklistById(UserFixture.USER1(), checklistId,
-//                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION()))
-//                .isInstanceOf(BangggoodException.class)
-//                .hasMessage(ExceptionCode.QUESTION_DIFFERENT.getMessage());
-//    }
+    @DisplayName("체크리스트 수정 실패 : 기존의 체크리스트와 질문 길이가 다를 경우")
+    @Test
+    void updateChecklistById_differentQuestionLength_exception() {
+        //given
+        User user = userRepository.save(UserFixture.USER1());
+        Long checklistId = checklistManageService.createChecklist(user,
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+
+        //when & then
+        assertThatThrownBy(
+                () -> checklistService.updateChecklistById(user, checklistId,
+                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION_LENGTH()))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.QUESTION_DIFFERENT.getMessage());
+    }
+
+    @DisplayName("체크리스트 수정 실패 : 기존의 체크리스트와 질문이 다를 경우")
+    @Test
+    void createChecklist_differentQuestion_exception() {
+        //given
+        User user = userRepository.save(UserFixture.USER1());
+        Long checklistId = checklistManageService.createChecklist(user,
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+
+        //when & then
+        assertThatThrownBy(
+                () -> checklistService.updateChecklistById(user, checklistId,
+                        ChecklistFixture.CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION()))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.QUESTION_DIFFERENT.getMessage());
+    }
 
     @DisplayName("체크리스트 수정 실패 : 해당 유저의 체크리스트가 아닐 경우")
     @Test
@@ -282,14 +249,13 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         );
 
         //when
-        List<UserChecklistPreviewResponse> checklists =
-                checklistService.readLikedChecklistsPreview(user).checklists();
+        List<Checklist> checklists = checklistService.readLikedChecklistsPreview(user);
 
         //then
         assertAll(
                 () -> assertThat(checklists.size()).isEqualTo(2),
-                () -> assertThat(checklists.get(0).checklistId()).isEqualTo(checklist1.getId()),
-                () -> assertThat(checklists.get(1).checklistId()).isEqualTo(checklist2.getId())
+                () -> assertThat(checklists.get(0).getId()).isEqualTo(checklist1.getId()),
+                () -> assertThat(checklists.get(1).getId()).isEqualTo(checklist2.getId())
         );
     }
 
@@ -323,35 +289,5 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         )
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER.getMessage());
-    }
-
-    @DisplayName("체크리스트 좋아요 삭제 성공")
-    @Test
-    void deleteChecklistLikeByChecklistId() {
-        // given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
-        User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-        ChecklistLike checklistLike = checklistLikeRepository.save(ChecklistFixture.CHECKLIST1_LIKE(checklist));
-
-        // when
-        checklistService.deleteChecklistLikeByChecklistId(user, checklist.getId());
-
-        // then
-        assertThat(checklistLikeRepository.existsById(checklistLike.getId())).isFalse();
-    }
-
-    @DisplayName("체크리스트 좋아요 삭제 실패 : 체크리스트 좋아요가 없는 경우")
-    @Test
-    void deleteChecklistLikeByChecklistId_notFound_exception() {
-        // given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
-        User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-
-        // when & then
-        assertThatThrownBy(() -> checklistService.deleteChecklistLikeByChecklistId(user, checklist.getId()))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.LIKE_NOT_EXISTS.getMessage());
     }
 }

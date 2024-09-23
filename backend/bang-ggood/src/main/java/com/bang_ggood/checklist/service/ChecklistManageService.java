@@ -3,6 +3,8 @@ package com.bang_ggood.checklist.service;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.domain.MaintenanceItem;
 import com.bang_ggood.maintenance.service.ChecklistMaintenanceService;
@@ -124,5 +126,20 @@ public class ChecklistManageService {
                         .toList();
 
         return SelectedCategoryQuestionsResponse.of(category, selectedQuestionResponse);
+    }
+
+    @Transactional(readOnly = true)
+    public ChecklistsPreviewResponse readLikedChecklistsPreview(User user) {
+        List<Checklist> likedChecklists = checklistService.readLikedChecklistsPreview(user);
+        List<ChecklistPreviewResponse> responses = mapToChecklistPreviewResponses(
+                likedChecklists);
+        return new ChecklistsPreviewResponse(responses);
+    }
+
+    private List<ChecklistPreviewResponse> mapToChecklistPreviewResponses(
+            List<Checklist> likedChecklists) {
+        return likedChecklists.stream()
+                .map(checklist -> ChecklistPreviewResponse.of(checklist, true))
+                .toList();
     }
 }

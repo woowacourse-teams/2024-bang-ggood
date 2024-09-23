@@ -61,9 +61,9 @@ const useChecklistStore = create<ChecklistState>()(
     }),
     {
       name: 'checklist-answer',
-      partialize: state => ({
-        checklistCategoryQnA: state.checklistCategoryQnA,
-        validCategory: state.categories,
+      partialize: ({ checklistCategoryQnA, categories }) => ({
+        checklistCategoryQnA,
+        categories,
         // actions는 저장하지 않음
       }),
     },

@@ -25,6 +25,7 @@ const NewChecklistPage = () => {
   useChecklistTemplate(); // 체크리스트 질문 가져오기 및 준비
 
   const { tabs } = useNewChecklistTabs();
+
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
   // TODO: action 분리 필요
   const resetChecklist = useChecklistStore(state => state.reset);

@@ -26,10 +26,10 @@ type RouteParams = {
 const EditChecklistPage = () => {
   const navigate = useNavigate();
   const { checklistId } = useParams() as RouteParams;
+  const { data: checklist, isSuccess } = useGetChecklistDetailQuery(checklistId);
   const { tabs } = useNewChecklistTabs();
   const { set } = useChecklistStore();
 
-  const { data: checklist, isSuccess } = useGetChecklistDetailQuery(checklistId);
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
 
   // 한줄평 모달

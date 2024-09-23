@@ -2,6 +2,7 @@ import createFormStore, { FormSpec } from '@/store/createFormStore';
 import { RoomInfo } from '@/types/room';
 import { objectMap } from '@/utils/typeFunctions';
 import {
+  inRangeValidator,
   isIntegerValidator,
   isNumericValidator,
   lengthValidator,
@@ -25,7 +26,11 @@ const formSpec: FormSpec<RoomInfo> = {
   floorLevel: { initialValue: '지상', type: 'string', validators: [] },
   structure: { initialValue: '', type: 'string', validators: [] },
   realEstate: { initialValue: '', type: 'string', validators: [] },
-  occupancyMonth: { initialValue: '', type: 'number', validators: [isIntegerValidator, positiveValidator] },
+  occupancyMonth: {
+    initialValue: '',
+    type: 'number',
+    validators: [isIntegerValidator, positiveValidator, inRangeValidator(1, 12)],
+  },
   occupancyPeriod: { initialValue: '초', type: 'string', validators: [] },
   summary: { initialValue: '', type: 'string', validators: [] },
   memo: { initialValue: '', type: 'string', validators: [] },

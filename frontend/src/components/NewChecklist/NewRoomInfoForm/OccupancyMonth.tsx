@@ -4,6 +4,7 @@ import Dropdown from '@/components/_common/Dropdown/Dropdown';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
+import { roomOccupancyPeriods } from '@/constants/roomInfo';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
 const OccupancyMonth = () => {
@@ -21,7 +22,7 @@ const OccupancyMonth = () => {
         <FormStyled.FlexLabel label="월  " />
         <Dropdown
           initialValue={occupancyPeriod}
-          options={['초', '중순', '말'].map(value => ({ value }))}
+          options={roomOccupancyPeriods.map(value => ({ value }))}
           onSelectSetter={(level: string) => {
             actions.set('occupancyPeriod', level);
           }}

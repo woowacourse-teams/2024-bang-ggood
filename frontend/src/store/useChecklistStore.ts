@@ -40,8 +40,7 @@ const useChecklistStore = create<ChecklistState>()(
         },
 
         getCategory: (categoryId: number) => {
-          const { checklistCategoryQnA } = get();
-          return checklistCategoryQnA.find(category => category.categoryId === categoryId);
+          return get().checklistCategoryQnA.find(category => category.categoryId === categoryId);
         },
 
         set: (checklistCategoryQnA: ChecklistCategoryWithAnswer[]) => {
@@ -53,8 +52,7 @@ const useChecklistStore = create<ChecklistState>()(
         },
 
         _parseCategory: () => {
-          const { checklistCategoryQnA } = get();
-          const categories = checklistCategoryQnA.map(category => ({
+          const categories = get().checklistCategoryQnA.map(category => ({
             categoryId: category.categoryId,
             categoryName: category.categoryName,
           }));

@@ -1,9 +1,9 @@
 import Divider from '@/components/_common/Divider/Divider';
 import ChecklistAnswer from '@/components/ChecklistDetail/CheckListAnswer';
-import { ChecklistCategoryQnA } from '@/types/checklist';
+import { ChecklistCategoryWithAnswer } from '@/types/checklist';
 
 interface Props {
-  category: ChecklistCategoryQnA;
+  category: ChecklistCategoryWithAnswer;
 }
 
 const CategoryAccordion = ({ category }: Props) => {

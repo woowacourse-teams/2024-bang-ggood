@@ -7,7 +7,7 @@ import useToast from '@/hooks/useToast';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
-import { ChecklistCategoryQnA, MutateType } from '@/types/checklist';
+import { ChecklistCategoryWithAnswer, MutateType } from '@/types/checklist';
 
 const useMutateChecklist = (mutateType: MutateType, checklistId?: number) => {
   const { showToast } = useToast({ type: 'positive' });
@@ -66,7 +66,7 @@ const useMutateChecklist = (mutateType: MutateType, checklistId?: number) => {
 export default useMutateChecklist;
 
 // 현재 상태를 백엔드에 보내는 답안 포맷으로 바꾸는 함수
-const transformQuestions = (checklist: ChecklistCategoryQnA[]) => {
+const transformQuestions = (checklist: ChecklistCategoryWithAnswer[]) => {
   return checklist.flatMap(category =>
     category.questions.map(question => ({
       questionId: question.questionId,

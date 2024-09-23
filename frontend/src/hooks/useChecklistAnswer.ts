@@ -7,10 +7,11 @@ interface UpdateAnswerProps extends CategoryAndQuestion {
 }
 
 const useChecklistAnswer = () => {
-  const { checklistCategoryQnA, setAnswers, getCategoryQnA } = useChecklistStore();
+  const checklistActions = useChecklistStore(store => store.actions);
+  const checklistCategoryQnA = useChecklistStore(store => store.checklistCategoryQnA);
 
   const updateAndToggleAnswer = ({ categoryId, questionId, newAnswer }: UpdateAnswerProps) => {
-    const targetCategory = getCategoryQnA(categoryId);
+    const targetCategory = checklistActions.getCategory(categoryId);
 
     if (targetCategory) {
       const updatedCategory = {
@@ -27,7 +28,7 @@ const useChecklistAnswer = () => {
         category.categoryId === categoryId ? updatedCategory : category,
       );
 
-      setAnswers(newCategories);
+      checklistActions.set(newCategories);
     }
   };
 

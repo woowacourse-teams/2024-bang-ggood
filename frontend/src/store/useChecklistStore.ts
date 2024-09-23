@@ -1,74 +1,71 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { Category, CategoryName } from '@/types/category';
-import { ChecklistCategoryQnA, ChecklistCategoryQuestions } from '@/types/checklist';
+import { Category } from '@/types/category';
+import { ChecklistCategory, ChecklistCategoryWithAnswer } from '@/types/checklist';
 
 interface ChecklistState {
-  basicInfo: Record<string, unknown>;
-  checklistCategoryQnA: ChecklistCategoryQnA[];
-  validCategory: Category[];
-  reset: () => void;
-  getCategoryQnA: (categoryId: number) => ChecklistCategoryQnA | undefined;
-  initAnswerSheetIfEmpty: (questions: ChecklistCategoryQuestions[]) => void;
-  setAnswers: (answers: ChecklistCategoryQnA[]) => void;
-  _setValidCategory: () => void;
-  _isEmptyCategoryQnA: () => boolean;
+  checklistCategoryQnA: ChecklistCategoryWithAnswer[];
+  categories: Category[];
+  actions: {
+    reset: () => void;
+    getCategory: (categoryId: number) => ChecklistCategoryWithAnswer | undefined;
+    initAnswerSheetIfEmpty: (questions: ChecklistCategory[]) => void;
+    set: (answers: ChecklistCategoryWithAnswer[]) => void;
+    _parseCategory: () => void;
+  };
 }
 
 const useChecklistStore = create<ChecklistState>()(
   persist(
     (set, get) => ({
-      basicInfo: {},
       checklistCategoryQnA: [],
-      validCategory: [],
+      categories: [],
 
-      _isEmptyCategoryQnA: () => get().checklistCategoryQnA.length === 0,
-      initAnswerSheetIfEmpty: (questions: ChecklistCategoryQuestions[]) => {
-        if (!get()._isEmptyCategoryQnA()) return;
+      actions: {
+        initAnswerSheetIfEmpty: (questions: ChecklistCategory[]) => {
+          if (get().checklistCategoryQnA.length !== 0) return;
 
-        const checklistCategoryQnA: ChecklistCategoryQnA[] = questions.map(category => ({
-          categoryId: category.categoryId,
-          categoryName: category.categoryName,
-          questions: category.questions.map(question => ({
-            ...question,
-            answer: 'NONE',
-          })),
-        }));
+          const checklistCategoryQnA: ChecklistCategoryWithAnswer[] = questions.map(category => ({
+            categoryId: category.categoryId,
+            categoryName: category.categoryName,
+            questions: category.questions.map(question => ({
+              ...question,
+              answer: 'NONE',
+            })),
+          }));
 
-        set({ checklistCategoryQnA });
-        get()._setValidCategory();
-      },
+          set({ checklistCategoryQnA });
+          get().actions._parseCategory();
+        },
 
-      _setValidCategory: () => {
-        const { checklistCategoryQnA } = get();
-        const validCategory = checklistCategoryQnA.map(category => ({
-          categoryId: category.categoryId,
-          categoryName: category.categoryName as CategoryName,
-        }));
+        getCategory: (categoryId: number) => {
+          return get().checklistCategoryQnA.find(category => category.categoryId === categoryId);
+        },
 
-        set({ validCategory });
-      },
+        set: (checklistCategoryQnA: ChecklistCategoryWithAnswer[]) => {
+          set({ checklistCategoryQnA });
+          get().actions._parseCategory();
+        },
+        reset: () => {
+          set({ checklistCategoryQnA: [], categories: [] });
+        },
 
-      getCategoryQnA: (categoryId: number) => {
-        const { checklistCategoryQnA } = get();
-        return checklistCategoryQnA.find(category => category.categoryId === categoryId);
-      },
+        _parseCategory: () => {
+          const categories = get().checklistCategoryQnA.map(category => ({
+            categoryId: category.categoryId,
+            categoryName: category.categoryName,
+          }));
 
-      setAnswers: (answers: ChecklistCategoryQnA[]) => {
-        set({ checklistCategoryQnA: answers });
-        get()._setValidCategory();
-      },
-      reset: () => {
-        set({ basicInfo: {}, checklistCategoryQnA: [], validCategory: [] });
+          set({ categories });
+        },
       },
     }),
     {
       name: 'checklist-answer',
-      partialize: state => ({
-        basicInfo: state.basicInfo,
-        checklistCategoryQnA: state.checklistCategoryQnA,
-        validCategory: state.validCategory,
+      partialize: ({ checklistCategoryQnA, categories }) => ({
+        checklistCategoryQnA,
+        categories,
         // actions는 저장하지 않음
       }),
     },

@@ -5,10 +5,10 @@ import { OPTIONS } from '@/constants/options';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 
 export const OptionList = () => {
-  const OptionStoreActions = useSelectedOptionStore(state => state.actions);
+  const { actions: optionStoreActions } = useSelectedOptionStore();
 
   const icons = OPTIONS.map(option => {
-    const isCurrentOptionSelected = OptionStoreActions.isSelectedOption(option.id);
+    const isCurrentOptionSelected = optionStoreActions.isSelectedOption(option.id);
     return <MemoziedOptionButton option={option} key={option.id} isSelected={isCurrentOptionSelected} />;
   });
 

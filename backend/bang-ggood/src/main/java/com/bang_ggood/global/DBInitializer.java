@@ -23,7 +23,6 @@ public class DBInitializer implements CommandLineRunner {
 
     public void createGuestUser() {
         User guestUser = userService.getOrCreateGuestUser();
-        defaultChecklistService.createDefaultChecklistQuestions(guestUser);
-        defaultChecklistService.createDefaultChecklist(guestUser);
+        defaultChecklistService.createDefaultChecklistAndQuestions(guestUser);
     }
 }

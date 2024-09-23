@@ -64,7 +64,7 @@ class ChecklistOptionServiceTest extends IntegrationTestSupport {
         Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-        List<ChecklistOption> checklistOptions = ChecklistOptionFixture.CHECkLIST1_OPTIONS(checklist);
+        List<ChecklistOption> checklistOptions = ChecklistOptionFixture.CHECkLIST1_OPTIONS_DUPLICATE(checklist);
 
         // when & then
         assertThatThrownBy(

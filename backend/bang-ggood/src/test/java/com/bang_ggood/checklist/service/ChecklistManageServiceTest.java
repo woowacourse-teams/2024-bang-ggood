@@ -118,12 +118,12 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
     @Test
     void updateChecklistById() {
         //given
-        long checklistId = checklistManageService.createChecklist(UserFixture.USER1(),
-                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+        User user = userRepository.save(UserFixture.USER1());
+        long checklistId = checklistManageService.createChecklist(user, ChecklistFixture.CHECKLIST_CREATE_REQUEST());
         ChecklistRequest updateChecklistRequest = ChecklistFixture.CHECKLIST_UPDATE_REQUEST();
 
         //when
-        checklistManageService.updateChecklistById(UserFixture.USER1(), checklistId, updateChecklistRequest);
+        checklistManageService.updateChecklistById(user, checklistId, updateChecklistRequest);
 
         //then
         Checklist checklist = checklistRepository.getById(checklistId);

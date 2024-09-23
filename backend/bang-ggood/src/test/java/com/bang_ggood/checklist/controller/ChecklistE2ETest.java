@@ -12,6 +12,7 @@ import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
+import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -130,7 +131,8 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 수정 성공")
     @Test
     void updateChecklist() {
-        Long checklistId = checklistManageService.createChecklist(USER1(), ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+        long checklistId = checklistManageService.createChecklist(this.getAuthenticatedUser(),
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)

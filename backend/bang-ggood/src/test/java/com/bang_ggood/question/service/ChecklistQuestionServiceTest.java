@@ -98,8 +98,7 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
         checklistQuestionService.updateQuestions(checklistQuestions, updateQuestions);
 
         //then
-        assertThat(checklistQuestionRepository.findAllByChecklistId(checklist.getId()).get(1).getAnswer())
-                .isEqualTo(Answer.BAD);
+        assertThat(checklistQuestions.get(1).getAnswer()).isEqualTo(Answer.BAD);
     }
 
     @DisplayName("질문 수정 실패: 질문 id가 중복일 경우")

@@ -8,6 +8,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 import java.util.Optional;
 
 class UserRepositoryTest extends IntegrationTestSupport {
@@ -36,9 +37,9 @@ class UserRepositoryTest extends IntegrationTestSupport {
         User expectedUser = userRepository.save(UserFixture.GUEST_USER());
 
         // when
-        User user = userRepository.getUserByType(UserType.GUEST);
+        List<User> users = userRepository.findUserByType(UserType.GUEST);
 
         // then
-        Assertions.assertThat(user).isEqualTo(expectedUser);
+        Assertions.assertThat(users).containsExactly(expectedUser);
     }
 }

@@ -25,11 +25,7 @@ const OptionButton = ({ option, isSelected }: { option: OptionWithIcon; isSelect
       text: theme.palette.grey500,
       fill: theme.palette.white,
     },
-    selected: {
-      border: theme.palette.yellow600,
-      fill: theme.palette.yellow100,
-      text: theme.palette.yellow700,
-    },
+    selected: { border: theme.palette.yellow600, fill: theme.palette.yellow100, text: theme.palette.yellow700 },
   };
 
   const currentColor = isSelected ? BUTTON_COLOR.selected : BUTTON_COLOR.unSelected;
@@ -43,7 +39,7 @@ const OptionButton = ({ option, isSelected }: { option: OptionWithIcon; isSelect
 };
 
 export default React.memo(OptionButton);
-// export default OptionButton;
+
 const S = {
   Box: styled.div<{ color: string; borderColor: string }>`
     position: relative;
@@ -79,24 +75,12 @@ const S = {
     font-weight: ${({ theme }) => theme.text.weight.bold};
     font-size: ${({ theme }) => theme.text.size.small};
 
-    @media (width <= 35rem) {
-      font-size: ${({ theme }) => theme.text.size.xxSmall};
-    }
-
-    @media (width <= 32rem) {
+    @media (width <= 34.4rem) {
       font-size: ${({ theme }) => theme.text.size.xSmall};
     }
 
-    @media (width <= 28rem) {
-      font-size: ${({ theme }) => theme.text.size.xxSmall};
-    }
-
-    @media (width <= 26rem) {
+    @media (width >= 58rem) {
       font-size: ${({ theme }) => theme.text.size.xSmall};
-    }
-
-    @media (width <= 22rem) {
-      font-size: ${({ theme }) => theme.text.size.xxSmall};
     }
   `,
 };

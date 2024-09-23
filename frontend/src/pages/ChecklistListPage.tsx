@@ -49,7 +49,8 @@ const ChecklistListPage = () => {
         </S.ListBox>
       </Layout>
       <FloatingButton size="extends" onClick={handleClickFloatingButton}>
-        <PlusBlack /> 작성하기
+        <PlusBlack />
+        작성하기
       </FloatingButton>
     </>
   );

@@ -1,0 +1,21 @@
+.sprite-icon::before {
+  content: '';
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+}
+.sprite-home::before {
+  background: url('@/assets/images/category-sprite.webp') -10px -10px;
+}
+.sprite-window::before {
+  background: url('@/assets/images/category-sprite.webp') -52px -10px;
+}
+.sprite-toilet::before {
+  background: url('@/assets/images/category-sprite.webp') -10px -52px;
+}
+.sprite-security::before {
+  background: url('@/assets/images/category-sprite.webp') -52px -52px;
+}
+.sprite-outdoor::before {
+  background: url('@/assets/images/category-sprite.webp') -94px -10px;
+}

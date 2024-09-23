@@ -56,7 +56,7 @@ const LandingPage = () => {
       <S.Section height={57} color={SectionColors.first.background}>
         <FirstSection />
       </S.Section>
-      <S.Section height={70} color={SectionColors.second.background}>
+      <S.Section height={75} color={SectionColors.second.background}>
         <SecondSection />
       </S.Section>
       <S.Section height={82} color={SectionColors.third.background}>

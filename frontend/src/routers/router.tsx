@@ -4,18 +4,17 @@ import { createBrowserRouter, Outlet } from 'react-router-dom';
 import FooterLayout from '@/components/_common/layout/FooterLayout';
 import { ROUTE_PATH } from '@/constants/routePath';
 
-const ArticleDetailPage = React.lazy(() => import('@/pages/ArticleDetailPage'));
-const NotFound = React.lazy(() => import('@/pages/NotFound'));
-const ArticleListPage = React.lazy(() => import('@/pages/ArticleListPage'));
-const ChecklistCustomPage = React.lazy(() => import('@/pages/ChecklistCustomPage'));
-const ChecklistDetailPage = React.lazy(() => import('@/pages/ChecklistDetailPage'));
-const ChecklistListPage = React.lazy(() => import('@/pages/ChecklistListPage'));
-const EditChecklistPage = React.lazy(() => import('@/pages/EditChecklistPage'));
-const LandingPage = React.lazy(() => import('@/pages/LandingPage'));
 const MainPage = React.lazy(() => import('@/pages/MainPage'));
+const ChecklistListPage = React.lazy(() => import('@/pages/ChecklistListPage'));
+const ArticleListPage = React.lazy(() => import('@/pages/ArticleListPage'));
 const MyPage = React.lazy(() => import('@/pages/MyPage'));
 const NewChecklistPage = React.lazy(() => import('@/pages/NewChecklistPage'));
-
+const EditChecklistPage = React.lazy(() => import('@/pages/EditChecklistPage'));
+const ChecklistDetailPage = React.lazy(() => import('@/pages/ChecklistDetailPage'));
+const ChecklistCustomPage = React.lazy(() => import('@/pages/ChecklistCustomPage'));
+const ArticleDetailPage = React.lazy(() => import('@/pages/ArticleDetailPage'));
+const LandingPage = React.lazy(() => import('@/pages/LandingPage'));
+const NotFound = React.lazy(() => import('@/pages/NotFound'));
 const ErrorPage = React.lazy(() => import('@/pages/ErrorPage'));
 
 const router = createBrowserRouter([

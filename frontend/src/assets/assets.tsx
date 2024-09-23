@@ -43,6 +43,11 @@ import KakaoLogo from '@/assets/icons/kakao/kakao-logo.svg';
 import Location from '@/assets/icons/map/location.svg';
 import Search from '@/assets/icons/map/search.svg';
 
+// landing page
+import checkingPageScreen from '@/assets/images/checkingPageScreen.webp';
+import customPageScreen from '@/assets/images/customPageScreen.webp';
+import mainPageScreen from '@/assets/images/mainPageScreen.webp';
+
 export {
   ArrowBack,
   ArrowDownSmall,
@@ -75,4 +80,7 @@ export {
   Subway,
   Summary,
   Utils,
+  checkingPageScreen,
+  customPageScreen,
+  mainPageScreen,
 };

@@ -19,7 +19,7 @@ public class SubwayStationService {
 
     public List<SubwayStationResponse> readNearestStation(double latitude, double longitude) {
         List<SubwayStationResponse> likelyNearStations = findLikelyNearStations(latitude, longitude);
-        List<SubwayStationResponse> mergedNearStations = mergeSameStations(likelyNearStations);
+        List<SubwayStationResponse> mergedNearStations = mergeTransferStations(likelyNearStations);
 
         return mergedNearStations.stream()
                 .sorted(Comparator.comparing(SubwayStationResponse::getWalkingTime))
@@ -35,7 +35,7 @@ public class SubwayStationService {
                 .toList();
     }
 
-    private List<SubwayStationResponse> mergeSameStations(List<SubwayStationResponse> stations) {
+    private List<SubwayStationResponse> mergeTransferStations(List<SubwayStationResponse> stations) {
         return stations.stream()
                 .collect(Collectors.groupingBy(
                         SubwayStationResponse::getStationName,

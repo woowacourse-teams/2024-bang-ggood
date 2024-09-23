@@ -65,7 +65,26 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 () -> assertThat(savedChecklist.getMemo()).isEqualTo(checklist.getMemo()),
                 () -> assertThat(savedChecklist.getSummary()).isEqualTo(checklist.getSummary())
         );
+    }
 
+    @DisplayName("체크리스트 수정 성공")
+    @Test
+    void updateChecklist() {
+        //given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist savedChecklist = checklistService.createChecklist(ChecklistFixture.CHECKLIST1_USER1(room, user));
+
+        //when
+        Checklist updateChecklist = ChecklistFixture.CHECKLIST1_USER1_UPDATE(room, user);
+        checklistService.updateChecklist(savedChecklist, updateChecklist);
+
+        //then
+        assertAll(
+                () -> assertThat(savedChecklist.getRealEstate()).isEqualTo(updateChecklist.getRealEstate()),
+                () -> assertThat(savedChecklist.getMemo()).isEqualTo(updateChecklist.getMemo()),
+                () -> assertThat(savedChecklist.getSummary()).isEqualTo(updateChecklist.getSummary())
+        );
     }
 
 //    @DisplayName("체크리스트 리스트 조회 성공")

@@ -29,6 +29,16 @@ public class ChecklistFixture {
         );
     }
 
+    public static Checklist CHECKLIST1_USER1_UPDATE(Room room, User user) {
+        return new Checklist(
+                room,
+                user,
+                1000, 50, 5, 12,
+                OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY,
+                "방끗공인중개", "메모 추가", "한줄평 수정"
+        );
+    }
+
     public static Checklist CHECKLIST2_USER1(Room room, User user) {
         return new Checklist(
                 room,

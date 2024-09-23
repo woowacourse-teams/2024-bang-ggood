@@ -16,8 +16,7 @@ class CookieResolverTest {
         // given
         String expectedToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0Ijox";
         CookieResolver cookieResolver = new CookieResolver();
-        Cookie[] cookies = new Cookie[1];
-        cookies[0] = new Cookie(CookieProvider.TOKEN_COOKIE_NAME, expectedToken);
+        Cookie[] cookies = { new Cookie(CookieProvider.TOKEN_COOKIE_NAME, expectedToken) };
 
         // when
         String token = cookieResolver.extractToken(cookies);

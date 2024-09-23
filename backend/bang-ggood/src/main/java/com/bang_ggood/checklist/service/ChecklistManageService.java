@@ -142,4 +142,14 @@ public class ChecklistManageService {
                 .map(checklist -> ChecklistPreviewResponse.of(checklist, true))
                 .toList();
     }
+
+    @Transactional
+    public void deleteChecklistById(User user, long id) {
+        Checklist checklist = checklistService.readChecklist(user, id);
+        checklistQuestionService.deleteAllByChecklistId(checklist.getId());
+        checklistOptionService.deleteAllByChecklistId(checklist.getId());
+        checklistMaintenanceService.deleteAllByChecklistId(checklist.getId());
+        checklistService.deleteById(id);
+        roomService.deleteById(checklist.getRoom().getId());
+    }
 }

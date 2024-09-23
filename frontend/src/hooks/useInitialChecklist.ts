@@ -5,7 +5,7 @@ import useGetChecklistQuestionQuery from '@/hooks/query/useGetChecklistQuestionQ
 import useChecklistStore from '@/store/useChecklistStore';
 
 const useInitialChecklist = () => {
-  const initAnswerSheetIfEmpty = useChecklistStore(state => state.initAnswerSheetIfEmpty);
+  const initAnswerSheetIfEmpty = useChecklistStore(state => state.actions.initAnswerSheetIfEmpty);
 
   useDefaultRoomName();
 

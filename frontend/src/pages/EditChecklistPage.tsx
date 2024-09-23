@@ -28,7 +28,7 @@ const EditChecklistPage = () => {
   const { checklistId } = useParams() as RouteParams;
   const { data: checklist, isSuccess } = useGetChecklistDetailQuery(checklistId);
   const { tabs } = useNewChecklistTabs();
-  const { set } = useChecklistStore();
+  const checklistActions = useChecklistStore(state => state.actions);
 
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
 
@@ -39,12 +39,11 @@ const EditChecklistPage = () => {
   const { isModalOpen: isMemoModalOpen, openModal: memoModalOpen, closeModal: memoModalClose } = useModal();
 
   // TODO: action 분리 필요
-  const resetChecklist = useChecklistStore(state => state.reset);
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);
 
   const resetAndGoDetailPage = () => {
     roomInfoActions.resetAll();
-    resetChecklist();
+    checklistActions.reset();
     selectedOptionActions.reset();
     navigate(ROUTE_PATH.checklistOne(Number(checklistId)));
   };
@@ -58,7 +57,7 @@ const EditChecklistPage = () => {
         value: checklist.room,
       });
       selectedOptionActions.set(checklist.options.map(option => option.optionId));
-      set(checklist.categories);
+      checklistActions.set(checklist.categories);
     };
 
     setChecklistDataToStore();

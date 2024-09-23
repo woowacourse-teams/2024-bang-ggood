@@ -28,7 +28,7 @@ const NewChecklistPage = () => {
 
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
   // TODO: action 분리 필요
-  const resetChecklist = useChecklistStore(state => state.reset);
+  const checklistActions = useChecklistStore(state => state.actions);
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);
   const { resetShowTipBox } = useHandleTipBox('OPTION');
 
@@ -43,7 +43,7 @@ const NewChecklistPage = () => {
 
   const resetAndGoHome = () => {
     roomInfoActions.resetAll();
-    resetChecklist();
+    checklistActions.reset();
     selectedOptionActions.reset();
     resetShowTipBox(); // 옵션의 팁박스 다시표시
     navigate(ROUTE_PATH.checklistList);

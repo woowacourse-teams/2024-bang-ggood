@@ -1,5 +1,5 @@
 import { AnswerType } from '@/types/answer';
-import { CategoryName } from '@/types/category';
+import { Category, CategoryName } from '@/types/category';
 // import { CategoryScore } from '@/types/category';
 import { Option } from '@/types/option';
 import { RoomInfo } from '@/types/room';
@@ -22,7 +22,7 @@ export interface ChecklistQuestion {
 }
 
 // 기본 체크리스트
-export interface ChecklistCategoryQuestions extends ChecklistCategoryBase {
+export interface ChecklistCategoryQuestions extends Category {
   questions: ChecklistQuestion[];
 }
 

@@ -1,6 +1,6 @@
 package com.bang_ggood.global.config;
 
-import com.bang_ggood.auth.config.AuthPrincipalArgumentResolver;
+import com.bang_ggood.auth.config.AuthRequiredPrincipalArgumentResolver;
 import com.bang_ggood.auth.config.CookieResolver;
 import com.bang_ggood.auth.config.UserPrincipalArgumentResolver;
 import com.bang_ggood.auth.service.AuthService;
@@ -22,7 +22,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(new AuthPrincipalArgumentResolver(cookieResolver, authService));
+        resolvers.add(new AuthRequiredPrincipalArgumentResolver(cookieResolver, authService));
         resolvers.add(new UserPrincipalArgumentResolver(cookieResolver, authService));
     }
 }

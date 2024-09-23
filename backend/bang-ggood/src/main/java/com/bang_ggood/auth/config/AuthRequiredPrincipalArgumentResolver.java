@@ -13,12 +13,12 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 @Component
-public class AuthPrincipalArgumentResolver implements HandlerMethodArgumentResolver {
+public class AuthRequiredPrincipalArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final CookieResolver cookieResolver;
     private final AuthService authService;
 
-    public AuthPrincipalArgumentResolver(CookieResolver cookieResolver, AuthService authService) {
+    public AuthRequiredPrincipalArgumentResolver(CookieResolver cookieResolver, AuthService authService) {
         this.cookieResolver = cookieResolver;
         this.authService = authService;
     }
@@ -26,7 +26,7 @@ public class AuthPrincipalArgumentResolver implements HandlerMethodArgumentResol
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return User.class.isAssignableFrom(parameter.getParameterType())
-                && parameter.hasParameterAnnotation(AuthPrincipal.class);
+                && parameter.hasParameterAnnotation(AuthRequiredPrincipal.class);
     }
 
     @Override

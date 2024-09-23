@@ -16,7 +16,7 @@ public class TestController {
     }
 
     @GetMapping(AUTH_PRINCIPAL_URL)
-    public User testAuthPrincipal(@AuthPrincipal User user) {
+    public User testAuthPrincipal(@AuthRequiredPrincipal User user) {
         return user;
     }
 }

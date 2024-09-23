@@ -1,6 +1,6 @@
 package com.bang_ggood.question.controller;
 
-import com.bang_ggood.auth.config.AuthPrincipal;
+import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.auth.config.UserPrincipal;
 import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
@@ -35,7 +35,7 @@ public class QuestionController {
     }
 
     @PutMapping("/custom-checklist")
-    public ResponseEntity<Void> updateCustomChecklist(@AuthPrincipal User user,
+    public ResponseEntity<Void> updateCustomChecklist(@AuthRequiredPrincipal User user,
                                                       @RequestBody CustomChecklistUpdateRequest request) {
         questionManageService.updateCustomChecklist(user, request);
         return ResponseEntity.noContent().build();

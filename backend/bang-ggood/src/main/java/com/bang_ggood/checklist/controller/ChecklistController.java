@@ -1,6 +1,6 @@
 package com.bang_ggood.checklist.controller;
 
-import com.bang_ggood.auth.config.AuthPrincipal;
+import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.auth.config.UserPrincipal;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
@@ -31,7 +31,7 @@ public class ChecklistController {
     }
 
     @PostMapping("/checklists")
-    public ResponseEntity<Void> createChecklist(@AuthPrincipal User user,
+    public ResponseEntity<Void> createChecklist(@AuthRequiredPrincipal User user,
                                                 @Valid @RequestBody ChecklistRequest checklistRequest) {
         long checklistId = checklistManageService.createChecklist(user, checklistRequest);
         return ResponseEntity.created(URI.create("/checklists/" + checklistId)).build();
@@ -49,13 +49,13 @@ public class ChecklistController {
     }
 
     @GetMapping("/checklists/like")
-    public ResponseEntity<ChecklistsPreviewResponse> readLikedChecklistsPreview(@AuthPrincipal User user) {
+    public ResponseEntity<ChecklistsPreviewResponse> readLikedChecklistsPreview(@AuthRequiredPrincipal User user) {
         return ResponseEntity.ok(checklistManageService.readLikedChecklistsPreview(user));
     }
 
     @PutMapping("/checklists/{id}")
     public ResponseEntity<Void> updateChecklistById(
-            @AuthPrincipal User user,
+            @AuthRequiredPrincipal User user,
             @PathVariable("id") long id,
             @Valid @RequestBody ChecklistRequest checklistRequest) {
         checklistService.updateChecklistById(user, id, checklistRequest);
@@ -63,7 +63,7 @@ public class ChecklistController {
     }
 
     @DeleteMapping("/checklists/{id}")
-    public ResponseEntity<Void> deleteChecklistById(@AuthPrincipal User user, @PathVariable("id") long id) {
+    public ResponseEntity<Void> deleteChecklistById(@AuthRequiredPrincipal User user, @PathVariable("id") long id) {
         checklistService.deleteChecklistById(user, id);
         return ResponseEntity.noContent().build();
     }

@@ -25,7 +25,7 @@ public class AuthService {
     private final OauthClient oauthClient;
     private final JwtTokenProvider jwtTokenProvider;
     private final DefaultChecklistService defaultChecklistService;
-    private final UserRepository userRepository;
+    private final UserRepository userRepository; // TODO 리팩토링
 
     public AuthService(OauthClient oauthClient, JwtTokenProvider jwtTokenProvider,
                        DefaultChecklistService defaultChecklistService, UserRepository userRepository) {
@@ -47,8 +47,7 @@ public class AuthService {
 
     private User signUp(OauthInfoApiResponse oauthInfoApiResponse) {
         User user = userRepository.save(oauthInfoApiResponse.toUserEntity());
-        defaultChecklistService.createDefaultChecklistQuestions(user);
-        defaultChecklistService.createDefaultChecklist(user);
+        defaultChecklistService.createDefaultChecklistAndQuestions(user);
         return user;
     }
 

@@ -4,10 +4,9 @@ import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.option.domain.Option;
 import com.bang_ggood.question.domain.Answer;
-import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.request.QuestionRequest;
-import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
+import com.bang_ggood.question.service.QuestionManageService;
 import com.bang_ggood.room.dto.request.RoomRequest;
 import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
@@ -21,12 +20,12 @@ public class DefaultChecklistService {
     private static final List<Integer> DEFAULT_OPTIONS = createDefaultOptions();
     private static final List<QuestionRequest> DEFAULT_QUESTION_REQUEST = createDefaultQuestionRequest();
 
-    private final CustomChecklistQuestionRepository customChecklistQuestionRepository;
+    private final QuestionManageService questionManageService;
     private final ChecklistManageService checklistManageService;
 
-    public DefaultChecklistService(CustomChecklistQuestionRepository customChecklistQuestionRepository,
+    public DefaultChecklistService(QuestionManageService questionManageService,
                                    ChecklistManageService checklistManageService) {
-        this.customChecklistQuestionRepository = customChecklistQuestionRepository;
+        this.questionManageService = questionManageService;
         this.checklistManageService = checklistManageService;
     }
 
@@ -58,19 +57,11 @@ public class DefaultChecklistService {
     }
 
     @Transactional
-    public void createDefaultChecklistQuestions(User user) {
-        List<CustomChecklistQuestion> checklistQuestions = Question.findDefaultQuestions()
-                .stream()
-                .map(question -> new CustomChecklistQuestion(user, question))
-                .toList();
-
-        customChecklistQuestionRepository.saveAll(checklistQuestions);
-    }
-
-    @Transactional
-    public void createDefaultChecklist(User user) {
+    public void createDefaultChecklistAndQuestions(User user) {
         ChecklistRequest checklistRequest = new ChecklistRequest(
                 DEFAULT_ROOM_REQUEST, DEFAULT_OPTIONS, DEFAULT_QUESTION_REQUEST);
+
+        questionManageService.createDefaultCustomChecklistQuestions(user);
         checklistManageService.createChecklist(user, checklistRequest);
     }
 }

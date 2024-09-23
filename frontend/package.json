@@ -20,6 +20,12 @@
     "lint:styled": "stylelint --cache --fix ./*"
   },
   "dependencies": {
+    "@babel/cli": "^7.25.6",
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.4",
+    "@babel/preset-react": "^7.24.7",
+    "@babel/preset-typescript": "^7.24.7",
+    "@emotion/babel-plugin": "^11.12.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@sentry/react": "^8.22.0",

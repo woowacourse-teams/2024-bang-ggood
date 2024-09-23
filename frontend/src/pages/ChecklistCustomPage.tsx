@@ -22,11 +22,16 @@ const ChecklistCustomPage = () => {
   const { showToast } = useToast();
 
   const { mutate: putCustomChecklist } = usePutCustomChecklist();
-  const { setValidCategory, setChecklistAllQuestionList, selectedQuestions } = useChecklistCustomStore();
+  const { selectedQuestions, setValidCategory, setChecklistAllQuestionList } = useChecklistCustomStore();
 
   const { resetShowTipBox } = useHandleTipBox('CUSTOM_QUESTION');
 
   const handleSubmitChecklist = () => {
+    if (!selectedQuestions.length) {
+      showToast(TOAST_MESSAGE.MIN_CUSTOM_SELECT);
+      return;
+    }
+
     putCustomChecklist(selectedQuestions, {
       onSuccess: () => {
         showToast(TOAST_MESSAGE.ADD);

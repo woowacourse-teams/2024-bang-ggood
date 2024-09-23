@@ -1,4 +1,4 @@
-import { MAX_SELECT_CATEGORY_COUNT } from '@/constants/system';
+import { MAX_SELECT_CATEGORY_COUNT, MIN_SELECT_CUSTOM_COUNT } from '@/constants/system';
 import { TipType } from '@/hooks/useHandleTipBox';
 
 export const TIP_MESSAGE: Record<TipType, string> = {
@@ -12,10 +12,11 @@ export const MODAL_MESSAGE: Record<ModalMessageType, string> = {
   SUMMARY: '방에 대한 한 줄 평을 적어주세요.',
 };
 
-type ToastType = 'ADD' | 'EDIT' | 'MAX_SELECT';
+type ToastType = 'ADD' | 'EDIT' | 'MIN_CUSTOM_SELECT' | 'MAX_SELECT';
 
 export const TOAST_MESSAGE: Record<ToastType, string> = {
   ADD: '체크리스트가 저장됐어요!',
   EDIT: '체크리스트가 수정됐어요!',
+  MIN_CUSTOM_SELECT: `질문은 최소 ${MIN_SELECT_CUSTOM_COUNT}개 이상 선택해야해요!`,
   MAX_SELECT: `카테고리는 최대 ${MAX_SELECT_CATEGORY_COUNT}개까지만 선택할 수 있어요.`,
 };

@@ -6,6 +6,8 @@ export const MAX_CHECKLISTS_DISPLAY_COUNT = 3;
 
 export const MAX_SELECT_CATEGORY_COUNT = 3;
 
+export const MIN_SELECT_CUSTOM_COUNT = 1;
+
 export const DEFAULT_TOAST_DURATION = 2;
 
 export const DEFAULT_CHECKLIST_TAB_PAGE = -1;

@@ -54,6 +54,10 @@ export const checklistHandlers = [
   http.get(BASE_URL + ENDPOINT.LIKE(1), () => {
     return HttpResponse.json(checklist.get(1), { status: 200 });
   }),
+
+  http.put(BASE_URL + ENDPOINT.CHECKLIST_CUSTOM, () => {
+    return HttpResponse.json({ status: 200 });
+  }),
 ];
 
 const checklist = new Map();

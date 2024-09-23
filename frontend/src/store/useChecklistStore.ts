@@ -2,16 +2,16 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 import { Category } from '@/types/category';
-import { ChecklistCategoryQnA, ChecklistCategoryQuestions } from '@/types/checklist';
+import { ChecklistCategory, ChecklistCategoryWithAnswer } from '@/types/checklist';
 
 interface ChecklistState {
-  checklistCategoryQnA: ChecklistCategoryQnA[];
+  checklistCategoryQnA: ChecklistCategoryWithAnswer[];
   categories: Category[];
   actions: {
     reset: () => void;
-    getCategory: (categoryId: number) => ChecklistCategoryQnA | undefined;
-    initAnswerSheetIfEmpty: (questions: ChecklistCategoryQuestions[]) => void;
-    set: (answers: ChecklistCategoryQnA[]) => void;
+    getCategory: (categoryId: number) => ChecklistCategoryWithAnswer | undefined;
+    initAnswerSheetIfEmpty: (questions: ChecklistCategory[]) => void;
+    set: (answers: ChecklistCategoryWithAnswer[]) => void;
     _parseCategory: () => void;
   };
 }
@@ -23,10 +23,10 @@ const useChecklistStore = create<ChecklistState>()(
       categories: [],
 
       actions: {
-        initAnswerSheetIfEmpty: (questions: ChecklistCategoryQuestions[]) => {
+        initAnswerSheetIfEmpty: (questions: ChecklistCategory[]) => {
           if (get().checklistCategoryQnA.length !== 0) return;
 
-          const checklistCategoryQnA: ChecklistCategoryQnA[] = questions.map(category => ({
+          const checklistCategoryQnA: ChecklistCategoryWithAnswer[] = questions.map(category => ({
             categoryId: category.categoryId,
             categoryName: category.categoryName,
             questions: category.questions.map(question => ({
@@ -44,7 +44,7 @@ const useChecklistStore = create<ChecklistState>()(
           return checklistCategoryQnA.find(category => category.categoryId === categoryId);
         },
 
-        set: (checklistCategoryQnA: ChecklistCategoryQnA[]) => {
+        set: (checklistCategoryQnA: ChecklistCategoryWithAnswer[]) => {
           set({ checklistCategoryQnA });
           get().actions._parseCategory();
         },

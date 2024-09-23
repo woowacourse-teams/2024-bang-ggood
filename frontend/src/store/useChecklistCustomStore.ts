@@ -1,16 +1,16 @@
 import { create } from 'zustand';
 
 import { Category, CategoryName } from '@/types/category';
-import { CategoryAndQuestion, ChecklistCategoryQnIsSelected, ChecklistQuestionWithIsSelected } from '@/types/checklist';
+import { CategoryAndQuestion, ChecklistCategoryCustom, ChecklistQuestionWithIsSelected } from '@/types/checklist';
 
 interface ChecklistCustomState {
   selectedQuestions: number[];
-  checklistAllQuestionList: ChecklistCategoryQnIsSelected[];
+  checklistAllQuestionList: ChecklistCategoryCustom[];
   validCategory: Category[];
 
-  setChecklistAllQuestionList: (answers: ChecklistCategoryQnIsSelected[]) => void;
+  setChecklistAllQuestionList: (answers: ChecklistCategoryCustom[]) => void;
   findCategoryQuestion: ({ categoryId, questionId }: CategoryAndQuestion) => ChecklistQuestionWithIsSelected | null;
-  categoryQnA: (categoryId: number) => ChecklistCategoryQnIsSelected;
+  categoryQnA: (categoryId: number) => ChecklistCategoryCustom;
   setValidCategory: () => void;
 }
 
@@ -19,7 +19,7 @@ const useChecklistCustomStore = create<ChecklistCustomState>((set, get) => ({
   checklistAllQuestionList: [],
   validCategory: [],
 
-  setChecklistAllQuestionList: (categoryQuestions: ChecklistCategoryQnIsSelected[]) => {
+  setChecklistAllQuestionList: (categoryQuestions: ChecklistCategoryCustom[]) => {
     const defaultSelectedQuestions = categoryQuestions.flatMap(category =>
       category.questions.filter(question => question.isSelected).map(question => question.questionId),
     );

@@ -1,6 +1,5 @@
 import { AnswerType } from '@/types/answer';
 import { Category } from '@/types/category';
-// import { CategoryScore } from '@/types/category';
 import { Option } from '@/types/option';
 import { RoomInfo } from '@/types/room';
 
@@ -17,12 +16,12 @@ export interface ChecklistQuestion {
 }
 
 // 기본 체크리스트
-export interface ChecklistCategoryQuestions extends Category {
+export interface ChecklistCategory extends Category {
   questions: ChecklistQuestion[];
 }
 
 // 체크리스트 작성: 모든 질문 + 답변
-export interface ChecklistCategoryQnA extends Category {
+export interface ChecklistCategoryWithAnswer extends Category {
   questions: ChecklistQuestionWithAnswer[];
 }
 
@@ -32,7 +31,7 @@ export interface ChecklistQuestionWithAnswer extends ChecklistQuestion {
 }
 
 // 체크리스트 커스텀
-export interface ChecklistCategoryQnIsSelected extends Category {
+export interface ChecklistCategoryCustom extends Category {
   questions: ChecklistQuestionWithIsSelected[];
 }
 
@@ -72,7 +71,7 @@ export interface ChecklistInfo {
   isLiked: boolean;
   room: RoomInfo;
   options: Option[];
-  categories: ChecklistCategoryQnA[];
+  categories: ChecklistCategoryWithAnswer[];
 }
 
 export interface ChecklistCustom {

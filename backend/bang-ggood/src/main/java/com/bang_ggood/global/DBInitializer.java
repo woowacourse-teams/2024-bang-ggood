@@ -1,19 +1,18 @@
 package com.bang_ggood.global;
 
 import com.bang_ggood.user.domain.User;
-import com.bang_ggood.user.domain.UserType;
-import com.bang_ggood.user.repository.UserRepository;
+import com.bang_ggood.user.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DBInitializer implements CommandLineRunner {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final DefaultChecklistService defaultChecklistService;
 
-    public DBInitializer(UserRepository userRepository, DefaultChecklistService defaultChecklistService) {
-        this.userRepository = userRepository;
+    public DBInitializer(UserService userService, DefaultChecklistService defaultChecklistService) {
+        this.userService = userService;
         this.defaultChecklistService = defaultChecklistService;
     }
 
@@ -23,9 +22,7 @@ public class DBInitializer implements CommandLineRunner {
     }
 
     public void createGuestUser() {
-        User guestUser = new User("방끗", "bang-ggood@gmail.com", UserType.GUEST);
-        userRepository.save(guestUser);
-
+        User guestUser = userService.getOrCreateGuestUser();
         defaultChecklistService.createDefaultChecklistQuestions(guestUser);
         defaultChecklistService.createDefaultChecklist(guestUser);
     }

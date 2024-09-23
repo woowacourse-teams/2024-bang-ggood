@@ -57,7 +57,7 @@ public class ChecklistController {
             @AuthPrincipal User user,
             @PathVariable("id") long id,
             @Valid @RequestBody ChecklistRequest checklistRequest) {
-        checklistService.updateChecklistById(user, id, checklistRequest);
+        checklistManageService.updateChecklistById(user, id, checklistRequest);
         return ResponseEntity.noContent().build();
     }
 

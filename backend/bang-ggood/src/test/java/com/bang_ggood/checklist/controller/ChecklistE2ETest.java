@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 
+import static com.bang_ggood.user.UserFixture.USER1;
 import static org.hamcrest.Matchers.containsString;
 
 class ChecklistE2ETest extends AcceptanceTest {
@@ -126,20 +127,19 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .statusCode(200);
     }
 
-    //TODO 체크리스트 수정 API 리팩토링 후 확인 필요
-//    @DisplayName("체크리스트 수정 성공")
-//    @Test
-//    void updateChecklist() {
-//        Long checklistId = checklistManageService.createChecklist(USER1(), ChecklistFixture.CHECKLIST_CREATE_REQUEST());
-//
-//        RestAssured.given().log().all()
-//                .contentType(ContentType.JSON)
-//                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
-//                .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST)
-//                .when().put("/checklists/" + checklistId)
-//                .then().log().all()
-//                .statusCode(204);
-//    }
+    @DisplayName("체크리스트 수정 성공")
+    @Test
+    void updateChecklist() {
+        Long checklistId = checklistManageService.createChecklist(USER1(), ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST())
+                .when().put("/checklists/" + checklistId)
+                .then().log().all()
+                .statusCode(204);
+    }
 
     @DisplayName("체크리스트 수정 실패: 방 이름을 넣지 않은 경우")
     @Test

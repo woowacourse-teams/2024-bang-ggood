@@ -53,18 +53,18 @@ public class ArticleRepositoryTest extends IntegrationTestSupport {
 
     @DisplayName("아티클 목록 최신순 조회 성공")
     @Test
-    void findLatest() {
+    void findLatestArticles() {
         // given
         Article article1 = articleRepository.save(ArticleFixture.ARTICLE_1());
         Article article2 = articleRepository.save(ArticleFixture.ARTICLE_2());
 
         // when & then
-        assertThat(articleRepository.findLatest()).containsExactly(article2, article1);
+        assertThat(articleRepository.findLatestArticles()).containsExactly(article2, article1);
     }
 
     @DisplayName("아티클 목록 최신순 조회 성공: 삭제된 아티클 제외")
     @Test
-    void findLatest_exceptDeletedArticle() {
+    void findLatestArticles_exceptDeletedArticle() {
         // given
         Article article1 = articleRepository.save(ArticleFixture.ARTICLE_1());
         Article article2 = articleRepository.save(ArticleFixture.ARTICLE_2());
@@ -72,23 +72,23 @@ public class ArticleRepositoryTest extends IntegrationTestSupport {
         articleRepository.deleteById(ArticleFixture.ARTICLE_1().getId());
 
         // when & then
-        assertThat(articleRepository.findLatest()).containsExactly(article3, article2, article1);
+        assertThat(articleRepository.findLatestArticles()).containsExactly(article3, article2, article1);
     }
 
     @DisplayName("아티클 목록 제한된 개수 최신순 조회 성공")
     @Test
-    void findLatest_limit() {
+    void findLatestArticles_limit() {
         // given
         Article article1 = articleRepository.save(ArticleFixture.ARTICLE_1());
         Article article2 = articleRepository.save(ArticleFixture.ARTICLE_2());
 
         // when & then
-        assertThat(articleRepository.findLatest(1)).containsExactly(article2);
+        assertThat(articleRepository.findLatestArticles(1)).containsExactly(article2);
     }
 
     @DisplayName("아티클 목록 제한된 개수 최신순 조회 성공: 삭제된 아티클 제외")
     @Test
-    void findLatest_limit_exceptDeletedArticle() {
+    void findLatestArticles_limit_exceptDeletedArticle() {
         // given
         Article article1 = articleRepository.save(ArticleFixture.ARTICLE_1());
         Article article2 = articleRepository.save(ArticleFixture.ARTICLE_2());
@@ -96,6 +96,6 @@ public class ArticleRepositoryTest extends IntegrationTestSupport {
         articleRepository.deleteById(article3.getId());
 
         // when & then
-        assertThat(articleRepository.findLatest(2)).containsExactly(article2, article1);
+        assertThat(articleRepository.findLatestArticles(2)).containsExactly(article2, article1);
     }
 }

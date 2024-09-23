@@ -2,11 +2,11 @@ package com.bang_ggood.article.service;
 
 import com.bang_ggood.article.domain.Article;
 import com.bang_ggood.article.dto.request.ArticleCreateRequest;
-import com.bang_ggood.article.dto.response.ArticleDetailPreviewResponse;
-import com.bang_ggood.article.dto.response.ArticlePreviewResponse;
+import com.bang_ggood.article.dto.response.ArticleListViewResponse;
+import com.bang_ggood.article.dto.response.ArticleCardViewResponse;
 import com.bang_ggood.article.dto.response.ArticleResponse;
-import com.bang_ggood.article.dto.response.ArticlesDetailPreviewResponse;
-import com.bang_ggood.article.dto.response.ArticlesPreviewResponse;
+import com.bang_ggood.article.dto.response.ArticlesListViewResponse;
+import com.bang_ggood.article.dto.response.ArticlesCardViewResponse;
 import com.bang_ggood.article.repository.ArticleRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,19 +36,19 @@ public class ArticleService {
     }
 
     @Transactional(readOnly = true)
-    public ArticlesDetailPreviewResponse readArticleDetailPreviews() {
-        List<ArticleDetailPreviewResponse> articles = articleRepository.findLatest().stream()
-                .map(ArticleDetailPreviewResponse::from)
+    public ArticlesListViewResponse readArticlesListView() {
+        List<ArticleListViewResponse> articles = articleRepository.findLatestArticles().stream()
+                .map(ArticleListViewResponse::from)
                 .toList();
-        return new ArticlesDetailPreviewResponse(articles);
+        return new ArticlesListViewResponse(articles);
     }
 
     @Transactional(readOnly = true)
-    public ArticlesPreviewResponse readArticlePreviews() {
-        List<ArticlePreviewResponse> articles = articleRepository.findLatest(MAX_ARTICLE_CARDS).stream()
-                .map(ArticlePreviewResponse::from)
+    public ArticlesCardViewResponse readArticlesCardView() {
+        List<ArticleCardViewResponse> articles = articleRepository.findLatestArticles(MAX_ARTICLE_CARDS).stream()
+                .map(ArticleCardViewResponse::from)
                 .toList();
-        return new ArticlesPreviewResponse(articles);
+        return new ArticlesCardViewResponse(articles);
     }
 
     @Transactional

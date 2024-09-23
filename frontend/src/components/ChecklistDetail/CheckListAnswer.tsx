@@ -2,10 +2,10 @@ import styled from '@emotion/styled';
 
 import AnswerIcon from '@/components/Answer/AnswerIcon';
 import { flexColumn, flexSpaceBetween } from '@/styles/common';
-import { OneQuestionWithAnswer } from '@/types/checklist';
+import { ChecklistQuestionWithAnswer } from '@/types/checklist';
 
 interface Props {
-  QuestionAndAnswer: OneQuestionWithAnswer;
+  QuestionAndAnswer: ChecklistQuestionWithAnswer;
 }
 
 const ChecklistAnswer = ({ QuestionAndAnswer }: Props) => {

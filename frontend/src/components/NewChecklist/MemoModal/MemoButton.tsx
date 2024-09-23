@@ -25,17 +25,14 @@ const S = {
     display: flex;
     position: fixed;
     bottom: 0;
+    left: 50%;
     z-index: ${({ theme }) => theme.zIndex.FLOATING_BUTTON};
 
-    justify-content: center;
-
-    @media (width >= 60rem) {
-      left: 50%;
-      max-width: 60rem;
-      transform: translateX(-50%);
-    }
-
     width: 100%;
+
+    justify-content: center;
+    max-width: 60rem;
+    transform: translateX(-50%);
   `,
   Button: styled.button`
     display: flex;

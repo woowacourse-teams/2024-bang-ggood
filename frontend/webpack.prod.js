@@ -3,6 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const { sentryWebpackPlugin } = require('@sentry/webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const CopyPlugin = require('copy-webpack-plugin');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
@@ -18,6 +19,11 @@ module.exports = merge(common, {
         project: process.env.SENTRY_PROJECT,
       }),
     process.env.BUNDLE_ANALYZE && new BundleAnalyzerPlugin(),
+    new CopyPlugin({
+      patterns: [
+        { from: 'public/mockServiceWorker.js', to: '' }, // 개발 환경에서만 복사
+      ],
+    }),
   ].filter(Boolean),
   module: {
     rules: [

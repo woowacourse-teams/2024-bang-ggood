@@ -1,12 +1,11 @@
 import { useRef } from 'react';
 
+import { customPageScreen } from '@/assets/assets';
 import ArticleCard from '@/components/ArticleList/ArticleCard';
 import S from '@/components/Landing/style';
 import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';
 import { articleList } from '@/mocks/fixtures/articleList';
-
-import customScreenShot from '../../../public/image/customScreenShot.png';
 
 const FourthSection = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -30,7 +29,7 @@ const FourthSection = () => {
         <S.EmptyBox height={10} />
         <S.Observer ref={ref} />
         <S.AnimationBox isIntersecting={isIntersecting}>
-          <img src={customScreenShot} width="200px" />
+          <img src={customPageScreen} width="200px" />
         </S.AnimationBox>
         <S.Text margin={30}>
           방 구하기 초보라 아무것도 모르겠다면,

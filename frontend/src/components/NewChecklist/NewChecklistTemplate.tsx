@@ -9,9 +9,9 @@ import theme from '@/styles/theme';
 
 const NewChecklistTemplate = () => {
   const { currentTabId } = useTabContext();
-  const { getCategoryQnA } = useChecklistStore();
+  const checklistActions = useChecklistStore(store => store.actions);
 
-  const questions = getCategoryQnA(currentTabId);
+  const questions = checklistActions.getCategory(currentTabId);
 
   return (
     <Layout bgColor={theme.palette.background} withHeader withTab>

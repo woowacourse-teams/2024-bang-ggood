@@ -23,7 +23,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: { option: OPTIONS[0] },
+  args: { option: OPTIONS[0], isSelected: true },
   decorators: [
     Story => (
       <S.Wrapper>

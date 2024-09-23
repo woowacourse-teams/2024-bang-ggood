@@ -17,7 +17,7 @@ import useModal from '@/hooks/useModal';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
-import useSelectedOptionStore from '@/store/useOptionStore';
+import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 
 type RouteParams = {
   checklistId: string;
@@ -26,9 +26,10 @@ type RouteParams = {
 const EditChecklistPage = () => {
   const navigate = useNavigate();
   const { checklistId } = useParams() as RouteParams;
-  const { tabs } = useNewChecklistTabs();
-
   const { data: checklist, isSuccess } = useGetChecklistDetailQuery(checklistId);
+  const { tabs } = useNewChecklistTabs();
+  const checklistActions = useChecklistStore(state => state.actions);
+
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
 
   // 한줄평 모달
@@ -38,12 +39,11 @@ const EditChecklistPage = () => {
   const { isModalOpen: isMemoModalOpen, openModal: memoModalOpen, closeModal: memoModalClose } = useModal();
 
   // TODO: action 분리 필요
-  const resetChecklist = useChecklistStore(state => state.reset);
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);
 
   const resetAndGoDetailPage = () => {
     roomInfoActions.resetAll();
-    resetChecklist();
+    checklistActions.reset();
     selectedOptionActions.reset();
     navigate(ROUTE_PATH.checklistOne(Number(checklistId)));
   };
@@ -56,14 +56,17 @@ const EditChecklistPage = () => {
         rawValue: checklist.room,
         value: checklist.room,
       });
+      selectedOptionActions.set(checklist.options.map(option => option.optionId));
+      checklistActions.set(checklist.categories);
     };
+
     setChecklistDataToStore();
   }, [checklistId]);
 
   return (
     <>
       <Header
-        left={<Header.Backward />}
+        left={<Header.Backward onClick={resetAndGoDetailPage} />}
         center={<Header.Text>체크리스트 편집</Header.Text>}
         right={<Button label="저장" size="small" color="dark" onClick={summaryModalOpen} />}
       />

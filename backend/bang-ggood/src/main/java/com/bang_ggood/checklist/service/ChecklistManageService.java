@@ -2,9 +2,9 @@ package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
-import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
+import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.domain.MaintenanceItem;
 import com.bang_ggood.maintenance.service.ChecklistMaintenanceService;
@@ -119,11 +119,12 @@ public class ChecklistManageService {
                 .toList();
     }
 
-    private SelectedCategoryQuestionsResponse categorizeChecklistQuestions(Category category, List<ChecklistQuestion> checklistQuestions) {
+    private SelectedCategoryQuestionsResponse categorizeChecklistQuestions(Category category,
+                                                                           List<ChecklistQuestion> checklistQuestions) {
         List<SelectedQuestionResponse> selectedQuestionResponse = Question.filter(category, checklistQuestions)
-                        .stream()
-                        .map(SelectedQuestionResponse::new)
-                        .toList();
+                .stream()
+                .map(SelectedQuestionResponse::new)
+                .toList();
 
         return SelectedCategoryQuestionsResponse.of(category, selectedQuestionResponse);
     }

@@ -21,7 +21,8 @@ public class ChecklistQuestionService {
     private final ChecklistQuestionRepository checklistQuestionRepository;
     private final CustomChecklistQuestionRepository customChecklistQuestionRepository;
 
-    public ChecklistQuestionService(ChecklistQuestionRepository checklistQuestionRepository, CustomChecklistQuestionRepository customChecklistQuestionRepository) {
+    public ChecklistQuestionService(ChecklistQuestionRepository checklistQuestionRepository,
+                                    CustomChecklistQuestionRepository customChecklistQuestionRepository) {
         this.checklistQuestionRepository = checklistQuestionRepository;
         this.customChecklistQuestionRepository = customChecklistQuestionRepository;
     }

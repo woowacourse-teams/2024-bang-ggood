@@ -224,7 +224,6 @@ public class ChecklistService {
     }
 
 
-
     @Transactional
     public void deleteChecklistLikeByChecklistId(User user, long checklistId) {
         Checklist checklist = checklistRepository.getById(checklistId);

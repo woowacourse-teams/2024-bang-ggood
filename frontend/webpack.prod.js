@@ -7,7 +7,7 @@ const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
   mode: 'production',
-  devtool: 'hide-source-map',
+  devtool: 'hidden-source-map',
   plugins: [
     new MiniCssExtractPlugin(),
     new WorkboxWebpackPlugin.GenerateSW(),
@@ -21,6 +21,16 @@ module.exports = merge(common, {
   ].filter(Boolean),
   module: {
     rules: [
+      {
+        test: /\.(js|jsx|ts|tsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', ['@babel/preset-react', { runtime: 'automatic' }]],
+          },
+        },
+      },
       {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],

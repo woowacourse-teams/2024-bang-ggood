@@ -31,6 +31,7 @@
     "@sentry/react": "^8.22.0",
     "@tanstack/react-query": "^5.51.15",
     "@uiw/react-markdown-preview": "^5.1.2",
+    "babel-loader": "^9.2.1",
     "init": "^0.1.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

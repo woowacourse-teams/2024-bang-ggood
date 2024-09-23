@@ -7,10 +7,10 @@ import { ANSWER_OPTIONS } from '@/constants/answer';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';
 import { flexCenter, flexRow, flexSpaceBetween } from '@/styles/common';
 import { Answer, AnswerType } from '@/types/answer';
-import { ChecklistQuestion } from '@/types/checklist';
+import { ChecklistQuestion as ChecklistQuestionType } from '@/types/checklist';
 
 interface Props {
-  question: ChecklistQuestion;
+  question: ChecklistQuestionType;
 }
 
 const ChecklistQuestion = ({ question }: Props) => {

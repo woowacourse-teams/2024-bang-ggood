@@ -36,11 +36,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/i,
-        loader: 'ts-loader',
-        exclude: ['/node_modules/'],
-      },
-      {
         test: /\.html$/i,
         use: [
           {
@@ -81,5 +76,12 @@ module.exports = {
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
+  },
+  devServer: {
+    open: true,
+    host: 'localhost',
+    port: 3000,
+    allowedHosts: 'all',
+    historyApiFallback: true,
   },
 };

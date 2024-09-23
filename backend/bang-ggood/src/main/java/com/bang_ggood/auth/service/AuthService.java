@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -53,7 +54,15 @@ public class AuthService {
 
     @Transactional(readOnly = true)
     public User assignGuestUser() {
-        return userRepository.getUserByType(UserType.GUEST);
+        List<User> users = userRepository.findUserByType(UserType.GUEST);
+
+        if (users.size() >= 2) {
+            throw new BangggoodException(ExceptionCode.GUEST_USER_UNEXPECTED_EXIST);
+        }
+
+        return users.stream()
+                .findFirst()
+                .orElseThrow(() -> new BangggoodException(ExceptionCode.GUEST_USER_NOT_FOUND));
     }
 
     public void logout(String accessToken, User user) {

@@ -34,14 +34,15 @@ class UserServiceTest extends IntegrationTestSupport {
     @Test
     void getOrCreateGuestUser_createNewGuestUser() {
         // given
-        boolean isUserExistBeforeMethodExecute = userRepository.findUserByType(UserType.GUEST).isPresent();
+        int expectedGuestUserSize = 1;
+        int userSizeBeforeMethodExecute = userRepository.findUserByType(UserType.GUEST).size();
 
         // when
         userService.getOrCreateGuestUser();
-        boolean isUserExistAfterMethodExecute = userRepository.findUserByType(UserType.GUEST).isPresent();
+        int userSizeAfterMethodExecute = userRepository.findUserByType(UserType.GUEST).size();
 
         // then
-        Assertions.assertThat(isUserExistBeforeMethodExecute).isFalse();
-        Assertions.assertThat(isUserExistAfterMethodExecute).isTrue();
+        Assertions.assertThat(userSizeBeforeMethodExecute).isZero();
+        Assertions.assertThat(userSizeAfterMethodExecute).isEqualTo(expectedGuestUserSize);
     }
 }

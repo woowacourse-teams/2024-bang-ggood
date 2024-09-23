@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -17,12 +18,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
         return findById(id).orElseThrow(() -> new BangggoodException(ExceptionCode.USER_NOT_FOUND));
     }
 
-    default User getUserByType(UserType type) {
-        return findUserByType(type).orElseThrow(() -> new BangggoodException(ExceptionCode.USER_NOT_FOUND));
-    }
-
     @Query("SELECT u FROM User u WHERE u.type = :type and u.deleted = false ")
-    Optional<User> findUserByType(@Param("type") UserType type);
+    List<User> findUserByType(@Param("type") UserType type);
 
     @Query("SELECT u FROM User u WHERE u.email = :email and u.deleted = false ")
     Optional<User> findByEmail(@Param("email") String email);

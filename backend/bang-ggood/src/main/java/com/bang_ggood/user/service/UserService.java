@@ -17,8 +17,14 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public User getOrCreateGuestUser() {
-        User newGustUser = new User("방끗", "bang-ggood@gmail.com", UserType.GUEST);
         return userRepository.findUserByType(UserType.GUEST)
-                .orElseGet(() -> userRepository.save(newGustUser));
+                .stream()
+                .findFirst()
+                .orElseGet(this::createGuestUser);
+    }
+
+    private User createGuestUser() {
+        User guestUser = new User("방끗", "bang-ggood@gmail.com", UserType.GUEST);
+        return userRepository.save(guestUser);
     }
 }

@@ -7,13 +7,13 @@ import { ANSWER_OPTIONS } from '@/constants/answer';
 import useChecklistAnswer from '@/hooks/useChecklistAnswer';
 import { flexCenter, flexRow, flexSpaceBetween } from '@/styles/common';
 import { Answer, AnswerType } from '@/types/answer';
-import { ChecklistQuestion as ChecklistQuestionType } from '@/types/checklist';
+import { ChecklistQuestion } from '@/types/checklist';
 
 interface Props {
-  question: ChecklistQuestionType;
+  question: ChecklistQuestion;
 }
 
-const ChecklistQuestion = ({ question }: Props) => {
+const ChecklistQuestionItem = ({ question }: Props) => {
   const { questionId, title, highlights } = question;
 
   const { updateAndToggleAnswer: updateAnswer, findCategoryQuestion } = useChecklistAnswer();
@@ -41,7 +41,7 @@ const ChecklistQuestion = ({ question }: Props) => {
   );
 };
 
-export default ChecklistQuestion;
+export default ChecklistQuestionItem;
 
 const S = {
   Container: styled.div`

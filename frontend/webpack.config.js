@@ -43,10 +43,10 @@ const config = {
     historyApiFallback: true,
   },
   plugins: [
+    new webpack.DefinePlugin(envKeys),
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
-    new webpack.DefinePlugin(envKeys),
   ],
   performance: {
     hints: false,
@@ -147,6 +147,7 @@ module.exports = () => {
     config.devtool = 'source-map';
 
     config.optimization = {
+      sideEffects: false,
       runtimeChunk: true,
       splitChunks: {
         chunks: 'all',

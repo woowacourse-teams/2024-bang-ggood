@@ -28,6 +28,7 @@ const useSelectedOptionStore = create<OptionState & { actions: OptionAction }>()
         reset: () => {
           set({ selectedOptions: DEFAULT_OPTIONS });
         },
+
         add: option =>
           set(state => ({
             selectedOptions: [...state.selectedOptions, option],
@@ -57,6 +58,7 @@ const useSelectedOptionStore = create<OptionState & { actions: OptionAction }>()
           const state = get();
           return state.selectedOptions.length === OPTION_COUNT;
         },
+
         addAllOptions: () => {
           set(() => ({
             selectedOptions: Array.from({ length: OPTION_COUNT }, (_, i) => i + 1),

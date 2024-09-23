@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 import { flexCenter, flexColumn } from '@/styles/common';
@@ -11,7 +11,9 @@ const OptionButton = ({ option, isSelected }: { option: OptionWithIcon; isSelect
 
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);
 
-  const handleClick = isSelected ? () => selectedOptionActions.remove(id) : () => selectedOptionActions.add(id);
+  const handleClick = useMemo(() => {
+    return isSelected ? () => selectedOptionActions.remove(id) : () => selectedOptionActions.add(id);
+  }, [isSelected, selectedOptionActions, id]);
 
   if (!option) {
     return null;
@@ -40,14 +42,8 @@ const OptionButton = ({ option, isSelected }: { option: OptionWithIcon; isSelect
   );
 };
 
-/*사용자가 누른 옵션 버튼만 리렌더링*/
-const MemoizedOptionButton = React.memo((props: { option: OptionWithIcon; isSelected: boolean }) => {
-  const isSelected = useSelectedOptionStore(state => state.actions.isSelectedOption(props.option.id));
-  return <OptionButton option={props.option} isSelected={isSelected} />;
-});
-
-export default MemoizedOptionButton;
-
+export default React.memo(OptionButton);
+// export default OptionButton;
 const S = {
   Box: styled.div<{ color: string; borderColor: string }>`
     position: relative;

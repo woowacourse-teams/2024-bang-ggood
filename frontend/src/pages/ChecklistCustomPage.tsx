@@ -9,6 +9,7 @@ import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import TipBox from '@/components/_common/TipBox/TipBox';
 import { ChecklistCustomTabs } from '@/components/ChecklistCustom/CustomTabs';
 import QuestionListTemplate from '@/components/ChecklistCustom/QuestionListTemplate/QuestionListTemplate';
+import { TOAST_MESSAGE } from '@/constants/message';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useHandleTipBox from '@/hooks/useHandleTipBox';
 import useToast from '@/hooks/useToast';
@@ -30,7 +31,7 @@ const ChecklistCustomPage = () => {
 
     try {
       fetchNewChecklist().then(() => {
-        showToast('체크리스트가 수정되었습니다.');
+        showToast(TOAST_MESSAGE.ADD);
         navigate(ROUTE_PATH.checklistList);
       });
     } catch (error) {

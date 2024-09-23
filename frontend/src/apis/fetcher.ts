@@ -26,8 +26,6 @@ const request = async ({ url, method, body, headers = {} }: RequestProps) => {
     }
     return response;
   } catch (error) {
-    // TODO: 나중에 배포시 삭제
-    console.error(error);
     if (error instanceof HTTPError) {
       throw error;
     } else {

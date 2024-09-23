@@ -11,10 +11,10 @@ export const HTTP_STATUS_CODE = {
 export type HttpErrorName = Exclude<keyof typeof HTTP_STATUS_CODE, 'OK'>;
 
 export const HTTP_ERROR_MESSAGE: Record<HttpErrorName, string> = {
-  NETWORK_ERROR: '네트워크 연결이 끊어졌습니다',
-  FETCH_FAILED: '데이터를 불러오는데 실패했습니다',
-  UNAUTHORIZED: '로그인 후 사용하실 수 있습니다',
-  BAD_REQUEST: '잘못된 요청입니다',
-  CONFLICT: '잘못된 요청입니다',
-  SERVER_ERROR: '서버에 에러가 생겼습니다',
+  NETWORK_ERROR: '인터넷 연결을 확인해 주세요.',
+  FETCH_FAILED: '데이터를 불러오지 못했어요. 다시 시도해 주세요.',
+  UNAUTHORIZED: '로그인 후 이용해 주세요.',
+  BAD_REQUEST: '요청을 다시 확인해 주세요.',
+  CONFLICT: '요청에 문제가 있어요. 잠시 후 다시 시도해 주세요.',
+  SERVER_ERROR: '서버에 문제가 생겼어요. 잠시 후 다시 시도해 주세요.',
 };

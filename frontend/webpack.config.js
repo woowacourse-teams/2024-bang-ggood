@@ -32,7 +32,7 @@ const config = {
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js',
+    filename: '[name].[chunkhash].js',
     clean: true,
   },
   devServer: {
@@ -50,8 +50,8 @@ const config = {
   ],
   performance: {
     hints: false,
-    maxEntrypointSize: 512000,
-    maxAssetSize: 512000,
+    // maxEntrypointSize: 512000,
+    // maxAssetSize: 512000,
   },
   module: {
     rules: [
@@ -147,27 +147,21 @@ module.exports = () => {
     config.devtool = 'source-map';
 
     config.optimization = {
+      runtimeChunk: true,
       splitChunks: {
         chunks: 'all',
-        minSize: 20000,
-        maxSize: 250000,
         cacheGroups: {
-          defaultVendors: {
+          vendor: {
             test: /[\\/]node_modules[\\/]/,
-            priority: -10,
-            reuseExistingChunk: true,
-            filename: '[name].js',
-          },
-          default: {
-            minChunks: 2,
-            priority: -20,
-            reuseExistingChunk: true,
+            // reuseExistingChunk: true,
+            filename: '[name].[chunkhash].js',
           },
         },
       },
     };
-    console.log(typeof process.env.BUNDLE_ANALYZE, process.env.BUNDLE_ANALYZE);
+
     if (process.env.BUNDLE_ANALYZE) {
+      console.log('BundleAnalyzer Plugin : ON');
       config.plugins.push(new BundleAnalyzerPlugin());
     }
   } else {

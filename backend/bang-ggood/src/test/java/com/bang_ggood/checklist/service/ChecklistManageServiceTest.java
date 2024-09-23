@@ -12,6 +12,7 @@ import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
+import com.bang_ggood.room.domain.Structure;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
@@ -110,6 +111,25 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
                 () -> assertThat(response.checklists()).hasSize(EXPECTED_LIKE_COUNT),
                 () -> assertThat(response.checklists().get(0).checklistId()).isEqualTo(checklist1.getId()),
                 () -> assertThat(response.checklists().get(1).checklistId()).isEqualTo(checklist2.getId())
+        );
+    }
+
+    @DisplayName("체크리스트 수정 성공")
+    @Test
+    void updateChecklistById() {
+        //given
+        long checklistId = checklistManageService.createChecklist(UserFixture.USER1(),
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+        ChecklistRequest updateChecklistRequest = ChecklistFixture.CHECKLIST_UPDATE_REQUEST();
+
+        //when
+        checklistManageService.updateChecklistById(UserFixture.USER1(), checklistId, updateChecklistRequest);
+
+        //then
+        Checklist checklist = checklistRepository.getById(checklistId);
+        assertAll(
+                () -> assertThat(checklist.getRoom().getStructure()).isEqualTo(Structure.OPEN_ONE_ROOM),
+                () -> assertThat(checklist.getMemo()).isEqualTo(updateChecklistRequest.room().memo())
         );
     }
 }

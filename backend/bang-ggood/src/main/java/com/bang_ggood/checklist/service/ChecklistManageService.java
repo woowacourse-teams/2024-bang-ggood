@@ -5,6 +5,8 @@ import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
+import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.domain.MaintenanceItem;
 import com.bang_ggood.maintenance.service.ChecklistMaintenanceService;
@@ -25,7 +27,9 @@ import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -141,5 +145,45 @@ public class ChecklistManageService {
         return likedChecklists.stream()
                 .map(checklist -> ChecklistPreviewResponse.of(checklist, true))
                 .toList();
+    }
+
+    @Transactional
+    public void updateChecklistById(User user, Long checklistId, ChecklistRequest checklistRequest) {
+        Checklist checklist = checklistService.readChecklist(user, checklistId);
+
+        roomService.updateRoom(checklist.getRoom(), checklistRequest.toRoomEntity());
+        checklistService.updateChecklist(checklist, checklistRequest.toChecklistEntity(checklist.getRoom(), user));
+
+        updateChecklistOptions(checklistRequest, checklist);
+        updateChecklistQuestions(checklistRequest, checklist);
+        updateChecklistMaintenances(checklistRequest, checklist);
+    }
+
+    private void updateChecklistOptions(ChecklistRequest checklistRequest, Checklist checklist) {
+        List<ChecklistOption> checklistOptions = checklistRequest.options().stream()
+                .map(option -> new ChecklistOption(checklist, option))
+                .toList();
+        checklistOptionService.updateOptions(checklist.getId(), checklistOptions);
+    }
+
+    private void updateChecklistQuestions(ChecklistRequest checklistRequest, Checklist checklist) {
+        List<ChecklistQuestion> questions = checklist.getQuestions();
+        List<ChecklistQuestion> updateQuestions = checklistRequest.questions().stream()
+                .map(question -> new ChecklistQuestion(
+                        checklist,
+                        Question.fromId(question.questionId()),
+                        Answer.from(question.answer())))
+                .toList();
+        checklistQuestionService.updateQuestions(questions, updateQuestions);
+    }
+
+    private void updateChecklistMaintenances(ChecklistRequest checklistRequest, Checklist checklist) {
+
+        List<ChecklistMaintenance> checklistMaintenances =
+                checklistRequest.room().includedMaintenances().stream()
+                        .map(maintenanceId -> new ChecklistMaintenance(checklist,
+                                MaintenanceItem.fromId(maintenanceId)))
+                        .collect(Collectors.toList());
+        checklistMaintenanceService.updateMaintenances(checklist.getId(), checklistMaintenances);
     }
 }

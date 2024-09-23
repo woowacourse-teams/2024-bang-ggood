@@ -10,6 +10,7 @@ import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.option.repository.ChecklistOptionRepository;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
+import com.bang_ggood.room.domain.Structure;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
@@ -97,24 +98,6 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 //                        Badge.CLEAN.getLongNameWithEmoji()));
 //    }
 //
-//    @DisplayName("체크리스트 수정 성공")
-//    @Test
-//    void updateChecklistById() {
-//        //given
-//        long checklistId = checklistManageService.createChecklist(UserFixture.USER1(),
-//                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
-//
-//        //when
-//        checklistService.updateChecklistById(UserFixture.USER1(), checklistId, ChecklistFixture.CHECKLIST_UPDATE_REQUEST);
-//
-//        //then
-//        Checklist checklist = checklistRepository.getById(checklistId);
-//        assertAll(
-//                () -> assertThat(checklist.getRoom().getStructure()).isEqualTo(Structure.OPEN_ONE_ROOM),
-//                () -> assertThat(
-//                        checklistOptionRepository.findAllByChecklistId(checklistId).get(3).getOptionId()).isEqualTo(4)
-//        );
-//    }
 
     @DisplayName("체크리스트 수정 실패 : 질문 id가 유효하지 않을 경우")
     @Test

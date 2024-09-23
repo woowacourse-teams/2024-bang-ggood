@@ -10,7 +10,6 @@ import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.option.repository.ChecklistOptionRepository;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
-import com.bang_ggood.room.domain.Structure;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;

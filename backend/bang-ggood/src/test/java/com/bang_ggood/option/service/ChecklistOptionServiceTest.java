@@ -89,7 +89,8 @@ class ChecklistOptionServiceTest extends IntegrationTestSupport {
 
         //then
         assertAll(
-                () -> assertThat(checklistOptionRepository.findAllByChecklistId(checklist.getId())).hasSize(updateOptions.size())
+                () -> assertThat(checklistOptionRepository.findAllByChecklistId(checklist.getId())).hasSize(
+                        updateOptions.size())
         );
     }
 

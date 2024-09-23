@@ -2,8 +2,8 @@ package com.bang_ggood.checklist.controller;
 
 import com.bang_ggood.auth.config.AuthPrincipal;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
-import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
+import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.checklist.service.ChecklistService;
 import com.bang_ggood.user.domain.User;

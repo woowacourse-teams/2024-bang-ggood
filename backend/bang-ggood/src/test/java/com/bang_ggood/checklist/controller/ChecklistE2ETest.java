@@ -12,7 +12,6 @@ import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
-import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -22,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 
-import static com.bang_ggood.user.UserFixture.USER1;
 import static org.hamcrest.Matchers.containsString;
 
 class ChecklistE2ETest extends AcceptanceTest {

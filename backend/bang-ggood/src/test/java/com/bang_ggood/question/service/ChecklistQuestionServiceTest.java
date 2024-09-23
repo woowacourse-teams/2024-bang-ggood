@@ -28,7 +28,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ChecklistQuestionServiceTest extends IntegrationTestSupport {
 
@@ -130,7 +129,8 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
         checklistQuestionService.createQuestions(checklistQuestions);
 
         //when & then
-        List<ChecklistQuestion> updateQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS_DIFFERENT_LENGTH(checklist);
+        List<ChecklistQuestion> updateQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS_DIFFERENT_LENGTH(
+                checklist);
         assertThatThrownBy(
                 () -> checklistQuestionService.updateQuestions(checklistQuestions, updateQuestions))
                 .isInstanceOf(BangggoodException.class)
@@ -148,7 +148,8 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
         checklistQuestionService.createQuestions(checklistQuestions);
 
         //when & then
-        List<ChecklistQuestion> updateQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS_DIFFERENT_QUESTION(checklist);
+        List<ChecklistQuestion> updateQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS_DIFFERENT_QUESTION(
+                checklist);
         assertThatThrownBy(
                 () -> checklistQuestionService.updateQuestions(checklistQuestions, updateQuestions))
                 .isInstanceOf(BangggoodException.class)

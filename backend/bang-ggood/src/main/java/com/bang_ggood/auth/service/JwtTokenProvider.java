@@ -18,28 +18,40 @@ import java.util.Date;
 public class JwtTokenProvider {
 
     private static final Logger log = LoggerFactory.getLogger(JwtTokenProvider.class);
+    private JwtTokenProperties jwtTokenProperties;
+
     private final String secretKey;
-    private final long tokenExpirationMills;
 
     public JwtTokenProvider(
             @Value("${jwt.secret-key}") String secretKey,
-            @Value("${jwt.expiration-millis}") long tokenExpirationMills) {
+            JwtTokenProperties jwtTokenProperties) {
         this.secretKey = secretKey;
-        this.tokenExpirationMills = tokenExpirationMills;
+        this.jwtTokenProperties = jwtTokenProperties;
     }
 
-    public String createToken(User user) {
+    public String createAccessToken(User user) {
         Date now = new Date();
-        Date expiredDate = new Date(now.getTime() + tokenExpirationMills);
-        log.info("userId {} ", user.getId());
-        String token = Jwts.builder()
+        long expiredMillis = now.getTime() + jwtTokenProperties.getAccessTokenExpirationMillis();
+        Date expiredDate = new Date(expiredMillis);
+
+        return createToken(user, now, expiredDate);
+    }
+
+    public String createRefreshToken(User user) {
+        Date now = new Date();
+        long expiredMillis = now.getTime() + jwtTokenProperties.getRefreshTokenExpirationMillis();
+        Date expiredDate = new Date(expiredMillis);
+
+        return createToken(user, now, expiredDate);
+    }
+
+    private String createToken(User user, Date now, Date expiredDate) {
+        return Jwts.builder()
                 .setSubject(user.getId().toString())
                 .setIssuedAt(now)
                 .setExpiration(expiredDate)
                 .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
                 .compact();
-        log.info("createToken token {}", token);
-        return token;
     }
 
     public AuthUser resolveToken(String token) {

@@ -1,6 +1,7 @@
 package com.bang_ggood.auth.service;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.auth.JwtTokenPropertiesFixture;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.user.UserFixture;
@@ -10,7 +11,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 
 class JwtTokenProviderTest extends IntegrationTestSupport {
 
@@ -24,7 +24,7 @@ class JwtTokenProviderTest extends IntegrationTestSupport {
     void createToken() {
         // given
         User user = userRepository.getUserById(1L);
-        String token = jwtTokenProvider.createToken(user);
+        String token = jwtTokenProvider.createAccessToken(user);
 
         // when
         AuthUser authUser = jwtTokenProvider.resolveToken(token);
@@ -38,11 +38,10 @@ class JwtTokenProviderTest extends IntegrationTestSupport {
     void resolveToken_expiredTime_exception() {
         // given
         String JWT_SECRET_KEY = "A".repeat(32);
-        int JWT_ACCESS_TOKEN_EXPIRE_LENGTH = 1;
-        JwtTokenProvider expiredJwtTokenProvider = new JwtTokenProvider(JWT_SECRET_KEY, JWT_ACCESS_TOKEN_EXPIRE_LENGTH);
+        JwtTokenProvider expiredJwtTokenProvider = new JwtTokenProvider(JWT_SECRET_KEY, JwtTokenPropertiesFixture.PROPERTIES_WITH_SHORT_EXPIRED_MILLIS());
 
         User user = userRepository.save(UserFixture.USER1());
-        String token = expiredJwtTokenProvider.createToken(user);
+        String token = expiredJwtTokenProvider.createAccessToken(user);
 
         // when & then
         Assertions.assertThatCode(() -> expiredJwtTokenProvider.resolveToken(token))
@@ -55,11 +54,10 @@ class JwtTokenProviderTest extends IntegrationTestSupport {
     void resolveToken_invalidSignature_exception() {
         // given
         String JWT_SECRET_KEY = "A".repeat(32);
-        int JWT_ACCESS_TOKEN_EXPIRE_LENGTH = 1800000;
-        JwtTokenProvider invalidJwtTokenProvider = new JwtTokenProvider(JWT_SECRET_KEY, JWT_ACCESS_TOKEN_EXPIRE_LENGTH);
+        JwtTokenProvider invalidJwtTokenProvider = new JwtTokenProvider(JWT_SECRET_KEY, JwtTokenPropertiesFixture.PROPERTIES());
 
         User user = userRepository.save(UserFixture.USER1());
-        String token = jwtTokenProvider.createToken(user);
+        String token = jwtTokenProvider.createAccessToken(user);
 
         // when & then
         Assertions.assertThatCode(() -> invalidJwtTokenProvider.resolveToken(token))

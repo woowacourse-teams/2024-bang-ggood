@@ -16,7 +16,7 @@ public class CookieResolver {
         }
 
         return Arrays.stream(cookies)
-                .filter(cookie -> cookie.getName().equals(CookieProvider.TOKEN_COOKIE_NAME))
+                .filter(cookie -> cookie.getName().equals(CookieProvider.ACCESS_TOKEN_COOKIE_NAME))
                 .findAny()
                 .map(Cookie::getValue)
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.AUTHENTICATION_COOKIE_TOKEN_EMPTY));

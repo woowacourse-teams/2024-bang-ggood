@@ -3,7 +3,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const { sentryWebpackPlugin } = require('@sentry/webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const CopyPlugin = require('copy-webpack-plugin');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
@@ -17,14 +16,13 @@ module.exports = merge(common, {
         authToken: process.env.SENTRY_AUTH_TOKEN,
         org: process.env.SENTRY_ORG,
         project: process.env.SENTRY_PROJECT,
+        sourcemaps: {
+          filesToDeleteAfterUpload: '**/*.js.map',
+        },
       }),
+
     process.env.BUNDLE_ANALYZE && new BundleAnalyzerPlugin(),
-    new CopyPlugin({
-      patterns: [
-        { from: 'public/mockServiceWorker.js', to: '' }, // 개발 환경에서만 복사
-      ],
-    }),
-  ].filter(Boolean),
+  ],
   module: {
     rules: [
       {
@@ -33,7 +31,15 @@ module.exports = merge(common, {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', ['@babel/preset-react', { runtime: 'automatic' }]],
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  modules: false,
+                },
+              ],
+              ['@babel/preset-react', { runtime: 'automatic' }],
+            ],
           },
         },
       },
@@ -44,21 +50,13 @@ module.exports = merge(common, {
     ],
   },
   optimization: {
+    runtimeChunk: true,
     splitChunks: {
       chunks: 'all',
-      minSize: 20000,
-      maxSize: 250000,
       cacheGroups: {
-        defaultVendors: {
+        vendor: {
           test: /[\\/]node_modules[\\/]/,
-          priority: -10,
-          reuseExistingChunk: true,
-          filename: '[name].js',
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true,
+          filename: '[name].[chunkhash].js',
         },
       },
     },

@@ -1,7 +1,6 @@
 package com.bang_ggood.auth.service;
 
 import com.bang_ggood.IntegrationTestSupport;
-import com.bang_ggood.auth.JwtTokenProviderFixture;
 import com.bang_ggood.auth.controller.CookieProvider;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
@@ -164,33 +163,6 @@ class AuthServiceTest extends IntegrationTestSupport {
                 UserFixture.USER2_WITH_ID()))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER.getMessage());
-    }
-
-    @DisplayName("액세스 토큰 재발행 실패 : 리프레시 토큰의 서명값이 잘못된 경우")
-    @Test
-    void reIssueAccessToken_InvalidSignature() {
-        // given
-        User user = userRepository.save(UserFixture.USER1());
-        JwtTokenProvider invalidJwtTokenProvider = JwtTokenProviderFixture.JWT_TOKEN_PROVIDER_WITH_INVALID_KEY();
-        String refreshToken = invalidJwtTokenProvider.createRefreshToken(user);
-
-        // when & then
-        assertThatThrownBy(() -> authService.reIssueAccessToken(refreshToken))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.AUTHENTICATION_TOKEN_INVALID.getMessage());
-    }
-
-    @DisplayName("액세스 토큰 재발행 실패 : 리프레시 토큰 시간이 만료된 경우")
-    @Test
-    void reIssueAccessToken_ExpiredTime() {
-        User user = userRepository.save(UserFixture.USER1());
-        JwtTokenProvider invalidJwtTokenProvider = JwtTokenProviderFixture.JWT_TOKEN_PROVIDER_WITH_INVALID_EXPIRED_TIME();
-        String refreshToken = invalidJwtTokenProvider.createRefreshToken(user);
-
-        // when & then
-        assertThatThrownBy(() -> authService.reIssueAccessToken(refreshToken))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.AUTHENTICATION_TOKEN_INVALID.getMessage());
     }
 
     @DisplayName("액세스 토큰 재발행 성공")

@@ -1,15 +1,14 @@
-package com.bang_ggood.user.service;
+package com.bang_ggood.user.repository;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
-import com.bang_ggood.user.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Optional;
 
-import static com.bang_ggood.user.UserFixture.USER1;
 
 class UserRepositoryTest extends IntegrationTestSupport {
 
@@ -20,7 +19,7 @@ class UserRepositoryTest extends IntegrationTestSupport {
     @Test
     void findByEmail() {
         // given
-        User user = userRepository.save(USER1);
+        User user = userRepository.save(UserFixture.USER1());
         userRepository.deleteByUser(user);
 
         // when

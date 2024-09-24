@@ -24,7 +24,7 @@ class RoomRepositoryTest extends IntegrationTestSupport {
 
     @BeforeEach
     void setUp() {
-        userRepository.save(UserFixture.USER1);
+        userRepository.save(UserFixture.USER1());
     }
 
 
@@ -32,7 +32,7 @@ class RoomRepositoryTest extends IntegrationTestSupport {
     @Test
     void deleteById() {
         //given
-        Room saved = roomRepository.save(RoomFixture.ROOM_1);
+        Room saved = roomRepository.save(RoomFixture.ROOM_1());
 
         //when
         roomRepository.deleteById(saved.getId());

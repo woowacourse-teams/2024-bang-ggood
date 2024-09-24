@@ -1,7 +1,7 @@
 package com.bang_ggood.auth.service;
 
-import com.bang_ggood.exception.BangggoodException;
-import com.bang_ggood.exception.ExceptionCode;
+import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.user.domain.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;

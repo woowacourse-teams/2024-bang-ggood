@@ -1,8 +1,8 @@
 package com.bang_ggood.article.repository;
 
 import com.bang_ggood.article.domain.Article;
-import com.bang_ggood.exception.BangggoodException;
-import com.bang_ggood.exception.ExceptionCode;
+import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,14 +22,15 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     Optional<Article> findById(@Param("id") Long id);
 
     @Query("SELECT a FROM Article a " +
-            "WHERE a.deleted = false")
-    List<Article> findAll();
+            "WHERE a.deleted = false " +
+            "ORDER BY a.createdAt DESC ")
+    List<Article> findLatestArticles();
 
     @Query("SELECT a FROM Article a " +
             "WHERE a.deleted = false " +
             "ORDER BY a.createdAt DESC " +
             "LIMIT :count")
-    List<Article> findLatest(@Param("count") int count);
+    List<Article> findLatestArticles(@Param("count") int count);
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("UPDATE Article a " +

@@ -1,8 +1,8 @@
 package com.bang_ggood.checklist.repository;
 
 import com.bang_ggood.checklist.domain.Checklist;
-import com.bang_ggood.exception.BangggoodException;
-import com.bang_ggood.exception.ExceptionCode;
+import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -19,10 +19,9 @@ public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
             + "LEFT JOIN FETCH c.questions q "
             + "WHERE c.id = :id "
             + "AND c.deleted = false")
-    Optional<Checklist> findById(@Param("id") long id);
+    Optional<Checklist> findById(@Param("id") Long id);
 
-
-    default Checklist getById(@Param("id") long id) {
+    default Checklist getById(@Param("id") Long id) {
         return findById(id).orElseThrow(() -> new BangggoodException(ExceptionCode.CHECKLIST_NOT_FOUND));
     }
 

@@ -13,7 +13,7 @@ interface Props {
   question: ChecklistQuestion;
 }
 
-const ChecklistQuestion = ({ question }: Props) => {
+const ChecklistQuestionItem = ({ question }: Props) => {
   const { questionId, title, highlights } = question;
 
   const { updateAndToggleAnswer: updateAnswer, findCategoryQuestion } = useChecklistAnswer();
@@ -41,7 +41,7 @@ const ChecklistQuestion = ({ question }: Props) => {
   );
 };
 
-export default ChecklistQuestion;
+export default ChecklistQuestionItem;
 
 const S = {
   Container: styled.div`

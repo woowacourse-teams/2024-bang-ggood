@@ -6,16 +6,14 @@ import { flexCenter } from '@/styles/common';
 import { SubwayStation } from '@/types/subway';
 
 const NearSubwayStationItem = ({ station }: { station: SubwayStation }) => {
-  const { name, line, walkingTime } = station;
+  const { stationName, stationLine, walkingTime } = station;
 
   return (
     <FlexBox.Horizontal gap={'6px'}>
       <FlexBox.Horizontal gap={'4px'}>
-        {line.map(oneLine => (
-          <SubwayLineIcon lineName={oneLine} key={oneLine} />
-        ))}
+        {stationLine?.map(oneLine => <SubwayLineIcon lineName={oneLine} key={oneLine} />)}
       </FlexBox.Horizontal>
-      <S.TextBox>{`${name}까지 도보 ${walkingTime}분`}</S.TextBox>
+      <S.TextBox>{`${stationName}까지 도보 ${walkingTime}분`}</S.TextBox>
     </FlexBox.Horizontal>
   );
 };

@@ -13,7 +13,7 @@ const NearSubwayStations = () => {
       <FormField.Label label="가까운 교통편" />
       <FlexBox.Vertical gap="1rem">
         {nearSubwayStation.length ? (
-          nearSubwayStation.map(station => <NearSubwayStationItem key={station.name} station={station} />)
+          nearSubwayStation?.map(station => <NearSubwayStationItem key={station.stationName} station={station} />)
         ) : (
           <FormField.TextBox text={'보신 방과 가까운 지하철역을 찾아드릴게요.'} />
         )}

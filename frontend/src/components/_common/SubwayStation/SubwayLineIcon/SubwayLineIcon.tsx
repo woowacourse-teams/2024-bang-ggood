@@ -23,7 +23,7 @@ const S = {
 
     width: ${({ isCircle }) => isCircle && '2rem'};
     height: 2rem;
-    padding: 0.3rem;
+    padding: ${({ isCircle }) => (isCircle ? '0.3rem' : '0.3rem 0.6rem')};
     border-radius: 2rem;
 
     background-color: ${({ color }) => (color ? color : 'black')};

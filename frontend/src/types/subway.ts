@@ -1,8 +1,8 @@
 import { SubwayLineName } from '@/styles/subway';
 
 export interface SubwayStation {
-  name: string;
-  line: SubwayLineName[];
+  stationName: string;
+  stationLine: SubwayLineName[];
   walkingTime: number;
 }
 

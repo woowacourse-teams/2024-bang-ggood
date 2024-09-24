@@ -80,27 +80,27 @@ public class ChecklistFixture {
     }
 
     public static QuestionRequest QUESTION_1_CREATE_REQUEST() {
-        return new QuestionRequest(1, "GOOD");
+        return new QuestionRequest(Question.BATHROOM_1.getId(), "GOOD");
     }
 
     public static QuestionRequest QUESTION_2_CREATE_REQUEST() {
-        return new QuestionRequest(2, "GOOD");
+        return new QuestionRequest(Question.BATHROOM_2.getId(), "GOOD");
     }
 
     public static QuestionRequest QUESTION_3_CREATE_REQUEST() {
-        return new QuestionRequest(3, "BAD");
+        return new QuestionRequest(Question.BATHROOM_3.getId(), "BAD");
     }
 
     public static QuestionRequest QUESTION_4_CREATE_REQUEST() {
-        return new QuestionRequest(4, "BAD");
+        return new QuestionRequest(Question.BATHROOM_4.getId(), "BAD");
     }
 
     public static QuestionRequest QUESTION_5_CREATE_REQUEST() {
-        return new QuestionRequest(5, "GOOD");
+        return new QuestionRequest(Question.BATHROOM_5.getId(), "GOOD");
     }
 
     public static QuestionRequest QUESTION_5_UPDATE_REQUEST() {
-        return new QuestionRequest(5, "GOOD");
+        return new QuestionRequest(Question.BATHROOM_5.getId(), "GOOD");
     }
 
     public static QuestionRequest QUESTION_CREATE_REQUEST_NO_ID() {
@@ -109,15 +109,23 @@ public class ChecklistFixture {
 
     public static ChecklistRequest CHECKLIST_CREATE_REQUEST() {
         return new ChecklistRequest(
-                RoomFixture.ROOM_CREATE_REQUEST(), List.of(1, 2, 3, 5),
+                RoomFixture.ROOM_CREATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(), Option.SHOE_RACK.getId()),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
                         QUESTION_3_CREATE_REQUEST(), QUESTION_5_CREATE_REQUEST())
         );
     }
 
+    public static ChecklistRequest CHECKLIST_CREATE_REQUEST2() {
+        return new ChecklistRequest(
+                RoomFixture.ROOM_CREATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(), Option.CLOSET.getId()),
+                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
+                        QUESTION_4_CREATE_REQUEST())
+        );
+    }
+
     public static ChecklistRequest CHECKLIST_CREATE_REQUEST_NO_ROOM_NAME() {
         return new ChecklistRequest(
-                RoomFixture.ROOM_CREATE_REQUEST_NO_ROOM_NAME(), List.of(1, 2, 3, 5),
+                RoomFixture.ROOM_CREATE_REQUEST_NO_ROOM_NAME(),List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(), Option.SHOE_RACK.getId()),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
                         QUESTION_3_CREATE_REQUEST(), QUESTION_5_CREATE_REQUEST())
         );
@@ -133,7 +141,7 @@ public class ChecklistFixture {
 
     public static ChecklistRequest CHECKLIST_UPDATE_REQUEST_NO_ROOM_NAME() {
         return new ChecklistRequest(
-                RoomFixture.ROOM_CREATE_REQUEST_NO_ROOM_NAME(), List.of(1, 2, 3, 4),
+                RoomFixture.ROOM_CREATE_REQUEST_NO_ROOM_NAME(), List.of(Option.REFRIGERATOR.getId(), Option.BED.getId(), Option.INDUCTION.getId(), Option.SHOE_RACK.getId()),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
                         QUESTION_3_CREATE_REQUEST(), QUESTION_5_UPDATE_REQUEST())
         );
@@ -141,7 +149,7 @@ public class ChecklistFixture {
 
     public static ChecklistRequest CHECKLIST_CREATE_REQUEST_NO_QUESTION_ID() {
         return new ChecklistRequest(
-                RoomFixture.ROOM_CREATE_REQUEST(), List.of(1, 2, 3, 5),
+                RoomFixture.ROOM_CREATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(), Option.SHOE_RACK.getId()),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
                         QUESTION_3_CREATE_REQUEST(), QUESTION_CREATE_REQUEST_NO_ID())
         );
@@ -149,7 +157,7 @@ public class ChecklistFixture {
 
     public static ChecklistRequest CHECKLIST_UPDATE_REQUEST_NO_QUESTION_ID() {
         return new ChecklistRequest(
-                RoomFixture.ROOM_UPDATE_REQUEST(), List.of(1, 2, 3, 4),
+                RoomFixture.ROOM_UPDATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.BED.getId(), Option.INDUCTION.getId(), Option.SHOE_RACK.getId()),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
                         QUESTION_3_CREATE_REQUEST(), QUESTION_CREATE_REQUEST_NO_ID())
         );

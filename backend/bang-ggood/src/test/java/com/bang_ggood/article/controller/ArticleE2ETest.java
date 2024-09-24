@@ -52,7 +52,7 @@ public class ArticleE2ETest extends AcceptanceTest {
     @DisplayName("아티클 생성 실패: 제목이 비어있는 경우")
     @Test
     void createArticle_titleBlank_exception() {
-        ArticleCreateRequest request = new ArticleCreateRequest("", "내용", "키워드", "요약");
+        ArticleCreateRequest request = new ArticleCreateRequest("", "내용", "키워드", "요약", "썸네일");
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
@@ -90,22 +90,22 @@ public class ArticleE2ETest extends AcceptanceTest {
         assertThat(response.message()).isEqualTo(ExceptionCode.ARTICLE_NOT_FOUND.getMessage());
     }
 
-    @DisplayName("아티클 목록 조회 성공")
+    @DisplayName("아티클 카드뷰 조회 성공")
     @Test
-    void readArticles() {
+    void readArticlesCardView() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .when().get("/articles")
+                .when().get("/articles/card")
                 .then().log().all()
                 .statusCode(200);
     }
 
-    @DisplayName("최신 아티클 조회 성공")
+    @DisplayName("아티클 리스트뷰 조회 성공")
     @Test
-    void readLatestArticles() {
+    void readArticlesListView() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .when().get("/articles/latest")
+                .when().get("/articles/list")
                 .then().log().all()
                 .statusCode(200);
     }

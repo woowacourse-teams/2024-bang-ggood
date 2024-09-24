@@ -39,6 +39,11 @@ public class ChecklistLikeService {
     }
 
     @Transactional
+    public boolean isLikedChecklist(Checklist checklist) {
+        return checklistLikeRepository.existsByChecklist(checklist);
+    }
+
+    @Transactional
     public void deleteLike(User user, Checklist checklist) {
         validateChecklistOwnership(user, checklist);
         ChecklistLike checklistLike = checklistLikeRepository.getByChecklistId(checklist.getId());

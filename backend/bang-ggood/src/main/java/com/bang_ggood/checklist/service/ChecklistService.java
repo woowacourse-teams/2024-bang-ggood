@@ -1,8 +1,6 @@
 package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.checklist.domain.Checklist;
-import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
-import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
@@ -59,19 +57,9 @@ public class ChecklistService {
         }
     }
 
-    @Transactional
-    public ChecklistsPreviewResponse readChecklistsPreview(User user) {
-        List<Checklist> checklists = checklistRepository.findAllByUserOrderByLatest(user);
-        List<ChecklistPreviewResponse> responses = checklists.stream()
-                .map(this::getChecklistPreview)
-                .toList();
-
-        return new ChecklistsPreviewResponse(responses);
-    }
-
-    private ChecklistPreviewResponse getChecklistPreview(Checklist checklist) {
-        boolean isLiked = checklistLikeRepository.existsByChecklist(checklist);
-        return ChecklistPreviewResponse.of(checklist, isLiked);
+    @Transactional(readOnly = true)
+    public List<Checklist> readAllChecklistsOrderByLatest(User user) {
+        return checklistRepository.findAllByUserOrderByLatest(user);
     }
 
     @Transactional(readOnly = true)

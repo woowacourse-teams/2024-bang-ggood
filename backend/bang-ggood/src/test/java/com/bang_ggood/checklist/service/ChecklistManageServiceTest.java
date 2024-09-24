@@ -4,6 +4,7 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
+import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
@@ -20,6 +21,7 @@ import com.bang_ggood.user.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -80,6 +82,28 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         assertThatThrownBy(() -> checklistManageService.readChecklist(user, 0L))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
+    }
+
+    @DisplayName("체크리스트 리스트 조회 성공")
+    @Test
+    void readUserChecklistsPreview() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        ChecklistRequest checklistRequest1 = ChecklistFixture.CHECKLIST_CREATE_REQUEST();
+        ChecklistRequest checklistRequest2 = ChecklistFixture.CHECKLIST_CREATE_REQUEST2();
+
+        Long checklistId1 = checklistManageService.createChecklist(user, checklistRequest1);
+        Long checklistId2 = checklistManageService.createChecklist(user, checklistRequest2);
+
+        // when
+        ChecklistsPreviewResponse response = checklistManageService.readAllChecklistsPreview(user);
+
+        // then
+        ChecklistPreviewResponse previewResponse1 = response.checklists().get(0);
+        ChecklistPreviewResponse previewResponse2 = response.checklists().get(1);
+
+        assertThat(previewResponse1.checklistId()).isEqualTo(checklistId2); // 최신순으로 조회
+        assertThat(previewResponse2.checklistId()).isEqualTo(checklistId1);
     }
 
     @DisplayName("좋아요된 체크리스트 리스트 조회 성공")

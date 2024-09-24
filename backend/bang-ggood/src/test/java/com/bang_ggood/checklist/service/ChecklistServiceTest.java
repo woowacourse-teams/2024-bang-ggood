@@ -116,6 +116,27 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 //                        Badge.CLEAN.getLongNameWithEmoji()));
 //    }
 
+    @DisplayName("체크리스트 리스트 최신순으로 조회 성공")
+    @Test
+    void readAllChecklistsOrderByLatest() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        Room room1 = roomRepository.save(RoomFixture.ROOM_1());
+        Room room2 = roomRepository.save(RoomFixture.ROOM_2());
+
+        Checklist checklist1 = ChecklistFixture.CHECKLIST1_USER1(room1, user);
+        Checklist checklist2 = ChecklistFixture.CHECKLIST3_USER2(room2, user);
+
+        checklistService.createChecklist(checklist1);
+        checklistService.createChecklist(checklist2);
+
+        // when
+        List<Checklist> checklists = checklistService.readAllChecklistsOrderByLatest(user);
+
+        // then
+        assertThat(checklists).containsExactly(checklist2, checklist1);
+    }
+
     @DisplayName("좋아요된 체크리스트 리스트 조회 성공")
     @Test
     void readLikedChecklistsPreview() {

@@ -90,8 +90,8 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         ChecklistRequest checklistRequest1 = ChecklistFixture.CHECKLIST_CREATE_REQUEST();
         ChecklistRequest checklistRequest2 = ChecklistFixture.CHECKLIST_CREATE_REQUEST2();
 
-        Long checklist1 = checklistManageService.createChecklist(user, checklistRequest1);
-        Long checklist2 = checklistManageService.createChecklist(user, checklistRequest2);
+        Long checklistId1 = checklistManageService.createChecklist(user, checklistRequest1);
+        Long checklistId2 = checklistManageService.createChecklist(user, checklistRequest2);
 
         // when
         ChecklistsPreviewResponse response = checklistManageService.readAllChecklistsPreview(user);
@@ -100,8 +100,8 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         ChecklistPreviewResponse previewResponse1 = response.checklists().get(0);
         ChecklistPreviewResponse previewResponse2 = response.checklists().get(1);
 
-        assertThat(previewResponse1.checklistId()).isEqualTo(checklist2); // 최신순으로 조회
-        assertThat(previewResponse2.checklistId()).isEqualTo(checklist1);
+        assertThat(previewResponse1.checklistId()).isEqualTo(checklistId2); // 최신순으로 조회
+        assertThat(previewResponse2.checklistId()).isEqualTo(checklistId1);
     }
 
     @DisplayName("좋아요된 체크리스트 리스트 조회 성공")

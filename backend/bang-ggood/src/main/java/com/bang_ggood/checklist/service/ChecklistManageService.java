@@ -150,14 +150,10 @@ public class ChecklistManageService {
     public ChecklistsPreviewResponse readAllChecklistsPreview(User user) {
         List<Checklist> checklists = checklistService.readAllChecklistsOrderByLatest(user);
 
-        List<ChecklistPreviewResponse> responses = mapToChecklistsPreview(checklists);
-        return ChecklistsPreviewResponse.from(responses);
-    }
-
-    private List<ChecklistPreviewResponse> mapToChecklistsPreview(List<Checklist> checklists) {
-        return checklists.stream()
+        List<ChecklistPreviewResponse> responses = checklists.stream()
                 .map(this::mapToChecklistPreview)
                 .toList();
+        return ChecklistsPreviewResponse.from(responses);
     }
 
     private ChecklistPreviewResponse mapToChecklistPreview(Checklist checklist) {

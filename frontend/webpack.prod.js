@@ -62,3 +62,7 @@ module.exports = merge(common, {
     },
   },
 });
+
+if (process.env.BUNDLE_ANALYZE) {
+  console.log('Bundle Anlazyer ON');
+}

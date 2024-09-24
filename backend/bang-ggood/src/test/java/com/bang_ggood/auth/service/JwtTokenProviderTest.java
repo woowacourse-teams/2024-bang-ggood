@@ -1,7 +1,7 @@
 package com.bang_ggood.auth.service;
 
 import com.bang_ggood.IntegrationTestSupport;
-import com.bang_ggood.auth.JwtTokenPropertiesFixture;
+import com.bang_ggood.auth.JwtTokenProviderFixture;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.user.UserFixture;
@@ -37,8 +37,7 @@ class JwtTokenProviderTest extends IntegrationTestSupport {
     @Test
     void resolveToken_expiredTime_exception() {
         // given
-        String JWT_SECRET_KEY = "A".repeat(32);
-        JwtTokenProvider expiredJwtTokenProvider = new JwtTokenProvider(JWT_SECRET_KEY, JwtTokenPropertiesFixture.PROPERTIES_WITH_SHORT_EXPIRED_MILLIS());
+        JwtTokenProvider expiredJwtTokenProvider = JwtTokenProviderFixture.JWT_TOKEN_PROVIDER_WITH_INVALID_EXPIRED_TIME();
 
         User user = userRepository.save(UserFixture.USER1());
         String token = expiredJwtTokenProvider.createAccessToken(user);
@@ -53,8 +52,7 @@ class JwtTokenProviderTest extends IntegrationTestSupport {
     @Test
     void resolveToken_invalidSignature_exception() {
         // given
-        String JWT_SECRET_KEY = "A".repeat(32);
-        JwtTokenProvider invalidJwtTokenProvider = new JwtTokenProvider(JWT_SECRET_KEY, JwtTokenPropertiesFixture.PROPERTIES());
+        JwtTokenProvider invalidJwtTokenProvider = JwtTokenProviderFixture.JWT_TOKEN_PROVIDER_WITH_INVALID_KEY();
 
         User user = userRepository.save(UserFixture.USER1());
         String token = jwtTokenProvider.createAccessToken(user);

@@ -51,7 +51,7 @@ public class AuthController {
     }
 
     @PostMapping("/accessToken/reIssue")
-    public ResponseEntity<Void> reIssueToken(HttpServletRequest httpServletRequest) {
+    public ResponseEntity<Void> reIssueAccessToken(HttpServletRequest httpServletRequest) {
         String refreshToken = cookieResolver.extractRefreshToken(httpServletRequest.getCookies());
         String accessToken = authService.reIssueAccessToken(refreshToken);
 

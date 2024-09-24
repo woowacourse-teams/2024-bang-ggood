@@ -7,6 +7,7 @@ import com.bang_ggood.contract.domain.OccupancyPeriod;
 import com.bang_ggood.like.domain.ChecklistLike;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.domain.MaintenanceItem;
+import com.bang_ggood.option.domain.Option;
 import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.Question;

@@ -110,6 +110,41 @@ class AuthServiceTest extends IntegrationTestSupport {
         assertThat(response.checklists()).hasSize(1);
     }
 
+    @DisplayName("게스트 유저 할당 실패 : 게스트 유저의 수가 2명이면 예외를 발생시킨다.")
+    @Test
+    void assignGuestUser_UnexpectedGuestUserExist() {
+        // given
+        userRepository.save(UserFixture.GUEST_USER());
+        userRepository.save(UserFixture.GUEST_USER());
+
+        // when & then
+        assertThatThrownBy(() -> authService.assignGuestUser())
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.GUEST_USER_UNEXPECTED_EXIST.getMessage());
+    }
+
+    @DisplayName("게스트 유저 할당 실패 : 게스트 유저가 존재하지 않으면 예외를 발생시킨다.")
+    @Test
+    void assingGuestUser_GuestUserNotExist() {
+        // when & then
+        assertThatThrownBy(() -> authService.assignGuestUser())
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.GUEST_USER_NOT_FOUND.getMessage());
+    }
+
+    @DisplayName("게스트 유저 할당 성공")
+    @Test
+    void assignGuestUser() {
+        // given
+        User guestUser = userRepository.save(UserFixture.GUEST_USER());
+
+        // when
+        User assignedGuestUser = authService.assignGuestUser();
+
+        // then
+        assertThat(assignedGuestUser).isEqualTo(guestUser);
+    }
+
     @DisplayName("로그아웃 실패 : 다른 유저의 토큰인 경우")
     @Test
     void logout_invalid_ownership_exception() {

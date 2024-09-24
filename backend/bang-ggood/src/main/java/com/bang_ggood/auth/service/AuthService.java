@@ -20,6 +20,7 @@ import java.util.Set;
 public class AuthService {
 
     private static final Logger log = LoggerFactory.getLogger(AuthService.class);
+    private static final int GUEST_USER_LIMIT = 1;
     private static final Set<String> blackList = new HashSet<>();
 
     private final OauthClient oauthClient;
@@ -53,13 +54,13 @@ public class AuthService {
 
     @Transactional(readOnly = true)
     public User assignGuestUser() {
-        List<User> users = userRepository.findUserByType(UserType.GUEST);
+        List<User> foundGuestUser = userRepository.findUserByType(UserType.GUEST);
 
-        if (users.size() >= 2) {
+        if (foundGuestUser.size() > GUEST_USER_LIMIT) {
             throw new BangggoodException(ExceptionCode.GUEST_USER_UNEXPECTED_EXIST);
         }
 
-        return users.stream()
+        return foundGuestUser.stream()
                 .findFirst()
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.GUEST_USER_NOT_FOUND));
     }

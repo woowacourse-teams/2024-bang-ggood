@@ -1,9 +1,11 @@
 package com.bang_ggood.global;
 
 import com.bang_ggood.user.domain.User;
+import com.bang_ggood.user.domain.UserType;
 import com.bang_ggood.user.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import java.util.List;
 
 @Component
 public class DBInitializer implements CommandLineRunner {
@@ -22,7 +24,12 @@ public class DBInitializer implements CommandLineRunner {
     }
 
     public void createGuestUser() {
-        User guestUser = userService.getOrCreateGuestUser();
-        defaultChecklistService.createDefaultChecklistAndQuestions(guestUser);
+        List<User> foundGuestUser = userService.readUser(UserType.GUEST);
+
+        if (foundGuestUser.isEmpty()) {
+            User guestUser = new User("방끗", "bang-ggood@gmail.com", UserType.GUEST);
+            userService.createUser(guestUser);
+            defaultChecklistService.createDefaultChecklistAndQuestions(guestUser);
+        }
     }
 }

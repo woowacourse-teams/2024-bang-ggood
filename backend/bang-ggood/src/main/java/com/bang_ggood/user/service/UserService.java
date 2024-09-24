@@ -5,6 +5,7 @@ import com.bang_ggood.user.domain.UserType;
 import com.bang_ggood.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -15,16 +16,13 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    @Transactional(readOnly = true)
-    public User getOrCreateGuestUser() {
-        return userRepository.findUserByType(UserType.GUEST)
-                .stream()
-                .findFirst()
-                .orElseGet(this::createGuestUser);
+    @Transactional
+    public void createUser(User user) {
+        userRepository.save(user);
     }
 
-    private User createGuestUser() {
-        User guestUser = new User("방끗", "bang-ggood@gmail.com", UserType.GUEST);
-        return userRepository.save(guestUser);
+    @Transactional(readOnly = true)
+    public List<User> readUser(UserType userType) {
+        return userRepository.findUserByType(userType);
     }
 }

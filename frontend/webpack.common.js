@@ -24,14 +24,14 @@ module.exports = {
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js',
+    filename: '[name].[chunkhash].js',
     clean: true,
   },
   plugins: [
+    new webpack.DefinePlugin(envKeys),
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
-    new webpack.DefinePlugin(envKeys),
   ],
   module: {
     rules: [

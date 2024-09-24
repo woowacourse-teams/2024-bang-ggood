@@ -10,7 +10,7 @@ module.exports = merge(common, {
   devtool: 'hidden-source-map',
   plugins: [
     new MiniCssExtractPlugin(),
-    new WorkboxWebpackPlugin.GenerateSW(),
+    // new WorkboxWebpackPlugin.GenerateSW(), 안쓰니까 그냥 주석 해둠
     process.env.SENTRY_AUTH_TOKEN &&
       sentryWebpackPlugin({
         authToken: process.env.SENTRY_AUTH_TOKEN,

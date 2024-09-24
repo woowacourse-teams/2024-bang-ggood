@@ -13,9 +13,6 @@ import {
 
 const formSpec: FormSpec<RoomInfo> = {
   roomName: { initialValue: '', type: 'string', validators: [lengthValidator(20)] },
-  // address: { initialValue: '', type: 'string', validators: [] },
-  // station: { initialValue: '', type: 'string', validators: [] },
-  // walkingTime: { initialValue: '', type: 'number', validators: [] },
   deposit: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
   rent: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
   maintenanceFee: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },

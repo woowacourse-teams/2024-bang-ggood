@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { flexCenter, title2 } from '@/styles/common';
+import { flexCenter, title4 } from '@/styles/common';
 import SUBWAY_LINE_PALLETE, { SubwayLineName } from '@/styles/subway';
 
 const SubwayLineIcon = ({ lineName }: { lineName: SubwayLineName }) => {
@@ -21,9 +21,9 @@ const S = {
   Box: styled.span<{ color: string; isCircle: boolean }>`
     display: inline-block;
 
-    width: ${({ isCircle }) => isCircle && '3.2rem'};
-    height: 3rem;
-    padding: ${({ isCircle }) => (isCircle ? '0.4rem 0.4rem 0.6rem 0.4rem' : '0.4rem 1.2rem 0.6rem;')};
+    width: ${({ isCircle }) => isCircle && '2rem'};
+    height: 2rem;
+    padding: 0.3rem;
     border-radius: 2rem;
 
     background-color: ${({ color }) => (color ? color : 'black')};
@@ -33,11 +33,10 @@ const S = {
   Text: styled.span`
     width: 100%;
     height: 100%;
-    padding-top: 0.3rem;
 
     ${flexCenter};
     color: ${({ theme }) => theme.palette.white};
-    ${title2}
+    ${title4}
   `,
 };
 

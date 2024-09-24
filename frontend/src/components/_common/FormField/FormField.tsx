@@ -29,7 +29,7 @@ const FormField = Object.assign(FormFieldWrapper, {
   ),
   TextBox: ({ text }: { text: string }) => <S.TextBox>{text}</S.TextBox>,
   Input: ({ ...rest }: GetProps<typeof Input>) => <Input {...rest} />,
-  ErrorMessage: ({ value, ...rest }: { value: string } & HTMLAttributes<HTMLParagraphElement>) => (
+  BottomMessageBox: ({ value, ...rest }: { value?: string } & HTMLAttributes<HTMLParagraphElement>) => (
     <S.ErrorMessage {...rest}>{value}</S.ErrorMessage>
   ),
 });

@@ -17,13 +17,13 @@ const Address = () => {
       ) : (
         <FormField.TextBox text={'주소를 추가해 주세요.'} />
       )}
-      <FlexBox.Horizontal>
+      <FlexBox.Horizontal style={{ marginTop: '20px' }}>
         {/*실시간 위치 모달*/}
         <RealTimeAddressModal />
         {/*주소 찾기 모달*/}
         <DaumAddressModal />
       </FlexBox.Horizontal>
-      <FormField.ErrorMessage value="" /> {/* 검증이 없으므로 에러메시지도 없음 */}
+      <FormField.BottomMessageBox />
     </FormField>
   );
 };

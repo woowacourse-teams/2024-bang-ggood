@@ -7,27 +7,30 @@ import Button from '@/components/_common/Button/Button';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import RealTimeMap from '@/components/_common/Map/RealTimeMap';
 import Modal from '@/components/_common/Modal/Modal';
-import useFindNearSubway from '@/hooks/useFindNearSubway';
 import useModal from '@/hooks/useModal';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import useRoomInfoNonInput from '@/hooks/useRoomInfoNonInput';
+import roomInfoNonInputStore from '@/store/roomInfoNonInputStore';
 import { title4 } from '@/styles/common';
 import { Position } from '@/types/address';
 
 const RealTimeAddressModal = () => {
   const DEFAULT_POSITION = { lat: 0, lon: 0 };
+
+  const { actions: nonInputAction } = useStore(roomInfoNonInputStore);
+
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const [position, setPosition] = useState<Position>(DEFAULT_POSITION);
-  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
+
   const [currentAddress, setCurrentAddress] = useState('');
   const [currentBuildingName, setCurrentBuildingName] = useState('');
 
-  const { findNearSubway } = useFindNearSubway();
+  const { findNearSubway } = useRoomInfoNonInput();
 
   const handleSubmitAddress = () => {
     if (position.lat && position.lon) {
-      roomInfoActions.set('address', currentAddress);
-      roomInfoActions.set('buildingName', currentBuildingName);
+      nonInputAction.set('address', currentAddress);
+      nonInputAction.set('buildingName', currentBuildingName);
 
       findNearSubway(position);
       closeModal();

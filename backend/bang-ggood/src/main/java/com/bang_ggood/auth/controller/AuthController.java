@@ -1,6 +1,6 @@
 package com.bang_ggood.auth.controller;
 
-import com.bang_ggood.auth.config.AuthPrincipal;
+import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.service.AuthService;
 import com.bang_ggood.user.domain.User;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AuthController {
-
 
     private static final Logger log = LoggerFactory.getLogger(AuthController.class);
     private final AuthService authService;
@@ -37,7 +36,7 @@ public class AuthController {
     }
 
     @PostMapping("/oauth/logout")
-    public ResponseEntity<Void> logout(@AuthPrincipal User user,
+    public ResponseEntity<Void> logout(@AuthRequiredPrincipal User user,
                                        @RequestHeader(value = "Cookie") String accessToken) {
         authService.logout(accessToken, user);
         ResponseCookie expiredCookie = cookieProvider.deleteCookie();

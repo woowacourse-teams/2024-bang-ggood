@@ -17,7 +17,6 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-
     private static final Logger log = LoggerFactory.getLogger(JwtTokenProvider.class);
     private final String secretKey;
     private final long tokenExpirationMills;

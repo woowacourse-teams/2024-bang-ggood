@@ -5,7 +5,7 @@ import com.bang_ggood.article.dto.response.ArticleResponse;
 import com.bang_ggood.article.dto.response.ArticlesListViewResponse;
 import com.bang_ggood.article.dto.response.ArticlesCardViewResponse;
 import com.bang_ggood.article.service.ArticleService;
-import com.bang_ggood.auth.config.AuthPrincipal;
+import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.user.domain.User;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class ArticleController {
     }
 
     @PostMapping("/articles")
-    public ResponseEntity<Void> createArticle(@AuthPrincipal User user,
+    public ResponseEntity<Void> createArticle(@AuthRequiredPrincipal User user,
                                               @Valid @RequestBody ArticleCreateRequest request) {
         Long id = articleService.createArticle(request);
         return ResponseEntity.created(URI.create("articles/" + id)).build();
@@ -49,7 +49,7 @@ public class ArticleController {
     }
 
     @DeleteMapping("/articles/{id}")
-    public ResponseEntity<ArticleResponse> deleteArticle(@AuthPrincipal User user,
+    public ResponseEntity<ArticleResponse> deleteArticle(@AuthRequiredPrincipal User user,
                                                          @PathVariable("id") Long id) {
         articleService.deleteArticle(id);
         return ResponseEntity.noContent().build();

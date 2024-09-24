@@ -71,7 +71,8 @@ public enum ExceptionCode {
     ARTICLE_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당 아티클이 존재하지 않습니다."),
 
     // Station
-    STATION_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "지하철 역을 찾을 수 없습니다.");
+    STATION_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "지하철 역을 찾을 수 없습니다."),
+    STATION_NAME_NOT_SAME(HttpStatus.INTERNAL_SERVER_ERROR, "지하철 역을 찾을 수 없습니다.");
 
     private final HttpStatus httpStatus;
     private final String message;

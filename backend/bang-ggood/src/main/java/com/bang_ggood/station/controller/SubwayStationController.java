@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 @RestController
 public class SubwayStationController {
@@ -17,10 +18,10 @@ public class SubwayStationController {
     }
 
     @GetMapping("/stations/nearest")
-    public ResponseEntity<SubwayStationResponse> readNearestStation(@RequestParam("latitude") double latitude,
-                                                                    @RequestParam("longitude") double longitude) {
+    public ResponseEntity<List<SubwayStationResponse>> readNearestStation(@RequestParam("latitude") Double latitude,
+                                                                          @RequestParam("longitude") Double longitude) {
 
-        SubwayStationResponse response = subwayStationService.readNearestStation(latitude, longitude);
+        List<SubwayStationResponse> response = subwayStationService.readNearestStation(latitude, longitude);
         return ResponseEntity.ok(response);
     }
 }

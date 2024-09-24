@@ -18,16 +18,17 @@ import useModal from '@/hooks/useModal';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
-import useSelectedOptionStore from '@/store/useOptionStore';
+import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 
 const NewChecklistPage = () => {
   const navigate = useNavigate();
   useChecklistTemplate(); // 체크리스트 질문 가져오기 및 준비
 
   const { tabs } = useNewChecklistTabs();
+
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
   // TODO: action 분리 필요
-  const resetChecklist = useChecklistStore(state => state.reset);
+  const checklistActions = useChecklistStore(state => state.actions);
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);
   const { resetShowTipBox } = useHandleTipBox('OPTION');
 
@@ -37,12 +38,12 @@ const NewChecklistPage = () => {
   // 한줄평 모달
   const { isModalOpen: isSubmitModalOpen, openModal: openSummaryModal, closeModal: closeSummaryModal } = useModal();
 
-  // 뒤로가기시 휘발 경고 모달
+  // 뒤로가기 시 휘발 경고 모달
   const { isModalOpen: isAlertModalOpen, openModal: openAlertModal, closeModal: closeAlertModal } = useModal();
 
   const resetAndGoHome = () => {
     roomInfoActions.resetAll();
-    resetChecklist();
+    checklistActions.reset();
     selectedOptionActions.reset();
     resetShowTipBox(); // 옵션의 팁박스 다시표시
     navigate(ROUTE_PATH.checklistList);

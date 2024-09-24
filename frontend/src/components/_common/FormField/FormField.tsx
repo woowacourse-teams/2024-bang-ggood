@@ -52,8 +52,8 @@ const S = {
   `,
   TextBox: styled.div`
     width: 100%;
-    height: 4rem;
-    padding: 0.6rem 1.1rem;
+    height: 3rem;
+    padding: 0.6rem 1rem;
 
     box-sizing: border-box;
   `,

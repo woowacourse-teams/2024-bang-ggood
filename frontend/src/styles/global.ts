@@ -34,5 +34,6 @@ export const baseStyle = css`
 
   input {
     font-family: 'SUITE Variable', sans-serif;
+    letter-spacing: 0.14rem;
   }
 `;

@@ -1,5 +1,6 @@
-export type OccupancyPeriod = '초' | '중순' | '말';
+import { roomOccupancyPeriods } from '@/constants/roomInfo';
 
+export type OccupancyPeriod = (typeof roomOccupancyPeriods)[number];
 export type RoomInfo = Partial<{
   roomName: string;
   deposit: number;

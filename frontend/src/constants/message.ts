@@ -1,21 +1,22 @@
-import { MAX_SELECT_CATEGORY_COUNT } from '@/constants/system';
+import { MAX_SELECT_CATEGORY_COUNT, MIN_SELECT_CUSTOM_COUNT } from '@/constants/system';
 import { TipType } from '@/hooks/useHandleTipBox';
 
 export const TIP_MESSAGE: Record<TipType, string> = {
-  OPTION: '수리가 필요한 시설이 있다면, 관리자에게 수리 가능 여부를 미리 물어보세요!',
-  CUSTOM_QUESTION: `집을 보는 시간은 평균 10분 이내로, 10개 정도의 질문 갯수가 확인하기 적당해요!`,
+  OPTION: '수리가 필요하다면, 미리 관리자에게 확인해 보세요!',
+  CUSTOM_QUESTION: '집을 볼 때는 평균 10분 정도 소요돼요. 10개 정도의 질문을 준비해 두면 적당해요!',
 };
 
 type ModalMessageType = 'SUMMARY';
 
 export const MODAL_MESSAGE: Record<ModalMessageType, string> = {
-  SUMMARY: '방에 대한 한줄평을 적어주세요',
+  SUMMARY: '방에 대한 한 줄 평을 적어주세요.',
 };
 
-type ToastType = 'ADD' | 'EDIT' | 'MAX_SELECT';
+type ToastType = 'ADD' | 'EDIT' | 'MIN_CUSTOM_SELECT' | 'MAX_SELECT';
 
 export const TOAST_MESSAGE: Record<ToastType, string> = {
-  ADD: '체크리스트가 저장되었습니다.',
-  EDIT: '체크리스트가 수정되었습니다.',
-  MAX_SELECT: `카테고리는 최대 ${MAX_SELECT_CATEGORY_COUNT}개까지만 선택 가능합니다.`,
+  ADD: '체크리스트가 저장됐어요!',
+  EDIT: '체크리스트가 수정됐어요!',
+  MIN_CUSTOM_SELECT: `질문은 최소 ${MIN_SELECT_CUSTOM_COUNT}개 이상 선택해야해요!`,
+  MAX_SELECT: `카테고리는 최대 ${MAX_SELECT_CATEGORY_COUNT}개까지만 선택할 수 있어요.`,
 };

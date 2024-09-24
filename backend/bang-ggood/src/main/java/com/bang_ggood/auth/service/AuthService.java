@@ -102,4 +102,12 @@ public class AuthService {
             throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_IN_BLACKLIST);
         }
     }
+
+    @Transactional(readOnly = true)
+    public String reIssueAccessToken(String refreshToken) {
+        AuthUser authUser = jwtTokenProvider.resolveToken(refreshToken);
+        User user = userRepository.getUserById(authUser.id());
+
+        return jwtTokenProvider.createAccessToken(user);
+    }
 }

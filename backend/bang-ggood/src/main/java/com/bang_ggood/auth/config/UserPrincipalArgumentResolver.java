@@ -1,5 +1,6 @@
 package com.bang_ggood.auth.config;
 
+import com.bang_ggood.auth.controller.CookieResolver;
 import com.bang_ggood.auth.service.AuthService;
 import com.bang_ggood.user.domain.User;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,7 +37,7 @@ public class UserPrincipalArgumentResolver implements HandlerMethodArgumentResol
             return authService.assignGuestUser();
         }
 
-        String token = cookieResolver.extractToken(request.getCookies());
+        String token = cookieResolver.extractAccessToken(request.getCookies());
         return authService.getAuthUser(token);
     }
 }

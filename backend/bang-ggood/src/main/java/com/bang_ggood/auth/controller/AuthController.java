@@ -5,6 +5,7 @@ import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.service.AuthService;
 import com.bang_ggood.user.domain.User;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -19,10 +20,12 @@ public class AuthController {
 
     private final AuthService authService;
     private final CookieProvider cookieProvider;
+    private final CookieResolver cookieResolver;
 
-    public AuthController(AuthService authService, CookieProvider cookieProvider) {
+    public AuthController(AuthService authService, CookieProvider cookieProvider, CookieResolver cookieResolver) {
         this.authService = authService;
         this.cookieProvider = cookieProvider;
+        this.cookieResolver = cookieResolver;
     }
 
     @PostMapping("/oauth/login")
@@ -45,5 +48,16 @@ public class AuthController {
         ResponseCookie expiredCookie = cookieProvider.deleteCookie();
 
         return ResponseEntity.noContent().header(HttpHeaders.SET_COOKIE, expiredCookie.toString()).build();
+    }
+
+    @PostMapping("/accessToken/reIssue")
+    public ResponseEntity<Void> reIssueToken(HttpServletRequest httpServletRequest) {
+        String refreshToken = cookieResolver.extractRefreshToken(httpServletRequest.getCookies());
+        String accessToken = authService.reIssueAccessToken(refreshToken);
+
+        ResponseCookie accessTokenCookie = cookieProvider.createAccessTokenCookie(accessToken);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString())
+                .build();
     }
 }

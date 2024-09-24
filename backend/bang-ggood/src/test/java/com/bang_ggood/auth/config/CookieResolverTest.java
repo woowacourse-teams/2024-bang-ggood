@@ -1,6 +1,7 @@
 package com.bang_ggood.auth.config;
 
 import com.bang_ggood.auth.controller.CookieProvider;
+import com.bang_ggood.auth.controller.CookieResolver;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import jakarta.servlet.http.Cookie;
@@ -19,7 +20,7 @@ class CookieResolverTest {
         Cookie[] cookies = { new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, expectedToken) };
 
         // when
-        String token = cookieResolver.extractToken(cookies);
+        String token = cookieResolver.extractAccessToken(cookies);
 
         // then
         Assertions.assertThat(token).isEqualTo(expectedToken);
@@ -34,7 +35,7 @@ class CookieResolverTest {
         cookies[0] = new Cookie("testName", "testValue");
 
         // when & then
-        Assertions.assertThatThrownBy(() -> cookieResolver.extractToken(cookies))
+        Assertions.assertThatThrownBy(() -> cookieResolver.extractAccessToken(cookies))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.AUTHENTICATION_COOKIE_TOKEN_EMPTY.getMessage());
 

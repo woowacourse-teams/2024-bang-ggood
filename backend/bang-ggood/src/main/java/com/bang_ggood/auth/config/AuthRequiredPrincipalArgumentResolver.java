@@ -1,5 +1,6 @@
 package com.bang_ggood.auth.config;
 
+import com.bang_ggood.auth.controller.CookieResolver;
 import com.bang_ggood.auth.service.AuthService;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
@@ -38,7 +39,7 @@ public class AuthRequiredPrincipalArgumentResolver implements HandlerMethodArgum
             throw new BangggoodException(ExceptionCode.AUTHENTICATION_COOKIE_EMPTY);
         }
 
-        String token = cookieResolver.extractToken(request.getCookies());
+        String token = cookieResolver.extractAccessToken(request.getCookies());
         return authService.getAuthUser(token);
     }
 }

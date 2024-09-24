@@ -8,8 +8,6 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import java.util.Date;
@@ -17,9 +15,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private static final Logger log = LoggerFactory.getLogger(JwtTokenProvider.class);
-    private JwtTokenProperties jwtTokenProperties;
-
+    private final JwtTokenProperties jwtTokenProperties;
     private final String secretKey;
 
     public JwtTokenProvider(
@@ -56,7 +52,6 @@ public class JwtTokenProvider {
 
     public AuthUser resolveToken(String token) {
         try {
-            log.info("resolveToken token: {}", token);
             Claims claims = Jwts.parserBuilder()
                     .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
                     .build()

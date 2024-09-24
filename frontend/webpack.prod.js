@@ -17,7 +17,7 @@ module.exports = merge(common, {
         org: process.env.SENTRY_ORG,
         project: process.env.SENTRY_PROJECT,
         sourcemaps: {
-          filesToDeleteAfterUpload: '**/*.js.map',
+          filesToDeleteAfterUpload: ['**/*.js.map', '**/*.css.map'],
         },
       }),
 

@@ -2,9 +2,10 @@ package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
-import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
+import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.like.service.ChecklistLikeService;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.domain.MaintenanceItem;
 import com.bang_ggood.maintenance.service.ChecklistMaintenanceService;
@@ -36,16 +37,19 @@ public class ChecklistManageService {
     private final ChecklistOptionService checklistOptionService;
     private final ChecklistQuestionService checklistQuestionService;
     private final ChecklistMaintenanceService checklistMaintenanceService;
+    private final ChecklistLikeService checklistLikeService;
 
     public ChecklistManageService(RoomService roomService, ChecklistService checklistService,
                                   ChecklistOptionService checklistOptionService,
                                   ChecklistQuestionService checklistQuestionService,
-                                  ChecklistMaintenanceService checklistMaintenanceService) {
+                                  ChecklistMaintenanceService checklistMaintenanceService,
+                                  ChecklistLikeService checklistLikeService) {
         this.roomService = roomService;
         this.checklistService = checklistService;
         this.checklistOptionService = checklistOptionService;
         this.checklistQuestionService = checklistQuestionService;
         this.checklistMaintenanceService = checklistMaintenanceService;
+        this.checklistLikeService = checklistLikeService;
     }
 
     @Transactional
@@ -133,13 +137,27 @@ public class ChecklistManageService {
         List<Checklist> likedChecklists = checklistService.readLikedChecklistsPreview(user);
         List<ChecklistPreviewResponse> responses = mapToChecklistPreviewResponses(
                 likedChecklists);
-        return new ChecklistsPreviewResponse(responses);
+        return ChecklistsPreviewResponse.from(responses);
     }
 
-    private List<ChecklistPreviewResponse> mapToChecklistPreviewResponses(
-            List<Checklist> likedChecklists) {
+    private List<ChecklistPreviewResponse> mapToChecklistPreviewResponses(List<Checklist> likedChecklists) {
         return likedChecklists.stream()
                 .map(checklist -> ChecklistPreviewResponse.of(checklist, true))
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public ChecklistsPreviewResponse readAllChecklistsPreview(User user) {
+        List<Checklist> checklists = checklistService.readAllChecklistsOrderByLatest(user);
+
+        List<ChecklistPreviewResponse> responses = checklists.stream()
+                .map(this::mapToChecklistPreview)
+                .toList();
+        return ChecklistsPreviewResponse.from(responses);
+    }
+
+    private ChecklistPreviewResponse mapToChecklistPreview(Checklist checklist) {
+        boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
+        return ChecklistPreviewResponse.of(checklist, isLiked);
     }
 }

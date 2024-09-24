@@ -8,3 +8,9 @@
   border-radius: 0.4rem;
   min-width: 15rem;
 }
+
+@font-face {
+  font-family: 'SUITE Variable';
+  font-weight: 300 900;
+  src: url('./assets/SUITE-Variable.woff2') format('woff2-variations');
+}

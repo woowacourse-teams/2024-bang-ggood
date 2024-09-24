@@ -83,14 +83,6 @@ const config = {
       {
         test: /\.(eot|ttf|woff|woff2)$/i,
         type: 'asset',
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: 'assets/fonts/[name].[hash:8].[ext]',
-            },
-          },
-        ],
       },
       { test: /\.(png|jpg|gif|webp|mp4)/i, type: 'asset/resource' },
       {
@@ -132,7 +124,7 @@ module.exports = () => {
     config.mode = 'production';
 
     config.plugins.push(new MiniCssExtractPlugin());
-    config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
+    // config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
 
     if (process.env.SENTRY_AUTH_TOKEN) {
       config.plugins.push(

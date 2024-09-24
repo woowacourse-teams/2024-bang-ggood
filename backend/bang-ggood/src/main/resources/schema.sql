@@ -120,7 +120,7 @@ CREATE TABLE article
     content     TEXT,
     keyword     VARCHAR(255),
     summary     VARCHAR(255),
-    thumbnail   VARCHAR,
+    thumbnail   VARCHAR(2500),
     created_at  TIMESTAMP(6),
     modified_at TIMESTAMP(6),
     deleted     BOOLEAN

@@ -2,8 +2,8 @@ package com.bang_ggood.article.controller;
 
 import com.bang_ggood.article.dto.request.ArticleCreateRequest;
 import com.bang_ggood.article.dto.response.ArticleResponse;
-import com.bang_ggood.article.dto.response.ArticlesDetailPreviewResponse;
-import com.bang_ggood.article.dto.response.ArticlesPreviewResponse;
+import com.bang_ggood.article.dto.response.ArticlesListViewResponse;
+import com.bang_ggood.article.dto.response.ArticlesCardViewResponse;
 import com.bang_ggood.article.service.ArticleService;
 import com.bang_ggood.auth.config.AuthPrincipal;
 import com.bang_ggood.user.domain.User;
@@ -38,14 +38,14 @@ public class ArticleController {
         return ResponseEntity.ok(articleService.readArticle(id));
     }
 
-    @GetMapping("/articles")
-    public ResponseEntity<ArticlesDetailPreviewResponse> readArticles() {
-        return ResponseEntity.ok(articleService.readArticles());
+    @GetMapping("/articles/card")
+    public ResponseEntity<ArticlesCardViewResponse> readArticlesCardView() {
+        return ResponseEntity.ok(articleService.readArticlesCardView());
     }
 
-    @GetMapping("/articles/latest")
-    public ResponseEntity<ArticlesPreviewResponse> readLatestArticles() {
-        return ResponseEntity.ok(articleService.readLatestArticles());
+    @GetMapping("/articles/list")
+    public ResponseEntity<ArticlesListViewResponse> readArticlesListView() {
+        return ResponseEntity.ok(articleService.readArticlesListView());
     }
 
     @DeleteMapping("/articles/{id}")

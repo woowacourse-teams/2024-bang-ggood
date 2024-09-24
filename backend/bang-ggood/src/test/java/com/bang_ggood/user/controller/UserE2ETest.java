@@ -1,7 +1,7 @@
 package com.bang_ggood.user.controller;
 
 import com.bang_ggood.AcceptanceTest;
-import com.bang_ggood.user.UserFixture;
+import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.dto.UserResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -18,6 +18,7 @@ class UserE2ETest extends AcceptanceTest {
     @DisplayName("유저 정보 조회 성공")
     @Test
     void readUserInfo() {
+        User user = this.getAuthenticatedUser();
         UserResponse response = RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
@@ -28,9 +29,9 @@ class UserE2ETest extends AcceptanceTest {
                 .as(UserResponse.class);
 
         assertAll(
-                () -> assertThat(response.userId()).isEqualTo(UserFixture.USER1.getId()),
-                () -> assertThat(response.userName()).isEqualTo(UserFixture.USER1.getName()),
-                () -> assertThat(response.userEmail()).isEqualTo(UserFixture.USER1.getEmail())
+                () -> assertThat(response.userId()).isEqualTo(user.getId()),
+                () -> assertThat(response.userName()).isEqualTo(user.getName()),
+                () -> assertThat(response.userEmail()).isEqualTo(user.getEmail())
         );
     }
 }

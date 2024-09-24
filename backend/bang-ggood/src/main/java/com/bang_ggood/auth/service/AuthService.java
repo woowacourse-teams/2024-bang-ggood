@@ -2,16 +2,16 @@ package com.bang_ggood.auth.service;
 
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.response.OauthInfoApiResponse;
-import com.bang_ggood.checklist.domain.Answer;
-import com.bang_ggood.checklist.domain.CustomChecklistQuestion;
-import com.bang_ggood.checklist.domain.Option;
-import com.bang_ggood.checklist.domain.Question;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
-import com.bang_ggood.checklist.dto.request.QuestionRequest;
-import com.bang_ggood.checklist.repository.CustomChecklistQuestionRepository;
-import com.bang_ggood.checklist.service.ChecklistService;
-import com.bang_ggood.exception.BangggoodException;
-import com.bang_ggood.exception.ExceptionCode;
+import com.bang_ggood.checklist.service.ChecklistManageService;
+import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
+import com.bang_ggood.option.domain.Option;
+import com.bang_ggood.question.domain.Answer;
+import com.bang_ggood.question.domain.CustomChecklistQuestion;
+import com.bang_ggood.question.domain.Question;
+import com.bang_ggood.question.dto.request.QuestionRequest;
+import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.room.dto.request.RoomRequest;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -28,16 +28,17 @@ public class AuthService {
 
     private final OauthClient oauthClient;
     private final JwtTokenProvider jwtTokenProvider;
-    private final ChecklistService checklistService;
+    private final ChecklistManageService checklistManageService;
     private final UserRepository userRepository;
     private final CustomChecklistQuestionRepository customChecklistQuestionRepository;
 
-    public AuthService(OauthClient oauthClient, JwtTokenProvider jwtTokenProvider, ChecklistService checklistService,
+    public AuthService(OauthClient oauthClient, JwtTokenProvider jwtTokenProvider,
+                       ChecklistManageService checklistManageService,
                        UserRepository userRepository,
                        CustomChecklistQuestionRepository customChecklistQuestionRepository) {
         this.oauthClient = oauthClient;
         this.jwtTokenProvider = jwtTokenProvider;
-        this.checklistService = checklistService;
+        this.checklistManageService = checklistManageService;
         this.userRepository = userRepository;
         this.customChecklistQuestionRepository = customChecklistQuestionRepository;
     }
@@ -97,7 +98,8 @@ public class AuthService {
                 new QuestionRequest(Question.BATHROOM_2.getId(), Answer.GOOD.name()));
 
         ChecklistRequest checklistRequest = new ChecklistRequest(roomRequest, options, questionRequests);
-        checklistService.createChecklist(user, checklistRequest);
+        checklistManageService.createChecklist(user, checklistRequest);
+        //TODO: 로직 리팩토링 필요
     }
 
     public void logout(String accessToken, User user) {

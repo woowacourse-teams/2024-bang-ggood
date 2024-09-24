@@ -1,8 +1,9 @@
 package com.bang_ggood.auth.service;
 
 import com.bang_ggood.IntegrationTestSupport;
-import com.bang_ggood.exception.BangggoodException;
-import com.bang_ggood.exception.ExceptionCode;
+import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
+import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
 import org.assertj.core.api.Assertions;
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static com.bang_ggood.user.UserFixture.USER1;
 
 class JwtTokenProviderTest extends IntegrationTestSupport {
 
@@ -41,7 +41,7 @@ class JwtTokenProviderTest extends IntegrationTestSupport {
         int JWT_ACCESS_TOKEN_EXPIRE_LENGTH = 1;
         JwtTokenProvider expiredJwtTokenProvider = new JwtTokenProvider(JWT_SECRET_KEY, JWT_ACCESS_TOKEN_EXPIRE_LENGTH);
 
-        User user = userRepository.save(USER1);
+        User user = userRepository.save(UserFixture.USER1());
         String token = expiredJwtTokenProvider.createToken(user);
 
         // when & then
@@ -58,7 +58,7 @@ class JwtTokenProviderTest extends IntegrationTestSupport {
         int JWT_ACCESS_TOKEN_EXPIRE_LENGTH = 1800000;
         JwtTokenProvider invalidJwtTokenProvider = new JwtTokenProvider(JWT_SECRET_KEY, JWT_ACCESS_TOKEN_EXPIRE_LENGTH);
 
-        User user = userRepository.save(USER1);
+        User user = userRepository.save(UserFixture.USER1());
         String token = jwtTokenProvider.createToken(user);
 
         // when & then

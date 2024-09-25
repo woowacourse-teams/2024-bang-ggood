@@ -75,7 +75,7 @@ public class ChecklistManageService {
                         checklist,
                         Question.fromId(question.questionId()),
                         Answer.from(question.answer())))
-                .collect(Collectors.toList());
+                .toList();
         checklistQuestionService.createQuestions(checklistQuestions);
     }
 
@@ -84,7 +84,7 @@ public class ChecklistManageService {
                 checklistRequest.room().includedMaintenances().stream()
                         .map(maintenanceId -> new ChecklistMaintenance(checklist,
                                 MaintenanceItem.fromId(maintenanceId)))
-                        .collect(Collectors.toList());
+                        .toList();
         checklistMaintenanceService.createMaintenances(checklistMaintenances);
     }
 

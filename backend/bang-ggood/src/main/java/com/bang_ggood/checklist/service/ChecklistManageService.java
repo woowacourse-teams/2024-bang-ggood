@@ -75,7 +75,7 @@ public class ChecklistManageService {
                         checklist,
                         Question.fromId(question.questionId()),
                         Answer.from(question.answer())))
-                .collect(Collectors.toList());
+                .toList();
         checklistQuestionService.createQuestions(checklistQuestions);
     }
 
@@ -84,7 +84,7 @@ public class ChecklistManageService {
                 checklistRequest.room().includedMaintenances().stream()
                         .map(maintenanceId -> new ChecklistMaintenance(checklist,
                                 MaintenanceItem.fromId(maintenanceId)))
-                        .collect(Collectors.toList());
+                        .toList();
         checklistMaintenanceService.createMaintenances(checklistMaintenances);
     }
 
@@ -123,11 +123,12 @@ public class ChecklistManageService {
                 .toList();
     }
 
-    private SelectedCategoryQuestionsResponse categorizeChecklistQuestions(Category category, List<ChecklistQuestion> checklistQuestions) {
+    private SelectedCategoryQuestionsResponse categorizeChecklistQuestions(Category category,
+                                                                           List<ChecklistQuestion> checklistQuestions) {
         List<SelectedQuestionResponse> selectedQuestionResponse = Question.filter(category, checklistQuestions)
-                        .stream()
-                        .map(SelectedQuestionResponse::new)
-                        .toList();
+                .stream()
+                .map(SelectedQuestionResponse::new)
+                .toList();
 
         return SelectedCategoryQuestionsResponse.of(category, selectedQuestionResponse);
     }
@@ -159,5 +160,45 @@ public class ChecklistManageService {
     private ChecklistPreviewResponse mapToChecklistPreview(Checklist checklist) {
         boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
         return ChecklistPreviewResponse.of(checklist, isLiked);
+    }
+
+    @Transactional
+    public void updateChecklistById(User user, Long checklistId, ChecklistRequest checklistRequest) {
+        Checklist checklist = checklistService.readChecklist(user, checklistId);
+
+        roomService.updateRoom(checklist.getRoom(), checklistRequest.toRoomEntity());
+        checklistService.updateChecklist(checklist, checklistRequest.toChecklistEntity(checklist.getRoom(), user));
+
+        updateChecklistOptions(checklistRequest, checklist);
+        updateChecklistQuestions(checklistRequest, checklist);
+        updateChecklistMaintenances(checklistRequest, checklist);
+    }
+
+    private void updateChecklistOptions(ChecklistRequest checklistRequest, Checklist checklist) {
+        List<ChecklistOption> checklistOptions = checklistRequest.options().stream()
+                .map(option -> new ChecklistOption(checklist, option))
+                .toList();
+        checklistOptionService.updateOptions(checklist.getId(), checklistOptions);
+    }
+
+    private void updateChecklistQuestions(ChecklistRequest checklistRequest, Checklist checklist) {
+        List<ChecklistQuestion> questions = checklist.getQuestions();
+        List<ChecklistQuestion> updateQuestions = checklistRequest.questions().stream()
+                .map(question -> new ChecklistQuestion(
+                        checklist,
+                        Question.fromId(question.questionId()),
+                        Answer.from(question.answer())))
+                .toList();
+        checklistQuestionService.updateQuestions(questions, updateQuestions);
+    }
+
+    private void updateChecklistMaintenances(ChecklistRequest checklistRequest, Checklist checklist) {
+
+        List<ChecklistMaintenance> checklistMaintenances =
+                checklistRequest.room().includedMaintenances().stream()
+                        .map(maintenanceId -> new ChecklistMaintenance(checklist,
+                                MaintenanceItem.fromId(maintenanceId)))
+                        .collect(Collectors.toList());
+        checklistMaintenanceService.updateMaintenances(checklist.getId(), checklistMaintenances);
     }
 }

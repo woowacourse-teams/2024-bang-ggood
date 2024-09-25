@@ -1,9 +1,10 @@
 package com.bang_ggood.checklist.controller;
 
-import com.bang_ggood.auth.config.AuthPrincipal;
+import com.bang_ggood.auth.config.AuthRequiredPrincipal;
+import com.bang_ggood.auth.config.UserPrincipal;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
-import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.checklist.service.ChecklistService;
 import com.bang_ggood.user.domain.User;
@@ -30,39 +31,39 @@ public class ChecklistController {
     }
 
     @PostMapping("/checklists")
-    public ResponseEntity<Void> createChecklist(@AuthPrincipal User user,
+    public ResponseEntity<Void> createChecklist(@AuthRequiredPrincipal User user,
                                                 @Valid @RequestBody ChecklistRequest checklistRequest) {
         long checklistId = checklistManageService.createChecklist(user, checklistRequest);
         return ResponseEntity.created(URI.create("/checklists/" + checklistId)).build();
     }
 
     @GetMapping("/checklists/{id}")
-    public ResponseEntity<SelectedChecklistResponse> readChecklistById(@AuthPrincipal User user,
+    public ResponseEntity<SelectedChecklistResponse> readChecklistById(@UserPrincipal User user,
                                                                        @PathVariable("id") Long checklistId) {
         return ResponseEntity.ok(checklistManageService.readChecklist(user, checklistId));
     }
 
     @GetMapping("/checklists")
-    public ResponseEntity<ChecklistsPreviewResponse> readChecklistsPreview(@AuthPrincipal User user) {
+    public ResponseEntity<ChecklistsPreviewResponse> readChecklistsPreview(@UserPrincipal User user) {
         return ResponseEntity.ok(checklistManageService.readAllChecklistsPreview(user));
     }
 
     @GetMapping("/checklists/like")
-    public ResponseEntity<ChecklistsPreviewResponse> readLikedChecklistsPreview(@AuthPrincipal User user) {
+    public ResponseEntity<ChecklistsPreviewResponse> readLikedChecklistsPreview(@AuthRequiredPrincipal User user) {
         return ResponseEntity.ok(checklistManageService.readLikedChecklistsPreview(user));
     }
 
     @PutMapping("/checklists/{id}")
     public ResponseEntity<Void> updateChecklistById(
-            @AuthPrincipal User user,
+            @AuthRequiredPrincipal User user,
             @PathVariable("id") long id,
             @Valid @RequestBody ChecklistRequest checklistRequest) {
-        checklistService.updateChecklistById(user, id, checklistRequest);
+        checklistManageService.updateChecklistById(user, id, checklistRequest);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/checklists/{id}")
-    public ResponseEntity<Void> deleteChecklistById(@AuthPrincipal User user, @PathVariable("id") long id) {
+    public ResponseEntity<Void> deleteChecklistById(@AuthRequiredPrincipal User user, @PathVariable("id") long id) {
         checklistService.deleteChecklistById(user, id);
         return ResponseEntity.noContent().build();
     }

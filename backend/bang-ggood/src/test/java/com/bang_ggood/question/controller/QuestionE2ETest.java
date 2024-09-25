@@ -9,7 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 
-public class QuestionE2ETest extends AcceptanceTest {
+class QuestionE2ETest extends AcceptanceTest {
 
     @DisplayName("커스텀 체크리스트 질문 조회 성공")
     @Test

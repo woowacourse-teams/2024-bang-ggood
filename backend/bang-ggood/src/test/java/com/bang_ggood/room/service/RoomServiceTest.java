@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class RoomServiceTest extends IntegrationTestSupport {
 
@@ -25,5 +26,24 @@ class RoomServiceTest extends IntegrationTestSupport {
 
         //then
         assertThat(savedRoom.getName()).isEqualTo(room.getName());
+    }
+
+    @DisplayName("방 수정 성공")
+    @Test
+    void updateRoom() {
+        // given
+        Room room = RoomFixture.ROOM_1();
+        Room updateRoom = RoomFixture.ROOM_2();
+        roomService.createRoom(room);
+
+        // when
+        roomService.updateRoom(room, updateRoom);
+
+        // then
+        assertAll(
+                () -> assertThat(room.getName()).isEqualTo(updateRoom.getName()),
+                () -> assertThat(room.getAddress()).isEqualTo(updateRoom.getAddress()),
+                () -> assertThat(room.getBuildingName()).isEqualTo(updateRoom.getBuildingName())
+        );
     }
 }

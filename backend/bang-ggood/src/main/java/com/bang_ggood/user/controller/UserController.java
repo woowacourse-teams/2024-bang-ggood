@@ -1,6 +1,6 @@
 package com.bang_ggood.user.controller;
 
-import com.bang_ggood.auth.config.AuthPrincipal;
+import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.dto.UserResponse;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @GetMapping("/user/me")
-    public ResponseEntity<UserResponse> readUserInfo(@AuthPrincipal User user) {
+    public ResponseEntity<UserResponse> readUserInfo(@AuthRequiredPrincipal User user) {
         return ResponseEntity.ok(UserResponse.from(user));
     }
 }

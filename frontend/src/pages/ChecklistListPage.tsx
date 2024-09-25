@@ -11,7 +11,7 @@ import NoChecklistTemplate from '@/components/ChecklistList/NoChecklistTemplate'
 import SkChecklistList from '@/components/skeleton/ChecklistList/SkChecklistLst';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useGetChecklistListQuery from '@/hooks/query/useGetChecklistListQuery';
-import { flexColumn } from '@/styles/common';
+import { flexColumn, title3 } from '@/styles/common';
 import theme from '@/styles/theme';
 import { ChecklistPreview } from '@/types/checklist';
 
@@ -33,6 +33,9 @@ const ChecklistListPage = () => {
     <>
       <Header center={<Header.Text>체크리스트</Header.Text>} />
       <Layout bgColor={theme.palette.background} withFooter withHeader>
+        <S.Title>
+          방 둘러보면서 체크리스트 체크 <S.Count>{checklistList?.length}</S.Count>
+        </S.Title>
         <S.FlexBox>
           <CustomBanner onClick={handleClickMoveCustomPage} />
         </S.FlexBox>
@@ -49,8 +52,7 @@ const ChecklistListPage = () => {
         </S.ListBox>
       </Layout>
       <FloatingButton size="extends" onClick={handleClickFloatingButton}>
-        <PlusBlack />
-        작성하기
+        <PlusBlack />방 체크하기
       </FloatingButton>
     </>
   );
@@ -59,8 +61,15 @@ const ChecklistListPage = () => {
 export default ChecklistListPage;
 
 const S = {
+  Title: styled.h1`
+    ${title3}
+  `,
+  Count: styled.span`
+    color: ${({ theme }) => theme.palette.green500};
+  `,
   FlexBox: styled.div`
-    margin-bottom: 1.6rem;
+    display: flex;
+    margin: 1rem 0;
   `,
   ListBox: styled.div`
     ${flexColumn}

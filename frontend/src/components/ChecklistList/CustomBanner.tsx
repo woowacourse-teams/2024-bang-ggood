@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { PencilIcon } from '@/assets/assets';
-import { boxShadow, flexCenter, title3 } from '@/styles/common';
+import { boxShadow, flexCenter, flexRow } from '@/styles/common';
 
 interface Props {
   onClick?: () => void;
@@ -10,8 +10,11 @@ interface Props {
 const CustomBanner = ({ onClick }: Props) => {
   return (
     <S.Banner onClick={onClick}>
-      <PencilIcon width={50} height={70} />
-      <S.Title>나에게 최적인 체크리스트 만들기</S.Title>
+      <S.Wrapper>
+        <PencilIcon width={30} height={30} />
+        <S.Title>체크리스트 항목</S.Title>
+      </S.Wrapper>
+      <S.Button>편집하기</S.Button>
     </S.Banner>
   );
 };
@@ -23,29 +26,36 @@ const S = {
     ${flexCenter}
 
     width: 100%;
-    height: 8rem;
+    height: 5rem;
     padding: 1.6rem;
 
     border-radius: 1.6rem;
 
-    background-color: ${({ theme }) => theme.palette.green500};
-
-    color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.palette.white};
 
     box-sizing: border-box;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     gap: 0.5rem;
     ${boxShadow};
-    cursor: pointer;
-
-    &:hover,
-    &:active {
-      background-color: ${({ theme }) => theme.palette.green600};
-    }
+  `,
+  Wrapper: styled.div`
+    ${flexRow}
+    gap: .5rem;
   `,
   Title: styled.span`
     ${flexCenter}
-    ${title3}
+  `,
+  Button: styled.div`
+    padding: 0.4rem 0.8rem;
+
+    background-color: ${({ theme }) => theme.palette.green500};
+
+    color: ${({ theme }) => theme.palette.white};
+    border-radius: 0.8rem;
+
+    font-size: ${({ theme }) => theme.text.size.xSmall};
+
+    cursor: pointer;
   `,
 };

@@ -3,7 +3,6 @@ package com.bang_ggood.article.controller;
 import com.bang_ggood.article.dto.request.ArticleCreateRequest;
 import com.bang_ggood.article.dto.response.ArticleResponse;
 import com.bang_ggood.article.dto.response.ArticlesListViewResponse;
-import com.bang_ggood.article.dto.response.ArticlesCardViewResponse;
 import com.bang_ggood.article.service.ArticleService;
 import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.user.domain.User;
@@ -36,11 +35,6 @@ public class ArticleController {
     @GetMapping("/articles/{id}")
     public ResponseEntity<ArticleResponse> readArticle(@PathVariable("id") Long id) {
         return ResponseEntity.ok(articleService.readArticle(id));
-    }
-
-    @GetMapping("/articles/card")
-    public ResponseEntity<ArticlesCardViewResponse> readArticlesCardView() {
-        return ResponseEntity.ok(articleService.readArticlesCardView());
     }
 
     @GetMapping("/articles/list")

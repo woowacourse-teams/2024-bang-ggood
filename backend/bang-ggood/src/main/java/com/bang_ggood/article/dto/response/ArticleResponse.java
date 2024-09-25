@@ -4,7 +4,7 @@ import com.bang_ggood.article.domain.Article;
 import java.time.LocalDateTime;
 
 public record ArticleResponse(Long articleId, String title, String content, String keyword, String summary,
-                              LocalDateTime createdAt) {
+                              String thumbnail, LocalDateTime createdAt) {
 
     public static ArticleResponse from(Article article) {
         return new ArticleResponse(
@@ -13,6 +13,7 @@ public record ArticleResponse(Long articleId, String title, String content, Stri
                 article.getContent(),
                 article.getKeyword(),
                 article.getSummary(),
+                article.getThumbnail(),
                 article.getCreatedAt()
         );
     }

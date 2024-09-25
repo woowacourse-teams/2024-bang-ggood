@@ -3,6 +3,7 @@ export interface Article {
   keyword: string;
   title: string;
   summary: string;
-  content: string;
+  content?: string;
+  thumbnail: string | null;
   createdAt: string;
 }

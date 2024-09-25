@@ -11,8 +11,10 @@ const OccupancyMonth = () => {
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
   const occupancyMonth = useStore(checklistRoomInfoStore, state => state.rawValue.occupancyMonth);
   const occupancyPeriod = useStore(checklistRoomInfoStore, state => state.rawValue.occupancyPeriod);
+
   const errorMessageOccupancyMonth = useStore(checklistRoomInfoStore, state => state.errorMessage.occupancyMonth);
   const errorMessageOccupancyPeriod = useStore(checklistRoomInfoStore, state => state.errorMessage.occupancyPeriod);
+  const errorMessage = errorMessageOccupancyMonth || errorMessageOccupancyPeriod;
 
   return (
     <FlexBox.Vertical gap="1.5rem">
@@ -28,7 +30,7 @@ const OccupancyMonth = () => {
           }}
         />
       </FormStyled.FieldBox>
-      <FormField.ErrorMessage value={errorMessageOccupancyMonth || errorMessageOccupancyPeriod || ''} />
+      <FormField.ErrorMessage value={errorMessage} />
     </FlexBox.Vertical>
   );
 };

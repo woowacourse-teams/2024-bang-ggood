@@ -64,12 +64,12 @@ const S = {
     width: 100%;
     ${flexRow}
     justify-content: space-around;
-    gap: 10px;
+    gap: 1rem;
   `,
   IconBox: styled.div`
     display: flex;
-    gap: 10px;
-    margin: 20px 0;
+    gap: 1rem;
+    margin: 2rem 0;
   `,
   Title: styled.div`
     ${title4}
@@ -78,8 +78,8 @@ const S = {
     color: ${({ theme }) => theme.palette.grey500};
   `,
   AlertModalButton: styled(Button)`
-    width: calc(100% - 10px);
-    height: 40px;
+    width: calc(100% - 1rem);
+    height: 4rem;
     ${title4}
   `,
 };

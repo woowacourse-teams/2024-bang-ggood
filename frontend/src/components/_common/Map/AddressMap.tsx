@@ -84,18 +84,18 @@ const S = {
     bottom: 0;
     z-index: 10;
 
-    padding: 5px;
+    padding: 0.5rem;
 
     color: ${({ theme }) => theme.palette.white};
-    gap: 10px;
-    border-radius: 3px;
+    gap: 1rem;
+    border-radius: 0.3rem;
   `,
   LinkButton: styled.img`
     z-index: 10;
-    box-shadow: 0 4px 15px rgb(0 0 0 / 30%);
-    width: 35px;
+    box-shadow: 0 0.4rem 1.5rem rgb(0 0 0 / 30%);
+    width: 3.5rem;
     border-radius: 50%;
-    height: 35px;
+    height: 3.5rem;
   `,
 };
 

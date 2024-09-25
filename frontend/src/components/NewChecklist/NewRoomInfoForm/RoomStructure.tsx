@@ -34,7 +34,7 @@ const RoomStructure = () => {
           />
         ))}
       </FormStyled.OptionButtonContainer>
-      <FormField.ErrorMessage value="" /> {/* 필요없지만 레이아웃 일관성을 위해 */}
+      <FormField.BottomEmptyBox />
     </FlexBox.Vertical>
   );
 };

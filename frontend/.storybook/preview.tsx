@@ -1,4 +1,4 @@
-import { Global, ThemeProvider } from '@emotion/react';
+import { css, Global, ThemeProvider } from '@emotion/react';
 import type { Preview } from '@storybook/react';
 import React from 'react';
 import { withRouter } from 'storybook-addon-remix-react-router';
@@ -7,7 +7,12 @@ import theme from '../src/styles/theme';
 
 const decorator = Story => (
   <>
-    <Global styles={normalize} />
+    <Global
+      styles={css`
+        ${normalize}
+        font-size: 10px;
+      `}
+    />
     <ThemeProvider theme={theme}>
       <Story />
     </ThemeProvider>

@@ -5,9 +5,9 @@ import { useStore } from 'zustand';
 import { Search } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
-import useFindNearSubway from '@/hooks/useFindNearSubway';
 import useModal from '@/hooks/useModal';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import useRoomInfoUnvalidatedStore from '@/hooks/useRoomInfoUnvalidatedStore';
+import roomInfoUnvalidatedStore from '@/store/roomInfoUnvalidatedStore';
 import { Address, Postcode, PostcodeOptions } from '@/types/address';
 import loadExternalScriptWithCallback from '@/utils/loadScript';
 
@@ -22,9 +22,9 @@ declare global {
 const DaumAddressModal = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const postcodeContainerRef = useRef<HTMLDivElement | null>(null);
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
 
-  const { findNearSubway } = useFindNearSubway();
+  const { findNearSubway } = useRoomInfoUnvalidatedStore();
+  const roomInfoUnvalidatedActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
 
   const handleAddress = () => {
     openModal();
@@ -54,8 +54,8 @@ const DaumAddressModal = () => {
         width: '100%',
         height: '60rem',
         oncomplete: async (data: Address) => {
-          actions.set('address', data.address);
-          actions.set('buildingName', data.buildingName);
+          roomInfoUnvalidatedActions.set('address', data.address);
+          roomInfoUnvalidatedActions.set('buildingName', data.buildingName);
 
           loadExternalScriptWithCallback('kakaoMap', () => findPosition(data));
         },

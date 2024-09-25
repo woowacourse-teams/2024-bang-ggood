@@ -4,10 +4,11 @@ import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import DaumAddressModal from '@/components/NewChecklist/AddressModal/DaumAddressModal';
 import RealTimeAddressModal from '@/components/NewChecklist/AddressModal/RealTimeAddressModal';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import roomInfoUnvalidatedStore from '@/store/roomInfoUnvalidatedStore';
 
 const Address = () => {
-  const { address, buildingName } = useStore(checklistRoomInfoStore, state => state.rawValue);
+  const address = useStore(roomInfoUnvalidatedStore, state => state.address);
+  const buildingName = useStore(roomInfoUnvalidatedStore, state => state.buildingName);
 
   return (
     <FormField>
@@ -17,13 +18,13 @@ const Address = () => {
       ) : (
         <FormField.TextBox text={'주소를 추가해 주세요.'} />
       )}
-      <FlexBox.Horizontal>
+      <FlexBox.Horizontal style={{ marginTop: '20px' }}>
         {/*실시간 위치 모달*/}
         <RealTimeAddressModal />
         {/*주소 찾기 모달*/}
         <DaumAddressModal />
       </FlexBox.Horizontal>
-      <FormField.ErrorMessage value="" /> {/* 검증이 없으므로 에러메시지도 없음 */}
+      <FormField.BottomEmptyBox />
     </FormField>
   );
 };

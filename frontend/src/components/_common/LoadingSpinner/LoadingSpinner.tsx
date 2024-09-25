@@ -8,16 +8,16 @@ const S = {
   Container: styled.div`
     display: inline-block;
     position: relative;
-    width: 48px;
-    height: 48px;
+    width: 4.8rem;
+    height: 4.8rem;
 
     ::after,
     ::before {
       position: absolute;
       top: 0;
       left: 0;
-      width: 48px;
-      height: 48px;
+      width: 4.8rem;
+      height: 4.8rem;
 
       animation: animloader 2s linear infinite;
       content: '';

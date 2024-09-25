@@ -1,6 +1,6 @@
 import { useStore } from 'zustand';
 
-import { NewChecklistFormField } from '@/components/NewChecklist/NewChecklistFormField';
+import FormField from '@/components/_common/FormField/FormField';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
 const RealEstate = () => {
@@ -9,13 +9,18 @@ const RealEstate = () => {
   const errorMessage = useStore(checklistRoomInfoStore, state => state.errorMessage.realEstate);
 
   return (
-    <NewChecklistFormField
-      label="부동산 이름"
-      onChange={actions.onChange}
-      value={realEstate}
-      errorMessage={errorMessage}
-      name="realEstate"
-    />
+    <FormField>
+      <FormField.Label label={'부동산 이름'} required={false} />
+      <FormField.Input
+        placeholder=""
+        width="full"
+        type={'string'}
+        onChange={actions.onChange}
+        name={'realEstate'}
+        value={realEstate}
+      />
+      <FormField.ErrorMessage value={errorMessage} />
+    </FormField>
   );
 };
 

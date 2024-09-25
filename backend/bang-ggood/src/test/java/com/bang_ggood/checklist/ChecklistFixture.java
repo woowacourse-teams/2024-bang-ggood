@@ -30,6 +30,16 @@ public class ChecklistFixture {
         );
     }
 
+    public static Checklist CHECKLIST1_USER1_UPDATE(Room room, User user) {
+        return new Checklist(
+                room,
+                user,
+                1000, 50, 5, 12,
+                OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY,
+                "방끗공인중개", "메모 추가", "한줄평 수정"
+        );
+    }
+
     public static Checklist CHECKLIST2_USER1(Room room, User user) {
         return new Checklist(
                 room,
@@ -98,10 +108,6 @@ public class ChecklistFixture {
         return new QuestionRequest(null, "NONE");
     }
 
-    public static QuestionRequest QUESTION_CREATE_REQUEST_INVALID_ID() {
-        return new QuestionRequest(Integer.MAX_VALUE, "GOOD");
-    }
-
     public static ChecklistRequest CHECKLIST_CREATE_REQUEST() {
         return new ChecklistRequest(
                 RoomFixture.ROOM_CREATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(), Option.SHOE_RACK.getId()),
@@ -123,6 +129,14 @@ public class ChecklistFixture {
                 RoomFixture.ROOM_CREATE_REQUEST_NO_ROOM_NAME(),List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(), Option.SHOE_RACK.getId()),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
                         QUESTION_3_CREATE_REQUEST(), QUESTION_5_CREATE_REQUEST())
+        );
+    }
+
+    public static ChecklistRequest CHECKLIST_UPDATE_REQUEST() {
+        return new ChecklistRequest(
+                RoomFixture.ROOM_UPDATE_REQUEST(), List.of(1, 2, 3, 4),
+                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
+                        QUESTION_3_CREATE_REQUEST(), QUESTION_5_UPDATE_REQUEST())
         );
     }
 
@@ -149,57 +163,6 @@ public class ChecklistFixture {
                         QUESTION_3_CREATE_REQUEST(), QUESTION_CREATE_REQUEST_NO_ID())
         );
     }
-
-    public static ChecklistRequest CHECKLIST_UPDATE_REQUEST_INVALID_QUESTION_ID() {
-        return new ChecklistRequest(
-                RoomFixture.ROOM_UPDATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.BED.getId(), Option.INDUCTION.getId(), Option.SHOE_RACK.getId()),
-                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
-                        QUESTION_3_CREATE_REQUEST(), QUESTION_CREATE_REQUEST_INVALID_ID())
-        );
-    }
-
-    public static ChecklistRequest CHECKLIST_UPDATE_REQUEST_INVALID_OPTION_ID() {
-        return new ChecklistRequest(
-                RoomFixture.ROOM_UPDATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(), Integer.MAX_VALUE),
-                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
-                        QUESTION_3_CREATE_REQUEST(), QUESTION_5_UPDATE_REQUEST())
-        );
-    }
-
-    public static ChecklistRequest CHECKLIST_CREATE_REQUEST_DUPLICATED_QUESTION_ID() {
-        return new ChecklistRequest(
-                RoomFixture.ROOM_CREATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(), Option.SHOE_RACK.getId()),
-                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
-                        QUESTION_3_CREATE_REQUEST(), QUESTION_3_CREATE_REQUEST())
-        );
-    }
-
-
-    public static ChecklistRequest CHECKLIST_UPDATE_REQUEST_DUPLICATED_OPTION_ID() {
-        return new ChecklistRequest(
-                RoomFixture.ROOM_UPDATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.SINK.getId(), Option.SHOE_RACK.getId()),
-                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
-                        QUESTION_3_CREATE_REQUEST(), QUESTION_5_UPDATE_REQUEST())
-        );
-    }
-
-    public static ChecklistRequest CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION_LENGTH() {
-        return new ChecklistRequest(
-                RoomFixture.ROOM_UPDATE_REQUEST(), List.of(1, 2, 3, 4),
-                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
-                        QUESTION_3_CREATE_REQUEST())
-        );
-    }
-
-
-    public static ChecklistRequest CHECKLIST_UPDATE_REQUEST_DIFFERENT_QUESTION() {
-        return new ChecklistRequest(
-                RoomFixture.ROOM_UPDATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(), Option.SHOE_RACK.getId()),
-                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
-                        QUESTION_3_CREATE_REQUEST(), QUESTION_4_CREATE_REQUEST())
-        );
-    }
-
 
     public static ChecklistQuestion CHECKLIST_QUESTION_1(Checklist checklist) {
         return new ChecklistQuestion(checklist, Question.fromId(1), Answer.BAD);

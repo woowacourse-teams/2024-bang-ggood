@@ -45,4 +45,11 @@ public class ChecklistOptionService {
     public void deleteAllByChecklistId(Long id) {
         checklistOptionRepository.deleteAllByChecklistId(id);
     }
+
+    @Transactional
+    public void updateOptions(Long checklistId, List<ChecklistOption> checklistOptions) {
+        validateOptionDuplicate(checklistOptions);
+        checklistOptionRepository.deleteAllByChecklistId(checklistId);
+        checklistOptionRepository.saveAll(checklistOptions);
+    }
 }

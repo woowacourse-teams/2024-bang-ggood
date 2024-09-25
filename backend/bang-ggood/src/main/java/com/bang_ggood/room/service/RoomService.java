@@ -23,4 +23,9 @@ public class RoomService {
     public void deleteById(Long id) {
         roomRepository.deleteById(id);
     }
+
+    @Transactional
+    public void updateRoom(Room room, Room updateRoom) {
+        room.change(updateRoom);
+    }
 }

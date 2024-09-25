@@ -34,7 +34,7 @@ const ChecklistListPage = () => {
       <Header center={<Header.Text>체크리스트</Header.Text>} />
       <Layout bgColor={theme.palette.background} withFooter withHeader>
         <S.Title>
-          방 둘러보면서 체크리스트 체크 <S.Count>{checklistList?.length}</S.Count>
+          방 둘러볼 때 꼭 필요한 체크리스트 <S.Count>{checklistList?.length}</S.Count>
         </S.Title>
         <S.FlexBox>
           <CustomBanner onClick={handleClickMoveCustomPage} />
@@ -69,7 +69,7 @@ const S = {
   `,
   FlexBox: styled.div`
     display: flex;
-    margin: 1rem 0;
+    margin: 1.6rem 0 1rem;
   `,
   ListBox: styled.div`
     ${flexColumn}

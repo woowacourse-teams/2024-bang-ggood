@@ -37,7 +37,7 @@ public class ArticleController {
         return ResponseEntity.ok(articleService.readArticle(id));
     }
 
-    @GetMapping("/articles/list")
+    @GetMapping("/articles")
     public ResponseEntity<ArticlesListViewResponse> readArticlesListView() {
         return ResponseEntity.ok(articleService.readArticlesListView());
     }

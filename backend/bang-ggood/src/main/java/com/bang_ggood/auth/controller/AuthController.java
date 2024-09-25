@@ -5,8 +5,6 @@ import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.service.AuthService;
 import com.bang_ggood.user.domain.User;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-    private static final Logger log = LoggerFactory.getLogger(AuthController.class);
     private final AuthService authService;
     private final CookieProvider cookieProvider;
 
@@ -30,7 +27,6 @@ public class AuthController {
     @PostMapping("/oauth/login")
     public ResponseEntity<Void> login(@Valid @RequestBody OauthLoginRequest request) {
         String token = authService.login(request);
-        log.info("login token: {}", token);
         ResponseCookie cookie = cookieProvider.createCookie(token);
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).build();
     }

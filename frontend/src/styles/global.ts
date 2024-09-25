@@ -18,7 +18,7 @@ export const baseStyle = css`
     font-size: ${theme.text.size.small};
 
     max-width: 60rem;
-    min-height: 100vh;
+    min-height: 100dvh;
 
     margin: 0 auto;
     box-sizing: border-box;

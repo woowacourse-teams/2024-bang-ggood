@@ -37,7 +37,6 @@ const DaumAddressModal = () => {
         width: '100%',
         height: '60rem',
         oncomplete: (data: Address) => {
-          // TODO: 위도, 경도까지 보내주기
           setAddress(data.address);
           setBuildingName(data.buildingName);
           modalClose();
@@ -52,6 +51,7 @@ const DaumAddressModal = () => {
     <>
       <S.AddressButton size="xSmall" color="dark" label="주소 검색" isSquare={true} onClick={openPostcodeEmbed} />
       <Modal position="bottom" isOpen={isModalOpen} onClose={modalClose}>
+        <Modal.header>주소 검색</Modal.header>
         <Modal.body>
           <div ref={postcodeContainerRef} style={{ width: '100%', marginTop: '1rem' }} />
         </Modal.body>
@@ -67,5 +67,9 @@ const S = {
     width: 50%;
 
     font-size: ${({ theme }) => theme.text.size.xSmall};
+  `,
+  EmptyBox: styled.div`
+    width: 100%;
+    height: 20px;
   `,
 };

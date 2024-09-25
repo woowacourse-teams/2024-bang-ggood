@@ -80,7 +80,7 @@ const sizeStyles = {
     ${title4}
   `,
   medium: css`
-    padding: 1.2rem 4.8rem;
+    padding: 1.2rem 3.6rem;
     ${title3}
   `,
   full: css`

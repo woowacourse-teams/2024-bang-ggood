@@ -107,5 +107,4 @@ const OPTION_COUNT = OPTIONS.length;
 
 const DEFAULT_OPTIONS: number[] = [];
 
-// eslint-disable-next-line simple-import-sort/exports
 export { DEFAULT_OPTIONS, OPTION_COUNT, OPTIONS };

@@ -149,7 +149,7 @@ public class ChecklistManageService {
     }
 
     @Transactional
-    public void deleteChecklistById(User user, long id) {
+    public void deleteChecklistById(User user, Long id) {
         Checklist checklist = checklistService.readChecklist(user, id);
         checklistQuestionService.deleteAllByChecklistId(checklist.getId());
         checklistOptionService.deleteAllByChecklistId(checklist.getId());

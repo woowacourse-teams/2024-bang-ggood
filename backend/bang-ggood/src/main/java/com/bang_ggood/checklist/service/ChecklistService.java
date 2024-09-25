@@ -222,7 +222,7 @@ public class ChecklistService {
     }
 
     @Transactional
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         checklistRepository.deleteById(id);
     }
 }

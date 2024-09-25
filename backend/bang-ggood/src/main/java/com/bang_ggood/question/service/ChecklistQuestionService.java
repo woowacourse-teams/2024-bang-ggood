@@ -82,8 +82,9 @@ public class ChecklistQuestionService {
     public void updateQuestions(List<ChecklistQuestion> questions, List<ChecklistQuestion> updateQuestions) {
         validateQuestionDuplicate(updateQuestions);
         validateSameQuestions(questions, updateQuestions);
-        IntStream.range(0, questions.size())
-                .forEach(i -> questions.get(i).change(updateQuestions.get(i)));
+        for (int i = 0; i < questions.size(); i++) {
+            questions.get(i).change(updateQuestions.get(i));
+        }
     }
 
     private void validateSameQuestions(List<ChecklistQuestion> questions, List<ChecklistQuestion> updateQuestions) {
@@ -91,11 +92,10 @@ public class ChecklistQuestionService {
             throw new BangggoodException(ExceptionCode.QUESTION_DIFFERENT);
         }
 
-        IntStream.range(0, questions.size())
-                .filter(i -> questions.get(i).isDifferentQuestionId(updateQuestions.get(i)))
-                .findAny()
-                .ifPresent(i -> {
-                    throw new BangggoodException(ExceptionCode.QUESTION_DIFFERENT);
-                });
+        for (int i = 0; i < questions.size(); i++) {
+            if (questions.get(i).isDifferentQuestionId(updateQuestions.get(i))) {
+                throw new BangggoodException(ExceptionCode.QUESTION_DIFFERENT);
+            }
+        }
     }
 }

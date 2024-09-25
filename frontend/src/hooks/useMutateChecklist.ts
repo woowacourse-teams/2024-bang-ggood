@@ -15,7 +15,8 @@ const useMutateChecklist = (mutateType: MutateType, checklistId?: number) => {
   const { mutate: putChecklist } = usePutChecklistQuery();
 
   // 방 기본 정보
-  const { value: roomInfoAnswer, actions } = useStore(checklistRoomInfoStore);
+  const actions = useStore(checklistRoomInfoStore, state => state.actions);
+  const roomInfoAnswer = useStore(checklistRoomInfoStore, state => state.value);
 
   // 선택된 옵션
   const selectedOptions = useSelectedOptionStore(state => state.selectedOptions);

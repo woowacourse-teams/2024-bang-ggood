@@ -20,7 +20,8 @@ interface Props {
 }
 
 const SubmitModalWithSummary = ({ isModalOpen, modalClose, onConfirm = () => {}, mutateType, checklistId }: Props) => {
-  const { rawValue: roomInfo, actions } = useStore(checklistRoomInfoStore);
+  const summary = useStore(checklistRoomInfoStore, state => state.rawValue.summary);
+  const actions = useStore(checklistRoomInfoStore, state => state.actions);
 
   // 체크리스트 작성 / 수정
   const { handleSubmitChecklist } = useMutateChecklist(mutateType, checklistId);
@@ -43,12 +44,12 @@ const SubmitModalWithSummary = ({ isModalOpen, modalClose, onConfirm = () => {},
             autoFocus
             onChange={actions.onChange}
             name="summary"
-            value={roomInfo.summary}
+            value={summary}
             maxLength={15}
             height={'small'}
           />
           <S.CounterContainer>
-            <CounterBox currentCount={roomInfo.summary?.length || 0} totalCount={15} />
+            <CounterBox currentCount={summary?.length || 0} totalCount={15} />
           </S.CounterContainer>
           <Button size="full" color="dark" onClick={handleSaveChecklist} isSquare label="체크리스트 저장하기" />
         </S.Wrapper>

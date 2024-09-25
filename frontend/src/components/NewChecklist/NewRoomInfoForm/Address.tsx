@@ -7,7 +7,8 @@ import RealTimeAddressModal from '@/components/NewChecklist/AddressModal/RealTim
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
 const Address = () => {
-  const { address, buildingName } = useStore(checklistRoomInfoStore, state => state.rawValue);
+  const address = useStore(checklistRoomInfoStore, state => state.rawValue.address);
+  const buildingName = useStore(checklistRoomInfoStore, state => state.rawValue.buildingName);
 
   return (
     <FormField>

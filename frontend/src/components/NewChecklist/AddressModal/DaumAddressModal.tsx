@@ -24,7 +24,7 @@ const DaumAddressModal = () => {
   const postcodeContainerRef = useRef<HTMLDivElement | null>(null);
 
   const { findNearSubway } = useRoomInfoUnvalidatedStore();
-  const { actions: nonInputAction } = useStore(roomInfoUnvalidatedStore);
+  const roomInfoUnvalidatedStoreActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
 
   const handleAddress = () => {
     openModal();
@@ -54,8 +54,8 @@ const DaumAddressModal = () => {
         width: '100%',
         height: '60rem',
         oncomplete: async (data: Address) => {
-          nonInputAction.set('address', data.address);
-          nonInputAction.set('buildingName', data.buildingName);
+          roomInfoUnvalidatedStoreActions.set('address', data.address);
+          roomInfoUnvalidatedStoreActions.set('buildingName', data.buildingName);
 
           loadExternalScriptWithCallback('kakaoMap', () => findPosition(data));
         },

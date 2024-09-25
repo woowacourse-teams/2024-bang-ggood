@@ -6,8 +6,8 @@ import { Search } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
 import useModal from '@/hooks/useModal';
-import useRoomInfoNonInput from '@/hooks/useRoomInfoNonInput';
-import roomInfoNonInputStore from '@/store/roomInfoNonInputStore';
+import useRoomInfoUnvalidatedStore from '@/hooks/useRoomInfoUnvalidatedStore';
+import roomInfoUnvalidatedStore from '@/store/roomInfoUnvalidatedStore';
 import { Address, Postcode, PostcodeOptions } from '@/types/address';
 import loadExternalScriptWithCallback from '@/utils/loadScript';
 
@@ -23,8 +23,8 @@ const DaumAddressModal = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const postcodeContainerRef = useRef<HTMLDivElement | null>(null);
 
-  const { findNearSubway } = useRoomInfoNonInput();
-  const { actions: nonInputAction } = useStore(roomInfoNonInputStore);
+  const { findNearSubway } = useRoomInfoUnvalidatedStore();
+  const { actions: nonInputAction } = useStore(roomInfoUnvalidatedStore);
 
   const handleAddress = () => {
     openModal();

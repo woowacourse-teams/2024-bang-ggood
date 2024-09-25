@@ -12,14 +12,13 @@ interface Actions {
   set: <T extends keyof States>(name: T, value: States[T]) => void;
 }
 
-const roomInfoNonInputStore = createStore<States & { actions: Actions }>()(set => ({
+const roomInfoUnvalidatedStore = createStore<States & { actions: Actions }>()(set => ({
   nearSubwayStation: [],
   address: '',
   buildingName: '',
-
   actions: {
     set: (name, value) => set({ [name]: value }),
   },
 }));
 
-export default roomInfoNonInputStore;
+export default roomInfoUnvalidatedStore;

@@ -8,15 +8,15 @@ import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import RealTimeMap from '@/components/_common/Map/RealTimeMap';
 import Modal from '@/components/_common/Modal/Modal';
 import useModal from '@/hooks/useModal';
-import useRoomInfoNonInput from '@/hooks/useRoomInfoNonInput';
-import roomInfoNonInputStore from '@/store/roomInfoNonInputStore';
+import useRoomInfoUnvalidatedStore from '@/hooks/useRoomInfoUnvalidatedStore';
+import roomInfoUnvalidatedStore from '@/store/roomInfoUnvalidatedStore';
 import { title4 } from '@/styles/common';
 import { Position } from '@/types/address';
 
 const RealTimeAddressModal = () => {
   const DEFAULT_POSITION = { lat: 0, lon: 0 };
 
-  const { actions: nonInputAction } = useStore(roomInfoNonInputStore);
+  const { actions: nonInputAction } = useStore(roomInfoUnvalidatedStore);
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
@@ -25,7 +25,7 @@ const RealTimeAddressModal = () => {
   const [currentAddress, setCurrentAddress] = useState('');
   const [currentBuildingName, setCurrentBuildingName] = useState('');
 
-  const { findNearSubway } = useRoomInfoNonInput();
+  const { findNearSubway } = useRoomInfoUnvalidatedStore();
 
   const handleSubmitAddress = () => {
     if (position.lat && position.lon) {

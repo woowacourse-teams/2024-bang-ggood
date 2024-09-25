@@ -1,17 +1,16 @@
 import { useStore } from 'zustand';
 
 import { getNearSubway } from '@/apis/subway';
-import roomInfoNonInputStore from '@/store/roomInfoNonInputStore';
+import roomInfoUnvalidatedStore from '@/store/roomInfoUnvalidatedStore';
 
 /** 
-useRoomInfoNonInput : 방 기본정보에서 인풋 형식이 아니고, 검증이 필요없는 필드에 대한
+roomInfoUnvalidatedStore : 방 기본정보에서 인풋 형식이 아니고, 검증이 필요없는 필드에 대한
 함수를 모아놓은 훅입니다. (주소, 지하철, 관리비, 방구조)
 * @returns 
 * findNearSubway : 가까운 지하철을 찾고 전역에 설정해주는 함수입니다.
 */
-
-const useRoomInfoNonInput = () => {
-  const { actions } = useStore(roomInfoNonInputStore);
+const useRoomInfoUnvalidatedStore = () => {
+  const { actions } = useStore(roomInfoUnvalidatedStore);
 
   const findNearSubway = async ({ lat, lon }: { lat: number; lon: number }) => {
     const nearSubways = await getNearSubway({ lat, lon });
@@ -21,4 +20,4 @@ const useRoomInfoNonInput = () => {
   return { findNearSubway };
 };
 
-export default useRoomInfoNonInput;
+export default useRoomInfoUnvalidatedStore;

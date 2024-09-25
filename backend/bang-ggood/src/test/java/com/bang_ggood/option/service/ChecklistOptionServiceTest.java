@@ -73,6 +73,26 @@ class ChecklistOptionServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.OPTION_DUPLICATED.getMessage());
     }
 
+    @DisplayName("옵션 삭제 성공")
+    @Test
+    void deleteAllByChecklistId() {
+        //given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        List<ChecklistOption> checklistOptions = List.of(
+                ChecklistOptionFixture.CHECKLIST1_OPTION_CLOSET(checklist),
+                ChecklistOptionFixture.CHECKLIST1_OPTION_BED(checklist)
+        );
+        checklistOptionService.createOptions(checklistOptions);
+
+        //when
+        checklistOptionService.deleteAllByChecklistId(checklist.getId());
+
+        //then
+        assertThat(checklistOptionRepository.findAllByChecklistId(checklist.getId())).hasSize(0);
+    }
+
     @DisplayName("옵션 수정 성공")
     @Test
     void updateOptions() {

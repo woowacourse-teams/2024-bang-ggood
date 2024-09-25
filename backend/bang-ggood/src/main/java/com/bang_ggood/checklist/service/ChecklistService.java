@@ -73,22 +73,7 @@ public class ChecklistService {
     }
 
     @Transactional
-    public void deleteChecklistById(User user, long id) {
-        Checklist checklist = checklistRepository.getById(id);
-        validateChecklistOwnership(user, checklist);
-        checklistQuestionRepository.deleteAllByChecklistId(checklist.getId());
-        checklistOptionRepository.deleteAllByChecklistId(checklist.getId());
-        checklistMaintenanceRepository.deleteAllByChecklistId(checklist.getId());
+    public void deleteById(Long id) {
         checklistRepository.deleteById(id);
-        roomRepository.deleteById(checklist.getRoom().getId());
-    }
-
-    @Transactional
-    public void deleteChecklistLikeByChecklistId(User user, long checklistId) {
-        Checklist checklist = checklistRepository.getById(checklistId);
-        validateChecklistOwnership(user, checklist);
-        ChecklistLike checklistLike = checklistLikeRepository.getByChecklistId(checklistId);
-
-        checklistLikeRepository.deleteById(checklistLike.getId());
     }
 }

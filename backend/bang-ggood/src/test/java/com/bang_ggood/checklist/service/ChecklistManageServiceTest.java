@@ -84,6 +84,38 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
     }
 
+    @DisplayName("체크리스트 삭제 성공")
+    @Test
+    void deleteChecklistById() {
+        // given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+
+        // when
+        checklistManageService.deleteChecklistById(user, checklist.getId());
+
+        // then
+        assertThat(checklistRepository.existsById(checklist.getId().longValue())).isFalse();
+    }
+
+    @DisplayName("체크리스트 삭제 실패 : 체크리스트 작성 유저와 삭제하려는 유저가 다른 경우")
+    @Test
+    void deleteChecklistById_notOwnedByUser_exception() {
+        // given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user1 = userRepository.save(UserFixture.USER1());
+        User user2 = userRepository.save(UserFixture.USER2());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user1));
+
+        // when & then
+        assertThatThrownBy(
+                () -> checklistManageService.deleteChecklistById(user2, checklist.getId())
+        )
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER.getMessage());
+    }
+
     @DisplayName("체크리스트 리스트 조회 성공")
     @Test
     void readUserChecklistsPreview() {

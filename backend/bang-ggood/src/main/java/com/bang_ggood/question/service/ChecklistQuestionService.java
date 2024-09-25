@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.IntStream;
 
 @Service
 public class ChecklistQuestionService {
@@ -81,6 +80,11 @@ public class ChecklistQuestionService {
     @Transactional(readOnly = true)
     public List<ChecklistQuestion> readChecklistQuestions(Checklist checklist) {
         return checklistQuestionRepository.findAllByChecklistId(checklist.getId());
+    }
+
+    @Transactional
+    public void deleteAllByChecklistId(Long id) {
+        checklistQuestionRepository.deleteAllByChecklistId(id);
     }
 
     @Transactional

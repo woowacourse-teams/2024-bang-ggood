@@ -10,14 +10,14 @@ module.exports = merge(common, {
   devtool: 'hidden-source-map',
   plugins: [
     new MiniCssExtractPlugin(),
-    new WorkboxWebpackPlugin.GenerateSW(),
+    // new WorkboxWebpackPlugin.GenerateSW(), 안쓰니까 그냥 주석 해둠
     process.env.SENTRY_AUTH_TOKEN &&
       sentryWebpackPlugin({
         authToken: process.env.SENTRY_AUTH_TOKEN,
         org: process.env.SENTRY_ORG,
         project: process.env.SENTRY_PROJECT,
         sourcemaps: {
-          filesToDeleteAfterUpload: '**/*.js.map',
+          filesToDeleteAfterUpload: ['**/*.js.map', '**/*.css.map', '**/*.LICENSE.txt'],
         },
       }),
 

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import MarkdownPreview from '@uiw/react-markdown-preview';
+import MarkdownPreview from '@uiw/react-markdown-preview/nohighlight';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import Header from '@/components/_common/Header/Header';

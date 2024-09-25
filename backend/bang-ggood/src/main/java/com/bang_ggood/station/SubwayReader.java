@@ -4,22 +4,25 @@ import com.bang_ggood.station.domain.SubwayStation;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class SubwayReader {
 
-    public static final String SUBWAY_DATA_PATH = "seoul_stations_240819.csv";
+    private static final String SUBWAY_DATA_PATH = "classpath*:seoul_stations*.csv";
 
     public static List<SubwayStation> readSubwayStationData() {
         List<SubwayStation> stations = new ArrayList<>();
-        ClassPathResource resource = new ClassPathResource(SUBWAY_DATA_PATH);
         try (CSVReader csvReader = new CSVReaderBuilder(
-                new InputStreamReader(resource.getInputStream(), Charset.forName("EUC-KR"))).build()) {
+                new InputStreamReader(getSubwayStationResource().getInputStream(), Charset.forName("EUC-KR"))).build()) {
             String[] line = csvReader.readNext(); // drop first row
             while ((line = csvReader.readNext()) != null) {
                 SubwayStation station = new SubwayStation(
@@ -34,5 +37,15 @@ public class SubwayReader {
         } catch (IOException | CsvValidationException e) {
             throw new RuntimeException("지하철 데이터 파일을 읽어오는데 실패했습니다.");
         }
+    }
+
+    private static Resource getSubwayStationResource() throws IOException {
+        ResourcePatternResolver patternResolver = new PathMatchingResourcePatternResolver();
+        Resource[] resources = patternResolver.getResources(SUBWAY_DATA_PATH);
+
+        return Arrays.stream(resources)
+                .filter(resource -> resource.getFilename() != null)
+                .max(Comparator.comparing(Resource::getFilename))
+                .orElseThrow(() -> new RuntimeException(SUBWAY_DATA_PATH + "를 읽어오는데 실패했습니다."));
     }
 }

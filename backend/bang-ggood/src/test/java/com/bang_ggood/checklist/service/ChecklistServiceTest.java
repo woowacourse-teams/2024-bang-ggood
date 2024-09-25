@@ -214,7 +214,6 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 
         //then
         assertThat(checklistRepository.findById(checklist.getId()).isEmpty()).isTrue();
-
     }
 
     @DisplayName("체크리스트 리스트 최신순으로 조회 성공")

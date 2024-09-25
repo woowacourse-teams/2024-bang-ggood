@@ -6,13 +6,11 @@ import SUBWAY_LINE_PALLETE, { SubwayLineName } from '@/styles/subway';
 const SubwayLineIcon = ({ lineName }: { lineName: SubwayLineName }) => {
   const lineColor = SUBWAY_LINE_PALLETE[lineName];
 
-  const excludedSubwayNames = ['인천1호선', '인천2호선'];
-
-  const isNumberSubwayName = lineName.slice(-2) === '호선' && !excludedSubwayNames.includes(lineName);
+  const isNumberTypeSubwayName = lineName.slice(-2) === '호선' && lineName.length === 3;
 
   return (
-    <S.Box color={lineColor} isCircle={isNumberSubwayName}>
-      <S.Text>{isNumberSubwayName ? lineName.slice(0, lineName.length - 2) : lineName}</S.Text>
+    <S.Box color={lineColor} isCircle={isNumberTypeSubwayName}>
+      <S.Text>{isNumberTypeSubwayName ? lineName.slice(0, lineName.length - 2) : lineName}</S.Text>
     </S.Box>
   );
 };
@@ -26,7 +24,7 @@ const S = {
     padding: ${({ isCircle }) => (isCircle ? '0.3rem' : '0.3rem 0.6rem')};
     border-radius: 2rem;
 
-    background-color: ${({ color }) => (color ? color : 'black')};
+    background-color: ${({ color, theme }) => (color ? color : theme.palette.grey400)};
 
     text-align: center;
   `,

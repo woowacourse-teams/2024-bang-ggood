@@ -6,10 +6,6 @@ export const normalize = css`
    License: none (public domain)
 */
 
-  html {
-    font-size: 10px;
-  }
-
   body,
   div,
   span,

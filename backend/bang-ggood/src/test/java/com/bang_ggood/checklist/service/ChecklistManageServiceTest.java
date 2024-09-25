@@ -11,6 +11,7 @@ import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
+import com.bang_ggood.like.service.ChecklistLikeManageService;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.domain.Structure;
@@ -32,6 +33,8 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private ChecklistManageService checklistManageService;
+    @Autowired
+    private ChecklistLikeManageService checklistLikeManageService;
     @Autowired
     private RoomRepository roomRepository;
     @Autowired
@@ -71,6 +74,40 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
                 () -> assertThat(selectedChecklistResponse.room().address()).isEqualTo(room.getAddress())
         );
     }
+
+    @DisplayName("작성된 체크리스트 조회 성공 : 좋아요 여부를 true로 반환한다.")
+    @Test
+    void readChecklist_returnIsLikedTrue() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        checklistLikeManageService.createLike(user, checklist.getId());
+
+        // when
+        SelectedChecklistResponse selectedChecklistResponse = checklistManageService
+                .readChecklist(user, checklist.getId());
+
+        // then
+        assertThat(selectedChecklistResponse.isLiked()).isTrue();
+    }
+
+    @DisplayName("작성된 체크리스트 조회 성공 : 좋아요 여부를 false로 반환한다.")
+    @Test
+    void readChecklist_returnIsLikedFalse() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+
+        // when
+        SelectedChecklistResponse selectedChecklistResponse = checklistManageService
+                .readChecklist(user, checklist.getId());
+
+        // then
+        assertThat(selectedChecklistResponse.isLiked()).isFalse();
+    }
+
 
     @DisplayName("작성된 체크리스트 조회 실패 : 체크리스트가 존재하지 않는 id인 경우")
     @Test

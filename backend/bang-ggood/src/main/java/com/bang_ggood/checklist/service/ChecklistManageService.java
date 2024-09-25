@@ -97,7 +97,7 @@ public class ChecklistManageService {
         List<SelectedOptionResponse> options = readChecklistOptions(checklist);
         List<SelectedCategoryQuestionsResponse> questions = readChecklistQuestions(checklist);
         SelectedRoomResponse room = SelectedRoomResponse.of(checklist, maintenances);
-        boolean isLiked = false; // TODO 좋아요 이후 리팩토링 필요
+        boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
 
         return SelectedChecklistResponse.of(room, options, questions, isLiked);
     }

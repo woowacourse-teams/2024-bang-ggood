@@ -28,6 +28,16 @@ public class QuestionManageService {
         this.checklistQuestionService = checklistQuestionService;
     }
 
+    @Transactional
+    public void createDefaultCustomChecklistQuestions(User user) {
+        List<CustomChecklistQuestion> customChecklistQuestions = Question.findDefaultQuestions()
+                .stream()
+                .map(question -> new CustomChecklistQuestion(user, question))
+                .toList();
+
+        checklistQuestionService.createDefaultCustomQuestions(customChecklistQuestions);
+    }
+
     @Transactional(readOnly = true)
     public CustomChecklistQuestionsResponse readCustomChecklistQuestions(User user) {
         List<CustomChecklistQuestion> customChecklistQuestions = checklistQuestionService.readCustomChecklistQuestions(

@@ -20,6 +20,8 @@ public enum ExceptionCode {
 
     // User
     USER_NOT_FOUND(HttpStatus.UNAUTHORIZED, "유저가 존재하지 않습니다."),
+    GUEST_USER_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "게스트 유저가 존재하지 않습니다."),
+    GUEST_USER_UNEXPECTED_EXIST(HttpStatus.INTERNAL_SERVER_ERROR, "예상치 못한 게스트 유저가 존재합니다. 데이터베이스를 확인해주세요."),
 
     // Answer
     ANSWER_INVALID(HttpStatus.BAD_REQUEST, "점수가 유효하지 않습니다."),
@@ -57,8 +59,8 @@ public enum ExceptionCode {
     LIKE_NOT_EXISTS(HttpStatus.BAD_REQUEST, "체크리스트 좋아요가 존재하지 않아 삭제할 수 없습니다."),
 
     // Auth
-    AUTHENTICATION_COOKIE_EMPTY(HttpStatus.UNAUTHORIZED, "인증 정보가 존재하지 않습니다."),
-    AUTHENTICATION_COOKIE_INVALID(HttpStatus.UNAUTHORIZED, "인증 정보가 올바르지 않습니다."),
+    AUTHENTICATION_COOKIE_EMPTY(HttpStatus.UNAUTHORIZED, "인증정보가 존재하지 않습니다. 쿠키값을 넣어주세요."),
+    AUTHENTICATION_COOKIE_TOKEN_EMPTY(HttpStatus.UNAUTHORIZED, "인증정보가 존재하지 않습니다. 쿠키에 토큰 정보를 넣어주세요."),
     AUTHENTICATION_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "토큰이 만료되었습니다."),
     AUTHENTICATION_TOKEN_INVALID(HttpStatus.UNAUTHORIZED, "토큰 정보가 올바르지 않습니다."),
     AUTHENTICATION_TOKEN_IN_BLACKLIST(HttpStatus.UNAUTHORIZED, "이미 로그아웃되어 더 이상 사용할 수 없는 토큰입니다. 다시 로그인 해주세요."),

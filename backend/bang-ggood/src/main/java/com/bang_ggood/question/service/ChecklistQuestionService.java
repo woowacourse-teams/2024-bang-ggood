@@ -28,6 +28,11 @@ public class ChecklistQuestionService {
     }
 
     @Transactional
+    public void createDefaultCustomQuestions(List<CustomChecklistQuestion> customChecklistQuestions) {
+        customChecklistQuestionRepository.saveAll(customChecklistQuestions);
+    }
+
+    @Transactional
     public void createQuestions(List<ChecklistQuestion> checklistQuestions) {
         validateQuestionDuplicate(checklistQuestions);
         checklistQuestionRepository.saveAll(checklistQuestions);

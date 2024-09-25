@@ -30,7 +30,7 @@ const OccupancyMonth = () => {
           }}
         />
       </FormStyled.FieldBox>
-      <FormField.BottomMessageBox value={errorMessage} />
+      <FormField.ErrorMessage value={errorMessage} />
     </FlexBox.Vertical>
   );
 };

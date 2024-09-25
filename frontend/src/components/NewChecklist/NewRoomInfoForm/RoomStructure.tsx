@@ -34,7 +34,7 @@ const RoomStructure = () => {
           />
         ))}
       </FormStyled.OptionButtonContainer>
-      <FormField.BottomMessageBox />
+      <FormField.BottomEmptyBox />
     </FlexBox.Vertical>
   );
 };

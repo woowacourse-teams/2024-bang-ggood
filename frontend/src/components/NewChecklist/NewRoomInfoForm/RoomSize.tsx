@@ -17,7 +17,7 @@ const RoomSize = () => {
         <Input width="medium" placeholder="" onChange={actions.onChange} name="size" value={roomSize} />
         <FormStyled.FlexLabel label="평"></FormStyled.FlexLabel>
       </FormStyled.FieldBox>
-      <FormField.BottomMessageBox value={errorMessage} />
+      <FormField.ErrorMessage value={errorMessage} />
     </FormField>
   );
 };

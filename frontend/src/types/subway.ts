@@ -5,5 +5,3 @@ export interface SubwayStation {
   stationLine: SubwayLineName[];
   walkingTime: number;
 }
-
-export type NearSubwayStations = SubwayStation[];

@@ -18,7 +18,7 @@ const RoomContractTerm = () => {
         <Input width="medium" placeholder="" onChange={actions.onChange} name="contractTerm" value={contractTerm} />
         <FormStyled.FlexLabel label="개월"></FormStyled.FlexLabel>
       </S.FieldBox>
-      <FormField.BottomMessageBox value={errorMessage} />
+      <FormField.ErrorMessage value={errorMessage} />
     </FormField>
   );
 };

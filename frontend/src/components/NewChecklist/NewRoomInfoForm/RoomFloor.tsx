@@ -38,7 +38,7 @@ const RoomFloor = () => {
         />
         <FormStyled.FlexLabel label="층"></FormStyled.FlexLabel>
       </FormStyled.FieldBox>
-      <FormField.BottomMessageBox value={errorMessageFloor} />
+      <FormField.ErrorMessage value={errorMessageFloor} />
     </FormField>
   );
 };

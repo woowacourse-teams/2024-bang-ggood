@@ -18,7 +18,7 @@ const NearSubwayStations = () => {
           <FormField.TextBox text={'보신 방과 가까운 지하철역을 찾아드릴게요.'} />
         )}
       </FlexBox.Vertical>
-      <FormField.BottomMessageBox />
+      <FormField.BottomEmptyBox />
     </FlexBox.Vertical>
   );
 };

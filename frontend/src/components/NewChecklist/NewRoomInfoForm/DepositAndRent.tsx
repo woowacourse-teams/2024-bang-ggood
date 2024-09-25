@@ -21,7 +21,7 @@ const DepositAndRent = () => {
         <FormStyled.FlexLabel label=" / " />
         <FormField.Input width="medium" placeholder="" onChange={actions.onChange} name="rent" value={rent} />
       </FormStyled.FieldBox>
-      <FormField.BottomMessageBox value={errorMessage} />
+      <FormField.ErrorMessage value={errorMessage} />
     </FormField>
   );
 };

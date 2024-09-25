@@ -23,7 +23,7 @@ const Address = () => {
         {/*주소 찾기 모달*/}
         <DaumAddressModal />
       </FlexBox.Horizontal>
-      <FormField.BottomMessageBox />
+      <FormField.BottomEmptyBox />
     </FormField>
   );
 };

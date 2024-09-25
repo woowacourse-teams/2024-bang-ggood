@@ -42,7 +42,7 @@ const IncludedMaintenances = () => {
           />
         ))}
       </FormStyled.OptionButtonContainer>
-      <FormField.BottomMessageBox />
+      <FormField.BottomEmptyBox />
     </FlexBox.Vertical>
   );
 };

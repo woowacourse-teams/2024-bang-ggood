@@ -19,7 +19,7 @@ const RealEstate = () => {
         name={'realEstate'}
         value={realEstate}
       />
-      <FormField.BottomMessageBox value={errorMessage} />
+      <FormField.ErrorMessage value={errorMessage} />
     </FormField>
   );
 };

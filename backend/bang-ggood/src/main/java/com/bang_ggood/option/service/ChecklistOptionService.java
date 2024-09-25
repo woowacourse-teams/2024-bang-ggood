@@ -40,4 +40,11 @@ public class ChecklistOptionService {
     public List<ChecklistOption> readChecklistOptions(Checklist checklist) {
         return checklistOptionRepository.findAllByChecklistId(checklist.getId());
     }
+
+    @Transactional
+    public void updateOptions(Long checklistId, List<ChecklistOption> checklistOptions) {
+        validateOptionDuplicate(checklistOptions);
+        checklistOptionRepository.deleteAllByChecklistId(checklistId);
+        checklistOptionRepository.saveAll(checklistOptions);
+    }
 }

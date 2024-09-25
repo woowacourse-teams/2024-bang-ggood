@@ -7,6 +7,7 @@ import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.question.ChecklistQuestionFixture;
+import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
@@ -55,10 +56,7 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
         Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-        List<ChecklistQuestion> checklistQuestions = List.of(
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist),
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION10(checklist)
-        );
+        List<ChecklistQuestion> checklistQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS(checklist);
 
         //when
         checklistQuestionService.createQuestions(checklistQuestions);
@@ -68,23 +66,94 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
                 checklistQuestions.size());
     }
 
-    @DisplayName("질문 작성 실패: 옵션 id가 중복일 경우")
+    @DisplayName("질문 작성 실패: 질문 id가 중복일 경우")
     @Test
     void createQuestions_duplicateId_exception() {
         //given
         Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-        List<ChecklistQuestion> checklistQuestions = List.of(
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist),
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist)
-        );
+        List<ChecklistQuestion> checklistQuestions = ChecklistQuestionFixture.CHECKLIST1_DUPLICATE(checklist);
 
         // when & then
         assertThatThrownBy(
                 () -> checklistQuestionService.createQuestions(checklistQuestions))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
+    }
+
+    @DisplayName("질문 수정 성공")
+    @Test
+    void updateQuestions() {
+        //given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        List<ChecklistQuestion> checklistQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS(checklist);
+        checklistQuestionService.createQuestions(checklistQuestions);
+
+        //when
+        List<ChecklistQuestion> updateQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS_UPDATE(checklist);
+        checklistQuestionService.updateQuestions(checklistQuestions, updateQuestions);
+
+        //then
+        assertThat(checklistQuestions.get(1).getAnswer()).isEqualTo(Answer.BAD);
+    }
+
+    @DisplayName("질문 수정 실패: 질문 id가 중복일 경우")
+    @Test
+    void updateQuestions_duplicateId_exception() {
+        //given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        List<ChecklistQuestion> checklistQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS(checklist);
+        checklistQuestionService.createQuestions(checklistQuestions);
+
+        //when & then
+        List<ChecklistQuestion> updateQuestions = ChecklistQuestionFixture.CHECKLIST1_DUPLICATE(checklist);
+        assertThatThrownBy(
+                () -> checklistQuestionService.updateQuestions(checklistQuestions, updateQuestions))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
+    }
+
+    @DisplayName("질문 수정 실패 : 기존의 질문과 질문 길이가 다를 경우")
+    @Test
+    void updateQuestions_differentQuestionLength_exception() {
+        //given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        List<ChecklistQuestion> checklistQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS(checklist);
+        checklistQuestionService.createQuestions(checklistQuestions);
+
+        //when & then
+        List<ChecklistQuestion> updateQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS_DIFFERENT_LENGTH(
+                checklist);
+        assertThatThrownBy(
+                () -> checklistQuestionService.updateQuestions(checklistQuestions, updateQuestions))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.QUESTION_DIFFERENT.getMessage());
+    }
+
+    @DisplayName("질문 수정 실패 : 기존의 체크리스트와 질문이 다를 경우")
+    @Test
+    void updateQuestions_differentQuestion_exception() {
+        //given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        List<ChecklistQuestion> checklistQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS(checklist);
+        checklistQuestionService.createQuestions(checklistQuestions);
+
+        //when & then
+        List<ChecklistQuestion> updateQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS_DIFFERENT_QUESTION(
+                checklist);
+        assertThatThrownBy(
+                () -> checklistQuestionService.updateQuestions(checklistQuestions, updateQuestions))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.QUESTION_DIFFERENT.getMessage());
     }
 
     @DisplayName("커스텀 체크리스트 질문 조회 성공")

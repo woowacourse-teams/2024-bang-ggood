@@ -6,6 +6,7 @@ import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.like.service.ChecklistLikeService;
+import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.domain.MaintenanceItem;
 import com.bang_ggood.maintenance.service.ChecklistMaintenanceService;
@@ -96,7 +97,7 @@ public class ChecklistManageService {
         List<SelectedOptionResponse> options = readChecklistOptions(checklist);
         List<SelectedCategoryQuestionsResponse> questions = readChecklistQuestions(checklist);
         SelectedRoomResponse room = SelectedRoomResponse.of(checklist, maintenances);
-        boolean isLiked = false; // TODO 좋아요 이후 리팩토링 필요
+        boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
 
         return SelectedChecklistResponse.of(room, options, questions, isLiked);
     }
@@ -145,6 +146,16 @@ public class ChecklistManageService {
         return likedChecklists.stream()
                 .map(checklist -> ChecklistPreviewResponse.of(checklist, true))
                 .toList();
+    }
+
+    @Transactional
+    public void deleteChecklistById(User user, Long id) {
+        Checklist checklist = checklistService.readChecklist(user, id);
+        checklistQuestionService.deleteAllByChecklistId(checklist.getId());
+        checklistOptionService.deleteAllByChecklistId(checklist.getId());
+        checklistMaintenanceService.deleteAllByChecklistId(checklist.getId());
+        checklistService.deleteById(id);
+        roomService.deleteById(checklist.getRoom().getId());
     }
 
     @Transactional(readOnly = true)

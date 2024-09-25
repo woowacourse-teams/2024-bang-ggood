@@ -42,6 +42,11 @@ public class ChecklistMaintenanceService {
     }
 
     @Transactional
+    public void deleteAllByChecklistId(Long id) {
+        checklistMaintenanceRepository.deleteAllByChecklistId(id);
+    }
+
+    @Transactional
     public void updateMaintenances(Long checklistId, List<ChecklistMaintenance> checklistMaintenances) {
         validateMaintenancesDuplicate(checklistMaintenances);
         checklistMaintenanceRepository.deleteAllByChecklistId(checklistId);

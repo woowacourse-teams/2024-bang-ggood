@@ -75,6 +75,26 @@ class ChecklistMaintenanceServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.MAINTENANCE_ITEM_DUPLICATE.getMessage());
     }
 
+    @DisplayName("관리비 포함 항목 삭제 성공")
+    @Test
+    void deleteAllByChecklistId() {
+        //given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        List<ChecklistMaintenance> checklistMaintenances = List.of(
+                ChecklistMaintenanceFixture.CHECKLIST1_MAINTENANCE_WATERWORKS(checklist),
+                ChecklistMaintenanceFixture.CHECKLIST1_MAINTENANCE_INTERNET(checklist)
+        );
+        checklistMaintenanceService.createMaintenances(checklistMaintenances);
+
+        //when
+        checklistMaintenanceService.deleteAllByChecklistId(checklist.getId());
+
+        //then
+        assertThat(checklistMaintenanceRepository.findAllByChecklistId(checklist.getId())).hasSize(0);
+    }
+
     @DisplayName("관리비 포함 항목 수정 성공")
     @Test
     void updateChecklistMaintenance() {

@@ -51,11 +51,11 @@ jobs:
         name: bang-ggood-be-develop-jar
         path: ./**/*.jar
 
-  deploy:
+  deploy1:
     needs: build
-    runs-on: bang-ggood
+    runs-on: bang-ggood-prod1  
     steps:
-      - name: change permission
+      - name: Change permission
         run: sudo chown -R ubuntu:ubuntu /home/ubuntu/actions-runner/_work/2024-bang-ggood
 
       - name: Download build artifact
@@ -63,7 +63,32 @@ jobs:
         with:
           name: bang-ggood-be-develop-jar
 
-      - name: Turn off the server 8080 if runs
+      - name: Turn off the server 8080 if it runs
+        run: sudo fuser -k -n tcp 8080 || true
+
+      - name: Start server
+        run: sudo nohup java -jar -Dspring.profiles.active=prod -Duser.timezone=Asia/Seoul ./backend/bang-ggood/build/libs/*SNAPSHOT.jar > /home/ubuntu/actions-runner/server.log 2>&1 &
+
+      - name: Check server health
+        run: |
+          until curl -s -o /dev/null -w "%{http_code}" http://localhost:8080 | grep -q "200"; do
+            echo "Waiting for server to respond with 200 OK..."
+            sleep 5
+          done
+
+  deploy2:
+    needs: deploy1
+    runs-on: bang-ggood-prod2
+    steps:
+      - name: Change permission
+        run: sudo chown -R ubuntu:ubuntu /home/ubuntu/actions-runner/_work/2024-bang-ggood
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: bang-ggood-be-develop-jar
+
+      - name: Turn off the server 8080 if it runs
         run: sudo fuser -k -n tcp 8080 || true
 
       - name: Start server

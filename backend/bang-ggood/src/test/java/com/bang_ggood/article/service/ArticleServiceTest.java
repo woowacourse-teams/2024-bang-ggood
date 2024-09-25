@@ -4,7 +4,7 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.article.ArticleFixture;
 import com.bang_ggood.article.domain.Article;
 import com.bang_ggood.article.dto.request.ArticleCreateRequest;
-import com.bang_ggood.article.dto.response.ArticleListViewResponse;
+import com.bang_ggood.article.dto.response.ArticlesResponse;
 import com.bang_ggood.article.repository.ArticleRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
@@ -61,9 +61,9 @@ public class ArticleServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.ARTICLE_NOT_FOUND.getMessage());
     }
 
-    @DisplayName("아티클 리스트뷰 최신순 조회 성공")
+    @DisplayName("아티클 목록 최신순 조회 성공")
     @Test
-    void readArticlesListView() {
+    void readArticles() {
         // given
         Article article1 = articleRepository.save(ArticleFixture.ARTICLE_1());
         Article article2 = articleRepository.save(ArticleFixture.ARTICLE_2());
@@ -71,8 +71,8 @@ public class ArticleServiceTest extends IntegrationTestSupport {
         Article article4 = articleRepository.save(ArticleFixture.ARTICLE_4());
 
         // when
-        List<String> articleTitles = articleService.readArticlesListView().articles().stream()
-                .map(ArticleListViewResponse::title)
+        List<String> articleTitles = articleService.readArticles().articles().stream()
+                .map(ArticlesResponse::title)
                 .toList();
 
         // then

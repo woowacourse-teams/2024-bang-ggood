@@ -90,12 +90,12 @@ public class ArticleE2ETest extends AcceptanceTest {
         assertThat(response.message()).isEqualTo(ExceptionCode.ARTICLE_NOT_FOUND.getMessage());
     }
 
-    @DisplayName("아티클 리스트뷰 조회 성공")
+    @DisplayName("아티클 목록 조회 성공")
     @Test
     void readArticlesListView() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .when().get("/articles/list")
+                .when().get("/articles")
                 .then().log().all()
                 .statusCode(200);
     }

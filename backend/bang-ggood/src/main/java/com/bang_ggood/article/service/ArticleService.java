@@ -2,9 +2,9 @@ package com.bang_ggood.article.service;
 
 import com.bang_ggood.article.domain.Article;
 import com.bang_ggood.article.dto.request.ArticleCreateRequest;
-import com.bang_ggood.article.dto.response.ArticleListViewResponse;
+import com.bang_ggood.article.dto.response.ArticlesResponse;
 import com.bang_ggood.article.dto.response.ArticleResponse;
-import com.bang_ggood.article.dto.response.ArticlesListViewResponse;
+import com.bang_ggood.article.dto.response.ArticlesResponses;
 import com.bang_ggood.article.repository.ArticleRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +13,6 @@ import java.util.List;
 @Service
 public class ArticleService {
 
-    private static final int MAX_ARTICLE_CARDS = 3;
     private final ArticleRepository articleRepository;
 
     public ArticleService(ArticleRepository articleRepository) {
@@ -34,11 +33,11 @@ public class ArticleService {
     }
 
     @Transactional(readOnly = true)
-    public ArticlesListViewResponse readArticlesListView() {
-        List<ArticleListViewResponse> articles = articleRepository.findLatestArticles().stream()
-                .map(ArticleListViewResponse::from)
+    public ArticlesResponses readArticles() {
+        List<ArticlesResponse> articles = articleRepository.findLatestArticles().stream()
+                .map(ArticlesResponse::from)
                 .toList();
-        return new ArticlesListViewResponse(articles);
+        return new ArticlesResponses(articles);
     }
 
     @Transactional

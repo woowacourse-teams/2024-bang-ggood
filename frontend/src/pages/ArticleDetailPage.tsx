@@ -16,21 +16,20 @@ type RouteParams = {
 };
 
 const ArticleDetailPage = () => {
+  const navigate = useNavigate();
   const { articleId } = useParams() as RouteParams;
   const { data: article, isError, isLoading } = useGetArticleQuery(articleId);
-
-  const navigate = useNavigate();
 
   const { color500 } = getSeqColor(article?.articleId ?? 0);
 
   if (isError) navigate(ROUTE_PATH.articleList);
-
   if (isLoading) return <SKArticleDetail />;
 
   return (
     <>
-      <Header left={<Header.Backward />} />
-      <Layout withHeader>
+      <Header left={<Header.Backward />} isTransparent />
+      <S.Thumbnail src={article?.thumbnail || ''} />
+      <Layout withHeader style={{ overflowY: 'hidden' }}>
         <S.Row>
           <S.Keyword bgColor={color500}>{article?.keyword}</S.Keyword>
           <S.Date>{formattedDate(article?.createdAt ?? '')}</S.Date>
@@ -43,7 +42,9 @@ const ArticleDetailPage = () => {
             'data-color-mode': 'light',
           }}
         />
+        <S.EmptyBox />
       </Layout>
+      <S.EmptyBox />
     </>
   );
 };
@@ -51,6 +52,11 @@ const ArticleDetailPage = () => {
 export default ArticleDetailPage;
 
 const S = {
+  Thumbnail: styled.img`
+    width: 100%;
+    height: 25rem;
+    object-fit: cover;
+  `,
   Row: styled.div`
     ${flexSpaceBetween}
   `,
@@ -74,5 +80,8 @@ const S = {
 
     ${title1}
     text-align: center;
+  `,
+  EmptyBox: styled.div`
+    height: 10rem;
   `,
 };

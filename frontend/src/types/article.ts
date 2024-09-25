@@ -4,6 +4,6 @@ export interface Article {
   title: string;
   summary: string;
   content?: string;
-  thumbnail: string | null;
+  thumbnail?: string | null;
   createdAt: string;
 }

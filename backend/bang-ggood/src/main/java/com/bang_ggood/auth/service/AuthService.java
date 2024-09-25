@@ -2,18 +2,11 @@ package com.bang_ggood.auth.service;
 
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.response.OauthInfoApiResponse;
-import com.bang_ggood.checklist.dto.request.ChecklistRequest;
-import com.bang_ggood.checklist.service.ChecklistManageService;
+import com.bang_ggood.global.DefaultChecklistService;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
-import com.bang_ggood.option.domain.Option;
-import com.bang_ggood.question.domain.Answer;
-import com.bang_ggood.question.domain.CustomChecklistQuestion;
-import com.bang_ggood.question.domain.Question;
-import com.bang_ggood.question.dto.request.QuestionRequest;
-import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
-import com.bang_ggood.room.dto.request.RoomRequest;
 import com.bang_ggood.user.domain.User;
+import com.bang_ggood.user.domain.UserType;
 import com.bang_ggood.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +32,7 @@ public class AuthService {
                        DefaultChecklistService defaultChecklistService, UserRepository userRepository) {
         this.oauthClient = oauthClient;
         this.jwtTokenProvider = jwtTokenProvider;
-        this.checklistManageService = checklistManageService;
+        this.defaultChecklistService = defaultChecklistService;
         this.userRepository = userRepository;
     }
 

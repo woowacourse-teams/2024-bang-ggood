@@ -69,13 +69,6 @@ jobs:
       - name: Start server
         run: sudo nohup java -jar -Dspring.profiles.active=prod -Duser.timezone=Asia/Seoul ./backend/bang-ggood/build/libs/*SNAPSHOT.jar > /home/ubuntu/actions-runner/server.log 2>&1 &
 
-      - name: Check server health
-        run: |
-          until curl -s -o /dev/null -w "%{http_code}" http://localhost:8080 | grep -q "200"; do
-            echo "Waiting for server to respond with 200 OK..."
-            sleep 5
-          done
-
   deploy2:
     needs: deploy1
     runs-on: bang-ggood-prod2

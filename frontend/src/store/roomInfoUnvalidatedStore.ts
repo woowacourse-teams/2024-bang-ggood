@@ -10,14 +10,20 @@ interface States {
 
 interface Actions {
   set: <T extends keyof States>(name: T, value: States[T]) => void;
+  resetAll: () => void;
 }
 
-const roomInfoUnvalidatedStore = createStore<States & { actions: Actions }>()(set => ({
+const defaultStates = {
   nearSubwayStation: [],
   address: '',
   buildingName: '',
+};
+
+const roomInfoUnvalidatedStore = createStore<States & { actions: Actions }>()(set => ({
+  ...defaultStates,
   actions: {
     set: (name, value) => set({ [name]: value }),
+    resetAll: () => set(defaultStates),
   },
 }));
 

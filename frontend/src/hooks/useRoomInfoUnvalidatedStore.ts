@@ -10,11 +10,11 @@ roomInfoUnvalidatedStore : 방 기본정보에서 인풋 형식이 아니고, �
 * findNearSubway : 가까운 지하철을 찾고 전역에 설정해주는 함수입니다.
 */
 const useRoomInfoUnvalidatedStore = () => {
-  const roomInfoUnvalidatedStoreActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
+  const roomInfoUnvalidatedActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
 
   const findNearSubway = async ({ lat, lon }: { lat: number; lon: number }) => {
     const nearSubways = await getNearSubway({ lat, lon });
-    roomInfoUnvalidatedStoreActions.set('nearSubwayStation', nearSubways);
+    roomInfoUnvalidatedActions.set('nearSubwayStation', nearSubways);
   };
 
   return { findNearSubway };

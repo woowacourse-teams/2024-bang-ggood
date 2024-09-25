@@ -6,7 +6,7 @@ import NearSubwayStationItem from '@/components/_common/SubwayStation/NearSubway
 import roomInfoUnvalidatedStore from '@/store/roomInfoUnvalidatedStore';
 
 const NearSubwayStations = () => {
-  const { nearSubwayStation } = useStore(roomInfoUnvalidatedStore);
+  const nearSubwayStation = useStore(roomInfoUnvalidatedStore, state => state.nearSubwayStation);
 
   return (
     <FlexBox.Vertical gap="1.5rem">

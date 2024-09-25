@@ -16,7 +16,7 @@ import { Position } from '@/types/address';
 const RealTimeAddressModal = () => {
   const DEFAULT_POSITION = { lat: 0, lon: 0 };
 
-  const roomInfoUnvalidatedStoreActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
+  const roomInfoUnvalidatedActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
@@ -29,8 +29,8 @@ const RealTimeAddressModal = () => {
 
   const handleSubmitAddress = () => {
     if (position.lat && position.lon) {
-      roomInfoUnvalidatedStoreActions.set('address', currentAddress);
-      roomInfoUnvalidatedStoreActions.set('buildingName', currentBuildingName);
+      roomInfoUnvalidatedActions.set('address', currentAddress);
+      roomInfoUnvalidatedActions.set('buildingName', currentBuildingName);
 
       findNearSubway(position);
       closeModal();

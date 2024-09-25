@@ -5,12 +5,16 @@ import SubwayLineIcon from '@/components/_common/SubwayStation/SubwayLineIcon/Su
 import { flexCenter } from '@/styles/common';
 import { SubwayStation } from '@/types/subway';
 
-const NearSubwayStationItem = ({ station }: { station: SubwayStation }) => {
+interface Props {
+  station: SubwayStation;
+}
+
+const NearSubwayStationItem = ({ station }: Props) => {
   const { stationName, stationLine, walkingTime } = station;
 
   return (
-    <FlexBox.Horizontal gap={'6px'}>
-      <FlexBox.Horizontal gap={'4px'}>
+    <FlexBox.Horizontal gap={'0.6rem'}>
+      <FlexBox.Horizontal gap={'0.4rem'}>
         {stationLine?.map(oneLine => <SubwayLineIcon lineName={oneLine} key={oneLine} />)}
       </FlexBox.Horizontal>
       <S.TextBox>{`${stationName}까지 도보 ${walkingTime}분`}</S.TextBox>

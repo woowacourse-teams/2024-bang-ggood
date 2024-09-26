@@ -14,10 +14,12 @@ import {
 } from '@/assets/assets';
 import LikeButton from '@/components/_common/Like/LikeButton';
 import AddressMap from '@/components/_common/Map/AddressMap';
+import SubwayStations from '@/components/_common/Subway/SubwayStations';
 import { IncludedMaintenancesData } from '@/constants/roomInfo';
 import { flexColumn, flexRow, flexSpaceBetween, title2 } from '@/styles/common';
 import { Option } from '@/types/option';
 import { RoomInfo } from '@/types/room';
+import { SubwayStation } from '@/types/subway';
 import formattedDate from '@/utils/formattedDate';
 import formattedUndefined from '@/utils/formattedUndefined';
 
@@ -26,9 +28,10 @@ interface Props {
   options: Option[];
   checklistId: number;
   isLiked: boolean;
+  nearSubways: SubwayStation[];
 }
 
-const RoomInfoSection = ({ room, options, checklistId, isLiked }: Props) => {
+const RoomInfoSection = ({ nearSubways, room, options, checklistId, isLiked }: Props) => {
   const {
     roomName,
     deposit,
@@ -39,8 +42,6 @@ const RoomInfoSection = ({ room, options, checklistId, isLiked }: Props) => {
     contractTerm,
     floor,
     floorLevel,
-    station,
-    walkingTime,
     realEstate,
     occupancyMonth,
     buildingName,
@@ -94,7 +95,7 @@ const RoomInfoSection = ({ room, options, checklistId, isLiked }: Props) => {
       </S.Row>
       <S.Row>
         <Subway />
-        {formattedUndefined(station)}역까지 도보 {formattedUndefined(walkingTime)}분
+        <SubwayStations stations={nearSubways} />
       </S.Row>
       <S.GapBox>
         <S.Row>

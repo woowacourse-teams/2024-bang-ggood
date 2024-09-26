@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import React from 'react';
 
 import { title3 } from '@/styles/common';
 import theme from '@/styles/theme';
@@ -28,7 +29,9 @@ const HighlightText = ({ title, highlights }: Props) => {
   return <S.Title>{highlightText({ title, highlights })}</S.Title>;
 };
 
-export default HighlightText;
+const MemoHighlightText = React.memo(HighlightText);
+
+export default MemoHighlightText;
 
 const S = {
   Title: styled.div`

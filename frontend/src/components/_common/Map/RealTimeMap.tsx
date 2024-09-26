@@ -198,7 +198,7 @@ const S = {
     ${flexCenter}
   `,
   RetryButtonBox: styled(Button)`
-    margin-top: 20px;
+    margin-top: 2rem;
   `,
   InfoTextBox: styled.div`
     position: absolute;
@@ -211,12 +211,12 @@ const S = {
     transform: translate(-50%, -50%);
   `,
   LoadingMessage: styled.div`
-    padding-top: 20px;
+    padding-top: 2rem;
   `,
   FailureIcon: styled.div`
     width: 100%;
     ${flexCenter}
-    margin-bottom:10px;
+    margin-bottom:1rem;
   `,
   AddressButton: styled(Button)`
     width: 50%;
@@ -225,7 +225,7 @@ const S = {
   `,
   ButtonBox: styled.div`
     display: flex;
-    margin-top: 10px;
+    margin-top: 1rem;
   `,
 };
 

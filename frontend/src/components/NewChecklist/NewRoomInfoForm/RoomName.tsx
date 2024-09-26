@@ -12,7 +12,7 @@ const RoomName = () => {
     <FormField>
       <FormField.Label label="방 이름" required={true} />
       <FormField.Input placeholder="" onChange={actions.onChange} name="roomName" value={roomName} />
-      <FormField.ErrorMessage value={errorMessage ?? ''} />
+      <FormField.ErrorMessage value={errorMessage} />
     </FormField>
   );
 };

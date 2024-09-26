@@ -41,7 +41,7 @@ const S = {
   TextBox: styled.div`
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 0.5rem;
   `,
   UncompletedIndicator: styled.div`
     position: absolute;

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import React from 'react';
 
 import HighlightText from '@/components/_common/Highlight/HighlightText';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
@@ -11,15 +12,14 @@ import { ChecklistQuestion } from '@/types/checklist';
 
 interface Props {
   question: ChecklistQuestion;
+  answer: AnswerType;
 }
 
-const ChecklistQuestionItem = ({ question }: Props) => {
+const ChecklistQuestionItem = ({ answer, question }: Props) => {
   const { questionId, title, highlights } = question;
 
-  const { updateAndToggleAnswer: updateAnswer, findCategoryQuestion } = useChecklistAnswer();
+  const { updateAndToggleAnswer: updateAnswer } = useChecklistAnswer();
   const { currentTabId } = useTabContext();
-
-  const { answer } = findCategoryQuestion({ categoryId: currentTabId, questionId });
 
   const handleClick = (newAnswer: AnswerType) => {
     updateAnswer({ categoryId: currentTabId, questionId: questionId, newAnswer });
@@ -41,7 +41,8 @@ const ChecklistQuestionItem = ({ question }: Props) => {
   );
 };
 
-export default ChecklistQuestionItem;
+const ChecklistQuestionItemMemo = React.memo(ChecklistQuestionItem);
+export default ChecklistQuestionItemMemo;
 
 const S = {
   Container: styled.div`

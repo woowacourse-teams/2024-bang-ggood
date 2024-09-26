@@ -17,7 +17,7 @@ const MaintenanceFee = () => {
         <Input width="medium" placeholder="" onChange={actions.onChange} name="maintenanceFee" value={maintenanceFee} />
         <FormStyled.FlexLabel label="만원"></FormStyled.FlexLabel>
       </FormStyled.FieldBox>
-      <FormField.ErrorMessage value={errorMessage ?? ''} />
+      <FormField.ErrorMessage value={errorMessage} />
     </FormField>
   );
 };

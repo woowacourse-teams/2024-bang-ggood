@@ -9,7 +9,7 @@ const S = {
     width: 100%;
     ${flexCenter};
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(2rem);
     transition:
       opacity 0.5s ease-out,
       transform 0.5s ease-out;

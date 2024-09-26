@@ -16,6 +16,7 @@ import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery
 import useModal from '@/hooks/useModal';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import roomInfoUnvalidatedStore from '@/store/roomInfoUnvalidatedStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 
@@ -31,6 +32,7 @@ const EditChecklistPage = () => {
   const checklistActions = useChecklistStore(state => state.actions);
 
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
+  const roomInfoUnvalidatedActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
 
   // 한줄평 모달
   const { isModalOpen: isSubmitModalOpen, openModal: summaryModalOpen, closeModal: summaryModalClose } = useModal();
@@ -43,6 +45,7 @@ const EditChecklistPage = () => {
 
   const resetAndGoDetailPage = () => {
     roomInfoActions.resetAll();
+    roomInfoUnvalidatedActions.resetAll();
     checklistActions.reset();
     selectedOptionActions.reset();
     navigate(ROUTE_PATH.checklistOne(Number(checklistId)));
@@ -56,6 +59,11 @@ const EditChecklistPage = () => {
         rawValue: checklist.room,
         value: checklist.room,
       });
+
+      roomInfoUnvalidatedActions.set('address', checklist.room.address!);
+      roomInfoUnvalidatedActions.set('buildingName', checklist.room.buildingName!);
+      //TODO: 가까운 지하철은 나중에 api 수정되면 저장
+
       selectedOptionActions.set(checklist.options.map(option => option.optionId));
       checklistActions.set(checklist.categories);
     };

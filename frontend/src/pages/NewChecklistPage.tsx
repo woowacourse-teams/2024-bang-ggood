@@ -4,6 +4,7 @@ import { useStore } from 'zustand';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
 import AlertModal from '@/components/_common/Modal/AlertModal/AlertModal';
+import LoginModal from '@/components/_common/Modal/LoginModal/LoginModal';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import Tabs from '@/components/_common/Tabs/Tabs';
 import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
@@ -41,6 +42,9 @@ const NewChecklistPage = () => {
   // 뒤로가기 시 휘발 경고 모달
   const { isModalOpen: isAlertModalOpen, openModal: openAlertModal, closeModal: closeAlertModal } = useModal();
 
+  // 로그인 요청 모달
+  const { isModalOpen: isLoginModalOpen, openModal: openLoginModal, closeModal: closeLoginModal } = useModal();
+
   const resetAndGoHome = () => {
     roomInfoActions.resetAll();
     checklistActions.reset();
@@ -67,14 +71,14 @@ const NewChecklistPage = () => {
         <MemoButton onClick={openMemoModal} />
       )}
 
-      {isSubmitModalOpen && (
-        <SubmitModalWithSummary
-          isModalOpen={isSubmitModalOpen}
-          onConfirm={resetAndGoHome}
-          modalClose={closeSummaryModal}
-          mutateType="add"
-        />
-      )}
+      <SubmitModalWithSummary
+        isModalOpen={isSubmitModalOpen}
+        modalClose={closeSummaryModal}
+        onConfirm={resetAndGoHome}
+        onError={openLoginModal}
+        mutateType="add"
+      />
+
       {isAlertModalOpen && (
         <AlertModal
           title={
@@ -90,6 +94,8 @@ const NewChecklistPage = () => {
           approveButtonName="나가기"
         />
       )}
+
+      <LoginModal isModalOpen={isLoginModalOpen} modalClose={closeLoginModal} />
     </>
   );
 };

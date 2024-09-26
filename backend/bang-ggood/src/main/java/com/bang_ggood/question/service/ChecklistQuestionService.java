@@ -94,6 +94,7 @@ public class ChecklistQuestionService {
         for (int i = 0; i < questions.size(); i++) {
             questions.get(i).change(updateQuestions.get(i));
         }
+        checklistQuestionRepository.saveAll(questions);
     }
 
     private void validateSameQuestions(List<ChecklistQuestion> questions, List<ChecklistQuestion> updateQuestions) {

@@ -23,17 +23,7 @@ const Tab = ({ id, onMoveTab, name, active, hasIndicator, className }: Props) =>
   );
 };
 
-const TabMemo = React.memo(Tab, (prevProps, nextProps) => {
-  return (
-    prevProps.id === nextProps.id &&
-    prevProps.name === nextProps.name &&
-    prevProps.active === nextProps.active &&
-    prevProps.hasIndicator === nextProps.hasIndicator &&
-    prevProps.className === nextProps.className
-  );
-});
-
-export default TabMemo;
+export default React.memo(Tab);
 
 const S = {
   Container: styled.div<{ active: boolean }>`

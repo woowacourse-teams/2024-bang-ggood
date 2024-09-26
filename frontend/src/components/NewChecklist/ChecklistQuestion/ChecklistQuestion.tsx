@@ -2,12 +2,9 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 import HighlightText from '@/components/_common/Highlight/HighlightText';
-import { useTabContext } from '@/components/_common/Tabs/TabContext';
-import AnswerIcon from '@/components/Answer/AnswerIcon';
-import { ANSWER_OPTIONS } from '@/constants/answer';
-import useChecklistAnswer from '@/hooks/useChecklistAnswer';
+import ChecklistQuestionAnswers from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestionAnswers';
 import { flexCenter, flexRow, flexSpaceBetween } from '@/styles/common';
-import { Answer, AnswerType } from '@/types/answer';
+import { AnswerType } from '@/types/answer';
 import { ChecklistQuestion } from '@/types/checklist';
 
 interface Props {
@@ -18,31 +15,20 @@ interface Props {
 const ChecklistQuestionItem = ({ answer, question }: Props) => {
   const { questionId, title, highlights } = question;
 
-  const { updateAndToggleAnswer: updateAnswer } = useChecklistAnswer();
-  const { currentTabId } = useTabContext();
-
-  const handleClick = (newAnswer: AnswerType) => {
-    updateAnswer({ categoryId: currentTabId, questionId: questionId, newAnswer });
-  };
-
   return (
     <S.Container>
       <S.Question>
         <HighlightText title={title} highlights={highlights} />
       </S.Question>
       <S.Options>
-        {ANSWER_OPTIONS.map((option: Answer) => (
-          <div key={option.id} onClick={() => handleClick(option.name)}>
-            <AnswerIcon answer={option.name} isSelected={answer === option.name} />
-          </div>
-        ))}
+        <ChecklistQuestionAnswers answer={answer} questionId={questionId} />
       </S.Options>
     </S.Container>
   );
 };
 
 const ChecklistQuestionItemMemo = React.memo(ChecklistQuestionItem, (prevProps, nextProps) => {
-  return prevProps.answer === nextProps.answer && prevProps.question === nextProps.question;
+  return prevProps.answer === nextProps.answer && prevProps.question.questionId === nextProps.question.questionId;
 });
 
 export default ChecklistQuestionItemMemo;

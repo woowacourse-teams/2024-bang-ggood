@@ -6,6 +6,7 @@ import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.like.service.ChecklistLikeService;
+import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.domain.MaintenanceItem;
 import com.bang_ggood.maintenance.service.ChecklistMaintenanceService;
@@ -75,7 +76,7 @@ public class ChecklistManageService {
                         checklist,
                         Question.fromId(question.questionId()),
                         Answer.from(question.answer())))
-                .collect(Collectors.toList());
+                .toList();
         checklistQuestionService.createQuestions(checklistQuestions);
     }
 
@@ -84,7 +85,7 @@ public class ChecklistManageService {
                 checklistRequest.room().includedMaintenances().stream()
                         .map(maintenanceId -> new ChecklistMaintenance(checklist,
                                 MaintenanceItem.fromId(maintenanceId)))
-                        .collect(Collectors.toList());
+                        .toList();
         checklistMaintenanceService.createMaintenances(checklistMaintenances);
     }
 
@@ -96,7 +97,7 @@ public class ChecklistManageService {
         List<SelectedOptionResponse> options = readChecklistOptions(checklist);
         List<SelectedCategoryQuestionsResponse> questions = readChecklistQuestions(checklist);
         SelectedRoomResponse room = SelectedRoomResponse.of(checklist, maintenances);
-        boolean isLiked = false; // TODO 좋아요 이후 리팩토링 필요
+        boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
 
         return SelectedChecklistResponse.of(room, options, questions, isLiked);
     }
@@ -123,11 +124,12 @@ public class ChecklistManageService {
                 .toList();
     }
 
-    private SelectedCategoryQuestionsResponse categorizeChecklistQuestions(Category category, List<ChecklistQuestion> checklistQuestions) {
+    private SelectedCategoryQuestionsResponse categorizeChecklistQuestions(Category category,
+                                                                           List<ChecklistQuestion> checklistQuestions) {
         List<SelectedQuestionResponse> selectedQuestionResponse = Question.filter(category, checklistQuestions)
-                        .stream()
-                        .map(SelectedQuestionResponse::new)
-                        .toList();
+                .stream()
+                .map(SelectedQuestionResponse::new)
+                .toList();
 
         return SelectedCategoryQuestionsResponse.of(category, selectedQuestionResponse);
     }
@@ -146,6 +148,16 @@ public class ChecklistManageService {
                 .toList();
     }
 
+    @Transactional
+    public void deleteChecklistById(User user, Long id) {
+        Checklist checklist = checklistService.readChecklist(user, id);
+        checklistQuestionService.deleteAllByChecklistId(checklist.getId());
+        checklistOptionService.deleteAllByChecklistId(checklist.getId());
+        checklistMaintenanceService.deleteAllByChecklistId(checklist.getId());
+        checklistService.deleteById(id);
+        roomService.deleteById(checklist.getRoom().getId());
+    }
+
     @Transactional(readOnly = true)
     public ChecklistsPreviewResponse readAllChecklistsPreview(User user) {
         List<Checklist> checklists = checklistService.readAllChecklistsOrderByLatest(user);
@@ -159,5 +171,45 @@ public class ChecklistManageService {
     private ChecklistPreviewResponse mapToChecklistPreview(Checklist checklist) {
         boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
         return ChecklistPreviewResponse.of(checklist, isLiked);
+    }
+
+    @Transactional
+    public void updateChecklistById(User user, Long checklistId, ChecklistRequest checklistRequest) {
+        Checklist checklist = checklistService.readChecklist(user, checklistId);
+
+        roomService.updateRoom(checklist.getRoom(), checklistRequest.toRoomEntity());
+        checklistService.updateChecklist(checklist, checklistRequest.toChecklistEntity(checklist.getRoom(), user));
+
+        updateChecklistOptions(checklistRequest, checklist);
+        updateChecklistQuestions(checklistRequest, checklist);
+        updateChecklistMaintenances(checklistRequest, checklist);
+    }
+
+    private void updateChecklistOptions(ChecklistRequest checklistRequest, Checklist checklist) {
+        List<ChecklistOption> checklistOptions = checklistRequest.options().stream()
+                .map(option -> new ChecklistOption(checklist, option))
+                .toList();
+        checklistOptionService.updateOptions(checklist.getId(), checklistOptions);
+    }
+
+    private void updateChecklistQuestions(ChecklistRequest checklistRequest, Checklist checklist) {
+        List<ChecklistQuestion> questions = checklist.getQuestions();
+        List<ChecklistQuestion> updateQuestions = checklistRequest.questions().stream()
+                .map(question -> new ChecklistQuestion(
+                        checklist,
+                        Question.fromId(question.questionId()),
+                        Answer.from(question.answer())))
+                .toList();
+        checklistQuestionService.updateQuestions(questions, updateQuestions);
+    }
+
+    private void updateChecklistMaintenances(ChecklistRequest checklistRequest, Checklist checklist) {
+
+        List<ChecklistMaintenance> checklistMaintenances =
+                checklistRequest.room().includedMaintenances().stream()
+                        .map(maintenanceId -> new ChecklistMaintenance(checklist,
+                                MaintenanceItem.fromId(maintenanceId)))
+                        .collect(Collectors.toList());
+        checklistMaintenanceService.updateMaintenances(checklist.getId(), checklistMaintenances);
     }
 }

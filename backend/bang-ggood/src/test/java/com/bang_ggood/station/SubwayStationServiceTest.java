@@ -46,8 +46,8 @@ public class SubwayStationServiceTest extends IntegrationTestSupport {
                         new Station("잠실(송파구청)", List.of("2호선", "8호선")),
                         new Station("잠실나루", List.of("2호선"))),
                 Arguments.of(37.50808977595056, 127.04649615866747,
-                        new Station("선정릉", List.of("9호선", "분당선")),
-                        new Station("선릉", List.of("2호선", "분당선"))),
+                        new Station("선정릉", List.of("9호선", "수인분당선")),
+                        new Station("선릉", List.of("2호선", "수인분당선"))),
                 Arguments.of(37.538999998345446, 126.97201837726666,
                         new Station("남영", List.of("1호선")),
                         new Station("삼각지", List.of("4호선", "6호선")))

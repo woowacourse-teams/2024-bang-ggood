@@ -26,12 +26,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
             "ORDER BY a.createdAt DESC ")
     List<Article> findLatestArticles();
 
-    @Query("SELECT a FROM Article a " +
-            "WHERE a.deleted = false " +
-            "ORDER BY a.createdAt DESC " +
-            "LIMIT :count")
-    List<Article> findLatestArticles(@Param("count") int count);
-
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("UPDATE Article a " +
             "SET a.deleted = true " +

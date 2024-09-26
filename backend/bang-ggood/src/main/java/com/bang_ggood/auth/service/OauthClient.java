@@ -2,7 +2,7 @@ package com.bang_ggood.auth.service;
 
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.response.OauthInfoApiResponse;
-import com.bang_ggood.auth.dto.response.OauthTokenResponse;
+import com.bang_ggood.auth.dto.response.OauthTokenApiResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -39,16 +39,16 @@ public class OauthClient {
     }
 
     public OauthInfoApiResponse requestOauthInfo(OauthLoginRequest request) {
-        OauthTokenResponse oauthTokenResponse = requestToken(request);
+        OauthTokenApiResponse oauthTokenApiResponse = requestToken(request);
 
         return restClient.get()
                 .uri(userInfoRequestUri)
-                .header("Authorization", "Bearer " + oauthTokenResponse.access_token())
+                .header("Authorization", "Bearer " + oauthTokenApiResponse.access_token())
                 .retrieve()
                 .body(OauthInfoApiResponse.class);
     }
 
-    private OauthTokenResponse requestToken(OauthLoginRequest request) {
+    private OauthTokenApiResponse requestToken(OauthLoginRequest request) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("grant_type", grantType);
         map.add("client_id", clientId);
@@ -61,6 +61,6 @@ public class OauthClient {
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .body(map)
                 .retrieve()
-                .body(OauthTokenResponse.class);
+                .body(OauthTokenApiResponse.class);
     }
 }

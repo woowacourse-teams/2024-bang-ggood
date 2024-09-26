@@ -20,16 +20,18 @@ import org.springframework.test.context.jdbc.Sql;
 @Sql(scripts = {"/schema-test.sql", "/data-test.sql"})
 public abstract class AcceptanceTest {
 
-    protected ResponseCookie responseCookie;
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
     @Autowired
     private CookieProvider cookieProvider;
     @Autowired
     private UserRepository userRepository;
+
+    private User authenticatedUser;
+    protected ResponseCookie responseCookie;
+
     @LocalServerPort
     private int port;
-    private User authenticatedUser;
 
     @BeforeEach
     void setUp() {
@@ -43,8 +45,8 @@ public abstract class AcceptanceTest {
 
     private void setResponseCookie() {
         authenticatedUser = userRepository.save(UserFixture.USER1());
-        String token = jwtTokenProvider.createToken(authenticatedUser);
-        responseCookie = cookieProvider.createCookie(token);
+        String token = jwtTokenProvider.createAccessToken(authenticatedUser);
+        responseCookie = cookieProvider.createAccessTokenCookie(token);
     }
 
     public User getAuthenticatedUser() {

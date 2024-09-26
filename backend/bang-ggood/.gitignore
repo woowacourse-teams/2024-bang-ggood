@@ -18,11 +18,8 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-src/main/resources/application.yml
-src/main/resources/application-local.yml
-src/main/resources/application-dev.yml
-src/main/resources/application-prod.yml
-src/test/resources/application-test.yml
+src/main/resources/*.yml
+src/test/resources/*.yml
 .idea
 *.iws
 *.iml

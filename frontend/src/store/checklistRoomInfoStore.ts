@@ -25,7 +25,7 @@ const formSpec: FormSpec<RoomInfo> = {
   structure: { initialValue: '', type: 'string', validators: [] },
   realEstate: { initialValue: '', type: 'string', validators: [] },
   occupancyMonth: {
-    initialValue: '',
+    initialValue: `${new Date().getMonth() + 1}`,
     type: 'number',
     validators: [isIntegerValidator, positiveValidator, inRangeValidator(1, 12)],
   },

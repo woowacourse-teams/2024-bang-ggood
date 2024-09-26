@@ -48,7 +48,9 @@ const useMutateChecklist = (
         onSuccess: () => {
           showToast(TOAST_MESSAGE.ADD);
           actions.resetAll();
-          if (onSuccessCallback) onSuccessCallback();
+          if (onSuccessCallback) {
+            onSuccessCallback();
+          }
         },
         onError: () => {
           if (onErrorCallback) {
@@ -63,6 +65,14 @@ const useMutateChecklist = (
         onSuccess: () => {
           showToast(TOAST_MESSAGE.EDIT);
           actions.resetAll();
+          if (onSuccessCallback) {
+            onSuccessCallback();
+          }
+        },
+        onError: () => {
+          if (onErrorCallback) {
+            onErrorCallback();
+          }
         },
       });
     };

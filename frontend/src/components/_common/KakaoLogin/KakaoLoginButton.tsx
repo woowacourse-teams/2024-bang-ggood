@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import { KakaoLogo } from '@/assets/assets';
-import { KAKAO_AUTH_URL } from '@/constants/oAuth';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { flexRow } from '@/styles/common';
 
@@ -16,8 +15,6 @@ const KakaoLoginButton = ({ afterLoginPath }: Props) => {
   const handleMoveLogin = () => {
     localStorage.setItem('afterLoginPath', afterLoginPath);
     navigate(ROUTE_PATH.login);
-
-    window.location.href = KAKAO_AUTH_URL;
   };
 
   return (

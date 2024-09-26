@@ -33,7 +33,6 @@ public abstract class AcceptanceTest {
     @LocalServerPort
     private int port;
 
-
     @BeforeEach
     void setUp() {
         setPort();
@@ -46,8 +45,8 @@ public abstract class AcceptanceTest {
 
     private void setResponseCookie() {
         authenticatedUser = userRepository.save(UserFixture.USER1());
-        String token = jwtTokenProvider.createToken(authenticatedUser);
-        responseCookie = cookieProvider.createCookie(token);
+        String token = jwtTokenProvider.createAccessToken(authenticatedUser);
+        responseCookie = cookieProvider.createAccessTokenCookie(token);
     }
 
     public User getAuthenticatedUser() {

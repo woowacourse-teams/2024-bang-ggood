@@ -1,7 +1,9 @@
 package com.bang_ggood.auth.service;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.auth.controller.CookieProvider;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
+import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.global.exception.BangggoodException;
@@ -23,6 +25,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
@@ -50,10 +53,11 @@ class AuthServiceTest extends IntegrationTestSupport {
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
-        String token = authService.login(oauthLoginRequest);
+        AuthTokenResponse token = authService.login(oauthLoginRequest);
 
         // then
-        assertThat(token).isNotBlank();
+        assertThat(token.accessToken()).isNotBlank();
+        assertThat(token.refreshToken()).isNotBlank();
     }
 
     @DisplayName("로그인 성공 : 존재하는 회원이면 데이터베이스에 새로운 유저를 추가하지않고 토큰을 바로 반환한다.")
@@ -65,10 +69,11 @@ class AuthServiceTest extends IntegrationTestSupport {
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER1());
 
         // when
-        String token = authService.login(oauthLoginRequest);
+        AuthTokenResponse token = authService.login(oauthLoginRequest);
 
         // then
-        assertThat(token).isNotBlank();
+        assertThat(token.accessToken()).isNotBlank();
+        assertThat(token.refreshToken()).isNotBlank();
     }
 
     @DisplayName("로그인 성공 : 회원 가입시 디폴트 체크리스트 질문을 추가한다.")
@@ -79,10 +84,10 @@ class AuthServiceTest extends IntegrationTestSupport {
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
-        String token = authService.login(oauthLoginRequest);
+        AuthTokenResponse token = authService.login(oauthLoginRequest);
 
         // then
-        User user = authService.getAuthUser(token);
+        User user = authService.getAuthUser(token.accessToken());
         CustomChecklistQuestionsResponse customChecklistQuestions = questionManageService.readCustomChecklistQuestions(
                 user);
 
@@ -102,10 +107,10 @@ class AuthServiceTest extends IntegrationTestSupport {
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
-        String token = authService.login(oauthLoginRequest);
+        AuthTokenResponse token = authService.login(oauthLoginRequest);
 
         // then
-        User user = authService.getAuthUser(token);
+        User user = authService.getAuthUser(token.accessToken());
         ChecklistsPreviewResponse response = checklistManageService.readAllChecklistsPreview(user);
         assertThat(response.checklists()).hasSize(1);
     }
@@ -149,11 +154,29 @@ class AuthServiceTest extends IntegrationTestSupport {
     @Test
     void logout_invalid_ownership_exception() {
         // given
-        String token = jwtTokenProvider.createToken(UserFixture.USER1_WITH_ID());
+        String cookieDelimiter = "=";
+        String token = jwtTokenProvider.createAccessToken(UserFixture.USER1_WITH_ID());
 
         //when & then
-        assertThatThrownBy(() -> authService.logout("token=" + token, UserFixture.USER2_WITH_ID()))
+        assertThatThrownBy(() -> authService.logout(
+                CookieProvider.ACCESS_TOKEN_COOKIE_NAME + cookieDelimiter + token,
+                UserFixture.USER2_WITH_ID()))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER.getMessage());
+    }
+
+    @DisplayName("액세스 토큰 재발행 성공")
+    @Test
+    void reIssueAccessToken() {
+        // given
+        userRepository.save(UserFixture.USER1());
+        Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
+                .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER1());
+        AuthTokenResponse tokenResponse = authService.login(oauthLoginRequest);
+
+        // when & then
+        assertThatCode(() -> authService.reIssueAccessToken(tokenResponse.refreshToken()))
+                .doesNotThrowAnyException();
+
     }
 }

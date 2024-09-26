@@ -40,7 +40,7 @@ class AuthE2ETest extends AcceptanceTest {
                 .when().post("/checklists")
                 .then().log().all()
                 .statusCode(401)
-                .body("message", containsString(ExceptionCode.AUTHENTICATION_COOKIE_EMPTY.getMessage()));
+                .body("message", containsString(ExceptionCode.AUTHENTICATION_TOKEN_EMPTY.getMessage()));
     }
 
     @DisplayName("인증 실패 : 쿠키가 잘못된 형태로 들어간 경우")
@@ -55,7 +55,7 @@ class AuthE2ETest extends AcceptanceTest {
                 .when().post("/checklists")
                 .then().log().all()
                 .statusCode(401)
-                .body("message", containsString(ExceptionCode.AUTHENTICATION_COOKIE_TOKEN_EMPTY.getMessage()));
+                .body("message", containsString(ExceptionCode.AUTHENTICATION_TOKEN_EMPTY.getMessage()));
     }
 
     @DisplayName("인증 실패 : 블랙리스트에 들어간 토큰일 경우")

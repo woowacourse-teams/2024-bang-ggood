@@ -27,11 +27,7 @@ const ChecklistQuestionItem = ({ answer, question }: Props) => {
   );
 };
 
-const ChecklistQuestionItemMemo = React.memo(ChecklistQuestionItem, (prevProps, nextProps) => {
-  return prevProps.answer === nextProps.answer && prevProps.question.questionId === nextProps.question.questionId;
-});
-
-export default ChecklistQuestionItemMemo;
+export default React.memo(ChecklistQuestionItem);
 
 const S = {
   Container: styled.div`

@@ -1,6 +1,7 @@
 import '@/styles/category-sprite-image.css';
 
 import styled from '@emotion/styled';
+import React from 'react';
 
 import { flexCenter } from '@/styles/common';
 
@@ -22,7 +23,7 @@ const Tab = ({ id, onMoveTab, name, active, hasIndicator, className }: Props) =>
   );
 };
 
-export default Tab;
+export default React.memo(Tab);
 
 const S = {
   Container: styled.div<{ active: boolean }>`

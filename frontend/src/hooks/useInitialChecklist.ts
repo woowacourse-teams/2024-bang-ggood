@@ -1,13 +1,10 @@
 import { useEffect } from 'react';
 
-import useDefaultRoomName from '@/components/NewChecklist/NewRoomInfoForm/useDefaultRoomName';
 import useGetChecklistQuestionQuery from '@/hooks/query/useGetChecklistQuestionQuery';
 import useChecklistStore from '@/store/useChecklistStore';
 
 const useInitialChecklist = () => {
   const initAnswerSheetIfEmpty = useChecklistStore(state => state.actions.initAnswerSheetIfEmpty);
-
-  useDefaultRoomName();
 
   const result = useGetChecklistQuestionQuery();
 

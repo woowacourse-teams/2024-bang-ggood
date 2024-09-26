@@ -9,7 +9,12 @@ import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 import { ChecklistCategoryWithAnswer, MutateType } from '@/types/checklist';
 
-const useMutateChecklist = (mutateType: MutateType, checklistId?: number) => {
+const useMutateChecklist = (
+  mutateType: MutateType,
+  checklistId?: number,
+  onSuccessCallback?: () => void,
+  onErrorCallback?: () => void,
+) => {
   const { showToast } = useToast({ type: 'positive' });
   const { mutate: addChecklist } = useAddChecklistQuery();
   const { mutate: putChecklist } = usePutChecklistQuery();
@@ -43,6 +48,12 @@ const useMutateChecklist = (mutateType: MutateType, checklistId?: number) => {
         onSuccess: () => {
           showToast(TOAST_MESSAGE.ADD);
           actions.resetAll();
+          if (onSuccessCallback) onSuccessCallback();
+        },
+        onError: () => {
+          if (onErrorCallback) {
+            onErrorCallback();
+          }
         },
       });
     };

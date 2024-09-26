@@ -177,7 +177,7 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     @Test
     void existsById_false() {
         //given & when & then
-        assertThat(checklistRepository.existsById(1)).isFalse();
+        assertThat(checklistRepository.existsById(1L)).isFalse();
     }
 
     @DisplayName("체크리스트 삭제 성공")
@@ -189,12 +189,9 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
         Checklist savedChecklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
 
         //when
-        checklistRepository.deleteById(savedChecklist.getId().longValue());
+        checklistRepository.deleteById(savedChecklist.getId());
 
         //then
-        assertAll(
-                () -> assertThat(checklistRepository.existsById(savedChecklist.getId())).isTrue(),
-                () -> assertThat(checklistRepository.existsById(savedChecklist.getId().longValue())).isFalse()
-        );
+        assertThat(checklistRepository.existsById(savedChecklist.getId())).isFalse();
     }
 }

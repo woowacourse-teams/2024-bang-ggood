@@ -18,7 +18,7 @@ public class CookieResolver {
     }
 
     private String extractToken(Cookie[] cookies, String cookieName) {
-        if (cookies == null) {
+        if (cookies == null || cookies.length == 0) {
             throw new BangggoodException(ExceptionCode.AUTHENTICATION_COOKIE_EMPTY);
         }
 

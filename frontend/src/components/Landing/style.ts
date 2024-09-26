@@ -89,6 +89,18 @@ const S = {
     width: calc(100% - 4rem);
     margin: 0 2rem;
     box-sizing: border-box;
+
+    gap: 1rem;
+  `,
+  GuestLoginButton: styled.button`
+    width: 100%;
+    height: 5rem;
+    border: 3px solid ${({ theme }) => theme.palette.yellow500};
+    box-sizing: border-box;
+
+    font-size: ${({ theme }) => theme.text.size.medium};
+    border-radius: 0.8rem;
+    cursor: pointer;
   `,
   SubText: styled.div`
     font-size: ${({ theme }) => theme.text.size.small};

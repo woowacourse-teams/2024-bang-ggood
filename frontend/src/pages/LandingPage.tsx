@@ -33,7 +33,7 @@ const SectionColors: Record<string, Color> = {
 const LandingPage = () => {
   return (
     <S.Container>
-      <S.Section height={57} color={SectionColors.first.background}>
+      <S.Section height={65} color={SectionColors.first.background}>
         <FirstSection />
       </S.Section>
       <S.Section height={75} color={SectionColors.second.background}>

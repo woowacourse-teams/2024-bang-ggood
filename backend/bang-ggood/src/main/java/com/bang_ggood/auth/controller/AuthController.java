@@ -2,8 +2,10 @@ package com.bang_ggood.auth.controller;
 
 import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
+import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.service.AuthService;
 import com.bang_ggood.user.domain.User;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -18,17 +20,25 @@ public class AuthController {
 
     private final AuthService authService;
     private final CookieProvider cookieProvider;
+    private final CookieResolver cookieResolver;
 
-    public AuthController(AuthService authService, CookieProvider cookieProvider) {
+    public AuthController(AuthService authService, CookieProvider cookieProvider, CookieResolver cookieResolver) {
         this.authService = authService;
         this.cookieProvider = cookieProvider;
+        this.cookieResolver = cookieResolver;
     }
 
     @PostMapping("/oauth/login")
     public ResponseEntity<Void> login(@Valid @RequestBody OauthLoginRequest request) {
-        String token = authService.login(request);
-        ResponseCookie cookie = cookieProvider.createCookie(token);
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).build();
+        AuthTokenResponse response = authService.login(request);
+
+        ResponseCookie accessTokenCookie = cookieProvider.createAccessTokenCookie(response.accessToken());
+        ResponseCookie refreshTokenCookie = cookieProvider.createRefreshTokenCookie(response.refreshToken());
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString())
+                .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
+                .build();
     }
 
     @PostMapping("/oauth/logout")
@@ -38,5 +48,16 @@ public class AuthController {
         ResponseCookie expiredCookie = cookieProvider.deleteCookie();
 
         return ResponseEntity.noContent().header(HttpHeaders.SET_COOKIE, expiredCookie.toString()).build();
+    }
+
+    @PostMapping("/accessToken/reissue")
+    public ResponseEntity<Void> reIssueAccessToken(HttpServletRequest httpServletRequest) {
+        String refreshToken = cookieResolver.extractRefreshToken(httpServletRequest.getCookies());
+        String accessToken = authService.reIssueAccessToken(refreshToken);
+
+        ResponseCookie accessTokenCookie = cookieProvider.createAccessTokenCookie(accessToken);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString())
+                .build();
     }
 }

@@ -65,7 +65,7 @@ class ArgumentResolverTest extends AcceptanceTest {
                 .when().get(TestController.AUTH_PRINCIPAL_URL)
                 .then().log().all()
                 .statusCode(401)
-                .body("message", containsString(ExceptionCode.AUTHENTICATION_COOKIE_EMPTY.getMessage()));
+                .body("message", containsString(ExceptionCode.AUTHENTICATION_TOKEN_EMPTY.getMessage()));
     }
 
     @DisplayName("@AuthPrincipal 어노테이션 동작 성공 : 토큰값이 없으면 예외를 발생시킨다.")
@@ -80,6 +80,6 @@ class ArgumentResolverTest extends AcceptanceTest {
                 .when().get(TestController.AUTH_PRINCIPAL_URL)
                 .then().log().all()
                 .statusCode(401)
-                .body("message", containsString(ExceptionCode.AUTHENTICATION_COOKIE_TOKEN_EMPTY.getMessage()));
+                .body("message", containsString(ExceptionCode.AUTHENTICATION_TOKEN_EMPTY.getMessage()));
     }
 }

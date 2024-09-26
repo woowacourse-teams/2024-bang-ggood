@@ -15,26 +15,38 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
+    private static final String TOKEN_TYPE = "type";
+    private final JwtTokenProperties jwtTokenProperties;
     private final String secretKey;
-    private final long tokenExpirationMills;
 
     public JwtTokenProvider(
             @Value("${jwt.secret-key}") String secretKey,
-            @Value("${jwt.expiration-millis}") long tokenExpirationMills) {
+            JwtTokenProperties jwtTokenProperties) {
         this.secretKey = secretKey;
-        this.tokenExpirationMills = tokenExpirationMills;
+        this.jwtTokenProperties = jwtTokenProperties;
     }
 
-    public String createToken(User user) {
+    public String createAccessToken(User user) {
+        long accessTokenExpirationMillis = jwtTokenProperties.getAccessTokenExpirationMillis();
+        return createToken(user, accessTokenExpirationMillis, TokenType.ACCESS_TOKEN);
+    }
+
+    public String createRefreshToken(User user) {
+        long refreshTokenExpirationMillis = jwtTokenProperties.getRefreshTokenExpirationMillis();
+        return createToken(user, refreshTokenExpirationMillis, TokenType.REFRESH_TOKEN);
+    }
+
+    private String createToken(User user, long expirationMillis, TokenType tokenType) {
         Date now = new Date();
-        Date expiredDate = new Date(now.getTime() + tokenExpirationMills);
-        String token = Jwts.builder()
+        Date expiredDate = new Date(now.getTime() + expirationMillis);
+
+        return Jwts.builder()
                 .setSubject(user.getId().toString())
                 .setIssuedAt(now)
                 .setExpiration(expiredDate)
+                .claim(TOKEN_TYPE, tokenType.name())
                 .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
                 .compact();
-        return token;
     }
 
     public AuthUser resolveToken(String token) {
@@ -51,6 +63,20 @@ public class JwtTokenProvider {
             throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_EXPIRED);
         } catch (JwtException exception) {
             throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_INVALID);
+        }
+    }
+
+    public void validateRefreshTokenType(String refreshToken) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
+                .build()
+                .parseClaimsJws(refreshToken)
+                .getBody();
+
+        String tokenType = claims.get(TOKEN_TYPE, String.class);
+
+        if (!tokenType.equals(TokenType.REFRESH_TOKEN.name())) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_TYPE_MISMATCH);
         }
     }
 }

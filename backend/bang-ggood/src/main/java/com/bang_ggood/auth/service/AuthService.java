@@ -1,6 +1,8 @@
 package com.bang_ggood.auth.service;
 
+import com.bang_ggood.auth.controller.CookieProvider;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
+import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.dto.response.OauthInfoApiResponse;
 import com.bang_ggood.global.DefaultChecklistService;
 import com.bang_ggood.global.exception.BangggoodException;
@@ -37,13 +39,15 @@ public class AuthService {
     }
 
     @Transactional
-    public String login(OauthLoginRequest request) {
+    public AuthTokenResponse login(OauthLoginRequest request) {
         OauthInfoApiResponse oauthInfoApiResponse = oauthClient.requestOauthInfo(request);
 
         User user = userRepository.findByEmail(oauthInfoApiResponse.kakao_account().email())
                 .orElseGet(() -> signUp(oauthInfoApiResponse));
 
-        return jwtTokenProvider.createToken(user);
+        String accessToken = jwtTokenProvider.createAccessToken(user);
+        String refreshToken = jwtTokenProvider.createRefreshToken(user);
+        return AuthTokenResponse.of(accessToken, refreshToken);
     }
 
     private User signUp(OauthInfoApiResponse oauthInfoApiResponse) {
@@ -68,7 +72,7 @@ public class AuthService {
     public void logout(String accessToken, User user) {
         log.info("logout accessToken: {}", accessToken);
 
-        String splitToken = accessToken.split("token=")[1];
+        String splitToken = accessToken.split(CookieProvider.ACCESS_TOKEN_COOKIE_NAME + "=")[1];
         AuthUser authUser = jwtTokenProvider.resolveToken(splitToken);
         validateTokenOwnership(user, authUser);
         blackList.add(splitToken);
@@ -97,5 +101,14 @@ public class AuthService {
         if (isAccessTokenInBlackList(token)) {
             throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_IN_BLACKLIST);
         }
+    }
+
+    @Transactional(readOnly = true)
+    public String reIssueAccessToken(String refreshToken) {
+        jwtTokenProvider.validateRefreshTokenType(refreshToken);
+        AuthUser authUser = jwtTokenProvider.resolveToken(refreshToken);
+
+        User user = userRepository.getUserById(authUser.id());
+        return jwtTokenProvider.createAccessToken(user);
     }
 }

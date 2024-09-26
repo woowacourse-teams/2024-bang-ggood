@@ -23,7 +23,6 @@ const ArticleDetailPage = () => {
   const { color500 } = getSeqColor(article?.articleId ?? 0);
 
   if (isError) navigate(ROUTE_PATH.articleList);
-
   if (isLoading) return <SKArticleDetail />;
 
   return (

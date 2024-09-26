@@ -28,9 +28,7 @@ const ChecklistDetailPage = () => {
   const { mutate: deleteChecklist } = useDeleteChecklistQuery();
 
   if (isError) navigate(ROUTE_PATH.checklistList);
-
   if (isLoading) return <SkChecklistDetail />;
-
   if (!checklist) return;
 
   const handleDelete = async () => {
@@ -79,7 +77,7 @@ const ChecklistDetailPage = () => {
               정말 <S.AccentText>체크리스트</S.AccentText>를 삭제하시겠습니까?
             </div>
           }
-          subtTitle="삭제한 체크리스트는 다시 확인할 수 없습니다."
+          subtitle="삭제한 체크리스트는 다시 확인할 수 없습니다."
           isOpen={isModalOpen}
           onClose={closeModal}
           handleApprove={handleDelete}
@@ -89,9 +87,10 @@ const ChecklistDetailPage = () => {
   );
 };
 
+export default ChecklistDetailPage;
+
 const S = {
   AccentText: styled.span`
     color: ${({ theme }) => theme.palette.green600};
   `,
 };
-export default ChecklistDetailPage;

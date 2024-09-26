@@ -15,21 +15,42 @@ interface Props {
   isModalOpen: boolean;
   modalClose: () => void;
   onConfirm?: () => void;
+  onError?: () => void;
   mutateType: MutateType;
   checklistId?: number;
 }
 
-const SubmitModalWithSummary = ({ isModalOpen, modalClose, onConfirm = () => {}, mutateType, checklistId }: Props) => {
+const SubmitModalWithSummary = ({
+  isModalOpen,
+  modalClose,
+  onConfirm = () => {},
+  onError = () => {},
+  mutateType,
+  checklistId,
+}: Props) => {
   const summary = useStore(checklistRoomInfoStore, state => state.rawValue.summary);
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
 
   // 체크리스트 작성 / 수정
-  const { handleSubmitChecklist } = useMutateChecklist(mutateType, checklistId);
+  const { handleSubmitChecklist } = useMutateChecklist(
+    mutateType,
+    checklistId,
+    () => succeedPost(),
+    () => failedPost(),
+  );
 
   const handleSaveChecklist = () => {
     handleSubmitChecklist();
+  };
+
+  const succeedPost = () => {
     onConfirm();
     modalClose();
+  };
+
+  const failedPost = () => {
+    modalClose();
+    onError();
   };
 
   return (

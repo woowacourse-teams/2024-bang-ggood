@@ -21,4 +21,6 @@ export const ROUTE_PATH = {
   /* etc */
   location: '/location',
   myPage: '/my-page',
+  /* kakao login path */
+  login: '/login',
 };

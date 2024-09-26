@@ -4,6 +4,7 @@ import { useStore } from 'zustand';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
 import AlertModal from '@/components/_common/Modal/AlertModal/AlertModal';
+import LoginModal from '@/components/_common/Modal/LoginModal/LoginModal';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import Tabs from '@/components/_common/Tabs/Tabs';
 import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
@@ -42,6 +43,9 @@ const NewChecklistPage = () => {
   // 뒤로가기 시 휘발 경고 모달
   const { isModalOpen: isAlertModalOpen, openModal: openAlertModal, closeModal: closeAlertModal } = useModal();
 
+  // 로그인 요청 모달
+  const { isModalOpen: isLoginModalOpen, openModal: openLoginModal, closeModal: closeLoginModal } = useModal();
+
   const resetAndGoHome = () => {
     roomInfoActions.resetAll();
     roomInfoUnvalidatedActions.resetAll();
@@ -69,29 +73,13 @@ const NewChecklistPage = () => {
         <MemoButton onClick={openMemoModal} />
       )}
 
-      {isSubmitModalOpen && (
-        <SubmitModalWithSummary
-          isModalOpen={isSubmitModalOpen}
-          onConfirm={resetAndGoHome}
-          modalClose={closeSummaryModal}
-          mutateType="add"
-        />
-      )}
-      {isAlertModalOpen && (
-        <AlertModal
-          title={
-            <div>
-              나가면 작성하던 내용이 다 지워집니다.
-              <br />
-              괜찮으신가요?
-            </div>
-          }
-          isOpen={isAlertModalOpen}
-          onClose={closeAlertModal}
-          handleApprove={resetAndGoHome}
-          approveButtonName="나가기"
-        />
-      )}
+      <SubmitModalWithSummary
+        isModalOpen={isSubmitModalOpen}
+        modalClose={closeSummaryModal}
+        onConfirm={resetAndGoHome}
+        onError={openLoginModal}
+        mutateType="add"
+      />
 
       {isAlertModalOpen && (
         <AlertModal
@@ -108,6 +96,8 @@ const NewChecklistPage = () => {
           approveButtonName="나가기"
         />
       )}
+
+      <LoginModal isModalOpen={isLoginModalOpen} modalClose={closeLoginModal} />
     </>
   );
 };

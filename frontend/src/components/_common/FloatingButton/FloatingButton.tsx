@@ -50,8 +50,8 @@ const sizeStyle = {
   `,
   extends: css`
     display: flex;
-    width: 13rem;
     height: 5rem;
+    padding: 8px 12px;
 
     font-size: ${theme.text.size.small};
     gap: 1rem;

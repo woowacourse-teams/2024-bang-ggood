@@ -10,7 +10,12 @@ import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 import { ChecklistCategoryWithAnswer, MutateType } from '@/types/checklist';
 
-const useMutateChecklist = (mutateType: MutateType, checklistId?: number) => {
+const useMutateChecklist = (
+  mutateType: MutateType,
+  checklistId?: number,
+  onSuccessCallback?: () => void,
+  onErrorCallback?: () => void,
+) => {
   const { showToast } = useToast({ type: 'positive' });
   const { mutate: addChecklist } = useAddChecklistQuery();
   const { mutate: putChecklist } = usePutChecklistQuery();
@@ -19,7 +24,7 @@ const useMutateChecklist = (mutateType: MutateType, checklistId?: number) => {
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
   const roomInfoAnswer = useStore(checklistRoomInfoStore, state => state.value);
   // 방 기본 정보 - unValidated
-  const roomInfounValidatedActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
+  const roomInfoUnvalidatedActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
   const roomInfoUnvalidated = useStore(roomInfoUnvalidatedStore, state => state);
   // 선택된 옵션
   const selectedOptions = useSelectedOptionStore(state => state.selectedOptions);
@@ -44,8 +49,8 @@ const useMutateChecklist = (mutateType: MutateType, checklistId?: number) => {
   const roomInfoUnvalidatedAnswerWithoutSubway = removeKey(roomInfoUnvalidatedAnswer, 'nearSubwayStation');
 
   const formattedValues = {
-    station: roomInfoUnvalidatedAnswer.nearSubwayStation[0].stationName,
-    walkingTime: roomInfoUnvalidatedAnswer.nearSubwayStation[0].walkingTime,
+    station: roomInfoUnvalidatedAnswer.nearSubwayStation[0]?.stationName,
+    walkingTime: roomInfoUnvalidatedAnswer.nearSubwayStation[0]?.walkingTime,
   };
 
   const postData = {
@@ -67,7 +72,15 @@ const useMutateChecklist = (mutateType: MutateType, checklistId?: number) => {
         onSuccess: () => {
           showToast(TOAST_MESSAGE.ADD);
           roomInfoActions.resetAll();
-          roomInfounValidatedActions.resetAll();
+          roomInfoUnvalidatedActions.resetAll();
+          if (onSuccessCallback) {
+            onSuccessCallback();
+          }
+        },
+        onError: () => {
+          if (onErrorCallback) {
+            onErrorCallback();
+          }
         },
       });
     };
@@ -77,7 +90,15 @@ const useMutateChecklist = (mutateType: MutateType, checklistId?: number) => {
         onSuccess: () => {
           showToast(TOAST_MESSAGE.EDIT);
           roomInfoActions.resetAll();
-          roomInfounValidatedActions.resetAll();
+          roomInfoUnvalidatedActions.resetAll();
+          if (onSuccessCallback) {
+            onSuccessCallback();
+          }
+        },
+        onError: () => {
+          if (onErrorCallback) {
+            onErrorCallback();
+          }
         },
       });
     };

@@ -12,7 +12,7 @@ interface Props {
   handleApprove: () => void;
   approveButtonName?: string;
   title: ReactNode | string;
-  subtTitle?: string;
+  subtitle?: string;
   hasIcon?: boolean;
 }
 
@@ -22,7 +22,7 @@ const AlertModal = ({
   handleApprove,
   approveButtonName = '삭제하기',
   title,
-  subtTitle,
+  subtitle,
   hasIcon = true,
 }: Props) => {
   return (
@@ -31,7 +31,7 @@ const AlertModal = ({
         <S.Container>
           <S.IconBox>{hasIcon && <BangBangCryIcon width={70} height={70} />}</S.IconBox>
           <S.Title>{title}</S.Title>
-          {subtTitle && <S.subtitle>{subtTitle}</S.subtitle>}
+          {subtitle && <S.subtitle>{subtitle}</S.subtitle>}
         </S.Container>
       </Modal.body>
       <Modal.footer>

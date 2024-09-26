@@ -11,7 +11,6 @@ import { fadeIn, fadeOut } from '@/styles/animation';
 import { flexColumn } from '@/styles/common';
 
 type ModalPosition = 'center' | 'bottom';
-
 type ModalSize = 'small' | 'large';
 
 export interface ModalProps extends ComponentPropsWithRef<'dialog'> {

@@ -93,15 +93,14 @@ const EditChecklistPage = () => {
       )}
 
       {/* 한줄평 모달*/}
-      {isSubmitModalOpen && (
-        <SubmitModalWithSummary
-          isModalOpen={isSubmitModalOpen}
-          onConfirm={resetAndGoDetailPage}
-          modalClose={summaryModalClose}
-          mutateType="edit"
-          checklistId={Number(checklistId)}
-        />
-      )}
+
+      <SubmitModalWithSummary
+        isModalOpen={isSubmitModalOpen}
+        onConfirm={resetAndGoDetailPage}
+        modalClose={summaryModalClose}
+        mutateType="edit"
+        checklistId={Number(checklistId)}
+      />
     </>
   );
 };

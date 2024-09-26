@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 
+import LoginPage from '@/components/_common/KakaoLogin/LoginPage';
 import FooterLayout from '@/components/_common/layout/FooterLayout';
 import { ROUTE_PATH } from '@/constants/routePath';
 
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
   {
     element: <LandingPage />,
     path: ROUTE_PATH.root,
+  },
+  {
+    element: <LoginPage />,
+    path: ROUTE_PATH.login,
   },
   {
     element: <NotFound />,

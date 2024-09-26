@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { fadeIn, moveUpDown } from '@/styles/animation';
-import { boxShadow, flexCenter, flexColumn, flexRow } from '@/styles/common';
+import { boxShadow, flexCenter, flexColumn } from '@/styles/common';
 
 const S = {
   /* common */
@@ -86,23 +86,24 @@ const S = {
   ButtonWrapper: styled.div`
     ${flexCenter}
     ${flexColumn}
+    width: calc(100% - 4rem);
+    margin: 0 2rem;
+    box-sizing: border-box;
+
+    gap: 1rem;
+  `,
+  GuestLoginButton: styled.button`
     width: 100%;
+    height: 5rem;
+    border: 3px solid ${({ theme }) => theme.palette.yellow500};
+    box-sizing: border-box;
+
+    font-size: ${({ theme }) => theme.text.size.medium};
+    border-radius: 0.8rem;
+    cursor: pointer;
   `,
   SubText: styled.div`
     font-size: ${({ theme }) => theme.text.size.small};
-  `,
-  KakaoLoginButton: styled.div`
-    width: 300px;
-    height: 50px;
-    ${flexRow}
-    justify-content: space-evenly;
-    align-items: center;
-    border-radius: 8px;
-
-    background-color: ${({ theme }) => theme.palette.kakao};
-
-    font-size: ${({ theme }) => theme.text.size.large};
-    cursor: pointer;
   `,
   MoreBox: styled.div`
     width: 100%;

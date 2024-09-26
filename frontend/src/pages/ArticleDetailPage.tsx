@@ -37,7 +37,7 @@ const ArticleDetailPage = () => {
         <S.Title>{article?.title}</S.Title>
         <MarkdownPreview
           source={article?.content}
-          style={{ padding: 4, fontSize: '1.8rem' }}
+          style={{ padding: 4, fontSize: '1.8rem', fontFamily: 'SUITE Variable' }}
           wrapperElement={{
             'data-color-mode': 'light',
           }}

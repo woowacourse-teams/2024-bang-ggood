@@ -1,26 +1,26 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 import { BangBangIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import LogoutModal from '@/components/MyPage/LogoutModal';
+import SKMyPage from '@/components/skeleton/MyPage/SKMyPage';
+import { ROUTE_PATH } from '@/constants/routePath';
 import useUserQuery from '@/hooks/query/useUserQuery';
 import useModalOpen from '@/hooks/useModalOpen';
 import { boxShadow, boxShadowSpread, flexCenter, flexColumn, title2 } from '@/styles/common';
 import theme from '@/styles/theme';
 
 const MyPage = () => {
+  const navigate = useNavigate();
   const { isModalOpen, modalOpen, modalClose } = useModalOpen();
-  const { data: user, isLoading, isError } = useUserQuery();
+  const { data: user, isError, isLoading } = useUserQuery();
 
-  if (isLoading) {
-    return 'Loading...';
-  }
+  if (isError) navigate(ROUTE_PATH.root);
 
-  if (isError) {
-    return '로그인 되지 않았습니다.';
-  }
+  if (isLoading) return <SKMyPage />;
 
   return (
     <>

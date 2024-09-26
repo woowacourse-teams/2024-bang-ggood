@@ -40,12 +40,15 @@ public class QuestionManageService {
 
     @Transactional(readOnly = true)
     public CustomChecklistQuestionsResponse readCustomChecklistQuestions(User user) {
-        List<CustomChecklistQuestion> customChecklistQuestions = checklistQuestionService.readCustomChecklistQuestions(user);
-        List<CategoryQuestionsResponse> categoryQuestionsResponses = categorizeCustomChecklistQuestions(customChecklistQuestions);
+        List<CustomChecklistQuestion> customChecklistQuestions = checklistQuestionService.readCustomChecklistQuestions(
+                user);
+        List<CategoryQuestionsResponse> categoryQuestionsResponses = categorizeCustomChecklistQuestions(
+                customChecklistQuestions);
         return new CustomChecklistQuestionsResponse(categoryQuestionsResponses);
     }
 
-    private List<CategoryQuestionsResponse> categorizeCustomChecklistQuestions(List<CustomChecklistQuestion> customChecklistQuestions) {
+    private List<CategoryQuestionsResponse> categorizeCustomChecklistQuestions(
+            List<CustomChecklistQuestion> customChecklistQuestions) {
         Map<Category, List<Question>> categoryQuestions = customChecklistQuestions.stream()
                 .map(CustomChecklistQuestion::getQuestion)
                 .collect(Collectors.groupingBy(Question::getCategory, LinkedHashMap::new, Collectors.toList()));
@@ -61,7 +64,8 @@ public class QuestionManageService {
 
     @Transactional(readOnly = true)
     public CategoryCustomChecklistQuestionsResponse readAllCustomChecklistQuestions(User user) {
-        List<CustomChecklistQuestion> customChecklistQuestions = checklistQuestionService.readCustomChecklistQuestions(user);
+        List<CustomChecklistQuestion> customChecklistQuestions = checklistQuestionService.readCustomChecklistQuestions(
+                user);
         return categorizeAllQuestionsWithSelected(customChecklistQuestions);
     }
 

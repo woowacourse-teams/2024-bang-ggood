@@ -58,13 +58,13 @@ public class ChecklistController {
             @AuthRequiredPrincipal User user,
             @PathVariable("id") long id,
             @Valid @RequestBody ChecklistRequest checklistRequest) {
-        checklistService.updateChecklistById(user, id, checklistRequest);
+        checklistManageService.updateChecklistById(user, id, checklistRequest);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/checklists/{id}")
     public ResponseEntity<Void> deleteChecklistById(@AuthRequiredPrincipal User user, @PathVariable("id") long id) {
-        checklistService.deleteChecklistById(user, id);
+        checklistManageService.deleteChecklistById(user, id);
         return ResponseEntity.noContent().build();
     }
 }

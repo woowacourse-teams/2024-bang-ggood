@@ -14,6 +14,7 @@ const useInitialChecklist = () => {
   useDefaultRoomName();
 
   const result = useGetChecklistQuestionQuery();
+
   useEffect(() => {
     setAnswerInQuestion(result.data ?? []); // 체크리스트 질문에 대한 답안지 객체 생성
     resetToDefaultOptions(); // 옵션 선택지 리셋

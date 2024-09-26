@@ -6,6 +6,11 @@ import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';
 import theme from '@/styles/theme';
 
+import checkScreenshotImgUrl from '../../../public/image/checkScreenShot.png';
+import homeImgUrl from '../../../public/image/home.png';
+import toiletImgUrl from '../../../public/image/toilet.png';
+import windowImgUrl from '../../../public/image/window.png';
+
 const ThirdSection = () => {
   const ref = useRef<HTMLDivElement>(null);
   const ref2 = useRef<HTMLDivElement>(null);
@@ -31,7 +36,7 @@ const ThirdSection = () => {
           <S.AnimationBox isIntersecting={isIntersecting}>
             <S.Card>
               <S.Keyword color={theme.palette.blue500}>
-                <img src="/image/home.png" width={20} />방 내부시설
+                <img src={homeImgUrl} width={20} />방 내부시설
               </S.Keyword>
               방에서 불쾌한 냄새가 나지는 않나요?
             </S.Card>
@@ -39,7 +44,7 @@ const ThirdSection = () => {
           <S.AnimationBox isIntersecting={isIntersecting}>
             <S.Card>
               <S.Keyword color={theme.palette.yellow500}>
-                <img src="/image/window.png" width={20} />
+                <img src={windowImgUrl} width={20} />
                 창문
               </S.Keyword>
               햇빛이 잘 들어오나요?
@@ -48,7 +53,7 @@ const ThirdSection = () => {
           <S.AnimationBox isIntersecting={isIntersecting}>
             <S.Card>
               <S.Keyword color={theme.palette.green500}>
-                <img src="/image/toilet.png" width={20} />
+                <img src={toiletImgUrl} width={20} />
                 화장실
               </S.Keyword>
               화장실 내부에 환기 시설이 있나요?
@@ -62,7 +67,7 @@ const ThirdSection = () => {
         <S.Observer ref={ref2} />
         <S.AnimationBox isIntersecting={isIntersecting2}>
           <S.ChecklistImgBox>
-            <img src="/image/checkScreenShot.png" />
+            <img src={checkScreenshotImgUrl} />
             <S.PencilIconBox>
               <PencilIcon width={70} height={90} />
             </S.PencilIconBox>

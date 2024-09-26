@@ -14,6 +14,7 @@ import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.like.service.ChecklistLikeManageService;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
+import com.bang_ggood.room.domain.Structure;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
@@ -21,6 +22,7 @@ import com.bang_ggood.user.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -119,6 +121,38 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
     }
 
+    @DisplayName("체크리스트 삭제 성공")
+    @Test
+    void deleteChecklistById() {
+        // given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+
+        // when
+        checklistManageService.deleteChecklistById(user, checklist.getId());
+
+        // then
+        assertThat(checklistRepository.existsById(checklist.getId().longValue())).isFalse();
+    }
+
+    @DisplayName("체크리스트 삭제 실패 : 체크리스트 작성 유저와 삭제하려는 유저가 다른 경우")
+    @Test
+    void deleteChecklistById_notOwnedByUser_exception() {
+        // given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user1 = userRepository.save(UserFixture.USER1());
+        User user2 = userRepository.save(UserFixture.USER2());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user1));
+
+        // when & then
+        assertThatThrownBy(
+                () -> checklistManageService.deleteChecklistById(user2, checklist.getId())
+        )
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER.getMessage());
+    }
+
     @DisplayName("체크리스트 리스트 조회 성공")
     @Test
     void readUserChecklistsPreview() {
@@ -169,6 +203,25 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
                 () -> assertThat(response.checklists()).hasSize(EXPECTED_LIKE_COUNT),
                 () -> assertThat(response.checklists().get(0).checklistId()).isEqualTo(checklist1.getId()),
                 () -> assertThat(response.checklists().get(1).checklistId()).isEqualTo(checklist2.getId())
+        );
+    }
+
+    @DisplayName("체크리스트 수정 성공")
+    @Test
+    void updateChecklistById() {
+        //given
+        User user = userRepository.save(UserFixture.USER1());
+        long checklistId = checklistManageService.createChecklist(user, ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+        ChecklistRequest updateChecklistRequest = ChecklistFixture.CHECKLIST_UPDATE_REQUEST();
+
+        //when
+        checklistManageService.updateChecklistById(user, checklistId, updateChecklistRequest);
+
+        //then
+        Checklist checklist = checklistRepository.getById(checklistId);
+        assertAll(
+                () -> assertThat(checklist.getRoom().getStructure()).isEqualTo(Structure.OPEN_ONE_ROOM),
+                () -> assertThat(checklist.getMemo()).isEqualTo(updateChecklistRequest.room().memo())
         );
     }
 }

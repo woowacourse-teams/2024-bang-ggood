@@ -75,6 +75,6 @@ const validatorSet: Record<string, Validator[]> = {
   memo: [],
 };
 
-const checklistRoomInfoStore = createFormStore<RoomInfo>(initialRoomInfo, validatorSet, roomInfoType);
+const checklistRoomInfoStore = createFormStore<RoomInfo>(initialRoomInfo, validatorSet, roomInfoType, 'roomInfoForm');
 
 export default checklistRoomInfoStore;

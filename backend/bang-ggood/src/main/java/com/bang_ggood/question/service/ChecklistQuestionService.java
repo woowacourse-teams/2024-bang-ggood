@@ -21,7 +21,8 @@ public class ChecklistQuestionService {
     private final ChecklistQuestionRepository checklistQuestionRepository;
     private final CustomChecklistQuestionRepository customChecklistQuestionRepository;
 
-    public ChecklistQuestionService(ChecklistQuestionRepository checklistQuestionRepository, CustomChecklistQuestionRepository customChecklistQuestionRepository) {
+    public ChecklistQuestionService(ChecklistQuestionRepository checklistQuestionRepository,
+                                    CustomChecklistQuestionRepository customChecklistQuestionRepository) {
         this.checklistQuestionRepository = checklistQuestionRepository;
         this.customChecklistQuestionRepository = customChecklistQuestionRepository;
     }
@@ -79,5 +80,31 @@ public class ChecklistQuestionService {
     @Transactional(readOnly = true)
     public List<ChecklistQuestion> readChecklistQuestions(Checklist checklist) {
         return checklistQuestionRepository.findAllByChecklistId(checklist.getId());
+    }
+
+    @Transactional
+    public void deleteAllByChecklistId(Long id) {
+        checklistQuestionRepository.deleteAllByChecklistId(id);
+    }
+
+    @Transactional
+    public void updateQuestions(List<ChecklistQuestion> questions, List<ChecklistQuestion> updateQuestions) {
+        validateQuestionDuplicate(updateQuestions);
+        validateSameQuestions(questions, updateQuestions);
+        for (int i = 0; i < questions.size(); i++) {
+            questions.get(i).change(updateQuestions.get(i));
+        }
+    }
+
+    private void validateSameQuestions(List<ChecklistQuestion> questions, List<ChecklistQuestion> updateQuestions) {
+        if (questions.size() != updateQuestions.size()) {
+            throw new BangggoodException(ExceptionCode.QUESTION_DIFFERENT);
+        }
+
+        for (int i = 0; i < questions.size(); i++) {
+            if (questions.get(i).isDifferentQuestionId(updateQuestions.get(i))) {
+                throw new BangggoodException(ExceptionCode.QUESTION_DIFFERENT);
+            }
+        }
     }
 }

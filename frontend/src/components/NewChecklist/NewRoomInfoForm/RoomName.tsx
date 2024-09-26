@@ -21,4 +21,4 @@ const RoomName = () => {
   );
 };
 
-export default React.memo(RoomName, () => true);
+export default React.memo(RoomName);

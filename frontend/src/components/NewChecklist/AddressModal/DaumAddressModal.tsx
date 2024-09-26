@@ -31,25 +31,6 @@ const DaumAddressModal = () => {
     loadExternalScriptWithCallback('daumAddress', openPostcodeEmbed);
   };
 
-  // findSubwayByAddress(data);
-
-  // const findPosition = (data: Address) => {
-  //   /* eslint-disable @typescript-eslint/no-explicit-any */
-  //   const { kakao } = window as any;
-
-  //   new kakao.maps.load(() => {
-  //     const geocoder = new kakao.maps.services.Geocoder();
-
-  //     geocoder.addressSearch(data.address, function (result: any, status: any) {
-  //       /* 정상적으로 검색이 완료됐으면*/
-  //       if (status === kakao.maps.services.Status.OK) {
-  //         findNearSubway({ lat: result[0].y, lon: result[0].x });
-  //       }
-  //       closeModal();
-  //     });
-  //   });
-  // };
-
   const openPostcodeEmbed = () => {
     if (window.daum?.Postcode && postcodeContainerRef.current) {
       new window.daum.Postcode({

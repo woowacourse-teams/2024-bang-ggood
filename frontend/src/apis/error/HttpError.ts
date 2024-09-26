@@ -25,8 +25,6 @@ class HTTPError extends Error {
         this.message = HTTP_ERROR_MESSAGE.FETCH_FAILED;
         break;
     }
-
-    Object.setPrototypeOf(this, HTTPError.prototype);
   }
 }
 

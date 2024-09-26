@@ -1,12 +1,9 @@
-import { ArrowDownSmall, BangBangIcon, BangGgoodTextIcon, KakaoLogo, SmallCheck } from '@/assets/assets';
+import { ArrowDownSmall, BangBangIcon, BangGgoodTextIcon, SmallCheck } from '@/assets/assets';
+import KakaoLoginButton from '@/components/_common/KakaoLogin/KakaoLoginButton';
 import S from '@/components/Landing/style';
-import { KAKAO_AUTH_URL } from '@/constants/oAuth';
+import { ROUTE_PATH } from '@/constants/routePath';
 
 const FirstSection = () => {
-  const handleMoveLogin = () => {
-    window.location.href = KAKAO_AUTH_URL;
-  };
-
   return (
     <>
       <S.LogoBox>
@@ -21,10 +18,7 @@ const FirstSection = () => {
         <BangGgoodTextIcon width={220} height={50} />
       </S.LogoBox>
       <S.ButtonWrapper>
-        <S.KakaoLoginButton onClick={handleMoveLogin}>
-          <KakaoLogo />
-          <S.Text>카카오톡으로 로그인</S.Text>
-        </S.KakaoLoginButton>
+        <KakaoLoginButton redirectUri="root" afterLoginPath={ROUTE_PATH.home} />
       </S.ButtonWrapper>
       <S.MoreBox>
         <S.SubText>방끗을 소개할게요!</S.SubText>

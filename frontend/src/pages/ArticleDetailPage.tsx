@@ -16,10 +16,9 @@ type RouteParams = {
 };
 
 const ArticleDetailPage = () => {
+  const navigate = useNavigate();
   const { articleId } = useParams() as RouteParams;
   const { data: article, isError, isLoading } = useGetArticleQuery(articleId);
-
-  const navigate = useNavigate();
 
   const { color500 } = getSeqColor(article?.articleId ?? 0);
 
@@ -38,7 +37,7 @@ const ArticleDetailPage = () => {
         <S.Title>{article?.title}</S.Title>
         <MarkdownPreview
           source={article?.content}
-          style={{ padding: 4, fontSize: '1.8rem' }}
+          style={{ padding: 4, fontSize: '1.8rem', fontFamily: 'SUITE Variable' }}
           wrapperElement={{
             'data-color-mode': 'light',
           }}

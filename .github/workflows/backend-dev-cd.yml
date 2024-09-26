@@ -35,10 +35,13 @@ jobs:
         APPLICATION_YML: ${{ secrets.APPLICATION_YML }}
         APPLICATION_DEV_YML: ${{ secrets.APPLICATION_DEV_YML }}
         APPLICATION_TEST_YML: ${{ secrets.APPLICATION_TEST_YML }}
+        APPLICATION_READ_WRITE_TEST_YML: ${{ secrets.APPLICATION_READ_WRITE_TEST_YML }}
+        
       run: |
         echo "${APPLICATION_YML}" > backend/bang-ggood/src/main/resources/application.yml
         echo "${APPLICATION_DEV_YML}" > backend/bang-ggood/src/main/resources/application-dev.yml
         echo "${APPLICATION_TEST_YML}" > backend/bang-ggood/src/test/resources/application-test.yml
+        echo "${APPLICATION_READ_WRITE_TEST_YML}" > backend/bang-ggood/src/test/resources/application-read-write-test.yml
 
     - name: Build with Gradle
       run: ./gradlew clean build

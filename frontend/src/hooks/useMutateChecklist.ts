@@ -77,9 +77,11 @@ const useMutateChecklist = (
             onSuccessCallback();
           }
         },
-        onError: () => {
-          if (onErrorCallback) {
-            onErrorCallback();
+        onError: error => {
+          if (error.name === 'AUTHENTICATION_FAILED') {
+            if (onErrorCallback) {
+              onErrorCallback();
+            }
           }
         },
       });
@@ -95,9 +97,11 @@ const useMutateChecklist = (
             onSuccessCallback();
           }
         },
-        onError: () => {
-          if (onErrorCallback) {
-            onErrorCallback();
+        onError: error => {
+          if (error.name === 'AUTHENTICATION_FAILED') {
+            if (onErrorCallback) {
+              onErrorCallback();
+            }
           }
         },
       });

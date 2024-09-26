@@ -25,7 +25,7 @@ const LoginModal = ({ isModalOpen, modalClose }: Props) => {
       </Modal.body>
       <Modal.footer>
         <S.Column>
-          <KakaoLoginButton redirectUri="write" afterLoginPath={ROUTE_PATH.checklistList} />
+          <KakaoLoginButton afterLoginPath={ROUTE_PATH.checklistList} />
           <S.CancelButton onClick={modalClose}>다음에 로그인하기</S.CancelButton>
         </S.Column>
       </Modal.footer>

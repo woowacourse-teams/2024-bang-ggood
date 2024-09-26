@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import useAddUserQuery from '@/hooks/query/useAddUserQuery';
 
-const useLogin = (navigate_path: string) => {
+const useLogin = () => {
   const navigate = useNavigate();
   const { mutate: addUser, isSuccess } = useAddUserQuery();
 
@@ -16,7 +16,8 @@ const useLogin = (navigate_path: string) => {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate(navigate_path);
+      const afterLoginPath = localStorage.getItem('afterLoginPath') || '/';
+      navigate(afterLoginPath);
     }
   }, [isSuccess, navigate]);
 };

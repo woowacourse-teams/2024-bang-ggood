@@ -15,6 +15,7 @@ const useRoomInfoUnvalidatedStore = () => {
   const findNearSubway = async ({ lat, lon }: { lat: number; lon: number }) => {
     const nearSubways = await getNearSubway({ lat, lon });
     roomInfoUnvalidatedActions.set('nearSubwayStation', nearSubways);
+    return nearSubways;
   };
 
   const findSubwayByAddress = (address: string) => {
@@ -27,7 +28,7 @@ const useRoomInfoUnvalidatedStore = () => {
       geocoder.addressSearch(address, function (result: any, status: any) {
         /* 정상적으로 검색이 완료됐으면*/
         if (status === kakao.maps.services.Status.OK) {
-          findNearSubway({ lat: result[0].y, lon: result[0].x });
+          return findNearSubway({ lat: result[0].y, lon: result[0].x });
         }
       });
     });

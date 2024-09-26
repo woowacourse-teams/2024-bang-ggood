@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
-import SubwayLineIcon from '@/components/_common/SubwayStation/SubwayLineIcon/SubwayLineIcon';
+import SubwayLineIcon from '@/components/_common/Subway/SubwayLineIcon/SubwayLineIcon';
 import { flexCenter } from '@/styles/common';
 import { SubwayStation } from '@/types/subway';
 
@@ -9,7 +9,7 @@ interface Props {
   station: SubwayStation;
 }
 
-const NearSubwayStationItem = ({ station }: Props) => {
+const SubwayStationItem = ({ station }: Props) => {
   const { stationName, stationLine, walkingTime } = station;
 
   return (
@@ -28,4 +28,4 @@ const S = {
   `,
 };
 
-export default NearSubwayStationItem;
+export default SubwayStationItem;

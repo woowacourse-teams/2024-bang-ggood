@@ -45,6 +45,7 @@ const EditChecklistPage = () => {
 
   const resetAndGoDetailPage = () => {
     roomInfoActions.resetAll();
+    roomInfoUnvalidatedActions.resetAll();
     checklistActions.reset();
     selectedOptionActions.reset();
     navigate(ROUTE_PATH.checklistOne(Number(checklistId)));

@@ -1,4 +1,4 @@
-import { SVGProps } from 'react';
+import React, { SVGProps } from 'react';
 
 import Bad from '@/assets/icons/answer/bad';
 import Good from '@/assets/icons/answer/good';
@@ -37,4 +37,7 @@ const AnswerIcon = ({ answer, isSelected = false, ...rest }: Props) => {
     </>
   );
 };
-export default AnswerIcon;
+
+const MemoAnswerIcon = React.memo(AnswerIcon);
+
+export default MemoAnswerIcon;

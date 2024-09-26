@@ -92,6 +92,22 @@ const NewChecklistPage = () => {
           approveButtonName="나가기"
         />
       )}
+
+      {isAlertModalOpen && (
+        <AlertModal
+          title={
+            <div>
+              나가면 작성하던 내용이 다 지워집니다.
+              <br />
+              괜찮으신가요?
+            </div>
+          }
+          isOpen={isAlertModalOpen}
+          onClose={closeAlertModal}
+          handleApprove={resetAndGoHome}
+          approveButtonName="나가기"
+        />
+      )}
     </>
   );
 };

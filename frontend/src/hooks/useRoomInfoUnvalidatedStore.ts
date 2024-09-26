@@ -11,6 +11,7 @@ roomInfoUnvalidatedStore : 방 기본정보에서 인풋 형식이 아니고, �
 */
 const useRoomInfoUnvalidatedStore = () => {
   const roomInfoUnvalidatedActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
+  // const address = useStore(roomInfoUnvalidatedStore, state => state.address);
 
   const findNearSubway = async ({ lat, lon }: { lat: number; lon: number }) => {
     const nearSubways = await getNearSubway({ lat, lon });

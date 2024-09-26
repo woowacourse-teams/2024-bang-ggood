@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import SubwayLineIcon from '@/components/_common/SubwayStation/SubwayLineIcon/SubwayLineIcon';
+import SubwayLineIcon from '@/components/_common/Subway/SubwayLineIcon/SubwayLineIcon';
 import { SUBWAY_LINE_NAMES } from '@/styles/subway';
 
 const meta: Meta<typeof SubwayLineIcon> = {

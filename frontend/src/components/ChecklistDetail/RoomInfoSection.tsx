@@ -1,6 +1,4 @@
 import styled from '@emotion/styled';
-import { useEffect } from 'react';
-import { useStore } from 'zustand';
 
 import {
   Building,
@@ -18,23 +16,22 @@ import LikeButton from '@/components/_common/Like/LikeButton';
 import AddressMap from '@/components/_common/Map/AddressMap';
 import SubwayStations from '@/components/_common/Subway/SubwayStations';
 import { IncludedMaintenancesData } from '@/constants/roomInfo';
-import useRoomInfoUnvalidatedStore from '@/hooks/useRoomInfoUnvalidatedStore';
-import roomInfoUnvalidatedStore from '@/store/roomInfoUnvalidatedStore';
 import { flexColumn, flexRow, flexSpaceBetween, title2 } from '@/styles/common';
 import { Option } from '@/types/option';
 import { RoomInfo } from '@/types/room';
+import { SubwayStation } from '@/types/subway';
 import formattedDate from '@/utils/formattedDate';
 import formattedUndefined from '@/utils/formattedUndefined';
-import loadExternalScriptWithCallback from '@/utils/loadScript';
 
 interface Props {
   room: RoomInfo;
   options: Option[];
   checklistId: number;
   isLiked: boolean;
+  nearSubways: SubwayStation[];
 }
 
-const RoomInfoSection = ({ room, options, checklistId, isLiked }: Props) => {
+const RoomInfoSection = ({ nearSubways, room, options, checklistId, isLiked }: Props) => {
   const {
     roomName,
     deposit,
@@ -54,16 +51,6 @@ const RoomInfoSection = ({ room, options, checklistId, isLiked }: Props) => {
     summary,
     createdAt,
   } = room;
-
-  //TODO: 나중에 백엔드에서 보내줌
-  const { findSubwayByAddress } = useRoomInfoUnvalidatedStore();
-  const { nearSubwayStation } = useStore(roomInfoUnvalidatedStore);
-
-  useEffect(() => {
-    if (address) {
-      loadExternalScriptWithCallback('kakaoMap', () => findSubwayByAddress(address));
-    }
-  }, []);
 
   return (
     <S.Container>
@@ -108,7 +95,7 @@ const RoomInfoSection = ({ room, options, checklistId, isLiked }: Props) => {
       </S.Row>
       <S.Row>
         <Subway />
-        <SubwayStations stations={nearSubwayStation} />
+        <SubwayStations stations={nearSubways} />
       </S.Row>
       <S.GapBox>
         <S.Row>

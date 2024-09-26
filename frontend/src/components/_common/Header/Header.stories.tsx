@@ -40,3 +40,11 @@ export const Triple: Story = {
     />
   ),
 };
+
+export const Opacity: Story = {
+  render: () => (
+    <div style={{ height: '6rem' }}>
+      <Header left={<Header.Backward />} isTransparent />
+    </div>
+  ),
+};

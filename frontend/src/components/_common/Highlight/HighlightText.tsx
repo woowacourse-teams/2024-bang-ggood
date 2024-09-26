@@ -29,9 +29,7 @@ const HighlightText = ({ title, highlights }: Props) => {
   return <S.Title>{highlightText({ title, highlights })}</S.Title>;
 };
 
-const MemoHighlightText = React.memo(HighlightText);
-
-export default MemoHighlightText;
+export default React.memo(HighlightText);
 
 const S = {
   Title: styled.div`

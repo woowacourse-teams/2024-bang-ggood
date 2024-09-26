@@ -38,6 +38,4 @@ const AnswerIcon = ({ answer, isSelected = false, ...rest }: Props) => {
   );
 };
 
-const MemoAnswerIcon = React.memo(AnswerIcon);
-
-export default MemoAnswerIcon;
+export default React.memo(AnswerIcon);

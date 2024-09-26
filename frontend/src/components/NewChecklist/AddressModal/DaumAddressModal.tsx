@@ -23,7 +23,7 @@ const DaumAddressModal = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const postcodeContainerRef = useRef<HTMLDivElement | null>(null);
 
-  const { findNearSubway } = useRoomInfoUnvalidatedStore();
+  const { findSubwayByAddress } = useRoomInfoUnvalidatedStore();
   const roomInfoUnvalidatedActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
 
   const handleAddress = () => {
@@ -31,22 +31,24 @@ const DaumAddressModal = () => {
     loadExternalScriptWithCallback('daumAddress', openPostcodeEmbed);
   };
 
-  const findPosition = (data: Address) => {
-    /* eslint-disable @typescript-eslint/no-explicit-any */
-    const { kakao } = window as any;
+  // findSubwayByAddress(data);
 
-    new kakao.maps.load(() => {
-      const geocoder = new kakao.maps.services.Geocoder();
+  // const findPosition = (data: Address) => {
+  //   /* eslint-disable @typescript-eslint/no-explicit-any */
+  //   const { kakao } = window as any;
 
-      geocoder.addressSearch(data.address, function (result: any, status: any) {
-        /* 정상적으로 검색이 완료됐으면*/
-        if (status === kakao.maps.services.Status.OK) {
-          findNearSubway({ lat: result[0].y, lon: result[0].x });
-        }
-        closeModal();
-      });
-    });
-  };
+  //   new kakao.maps.load(() => {
+  //     const geocoder = new kakao.maps.services.Geocoder();
+
+  //     geocoder.addressSearch(data.address, function (result: any, status: any) {
+  //       /* 정상적으로 검색이 완료됐으면*/
+  //       if (status === kakao.maps.services.Status.OK) {
+  //         findNearSubway({ lat: result[0].y, lon: result[0].x });
+  //       }
+  //       closeModal();
+  //     });
+  //   });
+  // };
 
   const openPostcodeEmbed = () => {
     if (window.daum?.Postcode && postcodeContainerRef.current) {
@@ -57,7 +59,8 @@ const DaumAddressModal = () => {
           roomInfoUnvalidatedActions.set('address', data.address);
           roomInfoUnvalidatedActions.set('buildingName', data.buildingName);
 
-          loadExternalScriptWithCallback('kakaoMap', () => findPosition(data));
+          loadExternalScriptWithCallback('kakaoMap', () => findSubwayByAddress(data.address));
+          closeModal();
         },
       }).embed(postcodeContainerRef.current, { q: '' });
     } else {

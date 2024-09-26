@@ -17,7 +17,23 @@ const useRoomInfoUnvalidatedStore = () => {
     roomInfoUnvalidatedActions.set('nearSubwayStation', nearSubways);
   };
 
-  return { findNearSubway };
+  const findSubwayByAddress = (address: string) => {
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    const { kakao } = window as any;
+
+    new kakao.maps.load(() => {
+      const geocoder = new kakao.maps.services.Geocoder();
+
+      geocoder.addressSearch(address, function (result: any, status: any) {
+        /* 정상적으로 검색이 완료됐으면*/
+        if (status === kakao.maps.services.Status.OK) {
+          findNearSubway({ lat: result[0].y, lon: result[0].x });
+        }
+      });
+    });
+  };
+
+  return { findNearSubway, findSubwayByAddress };
 };
 
 export default useRoomInfoUnvalidatedStore;

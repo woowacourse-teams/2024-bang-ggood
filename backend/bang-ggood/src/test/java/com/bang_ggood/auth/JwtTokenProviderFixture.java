@@ -7,9 +7,7 @@ import java.util.Base64;
 
 public class JwtTokenProviderFixture {
 
-    public static JwtTokenProvider JWT_TOKEN_PROVIDER() {
-        return new JwtTokenProvider(createJwtSecretKey(), PROPERTIES());
-    }
+    private static final long THIRTY_MINUTE = 1800000L;
 
     public static JwtTokenProvider JWT_TOKEN_PROVIDER_WITH_INVALID_KEY() {
         return new JwtTokenProvider(createInvalidJwtSecretKey(), PROPERTIES());
@@ -35,6 +33,6 @@ public class JwtTokenProviderFixture {
     }
 
     private static JwtTokenProperties PROPERTIES() {
-        return new JwtTokenProperties(1800000L, 1800000L); // 30분
+        return new JwtTokenProperties(THIRTY_MINUTE , THIRTY_MINUTE);
     }
 }

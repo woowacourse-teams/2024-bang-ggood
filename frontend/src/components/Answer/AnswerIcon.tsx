@@ -38,8 +38,4 @@ const AnswerIcon = ({ answer, isSelected = false, ...rest }: Props) => {
   );
 };
 
-const AnswerIconMemo = React.memo(AnswerIcon, (prevProps, nextProps) => {
-  return prevProps.isSelected === nextProps.isSelected;
-});
-
-export default AnswerIconMemo;
+export default React.memo(AnswerIcon);

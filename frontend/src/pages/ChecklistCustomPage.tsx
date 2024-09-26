@@ -34,7 +34,7 @@ const ChecklistCustomPage = () => {
 
     putCustomChecklist(selectedQuestions, {
       onSuccess: () => {
-        showToast(TOAST_MESSAGE.ADD);
+        showToast(TOAST_MESSAGE.CUSTOM);
         navigate(ROUTE_PATH.checklistList);
       },
     });

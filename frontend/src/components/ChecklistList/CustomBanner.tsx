@@ -12,7 +12,7 @@ const CustomBanner = ({ onClick }: Props) => {
     <S.Banner onClick={onClick}>
       <S.Wrapper>
         <PencilIcon width={30} height={30} />
-        <S.Title>체크리스트 항목</S.Title>
+        <S.Title>체크리스트 질문</S.Title>
       </S.Wrapper>
       <S.Button>편집하기</S.Button>
     </S.Banner>

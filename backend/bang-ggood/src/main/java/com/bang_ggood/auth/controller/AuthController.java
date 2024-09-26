@@ -50,7 +50,7 @@ public class AuthController {
         return ResponseEntity.noContent().header(HttpHeaders.SET_COOKIE, expiredCookie.toString()).build();
     }
 
-    @PostMapping("/accessToken/reIssue")
+    @PostMapping("/accessToken/reissue")
     public ResponseEntity<Void> reIssueAccessToken(HttpServletRequest httpServletRequest) {
         String refreshToken = cookieResolver.extractRefreshToken(httpServletRequest.getCookies());
         String accessToken = authService.reIssueAccessToken(refreshToken);

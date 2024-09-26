@@ -46,7 +46,7 @@ public class ArticleE2ETest extends AcceptanceTest {
                 .extract()
                 .as(ExceptionResponse.class);
 
-        assertThat(response.message()).isEqualTo(ExceptionCode.AUTHENTICATION_COOKIE_EMPTY.getMessage());
+        assertThat(response.message()).isEqualTo(ExceptionCode.AUTHENTICATION_TOKEN_EMPTY.getMessage());
     }
 
     @DisplayName("아티클 생성 실패: 제목이 비어있는 경우")

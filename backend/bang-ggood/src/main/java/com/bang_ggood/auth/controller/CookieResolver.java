@@ -26,6 +26,23 @@ public class CookieResolver {
                 .filter(cookie -> cookie.getName().equals(cookieName))
                 .findAny()
                 .map(Cookie::getValue)
-                .orElseThrow(() -> new BangggoodException(ExceptionCode.AUTHENTICATION_COOKIE_TOKEN_EMPTY));
+                .orElseThrow(() -> new BangggoodException(ExceptionCode.AUTHENTICATION_REQUIRED_TOKEN_EMPTY));
+    }
+
+    public boolean isTokenNotExist(Cookie[] cookies) {
+        return (!isAccessTokenExist(cookies) && !isRefreshTokenExist(cookies));
+    }
+
+    private boolean isAccessTokenExist(Cookie[] cookies) {
+        return isTokenExist(cookies, CookieProvider.ACCESS_TOKEN_COOKIE_NAME);
+    }
+
+    private boolean isRefreshTokenExist(Cookie[] cookies) {
+        return isTokenExist(cookies, CookieProvider.REFRESH_TOKEN_COOKIE_NAME);
+    }
+
+    private boolean isTokenExist(Cookie[] cookies, String cookieName) {
+        return Arrays.stream(cookies)
+                .anyMatch(cookie -> cookie.getName().equals(cookieName));
     }
 }

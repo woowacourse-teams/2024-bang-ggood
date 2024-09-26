@@ -50,7 +50,50 @@ class CookieResolverTest {
         // when & then
         Assertions.assertThatThrownBy(() -> cookieResolver.extractAccessToken(cookies))
                 .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.AUTHENTICATION_COOKIE_TOKEN_EMPTY.getMessage());
+                .hasMessage(ExceptionCode.AUTHENTICATION_REQUIRED_TOKEN_EMPTY.getMessage());
 
+    }
+
+    @DisplayName("쿠키 존재 여부 반환 성공 : 토큰 정보가 존재하면 false를 반환한다.")
+    @Test
+    void isAllTokenNotExist_returnFalse() {
+        // given
+        CookieResolver cookieResolver = new CookieResolver();
+        Cookie[] cookies =  { new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, "test"),
+                new Cookie(CookieProvider.REFRESH_TOKEN_COOKIE_NAME, "test")};
+
+        // when
+        boolean result = cookieResolver.isTokenNotExist(cookies);
+
+        // then
+        Assertions.assertThat(result).isFalse();
+    }
+
+    @DisplayName("쿠키 존재 여부 반환 성공 : 액세스 & 리프레시 토큰 정보가 존재하지 않으면 true를 반환한다.")
+    @Test
+    void isTokenNotExist_returnTrue() {
+        // given
+        CookieResolver cookieResolver = new CookieResolver();
+        Cookie[] cookies =  { new Cookie("test", "test") };
+
+        // when
+        boolean result = cookieResolver.isTokenNotExist(cookies);
+
+        // then
+        Assertions.assertThat(result).isTrue();
+    }
+
+    @DisplayName("쿠키 존재 여부 반환 성공 : 토큰 정보가 하나라도 존재하지 않으면 false를 반환한다.")
+    @Test
+    void isTokenNotExist_returnFalse() {
+        // given
+        CookieResolver cookieResolver = new CookieResolver();
+        Cookie[] cookies =  { new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, "test")};
+
+        // when
+        boolean result = cookieResolver.isTokenNotExist(cookies);
+
+        // then
+        Assertions.assertThat(result).isFalse();
     }
 }

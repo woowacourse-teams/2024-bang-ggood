@@ -60,7 +60,8 @@ public enum ExceptionCode {
 
     // Auth
     AUTHENTICATION_COOKIE_EMPTY(HttpStatus.UNAUTHORIZED, "인증정보가 존재하지 않습니다. 쿠키값을 넣어주세요."),
-    AUTHENTICATION_COOKIE_TOKEN_EMPTY(HttpStatus.UNAUTHORIZED, "인증정보가 존재하지 않습니다. 쿠키에 토큰 정보를 넣어주세요."),
+    AUTHENTICATION_REQUIRED_TOKEN_EMPTY(HttpStatus.UNAUTHORIZED, "토큰 정보가 존재하지 않습니다. 토큰을 재발급해주세요."),
+    AUTHENTICATION_TOKEN_EMPTY(HttpStatus.UNAUTHORIZED, "로그인이 필요한 사용자입니다."),
     AUTHENTICATION_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "토큰이 만료되었습니다."),
     AUTHENTICATION_TOKEN_INVALID(HttpStatus.UNAUTHORIZED, "토큰 정보가 올바르지 않습니다."),
     AUTHENTICATION_TOKEN_IN_BLACKLIST(HttpStatus.UNAUTHORIZED, "이미 로그아웃되어 더 이상 사용할 수 없는 토큰입니다. 다시 로그인 해주세요."),

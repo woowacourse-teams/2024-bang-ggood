@@ -33,7 +33,7 @@ public class UserPrincipalArgumentResolver implements HandlerMethodArgumentResol
                                   NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
 
-        if (request.getCookies() == null) {
+        if (request.getCookies() == null || cookieResolver.isTokenNotExist(request.getCookies())) {
             return authService.assignGuestUser();
         }
 

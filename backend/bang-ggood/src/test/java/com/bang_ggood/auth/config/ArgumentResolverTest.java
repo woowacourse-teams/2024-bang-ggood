@@ -80,6 +80,6 @@ class ArgumentResolverTest extends AcceptanceTest {
                 .when().get(TestController.AUTH_PRINCIPAL_URL)
                 .then().log().all()
                 .statusCode(401)
-                .body("message", containsString(ExceptionCode.AUTHENTICATION_COOKIE_TOKEN_EMPTY.getMessage()));
+                .body("message", containsString(ExceptionCode.AUTHENTICATION_REQUIRED_TOKEN_EMPTY.getMessage()));
     }
 }

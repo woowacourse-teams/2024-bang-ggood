@@ -35,8 +35,8 @@ public class AuthRequiredPrincipalArgumentResolver implements HandlerMethodArgum
                                 NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
 
-        if (request.getCookies() == null) {
-            throw new BangggoodException(ExceptionCode.AUTHENTICATION_COOKIE_EMPTY);
+        if (request.getCookies() == null || cookieResolver.isTokenNotExist(request.getCookies())) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_EMPTY);
         }
 
         String token = cookieResolver.extractAccessToken(request.getCookies());

@@ -49,8 +49,8 @@ const useMutateChecklist = (
   const roomInfoUnvalidatedAnswerWithoutSubway = removeKey(roomInfoUnvalidatedAnswer, 'nearSubwayStation');
 
   const formattedValues = {
-    station: roomInfoUnvalidatedAnswer.nearSubwayStation[0].stationName,
-    walkingTime: roomInfoUnvalidatedAnswer.nearSubwayStation[0].walkingTime,
+    station: roomInfoUnvalidatedAnswer.nearSubwayStation[0]?.stationName,
+    walkingTime: roomInfoUnvalidatedAnswer.nearSubwayStation[0]?.walkingTime,
   };
 
   const postData = {

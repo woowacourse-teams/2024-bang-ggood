@@ -7,7 +7,8 @@ import { flexSpaceBetween, Skeleton } from '@/styles/common';
 const SKArticleDetail = () => {
   return (
     <>
-      <Header left={<Header.Backward />} />
+      <Header left={<Header.Backward />} isTransparent />
+      <S.SkeletonThumbnail />
       <Layout withHeader>
         <S.Row>
           <S.SkeletonKeyword />
@@ -22,6 +23,11 @@ const SKArticleDetail = () => {
 export default SKArticleDetail;
 
 const S = {
+  SkeletonThumbnail: styled.div`
+    width: 100%;
+    height: 250px;
+    ${Skeleton}
+  `,
   Row: styled.div`
     ${flexSpaceBetween}
   `,

@@ -28,12 +28,14 @@ export const getChecklists = async () => {
 };
 
 export const postChecklist = async (checklist: ChecklistPostForm) => {
+  checklist.room.structure = checklist.room.structure === 'NONE' ? undefined : checklist.room.structure;
   checklist.room = mapObjUndefinedToNull(checklist.room);
   const response = await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLISTS, body: checklist });
   return response;
 };
 
 export const putChecklist = async (id: number, checklist: ChecklistPostForm) => {
+  checklist.room.structure = checklist.room.structure === 'NONE' ? undefined : checklist.room.structure;
   checklist.room = mapObjUndefinedToNull(checklist.room);
   const response = await fetcher.put({ url: BASE_URL + ENDPOINT.CHECKLIST_ID(id), body: checklist });
   return response;

@@ -1,55 +1,87 @@
 import { useNavigate } from 'react-router-dom';
 import { useStore } from 'zustand';
 
-import AlertModal from '@/components/_common/AlertModal/AlertModal';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
+import AlertModal from '@/components/_common/Modal/AlertModal/AlertModal';
+import LoginModal from '@/components/_common/Modal/LoginModal/LoginModal';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import Tabs from '@/components/_common/Tabs/Tabs';
 import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
 import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
-import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
+import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
-import useChecklistPost from '@/hooks/useChecklistPost';
+import useHandleTipBox from '@/hooks/useHandleTipBox';
 import useChecklistTemplate from '@/hooks/useInitialChecklist';
-import useModalOpen from '@/hooks/useModalOpen';
+import useModal from '@/hooks/useModal';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import roomInfoUnvalidatedStore from '@/store/roomInfoUnvalidatedStore';
+import useChecklistStore from '@/store/useChecklistStore';
+import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 
 const NewChecklistPage = () => {
-  useChecklistTemplate(); // 체크리스트 질문 가져오기 및 준비
   const navigate = useNavigate();
+  useChecklistTemplate(); // 체크리스트 질문 가져오기 및 준비
 
   const { tabs } = useNewChecklistTabs();
 
+  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
+  const roomInfoUnvalidatedActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
+  const checklistActions = useChecklistStore(state => state.actions);
+  const selectedOptionActions = useSelectedOptionStore(state => state.actions);
+  const { resetShowTipBox } = useHandleTipBox('OPTION');
+
   // 메모 모달
-  const { isModalOpen: isMemoModalOpen, modalOpen: memoModalOpen, modalClose: memoModalClose } = useModalOpen();
+  const { isModalOpen: isMemoModalOpen, openModal: openMemoModal, closeModal: closeMemoModal } = useModal();
 
   // 한줄평 모달
-  const {
-    isModalOpen: isSummaryModalOpen,
-    modalOpen: summaryModalOpen,
-    modalClose: summaryModalClose,
-  } = useModalOpen();
+  const { isModalOpen: isSubmitModalOpen, openModal: openSummaryModal, closeModal: closeSummaryModal } = useModal();
 
-  // 체크리스트 POST
-  const { handleSubmitChecklist } = useChecklistPost(summaryModalClose);
+  // 뒤로가기 시 휘발 경고 모달
+  const { isModalOpen: isAlertModalOpen, openModal: openAlertModal, closeModal: closeAlertModal } = useModal();
 
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
+  // 로그인 요청 모달
+  const { isModalOpen: isLoginModalOpen, openModal: openLoginModal, closeModal: closeLoginModal } = useModal();
 
-  //뒤로가기 내용 삭제 경고 모달
-  const { isModalOpen, modalOpen, modalClose } = useModalOpen();
-
-  const handleNavigateBack = () => {
-    actions.resetAll();
+  const resetAndGoHome = () => {
+    roomInfoActions.resetAll();
+    roomInfoUnvalidatedActions.resetAll();
+    checklistActions.reset();
+    selectedOptionActions.reset();
+    resetShowTipBox(); // 옵션의 팁박스 다시표시
     navigate(ROUTE_PATH.checklistList);
   };
 
   return (
     <>
-      {isModalOpen && (
+      <Header
+        left={<Header.Backward onClick={openAlertModal} />}
+        center={<Header.Text>새 체크리스트</Header.Text>}
+        right={<Button label="저장" size="xSmall" color="dark" onClick={openSummaryModal} />}
+      />
+      <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
+        <Tabs tabList={tabs} />
+        <NewChecklistContent />
+      </TabProvider>
+
+      {isMemoModalOpen ? (
+        <MemoModal isModalOpen={isMemoModalOpen} modalClose={closeMemoModal} />
+      ) : (
+        <MemoButton onClick={openMemoModal} />
+      )}
+
+      <SubmitModalWithSummary
+        isModalOpen={isSubmitModalOpen}
+        modalClose={closeSummaryModal}
+        onConfirm={resetAndGoHome}
+        onError={openLoginModal}
+        mutateType="add"
+      />
+
+      {isAlertModalOpen && (
         <AlertModal
           title={
             <div>
@@ -58,35 +90,14 @@ const NewChecklistPage = () => {
               괜찮으신가요?
             </div>
           }
-          isOpen={isModalOpen}
-          onClose={modalClose}
-          handleApprove={handleNavigateBack}
+          isOpen={isAlertModalOpen}
+          onClose={closeAlertModal}
+          handleApprove={resetAndGoHome}
           approveButtonName="나가기"
         />
       )}
-      <Header
-        left={<Header.Backward onClick={modalOpen} />}
-        center={<Header.Text>새 체크리스트</Header.Text>}
-        right={<Button label="저장" size="xSmall" color="dark" onClick={summaryModalOpen} />}
-      />
-      <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
-        <Tabs tabList={tabs} />
-        <NewChecklistContent />
-      </TabProvider>
 
-      {isMemoModalOpen ? (
-        <MemoModal isModalOpen={isMemoModalOpen} modalClose={memoModalClose} />
-      ) : (
-        <MemoButton onClick={memoModalOpen} />
-      )}
-
-      {isSummaryModalOpen && (
-        <SummaryModal
-          isModalOpen={isSummaryModalOpen}
-          modalClose={summaryModalClose}
-          submitChecklist={handleSubmitChecklist}
-        />
-      )}
+      <LoginModal isModalOpen={isLoginModalOpen} modalClose={closeLoginModal} />
     </>
   );
 };

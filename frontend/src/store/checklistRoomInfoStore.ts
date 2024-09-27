@@ -1,5 +1,7 @@
-import createFormStore from '@/store/createFormStore';
+import { roomFloorLevels, roomOccupancyPeriods } from '@/constants/roomInfo';
+import createFormStore, { FormSpec } from '@/store/createFormStore';
 import { RoomInfo } from '@/types/room';
+import { objectMap } from '@/utils/typeFunctions';
 import {
   inRangeValidator,
   isIntegerValidator,
@@ -7,74 +9,33 @@ import {
   lengthValidator,
   nonNegativeValidator,
   positiveValidator,
-  Validator,
 } from '@/utils/validators';
 
-export const initialRoomInfo = {
-  roomName: '',
-  deposit: undefined,
-  rent: undefined,
-  maintenanceFee: undefined,
-  station: undefined,
-  walkingTime: undefined,
-  size: undefined,
-  floor: undefined,
-  floorLevel: '지상',
-  type: undefined,
-  structure: undefined,
-  contractTerm: undefined,
-  realEstate: undefined,
-  occupancyMonth: undefined,
-  occupancyPeriod: '초',
-  summary: undefined,
-  memo: undefined,
-} as const;
-
-const roomInfoType = {
-  roomName: 'string',
-  address: 'string',
-  station: 'string',
-  deposit: 'number',
-  rent: 'number',
-  maintenanceFee: 'number',
-  walkingTime: 'number',
-  size: 'number',
-  floor: 'number',
-  floorLevel: 'string',
-  type: 'string',
-  structure: 'string',
-  contractTerm: 'number',
-  realEstate: 'string',
-  occupancyMonth: 'number',
-  occupancyPeriod: 'string',
-  summary: 'string',
-  memo: 'string',
-  createdAt: 'string',
-  includedMaintenances: '',
-} as const;
-
-const validatorSet: Record<string, Validator[]> = {
-  roomName: [lengthValidator(20)],
-  address: [],
-  deposit: [isNumericValidator, nonNegativeValidator],
-  rent: [isNumericValidator, nonNegativeValidator],
-  maintenanceFee: [isNumericValidator, nonNegativeValidator],
-  includedMaintenances: [],
-  contractTerm: [isNumericValidator, nonNegativeValidator],
-  station: [],
-  walkingTime: [isIntegerValidator],
-  type: [],
-  size: [isNumericValidator],
-  floor: [isIntegerValidator, positiveValidator],
-  floorLevel: [],
-  structure: [],
-  realEstate: [],
-  occupancyMonth: [isNumericValidator, positiveValidator, inRangeValidator(1, 12)],
-  occupancyPeriod: [],
-  summary: [],
-  memo: [],
+const formSpec: FormSpec<RoomInfo> = {
+  roomName: { initialValue: '', type: 'string', validators: [lengthValidator(20)] },
+  deposit: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
+  rent: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
+  maintenanceFee: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
+  includedMaintenances: { initialValue: '', type: 'number[]', validators: [] },
+  contractTerm: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
+  type: { initialValue: '', type: 'string', validators: [] },
+  size: { initialValue: '', type: 'number', validators: [isNumericValidator] },
+  floor: { initialValue: '', type: 'number', validators: [isIntegerValidator, positiveValidator] },
+  floorLevel: { initialValue: roomFloorLevels[0], type: 'string', validators: [] },
+  structure: { initialValue: 'NONE', type: 'string', validators: [] },
+  realEstate: { initialValue: '', type: 'string', validators: [] },
+  occupancyMonth: {
+    initialValue: `${new Date().getMonth() + 1}`,
+    type: 'number',
+    validators: [isIntegerValidator, positiveValidator, inRangeValidator(1, 12)],
+  },
+  occupancyPeriod: { initialValue: roomOccupancyPeriods[0], type: 'string', validators: [] },
+  summary: { initialValue: '', type: 'string', validators: [] },
+  memo: { initialValue: '', type: 'string', validators: [] },
 };
 
-const checklistRoomInfoStore = createFormStore<RoomInfo>(initialRoomInfo, validatorSet, roomInfoType, 'roomInfoForm');
+export const initialRoomInfo = objectMap(formSpec, ([key, val]) => [key, val.initialValue]);
+
+const checklistRoomInfoStore = createFormStore<RoomInfo>(formSpec, 'roomInfoForm');
 
 export default checklistRoomInfoStore;

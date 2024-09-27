@@ -26,7 +26,7 @@ const ChecklistSection = () => {
 
   return (
     <>
-      <S.Title>집 구할 때 꼭 필요한 목록</S.Title>
+      <S.Title>방 둘러볼 때 꼭 필요한 체크리스트</S.Title>
       <S.Container>
         <S.Row>
           <S.ContainerTitle>

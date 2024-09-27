@@ -1,168 +1,174 @@
 import styled from '@emotion/styled';
-import { useEffect, useRef } from 'react';
-import { useStore } from 'zustand';
+import React, { useEffect, useRef, useState } from 'react';
 
-import checklistAddressStore from '@/store/checklistAddressStore';
+import { BangBangCryIcon } from '@/assets/assets';
+import Button from '@/components/_common/Button/Button';
+import { LoadingSpinner } from '@/components/_common/LoadingSpinner/LoadingSpinner';
 import { flexCenter } from '@/styles/common';
+import { Position } from '@/types/address';
+import createKakaoMapElements from '@/utils/createKakaoMapElements';
+import loadExternalScriptWithCallback from '@/utils/loadScript';
+
+type RealTimeLocationState = 'loading' | 'failure' | 'success';
+
+interface Props {
+  position: Position;
+  setPosition: React.Dispatch<React.SetStateAction<Position>>;
+  setCurrentAddress: React.Dispatch<React.SetStateAction<string>>;
+  setCurrentBuildingName: React.Dispatch<React.SetStateAction<string>>;
+  handleSubmitAddress: () => void;
+}
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const { kakao } = window as any;
-
-const RealTimeMap = () => {
+const RealTimeMap = ({
+  position,
+  setPosition,
+  setCurrentAddress,
+  setCurrentBuildingName,
+  handleSubmitAddress,
+}: Props) => {
   const mapRef = useRef<any | null>(null);
   const markerRef = useRef<any | null>(null);
   const infoWindowRef = useRef<any | null>(null);
+  const mapElement = useRef(null);
 
-  const { setAddress, setBuildingName, setPosition, position } = useStore(checklistAddressStore);
+  const { createMap, createMarker, createInfoWindow } = createKakaoMapElements();
+  const [realTimeLocationState, setRealTimeLocationState] = useState<RealTimeLocationState>('loading');
 
-  const geocoder = new kakao.maps.services.Geocoder();
+  const initializeMap = () => {
+    const { kakao } = window as any;
 
-  const displayMarker = (locPosition: any, message: string) => {
-    if (markerRef.current) {
-      markerRef.current.setPosition(locPosition);
-    } else {
-      markerRef.current = new kakao.maps.Marker({
-        map: mapRef.current,
-        position: locPosition,
-      });
-    }
+    kakao.maps.load(() => {
+      /*카카오 맵 생성 */
+      const map = createMap(kakao);
+      mapRef.current = map;
 
-    if (infoWindowRef.current) {
-      infoWindowRef.current.setContent(message);
-      infoWindowRef.current.open(mapRef.current, markerRef.current);
-    } else {
-      infoWindowRef.current = new kakao.maps.InfoWindow({
-        content: message,
-        removable: true,
-      });
-      infoWindowRef.current.open(mapRef.current, markerRef.current);
-    }
+      /*마커 생성*/
+      const marker = createMarker(kakao, map, new kakao.maps.LatLng(position.lat, position.lon));
+      markerRef.current = marker;
 
-    mapRef.current.setCenter(locPosition);
-  };
+      /*인포윈도우 생성*/
+      const infoWindow = createInfoWindow(kakao, map, marker);
+      infoWindowRef.current = infoWindow;
 
-  const successGeolocation = (position: GeolocationPosition) => {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
+      /*클릭할때 위치 변경*/
+      kakao.maps.event.addListener(map, 'click', (mouseEvent: any) => {
+        const latlng = mouseEvent.latLng;
+        map.setCenter(latlng);
+        setPosition({ lat: latlng.getLat(), lon: latlng.getLng() });
 
-    const locPosition = new kakao.maps.LatLng(lat, lon);
-    const message = `<span id="info-title">이 위치가 맞나요?</span>`;
-
-    displayMarker(locPosition, message);
-
-    /* 좌표로부터 상세 주소 정보를 요청하고, 주소 상태 업데이트 */
-    geocoder.coord2Address(lon, lat, (result: any, status: any) => {
-      if (status === kakao.maps.services.Status.OK) {
-        if (result[0].road_address) {
-          setAddress(result[0].road_address.address_name);
-          setBuildingName(result[0].road_address.building_name);
+        if (markerRef.current) {
+          markerRef.current.setPosition(latlng);
         }
+
+        updateAddressFromCoords(latlng);
+      });
+
+      /* 실시간 위치 찾기 */
+      const successGeolocation = (position: GeolocationPosition) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        const locPosition = new kakao.maps.LatLng(lat, lon);
+        const message = `<span id="info-title">이 위치가 맞나요?</span>`;
+
+        setPosition({ lat, lon });
+        map.setCenter(locPosition);
+        setRealTimeLocationState('success');
+
+        infoWindowRef.current.setContent(message);
+        infoWindowRef.current.open(mapRef.current, markerRef.current);
+        updateAddressFromCoords(mapRef.current.getCenter());
+      };
+
+      const errorGeolocation = () => {
+        setRealTimeLocationState('failure');
+      };
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(successGeolocation, errorGeolocation);
+      } else {
+        errorGeolocation();
       }
     });
   };
 
-  const errorGeolocation = () => {
-    const locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
-    const message = `<span id="info-title">현재 위치를 불러올 수 없어요.</span>`;
-
-    displayMarker(locPosition, message);
-  };
-
-  // 첫 지도 생성
-  const makeMap = () => {
-    const mapContainer = document.getElementById('map');
-    if (!mapContainer) return;
-
-    const mapOption = {
-      center: new kakao.maps.LatLng(position.lat, position.lon),
-      level: 3,
-    };
-
-    const map = new kakao.maps.Map(mapContainer, mapOption);
-    mapRef.current = map;
-    return map;
-  };
-
-  //현재 위치 표기하는 커스텀 마커 생성
-  const makeCustomMarker = (map: any) => {
-    const imageSrc = 'https://github.com/user-attachments/assets/cdd2825b-407f-485a-8cc9-5d261acf815d ',
-      imageSize = new kakao.maps.Size(32, 40),
-      imageOption = { offset: new kakao.maps.Point(15, 45) };
-
-    const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-
-    const marker = new kakao.maps.Marker({
-      map: map,
-      position: new kakao.maps.LatLng(position.lat, position.lon),
-      image: markerImage,
-    });
-    markerRef.current = marker;
-  };
-
-  // 첫 인포윈도우 생성
-  const makeInfoWindow = () => {
-    infoWindowRef.current = new kakao.maps.InfoWindow({
-      content: '<span id="info-title">이 위치가 맞나요?</span>',
-      removable: true,
-    });
-  };
-
   useEffect(() => {
-    const map = makeMap();
-
-    makeCustomMarker(map);
-
-    makeInfoWindow();
-
-    // geolocation으로 현재 실시간 위치 받아오기
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(successGeolocation, errorGeolocation);
-    } else {
-      errorGeolocation();
-    }
-
-    //클릭시 해당 위치로 위치 상태 변경
-    kakao.maps.event.addListener(map, 'click', (mouseEvent: any) => {
-      const latlng = mouseEvent.latLng;
-
-      setPosition({
-        lat: latlng.getLat(),
-        lon: latlng.getLng(),
-      });
-    });
+    /*카카오 맵 스크립트 불러오고 콜백 실행*/
+    loadExternalScriptWithCallback('kakaoMap', initializeMap);
   }, []);
 
-  /* 좌표로 법정동 상세 주소 정보를 요청*/
-  const searchDetailAddrFromCoords = (coords: any, callback: any) => {
-    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
-  };
+  const updateAddressFromCoords = (coords: any) => {
+    const { kakao } = window as any;
 
-  const getDetailAddress = (result: any, status: any) => {
-    if (status === kakao.maps.services.Status.OK) {
-      if (result[0].road_address) {
-        setAddress(result[0].road_address.address_name);
-        setBuildingName(result[0].road_address.building_name);
+    const geocoder = new kakao.maps.services.Geocoder();
+
+    geocoder.coord2Address(coords.getLng(), coords.getLat(), (result: any, status: any) => {
+      if (status === kakao.maps.services.Status.OK) {
+        /*1순위 : 도로명 주소 */
+        if (result[0].road_address) {
+          setCurrentAddress(result[0].road_address.address_name);
+        } else if (result[0].address.address_name) {
+          /*2순위 : 지번 주소 */
+          setCurrentAddress(result[0].address.address_name);
+        }
+        setCurrentBuildingName(result[0].road_address?.building_name || '');
       }
-    }
+    });
   };
 
-  /* 위치가 수정될 때마다 마커의 위치를 옮기기 */
   useEffect(() => {
-    if (markerRef.current && mapRef.current) {
+    if (markerRef.current && mapRef.current && realTimeLocationState !== 'loading') {
+      const { kakao } = window as any;
+
       const locPosition = new kakao.maps.LatLng(position.lat, position.lon);
       markerRef.current.setPosition(locPosition);
       mapRef.current.setCenter(locPosition);
-      infoWindowRef.current.open(mapRef.current, markerRef.current);
-      searchDetailAddrFromCoords(mapRef.current.getCenter(), getDetailAddress);
+
+      if (infoWindowRef.current) {
+        infoWindowRef.current.open(mapRef.current, markerRef.current);
+      }
+
+      updateAddressFromCoords(locPosition);
     }
-  }, [position, markerRef]);
+  }, [position]);
+
+  const onClickKakaoMap = () => loadExternalScriptWithCallback('kakaoMap', initializeMap);
 
   return (
     <S.Container>
-      <S.MapBox id="map">
-        <S.MapEmptyBox>지도 준비 중</S.MapEmptyBox>
-      </S.MapBox>
+      <S.Map id="map" ref={mapElement}>
+        {realTimeLocationState === 'loading' && (
+          <S.MapEmptyBox>
+            <S.InfoTextBox>
+              <LoadingSpinner />
+              <S.LoadingMessage>
+                <div>현재 위치를 찾고 있어요.</div>
+                <div>위치 권한을 허용해 주세요.</div>
+              </S.LoadingMessage>
+            </S.InfoTextBox>
+          </S.MapEmptyBox>
+        )}
+        {realTimeLocationState === 'failure' && (
+          <S.MapEmptyBox>
+            <S.InfoTextBox>
+              <S.FailureIcon>
+                <BangBangCryIcon />
+              </S.FailureIcon>
+              <div>현재 위치를 찾을 수 없어요.</div>
+              <div>위치를 허용하셨는지 확인 후,</div>
+              <div>다시 시도해 주세요.</div>
+              <S.RetryButtonBox size={'xSmall'} color={'dark'} onClick={onClickKakaoMap} label="다시 시도" />
+            </S.InfoTextBox>
+          </S.MapEmptyBox>
+        )}
+      </S.Map>
       <div id="message"></div>
+      {realTimeLocationState === 'success' && (
+        <S.ButtonBox>
+          <Button label="이 위치로 설정할게요." size="full" isSquare={true} onClick={() => handleSubmitAddress()} />
+        </S.ButtonBox>
+      )}
     </S.Container>
   );
 };
@@ -171,7 +177,8 @@ const S = {
   Container: styled.div`
     width: 100%;
   `,
-  MapBox: styled.div`
+  Map: styled.div`
+    position: relative;
     width: 100%;
     min-height: 40rem;
   `,
@@ -181,11 +188,44 @@ const S = {
     height: 5rem;
   `,
   MapEmptyBox: styled.div`
+    position: relative;
+    z-index: 10;
     width: 100%;
     min-height: 40rem;
 
     background-color: ${({ theme }) => theme.palette.background};
+
     ${flexCenter}
+  `,
+  RetryButtonBox: styled(Button)`
+    margin-top: 2rem;
+  `,
+  InfoTextBox: styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    width: 80%;
+
+    text-align: center;
+    transform: translate(-50%, -50%);
+  `,
+  LoadingMessage: styled.div`
+    padding-top: 2rem;
+  `,
+  FailureIcon: styled.div`
+    width: 100%;
+    ${flexCenter}
+    margin-bottom:1rem;
+  `,
+  AddressButton: styled(Button)`
+    width: 50%;
+
+    font-size: ${({ theme }) => theme.text.size.xSmall};
+  `,
+  ButtonBox: styled.div`
+    display: flex;
+    margin-top: 1rem;
   `,
 };
 

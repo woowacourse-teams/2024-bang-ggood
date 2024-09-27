@@ -8,7 +8,8 @@ import useChecklistStore from '@/store/useChecklistStore';
 describe('useChecklistAnswer 테스트', () => {
   beforeEach(() => {
     const { result } = renderHook(() => useChecklistStore());
-    act(() => result.current.setAnswerInQuestion(checklistQuestions.categories));
+    act(() => result.current.actions.reset());
+    act(() => result.current.actions.initAnswerSheetIfEmpty(checklistQuestions.categories));
   });
 
   it('Answer가 없을 때, null을 응답한다.', () => {

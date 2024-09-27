@@ -11,6 +11,8 @@ const DepositAndRent = () => {
   const errorMessageDeposit = useStore(checklistRoomInfoStore, state => state.errorMessage.deposit);
   const errorMessageRent = useStore(checklistRoomInfoStore, state => state.errorMessage.rent);
 
+  const errorMessage = errorMessageDeposit || errorMessageRent;
+
   return (
     <FormField>
       <FormField.Label label="보증금 / 월세 (만원)" />
@@ -19,7 +21,7 @@ const DepositAndRent = () => {
         <FormStyled.FlexLabel label=" / " />
         <FormField.Input width="medium" placeholder="" onChange={actions.onChange} name="rent" value={rent} />
       </FormStyled.FieldBox>
-      <FormField.ErrorMessage value={errorMessageDeposit || errorMessageRent || ''} />
+      <FormField.ErrorMessage value={errorMessage} />
     </FormField>
   );
 };

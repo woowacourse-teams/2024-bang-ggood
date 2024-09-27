@@ -3,21 +3,24 @@ import styled from '@emotion/styled';
 import Checkbox from '@/components/_common/Checkbox/Checkbox';
 import CounterBox from '@/components/_common/CounterBox/CounterBox';
 import { OPTION_COUNT } from '@/constants/options';
-import useOptionStore from '@/store/useOptionStore';
+import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 import { flexCenter, flexSpaceBetween, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
 
 const OptionAllSelectBox = () => {
-  const { selectedOptions, isAllSelected, addAllOptions, removeAllOptions } = useOptionStore();
+  const selectedOptions = useSelectedOptionStore(state => state.selectedOptions);
+  const selectedOptionActions = useSelectedOptionStore(state => state.actions);
 
-  const handleToggleAllSelect = isAllSelected() ? removeAllOptions : addAllOptions;
+  const handleToggleAllSelect = selectedOptionActions.isAllSelected()
+    ? selectedOptionActions.removeAll
+    : selectedOptionActions.addAllOptions;
 
   return (
     <S.ButtonContainer>
       <S.TotalSelectBox>
         {/*전체 선택 버튼*/}
         <Checkbox
-          isChecked={isAllSelected()}
+          isChecked={selectedOptionActions.isAllSelected()}
           setIsChecked={handleToggleAllSelect}
           onClick={handleToggleAllSelect}
           color={theme.palette.yellow500}

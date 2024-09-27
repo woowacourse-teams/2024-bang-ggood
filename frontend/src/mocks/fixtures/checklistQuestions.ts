@@ -1,4 +1,6 @@
-export const checklistQuestions = {
+import { ChecklistCategory } from '@/types/checklist';
+
+export const checklistQuestions: { categories: ChecklistCategory[] } = {
   categories: [
     {
       categoryId: 1,

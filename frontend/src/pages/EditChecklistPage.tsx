@@ -9,105 +9,79 @@ import Tabs from '@/components/_common/Tabs/Tabs';
 import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
 import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
-import SummaryModal from '@/components/NewChecklist/SummaryModal/SummaryModal';
+import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery';
-import usePutChecklistQuery from '@/hooks/query/usePutCheclistQuery';
-import useModalOpen from '@/hooks/useModalOpen';
+import useModal from '@/hooks/useModal';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
-import useToast from '@/hooks/useToast';
-import checklistIncludedMaintenancesStore from '@/store/checklistIncludedMaintenancesStore';
+import useRoomInfoUnvalidatedStore from '@/hooks/useRoomInfoUnvalidatedStore';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import roomInfoUnvalidatedStore from '@/store/roomInfoUnvalidatedStore';
 import useChecklistStore from '@/store/useChecklistStore';
-import useOptionStore from '@/store/useOptionStore';
-import { ChecklistCategoryQnA } from '@/types/checklist';
-import { objectOmit } from '@/utils/typeFunctions';
+import useSelectedOptionStore from '@/store/useSelectedOptionStore';
+import loadExternalScriptWithCallback from '@/utils/loadScript';
 
 type RouteParams = {
   checklistId: string;
 };
+
 const EditChecklistPage = () => {
   const navigate = useNavigate();
-  const { showToast } = useToast();
-  const { tabs } = useNewChecklistTabs();
-
-  const { isModalOpen, modalOpen, modalClose } = useModalOpen();
-  const { isModalOpen: isMemoModalOpen, modalOpen: memoModalOpen, modalClose: memoModalClose } = useModalOpen(); // 메모 모달
-
   const { checklistId } = useParams() as RouteParams;
   const { data: checklist, isSuccess } = useGetChecklistDetailQuery(checklistId);
-  const { mutate: putChecklist } = usePutChecklistQuery();
+  const { tabs } = useNewChecklistTabs();
+  const checklistActions = useChecklistStore(state => state.actions);
 
-  /* roomInfo */
-  const roomInfoAnswer = useStore(checklistRoomInfoStore, state => state.value);
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const roomName = useStore(checklistRoomInfoStore, state => state.value.roomName);
-  const IncludedMaintenancesActions = useStore(checklistIncludedMaintenancesStore, state => state.actions);
+  const { findSubwayByAddress } = useRoomInfoUnvalidatedStore();
+  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
+  const roomInfoUnvalidatedActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
 
-  /* option */
-  const { selectedOptions, setSelectedOptions } = useOptionStore();
-  /* checklist */
-  const { checklistCategoryQnA, setAnswers } = useChecklistStore();
+  // 한줄평 모달
+  const { isModalOpen: isSubmitModalOpen, openModal: summaryModalOpen, closeModal: summaryModalClose } = useModal();
+
+  // 메모 모달
+  const { isModalOpen: isMemoModalOpen, openModal: memoModalOpen, closeModal: memoModalClose } = useModal();
+
+  // TODO: action 분리 필요
+  const selectedOptionActions = useSelectedOptionStore(state => state.actions);
+
+  const resetAndGoDetailPage = () => {
+    roomInfoActions.resetAll();
+    roomInfoUnvalidatedActions.resetAll();
+    checklistActions.reset();
+    selectedOptionActions.reset();
+    navigate(ROUTE_PATH.checklistOne(Number(checklistId)));
+  };
 
   useEffect(() => {
-    const fetchChecklistAndSetToStore = async () => {
+    const setChecklistDataToStore = async () => {
       if (!isSuccess) return;
-      actions.setAll({ rawValue: objectOmit(checklist.room, new Set('includedMaintenances')), value: checklist.room });
-      IncludedMaintenancesActions.set(checklist.room.includedMaintenances ?? []);
-      setSelectedOptions(checklist.options.flatMap(option => option.optionId));
 
-      setAnswers(checklist.categories);
+      roomInfoActions.setAll({
+        rawValue: checklist.room,
+        value: checklist.room,
+      });
+
+      roomInfoUnvalidatedActions.set('address', checklist.room.address!);
+      roomInfoUnvalidatedActions.set('buildingName', checklist.room.buildingName!);
+      //TODO: 가까운 지하철은 나중에 api 수정되면 저장
+
+      loadExternalScriptWithCallback('kakaoMap', () => findSubwayByAddress(checklist.room.address!));
+
+      selectedOptionActions.set(checklist.options.map(option => option.optionId));
+      checklistActions.set(checklist.categories);
     };
-    fetchChecklistAndSetToStore();
+
+    setChecklistDataToStore();
   }, [checklistId]);
-
-  // TODO: fetch 시 로딩 상태일 때 스켈레톤처리. 성공할 떄만 return 문 보여주는 로직이 필요
-  if (roomName === undefined) {
-    return <div>체크리스트가 없어요</div>;
-  }
-
-  /* 현재 상태를 백엔드에 보내는 답안 포맷으로 바꾸는 함수 */
-  const transformQuestions = (checklist: ChecklistCategoryQnA[]) => {
-    return checklist.flatMap(category =>
-      category.questions.map(question => ({
-        questionId: question.questionId,
-        answer: question.answer,
-      })),
-    );
-  };
-
-  const handleSubmitChecklist = () => {
-    const fetchNewChecklist = () => {
-      putChecklist(
-        {
-          id: Number(checklistId),
-          checklist: {
-            room: roomInfoAnswer,
-            options: selectedOptions,
-            questions: transformQuestions(checklistCategoryQnA),
-          },
-        },
-        {
-          onSuccess: () => {
-            modalClose();
-            showToast('체크리스트가 수정되었습니다.');
-            actions.resetAll();
-            navigate(ROUTE_PATH.checklistOne(Number(checklistId)));
-          },
-        },
-      );
-    };
-
-    fetchNewChecklist();
-  };
 
   return (
     <>
       <Header
-        left={<Header.Backward />}
+        left={<Header.Backward onClick={resetAndGoDetailPage} />}
         center={<Header.Text>체크리스트 편집</Header.Text>}
-        right={<Button label="저장" size="small" color="dark" onClick={modalOpen} />}
+        right={<Button label="저장" size="small" color="dark" onClick={summaryModalOpen} />}
       />
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
         {/* 체크리스트 작성의 탭 */}
@@ -122,10 +96,16 @@ const EditChecklistPage = () => {
       ) : (
         <MemoButton onClick={memoModalOpen} />
       )}
+
       {/* 한줄평 모달*/}
-      {isModalOpen && (
-        <SummaryModal isModalOpen={isModalOpen} modalClose={modalClose} submitChecklist={handleSubmitChecklist} />
-      )}
+
+      <SubmitModalWithSummary
+        isModalOpen={isSubmitModalOpen}
+        onConfirm={resetAndGoDetailPage}
+        modalClose={summaryModalClose}
+        mutateType="edit"
+        checklistId={Number(checklistId)}
+      />
     </>
   );
 };

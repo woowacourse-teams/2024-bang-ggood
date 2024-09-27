@@ -1,4 +1,7 @@
+import '@/styles/category-sprite-image.css';
+
 import styled from '@emotion/styled';
+import React from 'react';
 
 import { flexCenter } from '@/styles/common';
 
@@ -8,22 +11,19 @@ interface Props {
   name: string;
   active: boolean;
   hasIndicator: boolean | null;
-  imgUrl?: string;
+  className?: string;
 }
 
-const Tab = ({ id, onMoveTab, name, active, hasIndicator, imgUrl }: Props) => {
+const Tab = ({ id, onMoveTab, name, active, hasIndicator, className }: Props) => {
   return (
     <S.Container key={id} onClick={() => onMoveTab(id)} active={active}>
-      <S.TextBox>
-        {imgUrl && <img src={imgUrl} width={22} />}
-        <span>{name}</span>
-      </S.TextBox>
+      <S.TextBox className={className && `sprite-icon ${className}`}>{name}</S.TextBox>
       {hasIndicator && hasIndicator !== null && <S.UncompletedIndicator />}
     </S.Container>
   );
 };
 
-export default Tab;
+export default React.memo(Tab);
 
 const S = {
   Container: styled.div<{ active: boolean }>`
@@ -41,7 +41,8 @@ const S = {
   `,
   TextBox: styled.div`
     display: flex;
-    gap: 5px;
+    align-items: center;
+    gap: 0.5rem;
   `,
   UncompletedIndicator: styled.div`
     position: absolute;

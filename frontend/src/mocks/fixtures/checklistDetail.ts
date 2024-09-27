@@ -31,7 +31,7 @@ export const checklistDetail: ChecklistInfo = {
   categories: [
     {
       categoryId: 1,
-      categoryName: '주거지',
+      categoryName: '방 컨디션',
       questions: [
         {
           questionId: 1,
@@ -51,7 +51,7 @@ export const checklistDetail: ChecklistInfo = {
     },
     {
       categoryId: 2,
-      categoryName: '시설',
+      categoryName: '외부',
       questions: [
         {
           questionId: 3,

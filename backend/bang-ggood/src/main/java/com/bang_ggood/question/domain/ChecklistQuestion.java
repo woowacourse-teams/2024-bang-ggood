@@ -38,8 +38,6 @@ public class ChecklistQuestion extends BaseEntity {
     }
 
     public void change(ChecklistQuestion checklistQuestion) {
-        this.checklist = checklistQuestion.checklist;
-        this.question = checklistQuestion.question;
         this.answer = checklistQuestion.answer;
     }
 

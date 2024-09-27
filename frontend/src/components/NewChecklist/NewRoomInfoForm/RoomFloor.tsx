@@ -13,6 +13,12 @@ const RoomFloor = () => {
   const floorLevel = useStore(checklistRoomInfoStore, state => state.rawValue.floorLevel);
   const errorMessageFloor = useStore(checklistRoomInfoStore, state => state.errorMessage.floor);
 
+  const handleClickDropdown = (level: string) => {
+    actions.set('floorLevel', level);
+    if (level === '반지하/지하') {
+      actions.set('floor', '');
+    }
+  };
   return (
     <FormField>
       <FormField.Label label="층수" />
@@ -20,14 +26,19 @@ const RoomFloor = () => {
         <Dropdown
           initialValue={floorLevel}
           options={roomFloorLevels.map(value => ({ value }))}
-          onSelectSetter={(level: string) => {
-            actions.set('floorLevel', level);
-          }}
+          onSelectSetter={handleClickDropdown}
         />
-        <Input width="medium" placeholder="" name="floor" value={floor} onChange={actions.onChange} />
+        <Input
+          width="medium"
+          disabled={floorLevel === '반지하/지하'}
+          placeholder=""
+          name="floor"
+          value={floor}
+          onChange={actions.onChange}
+        />
         <FormStyled.FlexLabel label="층"></FormStyled.FlexLabel>
       </FormStyled.FieldBox>
-      <FormField.ErrorMessage value={errorMessageFloor ?? ''} />
+      <FormField.ErrorMessage value={errorMessageFloor} />
     </FormField>
   );
 };

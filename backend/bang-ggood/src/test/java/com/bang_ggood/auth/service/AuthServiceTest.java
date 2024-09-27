@@ -154,12 +154,13 @@ class AuthServiceTest extends IntegrationTestSupport {
     @Test
     void logout_invalid_ownership_exception() {
         // given
-        String cookieDelimiter = "=";
-        String token = jwtTokenProvider.createAccessToken(UserFixture.USER1_WITH_ID());
+        String accessToken = jwtTokenProvider.createAccessToken(UserFixture.USER1_WITH_ID());
+        String refreshToken = jwtTokenProvider.createRefreshToken(UserFixture.USER1_WITH_ID());
 
         //when & then
         assertThatThrownBy(() -> authService.logout(
-                CookieProvider.ACCESS_TOKEN_COOKIE_NAME + cookieDelimiter + token,
+                accessToken,
+                refreshToken,
                 UserFixture.USER2_WITH_ID()))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER.getMessage());

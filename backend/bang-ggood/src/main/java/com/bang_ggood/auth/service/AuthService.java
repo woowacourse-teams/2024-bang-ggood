@@ -1,6 +1,5 @@
 package com.bang_ggood.auth.service;
 
-import com.bang_ggood.auth.controller.CookieProvider;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.dto.response.OauthInfoApiResponse;
@@ -14,16 +13,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class AuthService {
 
     private static final Logger log = LoggerFactory.getLogger(AuthService.class);
     private static final int GUEST_USER_LIMIT = 1;
-    private static final Set<String> blackList = new HashSet<>();
 
     private final OauthClient oauthClient;
     private final JwtTokenProvider jwtTokenProvider;
@@ -69,23 +65,21 @@ public class AuthService {
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.GUEST_USER_NOT_FOUND));
     }
 
-    public void logout(String accessToken, User user) {
+    public void logout(String accessToken, String refreshToken, User user) {
         log.info("logout accessToken: {}", accessToken);
-
-        String splitToken = accessToken.split(CookieProvider.ACCESS_TOKEN_COOKIE_NAME + "=")[1];
-        AuthUser authUser = jwtTokenProvider.resolveToken(splitToken);
-        validateTokenOwnership(user, authUser);
-        blackList.add(splitToken);
+        log.info("logout refreshToken: {}", refreshToken);
+        AuthUser accessAuthUser = jwtTokenProvider.resolveToken(accessToken);
+        AuthUser refreshAuthUser = jwtTokenProvider.resolveToken(refreshToken);
+        validateTokenOwnership(user, accessAuthUser, refreshAuthUser);
     }
 
-    private static void validateTokenOwnership(User user, AuthUser authUser) {
-        if (!user.getId().equals(authUser.id())) {
+    private static void validateTokenOwnership(User user, AuthUser accessAuthUser, AuthUser refreshAuthUser) {
+        if (!accessAuthUser.id().equals(refreshAuthUser.id())) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_USER_MISMATCH);
+        }
+        if (!user.getId().equals(accessAuthUser.id())) {
             throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER);
         }
-    }
-
-    public boolean isAccessTokenInBlackList(String accessToken) {
-        return blackList.contains(accessToken);
     }
 
     @Transactional(readOnly = true)
@@ -93,14 +87,7 @@ public class AuthService {
         log.info("extractUser token: {}", token);
         AuthUser authUser = jwtTokenProvider.resolveToken(token);
         log.info("extractUser authUserId: {}", authUser.id());
-        validateAccessTokenInBlacklist(token);
         return userRepository.getUserById(authUser.id());
-    }
-
-    private void validateAccessTokenInBlacklist(String token) {
-        if (isAccessTokenInBlackList(token)) {
-            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_IN_BLACKLIST);
-        }
     }
 
     @Transactional(readOnly = true)

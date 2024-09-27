@@ -46,9 +46,17 @@ public class CookieProvider {
                 .build();
     }
 
-    public ResponseCookie deleteCookie() {
+    public ResponseCookie deleteAccessTokenCookie(String token) {
+        return deleteCookie(ACCESS_TOKEN_COOKIE_NAME);
+    }
+
+    public ResponseCookie deleteRefreshTokenCookie(String token) {
+        return deleteCookie(REFRESH_TOKEN_COOKIE_NAME);
+    }
+
+    private ResponseCookie deleteCookie(String tokenName) {
         return ResponseCookie
-                .from(ACCESS_TOKEN_COOKIE_NAME, "")
+                .from(tokenName, "")
                 .domain(domain)
                 .httpOnly(true)
                 .secure(true)

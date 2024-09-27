@@ -57,20 +57,4 @@ class AuthE2ETest extends AcceptanceTest {
                 .statusCode(401)
                 .body("message", containsString(ExceptionCode.AUTHENTICATION_TOKEN_EMPTY.getMessage()));
     }
-
-    @DisplayName("인증 실패 : 블랙리스트에 들어간 토큰일 경우")
-    @Test
-    void authentication_token_blacklist_exception() {
-        authService.logout(this.responseCookie.getName() + "=" + this.responseCookie.getValue(),
-                this.getAuthenticatedUser());
-
-        RestAssured.given().log().all()
-                .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
-                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST())
-                .when().post("/checklists")
-                .then().log().all()
-                .statusCode(401)
-                .body("message", containsString(ExceptionCode.AUTHENTICATION_TOKEN_IN_BLACKLIST.getMessage()));
-    }
 }

@@ -46,15 +46,19 @@ const useMutateChecklist = (
     return rest;
   }
 
+  //TODO: 나중에 해당 키 이름 수정
   const roomInfoUnvalidatedAnswerWithoutSubway = removeKey(roomInfoUnvalidatedAnswer, 'nearSubwayStation');
 
-  const formattedValues = {
+  const formattedUnvalidatedValues = {
     station: roomInfoUnvalidatedAnswer.nearSubwayStation[0]?.stationName,
     walkingTime: roomInfoUnvalidatedAnswer.nearSubwayStation[0]?.walkingTime,
   };
 
   const postData = {
-    room: { ...roomInfoAnswer, ...{ ...roomInfoUnvalidatedAnswerWithoutSubway, ...formattedValues } },
+    room: {
+      ...roomInfoAnswer,
+      ...{ ...roomInfoUnvalidatedAnswerWithoutSubway, ...formattedUnvalidatedValues },
+    },
     options: selectedOptions,
     questions: transformQuestions(checklistCategoryQnA),
   };

@@ -3,6 +3,7 @@ import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 import FooterLayout from '@/components/_common/layout/FooterLayout';
 import { ROUTE_PATH } from '@/constants/routePath';
+import GoogleAnalytics from '@/routers/GoogleAnalytics';
 
 const MainPage = React.lazy(() => import('@/pages/MainPage'));
 const ChecklistListPage = React.lazy(() => import('@/pages/ChecklistListPage'));
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
   {
     element: (
       <Suspense>
+        <GoogleAnalytics />
         <Outlet />
       </Suspense>
     ),

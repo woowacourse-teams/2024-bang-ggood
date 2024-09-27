@@ -102,7 +102,11 @@ const sizeStyles = {
     ${title4}
   `,
   medium: css`
+<<<<<<< HEAD
     padding: 1.2rem 2.4rem;
+=======
+    padding: 1.2rem 3.6rem;
+>>>>>>> 09a22ca14ed112c96c97cc2ce07157776b0f5023
     ${title3}
   `,
   full: css`

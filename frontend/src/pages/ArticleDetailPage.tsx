@@ -28,23 +28,23 @@ const ArticleDetailPage = () => {
   return (
     <>
       <Header left={<Header.Backward />} isTransparent />
-      <S.Thumbnail src={article?.thumbnail || ''} />
-      <Layout withHeader style={{ overflowY: 'hidden' }}>
-        <S.Row>
-          <S.Keyword bgColor={color500}>{article?.keyword}</S.Keyword>
-          <S.Date>{formattedDate(article?.createdAt ?? '')}</S.Date>
-        </S.Row>
-        <S.Title>{article?.title}</S.Title>
-        <MarkdownPreview
-          source={article?.content}
-          style={{ padding: 4, fontSize: '1.8rem', fontFamily: 'SUITE Variable' }}
-          wrapperElement={{
-            'data-color-mode': 'light',
-          }}
-        />
-        <S.EmptyBox />
+      <Layout withHeader style={{ padding: 0 }}>
+        <S.Thumbnail src={article?.thumbnail || ''} />
+        <S.Wrapper>
+          <S.Row>
+            <S.Keyword bgColor={color500}>{article?.keyword}</S.Keyword>
+            <S.Date>{formattedDate(article?.createdAt ?? '')}</S.Date>
+          </S.Row>
+          <S.Title>{article?.title}</S.Title>
+          <MarkdownPreview
+            source={article?.content}
+            style={{ fontSize: '1.8rem', fontFamily: 'SUITE Variable' }}
+            wrapperElement={{
+              'data-color-mode': 'light',
+            }}
+          />
+        </S.Wrapper>
       </Layout>
-      <S.EmptyBox />
     </>
   );
 };
@@ -56,6 +56,9 @@ const S = {
     width: 100%;
     height: 25rem;
     object-fit: cover;
+  `,
+  Wrapper: styled.div`
+    padding: 1.6rem 1.6rem 0;
   `,
   Row: styled.div`
     ${flexSpaceBetween}

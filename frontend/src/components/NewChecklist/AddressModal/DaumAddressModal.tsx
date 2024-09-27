@@ -1,13 +1,15 @@
 import styled from '@emotion/styled';
-import { useCallback, useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useStore } from 'zustand';
 
+import { Search } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
-import loadPostcode from '@/components/NewChecklist/AddressModal/loadPostcode';
-import useModalOpen from '@/hooks/useModalOpen';
-import checklistAddressStore from '@/store/checklistAddressStore';
+import useModal from '@/hooks/useModal';
+import useRoomInfoUnvalidatedStore from '@/hooks/useRoomInfoUnvalidatedStore';
+import roomInfoUnvalidatedStore from '@/store/roomInfoUnvalidatedStore';
 import { Address, Postcode, PostcodeOptions } from '@/types/address';
+import loadExternalScriptWithCallback from '@/utils/loadScript';
 
 declare global {
   interface Window {
@@ -17,40 +19,47 @@ declare global {
   }
 }
 
-const scriptUrl = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
-
 const DaumAddressModal = () => {
-  const { isModalOpen, modalOpen, modalClose } = useModalOpen();
+  const { isModalOpen, openModal, closeModal } = useModal();
   const postcodeContainerRef = useRef<HTMLDivElement | null>(null);
-  const { setAddress, setBuildingName } = useStore(checklistAddressStore);
 
-  useEffect(() => {
-    loadPostcode(scriptUrl).catch(error => {
-      console.error('Failed to load Daum postcode script:', error);
-    });
-  }, []);
+  const { findSubwayByAddress } = useRoomInfoUnvalidatedStore();
+  const roomInfoUnvalidatedActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
 
-  const openPostcodeEmbed = useCallback(() => {
-    modalOpen();
+  const handleAddress = () => {
+    openModal();
+    loadExternalScriptWithCallback('daumAddress', openPostcodeEmbed);
+  };
+
+  const openPostcodeEmbed = () => {
     if (window.daum?.Postcode && postcodeContainerRef.current) {
       new window.daum.Postcode({
         width: '100%',
         height: '60rem',
-        oncomplete: (data: Address) => {
-          setAddress(data.address);
-          setBuildingName(data.buildingName);
-          modalClose();
+        oncomplete: async (data: Address) => {
+          roomInfoUnvalidatedActions.set('address', data.address);
+          roomInfoUnvalidatedActions.set('buildingName', data.buildingName);
+
+          loadExternalScriptWithCallback('kakaoMap', () => findSubwayByAddress(data.address));
+          closeModal();
         },
       }).embed(postcodeContainerRef.current, { q: '' });
     } else {
       console.error('Daum Postcode is not loaded yet');
     }
-  }, []);
+  };
 
   return (
     <>
-      <S.AddressButton size="xSmall" color="dark" label="주소 검색" isSquare={true} onClick={openPostcodeEmbed} />
-      <Modal position="bottom" isOpen={isModalOpen} onClose={modalClose}>
+      <S.AddressButton
+        onClick={handleAddress}
+        label="주소 검색"
+        size="full"
+        isSquare={true}
+        color="dark"
+        Icon={Search}
+      />
+      <Modal position="bottom" isOpen={isModalOpen} onClose={closeModal}>
         <Modal.header>주소 검색</Modal.header>
         <Modal.body>
           <div ref={postcodeContainerRef} style={{ width: '100%', marginTop: '1rem' }} />
@@ -65,6 +74,8 @@ export default DaumAddressModal;
 const S = {
   AddressButton: styled(Button)`
     width: 50%;
+    height: 4.2rem;
+    padding: 0.4rem;
 
     font-size: ${({ theme }) => theme.text.size.xSmall};
   `,

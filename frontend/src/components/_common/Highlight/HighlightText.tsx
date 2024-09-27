@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
+import React from 'react';
 
-import { flexRow, title3 } from '@/styles/common';
+import { title3 } from '@/styles/common';
 import theme from '@/styles/theme';
 
 interface Props {
@@ -17,9 +18,9 @@ const highlightText = ({ title, highlights }: Props) => {
     .split(regex)
     .map((part, index) =>
       highlights.some(highlight => highlight.toLowerCase() === part.toLowerCase()) ? (
-        <S.Highlight key={index}>{part}</S.Highlight>
+        <S.Highlight key={`highlight-${index}`}>{part}</S.Highlight>
       ) : (
-        part
+        <S.NormalText key={`normal-${index}`}>{part}</S.NormalText>
       ),
     );
 };
@@ -28,21 +29,33 @@ const HighlightText = ({ title, highlights }: Props) => {
   return <S.Title>{highlightText({ title, highlights })}</S.Title>;
 };
 
-export default HighlightText;
+export default React.memo(HighlightText);
 
 const S = {
   Title: styled.div`
-    ${flexRow}
+    display: inline-block;
+
     width: 100%;
     margin: 0.5rem 0;
 
     font-size: ${({ theme }) => theme.text.size.medium};
-    align-items: baseline;
-    flex-wrap: wrap;
+    white-space: normal;
+    word-break: break-word;
   `,
-  Highlight: styled.p`
+  Highlight: styled.span`
+    display: inline;
     background: linear-gradient(to top, ${theme.palette.yellow500} 50%, transparent 50%);
     ${title3};
     margin: 0 0.2rem;
+
+    word-break: break-word;
+
+    white-space: normal;
+  `,
+  NormalText: styled.span`
+    display: inline;
+    word-break: break-word;
+
+    white-space: normal;
   `,
 };

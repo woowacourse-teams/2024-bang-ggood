@@ -5,7 +5,7 @@ import Layout from '@/components/_common/layout/Layout';
 import { flexColumn, Skeleton } from '@/styles/common';
 import theme from '@/styles/theme';
 
-const SHOW_ARTICLE_COUNT = 3;
+const SHOW_ARTICLE_COUNT = 4;
 
 const SkArticleList = () => {
   return (

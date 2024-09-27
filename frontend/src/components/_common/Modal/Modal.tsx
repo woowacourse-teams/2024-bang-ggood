@@ -11,7 +11,6 @@ import { fadeIn, fadeOut } from '@/styles/animation';
 import { flexColumn } from '@/styles/common';
 
 type ModalPosition = 'center' | 'bottom';
-
 type ModalSize = 'small' | 'large';
 
 export interface ModalProps extends ComponentPropsWithRef<'dialog'> {
@@ -120,7 +119,7 @@ const positionStyles = {
     transform: translate(-50%, -50%);
     border-radius: 0.8rem;
     width: ${$size === 'small' ? '60%' : '85%'};
-    max-width: 50rem;
+    max-width: 45rem;
   `,
   bottom: ($size: ModalSize) => css`
     bottom: 0;

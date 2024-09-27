@@ -6,7 +6,6 @@ export const normalize = css`
    License: none (public domain)
 */
 
-  html,
   body,
   div,
   span,
@@ -91,11 +90,11 @@ export const normalize = css`
     padding: 0;
     border: 0;
 
-    font-size: 100%;
     font: inherit;
 
     vertical-align: baseline;
     min-width: 0;
+    -webkit-tap-highlight-color: transparent !important;
   }
 
   /* HTML5 display-role reset for older browsers */

@@ -1,29 +1,19 @@
 import styled from '@emotion/styled';
+import React from 'react';
 
 import HighlightText from '@/components/_common/Highlight/HighlightText';
-import { useTabContext } from '@/components/_common/Tabs/TabContext';
-import AnswerIcon from '@/components/Answer/AnswerIcon';
-import { ANSWER_OPTIONS } from '@/constants/answer';
-import useChecklistAnswer from '@/hooks/useChecklistAnswer';
+import ChecklistQuestionAnswers from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestionAnswers';
 import { flexCenter, flexRow, flexSpaceBetween } from '@/styles/common';
-import { Answer, AnswerType } from '@/types/answer';
+import { AnswerType } from '@/types/answer';
 import { ChecklistQuestion } from '@/types/checklist';
 
 interface Props {
   question: ChecklistQuestion;
+  answer: AnswerType;
 }
 
-const ChecklistQuestion = ({ question }: Props) => {
+const ChecklistQuestionItem = ({ answer, question }: Props) => {
   const { questionId, title, highlights } = question;
-
-  const { updateAndToggleAnswer: updateAnswer, findCategoryQuestion } = useChecklistAnswer();
-  const { currentTabId } = useTabContext();
-
-  const { answer } = findCategoryQuestion({ categoryId: currentTabId, questionId });
-
-  const handleClick = (newAnswer: AnswerType) => {
-    updateAnswer({ categoryId: currentTabId, questionId: questionId, newAnswer });
-  };
 
   return (
     <S.Container>
@@ -31,17 +21,13 @@ const ChecklistQuestion = ({ question }: Props) => {
         <HighlightText title={title} highlights={highlights} />
       </S.Question>
       <S.Options>
-        {ANSWER_OPTIONS.map((option: Answer) => (
-          <div key={option.id} onClick={() => handleClick(option.name)}>
-            <AnswerIcon answer={option.name} isSelected={answer === option.name} />
-          </div>
-        ))}
+        <ChecklistQuestionAnswers answer={answer} questionId={questionId} />
       </S.Options>
     </S.Container>
   );
 };
 
-export default ChecklistQuestion;
+export default React.memo(ChecklistQuestionItem);
 
 const S = {
   Container: styled.div`
@@ -58,7 +44,9 @@ const S = {
     border-radius: 0.8rem;
   `,
   Question: styled.div`
+    display: flex;
     width: 80%;
+    flex-flow: column wrap;
   `,
   Subtitle: styled.div`
     width: 100%;
@@ -75,6 +63,7 @@ const S = {
 
     ${flexSpaceBetween}
     align-items: center;
+    cursor: pointer;
   `,
   ButtonBox: styled.div`
     position: absolute;

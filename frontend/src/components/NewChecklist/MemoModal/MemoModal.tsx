@@ -17,8 +17,9 @@ interface Props {
 
 const MemoModal = ({ isModalOpen, modalClose }: Props) => {
   const intervalRef = useRef<number | undefined>(undefined);
-  const { actions, value: roomInfo } = useStore(checklistRoomInfoStore);
-  const { value: memo, onChange } = useInput<string>(roomInfo.memo || '');
+  const checklistRoomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
+  const memo = useStore(checklistRoomInfoStore, state => state.value.memo);
+  const { value: memoValue, onChange } = useInput<string>(memo || '');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e);
@@ -32,7 +33,7 @@ const MemoModal = ({ isModalOpen, modalClose }: Props) => {
   };
 
   const handleSubmit = (addModalClose: boolean) => {
-    actions.set('memo', memo);
+    checklistRoomInfoActions.set('memo', memoValue);
     if (addModalClose) modalClose();
   };
 
@@ -61,9 +62,8 @@ const MemoModal = ({ isModalOpen, modalClose }: Props) => {
         <S.TextareaBox>
           <Textarea
             placeholder="메모를 입력하세요."
-            autoFocus
             height={'large'}
-            value={memo}
+            value={memoValue}
             onChange={handleInputChange}
             onBlur={handleBlur}
           />

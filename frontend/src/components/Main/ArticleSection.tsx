@@ -22,7 +22,7 @@ const ArticleSection = () => {
   return (
     <>
       <S.Row>
-        <S.Title>집 구하기 전 꼭 필요한 이야기</S.Title>
+        <S.Title>방 구하기 전 꼭 필요한 이야기</S.Title>
         <S.ShowMore onClick={handleClickShowMore}>더보기</S.ShowMore>
       </S.Row>
       <S.CardList>
@@ -53,6 +53,7 @@ const S = {
   ShowMore: styled.div`
     color: ${({ theme }) => theme.palette.grey400};
     font-size: ${({ theme }) => theme.text.size.small};
+    cursor: pointer;
   `,
   CardList: styled.div`
     box-sizing: border-box;

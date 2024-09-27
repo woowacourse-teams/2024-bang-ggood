@@ -39,6 +39,15 @@ import PencilIcon from '@/assets/icons/mascot/pencil-icon.svg';
 // kakao
 import KakaoLogo from '@/assets/icons/kakao/kakao-logo.svg';
 
+//map
+import Location from '@/assets/icons/map/location.svg';
+import Search from '@/assets/icons/map/search.svg';
+
+// landing page
+import checkingPageScreen from '@/assets/images/checkingPageScreen.webp';
+import customPageScreen from '@/assets/images/customPageScreen.webp';
+import mainPageScreen from '@/assets/images/mainPageScreen.webp';
+
 export {
   ArrowBack,
   ArrowDownSmall,
@@ -56,6 +65,7 @@ export {
   InputRequiredDot,
   KakaoLogo,
   LampIcon,
+  Location,
   LocationLineIcon,
   Memo,
   Options,
@@ -64,9 +74,13 @@ export {
   PlusBlack,
   PlusWhite,
   Room,
+  Search,
   SmallCheck,
   Stairs,
   Subway,
   Summary,
   Utils,
+  checkingPageScreen,
+  customPageScreen,
+  mainPageScreen,
 };

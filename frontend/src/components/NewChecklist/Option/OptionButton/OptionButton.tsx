@@ -1,13 +1,17 @@
 import styled from '@emotion/styled';
+import React from 'react';
 
-import useOptionStore from '@/store/useOptionStore';
-import { flexCenter } from '@/styles/common';
+import useSelectedOptionStore from '@/store/useSelectedOptionStore';
+import { flexCenter, flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
 import { OptionWithIcon } from '@/types/option';
 
-const OptionButton = ({ option }: { option: OptionWithIcon }) => {
+const OptionButton = ({ option, isSelected }: { option: OptionWithIcon; isSelected: boolean }) => {
   const { FilledIcon, UnFilledIcon, displayName, id } = option;
-  const { addOption, removeOption, isSelectedOption } = useOptionStore(); //isSelectedOption, addOption,
+
+  const selectedOptionActions = useSelectedOptionStore(state => state.actions);
+
+  const handleClick = isSelected ? () => selectedOptionActions.remove(id) : () => selectedOptionActions.add(id);
 
   if (!option) {
     return null;
@@ -19,22 +23,24 @@ const OptionButton = ({ option }: { option: OptionWithIcon }) => {
       text: theme.palette.grey500,
       fill: theme.palette.white,
     },
-    selected: { border: theme.palette.yellow600, fill: theme.palette.yellow100, text: theme.palette.yellow700 },
+    selected: {
+      border: theme.palette.yellow600,
+      fill: theme.palette.yellow100,
+      text: theme.palette.yellow700,
+    },
   };
 
-  const currentColor = isSelectedOption(id) ? BUTTON_COLOR.selected : BUTTON_COLOR.unSelected;
+  const currentColor = isSelected ? BUTTON_COLOR.selected : BUTTON_COLOR.unSelected;
 
   return (
-    <S.Box
-      color={currentColor.fill}
-      borderColor={currentColor.border}
-      onClick={isSelectedOption(id) ? () => removeOption(id) : () => addOption(id)}
-    >
-      <S.IconBox>{isSelectedOption(id) ? <FilledIcon /> : <UnFilledIcon />}</S.IconBox>
+    <S.Box color={currentColor.fill} borderColor={currentColor.border} onClick={handleClick}>
+      <S.IconBox>{isSelected ? <FilledIcon /> : <UnFilledIcon />}</S.IconBox>
       <S.TextBox color={currentColor.text}>{displayName}</S.TextBox>
     </S.Box>
   );
 };
+
+export default React.memo(OptionButton);
 
 const S = {
   Box: styled.div<{ color: string; borderColor: string }>`
@@ -48,7 +54,9 @@ const S = {
 
     font-size: 1.4rem;
     ${flexCenter}
-    flex-direction: column;
+    ${flexColumn}
+
+    cursor: pointer;
   `,
   IconBox: styled.div`
     position: absolute;
@@ -66,17 +74,27 @@ const S = {
     ${flexCenter}
 
     color: ${({ color }) => color};
-    font-weight: bold;
-    font-size: 1.4rem;
+    font-weight: ${({ theme }) => theme.text.weight.bold};
+    font-size: ${({ theme }) => theme.text.size.small};
 
-    @media (width <= 34.4rem) {
-      font-size: 1.2rem;
+    @media (width <= 35rem) {
+      font-size: ${({ theme }) => theme.text.size.xxSmall};
     }
 
-    @media (width >= 58rem) {
-      font-size: 1.2rem;
+    @media (width <= 32rem) {
+      font-size: ${({ theme }) => theme.text.size.xSmall};
+    }
+
+    @media (width <= 28rem) {
+      font-size: ${({ theme }) => theme.text.size.xxSmall};
+    }
+
+    @media (width <= 26rem) {
+      font-size: ${({ theme }) => theme.text.size.xSmall};
+    }
+
+    @media (width <= 22rem) {
+      font-size: ${({ theme }) => theme.text.size.xxSmall};
     }
   `,
 };
-
-export default OptionButton;

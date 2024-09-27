@@ -43,11 +43,17 @@ public class AuthController {
 
     @PostMapping("/oauth/logout")
     public ResponseEntity<Void> logout(@AuthRequiredPrincipal User user,
-                                       @RequestHeader(value = "Cookie") String accessToken) {
-        authService.logout(accessToken, user);
-        ResponseCookie expiredCookie = cookieProvider.deleteCookie();
+                                       HttpServletRequest httpServletRequest) {
+        String accessToken = cookieResolver.extractAccessToken(httpServletRequest.getCookies());
+        String refreshToken = cookieResolver.extractRefreshToken(httpServletRequest.getCookies());
+        authService.logout(accessToken, refreshToken, user);
+        ResponseCookie deletedAccessTokenCookie = cookieProvider.deleteAccessTokenCookie(accessToken);
+        ResponseCookie deletedRefreshTokenCookie = cookieProvider.deleteRefreshTokenCookie(refreshToken);
 
-        return ResponseEntity.noContent().header(HttpHeaders.SET_COOKIE, expiredCookie.toString()).build();
+        return ResponseEntity.noContent()
+                .header(HttpHeaders.SET_COOKIE, deletedAccessTokenCookie.toString())
+                .header(HttpHeaders.SET_COOKIE, deletedRefreshTokenCookie.toString())
+                .build();
     }
 
     @PostMapping("/accessToken/reissue")

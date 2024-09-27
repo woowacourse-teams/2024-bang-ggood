@@ -94,6 +94,7 @@ export const normalize = css`
 
     vertical-align: baseline;
     min-width: 0;
+    -webkit-tap-highlight-color: transparent !important;
   }
 
   /* HTML5 display-role reset for older browsers */

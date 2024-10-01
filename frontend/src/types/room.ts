@@ -23,6 +23,6 @@ export type RoomInfo = Partial<{
   createdAt?: string;
   address: string;
   buildingName: string;
-  includedMaintenances: number[]; // 관리비 포함항목
+  // includedMaintenances: number[]; // 관리비 포함항목
 }>;
 export type RoomInfoName = keyof RoomInfo;

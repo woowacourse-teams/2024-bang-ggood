@@ -1,7 +1,6 @@
 import { roomFloorLevels, roomOccupancyPeriods } from '@/constants/roomInfo';
-import createFormStore, { FormSpec } from '@/store/createFormStore';
+import { createInputFieldStores, FormSpec } from '@/store/createFormFieldSlice';
 import { RoomInfo } from '@/types/room';
-import { objectMap } from '@/utils/typeFunctions';
 import {
   inRangeValidator,
   isIntegerValidator,
@@ -11,7 +10,7 @@ import {
   positiveValidator,
 } from '@/utils/validators';
 
-export const roomFormSpec: FormSpec<RoomInfo> = {
+export const roomFormSpec: FormSpec<Omit<RoomInfo, 'includedMaintenances'>> = {
   roomName: { initialValue: '', type: 'string', validators: [lengthValidator(20)] },
   deposit: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
   rent: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
@@ -34,8 +33,4 @@ export const roomFormSpec: FormSpec<RoomInfo> = {
   // includedMaintenances: { initialValue: '', type: 'number[]', validators: [] },
 };
 
-export const initialRoomInfo = objectMap(roomFormSpec, ([key, val]) => [key, val.initialValue]);
-
-const checklistRoomInfoStore = createFormStore<RoomInfo>(roomFormSpec, 'roomInfoForm');
-
-export default checklistRoomInfoStore;
+export const checklistRoomInfostores = createInputFieldStores(roomFormSpec);

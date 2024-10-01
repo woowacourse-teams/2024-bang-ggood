@@ -4,9 +4,9 @@ import { ChangeEvent } from 'react';
 import { useStore } from 'zustand';
 
 import { roomFormSpec } from '@/store/checklistRoomInfoStoreTwo';
-import { createInputFieldStores } from '@/store/createFormFieldSlice';
+import { createFormFieldStores } from '@/store/createFormFieldStores';
 
-const stores = createInputFieldStores(roomFormSpec);
+const stores = createFormFieldStores(roomFormSpec);
 const makeEvent = (name: string, value: string) => ({ target: { name, value } }) as ChangeEvent<HTMLInputElement>;
 
 describe('useChecklistBasicInfoStore 테스트', () => {

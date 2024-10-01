@@ -1,5 +1,5 @@
 import { roomFloorLevels, roomOccupancyPeriods } from '@/constants/roomInfo';
-import { createInputFieldStores, FormSpec } from '@/store/createFormFieldSlice';
+import { createFormFieldStores, FormSpec } from '@/store/createFormFieldStores';
 import { RoomInfo } from '@/types/room';
 import {
   inRangeValidator,
@@ -33,4 +33,4 @@ export const roomFormSpec: FormSpec<Omit<RoomInfo, 'includedMaintenances'>> = {
   // includedMaintenances: { initialValue: '', type: 'number[]', validators: [] },
 };
 
-export const checklistRoomInfostores = createInputFieldStores(roomFormSpec);
+export const checklistRoomInfostores = createFormFieldStores(roomFormSpec);

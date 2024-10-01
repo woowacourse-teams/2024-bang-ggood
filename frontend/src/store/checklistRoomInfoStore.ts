@@ -31,7 +31,7 @@ export const roomFormSpec: FormSpec<RoomInfo> = {
   occupancyPeriod: { initialValue: roomOccupancyPeriods[0], type: 'string', validators: [] },
   summary: { initialValue: '', type: 'string', validators: [] },
   memo: { initialValue: '', type: 'string', validators: [] },
-  // includedMaintenances: { initialValue: '', type: 'number[]', validators: [] },
+  // includedMaintenances: { initialValue: '', type: 'number[]', validators: [] }, TODO : includedMaintenance 비검증스토어로 이동
 };
 
 export const initialRoomInfo = objectMap(roomFormSpec, ([key, val]) => [key, val.initialValue]);

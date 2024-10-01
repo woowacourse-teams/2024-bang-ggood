@@ -6,9 +6,9 @@ import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
 import Textarea from '@/components/_common/Textarea/Textarea';
 import useInput from '@/hooks/useInput';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import { flexCenter, title3 } from '@/styles/common';
 import theme from '@/styles/theme';
+import checklistRoomInfoStores from '@/store/checklistRoomInfoStore';
 
 interface Props {
   isModalOpen: boolean;
@@ -17,8 +17,8 @@ interface Props {
 
 const MemoModal = ({ isModalOpen, modalClose }: Props) => {
   const intervalRef = useRef<number | undefined>(undefined);
-  const checklistRoomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
-  const memo = useStore(checklistRoomInfoStore, state => state.value.memo);
+  const checklistRoomInfoActions = useStore(checklistRoomInfoStores.memo, state => state.actions);
+  const memo = useStore(checklistRoomInfoStores.memo, state => state.value);
   const { value: memoValue, onChange } = useInput<string>(memo || '');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

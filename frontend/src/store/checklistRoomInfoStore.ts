@@ -34,3 +34,5 @@ export const roomFormSpec: FormSpec<Omit<RoomInfo, 'includedMaintenances'>> = {
 };
 
 export const checklistRoomInfoStores = createFormFieldStores(roomFormSpec);
+
+export default checklistRoomInfoStores;

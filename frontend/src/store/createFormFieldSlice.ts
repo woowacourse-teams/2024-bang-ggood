@@ -5,7 +5,24 @@ import { Validator } from '@/utils/validators';
 
 interface FormFieldNumericState {
   rawValue: string;
-  value: string | number;
+  value: number;
+  errorMessage: string;
+}
+interface FormFieldStringState {
+  rawValue: string;
+  value: string;
+  errorMessage: string;
+}
+
+interface FormFieldBothState {
+  rawValue: string;
+  value: string;
+  errorMessage: string;
+}
+
+interface FormFieldUnitState<Value> {
+  rawValue: string;
+  value: Value;
   errorMessage: string;
 }
 
@@ -17,14 +34,14 @@ interface Action {
   reset: () => void;
 }
 
-export type FormFieldState = FormFieldNumericState & { actions: Action };
+export type FormFieldState = (FormFieldNumericState | FormFieldStringState) & { actions: Action };
 
 export const createFormFieldSlice =
-  (initialRawValue: string, validators: Validator[], type: 'string' | 'number'): StateCreator<FormFieldState> =>
+  (initialRawValue: string, validators: Validator[], type: 'string' | 'number'): StateCreator<FormFieldBothState & {actions:Action}> =>
   (set, get) => ({
     rawValue: initialRawValue,
     errorMessage: '',
-    value: parseValue(initialRawValue, type),
+    value: type==='string'? get().rawValue:parseValue0(get().rawValue),
     actions: {
       onChange: e => get().actions.setInputWithValidation(e.target.value),
       set: rawValue => get().actions.setInputWithValidation(rawValue),
@@ -36,12 +53,35 @@ export const createFormFieldSlice =
       },
 
       reset: () => get().actions.setInputWithValidation(initialRawValue),
-      _setAndParse: (rawValue: string) => set({ rawValue, value: parseValue(rawValue, type) }),
+      _setAndParse: (rawValue: string) => set({ rawValue, value: type==='string'? rawValue:parseValue0(rawValue) }),
     },
   });
 
-const parseValue = (value: string, type: 'string' | 'number') => (type === 'number' ? Number(value) : value);
+function parseValue(value: string, type: 'string'): string;
+function parseValue(value: string, type: 'number'): number;
+function parseValue(value: string, type: 'string' | 'number') {
+  return type === 'number' ? Number(value) : value;
+}
 
+const parseValue1 = <Type extends 'string' | 'number'>(
+  value: string,
+  type: Type,
+): Type extends 'string' ? string : number =>
+  (type === 'number' ? Number(value) : value) as Type extends 'string' ? string : number;
+
+function parseValue2(value: string, type: 'string' | 'number') {
+  return type === 'number' ? Number(value) : value;
+}
+
+// function parseValue3(value: string, type: 'string'): string;
+// function parseValue3(value: string, type: 'number'): number;
+// function parseValue3(value: string, type: 'string' | 'number') {
+//   return type === 'number' ? Number(value) : value;
+// }
+const a = parseValue('absc', 'string');
+const b = parseValue('absc', 'number');
+
+const parseValue0 = (value:string) =>Number(value);
 const validation = (rawValue: string, validators: Validator[]) => {
   const newErrorMessage =
     validators

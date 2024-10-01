@@ -3,7 +3,7 @@ import { act, renderHook } from '@testing-library/react';
 import { ChangeEvent } from 'react';
 import { useStore } from 'zustand';
 
-import { roomFormSpec } from '@/store/checklistRoomInfoStoreTwo';
+import { roomFormSpec } from '@/store/checklistRoomInfoStore';
 import { createFormFieldStores } from '@/store/createFormFieldStores';
 
 const { stores, onChange, resetAll } = createFormFieldStores(roomFormSpec);

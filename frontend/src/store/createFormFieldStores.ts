@@ -13,7 +13,8 @@ export interface FormFieldSpec {
 export type FormSpec<T> = {
   [k in keyof T]: FormFieldSpec;
 };
-export const createFormFieldStores = <ObjectState extends object>(formSpec: FormSpec<ObjectState>) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const createFormFieldStores = <ObjectState extends Record<string, any>>(formSpec: FormSpec<ObjectState>) => {
   const stores = Object.fromEntries(
     Object.entries<FormFieldSpec>(formSpec).map(([key, value]) => [
       key,
@@ -35,6 +36,7 @@ export const createFormFieldStores = <ObjectState extends object>(formSpec: Form
   const onChange: ChangeEventHandler<HTMLInputElement> = e => {
     setByName(e.target.name as keyof ObjectState, e.target.value);
   };
+  const set = <Name extends keyof ObjectState>(name: Name, value: string) => stores[name].getState().actions.set(value);
 
-  return { stores, onChange, setAllWithValidation, resetAll };
+  return { stores, set, onChange, setAllWithValidation, resetAll };
 };

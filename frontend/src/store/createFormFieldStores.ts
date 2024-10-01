@@ -38,5 +38,5 @@ export const createFormFieldStores = <ObjectState extends Record<string, any>>(f
   };
   const set = <Name extends keyof ObjectState>(name: Name, value: string) => stores[name].getState().actions.set(value);
 
-  return { stores, set, onChange, setAllWithValidation, resetAll };
+  return { ...stores, set, onChange, setAllWithValidation, resetAll };
 };

@@ -33,4 +33,4 @@ export const roomFormSpec: FormSpec<Omit<RoomInfo, 'includedMaintenances'>> = {
   // includedMaintenances: { initialValue: '', type: 'number[]', validators: [] },
 };
 
-export const checklistRoomInfostores = createFormFieldStores(roomFormSpec);
+export const checklistRoomInfoStores = createFormFieldStores(roomFormSpec);

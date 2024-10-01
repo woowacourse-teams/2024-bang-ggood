@@ -17,7 +17,7 @@ interface Action {
   reset: () => void;
 }
 
-type FormFieldState = FormFieldNumericState & { actions: Action };
+export type FormFieldState = FormFieldNumericState & { actions: Action };
 
 export const createFormFieldSlice =
   (initialRawValue: string, validators: Validator[], type: 'string' | 'number'): StateCreator<FormFieldState> =>

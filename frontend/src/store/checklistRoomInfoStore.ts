@@ -17,8 +17,8 @@ export const roomFormSpec: FormSpec<Omit<RoomInfo, 'includedMaintenances'>> = {
   maintenanceFee: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
   contractTerm: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
   type: { initialValue: '', type: 'string', validators: [] },
-  size: { initialValue: '', type: 'number', validators: [isNumericValidator] },
-  floor: { initialValue: '', type: 'number', validators: [isIntegerValidator, positiveValidator] },
+  size: { initialValue: 0, type: 'number', validators: [isNumericValidator] },
+  floor: { initialValue: 0, type: 'number', validators: [isIntegerValidator, positiveValidator] },
   floorLevel: { initialValue: roomFloorLevels[0], type: 'string', validators: [] },
   structure: { initialValue: 'NONE', type: 'string', validators: [] },
   realEstate: { initialValue: '', type: 'string', validators: [] },
@@ -33,6 +33,7 @@ export const roomFormSpec: FormSpec<Omit<RoomInfo, 'includedMaintenances'>> = {
   // includedMaintenances: { initialValue: '', type: 'number[]', validators: [] },
 };
 
-export const checklistRoomInfoStores = createFormFieldStores(roomFormSpec);
-
+export const checklistRoomInfoStores = createFormFieldStores<RoomInfo>(roomFormSpec);
+checklistRoomInfoStores.address.getState().value
+checklistRoomInfoStores.floor.getState().value
 export default checklistRoomInfoStores;

@@ -46,7 +46,6 @@ public class QuestionManageService {
 
     private List<CategoryQuestionsResponse> categorizeCustomChecklistQuestions(
             List<CustomChecklistQuestion> customChecklistQuestions) {
-
         List<CategoryQuestionsResponse> categoryQuestionsResponses = new ArrayList<>();
 
         for (Category category : Category.values()) {
@@ -68,7 +67,6 @@ public class QuestionManageService {
         return categorizeAllQuestionsWithSelected(customChecklistQuestions);
     }
 
-    //사용자가 선택한 질문과 답 가져오기
     private CategoryCustomChecklistQuestionsResponse categorizeAllQuestionsWithSelected(
             List<CustomChecklistQuestion> customChecklistQuestions) {
         List<CategoryCustomChecklistQuestionResponse> response = new ArrayList<>();

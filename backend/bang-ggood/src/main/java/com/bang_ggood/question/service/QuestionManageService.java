@@ -14,10 +14,7 @@ import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class QuestionManageService {
@@ -49,17 +46,19 @@ public class QuestionManageService {
 
     private List<CategoryQuestionsResponse> categorizeCustomChecklistQuestions(
             List<CustomChecklistQuestion> customChecklistQuestions) {
-        Map<Category, List<Question>> categoryQuestions = customChecklistQuestions.stream()
-                .map(CustomChecklistQuestion::getQuestion)
-                .collect(Collectors.groupingBy(Question::getCategory, LinkedHashMap::new, Collectors.toList()));
 
-        return categoryQuestions.entrySet().stream()
-                .map(categoryQuestionEntry -> CategoryQuestionsResponse.of(
-                        categoryQuestionEntry.getKey(),
-                        categoryQuestionEntry.getValue().stream()
-                                .map(QuestionResponse::new)
-                                .toList()))
-                .toList();
+        List<CategoryQuestionsResponse> categoryQuestionsResponses = new ArrayList<>();
+
+        for (Category category : Category.values()) {
+            List<QuestionResponse> questionResponses = customChecklistQuestions.stream()
+                    .filter(customChecklistQuestion -> customChecklistQuestion.getCategory().equals(category))
+                    .map(customChecklistQuestion -> new QuestionResponse(customChecklistQuestion.getQuestion()))
+                    .toList();
+
+            categoryQuestionsResponses.add(CategoryQuestionsResponse.of(category, questionResponses));
+        }
+
+        return categoryQuestionsResponses;
     }
 
     @Transactional(readOnly = true)
@@ -69,6 +68,7 @@ public class QuestionManageService {
         return categorizeAllQuestionsWithSelected(customChecklistQuestions);
     }
 
+    //사용자가 선택한 질문과 답 가져오기
     private CategoryCustomChecklistQuestionsResponse categorizeAllQuestionsWithSelected(
             List<CustomChecklistQuestion> customChecklistQuestions) {
         List<CategoryCustomChecklistQuestionResponse> response = new ArrayList<>();

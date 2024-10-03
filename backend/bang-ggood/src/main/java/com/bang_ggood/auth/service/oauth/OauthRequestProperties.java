@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -17,25 +18,29 @@ public class OauthRequestProperties {
     private final String grantType;
     private final String clientId;
     private final String clientSecret;
-    private final String registerdRedirectUri;
+    private final List<String> registerdRedirectUris;
 
     public OauthRequestProperties(
             @Value("${kakao.token_post_uri}") String tokenPostUri,
             @Value("${kakao.user_get_uri}") String userInfoRequestUri,
             @Value("${kakao.grant_type}") String grantType,
             @Value("${kakao.client_id}") String clientId,
-            @Value("${kakao.redirect_uri}") String registerdRedirectUri,
+            @Value("${kakao.redirect_uris}") String registerdRedirectUris,
             @Value("${kakao.client_secret}") String clientSecret) {
         this.tokenRequestUri = tokenPostUri;
         this.userInfoRequestUri = userInfoRequestUri;
         this.grantType = grantType;
         this.clientId = clientId;
-        this.registerdRedirectUri = registerdRedirectUri;
+        this.registerdRedirectUris = convertToList(registerdRedirectUris);
         this.clientSecret = clientSecret;
     }
 
+    private List<String> convertToList(String registeredRedirectUris) {
+        return Arrays.asList(registeredRedirectUris.split(","));
+    }
+
     public MultiValueMap<String, String> createTokenRequestBody(OauthLoginRequest request) {
-        String matchingRedirectUri = findMatchingRedirectUri(request.redirectUris());
+        String matchingRedirectUri = findMatchingRedirectUri(request.redirectUri());
         String code = request.code();
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
@@ -48,9 +53,9 @@ public class OauthRequestProperties {
         return map;
     }
 
-    private String findMatchingRedirectUri(List<String> redirectUris) {
-        return redirectUris.stream()
-                .filter(redirectUri -> redirectUri.equals(registerdRedirectUri))
+    private String findMatchingRedirectUri(String redirectUri) {
+        return registerdRedirectUris.stream()
+                .filter(each -> each.equals(redirectUri))
                 .findAny()
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.OAUTH_REDIRECT_URI_MISMATCH));
     }

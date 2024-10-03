@@ -9,7 +9,6 @@ import com.bang_ggood.global.exception.ExceptionCode;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.util.List;
 
 class OauthPropertiesTest extends IntegrationTestSupport {
 
@@ -20,7 +19,7 @@ class OauthPropertiesTest extends IntegrationTestSupport {
         OauthRequestProperties oauthRequestProperties = OauthFixture.OAUTH_REQUEST_PROPERTIES();
 
         String invalidRedirectUri = OauthFixture.INVALID_REGISTERD_REDIRECT_URI;
-        OauthLoginRequest oauthLoginRequest = new OauthLoginRequest("testCode", List.of(invalidRedirectUri));
+        OauthLoginRequest oauthLoginRequest = new OauthLoginRequest("testCode", invalidRedirectUri);
 
         // when & then
         Assertions.assertThatThrownBy(() -> oauthRequestProperties.createTokenRequestBody(oauthLoginRequest))
@@ -33,8 +32,8 @@ class OauthPropertiesTest extends IntegrationTestSupport {
     void createTokenRequestBody() {
         // given
         OauthRequestProperties oauthRequestProperties = OauthFixture.OAUTH_REQUEST_PROPERTIES();
-        String redirectUri = OauthFixture.REGISTERD_REDIRECT_URI;
-        OauthLoginRequest oauthLoginRequest = new OauthLoginRequest("testCode", List.of(redirectUri));
+        String redirectUris = OauthFixture.REGISTERD_REDIRECT_URIS;
+        OauthLoginRequest oauthLoginRequest = new OauthLoginRequest("testCode", "localhost:3000");
 
         // when & then
         Assertions.assertThatCode(() -> oauthRequestProperties.createTokenRequestBody(oauthLoginRequest))

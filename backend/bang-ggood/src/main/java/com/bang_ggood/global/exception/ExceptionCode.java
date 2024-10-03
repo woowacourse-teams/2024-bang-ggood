@@ -69,6 +69,7 @@ public enum ExceptionCode {
     AUTHENTICATION_TOKEN_USER_MISMATCH(HttpStatus.UNAUTHORIZED, "엑세스 토큰과 리프레시 토큰의 소유자가 다릅니다."),
     AUTHENTICATION_TOKEN_TYPE_MISMATCH(HttpStatus.BAD_REQUEST, "토큰의 타입이 올바르지 않습니다. 리프레시 토큰을 보내주세요."),
     OAUTH_TOKEN_INTERNAL_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "카카오 서버와 통신하는 과정 중 예상치 못한 예외가 발생했습니다."),
+    OAUTH_REDIRECT_URI_MISMATCH(HttpStatus.BAD_REQUEST, "일치하는 Redirect URI가 존재하지 않습니다."),
 
     // Article
     ARTICLE_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당 아티클이 존재하지 않습니다."),

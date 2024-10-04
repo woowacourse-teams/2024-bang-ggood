@@ -39,7 +39,7 @@ const ErrorPage = () => {
 export default ErrorPage;
 
 const S = {
-  Wrapper: styled.div`
+  Wrapper: styled.article`
     display: flex;
     width: 100%;
     gap: 1rem;

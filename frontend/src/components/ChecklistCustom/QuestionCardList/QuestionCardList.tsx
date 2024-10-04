@@ -27,7 +27,7 @@ const QuestionCardList = ({ questions, currentTabId }: Props) => {
 export default QuestionCardList;
 
 const S = {
-  QuestionList: styled.div`
+  QuestionList: styled.section`
     width: 100%;
     height: fit-content;
     border-radius: 0.8rem;

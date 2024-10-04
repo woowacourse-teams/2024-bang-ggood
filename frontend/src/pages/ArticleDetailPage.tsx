@@ -78,7 +78,7 @@ const S = {
   Date: styled.div`
     font-size: ${({ theme }) => theme.text.size.xSmall};
   `,
-  Title: styled.div`
+  Title: styled.h1`
     margin: 3.6rem;
 
     ${title1}

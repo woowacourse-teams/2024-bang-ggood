@@ -62,7 +62,7 @@ Modal.body = ModalBody;
 export default Modal;
 
 const S = {
-  ModalWrapper: styled.div<{ open: boolean }>`
+  ModalWrapper: styled.aside<{ open: boolean }>`
     display: ${({ open }) => (open ? 'flex' : 'none')};
     position: fixed;
     z-index: ${({ theme }) => theme.zIndex.MODAL};

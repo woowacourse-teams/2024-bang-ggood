@@ -21,7 +21,7 @@ const MyPage = () => {
     <>
       <Header center={<Header.Text>마이페이지</Header.Text>} />
       <Layout bgColor={theme.palette.background} withFooter withHeader>
-        <S.Inner>
+        <S.InnerWrapper>
           <S.Container style={{ width: '100%' }}>
             <S.Profile>
               <S.ProfileIcon>
@@ -32,7 +32,7 @@ const MyPage = () => {
           </S.Container>
           {!isError && <Button label="로그아웃" size="full" color="dark" onClick={openModal} />}
           {isError && <Button label="로그인하러 가기" size="full" color="dark" onClick={openModal} />}
-        </S.Inner>
+        </S.InnerWrapper>
       </Layout>
       <LogoutModal isOpen={isModalOpen} onClose={closeModal} />
     </>
@@ -56,7 +56,7 @@ const S = {
     ${flexColumn};
     ${boxShadowSpread}
   `,
-  Inner: styled.div`
+  InnerWrapper: styled.article`
     ${flexCenter}
     ${flexColumn}
   `,

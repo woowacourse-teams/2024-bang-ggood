@@ -71,7 +71,7 @@ const S = {
     display: flex;
     margin: 1.6rem 0 1rem;
   `,
-  ListBox: styled.div`
+  ListBox: styled.section`
     ${flexColumn}
     gap: 1.2rem;
     overflow-y: scroll;

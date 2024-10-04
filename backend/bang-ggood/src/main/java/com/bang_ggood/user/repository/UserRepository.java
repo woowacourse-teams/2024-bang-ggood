@@ -18,8 +18,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
         return findById(id).orElseThrow(() -> new BangggoodException(ExceptionCode.USER_NOT_FOUND));
     }
 
-    @Query("SELECT u FROM User u WHERE u.type = :type and u.deleted = false ")
-    List<User> findUserByType(@Param("type") UserType type);
+    @Query("SELECT u FROM User u WHERE u.userType = :userType and u.deleted = false ")
+    List<User> findUserByUserType(@Param("userType") UserType userType);
 
     @Query("SELECT u FROM User u WHERE u.email = :email and u.deleted = false ")
     Optional<User> findByEmail(@Param("email") String email);

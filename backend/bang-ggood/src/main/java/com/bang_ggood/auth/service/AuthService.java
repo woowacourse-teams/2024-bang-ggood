@@ -54,7 +54,7 @@ public class AuthService {
 
     @Transactional(readOnly = true)
     public User assignGuestUser() {
-        List<User> foundGuestUser = userRepository.findUserByType(UserType.GUEST);
+        List<User> foundGuestUser = userRepository.findUserByUserType(UserType.GUEST);
 
         if (foundGuestUser.size() > GUEST_USER_LIMIT) {
             throw new BangggoodException(ExceptionCode.GUEST_USER_UNEXPECTED_EXIST);

@@ -32,4 +32,9 @@ public class ChecklistStationService {
 
         checklistStationRepository.saveAll(checklistStations);
     }
+
+    @Transactional(readOnly = true)
+    public List<ChecklistStation> readChecklistStationsByChecklistId(Long checklistId) {
+        return checklistStationRepository.findByChecklistId(checklistId);
+    }
 }

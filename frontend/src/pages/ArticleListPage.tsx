@@ -38,7 +38,7 @@ const S = {
   Count: styled.span`
     color: ${({ theme }) => theme.palette.green500};
   `,
-  ListContainer: styled.div`
+  ListContainer: styled.section`
     ${flexColumn}
     gap: 1.2rem;
     margin-top: 1.6rem;

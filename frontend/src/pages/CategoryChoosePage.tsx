@@ -104,7 +104,7 @@ const S = {
     height: 80dvh;
     padding: 0.4rem;
   `,
-  Content: styled.div`
+  Content: styled.article`
     ${flexColumn}
     gap: 4rem;
   `,

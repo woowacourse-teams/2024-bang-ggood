@@ -39,4 +39,21 @@ class OauthPropertiesTest extends IntegrationTestSupport {
         Assertions.assertThatCode(() -> oauthRequestProperties.createTokenRequestBody(oauthLoginRequest))
                 .doesNotThrowAnyException();
     }
+
+    @DisplayName("Redirect Uri 여러개를 받아 저장한다.")
+    @Test
+    void convertToList() {
+        // given
+        String firstRedirectUri = "localhost:3000";
+        String secondRedirectUri = "localhost:3001";
+        String testRegisteredUris = firstRedirectUri + ", " + secondRedirectUri;
+
+        OauthRequestProperties oauthRequestProperties = new OauthRequestProperties(
+                "testPostUri", "testUserUri", "testGrantType",
+        "testClientId", testRegisteredUris, "testClientSecret");
+
+        // when & then
+        Assertions.assertThat(oauthRequestProperties.getRegisteredRedirectUris())
+                .containsExactlyInAnyOrder(firstRedirectUri, secondRedirectUri);
+    }
 }

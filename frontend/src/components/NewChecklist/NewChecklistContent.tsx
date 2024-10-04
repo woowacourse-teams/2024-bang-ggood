@@ -21,7 +21,7 @@ const NewChecklistContent = () => {
 };
 
 const S = {
-  Container: styled.div`
+  Container: styled.main`
     position: relative;
     width: 100%;
     height: 100%;

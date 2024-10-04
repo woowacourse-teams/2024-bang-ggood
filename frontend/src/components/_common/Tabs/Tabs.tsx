@@ -58,7 +58,7 @@ const Tabs = ({ tabList }: Props) => {
 export default Tabs;
 
 const S = {
-  VisibleContainer: styled.div`
+  VisibleContainer: styled.nav`
     max-width: 60rem;
   `,
   EmptyBox: styled.div`

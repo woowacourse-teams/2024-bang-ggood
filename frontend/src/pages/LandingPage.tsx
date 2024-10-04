@@ -55,7 +55,7 @@ const LandingPage = () => {
 export default LandingPage;
 
 const S = {
-  Section: styled.div<{ color: string; height: number }>`
+  Section: styled.section<{ color: string; height: number }>`
     ${flexColumn}
     width: 100%;
     height: ${({ height }) => height}rem;
@@ -64,7 +64,7 @@ const S = {
 
     color: ${({ theme }) => theme.palette.black};
   `,
-  Container: styled.div`
+  Container: styled.main`
     background-color: ${({ theme }) => theme.palette.background};
     ${flexColumn};
   `,

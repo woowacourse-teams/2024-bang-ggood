@@ -9,9 +9,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import java.util.Objects;
 
+import static lombok.AccessLevel.PROTECTED;
+
 @Table(name = "users")
+@Getter
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 public class User extends BaseEntity {
 
@@ -38,25 +44,6 @@ public class User extends BaseEntity {
         this.id = id;
         this.name = name;
         this.email = email;
-    }
-
-    protected User() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public UserType getType() {
-        return type;
     }
 
     @Override

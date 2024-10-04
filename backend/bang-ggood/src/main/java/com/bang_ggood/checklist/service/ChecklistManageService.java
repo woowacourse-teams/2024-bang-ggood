@@ -6,7 +6,6 @@ import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.like.service.ChecklistLikeService;
-import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.domain.MaintenanceItem;
 import com.bang_ggood.maintenance.service.ChecklistMaintenanceService;
@@ -155,7 +154,7 @@ public class ChecklistManageService {
         checklistOptionService.deleteAllByChecklistId(checklist.getId());
         checklistMaintenanceService.deleteAllByChecklistId(checklist.getId());
         checklistService.deleteById(id);
-        roomService.deleteById(checklist.getRoom().getId());
+        roomService.deleteById(checklist.getRoomId());
     }
 
     @Transactional(readOnly = true)

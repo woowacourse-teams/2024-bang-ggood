@@ -9,8 +9,14 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import java.util.Objects;
 
+import static lombok.AccessLevel.PROTECTED;
+
+@Getter
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 public class Room extends BaseEntity {
 
@@ -37,9 +43,6 @@ public class Room extends BaseEntity {
     private Structure structure;
 
     private Double size;
-
-    protected Room() {
-    }
 
     public Room(String name, String address, String buildingName, String station, Integer walkingTime,
                 FloorLevel floorLevel, Integer floor, Structure structure, Double size) {
@@ -72,46 +75,6 @@ public class Room extends BaseEntity {
         if (floorLevel != FloorLevel.GROUND && floor != null) {
             throw new BangggoodException(ExceptionCode.ROOM_FLOOR_AND_LEVEL_INVALID);
         }
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getBuildingName() {
-        return buildingName;
-    }
-
-    public String getStation() {
-        return station;
-    }
-
-    public Integer getWalkingTime() {
-        return walkingTime;
-    }
-
-    public FloorLevel getFloorLevel() {
-        return floorLevel;
-    }
-
-    public Integer getFloor() {
-        return floor;
-    }
-
-    public Structure getStructure() {
-        return structure;
-    }
-
-    public Double getSize() {
-        return size;
     }
 
     @Override

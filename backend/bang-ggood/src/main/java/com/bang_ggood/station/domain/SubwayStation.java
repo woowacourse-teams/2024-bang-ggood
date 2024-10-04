@@ -1,5 +1,8 @@
 package com.bang_ggood.station.domain;
 
+import lombok.Getter;
+
+@Getter
 public class SubwayStation {
 
     private static final int METER_PER_DEGREE = 111_320;
@@ -26,26 +29,6 @@ public class SubwayStation {
         double distance = Math.sqrt(dx * dx + dy * dy);
 
         return (int) (Math.round(distance) / AVERAGE_WALKING_SPEED);
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getLine() {
-        return line;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
     }
 
     @Override

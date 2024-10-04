@@ -100,7 +100,7 @@ public enum Question {
 
     public static List<ChecklistQuestion> filter(Category category, List<ChecklistQuestion> questions) {
         return questions.stream()
-                .filter(question -> question.getQuestion().isCategory(category) && question.getAnswer() != null)
+                .filter(question -> question.isCategory(category) && question.getAnswer() != null)
                 .toList();
     }
 
@@ -123,10 +123,10 @@ public enum Question {
 
     public boolean isSelected(List<CustomChecklistQuestion> questions) {
         return questions.stream()
-                .anyMatch(question -> question.getQuestion().id == this.id);
+                .anyMatch(question -> question.getQuestionId() == this.id);
     }
 
-    private boolean isCategory(Category category) {
+    public boolean isCategory(Category category) {
         return this.category == category;
     }
 

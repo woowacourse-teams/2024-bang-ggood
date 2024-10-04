@@ -20,6 +20,15 @@ public class ChecklistStation extends BaseEntity {
 
     private String stationLine;
 
+    public ChecklistStation(Long checklistId, String stationName, String stationLine) {
+        this.checklistId = checklistId;
+        this.stationName = stationName;
+        this.stationLine = stationLine;
+    }
+
+    protected ChecklistStation() {
+    }
+
     public Long getId() {
         return id;
     }

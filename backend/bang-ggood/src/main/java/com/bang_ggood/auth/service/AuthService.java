@@ -3,6 +3,8 @@ package com.bang_ggood.auth.service;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.dto.response.OauthInfoApiResponse;
+import com.bang_ggood.auth.service.jwt.JwtTokenProvider;
+import com.bang_ggood.auth.service.oauth.OauthClient;
 import com.bang_ggood.global.DefaultChecklistService;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;

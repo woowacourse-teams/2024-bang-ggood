@@ -29,7 +29,7 @@ public class ArticleController {
     public ResponseEntity<Void> createArticle(@AuthRequiredPrincipal User user,
                                               @Valid @RequestBody ArticleCreateRequest request) {
         Long id = articleService.createArticle(request);
-        return ResponseEntity.created(URI.create("articles/" + id)).build();
+        return ResponseEntity.created(URI.create("/article/" + id)).build();
     }
 
     @GetMapping("/articles/{id}")

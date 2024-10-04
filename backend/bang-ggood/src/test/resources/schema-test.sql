@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS test_entity CASCADE;
 DROP TABLE IF EXISTS custom_checklist_question CASCADE;
 DROP TABLE IF EXISTS checklist_like CASCADE;
 DROP TABLE IF EXISTS article CASCADE;
+DROP TABLE IF EXISTS checklist_station CASCADE;
 
 -- Create tables
 CREATE TABLE room
@@ -136,4 +137,15 @@ CREATE TABLE article
     created_at  TIMESTAMP(6),
     modified_at TIMESTAMP(6),
     deleted     BOOLEAN
+);
+
+CREATE TABLE checklist_station
+(
+    id            BIGINT AUTO_INCREMENT PRIMARY KEY,
+    checklist_id  BIGINT,
+    station_name  VARCHAR(255),
+    station_line  VARCHAR(255),
+    created_at    TIMESTAMP(6),
+    modified_at   TIMESTAMP(6),
+    deleted       BOOLEAN
 );

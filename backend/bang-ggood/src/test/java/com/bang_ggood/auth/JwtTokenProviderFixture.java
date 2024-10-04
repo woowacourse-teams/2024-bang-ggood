@@ -1,7 +1,7 @@
 package com.bang_ggood.auth;
 
-import com.bang_ggood.auth.service.JwtTokenProperties;
-import com.bang_ggood.auth.service.JwtTokenProvider;
+import com.bang_ggood.auth.service.jwt.JwtTokenProperties;
+import com.bang_ggood.auth.service.jwt.JwtTokenProvider;
 import java.security.SecureRandom;
 import java.util.Base64;
 

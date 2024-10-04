@@ -10,9 +10,13 @@ const useLogin = () => {
   const { handleSubmitChecklist } = useMutateChecklist('add');
 
   useEffect(() => {
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.delete('code');
+    const redirectUri = currentUrl.toString();
+
     const code = new URL(window.location.href).searchParams.get('code');
     if (code) {
-      addUser(code);
+      addUser({ code, redirectUri });
     }
   }, [addUser]);
 

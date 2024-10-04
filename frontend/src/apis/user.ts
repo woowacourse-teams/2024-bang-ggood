@@ -2,8 +2,8 @@ import fetcher from '@/apis/fetcher';
 import { BASE_URL, ENDPOINT } from '@/apis/url';
 import { User } from '@/types/user';
 
-export const postLogin = async (code: string) => {
-  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.LOGIN, body: { code } });
+export const postLogin = async (code: string, redirectUri: string) => {
+  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.LOGIN, body: { code, redirectUri } });
   return response;
 };
 

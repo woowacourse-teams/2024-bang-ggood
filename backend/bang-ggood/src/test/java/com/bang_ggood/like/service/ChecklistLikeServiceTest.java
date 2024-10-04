@@ -62,11 +62,10 @@ class ChecklistLikeServiceTest extends IntegrationTestSupport {
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
         // when
         checklistLikeService.createLike(user, checklist);
+        checklistLikeService.createLike(user, checklist);
 
         //then
-        assertThatThrownBy(() -> checklistLikeService.createLike(user, checklist))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.LIKE_ALREADY_EXISTS.getMessage());
+        assertThat(checklistLikeRepository.count()).isEqualTo(1);
     }
 
     @DisplayName("체크리스트 좋아요 삭제 성공")

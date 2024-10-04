@@ -36,7 +36,9 @@ public class OauthRequestProperties {
     }
 
     private List<String> convertToList(String registeredRedirectUris) {
-        return Arrays.asList(registeredRedirectUris.split(","));
+        return Arrays.stream(registeredRedirectUris.split(","))
+                .map(String::trim)
+                .toList();
     }
 
     public MultiValueMap<String, String> createTokenRequestBody(OauthLoginRequest request) {
@@ -66,5 +68,9 @@ public class OauthRequestProperties {
 
     public String getUserInfoRequestUri() {
         return userInfoRequestUri;
+    }
+
+    public List<String> getRegisteredRedirectUris() {
+        return registeredRedirectUris;
     }
 }

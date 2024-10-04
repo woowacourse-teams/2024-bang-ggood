@@ -2,11 +2,11 @@ package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
+import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.like.service.ChecklistLikeService;
-import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.domain.MaintenanceItem;
 import com.bang_ggood.maintenance.service.ChecklistMaintenanceService;
@@ -23,6 +23,7 @@ import com.bang_ggood.question.service.ChecklistQuestionService;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import com.bang_ggood.room.service.RoomService;
+import com.bang_ggood.station.service.ChecklistStationService;
 import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,18 +40,21 @@ public class ChecklistManageService {
     private final ChecklistQuestionService checklistQuestionService;
     private final ChecklistMaintenanceService checklistMaintenanceService;
     private final ChecklistLikeService checklistLikeService;
+    private final ChecklistStationService checklistStationService;
 
     public ChecklistManageService(RoomService roomService, ChecklistService checklistService,
                                   ChecklistOptionService checklistOptionService,
                                   ChecklistQuestionService checklistQuestionService,
                                   ChecklistMaintenanceService checklistMaintenanceService,
-                                  ChecklistLikeService checklistLikeService) {
+                                  ChecklistLikeService checklistLikeService,
+                                  ChecklistStationService checklistStationService) {
         this.roomService = roomService;
         this.checklistService = checklistService;
         this.checklistOptionService = checklistOptionService;
         this.checklistQuestionService = checklistQuestionService;
         this.checklistMaintenanceService = checklistMaintenanceService;
         this.checklistLikeService = checklistLikeService;
+        this.checklistStationService = checklistStationService;
     }
 
     @Transactional
@@ -60,6 +64,19 @@ public class ChecklistManageService {
         createChecklistOptions(checklistRequest, checklist);
         createChecklistQuestions(checklistRequest, checklist);
         createChecklistMaintenances(checklistRequest, checklist);
+        return checklist.getId();
+    }
+
+    @Transactional
+    public Long createChecklistV1(User user, ChecklistRequestV1 checklistRequestV1) {
+        ChecklistRequest checklistRequest = checklistRequestV1.toChecklistRequest();
+
+        Room room = roomService.createRoom(checklistRequest.toRoomEntity());
+        Checklist checklist = checklistService.createChecklist(checklistRequest.toChecklistEntity(room, user));
+        createChecklistOptions(checklistRequest, checklist);
+        createChecklistQuestions(checklistRequest, checklist);
+        createChecklistMaintenances(checklistRequest, checklist);
+        checklistStationService.createChecklistStations(checklist.getId(), checklistRequestV1.geolocation());
         return checklist.getId();
     }
 

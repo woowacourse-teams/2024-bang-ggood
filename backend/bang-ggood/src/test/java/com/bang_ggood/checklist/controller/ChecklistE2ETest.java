@@ -49,6 +49,18 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .statusCode(201);
     }
 
+    @DisplayName("체크리스트 작성 성공v1")
+    @Test
+    void createChecklistV1() {
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_V1())
+                .when().post("v1/checklists")
+                .then().log().all()
+                .statusCode(201);
+    }
+
     @DisplayName("체크리스트 작성 실패: 방 이름을 넣지 않은 경우")
     @Test
     void createChecklist_noRoomName_exception() {

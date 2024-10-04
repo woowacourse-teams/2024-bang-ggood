@@ -18,20 +18,20 @@ public class OauthRequestProperties {
     private final String grantType;
     private final String clientId;
     private final String clientSecret;
-    private final List<String> registerdRedirectUris;
+    private final List<String> registeredRedirectUris;
 
     public OauthRequestProperties(
             @Value("${kakao.token_post_uri}") String tokenPostUri,
             @Value("${kakao.user_get_uri}") String userInfoRequestUri,
             @Value("${kakao.grant_type}") String grantType,
             @Value("${kakao.client_id}") String clientId,
-            @Value("${kakao.redirect_uris}") String registerdRedirectUris,
+            @Value("${kakao.redirect_uris}") String registeredRedirectUris,
             @Value("${kakao.client_secret}") String clientSecret) {
         this.tokenRequestUri = tokenPostUri;
         this.userInfoRequestUri = userInfoRequestUri;
         this.grantType = grantType;
         this.clientId = clientId;
-        this.registerdRedirectUris = convertToList(registerdRedirectUris);
+        this.registeredRedirectUris = convertToList(registeredRedirectUris);
         this.clientSecret = clientSecret;
     }
 
@@ -54,7 +54,7 @@ public class OauthRequestProperties {
     }
 
     private String findMatchingRedirectUri(String redirectUri) {
-        return registerdRedirectUris.stream()
+        return registeredRedirectUris.stream()
                 .filter(each -> each.equals(redirectUri))
                 .findAny()
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.OAUTH_REDIRECT_URI_MISMATCH));

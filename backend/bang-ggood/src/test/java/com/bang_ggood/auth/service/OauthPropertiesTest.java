@@ -18,7 +18,7 @@ class OauthPropertiesTest extends IntegrationTestSupport {
         // given
         OauthRequestProperties oauthRequestProperties = OauthFixture.OAUTH_REQUEST_PROPERTIES();
 
-        String invalidRedirectUri = OauthFixture.INVALID_REGISTERD_REDIRECT_URI;
+        String invalidRedirectUri = OauthFixture.INVALID_REGISTERED_REDIRECT_URI;
         OauthLoginRequest oauthLoginRequest = new OauthLoginRequest("testCode", invalidRedirectUri);
 
         // when & then
@@ -32,7 +32,7 @@ class OauthPropertiesTest extends IntegrationTestSupport {
     void createTokenRequestBody() {
         // given
         OauthRequestProperties oauthRequestProperties = OauthFixture.OAUTH_REQUEST_PROPERTIES();
-        String redirectUris = OauthFixture.REGISTERD_REDIRECT_URIS;
+        String redirectUris = OauthFixture.REGISTERED_REDIRECT_URIS;
         OauthLoginRequest oauthLoginRequest = new OauthLoginRequest("testCode", "localhost:3000");
 
         // when & then

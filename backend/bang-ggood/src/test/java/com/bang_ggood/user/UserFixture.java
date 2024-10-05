@@ -3,21 +3,22 @@ package com.bang_ggood.user;
 import com.bang_ggood.auth.dto.response.KakaoAccountResponse;
 import com.bang_ggood.auth.dto.response.OauthInfoApiResponse;
 import com.bang_ggood.auth.dto.response.ProfileResponse;
+import com.bang_ggood.user.domain.LoginType;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.domain.UserType;
 
 public class UserFixture {
 
     public static User USER1() {
-        return new User("방방이", "bang-bang@gmail.com", UserType.USER);
+        return new User("방방이", "bang-bang@gmail.com", UserType.USER, LoginType.LOCAL);
     }
 
     public static User USER2() {
-        return new User("빵빵이", "bbang-bbang@gmail.com", UserType.USER);
+        return new User("빵빵이", "bbang-bbang@gmail.com", UserType.USER, LoginType.LOCAL);
     }
 
     public static User GUEST_USER() {
-        return new User("빵빵이", "bbang-bbang@gmail.com", UserType.GUEST);
+        return new User("빵빵이", "bbang-bbang@gmail.com", UserType.GUEST, LoginType.LOCAL);
     }
 
     public static User USER1_WITH_ID() {

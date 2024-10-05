@@ -1,5 +1,6 @@
 package com.bang_ggood.auth.dto.response;
 
+import com.bang_ggood.user.domain.LoginType;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.domain.UserType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -8,6 +9,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public record OauthInfoApiResponse(String id, String connected_at, KakaoAccountResponse kakao_account) {
 
     public User toUserEntity() {
-        return new User(kakao_account.profile().nickname(), kakao_account.email(), UserType.USER);
+        return new User(kakao_account.profile().nickname(), kakao_account.email(), UserType.USER, LoginType.KAKAO);
     }
 }

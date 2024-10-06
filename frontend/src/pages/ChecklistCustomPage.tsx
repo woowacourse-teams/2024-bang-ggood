@@ -14,7 +14,7 @@ import { ROUTE_PATH } from '@/constants/routePath';
 import usePutCustomChecklist from '@/hooks/query/usePutCustomChecklist';
 import useHandleTipBox from '@/hooks/useHandleTipBox';
 import useToast from '@/hooks/useToast';
-import useChecklistCustomStore from '@/store/useChecklistCustomStore';
+import useChecklistQuestionSelectStore from '@/store/useChecklistQuestionSelectStore';
 import theme from '@/styles/theme';
 
 const ChecklistCustomPage = () => {
@@ -22,7 +22,7 @@ const ChecklistCustomPage = () => {
   const { showToast } = useToast();
 
   const { mutate: putCustomChecklist } = usePutCustomChecklist();
-  const { selectedQuestions, setValidCategory, setChecklistAllQuestionList } = useChecklistCustomStore();
+  const { selectedQuestions, setValidCategory, setChecklistAllQuestionList } = useChecklistQuestionSelectStore();
 
   const { resetShowTipBox } = useHandleTipBox('CUSTOM_QUESTION');
 

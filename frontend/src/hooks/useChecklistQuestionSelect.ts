@@ -1,14 +1,14 @@
-import useChecklistCustomStore from '@/store/useChecklistCustomStore';
+import useChecklistQuestionSelectStore from '@/store/useChecklistQuestionSelectStore';
 import { CategoryAndQuestion } from '@/types/checklist';
 
 export interface UpdateCheckProps extends CategoryAndQuestion {
   isSelected: boolean;
 }
 
-const useChecklistQuestionUpdate = () => {
-  const { setChecklistAllQuestionList, checklistAllQuestionList } = useChecklistCustomStore();
+const useChecklistQuestionSelect = () => {
+  const { setChecklistAllQuestionList, checklistAllQuestionList } = useChecklistQuestionSelectStore();
 
-  const updateCheckQuestion = ({ categoryId, questionId, isSelected }: UpdateCheckProps) => {
+  const toggleQuestionSelect = ({ categoryId, questionId, isSelected }: UpdateCheckProps) => {
     const targetCategory = checklistAllQuestionList.find(category => category.categoryId === categoryId);
 
     if (targetCategory) {
@@ -27,7 +27,7 @@ const useChecklistQuestionUpdate = () => {
     }
   };
 
-  return { updateCheckQuestion };
+  return { toggleQuestionSelect };
 };
 
-export default useChecklistQuestionUpdate;
+export default useChecklistQuestionSelect;

@@ -3,10 +3,10 @@ import styled from '@emotion/styled';
 import CounterBox from '@/components/_common/CounterBox/CounterBox';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import QuestionCardList from '@/components/ChecklistCustom/QuestionCardList/QuestionCardList';
-import useChecklistCustomStore from '@/store/useChecklistCustomStore';
+import useChecklistQuestionSelectStore from '@/store/useChecklistQuestionSelectStore';
 
 const QuestionListTemplate = () => {
-  const { categoryQnA, checklistAllQuestionList, selectedQuestions } = useChecklistCustomStore();
+  const { categoryQnA, checklistAllQuestionList, selectedQuestions } = useChecklistQuestionSelectStore();
   const { currentTabId } = useTabContext();
 
   const currentCategoryQnA = categoryQnA(currentTabId);

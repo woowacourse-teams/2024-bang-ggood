@@ -3,6 +3,8 @@ package com.bang_ggood.auth.service;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.dto.response.OauthInfoApiResponse;
+import com.bang_ggood.auth.service.jwt.JwtTokenProvider;
+import com.bang_ggood.auth.service.oauth.OauthClient;
 import com.bang_ggood.global.DefaultChecklistService;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
@@ -48,7 +50,7 @@ public class AuthService {
 
     @Transactional(readOnly = true)
     public User assignGuestUser() {
-        List<User> foundGuestUser = userRepository.findUserByType(UserType.GUEST);
+        List<User> foundGuestUser = userRepository.findUserByUserType(UserType.GUEST);
 
         if (foundGuestUser.size() > GUEST_USER_LIMIT) {
             throw new BangggoodException(ExceptionCode.GUEST_USER_UNEXPECTED_EXIST);

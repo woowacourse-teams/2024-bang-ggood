@@ -32,12 +32,17 @@ public class User extends BaseEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private UserType type;
+    private UserType userType;
 
-    public User(String name, String email, UserType type) {
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private LoginType loginType;
+
+    public User(String name, String email, UserType userType, LoginType loginType) {
         this.name = name;
         this.email = email;
-        this.type = type;
+        this.userType = userType;
+        this.loginType = loginType;
     }
 
     public User(Long id, String name, String email) { // TODO 테스트용

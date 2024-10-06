@@ -1,6 +1,6 @@
 package com.bang_ggood.auth.controller;
 
-import com.bang_ggood.auth.service.JwtTokenProperties;
+import com.bang_ggood.auth.service.jwt.JwtTokenProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;

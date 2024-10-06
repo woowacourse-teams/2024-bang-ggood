@@ -21,6 +21,6 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<User> readUser(UserType userType) {
-        return userRepository.findUserByType(userType);
+        return userRepository.findUserByUserType(userType);
     }
 }

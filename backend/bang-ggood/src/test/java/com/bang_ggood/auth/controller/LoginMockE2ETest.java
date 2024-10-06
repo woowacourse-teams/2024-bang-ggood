@@ -4,20 +4,25 @@ import com.bang_ggood.AcceptanceMockTestSupport;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.service.AuthService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
+import static com.bang_ggood.auth.OauthFixture.OAUTH_LOGIN_REQUEST;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class LoginMockE2ETest extends AcceptanceMockTestSupport {
 
+    @Autowired
+    ObjectMapper objectMapper;
     @MockBean
     AuthService authService;
 
@@ -30,13 +35,14 @@ class LoginMockE2ETest extends AcceptanceMockTestSupport {
         AuthTokenResponse authTokenResponse = AuthTokenResponse.of("accessToken", "refreshToken");
         String accessTokenCookieHeader = CookieProvider.ACCESS_TOKEN_COOKIE_NAME + COOKIE_DELIMITER + authTokenResponse.accessToken();
         String refreshTokenCookieHeader = CookieProvider.REFRESH_TOKEN_COOKIE_NAME + COOKIE_DELIMITER + authTokenResponse.refreshToken();
+        String oauthLoginRequestJson = objectMapper.writeValueAsString(OAUTH_LOGIN_REQUEST);
 
         // when & then
         Mockito.when(authService.login(any(OauthLoginRequest.class))).thenReturn(authTokenResponse);
 
         mockMvc.perform(post("/oauth/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"code\":\"code\"}")) // 요청 본문
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(oauthLoginRequestJson))
                 .andExpect(status().isOk())
                 .andExpect(result -> {
                     String[] cookies = result.getResponse().getHeaders(HttpHeaders.SET_COOKIE).toArray(new String[0]);

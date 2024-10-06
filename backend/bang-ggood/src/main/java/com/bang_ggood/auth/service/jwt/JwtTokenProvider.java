@@ -1,5 +1,7 @@
-package com.bang_ggood.auth.service;
+package com.bang_ggood.auth.service.jwt;
 
+import com.bang_ggood.auth.service.AuthUser;
+import com.bang_ggood.auth.service.TokenType;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.user.domain.User;

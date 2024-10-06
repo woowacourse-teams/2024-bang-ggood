@@ -18,7 +18,7 @@ import useChecklistTemplate from '@/hooks/useInitialChecklist';
 import useModal from '@/hooks/useModal';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
-import roomInfoUnvalidatedStore from '@/store/roomInfoUnvalidatedStore';
+import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 
@@ -29,7 +29,7 @@ const NewChecklistPage = () => {
   const { tabs } = useNewChecklistTabs();
 
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
-  const roomInfoUnvalidatedActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
+  const roomInfoNonValidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
   const checklistActions = useChecklistStore(state => state.actions);
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);
   const { resetShowTipBox } = useHandleTipBox('OPTION');
@@ -48,7 +48,7 @@ const NewChecklistPage = () => {
 
   const resetAndGoHome = () => {
     roomInfoActions.resetAll();
-    roomInfoUnvalidatedActions.resetAll();
+    roomInfoNonValidatedActions.resetAll();
     checklistActions.reset();
     selectedOptionActions.reset();
     resetShowTipBox(); // 옵션의 팁박스 다시표시

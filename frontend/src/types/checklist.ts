@@ -53,18 +53,6 @@ export interface ChecklistPreview {
   walkingTime: number;
 }
 
-// TODO: 방비교 추후를 위해..
-// 체크리스트 비교
-export interface ChecklistCompare {
-  room: RoomInfo;
-  checklistId: number;
-  rank: number;
-  score: number;
-  optionCount: number;
-  options: Option[];
-  // categories: CategoryScore[];
-}
-
 // 체크리스트 디테일
 export interface ChecklistInfo {
   checklistId: number;

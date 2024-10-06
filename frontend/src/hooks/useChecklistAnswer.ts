@@ -16,6 +16,8 @@ const useChecklistAnswer = () => {
     ({ categoryId, questionId, newAnswer }: UpdateAnswerProps) => {
       const targetCategory = checklistActions.getCategory(categoryId);
 
+      console.log('targetCategory', targetCategory);
+
       if (targetCategory) {
         const updatedCategory = {
           ...targetCategory,

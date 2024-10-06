@@ -12,7 +12,7 @@ useRoomInfoNonValidated : 방 기본정보에서 인풋 형식이 아니고, 검
 const useRoomInfoNonValidated = () => {
   const roomInfoNonValidated = useStore(roomInfoNonValidatedStore, state => state.actions);
 
-  const _fetchNearbySubwayStations = async ({ lat, lon }: { lat: number; lon: number }) => {
+  const searchSubwayStationsByPosition = async ({ lat, lon }: { lat: number; lon: number }) => {
     const nearSubways = await getNearSubways({ lat, lon });
     roomInfoNonValidated.set('nearSubwayStation', nearSubways);
     return nearSubways;
@@ -28,13 +28,13 @@ const useRoomInfoNonValidated = () => {
       geocoder.addressSearch(address, function (result: any, status: any) {
         /* 정상적으로 검색이 완료됐으면*/
         if (status === kakao.maps.services.Status.OK) {
-          return _fetchNearbySubwayStations({ lat: result[0].y, lon: result[0].x });
+          return searchSubwayStationsByPosition({ lat: result[0].y, lon: result[0].x });
         }
       });
     });
   };
 
-  return { searchSubwayStationsByAddress };
+  return { searchSubwayStationsByPosition, searchSubwayStationsByAddress };
 };
 
 export default useRoomInfoNonValidated;

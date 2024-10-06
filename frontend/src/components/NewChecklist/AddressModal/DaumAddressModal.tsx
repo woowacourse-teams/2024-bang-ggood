@@ -6,8 +6,8 @@ import { Search } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
 import useModal from '@/hooks/useModal';
-import useRoomInfoUnvalidatedStore from '@/hooks/useRoomInfoUnvalidatedStore';
-import roomInfoUnvalidatedStore from '@/store/roomInfoUnvalidatedStore';
+import useRoomInfoNonValidated from '@/hooks/useRoomInfoNonValidated';
+import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
 import { Address, Postcode, PostcodeOptions } from '@/types/address';
 import loadExternalScriptWithCallback from '@/utils/loadScript';
 
@@ -23,8 +23,8 @@ const DaumAddressModal = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const postcodeContainerRef = useRef<HTMLDivElement | null>(null);
 
-  const { findSubwayByAddress } = useRoomInfoUnvalidatedStore();
-  const roomInfoUnvalidatedActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
+  const { searchSubwayStationsByAddress } = useRoomInfoNonValidated();
+  const roomInfoUnvalidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
 
   const handleAddress = () => {
     openModal();
@@ -40,7 +40,7 @@ const DaumAddressModal = () => {
           roomInfoUnvalidatedActions.set('address', data.address);
           roomInfoUnvalidatedActions.set('buildingName', data.buildingName);
 
-          loadExternalScriptWithCallback('kakaoMap', () => findSubwayByAddress(data.address));
+          loadExternalScriptWithCallback('kakaoMap', () => searchSubwayStationsByAddress(data.address));
           closeModal();
         },
       }).embed(postcodeContainerRef.current, { q: '' });

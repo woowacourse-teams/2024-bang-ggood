@@ -5,20 +5,18 @@ import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.option.domain.ChecklistOption;
 import com.bang_ggood.option.repository.ChecklistOptionRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@RequiredArgsConstructor
 @Service
 public class ChecklistOptionService {
 
     private final ChecklistOptionRepository checklistOptionRepository;
-
-    public ChecklistOptionService(ChecklistOptionRepository checklistOptionRepository) {
-        this.checklistOptionRepository = checklistOptionRepository;
-    }
 
     @Transactional
     public void createOptions(List<ChecklistOption> options) {

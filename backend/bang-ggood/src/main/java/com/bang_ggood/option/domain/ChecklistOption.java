@@ -9,9 +9,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import java.util.Objects;
 
+import static lombok.AccessLevel.PROTECTED;
 
+@Getter
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 public class ChecklistOption extends BaseEntity {
 
@@ -28,21 +33,6 @@ public class ChecklistOption extends BaseEntity {
     public ChecklistOption(Checklist checklist, Integer optionId) {
         this.checklist = checklist;
         this.optionId = optionId;
-    }
-
-    protected ChecklistOption() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Checklist getChecklist() {
-        return checklist;
-    }
-
-    public Integer getOptionId() {
-        return optionId;
     }
 
     @Override

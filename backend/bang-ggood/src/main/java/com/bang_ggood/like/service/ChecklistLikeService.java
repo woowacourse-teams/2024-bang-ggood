@@ -6,17 +6,15 @@ import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.like.domain.ChecklistLike;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.user.domain.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
 public class ChecklistLikeService {
 
     private final ChecklistLikeRepository checklistLikeRepository;
-
-    public ChecklistLikeService(ChecklistLikeRepository checklistLikeRepository) {
-        this.checklistLikeRepository = checklistLikeRepository;
-    }
 
     @Transactional
     public void createLike(User user, Checklist checklist) {

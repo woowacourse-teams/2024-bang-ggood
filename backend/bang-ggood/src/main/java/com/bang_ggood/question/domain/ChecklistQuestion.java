@@ -10,8 +10,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import java.util.Objects;
 
+import static lombok.AccessLevel.PROTECTED;
+
+@Getter
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 public class ChecklistQuestion extends BaseEntity {
 
@@ -34,9 +40,6 @@ public class ChecklistQuestion extends BaseEntity {
         this.answer = answer;
     }
 
-    protected ChecklistQuestion() {
-    }
-
     public void change(ChecklistQuestion checklistQuestion) {
         this.answer = checklistQuestion.answer;
     }
@@ -45,24 +48,16 @@ public class ChecklistQuestion extends BaseEntity {
         return this.question != checklistQuestion.question;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public Checklist getChecklist() {
-        return checklist;
-    }
-
-    public Question getQuestion() {
-        return question;
+    public Long getChecklistId() {
+        return checklist.getId();
     }
 
     public Integer getQuestionId() {
         return question.getId();
     }
 
-    public Answer getAnswer() {
-        return answer;
+    public boolean isCategory(Category category) {
+        return question.isCategory(category);
     }
 
     @Override

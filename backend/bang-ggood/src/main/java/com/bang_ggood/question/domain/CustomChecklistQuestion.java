@@ -10,7 +10,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import static lombok.AccessLevel.PROTECTED;
+
+@Getter
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 public class CustomChecklistQuestion extends BaseEntity {
 
@@ -29,19 +35,8 @@ public class CustomChecklistQuestion extends BaseEntity {
         this.question = question;
     }
 
-    protected CustomChecklistQuestion() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public Question getQuestion() {
-        return question;
+    public Integer getQuestionId() {
+        return question.getId();
     }
 
     public Category getCategory() {

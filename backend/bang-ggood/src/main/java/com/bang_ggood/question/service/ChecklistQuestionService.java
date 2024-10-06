@@ -9,23 +9,19 @@ import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.user.domain.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@RequiredArgsConstructor
 @Service
 public class ChecklistQuestionService {
 
     private final ChecklistQuestionRepository checklistQuestionRepository;
     private final CustomChecklistQuestionRepository customChecklistQuestionRepository;
-
-    public ChecklistQuestionService(ChecklistQuestionRepository checklistQuestionRepository,
-                                    CustomChecklistQuestionRepository customChecklistQuestionRepository) {
-        this.checklistQuestionRepository = checklistQuestionRepository;
-        this.customChecklistQuestionRepository = customChecklistQuestionRepository;
-    }
 
     @Transactional
     public void createDefaultCustomQuestions(List<CustomChecklistQuestion> customChecklistQuestions) {

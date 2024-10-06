@@ -23,7 +23,7 @@ import com.bang_ggood.question.service.ChecklistQuestionService;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import com.bang_ggood.room.service.RoomService;
-import com.bang_ggood.station.service.ChecklistStationService;
+import com.bang_ggood.station.service.ChecklistStationManageService;
 import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,21 +40,21 @@ public class ChecklistManageService {
     private final ChecklistQuestionService checklistQuestionService;
     private final ChecklistMaintenanceService checklistMaintenanceService;
     private final ChecklistLikeService checklistLikeService;
-    private final ChecklistStationService checklistStationService;
+    private final ChecklistStationManageService checklistStationManageService;
 
     public ChecklistManageService(RoomService roomService, ChecklistService checklistService,
                                   ChecklistOptionService checklistOptionService,
                                   ChecklistQuestionService checklistQuestionService,
                                   ChecklistMaintenanceService checklistMaintenanceService,
                                   ChecklistLikeService checklistLikeService,
-                                  ChecklistStationService checklistStationService) {
+                                  ChecklistStationManageService checklistStationManageService) {
         this.roomService = roomService;
         this.checklistService = checklistService;
         this.checklistOptionService = checklistOptionService;
         this.checklistQuestionService = checklistQuestionService;
         this.checklistMaintenanceService = checklistMaintenanceService;
         this.checklistLikeService = checklistLikeService;
-        this.checklistStationService = checklistStationService;
+        this.checklistStationManageService = checklistStationManageService;
     }
 
     @Transactional
@@ -76,7 +76,7 @@ public class ChecklistManageService {
         createChecklistOptions(checklistRequest, checklist);
         createChecklistQuestions(checklistRequest, checklist);
         createChecklistMaintenances(checklistRequest, checklist);
-        checklistStationService.createChecklistStations(checklist.getId(), checklistRequestV1.geolocation());
+        checklistStationManageService.createChecklistStations(checklist.getId(), checklistRequestV1.geolocation());
         return checklist.getId();
     }
 

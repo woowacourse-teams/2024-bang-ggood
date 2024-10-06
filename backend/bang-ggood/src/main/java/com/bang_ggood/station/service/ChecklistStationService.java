@@ -2,7 +2,6 @@ package com.bang_ggood.station.service;
 
 import com.bang_ggood.station.domain.ChecklistStation;
 import com.bang_ggood.station.dto.response.SubwayStationResponse;
-import com.bang_ggood.station.dto.request.ChecklistStationRequest;
 import com.bang_ggood.station.repository.ChecklistStationRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +20,8 @@ public class ChecklistStationService {
     }
 
     @Transactional
-    public void createChecklistStations(Long checklistId, ChecklistStationRequest request) {
-        List<SubwayStationResponse> responses = subwayStationService.readNearestStation(request.latitude(), request.longitude());
+    public void createChecklistStations(Long checklistId, double latitude, double longitude) {
+        List<SubwayStationResponse> responses = subwayStationService.readNearestStation(latitude, longitude);
         List<ChecklistStation> checklistStations = new ArrayList<>();
 
         for (SubwayStationResponse response : responses) {

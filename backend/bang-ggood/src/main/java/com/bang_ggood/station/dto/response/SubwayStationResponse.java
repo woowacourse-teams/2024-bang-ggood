@@ -2,6 +2,7 @@ package com.bang_ggood.station.dto.response;
 
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
+import com.bang_ggood.station.domain.ChecklistStation;
 import com.bang_ggood.station.domain.SubwayStation;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,12 @@ public class SubwayStationResponse {
         List<String> stationLine = new ArrayList<>();
         stationLine.add(station.getLine());
         return new SubwayStationResponse(station.getName(), stationLine, station.calculateWalkingTime(latitude, longitude));
+    }
+
+    public static SubwayStationResponse of(ChecklistStation checklistStation) {
+        List<String> stationLine = new ArrayList<>();
+        stationLine.add(checklistStation.getStationLine());
+        return new SubwayStationResponse(checklistStation.getStationName(), stationLine, checklistStation.getWalkingTime());
     }
 
     public SubwayStationResponse merge(SubwayStationResponse response) {

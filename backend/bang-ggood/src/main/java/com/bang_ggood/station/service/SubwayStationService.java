@@ -35,7 +35,7 @@ public class SubwayStationService {
                 .toList();
     }
 
-    private List<SubwayStationResponse> mergeTransferStations(List<SubwayStationResponse> stations) {
+    protected List<SubwayStationResponse> mergeTransferStations(List<SubwayStationResponse> stations) {
         return stations.stream()
                 .collect(Collectors.groupingBy(
                         SubwayStationResponse::getStationName,

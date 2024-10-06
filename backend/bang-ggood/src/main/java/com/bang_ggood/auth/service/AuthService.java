@@ -11,12 +11,14 @@ import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.domain.UserType;
 import com.bang_ggood.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class AuthService {
 
@@ -27,14 +29,6 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
     private final DefaultChecklistService defaultChecklistService;
     private final UserRepository userRepository; // TODO 리팩토링
-
-    public AuthService(OauthClient oauthClient, JwtTokenProvider jwtTokenProvider,
-                       DefaultChecklistService defaultChecklistService, UserRepository userRepository) {
-        this.oauthClient = oauthClient;
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.defaultChecklistService = defaultChecklistService;
-        this.userRepository = userRepository;
-    }
 
     @Transactional
     public AuthTokenResponse login(OauthLoginRequest request) {
@@ -56,7 +50,7 @@ public class AuthService {
 
     @Transactional(readOnly = true)
     public User assignGuestUser() {
-        List<User> foundGuestUser = userRepository.findUserByType(UserType.GUEST);
+        List<User> foundGuestUser = userRepository.findUserByUserType(UserType.GUEST);
 
         if (foundGuestUser.size() > GUEST_USER_LIMIT) {
             throw new BangggoodException(ExceptionCode.GUEST_USER_UNEXPECTED_EXIST);

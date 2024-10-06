@@ -1,5 +1,5 @@
 import { MAX_SELECT_CATEGORY_COUNT, MIN_SELECT_CUSTOM_COUNT } from '@/constants/system';
-import { TipType } from '@/hooks/useHandleTipBox';
+import { TipType } from '@/hooks/useHandleTip';
 
 export const TIP_MESSAGE: Record<TipType, string> = {
   OPTION: '수리가 필요하다면, 미리 관리자에게 확인해 보세요!',

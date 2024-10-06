@@ -12,7 +12,7 @@ import QuestionListTemplate from '@/components/ChecklistCustom/QuestionListTempl
 import { TOAST_MESSAGE } from '@/constants/message';
 import { ROUTE_PATH } from '@/constants/routePath';
 import usePutCustomChecklist from '@/hooks/query/usePutCustomChecklist';
-import useHandleTipBox from '@/hooks/useHandleTipBox';
+import useHandleTip from '@/hooks/useHandleTip';
 import useToast from '@/hooks/useToast';
 import useChecklistQuestionSelectStore from '@/store/useChecklistQuestionSelectStore';
 import theme from '@/styles/theme';
@@ -24,7 +24,7 @@ const ChecklistQuestionSelectPage = () => {
   const { mutate: putCustomChecklist } = usePutCustomChecklist();
   const { selectedQuestions, setValidCategory, setChecklistAllQuestionList } = useChecklistQuestionSelectStore();
 
-  const { resetShowTipBox } = useHandleTipBox('CUSTOM_QUESTION');
+  const { resetShowTip } = useHandleTip('CUSTOM_QUESTION');
 
   const handleSubmitChecklist = () => {
     if (!selectedQuestions.length) {
@@ -50,7 +50,7 @@ const ChecklistQuestionSelectPage = () => {
     };
     fetchChecklist();
     /*팁 박스를 다시 보이도록 리셋*/
-    resetShowTipBox();
+    resetShowTip();
   }, []);
 
   return (

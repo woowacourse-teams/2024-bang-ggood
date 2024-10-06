@@ -13,7 +13,7 @@ import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
-import useHandleTipBox from '@/hooks/useHandleTipBox';
+import useHandleTip from '@/hooks/useHandleTip';
 import useChecklistTemplate from '@/hooks/useInitialChecklist';
 import useModal from '@/hooks/useModal';
 import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
@@ -32,7 +32,7 @@ const NewChecklistPage = () => {
   const roomInfoNonValidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
   const checklistActions = useChecklistStore(state => state.actions);
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);
-  const { resetShowTipBox } = useHandleTipBox('OPTION');
+  const { resetShowTip } = useHandleTip('OPTION');
 
   // 메모 모달
   const { isModalOpen: isMemoModalOpen, openModal: openMemoModal, closeModal: closeMemoModal } = useModal();
@@ -51,7 +51,7 @@ const NewChecklistPage = () => {
     roomInfoNonValidatedActions.resetAll();
     checklistActions.reset();
     selectedOptionActions.reset();
-    resetShowTipBox(); // 옵션의 팁박스 다시표시
+    resetShowTip(); // 옵션의 팁박스 다시표시
     navigate(ROUTE_PATH.checklistList);
   };
 

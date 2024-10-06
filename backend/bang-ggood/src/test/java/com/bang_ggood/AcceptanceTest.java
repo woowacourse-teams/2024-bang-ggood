@@ -6,10 +6,13 @@ import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
 import io.restassured.RestAssured;
+import io.restassured.http.Header;
+import io.restassured.http.Headers;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
@@ -28,7 +31,7 @@ public abstract class AcceptanceTest {
     private UserRepository userRepository;
 
     private User authenticatedUser;
-    protected ResponseCookie responseCookie;
+    protected Headers headers;
 
     @LocalServerPort
     private int port;
@@ -45,8 +48,13 @@ public abstract class AcceptanceTest {
 
     private void setResponseCookie() {
         authenticatedUser = userRepository.save(UserFixture.USER1());
-        String token = jwtTokenProvider.createAccessToken(authenticatedUser);
-        responseCookie = cookieProvider.createAccessTokenCookie(token);
+        String accessToken = jwtTokenProvider.createAccessToken(authenticatedUser);
+        String refreshToken = jwtTokenProvider.createRefreshToken(authenticatedUser);
+        ResponseCookie accessTokenResponseCookie = cookieProvider.createAccessTokenCookie(accessToken);
+        ResponseCookie refreshTokenCookie = cookieProvider.createRefreshTokenCookie(refreshToken);
+
+        headers = new Headers(new Header(HttpHeaders.COOKIE, accessTokenResponseCookie.toString()),
+                new Header(HttpHeaders.COOKIE, refreshTokenCookie.toString()));
     }
 
     public User getAuthenticatedUser() {

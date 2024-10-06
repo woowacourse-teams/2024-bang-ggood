@@ -46,7 +46,7 @@ class ArgumentResolverTest extends AcceptanceTest {
         // given & when
         User user = RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .when().get(TestController.USER_PRINCIPAL_URL)
                 .then().log().all()
                 .statusCode(200)

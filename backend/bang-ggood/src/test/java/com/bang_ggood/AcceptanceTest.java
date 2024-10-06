@@ -1,6 +1,6 @@
 package com.bang_ggood;
 
-import com.bang_ggood.auth.controller.CookieProvider;
+import com.bang_ggood.auth.controller.cookie.CookieProvider;
 import com.bang_ggood.auth.service.jwt.JwtTokenProvider;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;

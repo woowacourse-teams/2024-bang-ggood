@@ -1,5 +1,7 @@
-package com.bang_ggood.auth.controller;
+package com.bang_ggood.auth.controller.cookie;
 
+import com.bang_ggood.auth.controller.cookie.CookieProvider;
+import com.bang_ggood.auth.controller.cookie.CookieResolver;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import jakarta.servlet.http.Cookie;

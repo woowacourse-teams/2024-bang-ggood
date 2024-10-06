@@ -1,6 +1,8 @@
 package com.bang_ggood.auth.controller;
 
 import com.bang_ggood.auth.config.AuthRequiredPrincipal;
+import com.bang_ggood.auth.controller.cookie.CookieProvider;
+import com.bang_ggood.auth.controller.cookie.CookieResolver;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.service.AuthService;

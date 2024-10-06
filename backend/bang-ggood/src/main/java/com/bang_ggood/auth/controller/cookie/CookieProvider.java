@@ -1,4 +1,4 @@
-package com.bang_ggood.auth.controller;
+package com.bang_ggood.auth.controller.cookie;
 
 import com.bang_ggood.auth.service.jwt.JwtTokenProperties;
 import org.springframework.beans.factory.annotation.Value;

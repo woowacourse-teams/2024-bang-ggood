@@ -1,7 +1,7 @@
 package com.bang_ggood.auth.config;
 
 import com.bang_ggood.AcceptanceTest;
-import com.bang_ggood.auth.controller.CookieProvider;
+import com.bang_ggood.auth.controller.cookie.CookieProvider;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;

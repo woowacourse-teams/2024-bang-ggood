@@ -19,7 +19,7 @@ const defaultStates = {
   buildingName: '',
 };
 
-const roomInfoUnvalidatedStore = createStore<States & { actions: Actions }>()(set => ({
+const roomInfoNonValidatedStore = createStore<States & { actions: Actions }>()(set => ({
   ...defaultStates,
   actions: {
     set: (name, value) => set({ [name]: value }),
@@ -27,4 +27,4 @@ const roomInfoUnvalidatedStore = createStore<States & { actions: Actions }>()(se
   },
 }));
 
-export default roomInfoUnvalidatedStore;
+export default roomInfoNonValidatedStore;

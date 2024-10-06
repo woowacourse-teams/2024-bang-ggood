@@ -6,11 +6,11 @@ interface UpdateAnswerProps extends CategoryAndQuestion {
   newAnswer: AnswerType;
 }
 /**
- * useChecklistQuestion : 체크리스트의 답변을 설정하는 훅입니다.
+ * useChecklistQuestionAnswer : 체크리스트의 답변을 설정하는 훅입니다.
  * - toggleAnswer : 질문의 답변을 수정하고 전역에 반영하는 함수입니다.
  */
 
-const useChecklistQuestion = () => {
+const useChecklistQuestionAnswer = () => {
   const checklistActions = useChecklistStore(store => store.actions);
   const checklistCategoryQnA = useChecklistStore(store => store.checklistCategoryQnA);
 
@@ -36,4 +36,4 @@ const useChecklistQuestion = () => {
   return { toggleAnswer };
 };
 
-export default useChecklistQuestion;
+export default useChecklistQuestionAnswer;

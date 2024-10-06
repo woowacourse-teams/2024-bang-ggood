@@ -3,11 +3,11 @@ import React, { useCallback } from 'react';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import AnswerIcon from '@/components/Answer/AnswerIcon';
 import { ANSWER_OPTIONS } from '@/constants/answer';
-import useChecklistQuestion from '@/hooks/useChecklistQuestion';
+import useChecklistQuestionAnswer from '@/hooks/useChecklistQuestionAnswer';
 import { Answer, AnswerType } from '@/types/answer';
 
 const ChecklistQuestionAnswers = ({ answer, questionId }: { answer: AnswerType; questionId: number }) => {
-  const { toggleAnswer } = useChecklistQuestion();
+  const { toggleAnswer } = useChecklistQuestionAnswer();
   const { currentTabId } = useTabContext();
 
   const handleClick = useCallback(

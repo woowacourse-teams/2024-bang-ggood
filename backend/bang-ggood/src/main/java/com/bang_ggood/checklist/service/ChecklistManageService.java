@@ -6,6 +6,7 @@ import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.dto.response.SelectedChecklistResponseV1;
 import com.bang_ggood.like.service.ChecklistLikeService;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.domain.MaintenanceItem;
@@ -23,6 +24,7 @@ import com.bang_ggood.question.service.ChecklistQuestionService;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import com.bang_ggood.room.service.RoomService;
+import com.bang_ggood.station.dto.response.SubwayStationResponse;
 import com.bang_ggood.station.service.ChecklistStationManageService;
 import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
@@ -117,6 +119,20 @@ public class ChecklistManageService {
         boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
 
         return SelectedChecklistResponse.of(room, options, questions, isLiked);
+    }
+
+    @Transactional(readOnly = true)
+    public SelectedChecklistResponseV1 readChecklistV1(User user, Long checklistId) {
+        Checklist checklist = checklistService.readChecklist(user, checklistId);
+
+        List<Integer> maintenances = readChecklistMaintenances(checklist);
+        List<SelectedOptionResponse> options = readChecklistOptions(checklist);
+        List<SelectedCategoryQuestionsResponse> questions = readChecklistQuestions(checklist);
+        SelectedRoomResponse room = SelectedRoomResponse.of(checklist, maintenances);
+        boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
+        List<SubwayStationResponse> stations = checklistStationManageService.readStationsByChecklistId(checklistId);
+
+        return SelectedChecklistResponseV1.of(room, options, questions, isLiked, stations);
     }
 
     private List<Integer> readChecklistMaintenances(Checklist checklist) {

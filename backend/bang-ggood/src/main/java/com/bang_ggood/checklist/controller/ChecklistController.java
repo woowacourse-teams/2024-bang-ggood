@@ -6,6 +6,7 @@ import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
+import com.bang_ggood.checklist.dto.response.SelectedChecklistResponseV1;
 import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.checklist.service.ChecklistService;
 import com.bang_ggood.user.domain.User;
@@ -49,6 +50,12 @@ public class ChecklistController {
     public ResponseEntity<SelectedChecklistResponse> readChecklistById(@UserPrincipal User user,
                                                                        @PathVariable("id") Long checklistId) {
         return ResponseEntity.ok(checklistManageService.readChecklist(user, checklistId));
+    }
+
+    @GetMapping("v1/checklists/{id}")
+    public ResponseEntity<SelectedChecklistResponseV1> readChecklistByIdV1(@UserPrincipal User user,
+                                                                           @PathVariable("id") Long checklistId) {
+        return ResponseEntity.ok(checklistManageService.readChecklistV1(user, checklistId));
     }
 
     @GetMapping("/checklists")

@@ -124,6 +124,20 @@ class ChecklistE2ETest extends AcceptanceTest {
         //TODO 수정
     }
 
+    @DisplayName("작성된 체크리스트 조회 성공 v1")
+    @Test
+    void readChecklistV1() {
+        long checklistId = checklistManageService.createChecklist(this.getAuthenticatedUser(),
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .when().get("v1/checklists/" + checklistId)
+                .then().log().all()
+                .statusCode(200);
+    }
+
     @DisplayName("좋아요된 체크리스트 리스트 조회 성공")
     @Test
     void readLikedUserChecklistsPreview() {

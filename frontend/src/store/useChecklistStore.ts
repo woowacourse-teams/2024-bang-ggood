@@ -30,7 +30,6 @@ interface ChecklistState {
 /**
  * useChecklistStore 체크리스트의 질문 상태를 관리하는 스토어 입니다.
  */
-
 const useChecklistStore = create<ChecklistState>()(
   persist(
     (set, get) => ({
@@ -72,6 +71,15 @@ const useChecklistStore = create<ChecklistState>()(
           set({ checklistCategoryQnA: [], categories: [] });
         },
 
+        _parseCategory: () => {
+          const categories = get().checklistCategoryQnA.map(category => ({
+            categoryId: category.categoryId,
+            categoryName: category.categoryName,
+          }));
+
+          set({ categories });
+        },
+
         /**
          * 체크리스트의 카테고리를 찾는 함수입니다. 해당 카테고리 id 와 일치하는 카테고리를 찾아서 반환합니다.
          */
@@ -104,15 +112,6 @@ const useChecklistStore = create<ChecklistState>()(
         getQuestionAnswer: ({ categoryId, questionId }: CategoryAndQuestion): AnswerType => {
           const { question } = get().actions.getCategoryAndQuestion({ categoryId, questionId });
           return question.answer;
-        },
-
-        _parseCategory: () => {
-          const categories = get().checklistCategoryQnA.map(category => ({
-            categoryId: category.categoryId,
-            categoryName: category.categoryName,
-          }));
-
-          set({ categories });
         },
       },
     }),

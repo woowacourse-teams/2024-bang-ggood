@@ -6,10 +6,10 @@ import QuestionCardList from '@/components/ChecklistCustom/QuestionCardList/Ques
 import useChecklistQuestionSelectStore from '@/store/useChecklistQuestionSelectStore';
 
 const QuestionListTemplate = () => {
-  const { categoryQnA, checklistAllQuestionList, selectedQuestions } = useChecklistQuestionSelectStore();
+  const { getCategoryQuestions, checklistAllQuestionList, selectedQuestions } = useChecklistQuestionSelectStore();
   const { currentTabId } = useTabContext();
 
-  const currentCategoryQnA = categoryQnA(currentTabId);
+  const currentCategoryQnA = getCategoryQuestions(currentTabId);
 
   const allQuestionCount = checklistAllQuestionList.flatMap(category => category.questions);
 

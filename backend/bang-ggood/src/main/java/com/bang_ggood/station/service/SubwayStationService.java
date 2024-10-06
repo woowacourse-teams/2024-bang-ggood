@@ -4,7 +4,7 @@ import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.station.SubwayReader;
 import com.bang_ggood.station.domain.SubwayStation;
-import com.bang_ggood.station.dto.SubwayStationResponse;
+import com.bang_ggood.station.dto.response.SubwayStationResponse;
 import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.List;

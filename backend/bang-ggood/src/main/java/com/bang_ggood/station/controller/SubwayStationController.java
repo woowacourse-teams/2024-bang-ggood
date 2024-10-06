@@ -1,6 +1,6 @@
 package com.bang_ggood.station.controller;
 
-import com.bang_ggood.station.dto.SubwayStationResponse;
+import com.bang_ggood.station.dto.response.SubwayStationResponse;
 import com.bang_ggood.station.service.SubwayStationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

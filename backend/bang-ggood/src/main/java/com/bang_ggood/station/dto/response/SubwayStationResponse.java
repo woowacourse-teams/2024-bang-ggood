@@ -1,4 +1,4 @@
-package com.bang_ggood.station.dto;
+package com.bang_ggood.station.dto.response;
 
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;

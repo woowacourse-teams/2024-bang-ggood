@@ -1,4 +1,4 @@
-package com.bang_ggood.station;
+package com.bang_ggood.station.service;
 
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.station.domain.ChecklistStation;

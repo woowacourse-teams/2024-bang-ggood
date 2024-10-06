@@ -1,8 +1,7 @@
-package com.bang_ggood.station;
+package com.bang_ggood.station.service;
 
 import com.bang_ggood.IntegrationTestSupport;
-import com.bang_ggood.station.dto.SubwayStationResponse;
-import com.bang_ggood.station.service.SubwayStationService;
+import com.bang_ggood.station.dto.response.SubwayStationResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

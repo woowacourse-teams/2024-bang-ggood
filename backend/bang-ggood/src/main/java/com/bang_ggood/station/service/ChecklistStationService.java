@@ -1,7 +1,7 @@
 package com.bang_ggood.station.service;
 
 import com.bang_ggood.station.domain.ChecklistStation;
-import com.bang_ggood.station.dto.SubwayStationResponse;
+import com.bang_ggood.station.dto.response.SubwayStationResponse;
 import com.bang_ggood.station.dto.request.ChecklistStationRequest;
 import com.bang_ggood.station.repository.ChecklistStationRepository;
 import org.springframework.stereotype.Service;

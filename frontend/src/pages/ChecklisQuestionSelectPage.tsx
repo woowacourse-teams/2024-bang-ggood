@@ -17,7 +17,7 @@ import useToast from '@/hooks/useToast';
 import useChecklistQuestionSelectStore from '@/store/useChecklistQuestionSelectStore';
 import theme from '@/styles/theme';
 
-const ChecklistCustomPage = () => {
+const ChecklistQuestionSelectPage = () => {
   const navigate = useNavigate();
   const { showToast } = useToast();
 
@@ -73,4 +73,4 @@ const ChecklistCustomPage = () => {
   );
 };
 
-export default ChecklistCustomPage;
+export default ChecklistQuestionSelectPage;

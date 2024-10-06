@@ -12,7 +12,7 @@ const MyPage = React.lazy(() => import('@/pages/MyPage'));
 const NewChecklistPage = React.lazy(() => import('@/pages/NewChecklistPage'));
 const EditChecklistPage = React.lazy(() => import('@/pages/EditChecklistPage'));
 const ChecklistDetailPage = React.lazy(() => import('@/pages/ChecklistDetailPage'));
-const ChecklistCustomPage = React.lazy(() => import('@/pages/ChecklistCustomPage'));
+const ChecklistQuestionSelectPage = React.lazy(() => import('@/pages/ChecklisQuestionSelectPage'));
 const ArticleDetailPage = React.lazy(() => import('@/pages/ArticleDetailPage'));
 const LandingPage = React.lazy(() => import('@/pages/LandingPage'));
 const LoginPage = React.lazy(() => import('@/pages/LoginPage'));
@@ -63,7 +63,7 @@ const router = createBrowserRouter([
         path: ROUTE_PATH.checklistEdit,
       },
       {
-        element: <ChecklistCustomPage />,
+        element: <ChecklistQuestionSelectPage />,
         path: ROUTE_PATH.checklistCustom,
       },
       {

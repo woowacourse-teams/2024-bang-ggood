@@ -23,7 +23,7 @@ const FirstSection = () => {
         <BangGgoodTextIcon width={220} height={50} />
       </S.LogoBox>
       <S.ButtonWrapper>
-        <KakaoLoginButton afterLoginPath={ROUTE_PATH.home} />
+        <KakaoLoginButton />
         <Button label="방끗 둘러보기" size="full" isSquare onClick={() => navigate(ROUTE_PATH.home)} />
       </S.ButtonWrapper>
       <S.MoreBox>

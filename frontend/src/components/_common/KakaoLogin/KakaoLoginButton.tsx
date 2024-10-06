@@ -1,24 +1,14 @@
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
 
 import { KakaoLogo } from '@/assets/assets';
-import { ROUTE_PATH } from '@/constants/routePath';
+import useLogin from '@/hooks/useLogin';
 import { flexRow } from '@/styles/common';
 
-interface Props {
-  afterLoginPath: string;
-}
-
-const KakaoLoginButton = ({ afterLoginPath }: Props) => {
-  const navigate = useNavigate();
-
-  const handleMoveLogin = () => {
-    localStorage.setItem('afterLoginPath', afterLoginPath);
-    navigate(ROUTE_PATH.login);
-  };
+const KakaoLoginButton = () => {
+  const { moveToKakao } = useLogin();
 
   return (
-    <S.KakaoLoginButton onClick={handleMoveLogin}>
+    <S.KakaoLoginButton onClick={moveToKakao}>
       <KakaoLogo />
       <S.Text>카카오톡으로 시작하기</S.Text>
     </S.KakaoLoginButton>

@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useStore } from 'zustand';
 
 import { TOAST_MESSAGE } from '@/constants/message';
@@ -16,6 +17,7 @@ const useMutateChecklist = (
   onSuccessCallback?: () => void,
   onErrorCallback?: () => void,
 ) => {
+  const navigate = useNavigate();
   const { showToast } = useToast({ type: 'positive' });
   const { mutate: addChecklist } = useAddChecklistQuery();
   const { mutate: putChecklist } = usePutChecklistQuery();
@@ -73,13 +75,16 @@ const useMutateChecklist = (
   const handleSubmitChecklist = () => {
     const postNewChecklist = () => {
       addChecklist(postData, {
-        onSuccess: () => {
+        onSuccess: res => {
           showToast(TOAST_MESSAGE.ADD);
           roomInfoActions.resetAll();
           roomInfoUnvalidatedActions.resetAll();
           if (onSuccessCallback) {
             onSuccessCallback();
           }
+
+          const location = res.headers.get('location');
+          if (location) navigate(location);
         },
         onError: error => {
           if (error.name === 'AUTHENTICATION_FAILED') {
@@ -93,13 +98,16 @@ const useMutateChecklist = (
 
     const putEditedChecklist = () => {
       putChecklist(putData, {
-        onSuccess: () => {
+        onSuccess: res => {
           showToast(TOAST_MESSAGE.EDIT);
           roomInfoActions.resetAll();
           roomInfoUnvalidatedActions.resetAll();
           if (onSuccessCallback) {
             onSuccessCallback();
           }
+
+          const location = res.headers.get('location');
+          if (location) navigate(location);
         },
         onError: error => {
           if (error.name === 'AUTHENTICATION_FAILED') {

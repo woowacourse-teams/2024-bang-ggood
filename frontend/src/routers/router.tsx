@@ -15,7 +15,6 @@ const ChecklistDetailPage = React.lazy(() => import('@/pages/ChecklistDetailPage
 const ChecklistCustomPage = React.lazy(() => import('@/pages/ChecklistCustomPage'));
 const ArticleDetailPage = React.lazy(() => import('@/pages/ArticleDetailPage'));
 const LandingPage = React.lazy(() => import('@/pages/LandingPage'));
-const LoginPage = React.lazy(() => import('@/pages/LoginPage'));
 const NotFound = React.lazy(() => import('@/pages/NotFound'));
 const ErrorPage = React.lazy(() => import('@/pages/ErrorPage'));
 
@@ -73,10 +72,6 @@ const router = createBrowserRouter([
       {
         element: <LandingPage />,
         path: ROUTE_PATH.root,
-      },
-      {
-        element: <LoginPage />,
-        path: ROUTE_PATH.login,
       },
       {
         element: <NotFound />,

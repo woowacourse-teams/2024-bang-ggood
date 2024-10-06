@@ -66,7 +66,7 @@ public enum ExceptionCode {
     AUTHENTICATION_TOKEN_INVALID(HttpStatus.UNAUTHORIZED, "토큰 정보가 올바르지 않습니다."),
     AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER(HttpStatus.UNAUTHORIZED, "해당 유저의 토큰이 아닙니다"),
     AUTHENTICATION_TOKEN_USER_MISMATCH(HttpStatus.UNAUTHORIZED, "엑세스 토큰과 리프레시 토큰의 소유자가 다릅니다."),
-    AUTHENTICATION_TOKEN_TYPE_MISMATCH(HttpStatus.BAD_REQUEST, "토큰의 타입이 올바르지 않습니다. 리프레시 토큰을 보내주세요."),
+    AUTHENTICATION_TOKEN_TYPE_MISMATCH(HttpStatus.BAD_REQUEST, "토큰 타입이 올바르지 않습니다."),
     OAUTH_TOKEN_INTERNAL_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "카카오 서버와 통신하는 과정 중 예상치 못한 예외가 발생했습니다."),
     OAUTH_REDIRECT_URI_MISMATCH(HttpStatus.BAD_REQUEST, "일치하는 Redirect URI가 존재하지 않습니다."),
 

@@ -14,9 +14,9 @@ import java.util.Objects;
 
 import static lombok.AccessLevel.PROTECTED;
 
-@Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
+@Entity
 public class ChecklistLike extends BaseEntity {
 
     @Id

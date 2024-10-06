@@ -18,8 +18,8 @@ public class ChecklistRepositoryTest extends IntegrationTestSupport {
     @Test
     void findByChecklistId() {
         // given
-        ChecklistStation checklistStation1 = new ChecklistStation(1L, "잠실", "2호선");
-        ChecklistStation checklistStation2 = new ChecklistStation(1L, "잠실", "8호선");
+        ChecklistStation checklistStation1 = new ChecklistStation(1L, "잠실", "2호선", 5);
+        ChecklistStation checklistStation2 = new ChecklistStation(1L, "잠실", "8호선", 6);
         checklistStationRepository.saveAll(List.of(checklistStation1, checklistStation2));
 
         // when & then

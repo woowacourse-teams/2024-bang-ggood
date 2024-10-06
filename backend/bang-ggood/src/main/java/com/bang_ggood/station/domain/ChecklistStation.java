@@ -20,10 +20,13 @@ public class ChecklistStation extends BaseEntity {
 
     private String stationLine;
 
-    public ChecklistStation(Long checklistId, String stationName, String stationLine) {
+    private int walkingTime;
+
+    public ChecklistStation(Long checklistId, String stationName, String stationLine, int walkingTime) {
         this.checklistId = checklistId;
         this.stationName = stationName;
         this.stationLine = stationLine;
+        this.walkingTime = walkingTime;
     }
 
     protected ChecklistStation() {
@@ -43,6 +46,10 @@ public class ChecklistStation extends BaseEntity {
 
     public String getStationLine() {
         return stationLine;
+    }
+
+    public int getWalkingTime() {
+        return walkingTime;
     }
 
     @Override

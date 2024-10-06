@@ -145,6 +145,7 @@ CREATE TABLE checklist_station
     checklist_id  BIGINT,
     station_name  VARCHAR(255),
     station_line  VARCHAR(255),
+    walking_time  INTEGER,
     created_at    TIMESTAMP(6),
     modified_at   TIMESTAMP(6),
     deleted       BOOLEAN

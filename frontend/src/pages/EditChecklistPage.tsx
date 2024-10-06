@@ -13,8 +13,8 @@ import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSum
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery';
+import useChecklistTabs from '@/hooks/useChecklistTabs';
 import useModal from '@/hooks/useModal';
-import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import useRoomInfoNonValidated from '@/hooks/useRoomInfoNonValidated';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
@@ -30,7 +30,8 @@ const EditChecklistPage = () => {
   const navigate = useNavigate();
   const { checklistId } = useParams() as RouteParams;
   const { data: checklist, isSuccess } = useGetChecklistDetailQuery(checklistId);
-  const { tabs } = useNewChecklistTabs();
+
+  const { tabs } = useChecklistTabs();
   const checklistActions = useChecklistStore(state => state.actions);
 
   const { searchSubwayStationsByAddress } = useRoomInfoNonValidated();

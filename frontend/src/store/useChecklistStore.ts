@@ -61,23 +61,16 @@ const useChecklistStore = create<ChecklistState>()(
           }));
 
           set({ checklistCategoryQnA });
+          get().actions._parseCategory();
         },
 
         set: (checklistCategoryQnA: ChecklistCategoryWithAnswer[]) => {
           set({ checklistCategoryQnA });
+          get().actions._parseCategory();
         },
 
         reset: () => {
           set({ checklistCategoryQnA: [], categories: [] });
-        },
-
-        _parseCategory: () => {
-          const categories = get().checklistCategoryQnA.map(category => ({
-            categoryId: category.categoryId,
-            categoryName: category.categoryName,
-          }));
-
-          set({ categories });
         },
 
         /**
@@ -112,6 +105,15 @@ const useChecklistStore = create<ChecklistState>()(
         getQuestionAnswer: ({ categoryId, questionId }: CategoryAndQuestion): AnswerType => {
           const { question } = get().actions.getCategoryAndQuestion({ categoryId, questionId });
           return question.answer;
+        },
+
+        _parseCategory: () => {
+          const categories = get().checklistCategoryQnA.map(category => ({
+            categoryId: category.categoryId,
+            categoryName: category.categoryName,
+          }));
+
+          set({ categories });
         },
       },
     }),

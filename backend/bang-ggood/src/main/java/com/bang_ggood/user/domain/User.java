@@ -2,6 +2,7 @@ package com.bang_ggood.user.domain;
 
 import com.bang_ggood.BaseEntity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -30,6 +31,9 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String email;
 
+    @Embedded
+    private Password password;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserType userType;
@@ -41,6 +45,14 @@ public class User extends BaseEntity {
     public User(String name, String email, UserType userType, LoginType loginType) {
         this.name = name;
         this.email = email;
+        this.userType = userType;
+        this.loginType = loginType;
+    }
+
+    public User(String name, String email, String password, UserType userType, LoginType loginType) {
+        this.name = name;
+        this.email = email;
+        this.password = new Password(password);
         this.userType = userType;
         this.loginType = loginType;
     }

@@ -2,21 +2,20 @@ package com.bang_ggood.station.dto.response;
 
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class SubwayStationResponses {
 
     private static final int REQUESTED_STATION_NUMBER = 2;
 
     private final List<SubwayStationResponse> stations;
-
-    private SubwayStationResponses(List<SubwayStationResponse> stations) {
-        this.stations = stations;
-    }
 
     public static SubwayStationResponses from(List<SubwayStationResponse> stations) {
         return new SubwayStationResponses(mergeTransferStations(stations));

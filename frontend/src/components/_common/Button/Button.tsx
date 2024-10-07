@@ -37,6 +37,7 @@ const Button = ({
       onClick={color !== 'disabled' ? onClick : () => {}}
       {...rest}
       disabled={disabled}
+      aria-label={label}
     >
       <FlexBox.Horizontal>
         {Icon && <Icon />}

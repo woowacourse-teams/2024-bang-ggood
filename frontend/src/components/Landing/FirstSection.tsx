@@ -12,15 +12,15 @@ const FirstSection = () => {
   return (
     <>
       <S.LogoBox>
-        <BangBangIcon width="350" height="130" />
+        <BangBangIcon width="350" height="130" aria-hidden="true" />
         <S.TextWrapper>
           <S.SubtitleText>방 구하기</S.SubtitleText>
           <S.SubtitleText>이거 하나로 끝!</S.SubtitleText>
           <S.CheckIconBox>
-            <SmallCheck />
+            <SmallCheck aria-hidden="true" />
           </S.CheckIconBox>
         </S.TextWrapper>
-        <BangGgoodTextIcon width={220} height={50} />
+        <BangGgoodTextIcon width={220} height={50} aria-hidden="true" />
       </S.LogoBox>
       <S.ButtonWrapper>
         <KakaoLoginButton />
@@ -29,7 +29,7 @@ const FirstSection = () => {
       <S.MoreBox>
         <S.SubText>방끗을 소개할게요!</S.SubText>
         <S.MoveUpDownAnimationBox>
-          <ArrowDownSmall />
+          <ArrowDownSmall aria-hidden="true" />
         </S.MoveUpDownAnimationBox>
       </S.MoreBox>
     </>

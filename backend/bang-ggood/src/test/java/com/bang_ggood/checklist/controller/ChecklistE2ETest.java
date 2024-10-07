@@ -49,6 +49,18 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .statusCode(201);
     }
 
+    @DisplayName("체크리스트 작성 v1 성공")
+    @Test
+    void createChecklistV1() {
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_V1())
+                .when().post("v1/checklists")
+                .then().log().all()
+                .statusCode(201);
+    }
+
     @DisplayName("체크리스트 작성 실패: 방 이름을 넣지 않은 경우")
     @Test
     void createChecklist_noRoomName_exception() {
@@ -110,6 +122,20 @@ class ChecklistE2ETest extends AcceptanceTest {
                 () -> assertThat(selectedChecklistResponse.room().address()).isEqualTo(ChecklistFixture.CHECKLIST_CREATE_REQUEST().room().address())
         );*/
         //TODO 수정
+    }
+
+    @DisplayName("작성된 체크리스트 조회 v1 성공")
+    @Test
+    void readChecklistV1() {
+        long checklistId = checklistManageService.createChecklist(this.getAuthenticatedUser(),
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .when().get("v1/checklists/" + checklistId)
+                .then().log().all()
+                .statusCode(200);
     }
 
     @DisplayName("좋아요된 체크리스트 리스트 조회 성공")

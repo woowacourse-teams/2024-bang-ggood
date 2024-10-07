@@ -2,6 +2,7 @@ package com.bang_ggood.checklist;
 
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
+import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
 import com.bang_ggood.contract.domain.OccupancyMonth;
 import com.bang_ggood.contract.domain.OccupancyPeriod;
 import com.bang_ggood.like.domain.ChecklistLike;
@@ -14,6 +15,7 @@ import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.request.QuestionRequest;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
+import com.bang_ggood.station.dto.request.ChecklistStationRequest;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import java.util.List;
@@ -113,6 +115,15 @@ public class ChecklistFixture {
                 RoomFixture.ROOM_CREATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(), Option.SHOE_RACK.getId()),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
                         QUESTION_3_CREATE_REQUEST(), QUESTION_5_CREATE_REQUEST())
+        );
+    }
+
+    public static ChecklistRequestV1 CHECKLIST_CREATE_REQUEST_V1() {
+        return new ChecklistRequestV1(
+                RoomFixture.ROOM_CREATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(), Option.SHOE_RACK.getId()),
+                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
+                        QUESTION_3_CREATE_REQUEST(), QUESTION_5_CREATE_REQUEST()),
+                ChecklistStationRequest.of(38, 127)
         );
     }
 

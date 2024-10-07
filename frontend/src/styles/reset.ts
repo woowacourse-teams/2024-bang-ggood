@@ -92,8 +92,6 @@ export const normalize = css`
 
     font: inherit;
 
-    line-height: 1.5;
-
     vertical-align: baseline;
     min-width: 0;
     -webkit-tap-highlight-color: transparent !important;

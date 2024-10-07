@@ -6,6 +6,13 @@ import FloatingButton from '@/components/_common/FloatingButton/FloatingButton';
 const meta: Meta<typeof FloatingButton> = {
   title: 'components/FloatingButton',
   component: FloatingButton,
+  decorators: [
+    Story => (
+      <div style={{ width: '300px', height: '200px' }}>
+        <Story />
+      </div>
+    ),
+  ],
   argTypes: {
     size: {
       control: { type: 'select' },
@@ -15,17 +22,8 @@ const meta: Meta<typeof FloatingButton> = {
       control: { type: 'select' },
       options: ['yellow', 'green', 'subGreen'],
     },
+
     'aria-label': { control: 'text' },
-  },
-  tags: ['autodocs'],
-  parameters: {
-    docs: {
-      inlineStories: true,
-      iframeHeight: 600,
-      description: {
-        component: 'Floating 버튼은 하단에 새 체크리스트 추가 기능을 위한 컴포넌트입니다.',
-      },
-    },
   },
 };
 
@@ -53,7 +51,7 @@ export const IconButton: Story = {
 export const TextIconButton: Story = {
   args: {
     children: (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem' }}>
         <PlusBlack /> 추가
       </div>
     ),

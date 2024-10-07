@@ -23,6 +23,7 @@ const AnswerColor: Record<AnswerType, { selected: string; notSelected?: string }
   },
   NONE: {
     selected: theme.palette.grey300,
+    notSelected: theme.palette.grey300,
   },
 };
 

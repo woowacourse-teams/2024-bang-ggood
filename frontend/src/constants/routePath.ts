@@ -6,7 +6,7 @@ export const ROUTE_PATH = {
   checklistNew: '/checklist/new',
   checklistEdit: '/checklist/edit/:checklistId',
   checklistEditOne: (id: number) => `/checklist/edit/${id}`,
-  checklistCustom: `/checklist/custom`,
+  checklistQuestionSelect: `/checklist/question-select`,
   checklistId: '/checklist/:checklistId',
   checklistOne: (id: number) => `/checklist/${id}`,
   /* category */

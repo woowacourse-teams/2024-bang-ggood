@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 import Checkbox from '@/components/_common/Checkbox/Checkbox';
+import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import useChecklistQuestionSelect from '@/hooks/useChecklistQuestionSelect';
 import { flexCenter } from '@/styles/common';
@@ -18,10 +19,10 @@ const QuestionSelectCard = ({ question }: { question: ChecklistQuestionWithIsSel
   return (
     <S.Container isChecked={isSelected} onClick={handleCheckQuestion}>
       <S.FlexColumn>
-        <S.FlexRow>
+        <FlexBox.Vertical>
           <S.Title>{title}</S.Title>
-        </S.FlexRow>
-        {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
+          {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
+        </FlexBox.Vertical>
       </S.FlexColumn>
       <S.CheckBoxContainer>
         <Checkbox
@@ -66,8 +67,6 @@ const S = {
     gap: 1rem;
   `,
   Subtitle: styled.div`
-    padding-left: 2rem;
-
     color: ${({ theme }) => theme.palette.grey500};
     font-size: ${({ theme }) => theme.text.size.small};
     word-break: keep-all;

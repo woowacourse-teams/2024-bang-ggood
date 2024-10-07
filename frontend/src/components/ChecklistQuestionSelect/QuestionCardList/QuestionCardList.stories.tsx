@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import QuestionCardList from '@/components/ChecklistCustom/QuestionCardList/QuestionCardList';
+import QuestionCardList from '@/components/ChecklistQuestionSelect/QuestionCardList/QuestionCardList';
 import theme from '@/styles/theme';
 
 import mobileDecorator from '../../../../.storybook/common';

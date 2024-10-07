@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import { Category, CategoryName } from '@/types/category';
 import { ChecklistCategoryWithIsSelected } from '@/types/checklist';
 
-interface ChecklistCustomState {
+interface ChecklistQuestionSelectState {
   selectedQuestions: number[];
   checklistAllQuestionList: ChecklistCategoryWithIsSelected[];
   validCategory: Category[];
@@ -16,7 +16,7 @@ interface ChecklistCustomState {
 /**
  * useChecklistQuestionSelectStore 체크리스트 질문 선택 페이지에서 질문 선택 상태를 관리하는 전역 상태입니다.
  */
-const useChecklistQuestionSelectStore = create<ChecklistCustomState>((set, get) => ({
+const useChecklistQuestionSelectStore = create<ChecklistQuestionSelectState>((set, get) => ({
   selectedQuestions: [],
   checklistAllQuestionList: [],
   validCategory: [],

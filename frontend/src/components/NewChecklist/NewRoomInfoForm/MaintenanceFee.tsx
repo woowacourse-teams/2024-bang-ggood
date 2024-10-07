@@ -10,7 +10,6 @@ const MaintenanceFee = () => {
   const maintenanceFee = useStore(checklistRoomInfoStore, state => state.rawValue.maintenanceFee);
   const errorMessage = useStore(checklistRoomInfoStore, state => state.errorMessage.maintenanceFee);
 
-  // 토큰있을때.
   return (
     <FormField>
       <FormField.Label label="관리비" htmlFor="maintenanceFee" />

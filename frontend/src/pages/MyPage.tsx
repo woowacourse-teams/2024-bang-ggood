@@ -24,7 +24,7 @@ const MyPage = () => {
     <>
       <Header center={<Header.Text>마이페이지</Header.Text>} />
       <Layout bgColor={theme.palette.background} withFooter withHeader>
-        <S.Inner>
+        <S.InnerWrapper>
           <S.Container style={{ width: '100%' }}>
             <S.Profile>
               <S.ProfileIcon>
@@ -61,7 +61,7 @@ const S = {
     ${flexColumn};
     ${boxShadowSpread}
   `,
-  Inner: styled.div`
+  InnerWrapper: styled.article`
     ${flexCenter}
     ${flexColumn}
   `,

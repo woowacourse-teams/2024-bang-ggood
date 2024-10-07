@@ -26,12 +26,12 @@ const SkArticleList = () => {
 export default SkArticleList;
 
 const S = {
-  Title: styled.div`
+  Title: styled.h1`
     width: 20rem;
     height: 3rem;
     ${Skeleton}
   `,
-  ListContainer: styled.div`
+  ListContainer: styled.section`
     ${flexColumn}
     gap: 1.2rem;
     margin-top: 1.6rem;

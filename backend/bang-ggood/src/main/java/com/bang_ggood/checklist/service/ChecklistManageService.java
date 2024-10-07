@@ -24,8 +24,11 @@ import com.bang_ggood.question.service.ChecklistQuestionService;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import com.bang_ggood.room.service.RoomService;
+import com.bang_ggood.station.domain.ChecklistStation;
+import com.bang_ggood.station.dto.request.ChecklistStationRequest;
+import com.bang_ggood.station.dto.response.SubwayStationResponse;
 import com.bang_ggood.station.dto.response.SubwayStationResponses;
-import com.bang_ggood.station.service.ChecklistStationManageService;
+import com.bang_ggood.station.service.ChecklistStationService;
 import com.bang_ggood.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,7 +46,7 @@ public class ChecklistManageService {
     private final ChecklistQuestionService checklistQuestionService;
     private final ChecklistMaintenanceService checklistMaintenanceService;
     private final ChecklistLikeService checklistLikeService;
-    private final ChecklistStationManageService checklistStationManageService;
+    private final ChecklistStationService checklistStationService;
 
     @Transactional
     public Long createChecklist(User user, ChecklistRequest checklistRequest) {
@@ -64,7 +67,7 @@ public class ChecklistManageService {
         createChecklistOptions(checklistRequest, checklist);
         createChecklistQuestions(checklistRequest, checklist);
         createChecklistMaintenances(checklistRequest, checklist);
-        checklistStationManageService.createChecklistStations(checklist, checklistRequestV1.geolocation());
+        createChecklistStation(checklistRequestV1, checklist);
         return checklist.getId();
     }
 
@@ -94,6 +97,11 @@ public class ChecklistManageService {
         checklistMaintenanceService.createMaintenances(checklistMaintenances);
     }
 
+    private void createChecklistStation(ChecklistRequestV1 checklistRequestV1, Checklist checklist) {
+        ChecklistStationRequest geolocation = checklistRequestV1.geolocation();
+        checklistStationService.createChecklistStations(checklist, geolocation.latitude(), geolocation.latitude());
+    }
+
     @Transactional(readOnly = true)
     public SelectedChecklistResponse readChecklist(User user, Long checklistId) {
         Checklist checklist = checklistService.readChecklist(user, checklistId);
@@ -116,7 +124,7 @@ public class ChecklistManageService {
         List<SelectedCategoryQuestionsResponse> questions = readChecklistQuestions(checklist);
         SelectedRoomResponse room = SelectedRoomResponse.of(checklist, maintenances);
         boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
-        SubwayStationResponses stations = checklistStationManageService.readStationsByChecklist(checklist);
+        SubwayStationResponses stations = readChecklistStations(checklist);
 
         return SelectedChecklistResponseV1.of(room, options, questions, isLiked, stations);
     }
@@ -151,6 +159,15 @@ public class ChecklistManageService {
                 .toList();
 
         return SelectedCategoryQuestionsResponse.of(category, selectedQuestionResponse);
+    }
+
+    private SubwayStationResponses readChecklistStations(Checklist checklist) {
+        List<ChecklistStation> checklistStations = checklistStationService.readChecklistStationsByChecklist(checklist);
+        List<SubwayStationResponse> stations = checklistStations.stream()
+                .map(SubwayStationResponse::from)
+                .toList();
+
+        return SubwayStationResponses.from(stations);
     }
 
     @Transactional(readOnly = true)

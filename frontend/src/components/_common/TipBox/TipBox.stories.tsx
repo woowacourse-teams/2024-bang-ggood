@@ -8,6 +8,15 @@ import TipBox from '@/components/_common/TipBox/TipBox';
 const meta = {
   title: 'components/TipBox',
   component: TipBox,
+  parameters: {
+    backgrounds: {
+      default: 'grey',
+      values: [
+        { name: 'grey', value: '#cccccc' },
+        { name: 'white', value: '#ffffff' },
+      ],
+    },
+  },
 } satisfies Meta<typeof TipBox>;
 
 export default meta;

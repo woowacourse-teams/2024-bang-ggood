@@ -20,6 +20,8 @@ const meta: Meta<typeof FloatingButton> = {
   tags: ['autodocs'],
   parameters: {
     docs: {
+      inlineStories: true,
+      iframeHeight: 600,
       description: {
         component: 'Floating 버튼은 하단에 새 체크리스트 추가 기능을 위한 컴포넌트입니다.',
       },

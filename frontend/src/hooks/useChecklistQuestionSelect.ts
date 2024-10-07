@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import useChecklistQuestionSelectStore from '@/store/useChecklistQuestionSelectStore';
 import { CategoryAndQuestion } from '@/types/checklist';
 
@@ -29,10 +27,6 @@ const useChecklistQuestionSelect = () => {
       setChecklistAllQuestionList(newCategories);
     }
   };
-
-  useEffect(() => {
-    console.log('selectedQuestions', selectedQuestions);
-  }, [selectedQuestions]);
 
   return { toggleQuestionSelect };
 };

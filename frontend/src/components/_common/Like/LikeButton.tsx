@@ -12,13 +12,20 @@ interface Props {
 
 const LikeButton = ({ isLiked = false, checklistId }: Props) => {
   const [localIsLiked, setLocalIsLiked] = useState(isLiked);
-  const { mutate: toggleLike, variables, isPending } = useToggleLikeQuery();
 
+  const { mutate: toggleLike, variables, isPending } = useToggleLikeQuery();
   const debouncedIsLiked = useDebounce({ value: localIsLiked, delay: 500 });
 
   useEffect(() => {
     if (debouncedIsLiked !== isLiked) {
-      toggleLike({ checklistId, isLiked: debouncedIsLiked });
+      toggleLike(
+        { checklistId, isLiked: debouncedIsLiked },
+        {
+          onError: () => {
+            setLocalIsLiked(prev => !prev);
+          },
+        },
+      );
     }
   }, [debouncedIsLiked]);
 

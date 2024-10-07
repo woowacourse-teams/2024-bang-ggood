@@ -1,5 +1,6 @@
 package com.bang_ggood.station.service;
 
+import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.station.domain.ChecklistStation;
 import com.bang_ggood.station.dto.response.SubwayStationResponse;
 import com.bang_ggood.station.repository.ChecklistStationRepository;
@@ -20,13 +21,13 @@ public class ChecklistStationService {
     }
 
     @Transactional
-    public void createChecklistStations(Long checklistId, double latitude, double longitude) {
+    public void createChecklistStations(Checklist checklist, double latitude, double longitude) {
         List<SubwayStationResponse> responses = subwayStationService.readNearestStation(latitude, longitude);
         List<ChecklistStation> checklistStations = new ArrayList<>();
 
         for (SubwayStationResponse response : responses) {
             for (String stationLine : response.getStationLine()) {
-                checklistStations.add(new ChecklistStation(checklistId, response.getStationName(), stationLine, response.getWalkingTime()));
+                checklistStations.add(new ChecklistStation(checklist, response.getStationName(), stationLine, response.getWalkingTime()));
             }
         }
 
@@ -34,7 +35,7 @@ public class ChecklistStationService {
     }
 
     @Transactional(readOnly = true)
-    public List<ChecklistStation> readChecklistStationsByChecklistId(Long checklistId) {
-        return checklistStationRepository.findByChecklistId(checklistId);
+    public List<ChecklistStation> readChecklistStationsByChecklist(Checklist checklist) {
+        return checklistStationRepository.findByChecklist(checklist);
     }
 }

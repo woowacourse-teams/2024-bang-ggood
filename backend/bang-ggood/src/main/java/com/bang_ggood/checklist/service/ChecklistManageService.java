@@ -64,7 +64,7 @@ public class ChecklistManageService {
         createChecklistOptions(checklistRequest, checklist);
         createChecklistQuestions(checklistRequest, checklist);
         createChecklistMaintenances(checklistRequest, checklist);
-        checklistStationManageService.createChecklistStations(checklist.getId(), checklistRequestV1.geolocation());
+        checklistStationManageService.createChecklistStations(checklist, checklistRequestV1.geolocation());
         return checklist.getId();
     }
 
@@ -116,7 +116,7 @@ public class ChecklistManageService {
         List<SelectedCategoryQuestionsResponse> questions = readChecklistQuestions(checklist);
         SelectedRoomResponse room = SelectedRoomResponse.of(checklist, maintenances);
         boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
-        List<SubwayStationResponse> stations = checklistStationManageService.readStationsByChecklistId(checklistId);
+        List<SubwayStationResponse> stations = checklistStationManageService.readStationsByChecklist(checklist);
 
         return SelectedChecklistResponseV1.of(room, options, questions, isLiked, stations);
     }

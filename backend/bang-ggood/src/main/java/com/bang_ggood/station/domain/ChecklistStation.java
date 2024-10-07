@@ -1,10 +1,13 @@
 package com.bang_ggood.station.domain;
 
 import com.bang_ggood.BaseEntity;
+import com.bang_ggood.checklist.domain.Checklist;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.util.Objects;
@@ -20,7 +23,8 @@ public class ChecklistStation extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long checklistId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Checklist checklist;
 
     private String stationName;
 
@@ -28,8 +32,8 @@ public class ChecklistStation extends BaseEntity {
 
     private int walkingTime;
 
-    public ChecklistStation(Long checklistId, String stationName, String stationLine, int walkingTime) {
-        this.checklistId = checklistId;
+    public ChecklistStation(Checklist checklist, String stationName, String stationLine, int walkingTime) {
+        this.checklist = checklist;
         this.stationName = stationName;
         this.stationLine = stationLine;
         this.walkingTime = walkingTime;

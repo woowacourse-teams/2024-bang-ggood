@@ -149,5 +149,6 @@ CREATE TABLE checklist_station
     walking_time  INTEGER,
     created_at    TIMESTAMP(6),
     modified_at   TIMESTAMP(6),
-    deleted       BOOLEAN
+    deleted       BOOLEAN,
+    FOREIGN KEY (checklist_id) REFERENCES checklist (id)
 );

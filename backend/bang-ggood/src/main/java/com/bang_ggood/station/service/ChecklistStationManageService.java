@@ -1,5 +1,6 @@
 package com.bang_ggood.station.service;
 
+import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.station.domain.ChecklistStation;
 import com.bang_ggood.station.dto.request.ChecklistStationRequest;
 import com.bang_ggood.station.dto.response.SubwayStationResponse;
@@ -17,12 +18,12 @@ public class ChecklistStationManageService {
         this.subwayStationService = subwayStationService;
     }
 
-    public void createChecklistStations(Long checklistId, ChecklistStationRequest geolocation) {
-        checklistStationService.createChecklistStations(checklistId, geolocation.latitude(), geolocation.longitude());
+    public void createChecklistStations(Checklist checklist, ChecklistStationRequest geolocation) {
+        checklistStationService.createChecklistStations(checklist, geolocation.latitude(), geolocation.longitude());
     }
 
-    public List<SubwayStationResponse> readStationsByChecklistId(Long checklistId) {
-        List<ChecklistStation> checklistStations = checklistStationService.readChecklistStationsByChecklistId(checklistId);
+    public List<SubwayStationResponse> readStationsByChecklist(Checklist checklist) {
+        List<ChecklistStation> checklistStations = checklistStationService.readChecklistStationsByChecklist(checklist);
         List<SubwayStationResponse> stationResponses = checklistStations.stream()
                 .map(SubwayStationResponse::of)
                 .toList();

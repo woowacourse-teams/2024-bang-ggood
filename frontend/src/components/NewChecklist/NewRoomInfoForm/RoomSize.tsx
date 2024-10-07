@@ -12,9 +12,9 @@ const RoomSize = () => {
 
   return (
     <FormField>
-      <FormField.Label label="방 크기" />
+      <FormField.Label label="방 크기" htmlFor="size" />
       <FormStyled.FieldBox>
-        <Input width="medium" placeholder="" onChange={actions.onChange} name="size" value={roomSize} />
+        <Input width="medium" placeholder="" onChange={actions.onChange} name="size" value={roomSize} id="size" />
         <FormStyled.FlexLabel label="평"></FormStyled.FlexLabel>
       </FormStyled.FieldBox>
       <FormField.ErrorMessage value={errorMessage} />

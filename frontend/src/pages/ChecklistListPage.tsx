@@ -52,7 +52,7 @@ const ChecklistListPage = () => {
         </S.ListBox>
       </Layout>
       <FloatingButton size="extends" onClick={handleClickFloatingButton}>
-        <PlusBlack aria-hidden="true" />방 체크하기
+        <PlusBlack />방 체크하기
       </FloatingButton>
     </>
   );

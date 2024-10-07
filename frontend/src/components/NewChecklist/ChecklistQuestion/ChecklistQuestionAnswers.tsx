@@ -28,6 +28,7 @@ const ChecklistQuestionAnswers = ({ answer, questionId }: { answer: AnswerType; 
             isSelected={isSelected}
             onClick={() => handleClick(option.name)}
             key={`${questionId}-${option.id}`}
+            aria-label={option.name === 'GOOD' ? '좋아요 버튼' : '싫어요 버튼'}
           />
         );
       })}

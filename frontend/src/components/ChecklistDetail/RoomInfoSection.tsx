@@ -70,18 +70,18 @@ const RoomInfoSection = ({ nearSubways, room, options, checklistId, isLiked }: P
       </S.GreenWrapper>
       <S.GapBox>
         <S.Row>
-          <Room />
+          <Room aria-hidden="true" />
           {formattedUndefined(structure, 'string', '방 구조')} / {formattedUndefined(size)} 평
         </S.Row>
         <S.Row>
-          <Stairs />
+          <Stairs aria-hidden="true" />
           {floorLevel === '지상'
             ? `${formattedUndefined(floor)}층`
             : formattedUndefined(floorLevel, 'string', '방 종류')}
         </S.Row>
       </S.GapBox>
       <S.Row>
-        <Utils /> 관리비 포함 항목 :
+        <Utils aria-hidden="true" /> 관리비 포함 항목 :
         {includedMaintenances
           ?.map(id => IncludedMaintenancesData.find(item => item.id === id)?.displayName)
           .filter(Boolean)
@@ -89,36 +89,36 @@ const RoomInfoSection = ({ nearSubways, room, options, checklistId, isLiked }: P
         {!includedMaintenances?.length && formattedUndefined(includedMaintenances?.length, 'string', '')}
       </S.Row>
       <S.Row>
-        <Calendar />
+        <Calendar aria-hidden="true" />
         {formattedUndefined(contractTerm)}개월 계약 <br />
         입주 가능일 : {formattedUndefined(occupancyMonth)}월 {occupancyPeriod}
       </S.Row>
       <S.Row>
-        <Subway />
+        <Subway aria-hidden="true" />
         <SubwayStations stations={nearSubways} />
       </S.Row>
       <S.GapBox>
         <S.Row>
-          <Building />
+          <Building aria-hidden="true" />
           {formattedUndefined(realEstate, 'string', '부동산')}
         </S.Row>
         <S.Row>
-          <Pencil />
+          <Pencil aria-hidden="true" />
           {formattedDate(createdAt ?? '', '.')}
         </S.Row>
       </S.GapBox>
       <S.Row>
-        <Options />
+        <Options aria-hidden="true" />
         {options.length
           ? options.map(option => option.optionName).join(', ')
           : formattedUndefined(options.length, 'string', '옵션')}
       </S.Row>
       <S.Row>
-        <Summary />
+        <Summary aria-hidden="true" />
         {formattedUndefined(summary, 'string', '한줄평')}
       </S.Row>
       <S.Row>
-        <LocationLineIcon height={20} width={20} />
+        <LocationLineIcon height={20} width={20} aria-hidden="true" />
         {formattedUndefined(address, 'string', '주소')} <br /> {buildingName}
       </S.Row>
       <AddressMap location={address ?? ''} />

@@ -2,17 +2,17 @@ import styled from '@emotion/styled';
 
 import Checkbox from '@/components/_common/Checkbox/Checkbox';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
-import useChecklistQuestionUpdate from '@/hooks/useChecklistQuestionUpdate';
+import useChecklistQuestionSelect from '@/hooks/useChecklistQuestionSelect';
 import { flexCenter } from '@/styles/common';
 import { ChecklistQuestionWithIsSelected } from '@/types/checklist';
 
 const QuestionSelectCard = ({ question }: { question: ChecklistQuestionWithIsSelected }) => {
   const { title, subtitle, isSelected, questionId } = question;
-  const { updateCheckQuestion } = useChecklistQuestionUpdate();
+  const { toggleQuestionSelect } = useChecklistQuestionSelect();
   const { currentTabId: categoryId } = useTabContext();
 
   const handleCheckQuestion = () => {
-    updateCheckQuestion({ questionId, isSelected: !isSelected, categoryId });
+    toggleQuestionSelect({ questionId, isSelected: !isSelected, categoryId });
   };
 
   return (

@@ -3,10 +3,10 @@ import { useStore } from 'zustand';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import SubwayStations from '@/components/_common/Subway/SubwayStations';
-import roomInfoUnvalidatedStore from '@/store/roomInfoUnvalidatedStore';
+import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
 
 const NearSubwayStations = () => {
-  const nearSubwayStation = useStore(roomInfoUnvalidatedStore, state => state.nearSubwayStation);
+  const nearSubwayStation = useStore(roomInfoNonValidatedStore, state => state.nearSubwayStation);
 
   return (
     <FlexBox.Vertical gap="1.5rem">

@@ -31,7 +31,7 @@ export interface ChecklistQuestionWithAnswer extends ChecklistQuestion {
 }
 
 // 체크리스트 커스텀
-export interface ChecklistCategoryCustom extends Category {
+export interface ChecklistCategoryWithIsSelected extends Category {
   questions: ChecklistQuestionWithIsSelected[];
 }
 
@@ -51,18 +51,6 @@ export interface ChecklistPreview {
   isLiked: boolean;
   station: string;
   walkingTime: number;
-}
-
-// TODO: 방비교 추후를 위해..
-// 체크리스트 비교
-export interface ChecklistCompare {
-  room: RoomInfo;
-  checklistId: number;
-  rank: number;
-  score: number;
-  optionCount: number;
-  options: Option[];
-  // categories: CategoryScore[];
 }
 
 // 체크리스트 디테일

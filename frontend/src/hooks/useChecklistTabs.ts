@@ -4,7 +4,11 @@ import { TabWithCompletion } from '@/components/_common/Tabs/Tabs';
 import { findCategoryClassNameByName } from '@/constants/category';
 import useChecklistStore from '@/store/useChecklistStore';
 
-const useNewChecklistTabs = () => {
+/**
+ * useChecklistTabs 체크리스트 페이지에서 기본 정보, 옵션, 카테고리를 포함한 탭을 만들어주는 훅 함수입니다.
+ * isCategoryQuestionAllCompleted : 해당 카테고리의 답변이 다 채워졌는지를 알려줍니다.
+ */
+const useChecklistTabs = () => {
   const categories = useChecklistStore(state => state.categories);
   const checklistCategoryQnA = useChecklistStore(state => state.checklistCategoryQnA);
   const actions = useChecklistStore(state => state.actions);
@@ -16,7 +20,7 @@ const useNewChecklistTabs = () => {
       const targetCategory = actions.getCategory(targetId);
       return targetCategory?.questions.every(question => question.answer !== 'NONE');
     },
-    [actions.getCategory],
+    [actions],
   );
 
   useEffect(() => {
@@ -43,4 +47,4 @@ const useNewChecklistTabs = () => {
   return { tabs };
 };
 
-export default useNewChecklistTabs;
+export default useChecklistTabs;

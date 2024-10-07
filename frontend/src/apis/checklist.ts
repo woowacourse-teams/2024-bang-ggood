@@ -46,12 +46,6 @@ export const deleteChecklist = async (id: number) => {
   return response;
 };
 
-export const getCompareRooms = async ({ id1, id2, id3 }: { id1: number; id2: number; id3?: number }) => {
-  const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_COMPARE({ id1, id2, id3 }) });
-  const data = await response.json();
-  return data.checklists;
-};
-
 export const putCustomChecklist = async (questionIds: ChecklistCustom) => {
   const response = await fetcher.put({ url: BASE_URL + ENDPOINT.CHECKLIST_CUSTOM, body: questionIds });
 

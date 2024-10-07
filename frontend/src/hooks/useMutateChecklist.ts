@@ -5,7 +5,7 @@ import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
 import usePutChecklistQuery from '@/hooks/query/usePutCheclistQuery';
 import useToast from '@/hooks/useToast';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
-import roomInfoUnvalidatedStore from '@/store/roomInfoUnvalidatedStore';
+import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 import { ChecklistCategoryWithAnswer, MutateType } from '@/types/checklist';
@@ -23,9 +23,9 @@ const useMutateChecklist = (
   // 방 기본 정보 - validated
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
   const roomInfoAnswer = useStore(checklistRoomInfoStore, state => state.value);
-  // 방 기본 정보 - unValidated
-  const roomInfoUnvalidatedActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
-  const roomInfoUnvalidated = useStore(roomInfoUnvalidatedStore, state => state);
+  // 방 기본 정보 - nonValidated
+  const roomInfoUnvalidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
+  const roomInfoUnvalidated = useStore(roomInfoNonValidatedStore, state => state);
   // 선택된 옵션
   const selectedOptions = useSelectedOptionStore(state => state.selectedOptions);
   // 체크리스트 답변

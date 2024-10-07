@@ -13,26 +13,25 @@ import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
-import useHandleTipBox from '@/hooks/useHandleTipBox';
+import useChecklistTabs from '@/hooks/useChecklistTabs';
+import useHandleTip from '@/hooks/useHandleTip';
 import useChecklistTemplate from '@/hooks/useInitialChecklist';
 import useModal from '@/hooks/useModal';
-import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
-import roomInfoUnvalidatedStore from '@/store/roomInfoUnvalidatedStore';
+import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 
 const NewChecklistPage = () => {
   const navigate = useNavigate();
   useChecklistTemplate(); // 체크리스트 질문 가져오기 및 준비
-
-  const { tabs } = useNewChecklistTabs();
+  const { tabs } = useChecklistTabs();
 
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
-  const roomInfoUnvalidatedActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
+  const roomInfoNonValidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
   const checklistActions = useChecklistStore(state => state.actions);
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);
-  const { resetShowTipBox } = useHandleTipBox('OPTION');
+  const { resetShowTip } = useHandleTip('OPTION');
 
   // 메모 모달
   const { isModalOpen: isMemoModalOpen, openModal: openMemoModal, closeModal: closeMemoModal } = useModal();
@@ -48,10 +47,10 @@ const NewChecklistPage = () => {
 
   const resetAndGoHome = () => {
     roomInfoActions.resetAll();
-    roomInfoUnvalidatedActions.resetAll();
+    roomInfoNonValidatedActions.resetAll();
     checklistActions.reset();
     selectedOptionActions.reset();
-    resetShowTipBox(); // 옵션의 팁박스 다시표시
+    resetShowTip(); // 옵션의 팁박스 다시표시
     navigate(ROUTE_PATH.checklistList);
   };
 

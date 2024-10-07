@@ -29,7 +29,7 @@ const QuestionListTemplate = () => {
 };
 
 const S = {
-  Container: styled.div`
+  Container: styled.article`
     width: 100%;
     margin-top: 1rem;
     border-radius: 0.8rem;
@@ -39,7 +39,7 @@ const S = {
   Span: styled.div`
     color: ${({ theme }) => theme.palette.grey500};
   `,
-  CounterBox: styled.div`
+  CounterBox: styled.section`
     display: flex;
     padding: 1.2rem;
     justify-content: right;

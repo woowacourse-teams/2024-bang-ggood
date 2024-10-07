@@ -25,7 +25,7 @@ const TipBox = ({ tipType }: Props) => {
 };
 
 const S = {
-  TipBox: styled.div`
+  TipBox: styled.article`
     width: 100%;
     ${flexCenter}
     ${flexSpaceBetween}

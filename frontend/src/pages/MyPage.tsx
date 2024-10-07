@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 import { BangBangIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
@@ -6,12 +7,14 @@ import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import LogoutModal from '@/components/MyPage/LogoutModal';
 import SKMyPage from '@/components/skeleton/MyPage/SKMyPage';
+import { ROUTE_PATH } from '@/constants/routePath';
 import useUserQuery from '@/hooks/query/useUserQuery';
 import useModal from '@/hooks/useModal';
 import { boxShadow, boxShadowSpread, flexCenter, flexColumn, title2 } from '@/styles/common';
 import theme from '@/styles/theme';
 
 const MyPage = () => {
+  const navigate = useNavigate();
   const { isModalOpen, openModal, closeModal } = useModal();
   const { data: user, isError, isLoading } = useUserQuery();
 
@@ -21,7 +24,7 @@ const MyPage = () => {
     <>
       <Header center={<Header.Text>마이페이지</Header.Text>} />
       <Layout bgColor={theme.palette.background} withFooter withHeader>
-        <S.Inner>
+        <S.InnerWrapper>
           <S.Container style={{ width: '100%' }}>
             <S.Profile>
               <S.ProfileIcon>
@@ -31,7 +34,9 @@ const MyPage = () => {
             </S.Profile>
           </S.Container>
           {!isError && <Button label="로그아웃" size="full" color="dark" onClick={openModal} />}
-          {isError && <Button label="로그인하러 가기" size="full" color="dark" onClick={openModal} />}
+          {isError && (
+            <Button label="로그인하러 가기" size="full" color="dark" onClick={() => navigate(ROUTE_PATH.root)} />
+          )}
         </S.Inner>
       </Layout>
       <LogoutModal isOpen={isModalOpen} onClose={closeModal} />
@@ -56,7 +61,7 @@ const S = {
     ${flexColumn};
     ${boxShadowSpread}
   `,
-  Inner: styled.div`
+  InnerWrapper: styled.article`
     ${flexCenter}
     ${flexColumn}
   `,

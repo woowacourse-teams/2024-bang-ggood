@@ -129,7 +129,7 @@ const RoomInfoSection = ({ nearSubways, room, options, checklistId, isLiked }: P
 export default RoomInfoSection;
 
 const S = {
-  Container: styled.div`
+  Container: styled.section`
     box-sizing: border-box;
     width: 100%;
     ${flexColumn}

@@ -70,7 +70,7 @@ public class ChecklistStationManageServiceTest extends IntegrationTestSupport {
         checklistStationRepository.saveAll(List.of(checklistStation1, checklistStation2));
 
         // when
-        List<SubwayStationResponse> responses = checklistStationManageService.readStationsByChecklist(checklist);
+        List<SubwayStationResponse> responses = checklistStationManageService.readStationsByChecklist(checklist).getStations();
 
         // then
         assertThat(responses).hasSize(1);
@@ -82,7 +82,7 @@ public class ChecklistStationManageServiceTest extends IntegrationTestSupport {
     @Test
     void readStationsByChecklist_noData() {
         // given & when
-        List<SubwayStationResponse> responses = checklistStationManageService.readStationsByChecklist(checklist);
+        List<SubwayStationResponse> responses = checklistStationManageService.readStationsByChecklist(checklist).getStations();
 
         // then
         assertThat(responses).hasSize(0);

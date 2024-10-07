@@ -24,7 +24,7 @@ import com.bang_ggood.question.service.ChecklistQuestionService;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import com.bang_ggood.room.service.RoomService;
-import com.bang_ggood.station.dto.response.SubwayStationResponse;
+import com.bang_ggood.station.dto.response.SubwayStationResponses;
 import com.bang_ggood.station.service.ChecklistStationManageService;
 import com.bang_ggood.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -116,7 +116,7 @@ public class ChecklistManageService {
         List<SelectedCategoryQuestionsResponse> questions = readChecklistQuestions(checklist);
         SelectedRoomResponse room = SelectedRoomResponse.of(checklist, maintenances);
         boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
-        List<SubwayStationResponse> stations = checklistStationManageService.readStationsByChecklist(checklist);
+        SubwayStationResponses stations = checklistStationManageService.readStationsByChecklist(checklist);
 
         return SelectedChecklistResponseV1.of(room, options, questions, isLiked, stations);
     }

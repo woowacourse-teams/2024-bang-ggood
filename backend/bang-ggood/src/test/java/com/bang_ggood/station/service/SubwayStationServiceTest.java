@@ -23,7 +23,7 @@ public class SubwayStationServiceTest extends IntegrationTestSupport {
     @MethodSource("provideStationData")
     void readNearestStation(double latitude, double longitude, Station nearestStation, Station nextNearestStation) {
         // given & when
-        List<SubwayStationResponse> responses = subwayStationService.readNearestStation(latitude, longitude);
+        List<SubwayStationResponse> responses = subwayStationService.readNearestStation(latitude, longitude).getStations();
         assertThat(responses).hasSize(2);
         SubwayStationResponse nearest =  responses.get(0);
         SubwayStationResponse nextNearest =  responses.get(1);

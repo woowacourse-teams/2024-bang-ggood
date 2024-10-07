@@ -22,7 +22,7 @@ public class ChecklistStationService {
 
     @Transactional
     public void createChecklistStations(Checklist checklist, double latitude, double longitude) {
-        List<SubwayStationResponse> responses = subwayStationService.readNearestStation(latitude, longitude);
+        List<SubwayStationResponse> responses = subwayStationService.readNearestStation(latitude, longitude).getStations();
         List<ChecklistStation> checklistStations = new ArrayList<>();
 
         for (SubwayStationResponse response : responses) {

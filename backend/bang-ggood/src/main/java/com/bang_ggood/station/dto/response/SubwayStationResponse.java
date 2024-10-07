@@ -25,7 +25,7 @@ public class SubwayStationResponse {
         return new SubwayStationResponse(station.getName(), stationLine, station.calculateWalkingTime(latitude, longitude));
     }
 
-    public static SubwayStationResponse of(ChecklistStation checklistStation) {
+    public static SubwayStationResponse from(ChecklistStation checklistStation) {
         List<String> stationLine = new ArrayList<>();
         stationLine.add(checklistStation.getStationLine());
         return new SubwayStationResponse(checklistStation.getStationName(), stationLine, checklistStation.getWalkingTime());

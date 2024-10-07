@@ -81,7 +81,7 @@ const Header = Object.assign(HeaderWrapper, {
   Logo: () => {
     return (
       <Link to={ROUTE_PATH.home}>
-        <BangGgoodTextIcon aria-label="" />
+        <BangGgoodTextIcon aria-label="방끗 로고" />
       </Link>
     );
   },
@@ -96,6 +96,7 @@ const Header = Object.assign(HeaderWrapper, {
         }}
         onClick={handleClick}
         {...props}
+        aria-label="뒤로가기"
       />
     );
   },

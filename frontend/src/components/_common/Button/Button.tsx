@@ -40,7 +40,7 @@ const Button = ({
       aria-label={label}
     >
       <FlexBox.Horizontal>
-        {Icon && <Icon />}
+        {Icon && <Icon aria-hidden="true" />}
         <S.Text size={size}>{label}</S.Text>
       </FlexBox.Horizontal>
     </S.Button>

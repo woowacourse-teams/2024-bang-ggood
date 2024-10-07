@@ -42,7 +42,7 @@ const useChecklistTabs = () => {
     if (newTabsString !== prevTabsString) {
       setTabs(tabsWithBasicInfoAndOptions);
     }
-  }, [categories, checklistCategoryQnA, isCategoryQuestionAllCompleted, tabs]);
+  }, [categories, checklistCategoryQnA, isCategoryQuestionAllCompleted]);
 
   return { tabs };
 };

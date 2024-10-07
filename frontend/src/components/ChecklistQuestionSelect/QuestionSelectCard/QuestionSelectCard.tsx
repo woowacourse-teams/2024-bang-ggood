@@ -25,12 +25,7 @@ const QuestionSelectCard = ({ question }: { question: ChecklistQuestionWithIsSel
         </FlexBox.Vertical>
       </S.FlexColumn>
       <S.CheckBoxContainer>
-        <Checkbox
-          iconType="plus"
-          isChecked={isSelected}
-          setIsChecked={handleCheckQuestion}
-          onClick={handleCheckQuestion}
-        />
+        <Checkbox iconType="plus" isChecked={isSelected} onClick={handleCheckQuestion} />
       </S.CheckBoxContainer>
     </S.Container>
   );

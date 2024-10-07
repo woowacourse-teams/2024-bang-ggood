@@ -24,6 +24,7 @@ const ChecklistQuestionAnswers = ({ answer, questionId }: { answer: AnswerType; 
 
         return (
           <AnswerIcon
+            role="button"
             answer={option.name}
             isSelected={isSelected}
             onClick={() => handleClick(option.name)}

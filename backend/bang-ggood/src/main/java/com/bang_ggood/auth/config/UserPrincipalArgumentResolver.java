@@ -1,6 +1,6 @@
 package com.bang_ggood.auth.config;
 
-import com.bang_ggood.auth.controller.CookieResolver;
+import com.bang_ggood.auth.controller.cookie.CookieResolver;
 import com.bang_ggood.auth.service.AuthService;
 import com.bang_ggood.user.domain.User;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,7 +33,7 @@ public class UserPrincipalArgumentResolver implements HandlerMethodArgumentResol
                                   NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
 
-        if (request.getCookies() == null || cookieResolver.isTokenNotExist(request.getCookies())) {
+        if (cookieResolver.isTokenEmpty(request)) {
             return authService.assignGuestUser();
         }
 

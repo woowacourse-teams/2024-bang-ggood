@@ -1,5 +1,5 @@
-INSERT INTO users(name, email, user_type, login_type, created_at, modified_at, deleted)
-VALUES ('방방이', 'bang-ggood@gmail.com', 'USER', 'LOCAL', '2024-07-22 07:56:42', '2024-07-22 07:56:42', false);
+INSERT INTO users(name, email, password, user_type, login_type, created_at, modified_at, deleted)
+VALUES ('방방이', 'bang-ggood@gmail.com', 'mJf77Wm5oT67gm936ZxsFA==', 'USER', 'LOCAL', '2024-07-22 07:56:42', '2024-07-22 07:56:42', false);
 
 INSERT INTO custom_checklist_question(user_id, question, created_at, modified_at, deleted)
 VALUES (1, 'ROOM_CONDITION_1', '2024-07-22 07:56:42', '2024-07-22 07:56:42', false),

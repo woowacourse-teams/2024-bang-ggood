@@ -4,21 +4,18 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.station.domain.ChecklistStation;
 import com.bang_ggood.station.dto.response.SubwayStationResponse;
 import com.bang_ggood.station.repository.ChecklistStationRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class ChecklistStationService {
 
     private final ChecklistStationRepository checklistStationRepository;
     private final SubwayStationService subwayStationService;
-
-    public ChecklistStationService(ChecklistStationRepository checklistStationRepository, SubwayStationService subwayStationService) {
-        this.checklistStationRepository = checklistStationRepository;
-        this.subwayStationService = subwayStationService;
-    }
 
     @Transactional
     public void createChecklistStations(Checklist checklist, double latitude, double longitude) {

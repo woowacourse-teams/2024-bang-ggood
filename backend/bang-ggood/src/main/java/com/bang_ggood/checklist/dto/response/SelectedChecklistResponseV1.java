@@ -12,6 +12,7 @@ public record SelectedChecklistResponseV1(SelectedRoomResponseV1 room,
                                           List<SelectedCategoryQuestionsResponse> categories,
                                           boolean isLiked,
                                           SubwayStationResponses stations) {
+
     public static SelectedChecklistResponseV1 of(SelectedRoomResponse room, List<SelectedOptionResponse> options,
                                                  List<SelectedCategoryQuestionsResponse> categories, boolean isLiked,
                                                  SubwayStationResponses stations) {

@@ -37,7 +37,7 @@ const MyPage = () => {
           {isError && (
             <Button label="로그인하러 가기" size="full" color="dark" onClick={() => navigate(ROUTE_PATH.root)} />
           )}
-        </S.Inner>
+        </S.InnerWrapper>
       </Layout>
       <LogoutModal isOpen={isModalOpen} onClose={closeModal} />
     </>

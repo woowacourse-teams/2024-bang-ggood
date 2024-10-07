@@ -1,9 +1,7 @@
 package com.bang_ggood.auth.config;
 
-import com.bang_ggood.auth.controller.CookieResolver;
+import com.bang_ggood.auth.controller.cookie.CookieResolver;
 import com.bang_ggood.auth.service.AuthService;
-import com.bang_ggood.global.exception.BangggoodException;
-import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.user.domain.User;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.MethodParameter;
@@ -35,11 +33,7 @@ public class AuthRequiredPrincipalArgumentResolver implements HandlerMethodArgum
                                 NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
 
-        // TODO 리팩토링
-        if (request.getCookies() == null || cookieResolver.isTokenNotExist(request.getCookies())) {
-            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_EMPTY);
-        }
-
+        cookieResolver.checkLoginRequired(request);
         String token = cookieResolver.extractAccessToken(request.getCookies());
         return authService.getAuthUser(token);
     }

@@ -9,11 +9,9 @@ import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.global.exception.dto.ExceptionResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.http.Header;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,7 +25,7 @@ public class ArticleE2ETest extends AcceptanceTest {
     void createArticle() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .body(ArticleFixture.ARTICLE_CREATE_REQUEST())
                 .when().post("/articles")
                 .then().log().all()
@@ -56,7 +54,7 @@ public class ArticleE2ETest extends AcceptanceTest {
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .body(request)
                 .when().post("/articles")
                 .then().log().all()
@@ -106,7 +104,7 @@ public class ArticleE2ETest extends AcceptanceTest {
         Article article = articleRepository.save(ArticleFixture.ARTICLE());
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .when().delete("/articles/" + article.getId())
                 .then().log().all()
                 .statusCode(204);

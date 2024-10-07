@@ -12,11 +12,9 @@ import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.http.Header;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 
 class ChecklistLikeE2ETest extends AcceptanceTest {
 
@@ -39,7 +37,7 @@ class ChecklistLikeE2ETest extends AcceptanceTest {
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .when().post("/checklists/" + checklistId + "/like")
                 .then().log().all()
                 .statusCode(204);
@@ -54,7 +52,7 @@ class ChecklistLikeE2ETest extends AcceptanceTest {
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .when().post("/checklists/" + checklistId + "/like")
                 .then().log().all()
                 .statusCode(409);
@@ -70,7 +68,7 @@ class ChecklistLikeE2ETest extends AcceptanceTest {
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .when().delete("/checklists/" + checklist.getId() + "/like")
                 .then().log().all()
                 .statusCode(204);

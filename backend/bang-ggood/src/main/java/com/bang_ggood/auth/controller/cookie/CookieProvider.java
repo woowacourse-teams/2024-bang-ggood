@@ -1,4 +1,4 @@
-package com.bang_ggood.auth.controller;
+package com.bang_ggood.auth.controller.cookie;
 
 import com.bang_ggood.auth.service.jwt.JwtTokenProperties;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,8 +9,9 @@ import java.time.Duration;
 @Component
 public class CookieProvider {
 
-    public static final String ACCESS_TOKEN_COOKIE_NAME = "accessToken";
-    public static final String REFRESH_TOKEN_COOKIE_NAME = "refreshToken";
+    protected static final String ACCESS_TOKEN_COOKIE_NAME = "accessToken";
+    protected static final String REFRESH_TOKEN_COOKIE_NAME = "refreshToken";
+
     private final JwtTokenProperties jwtTokenProperties;
     private final String domain;
 
@@ -46,11 +47,11 @@ public class CookieProvider {
                 .build();
     }
 
-    public ResponseCookie deleteAccessTokenCookie(String token) {
+    public ResponseCookie deleteAccessTokenCookie() {
         return deleteCookie(ACCESS_TOKEN_COOKIE_NAME);
     }
 
-    public ResponseCookie deleteRefreshTokenCookie(String token) {
+    public ResponseCookie deleteRefreshTokenCookie() {
         return deleteCookie(REFRESH_TOKEN_COOKIE_NAME);
     }
 

@@ -1,6 +1,8 @@
 package com.bang_ggood.auth.controller;
 
 import com.bang_ggood.auth.config.AuthRequiredPrincipal;
+import com.bang_ggood.auth.controller.cookie.CookieProvider;
+import com.bang_ggood.auth.controller.cookie.CookieResolver;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.service.AuthService;
@@ -45,9 +47,11 @@ public class AuthController {
                                        HttpServletRequest httpServletRequest) {
         String accessToken = cookieResolver.extractAccessToken(httpServletRequest.getCookies());
         String refreshToken = cookieResolver.extractRefreshToken(httpServletRequest.getCookies());
+
         authService.logout(accessToken, refreshToken, user);
-        ResponseCookie deletedAccessTokenCookie = cookieProvider.deleteAccessTokenCookie(accessToken);
-        ResponseCookie deletedRefreshTokenCookie = cookieProvider.deleteRefreshTokenCookie(refreshToken);
+
+        ResponseCookie deletedAccessTokenCookie = cookieProvider.deleteAccessTokenCookie();
+        ResponseCookie deletedRefreshTokenCookie = cookieProvider.deleteRefreshTokenCookie();
 
         return ResponseEntity.noContent()
                 .header(HttpHeaders.SET_COOKIE, deletedAccessTokenCookie.toString())
@@ -57,6 +61,8 @@ public class AuthController {
 
     @PostMapping("/accessToken/reissue")
     public ResponseEntity<Void> reIssueAccessToken(HttpServletRequest httpServletRequest) {
+        cookieResolver.checkLoginRequired(httpServletRequest);
+
         String refreshToken = cookieResolver.extractRefreshToken(httpServletRequest.getCookies());
         String accessToken = authService.reIssueAccessToken(refreshToken);
 

@@ -1,4 +1,4 @@
-package com.bang_ggood.auth.service;
+package com.bang_ggood.auth.service.jwt;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

@@ -11,19 +11,17 @@ import com.bang_ggood.question.dto.response.CustomChecklistQuestionResponse;
 import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.QuestionResponse;
 import com.bang_ggood.user.domain.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class QuestionManageService {
 
     private final ChecklistQuestionService checklistQuestionService;
-
-    public QuestionManageService(ChecklistQuestionService checklistQuestionService) {
-        this.checklistQuestionService = checklistQuestionService;
-    }
 
     @Transactional
     public void createDefaultCustomChecklistQuestions(User user) {

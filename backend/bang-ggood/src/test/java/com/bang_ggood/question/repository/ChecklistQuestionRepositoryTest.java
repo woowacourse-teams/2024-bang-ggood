@@ -67,7 +67,7 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
 
         //when
         checklistQuestionRepository.deleteAllByChecklistId(
-                ChecklistFixture.CHECKLIST_QUESTION_1(checklist).getChecklist().getId());
+                ChecklistFixture.CHECKLIST_QUESTION_1(checklist).getChecklistId());
 
         //then
         assertAll(

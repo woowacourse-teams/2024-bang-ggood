@@ -27,12 +27,13 @@ import com.bang_ggood.room.service.RoomService;
 import com.bang_ggood.station.dto.response.SubwayStationResponse;
 import com.bang_ggood.station.service.ChecklistStationManageService;
 import com.bang_ggood.user.domain.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class ChecklistManageService {
 
@@ -43,21 +44,6 @@ public class ChecklistManageService {
     private final ChecklistMaintenanceService checklistMaintenanceService;
     private final ChecklistLikeService checklistLikeService;
     private final ChecklistStationManageService checklistStationManageService;
-
-    public ChecklistManageService(RoomService roomService, ChecklistService checklistService,
-                                  ChecklistOptionService checklistOptionService,
-                                  ChecklistQuestionService checklistQuestionService,
-                                  ChecklistMaintenanceService checklistMaintenanceService,
-                                  ChecklistLikeService checklistLikeService,
-                                  ChecklistStationManageService checklistStationManageService) {
-        this.roomService = roomService;
-        this.checklistService = checklistService;
-        this.checklistOptionService = checklistOptionService;
-        this.checklistQuestionService = checklistQuestionService;
-        this.checklistMaintenanceService = checklistMaintenanceService;
-        this.checklistLikeService = checklistLikeService;
-        this.checklistStationManageService = checklistStationManageService;
-    }
 
     @Transactional
     public Long createChecklist(User user, ChecklistRequest checklistRequest) {
@@ -188,7 +174,7 @@ public class ChecklistManageService {
         checklistOptionService.deleteAllByChecklistId(checklist.getId());
         checklistMaintenanceService.deleteAllByChecklistId(checklist.getId());
         checklistService.deleteById(id);
-        roomService.deleteById(checklist.getRoom().getId());
+        roomService.deleteById(checklist.getRoomId());
     }
 
     @Transactional(readOnly = true)
@@ -242,7 +228,7 @@ public class ChecklistManageService {
                 checklistRequest.room().includedMaintenances().stream()
                         .map(maintenanceId -> new ChecklistMaintenance(checklist,
                                 MaintenanceItem.fromId(maintenanceId)))
-                        .collect(Collectors.toList());
+                        .toList();
         checklistMaintenanceService.updateMaintenances(checklist.getId(), checklistMaintenances);
     }
 }

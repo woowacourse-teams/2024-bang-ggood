@@ -37,7 +37,7 @@ class ArgumentResolverTest extends AcceptanceTest {
                 .extract().as(User.class);
 
         // then
-        Assertions.assertThat(user.getType()).isEqualTo(UserType.GUEST);
+        Assertions.assertThat(user.getUserType()).isEqualTo(UserType.GUEST);
     }
 
     @DisplayName("@UserPrincipal 어노테이션 동작 성공 : 토큰값이 있으면 인증된 유저를 할당한다.")
@@ -53,7 +53,7 @@ class ArgumentResolverTest extends AcceptanceTest {
                 .extract().as(User.class);
 
         // then
-        Assertions.assertThat(user.getType()).isEqualTo(UserType.USER);
+        Assertions.assertThat(user.getUserType()).isEqualTo(UserType.USER);
     }
 
     @DisplayName("@AuthPrincipal 어노테이션 동작 성공 : 쿠키값이 없으면 예외를 발생시킨다.")

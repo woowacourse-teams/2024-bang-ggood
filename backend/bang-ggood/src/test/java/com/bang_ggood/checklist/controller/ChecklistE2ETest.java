@@ -52,7 +52,7 @@ class ChecklistE2ETest extends AcceptanceTest {
     void createChecklistV1() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_V1())
                 .when().post("v1/checklists")
                 .then().log().all()
@@ -130,7 +130,7 @@ class ChecklistE2ETest extends AcceptanceTest {
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .when().get("v1/checklists/" + checklistId)
                 .then().log().all()
                 .statusCode(200);

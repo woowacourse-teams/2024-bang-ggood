@@ -5,6 +5,7 @@ import com.bang_ggood.auth.controller.cookie.CookieProvider;
 import com.bang_ggood.auth.controller.cookie.CookieResolver;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
+import com.bang_ggood.auth.dto.response.RefreshTokenCheckResponse;
 import com.bang_ggood.auth.service.AuthService;
 import com.bang_ggood.user.domain.User;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -70,5 +72,14 @@ public class AuthController {
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString())
                 .build();
+    }
+
+    @GetMapping("/refreshToken/check")
+    public ResponseEntity<RefreshTokenCheckResponse> check(HttpServletRequest httpServletRequest) {
+        boolean isRefreshTokenExist = httpServletRequest.getCookies() != null
+                && !cookieResolver.isRefreshTokenEmpty(httpServletRequest.getCookies());
+
+        RefreshTokenCheckResponse refreshTokenCheckResponse = RefreshTokenCheckResponse.from(isRefreshTokenExist);
+        return ResponseEntity.ok(refreshTokenCheckResponse);
     }
 }

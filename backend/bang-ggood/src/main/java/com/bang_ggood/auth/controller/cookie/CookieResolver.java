@@ -25,7 +25,7 @@ public class CookieResolver {
         return isTokenEmpty(cookies, CookieProvider.ACCESS_TOKEN_COOKIE_NAME);
     }
 
-    private boolean isRefreshTokenEmpty(Cookie[] cookies) {
+    public boolean isRefreshTokenEmpty(Cookie[] cookies) {
         return isTokenEmpty(cookies, CookieProvider.REFRESH_TOKEN_COOKIE_NAME);
     }
 

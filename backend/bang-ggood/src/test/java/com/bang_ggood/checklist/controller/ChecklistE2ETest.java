@@ -49,7 +49,7 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .statusCode(201);
     }
 
-    @DisplayName("체크리스트 작성 성공v1")
+    @DisplayName("체크리스트 작성 v1 성공")
     @Test
     void createChecklistV1() {
         RestAssured.given().log().all()
@@ -124,7 +124,7 @@ class ChecklistE2ETest extends AcceptanceTest {
         //TODO 수정
     }
 
-    @DisplayName("작성된 체크리스트 조회 성공 v1")
+    @DisplayName("작성된 체크리스트 조회 v1 성공")
     @Test
     void readChecklistV1() {
         long checklistId = checklistManageService.createChecklist(this.getAuthenticatedUser(),

@@ -59,7 +59,7 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         assertThat(checklistId).isGreaterThan(0);
     }
 
-    @DisplayName("체크리스트 작성 성공v1")
+    @DisplayName("체크리스트 작성 v1 성공")
     @Test
     void createChecklistV1() {
         //given

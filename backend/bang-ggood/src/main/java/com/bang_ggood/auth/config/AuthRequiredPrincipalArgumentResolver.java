@@ -34,7 +34,7 @@ public class AuthRequiredPrincipalArgumentResolver implements HandlerMethodArgum
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
 
         cookieResolver.checkLoginRequired(request);
-        String token = cookieResolver.extractAccessToken(request.getCookies());
+        String token = cookieResolver.extractAccessToken(request);
         return authService.getAuthUser(token);
     }
 }

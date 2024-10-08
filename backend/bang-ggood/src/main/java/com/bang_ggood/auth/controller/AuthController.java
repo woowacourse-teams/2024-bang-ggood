@@ -47,8 +47,8 @@ public class AuthController {
     @PostMapping("/oauth/logout")
     public ResponseEntity<Void> logout(@AuthRequiredPrincipal User user,
                                        HttpServletRequest httpServletRequest) {
-        String accessToken = cookieResolver.extractAccessToken(httpServletRequest.getCookies());
-        String refreshToken = cookieResolver.extractRefreshToken(httpServletRequest.getCookies());
+        String accessToken = cookieResolver.extractAccessToken(httpServletRequest);
+        String refreshToken = cookieResolver.extractRefreshToken(httpServletRequest);
 
         authService.logout(accessToken, refreshToken, user);
 
@@ -65,7 +65,7 @@ public class AuthController {
     public ResponseEntity<Void> reIssueAccessToken(HttpServletRequest httpServletRequest) {
         cookieResolver.checkLoginRequired(httpServletRequest);
 
-        String refreshToken = cookieResolver.extractRefreshToken(httpServletRequest.getCookies());
+        String refreshToken = cookieResolver.extractRefreshToken(httpServletRequest);
         String accessToken = authService.reIssueAccessToken(refreshToken);
 
         ResponseCookie accessTokenCookie = cookieProvider.createAccessTokenCookie(accessToken);
@@ -76,8 +76,7 @@ public class AuthController {
 
     @GetMapping("/refreshToken/check")
     public ResponseEntity<RefreshTokenCheckResponse> check(HttpServletRequest httpServletRequest) {
-        boolean isRefreshTokenExist = httpServletRequest.getCookies() != null
-                && !cookieResolver.isRefreshTokenEmpty(httpServletRequest.getCookies());
+        boolean isRefreshTokenExist = !cookieResolver.isRefreshTokenEmpty(httpServletRequest);
 
         RefreshTokenCheckResponse refreshTokenCheckResponse = RefreshTokenCheckResponse.from(isRefreshTokenExist);
         return ResponseEntity.ok(refreshTokenCheckResponse);

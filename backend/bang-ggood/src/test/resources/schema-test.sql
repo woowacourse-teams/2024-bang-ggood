@@ -10,6 +10,8 @@ DROP TABLE IF EXISTS custom_checklist_question CASCADE;
 DROP TABLE IF EXISTS checklist_like CASCADE;
 DROP TABLE IF EXISTS article CASCADE;
 DROP TABLE IF EXISTS checklist_station CASCADE;
+DROP TABLE IF EXISTS highlight CASCADE;
+DROP TABLE IF EXISTS question CASCADE;
 DROP TABLE IF EXISTS category CASCADE;
 
 -- Create tables
@@ -158,4 +160,22 @@ CREATE TABLE category
 (
     id    INTEGER AUTO_INCREMENT PRIMARY KEY,
     name  VARCHAR(255)
+);
+
+CREATE TABLE question
+(
+    id          INTEGER AUTO_INCREMENT PRIMARY KEY,
+    category_id INTEGER,
+    title       VARCHAR(255),
+    subtitle    VARCHAR(255),
+    is_default  BOOLEAN,
+    FOREIGN KEY (category_id) REFERENCES category (id)
+);
+
+CREATE TABLE highlight
+(
+    id          INTEGER AUTO_INCREMENT PRIMARY KEY,
+    question_id INTEGER,
+    name        VARCHAR(255),
+    FOREIGN KEY (question_id) REFERENCES question (id)
 );

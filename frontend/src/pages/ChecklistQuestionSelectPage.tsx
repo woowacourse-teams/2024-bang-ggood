@@ -7,8 +7,8 @@ import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import TipBox from '@/components/_common/TipBox/TipBox';
-import { ChecklistCustomTabs } from '@/components/ChecklistCustom/CustomTabs';
-import QuestionListTemplate from '@/components/ChecklistCustom/QuestionListTemplate/QuestionListTemplate';
+import { ChecklistQuestionSelectTabs } from '@/components/ChecklistQuestionSelect/ChecklistQuestionSelectTabs';
+import QuestionListTemplate from '@/components/ChecklistQuestionSelect/QuestionListTemplate/QuestionListTemplate';
 import { TOAST_MESSAGE } from '@/constants/message';
 import { ROUTE_PATH } from '@/constants/routePath';
 import usePutCustomChecklist from '@/hooks/query/usePutCustomChecklist';
@@ -62,7 +62,7 @@ const ChecklistQuestionSelectPage = () => {
       />
       <TabProvider defaultTab={1}>
         {/* 질문 카테고리 탭 */}
-        <ChecklistCustomTabs />
+        <ChecklistQuestionSelectTabs />
         {/* 질문 콘텐츠 섹션*/}
         <Layout bgColor={theme.palette.background} withHeader withTab>
           <TipBox tipType={'CUSTOM_QUESTION'} />

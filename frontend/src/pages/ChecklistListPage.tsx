@@ -20,7 +20,7 @@ const ChecklistListPage = () => {
   const { data: checklistList, isLoading } = useGetChecklistListQuery();
 
   const handleClickMoveCustomPage = () => {
-    navigate(ROUTE_PATH.checklistCustom);
+    navigate(ROUTE_PATH.checklistQuestionSelect);
   };
 
   const handleClickFloatingButton = () => {

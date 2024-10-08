@@ -63,7 +63,7 @@ const router = createBrowserRouter([
       },
       {
         element: <ChecklistQuestionSelectPage />,
-        path: ROUTE_PATH.checklistCustom,
+        path: ROUTE_PATH.checklistQuestionSelect,
       },
       {
         element: <ArticleDetailPage />,

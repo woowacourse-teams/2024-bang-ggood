@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
-import RadioGroup from '@/components/_common/RadioGroup/RadioGroup';
 import { flexCenter, title4 } from '@/styles/common';
 
 const FormStyled = {
@@ -55,15 +54,6 @@ const FormStyled = {
     ${flexCenter}
     ${title4}
     white-space: pre;
-  `,
-
-  RadioGroup: styled(RadioGroup)<{ width?: string }>`
-    ${({ width }) => (width ? `width:${width};` : '')}
-    flex: 1 0 auto;
-
-    ${flexCenter}
-    font-size: ${({ theme }) => theme.text.size.xSmall};
-    column-gap: 0.7rem;
   `,
 };
 export default FormStyled;

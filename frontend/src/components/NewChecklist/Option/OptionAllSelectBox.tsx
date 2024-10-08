@@ -21,7 +21,6 @@ const OptionAllSelectBox = () => {
         {/*전체 선택 버튼*/}
         <Checkbox
           isChecked={selectedOptionActions.isAllSelected()}
-          setIsChecked={handleToggleAllSelect}
           onClick={handleToggleAllSelect}
           color={theme.palette.yellow500}
           hoverColor={theme.palette.yellow600}

@@ -35,7 +35,6 @@ export const TextButton: Story = {
   args: {
     children: '버튼',
     size: 'medium',
-    'aria-label': 'text button',
   },
 };
 
@@ -44,7 +43,6 @@ export const IconButton: Story = {
     children: <PlusWhite />,
     size: 'medium',
     color: 'green',
-    'aria-label': 'icon button',
   },
 };
 
@@ -56,6 +54,5 @@ export const TextIconButton: Story = {
       </div>
     ),
     size: 'extends',
-    'aria-label': 'text and icon button',
   },
 };

@@ -33,19 +33,19 @@ const SectionColors: Record<string, Color> = {
 const LandingPage = () => {
   return (
     <S.Container>
-      <S.Section height={65} color={SectionColors.first.background}>
+      <S.Section color={SectionColors.first.background}>
         <FirstSection />
       </S.Section>
-      <S.Section height={75} color={SectionColors.second.background}>
+      <S.Section color={SectionColors.second.background}>
         <SecondSection />
       </S.Section>
-      <S.Section height={82} color={SectionColors.third.background}>
+      <S.Section color={SectionColors.third.background}>
         <ThirdSection />
       </S.Section>
-      <S.Section height={95} color={SectionColors.fourth.background}>
+      <S.Section color={SectionColors.fourth.background}>
         <FourthSection />
       </S.Section>
-      <S.Section height={25} color={SectionColors.fifth.background}>
+      <S.Section color={SectionColors.fifth.background}>
         <FifthSection />
       </S.Section>
     </S.Container>
@@ -55,10 +55,10 @@ const LandingPage = () => {
 export default LandingPage;
 
 const S = {
-  Section: styled.section<{ color: string; height: number }>`
+  Section: styled.section<{ color: string }>`
     ${flexColumn}
     width: 100%;
-    height: ${({ height }) => height}rem;
+    height: 100dvh;
 
     background-color: ${({ color }) => color};
 

@@ -21,7 +21,7 @@ const ThirdSection = () => {
         <S.Text>
           방 구할 때 어디를 봐야 할지 <br />더 이상 고민하지 마세요!
         </S.Text>
-        <S.EmptyBox height={10} />
+        <S.EmptyBox height={'1rem'} />
         <S.Text>
           <S.Bold>방구하기 N년차 전문가</S.Bold>들이 <br />
           직접 방을 보러다니면서 <br />
@@ -55,7 +55,7 @@ const ThirdSection = () => {
             </S.Card>
           </S.AnimationBox>
         </S.CardList>
-        <S.EmptyBox height={10} />
+        <S.EmptyBox height={'1rem'} />
         <S.Text margin={25}>
           짧은 시간동안 <S.Bold>O X</S.Bold> 로 <S.Highlight>빠르게 체크해요!</S.Highlight>
         </S.Text>

@@ -18,11 +18,11 @@ const SecondSection = () => {
           <br />
           <S.Highlight>체크리스트 서비스</S.Highlight>에요!
         </S.Text>
-        <S.EmptyBox height={10} />
+        <S.EmptyBox height={'2rem'} />
         <S.Text>
           새집을 구하러 다니는 당신이 <br />한 방을 둘러보는 시간은 <S.Bold>단 10분 ⏰ </S.Bold>
         </S.Text>
-        <S.EmptyBox height={10} />
+        <S.EmptyBox height={'2rem'} />
         <S.Text>
           <S.Highlight>방끗</S.Highlight>은 그 귀중한 시간을
           <br />
@@ -32,7 +32,7 @@ const SecondSection = () => {
       </S.TextBox>
       <S.Observer ref={ref} />
       <S.AnimationBox isIntersecting={isIntersecting}>
-        <img src={mainPageScreen} width="200px" />
+        <S.ScreenShot src={mainPageScreen} width="180rem" />
       </S.AnimationBox>
     </>
   );

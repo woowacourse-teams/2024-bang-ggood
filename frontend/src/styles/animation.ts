@@ -26,13 +26,11 @@ export const fadeOut = css`
   `}
 `;
 
-export const moveUpDown = css`
-  ${keyframes`
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  `}
+export const moveUpDown = keyframes`
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 `;

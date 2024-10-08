@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { fadeIn, moveUpDown } from '@/styles/animation';
+import { fadeIn } from '@/styles/animation';
 import { boxShadow, flexCenter, flexColumn } from '@/styles/common';
 
 const S = {
@@ -23,9 +23,9 @@ const S = {
   
     `}
   `,
-  EmptyBox: styled.div<{ height: number }>`
+  EmptyBox: styled.div<{ height: string }>`
     width: 100%;
-    height: ${({ height }) => height}px;
+    height: ${({ height }) => height};
   `,
   Observer: styled.div`
     height: 10px;
@@ -54,70 +54,6 @@ const S = {
     width: fit-content;
     padding: 3px;
     background-color: ${({ theme }) => theme.palette.yellow500};
-  `,
-  /*first */
-  SubtitleText: styled.div`
-    font-size: ${({ theme }) => theme.text.size.large};
-  `,
-  LogoBox: styled.div`
-    width: 100%;
-    align-items: center;
-    height: 370px;
-    padding-top: 80px;
-    gap: 25px;
-    ${flexColumn}
-  `,
-  CheckIconBox: styled.div`
-    position: absolute;
-    top: 15px;
-    right: 78px;
-  `,
-  TextWrapper: styled.div`
-    display: flex;
-    position: relative;
-    width: 280px;
-
-    font-size: 18px;
-    line-height: 1.4;
-    flex-direction: column;
-    align-items: center;
-    justify-content: left;
-  `,
-  ButtonWrapper: styled.div`
-    ${flexCenter}
-    ${flexColumn}
-    width: calc(100% - 4rem);
-    margin: 0 2rem;
-    box-sizing: border-box;
-
-    gap: 1rem;
-  `,
-  GuestLoginButton: styled.button`
-    width: 100%;
-    height: 5rem;
-    border: 3px solid ${({ theme }) => theme.palette.yellow500};
-    box-sizing: border-box;
-
-    font-size: ${({ theme }) => theme.text.size.medium};
-    border-radius: 0.8rem;
-    cursor: pointer;
-  `,
-  SubText: styled.div`
-    font-size: ${({ theme }) => theme.text.size.small};
-  `,
-  MoreBox: styled.div`
-    width: 100%;
-    padding-top: 40px;
-    gap: 10px;
-    ${flexColumn}
-    align-items: center;
-
-    color: ${({ theme }) => theme.palette.grey500};
-  `,
-  MoveUpDownAnimationBox: styled.div`
-    height: 40px;
-
-    animation: ${moveUpDown} 1s infinite;
   `,
   /*second */
   CardList: styled.div`
@@ -187,6 +123,13 @@ const S = {
   IconBox: styled.div`
     position: absolute;
     left: 80px;
+  `,
+  ScreenShot: styled.img`
+    width: 16rem;
+
+    @media (width <= 50rem) {
+      width: 25rem;
+    }
   `,
 };
 

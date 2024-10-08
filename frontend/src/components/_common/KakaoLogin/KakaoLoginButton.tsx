@@ -20,21 +20,28 @@ export default KakaoLoginButton;
 const S = {
   KakaoLoginButton: styled.div`
     width: 100%;
-    height: 5rem;
+    height: 7rem;
     ${flexRow}
     justify-content: space-evenly;
     align-items: center;
     border-radius: 0.8rem;
 
     background-color: ${({ theme }) => theme.palette.kakao};
-
-    font-size: ${({ theme }) => theme.text.size.large};
     cursor: pointer;
+
+    @media (width <= ${({ theme }) => theme.viewport.MOBILE}) {
+      height: 5rem;
+    }
   `,
   Text: styled.div`
     margin: 0.5rem;
 
-    font-size: ${({ theme }) => theme.text.size.medium};
+    font-weight: ${({ theme }) => theme.text.weight.bold};
+    font-size: ${({ theme }) => theme.text.size.xLarge};
     line-height: 1.5;
+
+    @media (width <= ${({ theme }) => theme.viewport.MOBILE}) {
+      font-size: ${({ theme }) => theme.text.size.medium};
+    }
   `,
 };

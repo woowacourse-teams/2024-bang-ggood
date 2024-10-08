@@ -15,6 +15,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "concurrently --names ,[TYPE] --prefix {name} \"jest\" \"tsc --noEmit\"",
+    "e2e": "playwright test",
     "postinstall": "cd .. && husky frontend/.husky",
     "format": "prettier --cache --write .",
     "lint": "eslint --cache .",
@@ -44,6 +45,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^1.6.1",
     "@eslint/js": "^8.6.0",
+    "@playwright/test": "^1.47.2",
     "@sentry/webpack-plugin": "^2.22.4",
     "@storybook/addon-docs": "^8.3.0",
     "@storybook/addon-essentials": "^8.2.4",
@@ -62,6 +64,7 @@
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.0",
     "@types/jest": "^29.5.12",
+    "@types/node": "^22.7.4",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@webpack-cli/generators": "^3.0.7",

@@ -29,12 +29,19 @@ const Button = ({
   Icon,
   ...rest
 }: Props) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (e.key === 'Enter') {
+      onClick();
+    }
+  };
+
   return (
     <S.Button
       size={size}
       color={color}
       isSquare={isSquare}
       onClick={color !== 'disabled' ? onClick : () => {}}
+      onKeyDown={handleKeyDown}
       {...rest}
       disabled={disabled}
       aria-label={label}

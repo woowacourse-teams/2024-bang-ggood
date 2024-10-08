@@ -89,14 +89,22 @@ const Header = Object.assign(HeaderWrapper, {
     const navigate = useNavigate();
     const handleClick = () => navigate(-1);
 
+    const handleKeyDown = (e: React.KeyboardEvent<SVGSVGElement>) => {
+      if (e.key === 'Enter') {
+        handleClick();
+      }
+    };
+
     return (
       <ArrowBack
         style={{
           cursor: 'pointer',
         }}
         onClick={handleClick}
+        onKeyDown={handleKeyDown}
         {...props}
         aria-label="뒤로가기"
+        tabIndex={1}
       />
     );
   },

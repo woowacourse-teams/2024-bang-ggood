@@ -10,7 +10,7 @@ const RealEstate = () => {
 
   return (
     <FormField>
-      <FormField.Label label={'부동산 이름'} required={false} />
+      <FormField.Label label={'부동산 이름'} required={false} htmlFor="realEstate" />
       <FormField.Input
         placeholder=""
         width="full"
@@ -18,6 +18,7 @@ const RealEstate = () => {
         onChange={actions.onChange}
         name={'realEstate'}
         value={realEstate}
+        id="realEstate"
       />
       <FormField.ErrorMessage value={errorMessage} />
     </FormField>

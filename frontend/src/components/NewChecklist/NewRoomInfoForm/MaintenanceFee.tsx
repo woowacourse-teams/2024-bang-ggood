@@ -12,9 +12,16 @@ const MaintenanceFee = () => {
 
   return (
     <FormField>
-      <FormField.Label label="관리비" />
+      <FormField.Label label="관리비" htmlFor="maintenanceFee" />
       <FormStyled.FieldBox>
-        <Input width="medium" placeholder="" onChange={actions.onChange} name="maintenanceFee" value={maintenanceFee} />
+        <Input
+          width="medium"
+          placeholder=""
+          onChange={actions.onChange}
+          name="maintenanceFee"
+          value={maintenanceFee}
+          id="maintenanceFee"
+        />
         <FormStyled.FlexLabel label="만원"></FormStyled.FlexLabel>
       </FormStyled.FieldBox>
       <FormField.ErrorMessage value={errorMessage} />

@@ -21,7 +21,7 @@ const Badge = ({ size = 'short', label, isSelected = false, onClick, name, ...re
   };
 
   return (
-    <S.Button size={size} onClick={handleClick} isSelected={isSelected} name={name} {...rest}>
+    <S.Button size={size} onClick={handleClick} isSelected={isSelected} name={name} aria-pressed={isSelected} {...rest}>
       {label}
     </S.Button>
   );

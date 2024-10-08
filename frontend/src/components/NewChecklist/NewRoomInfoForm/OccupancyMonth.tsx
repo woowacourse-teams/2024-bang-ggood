@@ -18,9 +18,15 @@ const OccupancyMonth = () => {
 
   return (
     <FlexBox.Vertical gap="1.5rem">
-      <FormField.Label label="입주 가능일" />
+      <FormField.Label label="입주 가능일" htmlFor="occupancyMonth" />
       <FormStyled.FieldBox>
-        <FormField.Input width="medium" onChange={actions.onChange} name="occupancyMonth" value={occupancyMonth} />
+        <FormField.Input
+          width="medium"
+          onChange={actions.onChange}
+          name="occupancyMonth"
+          value={occupancyMonth}
+          id="occupancyMonth"
+        />
         <FormStyled.FlexLabel label="월  " />
         <Dropdown
           initialValue={occupancyPeriod}

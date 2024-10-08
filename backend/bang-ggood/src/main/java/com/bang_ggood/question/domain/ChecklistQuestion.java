@@ -56,7 +56,7 @@ public class ChecklistQuestion extends BaseEntity {
         return question.getId();
     }
 
-    public boolean isCategory(Category category) {
+    public boolean isCategory(CategoryEntity category) {
         return question.isCategory(category);
     }
 

@@ -98,15 +98,15 @@ public enum Question {
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.QUESTION_INVALID));
     }
 
-    public static List<ChecklistQuestion> filter(Category category, List<ChecklistQuestion> questions) {
+    public static List<ChecklistQuestion> filter(CategoryEntity category, List<ChecklistQuestion> questions) {
         return questions.stream()
                 .filter(question -> question.isCategory(category) && question.getAnswer() != null)
                 .toList();
     }
 
-    public static List<Question> findQuestionsByCategory(Category category) {
+    public static List<Question> findQuestionsByCategory(CategoryEntity category) {
         return Arrays.stream(values())
-                .filter(question -> question.getCategory().equals(category))
+                .filter(question -> question.getCategory().getName().equals(category.getName())) // TODO 변경필요
                 .toList();
     }
 
@@ -126,8 +126,8 @@ public enum Question {
                 .anyMatch(question -> question.getQuestionId() == this.id);
     }
 
-    public boolean isCategory(Category category) {
-        return this.category == category;
+    public boolean isCategory(CategoryEntity category) {
+        return this.category.getName().equals(category.getName());
     }
 
     public int getId() {

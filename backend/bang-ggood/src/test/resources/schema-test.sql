@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS custom_checklist_question CASCADE;
 DROP TABLE IF EXISTS checklist_like CASCADE;
 DROP TABLE IF EXISTS article CASCADE;
 DROP TABLE IF EXISTS checklist_station CASCADE;
+DROP TABLE IF EXISTS category CASCADE;
 
 -- Create tables
 CREATE TABLE room
@@ -151,4 +152,10 @@ CREATE TABLE checklist_station
     modified_at   TIMESTAMP(6),
     deleted       BOOLEAN,
     FOREIGN KEY (checklist_id) REFERENCES checklist (id)
+);
+
+CREATE TABLE category
+(
+    id    INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name  VARCHAR(255)
 );

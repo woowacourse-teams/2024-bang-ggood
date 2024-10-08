@@ -42,5 +42,4 @@ public class CustomChecklistQuestion extends BaseEntity {
     public Category getCategory() {
         return question.getCategory();
     }
-
 }

@@ -29,7 +29,7 @@ const FourthSection = () => {
         <S.EmptyBox height={10} />
         <S.Observer ref={ref} />
         <S.AnimationBox isIntersecting={isIntersecting}>
-          <img src={customPageScreen} width="200px" alt="" />
+          <img src={customPageScreen} width="200px" alt="질문 선택 화면 스크린샷" />
         </S.AnimationBox>
         <S.Text margin={30}>
           방 구하기 초보라 아무것도 모르겠다면,

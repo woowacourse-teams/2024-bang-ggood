@@ -29,7 +29,7 @@ const FirstSection = () => {
       <S.MoreBox>
         <S.SubText>방끗을 소개할게요!</S.SubText>
         <S.MoveUpDownAnimationBox>
-          <ArrowDownSmall aria-hidden="true" />
+          <ArrowDownSmall aria-label="스크롤로 하단의 정보를 확인할 수 있어요" />
         </S.MoveUpDownAnimationBox>
       </S.MoreBox>
     </>

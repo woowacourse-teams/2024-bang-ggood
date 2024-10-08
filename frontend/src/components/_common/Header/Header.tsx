@@ -81,7 +81,7 @@ const Header = Object.assign(HeaderWrapper, {
   Logo: () => {
     return (
       <Link to={ROUTE_PATH.home}>
-        <BangGgoodTextIcon />
+        <BangGgoodTextIcon aria-label="방끗 로고" />
       </Link>
     );
   },

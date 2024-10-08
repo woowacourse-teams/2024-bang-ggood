@@ -19,7 +19,12 @@ const CounterBox = ({
   totalCount,
 }: Props) => {
   return (
-    <S.Container $color={color} $gap={gap}>
+    <S.Container
+      $color={color}
+      $gap={gap}
+      aria-live="polite"
+      aria-label={`${totalCount}개 중 ${currentCount}개 선택됨`}
+    >
       {hasBracket && <span>(</span>}
       <span>{currentCount}</span>
       <span>/</span>

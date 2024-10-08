@@ -30,7 +30,9 @@ const Checkbox = ({
 
   return (
     <S.Checkbox $color={checkedColor} $hoverColor={hoverColor} onClick={onClick}>
-      <S.FlexBox>{iconType === 'check' ? <CheckIcon /> : <PlusWhite />}</S.FlexBox>
+      <S.FlexBox>
+        {iconType === 'check' ? <CheckIcon aria-hidden="true" /> : <PlusWhite aria-hidden="true" />}
+      </S.FlexBox>
       <S.CheckboxInput type="checkbox" onChange={handleClick} checked={isChecked} />
     </S.Checkbox>
   );

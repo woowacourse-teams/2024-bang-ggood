@@ -50,12 +50,12 @@ const S = {
   Title: styled.div`
     ${title4}
   `,
-  ShowMore: styled.div`
+  ShowMore: styled.button`
     color: ${({ theme }) => theme.palette.grey400};
     font-size: ${({ theme }) => theme.text.size.small};
     cursor: pointer;
   `,
-  CardList: styled.div`
+  CardList: styled.article`
     box-sizing: border-box;
 
     min-width: 100%;

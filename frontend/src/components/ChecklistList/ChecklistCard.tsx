@@ -24,7 +24,7 @@ const ChecklistCard = ({ checklist }: Props) => {
     <S.Container onClick={handleMoveToDetail}>
       <S.Row>
         <S.LocationWrapper>
-          <LocationLineIcon />
+          <LocationLineIcon aria-hidden="true" />
           {formattedUndefined(address, 'string', '주소')}
         </S.LocationWrapper>
         <LikeButton isLiked={isLiked} checklistId={checklistId} />

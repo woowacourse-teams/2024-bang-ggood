@@ -22,25 +22,25 @@ const FooterButton = ({ logo, isActive = false }: Props) => {
     <S.Wrapper>
       {logo === 'home' && (
         <>
-          <Home stroke={stroke} fill={stroke} />
+          <Home stroke={stroke} fill={stroke} aria-label="홈 바로가기" />
           <S.Text isActive={isActive}>홈</S.Text>
         </>
       )}
       {logo === 'checklist' && (
         <>
-          <Checklist stroke={stroke} fill={fill} />
+          <Checklist stroke={stroke} fill={fill} aria-label="체크리스트 바로가기" />
           <S.Text isActive={isActive}>체크리스트</S.Text>
         </>
       )}
       {logo === 'article' && (
         <>
-          <Article stroke={stroke} fill={fill} />
+          <Article stroke={stroke} fill={fill} aria-label="아티클 바로가기" />
           <S.Text isActive={isActive}>아티클</S.Text>
         </>
       )}
       {logo === 'profile' && (
         <>
-          <Profile stroke={stroke} fill={fill} />
+          <Profile stroke={stroke} fill={fill} aria-label="마이페이지 바로가기" />
           <S.Text isActive={isActive}>마이페이지</S.Text>
         </>
       )}

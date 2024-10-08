@@ -19,7 +19,7 @@ const TipBox = ({ tipType }: Props) => {
       <S.TipText>
         💡 <S.Bold>TIP</S.Bold> : {TIP_MESSAGE[tipType]}
       </S.TipText>
-      <CloseIcon onClick={closeTip} style={{ paddingRight: 1 }} />
+      <CloseIcon onClick={closeTip} style={{ paddingRight: 1 }} aria-label="클릭하면 팁박스가 삭제됩니다" />
     </S.TipBox>
   );
 };

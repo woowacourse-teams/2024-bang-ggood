@@ -35,7 +35,9 @@ const FormField = Object.assign(FormFieldWrapper, {
   ),
   Input: ({ ...rest }: GetProps<typeof Input>) => <Input {...rest} />,
   ErrorMessage: ({ value, ...rest }: { value?: string } & HTMLAttributes<HTMLParagraphElement>) => (
-    <S.ErrorMessage {...rest}>{value ?? ''}</S.ErrorMessage>
+    <S.ErrorMessage {...rest} aria-live="polite">
+      {value ?? ''}
+    </S.ErrorMessage>
   ),
   BottomEmptyBox: () => <S.EmptyBox />,
 });

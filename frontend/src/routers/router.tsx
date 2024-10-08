@@ -12,7 +12,7 @@ const MyPage = React.lazy(() => import('@/pages/MyPage'));
 const NewChecklistPage = React.lazy(() => import('@/pages/NewChecklistPage'));
 const EditChecklistPage = React.lazy(() => import('@/pages/EditChecklistPage'));
 const ChecklistDetailPage = React.lazy(() => import('@/pages/ChecklistDetailPage'));
-const ChecklistQuestionSelectPage = React.lazy(() => import('@/pages/ChecklisQuestionSelectPage'));
+const ChecklistQuestionSelectPage = React.lazy(() => import('@/pages/ChecklistQuestionSelectPage'));
 const ArticleDetailPage = React.lazy(() => import('@/pages/ArticleDetailPage'));
 const LandingPage = React.lazy(() => import('@/pages/LandingPage'));
 const NotFound = React.lazy(() => import('@/pages/NotFound'));

@@ -25,7 +25,6 @@ const OptionAllSelectBox = () => {
           color={theme.palette.yellow500}
           hoverColor={theme.palette.yellow600}
         />
-
         <span>전체선택</span>
       </S.TotalSelectBox>
       <CounterBox currentCount={selectedOptions.length} totalCount={OPTION_COUNT} />

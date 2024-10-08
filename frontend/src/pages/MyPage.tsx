@@ -28,7 +28,7 @@ const MyPage = () => {
           <S.Container style={{ width: '100%' }}>
             <S.Profile>
               <S.ProfileIcon>
-                <BangBangIcon width="100" height="100" />
+                <BangBangIcon width="100" height="100" aria-hidden="true" />
               </S.ProfileIcon>
               {`안녕하세요 ${isError ? '게스트' : user?.userName}님`}
             </S.Profile>

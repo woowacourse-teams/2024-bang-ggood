@@ -29,17 +29,25 @@ const Button = ({
   Icon,
   ...rest
 }: Props) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (e.key === 'Enter') {
+      onClick();
+    }
+  };
+
   return (
     <S.Button
       size={size}
       color={color}
       isSquare={isSquare}
       onClick={color !== 'disabled' ? onClick : () => {}}
+      onKeyDown={handleKeyDown}
       {...rest}
       disabled={disabled}
+      aria-label={label}
     >
       <FlexBox.Horizontal>
-        {Icon && <Icon />}
+        {Icon && <Icon aria-hidden="true" />}
         <S.Text size={size}>{label}</S.Text>
       </FlexBox.Horizontal>
     </S.Button>

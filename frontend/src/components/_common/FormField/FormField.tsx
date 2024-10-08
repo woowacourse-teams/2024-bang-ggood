@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { HTMLAttributes } from 'react';
+import { ElementType, HTMLAttributes, LabelHTMLAttributes } from 'react';
 
 import { InputRequiredDot } from '@/assets/assets';
 import Input from '@/components/_common/Input/Input';
@@ -8,9 +8,10 @@ import theme from '@/styles/theme';
 
 type GetProps<T> = T extends React.FC<infer P> ? P : never;
 
-interface LabelProps extends HTMLAttributes<HTMLLabelElement> {
+interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
   label: string;
   required?: boolean;
+  as?: ElementType;
 }
 
 const FormFieldWrapper = styled.div<{ rowGap?: string }>`
@@ -21,13 +22,17 @@ const FormFieldWrapper = styled.div<{ rowGap?: string }>`
 `;
 
 const FormField = Object.assign(FormFieldWrapper, {
-  Label: ({ label, required = false, ...rest }: LabelProps) => (
-    <S.LabelContainer {...rest} style={{ fontSize: theme.text.size.medium, fontWeight: theme.text.weight.bold }}>
-      {label}
-      {required && <S.MovedRequiredDot />}
-    </S.LabelContainer>
+  Label: ({ label, required = false, ...rest }: LabelProps) => {
+    return (
+      <S.LabelContainer {...rest} style={{ fontSize: theme.text.size.medium, fontWeight: theme.text.weight.bold }}>
+        {label}
+        {required && <S.MovedRequiredDot />}
+      </S.LabelContainer>
+    );
+  },
+  TextBox: ({ text, ...rest }: { text: string } & HTMLAttributes<HTMLDivElement>) => (
+    <S.TextBox {...rest}>{text}</S.TextBox>
   ),
-  TextBox: ({ text }: { text: string }) => <S.TextBox>{text}</S.TextBox>,
   Input: ({ ...rest }: GetProps<typeof Input>) => <Input {...rest} />,
   ErrorMessage: ({ value, ...rest }: { value?: string } & HTMLAttributes<HTMLParagraphElement>) => (
     <S.ErrorMessage {...rest} aria-live="polite">

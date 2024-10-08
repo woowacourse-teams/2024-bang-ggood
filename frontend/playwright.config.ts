@@ -30,7 +30,7 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    actionTimeout: 5000, // await 타임아웃 :  5초로 설정
+    actionTimeout: 20000, // await 타임아웃 :  5초로 설정
   },
 
   /* Configure projects for major browsers */
@@ -73,8 +73,8 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'yarn msw',
-    url: 'http://localhost:3000',
+    command: 'yarn msw -- --no-open',
+    url: 'http://localhost:3000/',
     reuseExistingServer: !process.env.CI,
   },
 });

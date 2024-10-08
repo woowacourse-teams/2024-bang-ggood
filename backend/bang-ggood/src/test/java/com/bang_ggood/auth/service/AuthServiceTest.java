@@ -177,7 +177,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         AuthTokenResponse tokenResponse = authService.login(OAUTH_LOGIN_REQUEST);
 
         // when & then
-        assertThatCode(() -> authService.reIssueAccessToken(tokenResponse.refreshToken()))
+        assertThatCode(() -> authService.reissueAccessToken(tokenResponse.refreshToken()))
                 .doesNotThrowAnyException();
 
     }

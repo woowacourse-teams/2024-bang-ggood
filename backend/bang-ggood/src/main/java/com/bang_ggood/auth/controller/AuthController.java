@@ -62,11 +62,11 @@ public class AuthController {
     }
 
     @PostMapping("/accessToken/reissue")
-    public ResponseEntity<Void> reIssueAccessToken(HttpServletRequest httpServletRequest) {
+    public ResponseEntity<Void> reissueAccessToken(HttpServletRequest httpServletRequest) {
         cookieResolver.checkLoginRequired(httpServletRequest);
 
         String refreshToken = cookieResolver.extractRefreshToken(httpServletRequest);
-        String accessToken = authService.reIssueAccessToken(refreshToken);
+        String accessToken = authService.reissueAccessToken(refreshToken);
 
         ResponseCookie accessTokenCookie = cookieProvider.createAccessTokenCookie(accessToken);
         return ResponseEntity.ok()

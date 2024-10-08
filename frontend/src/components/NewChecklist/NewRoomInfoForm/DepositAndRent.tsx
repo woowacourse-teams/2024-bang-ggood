@@ -17,9 +17,22 @@ const DepositAndRent = () => {
     <FormField>
       <FormField.Label label="보증금 / 월세 (만원)" />
       <FormStyled.FieldBox>
-        <FormField.Input width="medium" onChange={actions.onChange} name="deposit" value={deposit} />
+        <FormField.Input
+          width="medium"
+          onChange={actions.onChange}
+          name="deposit"
+          value={deposit}
+          aria-label="보증금"
+        />
         <FormStyled.FlexLabel label=" / " />
-        <FormField.Input width="medium" placeholder="" onChange={actions.onChange} name="rent" value={rent} />
+        <FormField.Input
+          width="medium"
+          placeholder=""
+          onChange={actions.onChange}
+          name="rent"
+          value={rent}
+          aria-label="월세"
+        />
       </FormStyled.FieldBox>
       <FormField.ErrorMessage value={errorMessage} />
     </FormField>

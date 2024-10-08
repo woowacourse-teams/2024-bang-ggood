@@ -21,17 +21,18 @@ const RoomStructure = () => {
 
   return (
     <FlexBox.Vertical>
-      <FormField.Label label="방 구조" />
+      <FormField.Label as="legend" label="방 구조" />
       <FormStyled.OptionButtonContainer flexWrap="wrap">
         {roomStructures.map(structure => (
-          <Badge
-            key={structure}
-            label={structure}
-            name={structure}
-            size="button"
-            isSelected={structure === roomStructure}
-            onClick={() => handleClickTagButton(structure)}
-          />
+          <label key={structure}>
+            <Badge
+              label={structure}
+              name={structure}
+              size="button"
+              isSelected={structure === roomStructure}
+              onClick={() => handleClickTagButton(structure)}
+            />
+          </label>
         ))}
       </FormStyled.OptionButtonContainer>
       <FormField.BottomEmptyBox />

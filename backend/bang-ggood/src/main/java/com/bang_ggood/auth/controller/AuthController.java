@@ -74,7 +74,7 @@ public class AuthController {
                 .build();
     }
 
-    @GetMapping("/refreshToken/check")
+    @GetMapping("/refreshToken-check")
     public ResponseEntity<RefreshTokenCheckResponse> check(HttpServletRequest httpServletRequest) {
         boolean isRefreshTokenExist = !cookieResolver.isRefreshTokenEmpty(httpServletRequest);
 

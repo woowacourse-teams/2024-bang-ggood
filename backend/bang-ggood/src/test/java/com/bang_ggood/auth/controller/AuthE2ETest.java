@@ -64,7 +64,7 @@ class AuthE2ETest extends AcceptanceTest {
     void checkRefreshToken_returnFalse() {
         RefreshTokenCheckResponse refreshTokenCheckResponse = RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .when().get("/refreshToken/check")
+                .when().get("/refreshToken-check")
                 .then().log().all()
                 .statusCode(200)
                 .extract()
@@ -79,7 +79,7 @@ class AuthE2ETest extends AcceptanceTest {
         RefreshTokenCheckResponse refreshTokenCheckResponse = RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .headers(this.headers)
-                .when().get("/refreshToken/check")
+                .when().get("/refreshToken-check")
                 .then().log().all()
                 .statusCode(200)
                 .extract()

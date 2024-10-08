@@ -1,13 +1,18 @@
 name: Playwright Tests
 on:
   pull_request:
-    branches: [dev, dev-fe]
+    branches: [main, dev-fe]
+    paths:
+      - "frontend/**"
+  push:
+    branches: [main, dev-fe]
     paths:
       - "frontend/**"
 jobs:
   test:
     timeout-minutes: 10
     runs-on: ubuntu-latest
+    environment: frontend-msw
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

@@ -11,7 +11,7 @@ const CustomBanner = ({ onClick }: Props) => {
   return (
     <S.Banner onClick={onClick}>
       <S.Wrapper>
-        <PencilIcon width={30} height={30} />
+        <PencilIcon width={30} height={30} aria-hidden="true" />
         <S.Title>체크리스트 질문</S.Title>
       </S.Wrapper>
       <S.Button>편집하기</S.Button>
@@ -46,7 +46,7 @@ const S = {
   Title: styled.span`
     ${flexCenter}
   `,
-  Button: styled.div`
+  Button: styled.button`
     padding: 0.4rem 0.8rem;
 
     background-color: ${({ theme }) => theme.palette.green500};

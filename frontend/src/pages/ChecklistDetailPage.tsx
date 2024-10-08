@@ -104,19 +104,17 @@ const ChecklistDetailPage = () => {
         <MemoSection memo={checklist?.room?.memo} />
       </Layout>
 
-      {isModalOpen && (
-        <AlertModal
-          title={
-            <div>
-              정말 <S.AccentText>체크리스트</S.AccentText>를 삭제하시겠습니까?
-            </div>
-          }
-          subtitle="삭제한 체크리스트는 다시 확인할 수 없습니다."
-          isOpen={isModalOpen}
-          onClose={closeModal}
-          handleApprove={handleDelete}
-        />
-      )}
+      <AlertModal
+        title={
+          <div>
+            정말 <S.AccentText>체크리스트</S.AccentText>를 삭제하시겠습니까?
+          </div>
+        }
+        subtitle="삭제한 체크리스트는 다시 확인할 수 없습니다."
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        handleApprove={handleDelete}
+      />
     </>
   );
 };

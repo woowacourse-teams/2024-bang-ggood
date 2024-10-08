@@ -13,7 +13,7 @@ const FifthSection = () => {
             시작해 볼까요?
           </S.Text>
           <S.IconBox>
-            <LampIcon width={80} />
+            <LampIcon width={80} aria-hidden="true" />
           </S.IconBox>
           <S.EmptyBox height={20} />
           <S.CenterBox>

@@ -62,9 +62,9 @@ const ThirdSection = () => {
         <S.Observer ref={ref2} />
         <S.AnimationBox isIntersecting={isIntersecting2}>
           <S.ChecklistImgBox>
-            <img src={checkingPageScreen} />
+            <img src={checkingPageScreen} alt="체크리스트 작성 화면 스크린샷" />
             <S.PencilIconBox>
-              <PencilIcon width={70} height={90} />
+              <PencilIcon width={70} height={90} aria-hidden="true" />
             </S.PencilIconBox>
           </S.ChecklistImgBox>
         </S.AnimationBox>

@@ -26,7 +26,7 @@ const ChecklistPreviewCard = ({ index, checklist }: Props) => {
 
   return (
     <S.Container onClick={handleClick}>
-      <HomeCircle color={color500} bgColor={color200} />
+      <HomeCircle color={color500} bgColor={color200} aria-hidden="true" />
       <S.Column>
         <S.Label>
           {formattedUndefined(station)}역 · {formattedUndefined(walkingTime)}분

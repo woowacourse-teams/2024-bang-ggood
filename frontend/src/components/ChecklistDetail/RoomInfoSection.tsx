@@ -70,18 +70,18 @@ const RoomInfoSection = ({ nearSubways, room, options, checklistId, isLiked }: P
       </S.GreenWrapper>
       <S.GapBox>
         <S.Row>
-          <Room aria-hidden="true" />
+          <Room aria-label="방 구조" />
           {formattedUndefined(structure, 'string', '방 구조')} / {formattedUndefined(size)} 평
         </S.Row>
         <S.Row>
-          <Stairs aria-hidden="true" />
+          <Stairs aria-label="방 종류" />
           {floorLevel === '지상'
             ? `${formattedUndefined(floor)}층`
             : formattedUndefined(floorLevel, 'string', '방 종류')}
         </S.Row>
       </S.GapBox>
       <S.Row>
-        <Utils aria-hidden="true" /> 관리비 포함 항목 :
+        <Utils aria-label="관리비 포함 항목" /> 관리비 포함 항목 :
         {includedMaintenances
           ?.map(id => IncludedMaintenancesData.find(item => item.id === id)?.displayName)
           .filter(Boolean)
@@ -89,36 +89,36 @@ const RoomInfoSection = ({ nearSubways, room, options, checklistId, isLiked }: P
         {!includedMaintenances?.length && formattedUndefined(includedMaintenances?.length, 'string', '')}
       </S.Row>
       <S.Row>
-        <Calendar aria-hidden="true" />
+        <Calendar aria-label="계약 월수 / 입주 가능일" />
         {formattedUndefined(contractTerm)}개월 계약 <br />
         입주 가능일 : {formattedUndefined(occupancyMonth)}월 {occupancyPeriod}
       </S.Row>
       <S.Row>
-        <Subway aria-hidden="true" />
+        <Subway aria-label="가까운 지하철" />
         <SubwayStations stations={nearSubways} />
       </S.Row>
       <S.GapBox>
         <S.Row>
-          <Building aria-hidden="true" />
+          <Building aria-label="부동산" />
           {formattedUndefined(realEstate, 'string', '부동산')}
         </S.Row>
         <S.Row>
-          <Pencil aria-hidden="true" />
+          <Pencil aria-label="작성 일자" />
           {formattedDate(createdAt ?? '', '.')}
         </S.Row>
       </S.GapBox>
       <S.Row>
-        <Options aria-hidden="true" />
+        <Options aria-label="옵션" />
         {options.length
           ? options.map(option => option.optionName).join(', ')
           : formattedUndefined(options.length, 'string', '옵션')}
       </S.Row>
       <S.Row>
-        <Summary aria-hidden="true" />
+        <Summary aria-label="한줄평" />
         {formattedUndefined(summary, 'string', '한줄평')}
       </S.Row>
       <S.Row>
-        <LocationLineIcon height={20} width={20} aria-hidden="true" />
+        <LocationLineIcon height={20} width={20} aria-label="주소" />
         {formattedUndefined(address, 'string', '주소')} <br /> {buildingName}
       </S.Row>
       <AddressMap location={address ?? ''} />

@@ -9,4 +9,5 @@ module.exports = {
     '\\.svg': '<rootDir>/src/mocks/svg.ts',
   },
   testEnvironment: 'jest-environment-jsdom',
+  testPathIgnorePatterns: ['\\.spec\\.ts$'],
 };

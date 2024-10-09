@@ -51,6 +51,7 @@ import mainPageScreen from '@/assets/images/mainPageScreen.webp';
 // toast
 import ToastConfirm from '@/assets/icons/toast/toast-confirm.svg';
 import ToastError from '@/assets/icons/toast/toast-error.svg';
+import ToastInfo from '@/assets/icons/toast/toast-info.svg';
 
 export {
   ArrowBack,
@@ -85,6 +86,7 @@ export {
   Summary,
   ToastConfirm,
   ToastError,
+  ToastInfo,
   Utils,
   checkingPageScreen,
   customPageScreen,

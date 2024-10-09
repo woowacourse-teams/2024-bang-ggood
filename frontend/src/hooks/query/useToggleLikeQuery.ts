@@ -13,7 +13,7 @@ const useToggleLikeQuery = () => {
 
   return useMutation({
     mutationFn: async ({ checklistId, isLiked }: { checklistId: number; isLiked: boolean }) => {
-      isLiked ? postLike(checklistId) : deleteLike(checklistId);
+      isLiked ? await postLike(checklistId) : await deleteLike(checklistId);
     },
     retry: 3,
     onSuccess: () => {
@@ -21,7 +21,7 @@ const useToggleLikeQuery = () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CHECKLIST] });
     },
     onError: () => {
-      showToast({ message: TOAST_MESSAGE.LIKE_ERROR });
+      showToast({ message: TOAST_MESSAGE.LIKE_ERROR, type: 'error' });
       invalidateChecklistListQuery();
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CHECKLIST] });
     },

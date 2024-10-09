@@ -20,5 +20,5 @@ export const TOAST_MESSAGE: Record<ToastType, string> = {
   CUSTOM: '편집을 완료했어요! ',
   MIN_CUSTOM_SELECT: `질문은 최소 ${MIN_SELECT_CUSTOM_COUNT}개 이상 선택해야해요!`,
   MAX_SELECT: `카테고리는 최대 ${MAX_SELECT_CATEGORY_COUNT}개까지만 선택할 수 있어요.`,
-  LIKE_ERROR: '좋아요를 처리하는 중 문제가 발생했습니다. 나중에 다시 시도해주세요.',
+  LIKE_ERROR: '좋아요 처리 중 문제가 발생했습니다. \n나중에 다시 시도해주세요.',
 };

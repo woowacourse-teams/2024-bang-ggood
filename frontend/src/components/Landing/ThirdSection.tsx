@@ -111,13 +111,13 @@ const S = {
     ${flexCenter};
     position: relative;
 
-    width: 300px;
+    width: 250px;
 
     background-color: ${({ theme }) => theme.palette.background};
     border-radius: 10px;
 
     ${boxShadow};
-    @media (width <= ${({ theme }) => theme.viewport.MOBILE}px) {
+    @media (height <= ${({ theme }) => theme.viewport.MOBILE}px) {
       display: none;
       transform: none;
       transform-origin: center;

@@ -76,15 +76,6 @@ const S = {
 
     color: ${({ theme }) => theme.palette.black};
   `,
-  LastSection: styled.section<{ color: string }>`
-    ${flexColumn}
-    width: 100%;
-    height: 30rem;
-
-    background-color: ${({ color }) => color};
-
-    color: ${({ theme }) => theme.palette.black};
-  `,
   Container: styled.main`
     background-color: ${({ theme }) => theme.palette.background};
     ${flexColumn};

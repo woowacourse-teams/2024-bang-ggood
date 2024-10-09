@@ -81,16 +81,10 @@ const S = {
     }
   `,
   Button: styled(Button)`
-    height: 7rem;
+    height: 5rem;
 
-    font-size: ${({ theme }) => theme.text.size.large};
+    font-size: ${({ theme }) => theme.text.size.medium};
     border-radius: 1rem;
-
-    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
-      height: 5rem;
-
-      font-size: ${({ theme }) => theme.text.size.medium};
-    }
   `,
   LogoBox: styled.div`
     width: 100%;
@@ -137,10 +131,6 @@ const S = {
   `,
   SubText: styled.div`
     font-size: ${({ theme }) => theme.text.size.medium};
-
-    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
-      font-size: ${({ theme }) => theme.text.size.small};
-    }
   `,
   MoreBox: styled.div`
     width: 100%;

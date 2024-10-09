@@ -20,7 +20,7 @@ export default KakaoLoginButton;
 const S = {
   KakaoLoginButton: styled.div`
     width: 100%;
-    height: 7rem;
+    height: 5rem;
     ${flexRow}
     gap: 0.5rem;
     justify-content: center;
@@ -29,20 +29,12 @@ const S = {
 
     background-color: ${({ theme }) => theme.palette.kakao};
     cursor: pointer;
-
-    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
-      height: 5rem;
-    }
   `,
   Text: styled.div`
     margin: 0.5rem;
 
     font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: ${({ theme }) => theme.text.size.large};
+    font-size: ${({ theme }) => theme.text.size.medium};
     line-height: 1.5;
-
-    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
-      font-size: ${({ theme }) => theme.text.size.medium};
-    }
   `,
 };

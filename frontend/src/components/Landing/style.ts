@@ -68,7 +68,7 @@ const CS = {
 
   PencilIconBox: styled.div`
     position: absolute;
-    left: 280px;
+    right: -2rem;
     transform: scaleX(-1);
   `,
   LampIconBox: styled.div`

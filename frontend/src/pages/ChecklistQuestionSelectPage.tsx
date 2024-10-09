@@ -28,13 +28,13 @@ const ChecklistQuestionSelectPage = () => {
 
   const handleSubmitChecklist = () => {
     if (!selectedQuestions.length) {
-      showToast(TOAST_MESSAGE.MIN_CUSTOM_SELECT);
+      showToast({ message: TOAST_MESSAGE.MIN_CUSTOM_SELECT });
       return;
     }
 
     putCustomChecklist(selectedQuestions, {
       onSuccess: () => {
-        showToast(TOAST_MESSAGE.CUSTOM);
+        showToast({ message: TOAST_MESSAGE.CUSTOM });
         navigate(ROUTE_PATH.checklistList);
       },
     });

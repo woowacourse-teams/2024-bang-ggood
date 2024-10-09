@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { deleteLike, postLike } from '@/apis/like';
+import { TOAST_MESSAGE } from '@/constants/message';
 import { QUERY_KEYS } from '@/constants/queryKeys';
 import useRefetchGetChecklistList from '@/hooks/query/useRefetchGetChecklistList';
 import useToast from '@/hooks/useToast';
@@ -20,7 +21,7 @@ const useToggleLikeQuery = () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CHECKLIST] });
     },
     onError: () => {
-      showToast('좋아요를 처리하는 중 문제가 발생했습니다. 나중에 다시 시도해주세요.');
+      showToast({ message: TOAST_MESSAGE.LIKE_ERROR });
       invalidateChecklistListQuery();
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CHECKLIST] });
     },

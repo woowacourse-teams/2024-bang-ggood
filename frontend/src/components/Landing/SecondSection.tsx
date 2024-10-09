@@ -32,7 +32,7 @@ const SecondSection = () => {
       </S.TextBox>
       <S.Observer ref={ref} />
       <S.AnimationBox isIntersecting={isIntersecting}>
-        <img src={mainPageScreen} width="200px" alt="" />
+        <img src={mainPageScreen} width="200px" alt="메인 홈 화면 스크린샷" />
       </S.AnimationBox>
     </>
   );

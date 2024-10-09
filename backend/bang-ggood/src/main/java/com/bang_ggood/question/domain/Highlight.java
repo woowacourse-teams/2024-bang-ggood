@@ -1,10 +1,11 @@
 package com.bang_ggood.question.domain;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,17 +15,20 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-@Table(name = "category") //TODO 변경필요
 @Entity
-public class CategoryEntity {
+public class Highlight {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private QuestionEntity question;
+
     private String name;
 
-    public CategoryEntity(String name) {
+    public Highlight(QuestionEntity question, String name) {
+        this.question = question;
         this.name = name;
     }
 
@@ -36,8 +40,8 @@ public class CategoryEntity {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        CategoryEntity that = (CategoryEntity) o;
-        return Objects.equals(id, that.id);
+        Highlight highlight = (Highlight) o;
+        return Objects.equals(id, highlight.id);
     }
 
     @Override

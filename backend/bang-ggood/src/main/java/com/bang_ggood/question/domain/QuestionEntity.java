@@ -1,9 +1,11 @@
 package com.bang_ggood.question.domain;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,18 +16,28 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-@Table(name = "category") //TODO 변경필요
+@Table(name = "question") //TODO 변경필요
 @Entity
-public class CategoryEntity {
+public class QuestionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private CategoryEntity category;
 
-    public CategoryEntity(String name) {
-        this.name = name;
+    private String title;
+
+    private String subtitle;
+
+    private boolean isDefault;
+
+    public QuestionEntity(CategoryEntity category, String title, String subtitle, boolean isDefault) {
+        this.category = category;
+        this.title = title;
+        this.subtitle = subtitle;
+        this.isDefault = isDefault;
     }
 
     @Override
@@ -36,7 +48,7 @@ public class CategoryEntity {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        CategoryEntity that = (CategoryEntity) o;
+        QuestionEntity that = (QuestionEntity) o;
         return Objects.equals(id, that.id);
     }
 

@@ -16,7 +16,7 @@ const FifthSection = () => {
           <S.IconBox>
             <LampIcon width={80} />
           </S.IconBox>
-          <S.EmptyBox height={'2rem'} />
+          <S.EmptyBox height="2rem" />
           <S.CenterBox>
             <TopButton text={'시작하기!'} />
           </S.CenterBox>

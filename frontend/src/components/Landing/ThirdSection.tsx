@@ -19,7 +19,7 @@ const ThirdSection = () => {
 
   return (
     <CS.Container>
-      <CS.EmptyBox height="3rem" />
+      <CS.EmptyBox height="2rem" />
       <CS.TextBox>
         <CS.Text>
           방 구할 때 어디를 봐야 할지 <br />더 이상 고민하지 마세요!
@@ -32,7 +32,7 @@ const ThirdSection = () => {
           <br /> 모아놨어요.
         </CS.Text>
         <CS.Observer ref={ref} />
-        <CS.EmptyBox height="3rem" mobileHeight="0rem" />
+        <CS.EmptyBox height="2rem" mobileHeight="0rem" />
         <S.CardList>
           <CS.AnimationBox isIntersecting={isIntersecting}>
             <S.Card>
@@ -59,11 +59,9 @@ const ThirdSection = () => {
             </S.Card>
           </CS.AnimationBox>
         </S.CardList>
-        <CS.EmptyBox height="2rem" mobileHeight="0rem" />
         <CS.Text margin={25}>
-          짧은 시간동안 <CS.Bold>O X</CS.Bold> 로 <CS.Highlight>빠르게 체크해요!</CS.Highlight>
+          짧은 시간동안 <CS.Bold>O X</CS.Bold> 로<br /> <CS.Highlight>빠르게 체크해요!</CS.Highlight>
         </CS.Text>
-        <CS.EmptyBox height="1rem" mobileHeight="0rem" />
         <CS.Observer ref={ref2} />
         <CS.AnimationBox isIntersecting={isIntersecting2}>
           <S.ChecklistImgBox>
@@ -87,6 +85,13 @@ const S = {
     align-items: center;
 
     @media (width <= ${({ theme }) => theme.viewport.MOBILE}px) {
+      transform: none;
+      transform-origin: center;
+      width: 100%;
+      margin-top: 0;
+    }
+
+    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
       transform: none;
       transform-origin: center;
       width: 100%;
@@ -116,6 +121,12 @@ const S = {
       transform: none;
       transform-origin: center;
     }
+
+    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
+      display: none;
+      transform: none;
+      transform-origin: center;
+    }
   `,
   Card: styled.div`
     width: 300px;
@@ -132,6 +143,13 @@ const S = {
     border-radius: 8px;
 
     ${boxShadow}
+
+    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
+      padding: 6px 12px;
+
+      transform: none;
+      transform-origin: center;
+    }
   `,
   Keyword: styled.span<{ color?: string }>`
     align-self: flex-start;

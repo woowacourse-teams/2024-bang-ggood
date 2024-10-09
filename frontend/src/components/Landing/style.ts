@@ -86,8 +86,8 @@ const CS = {
   `,
   ScreenShot: styled.img`
     width: 250px;
-    @media (height <= ${({ theme }) => theme.viewport.MOBILE}px) {
-      width: 22rem;
+    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
+      width: 180px;
     }
   `,
 };

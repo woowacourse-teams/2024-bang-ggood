@@ -136,9 +136,9 @@ const S = {
     cursor: pointer;
   `,
   SubText: styled.div`
-    font-size: ${({ theme }) => theme.text.size.large};
+    font-size: ${({ theme }) => theme.text.size.medium};
 
-    @media (width <= ${({ theme }) => theme.viewport.MOBILE}px) {
+    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
       font-size: ${({ theme }) => theme.text.size.small};
     }
   `,

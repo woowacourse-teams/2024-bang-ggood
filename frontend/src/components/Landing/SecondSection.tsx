@@ -13,7 +13,7 @@ const SecondSection = () => {
   return (
     <>
       <CS.TextBox>
-        <CS.EmptyBox height={'8rem'} mobileHeight={'1rem'} />
+        <CS.EmptyBox height={'1rem'} />
         <CS.Text>
           방끗은 방 구할 때 기록하는
           <br />
@@ -30,7 +30,7 @@ const SecondSection = () => {
           <br /> 도와주기 위해 태어났어요.
         </CS.Text>
       </CS.TextBox>
-      <CS.EmptyBox mobileHeight={'3rem'} height={'2rem'} />
+      <CS.EmptyBox height={'2rem'} />
       <CS.Observer ref={ref} />
       <CS.AnimationBox isIntersecting={isIntersecting}>
         <CS.ScreenShot src={mainPageScreen} />

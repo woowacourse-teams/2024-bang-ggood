@@ -29,7 +29,7 @@ const ChecklistQuestionSelectPage = () => {
 
   const handleSubmitChecklist = () => {
     if (!selectedQuestions.length) {
-      showToast({ message: TOAST_MESSAGE.MIN_CUSTOM_SELECT });
+      showToast({ message: TOAST_MESSAGE.MIN_CUSTOM_SELECT, type: 'info' });
       return;
     }
 

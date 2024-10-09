@@ -23,6 +23,9 @@ public enum ExceptionCode {
     GUEST_USER_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "게스트 유저가 존재하지 않습니다."),
     GUEST_USER_UNEXPECTED_EXIST(HttpStatus.INTERNAL_SERVER_ERROR, "예상치 못한 게스트 유저가 존재합니다. 데이터베이스를 확인해주세요."),
 
+    //Email
+    EMAIL_INVALID_FORMAT(HttpStatus.BAD_REQUEST, "유효하지 않은 이메일 형식입니다."),
+
     //Password
     PASSWORD_INVALID_FORMAT(HttpStatus.BAD_REQUEST, "유효하지 않은 비밀번호 형식입니다."),
 

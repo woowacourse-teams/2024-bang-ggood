@@ -11,25 +11,25 @@ import java.util.regex.Pattern;
 
 import static lombok.AccessLevel.PROTECTED;
 
-@Getter
 @Embeddable
+@Getter
 @NoArgsConstructor(access = PROTECTED)
-public class Password {
+public class Email {
 
-    private static final Pattern PASSWORD_PATTERN =
-            Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$");
+    private static final Pattern EMAIL_PATTERN =
+            Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
 
-    @Column(name = "password")
+    @Column(name = "email")
     private String value;
 
-    public Password(String value) {
-        validatePassword(value);
+    public Email(String value) {
+        validateEmail(value);
         this.value = value;
     }
 
-    public void validatePassword(String password) {
-        if (!PASSWORD_PATTERN.matcher(password).matches()) {
-            throw new BangggoodException(ExceptionCode.PASSWORD_INVALID_FORMAT);
+    public void validateEmail(String email) {
+        if(!EMAIL_PATTERN.matcher(email).matches()) {
+            throw new BangggoodException(ExceptionCode.EMAIL_INVALID_FORMAT);
         }
     }
 
@@ -41,8 +41,8 @@ public class Password {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Password password1 = (Password) o;
-        return Objects.equals(value, password1.value);
+        Email email = (Email) o;
+        return Objects.equals(value, email.value);
     }
 
     @Override

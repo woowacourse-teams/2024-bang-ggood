@@ -81,7 +81,7 @@ const Header = Object.assign(HeaderWrapper, {
   Logo: () => {
     return (
       <Link to={ROUTE_PATH.home}>
-        <BangGgoodTextIcon />
+        <BangGgoodTextIcon aria-label="방끗 로고" />
       </Link>
     );
   },
@@ -89,13 +89,22 @@ const Header = Object.assign(HeaderWrapper, {
     const navigate = useNavigate();
     const handleClick = () => navigate(-1);
 
+    const handleKeyDown = (e: React.KeyboardEvent<SVGSVGElement>) => {
+      if (e.key === 'Enter') {
+        handleClick();
+      }
+    };
+
     return (
       <ArrowBack
         style={{
           cursor: 'pointer',
         }}
         onClick={handleClick}
+        onKeyDown={handleKeyDown}
         {...props}
+        aria-label="뒤로가기"
+        tabIndex={1}
       />
     );
   },

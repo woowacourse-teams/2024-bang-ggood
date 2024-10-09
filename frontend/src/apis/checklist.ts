@@ -1,6 +1,6 @@
 import fetcher from '@/apis/fetcher';
 import { BASE_URL, ENDPOINT } from '@/apis/url';
-import { ChecklistCustom, ChecklistInfo, ChecklistPostForm } from '@/types/checklist';
+import { ChecklistInfo, ChecklistPostForm, ChecklistSelectedQuestions } from '@/types/checklist';
 import { mapObjNullToUndefined, mapObjUndefinedToNull } from '@/utils/typeFunctions';
 
 export const getChecklistQuestions = async () => {
@@ -46,7 +46,7 @@ export const deleteChecklist = async (id: number) => {
   return response;
 };
 
-export const putCustomChecklist = async (questionIds: ChecklistCustom) => {
+export const putCustomChecklist = async (questionIds: ChecklistSelectedQuestions) => {
   const response = await fetcher.put({ url: BASE_URL + ENDPOINT.CHECKLIST_CUSTOM, body: questionIds });
 
   return response;

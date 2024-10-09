@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import CounterBox from '@/components/_common/CounterBox/CounterBox';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
-import QuestionCardList from '@/components/ChecklistCustom/QuestionCardList/QuestionCardList';
+import QuestionCardList from '@/components/ChecklistQuestionSelect/QuestionCardList/QuestionCardList';
 import useChecklistQuestionSelectStore from '@/store/useChecklistQuestionSelectStore';
 
 const QuestionListTemplate = () => {

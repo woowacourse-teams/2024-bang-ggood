@@ -12,13 +12,13 @@ const Address = () => {
 
   return (
     <FormField>
-      <FormField.Label label="주소" />
+      <FormField.Label label="주소" htmlFor="address" />
       {address ? (
-        <FormField.TextBox text={`${address} ${buildingName}`} />
+        <FormField.TextBox text={`${address} ${buildingName}`} id="address" />
       ) : (
-        <FormField.TextBox text={'주소를 추가해 주세요.'} />
+        <FormField.TextBox text={'주소를 추가해 주세요.'} id="address" />
       )}
-      <FlexBox.Horizontal style={{ marginTop: '20px' }}>
+      <FlexBox.Horizontal style={{ marginTop: '2rem' }}>
         {/*실시간 위치 모달*/}
         <RealTimeAddressModal />
         {/*주소 찾기 모달*/}

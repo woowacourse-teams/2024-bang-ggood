@@ -62,7 +62,7 @@ export interface ChecklistInfo {
   categories: ChecklistCategoryWithAnswer[];
 }
 
-export interface ChecklistCustom {
+export interface ChecklistSelectedQuestions {
   questionIds: number[];
 }
 

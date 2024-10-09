@@ -3,7 +3,7 @@ import '@/styles/category-sprite-image.css';
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { flexCenter } from '@/styles/common';
+import { flexCenter, title3 } from '@/styles/common';
 
 interface Props {
   id: number;
@@ -40,6 +40,7 @@ const S = {
       active ? `.3rem solid ${theme.palette.yellow400}` : `.3rem solid ${theme.palette.yellow100}`};
   `,
   TextBox: styled.div`
+    ${title3}
     display: flex;
     align-items: center;
     gap: 0.5rem;

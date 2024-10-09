@@ -24,11 +24,16 @@ const ArticlePreviewCard = ({ index, article }: Props) => {
   };
 
   return (
-    <S.Container bgColor={color500} hoverColor={color600} onClick={handleClickArticle}>
+    <S.Container
+      bgColor={color500}
+      hoverColor={color600}
+      onClick={handleClickArticle}
+      aria-label="클릭하면 해당 아티클 페이지로 이동합니다"
+    >
       <S.Keyword bgColor={color600}>{keyword}</S.Keyword>
       <S.Title>{title}</S.Title>
       <S.ArrowButton>
-        <ArrowRight stroke={color600} />
+        <ArrowRight stroke={color600} aria-hidden="true" />
       </S.ArrowButton>
     </S.Container>
   );

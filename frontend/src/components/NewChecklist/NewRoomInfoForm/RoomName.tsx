@@ -14,8 +14,8 @@ const RoomName = () => {
 
   return (
     <FormField>
-      <FormField.Label label="방 이름" required={true} />
-      <FormField.Input placeholder="" onChange={actions.onChange} name="roomName" value={roomName} />
+      <FormField.Label label="방 이름" htmlFor="roomName" required={true} />
+      <FormField.Input placeholder="" onChange={actions.onChange} name="roomName" id="roomName" value={roomName} />
       <FormField.ErrorMessage value={errorMessage} />
     </FormField>
   );

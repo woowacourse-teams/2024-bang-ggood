@@ -37,7 +37,6 @@ const S = {
     flex-direction: row;
     align-items: center;
     box-sizing: border-box;
-    border-bottom: 0.1rem solid ${({ theme }) => theme.palette.grey200};
   `,
   Title: styled.div`
     display: flex;

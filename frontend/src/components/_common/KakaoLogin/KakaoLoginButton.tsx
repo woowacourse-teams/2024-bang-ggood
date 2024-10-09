@@ -9,7 +9,7 @@ const KakaoLoginButton = () => {
 
   return (
     <S.KakaoLoginButton onClick={moveToKakao}>
-      <KakaoLogo />
+      <KakaoLogo aria-hidden="true" />
       <S.Text>카카오톡으로 시작하기</S.Text>
     </S.KakaoLoginButton>
   );
@@ -22,7 +22,8 @@ const S = {
     width: 100%;
     height: 7rem;
     ${flexRow}
-    justify-content: space-evenly;
+    gap: 0.5rem;
+    justify-content: center;
     align-items: center;
     border-radius: 0.8rem;
 

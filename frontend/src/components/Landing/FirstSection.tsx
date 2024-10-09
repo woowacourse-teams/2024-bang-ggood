@@ -34,16 +34,16 @@ const FirstSection = () => {
           <S.BangGgoodTextIcon />
         </S.LogoBox>
       </S.LogoTextBox>
-      <CS.EmptyBox mobileHeight="2rem" height="0" />
+      <CS.EmptyBox mobileHeight="2rem" height="4rem" />
       <S.ButtonWrapper>
         <KakaoLoginButton />
         <S.Button label="방끗 둘러보기" size="full" isSquare onClick={() => navigate(ROUTE_PATH.home)} />
       </S.ButtonWrapper>
       <CS.EmptyBox height="5rem" mobileHeight="10rem" />
       <S.MoreBox>
-        <S.SubText>방끗을 소개할게요!</S.SubText>
+        <S.SubText>방끗을 소개할게요. 아래를 클릭해보세요!</S.SubText>
         <S.MoveUpDownAnimationBox>
-          <ArrowDownSmall />
+          <ArrowDownSmall aria-label="스크롤로 하단의 정보를 확인할 수 있어요" />
         </S.MoveUpDownAnimationBox>
       </S.MoreBox>
     </S.CenterBox>
@@ -156,9 +156,14 @@ const S = {
   `,
   BangBangIcon: styled(BangBangIcon)`
     width: 30rem;
-    height: 13rem;
+    height: 15rem;
 
     animation: ${moveUpDown} 1s infinite;
+
+    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
+      width: 30rem;
+      height: 10rem;
+    }
   `,
   BangGgoodTextIcon: styled(BangGgoodTextIcon)`
     width: 15rem;

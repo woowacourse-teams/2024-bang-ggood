@@ -1,10 +1,12 @@
 import styled from '@emotion/styled';
+import React, { useRef } from 'react';
 
 import FifthSection from '@/components/Landing/FifthSection';
 import FirstSection from '@/components/Landing/FirstSection';
 import FourthSection from '@/components/Landing/FourthSection';
 import SecondSection from '@/components/Landing/SecondSection';
 import ThirdSection from '@/components/Landing/ThirdSection';
+import useMoveSection from '@/hooks/useMoveSection';
 import { flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
 
@@ -31,26 +33,36 @@ const SectionColors: Record<string, Color> = {
 };
 
 const LandingPage = () => {
+  const sectionRefs = useRef<(HTMLElement | null)[]>([]);
+
+  const { handleSectionClick } = useMoveSection(sectionRefs);
+
   return (
     <S.Container>
-      <S.Section color={SectionColors.first.background}>
-        <FirstSection />
-      </S.Section>
-      <S.Section color={SectionColors.second.background}>
-        <SecondSection />
-      </S.Section>
-      <S.Section color={SectionColors.third.background}>
-        <ThirdSection />
-      </S.Section>
-      <S.Section color={SectionColors.fourth.background}>
-        <FourthSection />
-      </S.Section>
-      <S.Section color={SectionColors.fifth.background} height="30rem">
-        <FifthSection />
-      </S.Section>
+      {Object.keys(SectionColors).map((key, index) => {
+        return (
+          <S.Section
+            height={index === 4 ? '25rem' : undefined}
+            key={key}
+            ref={el => (sectionRefs.current[index] = el)}
+            color={SectionColors[key].background}
+            onClick={e => handleSectionClick(index, e)}
+          >
+            {React.createElement(sections[index])}
+          </S.Section>
+        );
+      })}
     </S.Container>
   );
 };
+
+const sections = [
+  () => <FirstSection />,
+  () => <SecondSection />,
+  () => <ThirdSection />,
+  () => <FourthSection />,
+  () => <FifthSection />,
+];
 
 export default LandingPage;
 
@@ -59,6 +71,15 @@ const S = {
     ${flexColumn}
     width: 100%;
     height: ${({ height }) => (height ? height : '100dvh')};
+
+    background-color: ${({ color }) => color};
+
+    color: ${({ theme }) => theme.palette.black};
+  `,
+  LastSection: styled.section<{ color: string }>`
+    ${flexColumn}
+    width: 100%;
+    height: 30rem;
 
     background-color: ${({ color }) => color};
 

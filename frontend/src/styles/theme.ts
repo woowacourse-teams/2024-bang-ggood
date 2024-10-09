@@ -66,7 +66,7 @@ const text = {
 
 const viewport = {
   MOBILE: 576,
-  TABLET: 768,
+  TABLET: 800,
   DESKTOP: 1280,
 };
 

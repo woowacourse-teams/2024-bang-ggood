@@ -39,7 +39,7 @@ const FirstSection = () => {
         <KakaoLoginButton />
         <S.Button label="방끗 둘러보기" size="full" isSquare onClick={() => navigate(ROUTE_PATH.home)} />
       </S.ButtonWrapper>
-      <CS.EmptyBox height="1rem" />
+      <CS.EmptyBox height="5rem" mobileHeight="10rem" />
       <S.MoreBox>
         <S.SubText>방끗을 소개할게요!</S.SubText>
         <S.MoveUpDownAnimationBox>
@@ -156,17 +156,17 @@ const S = {
   `,
   BangBangIcon: styled(BangBangIcon)`
     width: 30rem;
-    height: 15rem;
+    height: 13rem;
 
     animation: ${moveUpDown} 1s infinite;
   `,
   BangGgoodTextIcon: styled(BangGgoodTextIcon)`
-    width: 20rem;
-    height: 15rem;
+    width: 15rem;
+    height: 10rem;
 
     @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
       width: 15rem;
-      height: 8rem;
+      height: 7rem;
     }
   `,
 };

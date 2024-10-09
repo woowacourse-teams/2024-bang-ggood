@@ -19,7 +19,7 @@ const ThirdSection = () => {
 
   return (
     <CS.Container>
-      <CS.EmptyBox height="2rem" />
+      <CS.EmptyBox height="1rem" mobileHeight="2rem" />
       <CS.TextBox>
         <CS.Text>
           방 구할 때 어디를 봐야 할지 <br />더 이상 고민하지 마세요!
@@ -81,7 +81,7 @@ const S = {
     transform: scale(1.2);
     transform-origin: center;
     ${flexColumn};
-    gap: 10px;
+    gap: 1rem;
     align-items: center;
 
     @media (width <= ${({ theme }) => theme.viewport.MOBILE}px) {
@@ -99,7 +99,7 @@ const S = {
     }
   `,
   EmptyBox: styled.div`
-    height: 12rem;
+    height: 10rem;
 
     @media (height <= ${({ theme }) => theme.viewport.MOBILE}px) {
       height: 2rem;
@@ -111,19 +111,19 @@ const S = {
     ${flexCenter};
     position: relative;
 
-    width: 320px;
+    width: 300px;
 
     background-color: ${({ theme }) => theme.palette.background};
     border-radius: 10px;
 
     ${boxShadow};
     @media (width <= ${({ theme }) => theme.viewport.MOBILE}px) {
+      display: none;
       transform: none;
       transform-origin: center;
     }
 
     @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
-      display: none;
       transform: none;
       transform-origin: center;
     }

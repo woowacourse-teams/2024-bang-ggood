@@ -4,7 +4,6 @@ import { fadeIn } from '@/styles/animation';
 import { flexCenter, flexColumn } from '@/styles/common';
 
 const CS = {
-  /* common */
   AnimationBox: styled.div<{ isIntersecting: boolean }>`
     width: 100%;
     ${flexCenter};
@@ -76,7 +75,6 @@ const CS = {
     position: absolute;
     margin-top: 20px;
   `,
-  /*fifth section*/
   RelativeBox: styled.div`
     position: relative;
   `,
@@ -85,9 +83,9 @@ const CS = {
     left: 80px;
   `,
   ScreenShot: styled.img`
-    width: 250px;
+    width: 25rem;
     @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
-      width: 180px;
+      width: 18rem;
     }
   `,
 };

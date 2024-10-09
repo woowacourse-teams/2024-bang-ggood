@@ -50,10 +50,7 @@ const CS = {
   Text: styled.div<{ margin?: number }>`
     margin: ${({ margin }) => margin ?? 5}px;
     line-height: 1.5;
-    font-size: ${({ theme }) => theme.text.size.large};
-    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
-      font-size: ${({ theme }) => theme.text.size.medium};
-    }
+    font-size: ${({ theme }) => theme.text.size.medium};
   `,
   Highlight: styled.span`
     font-weight: ${({ theme }) => theme.text.weight.semiBold};

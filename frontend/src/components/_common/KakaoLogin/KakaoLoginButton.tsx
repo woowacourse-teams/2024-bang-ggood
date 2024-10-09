@@ -29,7 +29,7 @@ const S = {
     background-color: ${({ theme }) => theme.palette.kakao};
     cursor: pointer;
 
-    @media (width <= ${({ theme }) => theme.viewport.MOBILE}) {
+    @media (width <= ${({ theme }) => theme.viewport.MOBILE}px) {
       height: 5rem;
     }
   `,
@@ -37,10 +37,10 @@ const S = {
     margin: 0.5rem;
 
     font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: ${({ theme }) => theme.text.size.xLarge};
+    font-size: ${({ theme }) => theme.text.size.large};
     line-height: 1.5;
 
-    @media (width <= ${({ theme }) => theme.viewport.MOBILE}) {
+    @media (width <= ${({ theme }) => theme.viewport.MOBILE}px) {
       font-size: ${({ theme }) => theme.text.size.medium};
     }
   `,

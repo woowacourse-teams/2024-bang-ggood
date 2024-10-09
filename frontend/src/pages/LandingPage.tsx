@@ -45,7 +45,7 @@ const LandingPage = () => {
       <S.Section color={SectionColors.fourth.background}>
         <FourthSection />
       </S.Section>
-      <S.Section color={SectionColors.fifth.background}>
+      <S.Section color={SectionColors.fifth.background} height="30rem">
         <FifthSection />
       </S.Section>
     </S.Container>
@@ -55,10 +55,10 @@ const LandingPage = () => {
 export default LandingPage;
 
 const S = {
-  Section: styled.section<{ color: string }>`
+  Section: styled.section<{ color: string; height?: string }>`
     ${flexColumn}
     width: 100%;
-    height: 100dvh;
+    height: ${({ height }) => (height ? height : '100dvh')};
 
     background-color: ${({ color }) => color};
 

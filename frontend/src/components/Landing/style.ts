@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 
 import { fadeIn } from '@/styles/animation';
-import { boxShadow, flexCenter, flexColumn } from '@/styles/common';
+import { flexCenter, flexColumn } from '@/styles/common';
 
-const S = {
+const CS = {
   /* common */
   AnimationBox: styled.div<{ isIntersecting: boolean }>`
     width: 100%;
@@ -23,9 +23,14 @@ const S = {
   
     `}
   `,
-  EmptyBox: styled.div<{ height: string }>`
+  EmptyBox: styled.div<{ height: string; mobileHeight?: string }>`
     width: 100%;
-    height: ${({ height }) => height};
+    /* height: ${({ height }) => height}; */
+    margin-top: ${({ height }) => height};
+
+    @media (height: ${({ theme }) => theme.viewport.MOBILE}px) {
+      margin-top: ${({ mobileHeight, height }) => mobileHeight || height};
+    }
   `,
   Observer: styled.div`
     height: 10px;
@@ -47,7 +52,10 @@ const S = {
   Text: styled.div<{ margin?: number }>`
     margin: ${({ margin }) => margin ?? 5}px;
     line-height: 1.5;
-    font-size: ${({ theme }) => theme.text.size.medium};
+    font-size: ${({ theme }) => theme.text.size.large};
+    @media (height <= ${({ theme }) => theme.viewport.MOBILE}px) {
+      font-size: ${({ theme }) => theme.text.size.medium};
+    }
   `,
   Highlight: styled.span`
     font-weight: ${({ theme }) => theme.text.weight.semiBold};
@@ -55,58 +63,11 @@ const S = {
     padding: 3px;
     background-color: ${({ theme }) => theme.palette.yellow500};
   `,
-  /*second */
-  CardList: styled.div`
-    width: 100%;
-    ${flexColumn};
-    gap: 10px;
-    align-items: center;
-    margin-top: 20px;
-  `,
-  Card: styled.div`
-    width: 300px;
-    ${flexColumn};
-    padding: 12px 16px;
-
-    background-color: white;
-
-    letter-spacing: 0.05rem;
-    text-align: left;
-
-    gap: 10px;
-    box-sizing: border-box;
-    border-radius: 8px;
-
-    ${boxShadow}
-  `,
-  Keyword: styled.span<{ color?: string }>`
-    align-self: flex-start;
-    padding: 4px 10px;
-    ${flexCenter}
-    gap:10px;
-
-    background-color: ${({ color, theme }) => color ?? theme.palette.white};
-
-    color: ${({ theme }) => theme.palette.white};
-
-    box-sizing: content-box;
-    border-radius: 6px;
-  `,
   CenterBox: styled.div`
     width: 100%;
     ${flexCenter}
   `,
-  /*fourth section*/
-  ChecklistImgBox: styled.div`
-    ${flexCenter};
-    position: relative;
 
-    width: 320px;
-
-    background-color: ${({ theme }) => theme.palette.background};
-    border-radius: 10px;
-    ${boxShadow};
-  `,
   PencilIconBox: styled.div`
     position: absolute;
     left: 280px;
@@ -125,12 +86,11 @@ const S = {
     left: 80px;
   `,
   ScreenShot: styled.img`
-    width: 16rem;
-
-    @media (width <= 50rem) {
-      width: 25rem;
+    width: 250px;
+    @media (height <= ${({ theme }) => theme.viewport.MOBILE}px) {
+      width: 22rem;
     }
   `,
 };
 
-export default S;
+export default CS;

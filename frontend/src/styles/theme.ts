@@ -65,9 +65,9 @@ const text = {
 };
 
 const viewport = {
-  MOBILE: '57.6rem',
-  TABLET: '76.8rem',
-  DESKTOP: '76.9rem',
+  MOBILE: 576,
+  TABLET: 768,
+  DESKTOP: 1280,
 };
 
 /*range: 10~50 */

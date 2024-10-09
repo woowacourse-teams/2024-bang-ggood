@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 
 import { ToastConfirm, ToastError } from '@/assets/assets';
-import { flexCenter, flexRow, title4 } from '@/styles/common';
+import { FOOTER_SIZE } from '@/constants/style';
+import { boxShadowSpread, flexCenter, flexRow, title4 } from '@/styles/common';
 import { ToastType } from '@/types/toast';
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
 const renderIcon = (type: string) => {
   if (type === 'error') return <ToastError />;
   if (type === 'confirm') return <ToastConfirm />;
+  return null;
 };
 
 const Toast = ({ type, message }: Props) => {
@@ -43,13 +45,14 @@ const slideUp = `
 const S = {
   ToastWrapper: styled.div`
     position: fixed;
-    bottom: 5rem;
+    bottom: ${FOOTER_SIZE + 1}rem;
     left: 50%;
     z-index: ${({ theme }) => theme.zIndex.TOAST};
 
     transform: translateX(-50%);
 
     animation: slideUp 0.5s ease-in-out;
+    ${boxShadowSpread}
     ${slideUp}
   `,
   Toast: styled.div`

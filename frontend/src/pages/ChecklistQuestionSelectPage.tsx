@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getChecklistAllQuestions } from '@/apis/checklist';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
@@ -11,6 +10,7 @@ import { ChecklistQuestionSelectTabs } from '@/components/ChecklistQuestionSelec
 import QuestionListTemplate from '@/components/ChecklistQuestionSelect/QuestionListTemplate/QuestionListTemplate';
 import { TOAST_MESSAGE } from '@/constants/message';
 import { ROUTE_PATH } from '@/constants/routePath';
+import useGetAllChecklistQuestionQuery from '@/hooks/query/useGetAllChecklistQuestionsQuery';
 import usePutCustomChecklist from '@/hooks/query/usePutCustomChecklist';
 import useHandleTip from '@/hooks/useHandleTip';
 import useToast from '@/hooks/useToast';
@@ -21,6 +21,7 @@ const ChecklistQuestionSelectPage = () => {
   const navigate = useNavigate();
   const { showToast } = useToast();
 
+  const { data: checklistQuestions } = useGetAllChecklistQuestionQuery();
   const { mutate: putCustomChecklist } = usePutCustomChecklist();
   const { selectedQuestions, setValidCategory, setChecklistAllQuestionList } = useChecklistQuestionSelectStore();
 
@@ -42,9 +43,8 @@ const ChecklistQuestionSelectPage = () => {
 
   useEffect(() => {
     const fetchChecklist = async () => {
-      const checklistQuestions = await getChecklistAllQuestions();
       /*체크리스트의 모든 질문 전역 상태로 저장 */
-      setChecklistAllQuestionList(checklistQuestions);
+      setChecklistAllQuestionList(checklistQuestions || []);
       /*체크리스트의 유효한 카테고리만 탭으로 생성 */
       setValidCategory();
     };

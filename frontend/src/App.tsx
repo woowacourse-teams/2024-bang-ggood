@@ -3,7 +3,7 @@ import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-qu
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider } from 'react-router-dom';
 
-import Toast from '@/components/_common/Toast/Toast';
+import ToastContainer from '@/components/_common/Toast/ToastContainer';
 import useToast from '@/hooks/useToast';
 import router from '@/routers/router';
 import { baseStyle } from '@/styles/global';
@@ -14,21 +14,22 @@ const App = () => {
 
   const queryClient = new QueryClient({
     defaultOptions: {
-      mutations: { onError: error => showToast(error.message) },
+      mutations: { onError: error => showToast({ message: error.message }) },
       queries: { throwOnError: true },
     },
     queryCache: new QueryCache({
-      onError: error => showToast(error.message),
+      // get 일때 return => fallback
+      onError: error => showToast({ message: error.message }),
     }),
   });
 
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
+        <ToastContainer />
         <Global styles={baseStyle} />
         <RouterProvider router={router} />
         <ReactQueryDevtools initialIsOpen={false} />
-        <Toast />
       </ThemeProvider>
     </QueryClientProvider>
   );

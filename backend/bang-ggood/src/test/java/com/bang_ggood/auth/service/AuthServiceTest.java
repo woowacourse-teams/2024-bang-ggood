@@ -2,6 +2,7 @@ package com.bang_ggood.auth.service;
 
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
+import com.bang_ggood.auth.dto.request.RegisterRequestV1;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.service.jwt.JwtTokenProvider;
 import com.bang_ggood.auth.service.oauth.OauthClient;
@@ -45,6 +46,50 @@ class AuthServiceTest extends IntegrationTestSupport {
     private UserRepository userRepository;
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
+
+    @DisplayName("회원가입 성공")
+    @Test
+    void register() {
+        //given
+        RegisterRequestV1 request = new RegisterRequestV1("방방이", "bang@gmail.com", "password1234");
+
+        //when
+        Long userId = authService.register(request);
+
+        //then
+        User findUser = userRepository.findById(userId).orElseThrow();
+        assertThat(findUser.getId()).isEqualTo(userId);
+    }
+
+    @DisplayName("회원가입 성공 : 비밀번호 암호화")
+    @Test
+    void register_encodePassword() {
+        //given
+        String password = "password1234";
+        RegisterRequestV1 request = new RegisterRequestV1("방방이", "bang@gmail.com", password);
+
+        //when
+        Long userId = authService.register(request);
+
+        //then
+        User findUser = userRepository.findById(userId).orElseThrow();
+        assertThat(findUser.getPassword().getValue()).isNotEqualTo(password);
+    }
+
+    @DisplayName("회원가입 실패 : 이미 사용중인 이메일인 경우")
+    @Test
+    void register_alreadyUsedEmail_exception() {
+        //given
+        RegisterRequestV1 request = new RegisterRequestV1("방방이", "bang@gmail.com", "password1234");
+
+        //when
+        authService.register(request);
+
+        //then
+        assertThatThrownBy(() -> authService.register(request))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.USER_EMAIL_ALREADY_USED.getMessage());
+    }
 
     @DisplayName("로그인 성공 : 존재하지 않는 회원이면 데이터베이스에 새로운 유저를 추가하고 토큰을 반환한다.")
     @Test

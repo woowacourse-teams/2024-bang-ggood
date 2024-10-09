@@ -4,18 +4,22 @@ import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.auth.controller.cookie.CookieProvider;
 import com.bang_ggood.auth.controller.cookie.CookieResolver;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
+import com.bang_ggood.auth.dto.request.RegisterRequestV1;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.service.AuthService;
 import com.bang_ggood.user.domain.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import java.net.URI;
 
+@RequiredArgsConstructor
 @RestController
 public class AuthController {
 
@@ -23,10 +27,10 @@ public class AuthController {
     private final CookieProvider cookieProvider;
     private final CookieResolver cookieResolver;
 
-    public AuthController(AuthService authService, CookieProvider cookieProvider, CookieResolver cookieResolver) {
-        this.authService = authService;
-        this.cookieProvider = cookieProvider;
-        this.cookieResolver = cookieResolver;
+    @PostMapping("/v1/register")
+    public ResponseEntity<Void> register(@Valid @RequestBody RegisterRequestV1 request) {
+        Long userId = authService.register(request);
+        return ResponseEntity.created(URI.create("/v1/register/" + userId)).build();
     }
 
     @PostMapping("/oauth/login")

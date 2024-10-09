@@ -2,6 +2,8 @@ package com.bang_ggood.user.repository;
 
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
+import com.bang_ggood.user.domain.Email;
+import com.bang_ggood.user.domain.LoginType;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.domain.UserType;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,7 +24,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findUserByUserType(@Param("userType") UserType userType);
 
     @Query("SELECT u FROM User u WHERE u.email = :email and u.deleted = false ")
-    Optional<User> findByEmail(@Param("email") String email);
+    Optional<User> findByEmail(@Param("email") Email email);
+
+    @Query("SELECT COUNT(u) > 0 FROM User u "
+            + "WHERE u.email = :email "
+            + "AND u.loginType = :loginType "
+            + "AND u.deleted = false")
+    boolean existsByEmailAndUserType(Email email, LoginType loginType);
 
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)

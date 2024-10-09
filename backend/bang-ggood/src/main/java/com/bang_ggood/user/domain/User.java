@@ -50,17 +50,10 @@ public class User extends BaseEntity {
         this.loginType = loginType;
     }
 
-    public User(String name, Email email, UserType userType, LoginType loginType) {
-        this.name = name;
-        this.email = email;
-        this.userType = userType;
-        this.loginType = loginType;
-    }
-
     public User(String name, String email, String password, UserType userType, LoginType loginType) {
         this.name = name;
         this.email = new Email(email);
-        this.password = new Password(password);
+        this.password = new Password(email, password);
         this.userType = userType;
         this.loginType = loginType;
     }

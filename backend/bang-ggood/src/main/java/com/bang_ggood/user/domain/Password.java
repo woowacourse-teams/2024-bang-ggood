@@ -1,5 +1,6 @@
 package com.bang_ggood.user.domain;
 
+import com.bang_ggood.auth.service.PasswordEncoder;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import jakarta.persistence.Column;
@@ -18,6 +19,7 @@ public class Password {
 
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$");
+    private static final PasswordEncoder passwordEncoder = new PasswordEncoder();
 
     @Column(name = "password")
     private String value;
@@ -25,6 +27,12 @@ public class Password {
     public Password(String value) {
         validatePassword(value);
         this.value = value;
+    }
+
+    //TODO : Salt 정책 세운 뒤 삭제 예정
+    public Password(String email, String value) {
+        validatePassword(value);
+        this.value = passwordEncoder.encode(email, value);
     }
 
     public void validatePassword(String password) {

@@ -15,29 +15,31 @@ const FirstSection = () => {
   return (
     <S.CenterBox>
       <CS.EmptyBox height="5rem" mobileHeight="12rem" />
-      <S.LogoBox>
+      <S.LogoTextBox>
         <S.BangBangIcon />
-        <S.TextWrapper>
-          <S.SubtitleText>방 구하기</S.SubtitleText>
-          <S.SubtitleText>
-            이거 하나로
-            <S.CheckRelativeText>
-              {' '}
-              끝!
-              <S.CheckIconBox>
-                <SmallCheck />
-              </S.CheckIconBox>
-            </S.CheckRelativeText>
-          </S.SubtitleText>
-        </S.TextWrapper>
-        <S.BangGgoodTextIcon />
-      </S.LogoBox>
+        <S.LogoBox>
+          <S.TextWrapper>
+            <S.SubtitleText>방 구하기</S.SubtitleText>
+            <S.SubtitleText>
+              이거 하나로
+              <S.CheckRelativeText>
+                {' '}
+                끝!
+                <S.CheckIconBox>
+                  <SmallCheck />
+                </S.CheckIconBox>
+              </S.CheckRelativeText>
+            </S.SubtitleText>
+          </S.TextWrapper>
+          <S.BangGgoodTextIcon />
+        </S.LogoBox>
+      </S.LogoTextBox>
       <CS.EmptyBox mobileHeight="2rem" height="0" />
       <S.ButtonWrapper>
         <KakaoLoginButton />
         <S.Button label="방끗 둘러보기" size="full" isSquare onClick={() => navigate(ROUTE_PATH.home)} />
       </S.ButtonWrapper>
-      <CS.EmptyBox mobileHeight="2rem" height="0" />
+      <CS.EmptyBox height="1rem" />
       <S.MoreBox>
         <S.SubText>방끗을 소개할게요!</S.SubText>
         <S.MoveUpDownAnimationBox>
@@ -49,6 +51,15 @@ const FirstSection = () => {
 };
 
 const S = {
+  LogoTextBox: styled.div`
+    ${flexCenter};
+    flex-direction: column;
+    gap: 2rem;
+
+    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
+      gap: 5rem;
+    }
+  `,
   CheckRelativeText: styled.span`
     position: relative;
   `,
@@ -63,22 +74,28 @@ const S = {
     }
   `,
   SubtitleText: styled.div`
-    @media (width >= ${({ theme }) => theme.viewport.MOBILE}px) {
-      font-size: 3rem;
-    }
+    font-size: 2.8rem;
 
-    font-size: ${({ theme }) => theme.text.size.large};
+    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
+      font-size: 2rem;
+    }
   `,
   Button: styled(Button)`
-    height: 5rem;
+    height: 7rem;
 
-    font-size: ${({ theme }) => theme.text.size.medium};
+    font-size: ${({ theme }) => theme.text.size.large};
     border-radius: 1rem;
+
+    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
+      height: 5rem;
+
+      font-size: ${({ theme }) => theme.text.size.medium};
+    }
   `,
   LogoBox: styled.div`
     width: 100%;
     align-items: center;
-    gap: 2.5rem;
+    gap: 1.5rem;
     ${flexColumn}
   `,
   CheckIconBox: styled.div`
@@ -139,15 +156,9 @@ const S = {
   `,
   BangBangIcon: styled(BangBangIcon)`
     width: 30rem;
-    height: 17rem;
-    margin-bottom: 2rem;
+    height: 15rem;
 
     animation: ${moveUpDown} 1s infinite;
-
-    @media (height <= ${({ theme }) => theme.viewport.MOBILE}px) {
-      width: 38rem;
-      height: 16rem;
-    }
   `,
   BangGgoodTextIcon: styled(BangGgoodTextIcon)`
     width: 20rem;

@@ -29,7 +29,7 @@ const S = {
     background-color: ${({ theme }) => theme.palette.kakao};
     cursor: pointer;
 
-    @media (width <= ${({ theme }) => theme.viewport.MOBILE}px) {
+    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
       height: 5rem;
     }
   `,
@@ -40,7 +40,7 @@ const S = {
     font-size: ${({ theme }) => theme.text.size.large};
     line-height: 1.5;
 
-    @media (width <= ${({ theme }) => theme.viewport.MOBILE}px) {
+    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
       font-size: ${({ theme }) => theme.text.size.medium};
     }
   `,

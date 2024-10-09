@@ -25,10 +25,9 @@ const CS = {
   `,
   EmptyBox: styled.div<{ height: string; mobileHeight?: string }>`
     width: 100%;
-    /* height: ${({ height }) => height}; */
     margin-top: ${({ height }) => height};
 
-    @media (height: ${({ theme }) => theme.viewport.MOBILE}px) {
+    @media (height: ${({ theme }) => theme.viewport.TABLET}px) {
       margin-top: ${({ mobileHeight, height }) => mobileHeight || height};
     }
   `,
@@ -53,7 +52,7 @@ const CS = {
     margin: ${({ margin }) => margin ?? 5}px;
     line-height: 1.5;
     font-size: ${({ theme }) => theme.text.size.large};
-    @media (height <= ${({ theme }) => theme.viewport.MOBILE}px) {
+    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
       font-size: ${({ theme }) => theme.text.size.medium};
     }
   `,

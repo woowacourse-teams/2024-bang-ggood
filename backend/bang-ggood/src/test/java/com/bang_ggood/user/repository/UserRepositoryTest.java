@@ -24,7 +24,7 @@ class UserRepositoryTest extends IntegrationTestSupport {
         userRepository.deleteByUser(user);
 
         // when
-        Optional<User> findUser = userRepository.findByEmailAndAndLoginType(user.getEmail(), user.getLoginType().name());
+        Optional<User> findUser = userRepository.findByEmailAndLoginType(user.getEmail(), user.getLoginType());
 
         // then
         Assertions.assertThat(findUser).isEmpty();

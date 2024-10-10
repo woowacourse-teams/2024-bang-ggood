@@ -91,8 +91,7 @@ class AuthServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.USER_EMAIL_ALREADY_USED.getMessage());
     }
 
-
-    @DisplayName("로그인 성공 : 존재하지 않는 회원이면 데이터베이스에 새로운 유저를 추가하고 토큰을 반환한다.")
+    @DisplayName("로그인 성공 : 존재하지 않는 회원이면 데이터베이스에 새로운 유저를 추가하고 토큰 반환")
     @Test
     void login_signup() {
         // given
@@ -107,7 +106,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         assertThat(token.refreshToken()).isNotBlank();
     }
 
-    @DisplayName("로그인 성공 : 존재하는 회원이면 데이터베이스에 새로운 유저를 추가하지않고 토큰을 바로 반환한다.")
+    @DisplayName("로그인 성공 : 존재하는 회원이면 데이터베이스에 새로운 유저를 추가하지않고 토큰 반환")
     @Test
     void login() {
         // given
@@ -123,7 +122,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         assertThat(token.refreshToken()).isNotBlank();
     }
 
-    @DisplayName("로그인 성공 : 회원 가입시 디폴트 체크리스트 질문을 추가한다.")
+    @DisplayName("로그인 성공 : 회원 가입시 디폴트 체크리스트 질문 추가")
     @Test
     void login_default_checklist_question() {
         // given
@@ -146,7 +145,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         assertThat(sum).isEqualTo(Question.findDefaultQuestions().size());
     }
 
-    @DisplayName("로그인 성공 : 회원 가입시 디폴트 체크리스트를 추가한다.")
+    @DisplayName("로그인 성공 : 회원 가입시 디폴트 체크리스트 추가")
     @Test
     void login_default_checklist() {
         // given
@@ -162,7 +161,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         assertThat(response.checklists()).hasSize(1);
     }
 
-    @DisplayName("게스트 유저 할당 실패 : 게스트 유저의 수가 2명이면 예외를 발생시킨다.")
+    @DisplayName("게스트 유저 할당 실패 : 게스트 유저의 수가 2명이면 예외 발생")
     @Test
     void assignGuestUser_UnexpectedGuestUserExist() {
         // given
@@ -175,7 +174,7 @@ class AuthServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.GUEST_USER_UNEXPECTED_EXIST.getMessage());
     }
 
-    @DisplayName("게스트 유저 할당 실패 : 게스트 유저가 존재하지 않으면 예외를 발생시킨다.")
+    @DisplayName("게스트 유저 할당 실패 : 게스트 유저가 존재하지 않으면 예외 발생")
     @Test
     void assingGuestUser_GuestUserNotExist() {
         // when & then
@@ -215,7 +214,7 @@ class AuthServiceTest extends IntegrationTestSupport {
 
     @DisplayName("액세스 토큰 재발행 성공")
     @Test
-    void reIssueAccessToken() {
+    void reissueAccessToken() {
         // given
         userRepository.save(UserFixture.USER1());
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
@@ -223,7 +222,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         AuthTokenResponse tokenResponse = authService.login(OAUTH_LOGIN_REQUEST);
 
         // when & then
-        assertThatCode(() -> authService.reIssueAccessToken(tokenResponse.refreshToken()))
+        assertThatCode(() -> authService.reissueAccessToken(tokenResponse.refreshToken()))
                 .doesNotThrowAnyException();
 
     }

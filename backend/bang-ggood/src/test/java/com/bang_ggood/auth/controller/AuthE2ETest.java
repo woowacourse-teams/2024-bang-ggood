@@ -1,11 +1,13 @@
 package com.bang_ggood.auth.controller;
 
 import com.bang_ggood.AcceptanceTest;
+import com.bang_ggood.auth.dto.response.RefreshTokenCheckResponse;
 import com.bang_ggood.auth.service.AuthService;
 import com.bang_ggood.global.exception.ExceptionCode;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Header;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +57,34 @@ class AuthE2ETest extends AcceptanceTest {
                 .then().log().all()
                 .statusCode(401)
                 .body("message", containsString(ExceptionCode.AUTHENTICATION_TOKEN_EMPTY.getMessage()));
+    }
+
+    @DisplayName("리프레시 토큰 체크 성공 : 쿠키가 존재하지 않는 경우")
+    @Test
+    void checkRefreshToken_returnFalse() {
+        RefreshTokenCheckResponse refreshTokenCheckResponse = RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .when().get("/refreshToken-check")
+                .then().log().all()
+                .statusCode(200)
+                .extract()
+                .as(RefreshTokenCheckResponse.class);
+
+        Assertions.assertThat(refreshTokenCheckResponse.isRefreshTokenExist()).isFalse();
+    }
+
+    @DisplayName("리프레시 토큰 체크 성공 : 리프레시 토큰이 존재하는 경우")
+    @Test
+    void checkRefreshToken_returnTrue() {
+        RefreshTokenCheckResponse refreshTokenCheckResponse = RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .headers(this.headers)
+                .when().get("/refreshToken-check")
+                .then().log().all()
+                .statusCode(200)
+                .extract()
+                .as(RefreshTokenCheckResponse.class);
+
+        Assertions.assertThat(refreshTokenCheckResponse.isRefreshTokenExist()).isTrue();
     }
 }

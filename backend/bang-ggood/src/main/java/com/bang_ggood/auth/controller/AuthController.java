@@ -6,6 +6,7 @@ import com.bang_ggood.auth.controller.cookie.CookieResolver;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.request.RegisterRequestV1;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
+import com.bang_ggood.auth.dto.response.RefreshTokenCheckResponse;
 import com.bang_ggood.auth.service.AuthService;
 import com.bang_ggood.user.domain.User;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,8 +51,8 @@ public class AuthController {
     @PostMapping("/oauth/logout")
     public ResponseEntity<Void> logout(@AuthRequiredPrincipal User user,
                                        HttpServletRequest httpServletRequest) {
-        String accessToken = cookieResolver.extractAccessToken(httpServletRequest.getCookies());
-        String refreshToken = cookieResolver.extractRefreshToken(httpServletRequest.getCookies());
+        String accessToken = cookieResolver.extractAccessToken(httpServletRequest);
+        String refreshToken = cookieResolver.extractRefreshToken(httpServletRequest);
 
         authService.logout(accessToken, refreshToken, user);
 
@@ -64,15 +66,23 @@ public class AuthController {
     }
 
     @PostMapping("/accessToken/reissue")
-    public ResponseEntity<Void> reIssueAccessToken(HttpServletRequest httpServletRequest) {
+    public ResponseEntity<Void> reissueAccessToken(HttpServletRequest httpServletRequest) {
         cookieResolver.checkLoginRequired(httpServletRequest);
 
-        String refreshToken = cookieResolver.extractRefreshToken(httpServletRequest.getCookies());
-        String accessToken = authService.reIssueAccessToken(refreshToken);
+        String refreshToken = cookieResolver.extractRefreshToken(httpServletRequest);
+        String accessToken = authService.reissueAccessToken(refreshToken);
 
         ResponseCookie accessTokenCookie = cookieProvider.createAccessTokenCookie(accessToken);
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString())
                 .build();
+    }
+
+    @GetMapping("/refreshToken-check")
+    public ResponseEntity<RefreshTokenCheckResponse> check(HttpServletRequest httpServletRequest) {
+        boolean isRefreshTokenExist = !cookieResolver.isRefreshTokenEmpty(httpServletRequest);
+
+        RefreshTokenCheckResponse refreshTokenCheckResponse = RefreshTokenCheckResponse.from(isRefreshTokenExist);
+        return ResponseEntity.ok(refreshTokenCheckResponse);
     }
 }

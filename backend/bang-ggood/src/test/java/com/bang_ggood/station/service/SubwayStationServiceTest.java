@@ -1,8 +1,7 @@
-package com.bang_ggood.station;
+package com.bang_ggood.station.service;
 
 import com.bang_ggood.IntegrationTestSupport;
-import com.bang_ggood.station.dto.SubwayStationResponse;
-import com.bang_ggood.station.service.SubwayStationService;
+import com.bang_ggood.station.dto.response.SubwayStationResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -24,7 +23,7 @@ public class SubwayStationServiceTest extends IntegrationTestSupport {
     @MethodSource("provideStationData")
     void readNearestStation(double latitude, double longitude, Station nearestStation, Station nextNearestStation) {
         // given & when
-        List<SubwayStationResponse> responses = subwayStationService.readNearestStation(latitude, longitude);
+        List<SubwayStationResponse> responses = subwayStationService.readNearestStation(latitude, longitude).getStations();
         assertThat(responses).hasSize(2);
         SubwayStationResponse nearest =  responses.get(0);
         SubwayStationResponse nextNearest =  responses.get(1);

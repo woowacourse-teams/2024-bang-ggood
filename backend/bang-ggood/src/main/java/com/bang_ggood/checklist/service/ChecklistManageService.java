@@ -2,9 +2,11 @@ package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
+import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.dto.response.SelectedChecklistResponseV1;
 import com.bang_ggood.like.service.ChecklistLikeService;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.domain.MaintenanceItem;
@@ -22,6 +24,11 @@ import com.bang_ggood.question.service.ChecklistQuestionService;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import com.bang_ggood.room.service.RoomService;
+import com.bang_ggood.station.domain.ChecklistStation;
+import com.bang_ggood.station.dto.request.ChecklistStationRequest;
+import com.bang_ggood.station.dto.response.SubwayStationResponse;
+import com.bang_ggood.station.dto.response.SubwayStationResponses;
+import com.bang_ggood.station.service.ChecklistStationService;
 import com.bang_ggood.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,6 +46,7 @@ public class ChecklistManageService {
     private final ChecklistQuestionService checklistQuestionService;
     private final ChecklistMaintenanceService checklistMaintenanceService;
     private final ChecklistLikeService checklistLikeService;
+    private final ChecklistStationService checklistStationService;
 
     @Transactional
     public Long createChecklist(User user, ChecklistRequest checklistRequest) {
@@ -47,6 +55,19 @@ public class ChecklistManageService {
         createChecklistOptions(checklistRequest, checklist);
         createChecklistQuestions(checklistRequest, checklist);
         createChecklistMaintenances(checklistRequest, checklist);
+        return checklist.getId();
+    }
+
+    @Transactional
+    public Long createChecklistV1(User user, ChecklistRequestV1 checklistRequestV1) {
+        ChecklistRequest checklistRequest = checklistRequestV1.toChecklistRequest();
+
+        Room room = roomService.createRoom(checklistRequest.toRoomEntity());
+        Checklist checklist = checklistService.createChecklist(checklistRequest.toChecklistEntity(room, user));
+        createChecklistOptions(checklistRequest, checklist);
+        createChecklistQuestions(checklistRequest, checklist);
+        createChecklistMaintenances(checklistRequest, checklist);
+        createChecklistStation(checklistRequestV1, checklist);
         return checklist.getId();
     }
 
@@ -76,6 +97,11 @@ public class ChecklistManageService {
         checklistMaintenanceService.createMaintenances(checklistMaintenances);
     }
 
+    private void createChecklistStation(ChecklistRequestV1 checklistRequestV1, Checklist checklist) {
+        ChecklistStationRequest geolocation = checklistRequestV1.geolocation();
+        checklistStationService.createChecklistStations(checklist, geolocation.latitude(), geolocation.latitude());
+    }
+
     @Transactional(readOnly = true)
     public SelectedChecklistResponse readChecklist(User user, Long checklistId) {
         Checklist checklist = checklistService.readChecklist(user, checklistId);
@@ -87,6 +113,20 @@ public class ChecklistManageService {
         boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
 
         return SelectedChecklistResponse.of(room, options, questions, isLiked);
+    }
+
+    @Transactional(readOnly = true)
+    public SelectedChecklistResponseV1 readChecklistV1(User user, Long checklistId) {
+        Checklist checklist = checklistService.readChecklist(user, checklistId);
+
+        List<Integer> maintenances = readChecklistMaintenances(checklist);
+        List<SelectedOptionResponse> options = readChecklistOptions(checklist);
+        List<SelectedCategoryQuestionsResponse> questions = readChecklistQuestions(checklist);
+        SelectedRoomResponse room = SelectedRoomResponse.of(checklist, maintenances);
+        boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
+        SubwayStationResponses stations = readChecklistStations(checklist);
+
+        return SelectedChecklistResponseV1.of(room, options, questions, isLiked, stations);
     }
 
     private List<Integer> readChecklistMaintenances(Checklist checklist) {
@@ -119,6 +159,15 @@ public class ChecklistManageService {
                 .toList();
 
         return SelectedCategoryQuestionsResponse.of(category, selectedQuestionResponse);
+    }
+
+    private SubwayStationResponses readChecklistStations(Checklist checklist) {
+        List<ChecklistStation> checklistStations = checklistStationService.readChecklistStationsByChecklist(checklist);
+        List<SubwayStationResponse> stations = checklistStations.stream()
+                .map(SubwayStationResponse::from)
+                .toList();
+
+        return SubwayStationResponses.from(stations);
     }
 
     @Transactional(readOnly = true)

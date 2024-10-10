@@ -14,11 +14,9 @@ import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.http.Header;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 
 import static org.hamcrest.Matchers.containsString;
 
@@ -42,9 +40,21 @@ class ChecklistE2ETest extends AcceptanceTest {
     void createChecklist() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST())
                 .when().post("/checklists")
+                .then().log().all()
+                .statusCode(201);
+    }
+
+    @DisplayName("체크리스트 작성 v1 성공")
+    @Test
+    void createChecklistV1() {
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .headers(this.headers)
+                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_V1())
+                .when().post("v1/checklists")
                 .then().log().all()
                 .statusCode(201);
     }
@@ -54,7 +64,7 @@ class ChecklistE2ETest extends AcceptanceTest {
     void createChecklist_noRoomName_exception() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_ROOM_NAME())
                 .when().post("/checklists")
                 .then().log().all()
@@ -67,7 +77,7 @@ class ChecklistE2ETest extends AcceptanceTest {
     void createChecklist_noQuestionId_exception() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_QUESTION_ID())
                 .when().post("/checklists")
                 .then().log().all()
@@ -84,7 +94,7 @@ class ChecklistE2ETest extends AcceptanceTest {
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .when().get("/checklists/questions")
                 .then().log().all()
                 .statusCode(200);
@@ -98,7 +108,7 @@ class ChecklistE2ETest extends AcceptanceTest {
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .when().get("/checklists/" + checklistId)
                 .then().log().all()
                 .statusCode(200);
@@ -112,12 +122,26 @@ class ChecklistE2ETest extends AcceptanceTest {
         //TODO 수정
     }
 
+    @DisplayName("작성된 체크리스트 조회 v1 성공")
+    @Test
+    void readChecklistV1() {
+        long checklistId = checklistManageService.createChecklist(this.getAuthenticatedUser(),
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .headers(this.headers)
+                .when().get("v1/checklists/" + checklistId)
+                .then().log().all()
+                .statusCode(200);
+    }
+
     @DisplayName("좋아요된 체크리스트 리스트 조회 성공")
     @Test
     void readLikedUserChecklistsPreview() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .when().get("/checklists/like")
                 .then().log().all()
                 .statusCode(200);
@@ -131,7 +155,7 @@ class ChecklistE2ETest extends AcceptanceTest {
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST())
                 .when().put("/checklists/" + checklistId)
                 .then().log().all()
@@ -146,7 +170,7 @@ class ChecklistE2ETest extends AcceptanceTest {
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST_NO_ROOM_NAME())
                 .when().put("/checklists/" + checklistId)
                 .then().log().all()
@@ -162,7 +186,7 @@ class ChecklistE2ETest extends AcceptanceTest {
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST_NO_QUESTION_ID())
                 .when().put("/checklists/" + checklistId)
                 .then().log().all()
@@ -179,7 +203,7 @@ class ChecklistE2ETest extends AcceptanceTest {
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .when().delete("/checklists/" + saved.getId())
                 .then().log().all()
                 .statusCode(204);

@@ -1,5 +1,7 @@
 package com.bang_ggood.auth.service;
 
+import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
 import org.springframework.stereotype.Component;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -22,7 +24,7 @@ public class PasswordEncoder {
             String encodedSalt = Base64.getEncoder().encodeToString(salt);
             return encodedPassword + ":" + encodedSalt;
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new RuntimeException(e);
+            throw new BangggoodException(ExceptionCode.PASSWORD_HASHING_ERROR);
         }
     }
 

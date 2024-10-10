@@ -29,6 +29,7 @@ public enum ExceptionCode {
 
     //Password
     PASSWORD_INVALID_FORMAT(HttpStatus.BAD_REQUEST, "유효하지 않은 비밀번호 형식입니다."),
+    PASSWORD_HASHING_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "비밀번호 해싱 중 오류가 발생했습니다."),
 
     // Answer
     ANSWER_INVALID(HttpStatus.BAD_REQUEST, "점수가 유효하지 않습니다."),

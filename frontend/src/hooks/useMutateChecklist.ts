@@ -58,6 +58,7 @@ const useMutateChecklist = (
     },
     options: selectedOptions,
     questions: transformQuestions(checklistCategoryQnA),
+    position: roomInfoUnvalidated.position,
   };
 
   const putData = {

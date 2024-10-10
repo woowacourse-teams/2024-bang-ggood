@@ -25,8 +25,8 @@ public class SubwayStationServiceTest extends IntegrationTestSupport {
         // given & when
         List<SubwayStationResponse> responses = subwayStationService.readNearestStation(latitude, longitude).getStations();
         assertThat(responses).hasSize(2);
-        SubwayStationResponse nearest =  responses.get(0);
-        SubwayStationResponse nextNearest =  responses.get(1);
+        SubwayStationResponse nearest = responses.get(0);
+        SubwayStationResponse nextNearest = responses.get(1);
 
         // then
         assertAll(() -> {

@@ -35,7 +35,7 @@ public class DataSourceTest {
     @DisplayName("read DB와 연결 성공: read-only인 경우")
     @Test
     public void read() {
-        try (Connection connection = dataSource.getConnection()){
+        try (Connection connection = dataSource.getConnection()) {
             assertThat(connection.getMetaData().getURL()).contains("read");
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -46,7 +46,7 @@ public class DataSourceTest {
     @DisplayName("write DB와 연결 성공: read-only가 아닌 경우")
     @Test
     public void write() {
-        try (Connection connection = dataSource.getConnection()){
+        try (Connection connection = dataSource.getConnection()) {
             assertThat(connection.getMetaData().getURL()).contains("write");
         } catch (SQLException e) {
             throw new RuntimeException(e);

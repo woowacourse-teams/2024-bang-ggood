@@ -10,15 +10,15 @@ import com.bang_ggood.user.domain.UserType;
 public class UserFixture {
 
     public static User USER1() {
-        return new User("방방이", "bang-bang@gmail.com", UserType.USER, LoginType.LOCAL);
+        return new User("방방이", "bang-bang@gmail.com", "password", UserType.USER, LoginType.LOCAL);
     }
 
     public static User USER2() {
-        return new User("빵빵이", "bbang-bbang@gmail.com", UserType.USER, LoginType.LOCAL);
+        return new User("빵빵이", "bbang-bbang@gmail.com", "password", UserType.USER, LoginType.LOCAL);
     }
 
     public static User GUEST_USER() {
-        return new User("빵빵이", "bbang-bbang@gmail.com", UserType.GUEST, LoginType.LOCAL);
+        return new User("빵빵이", "bbang-bbang@gmail.com", null, UserType.GUEST, LoginType.LOCAL);
     }
 
     public static User USER1_WITH_ID() {

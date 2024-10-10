@@ -20,7 +20,8 @@ public class SubwayStationResponse {
     public static SubwayStationResponse of(SubwayStation station, double latitude, double longitude) {
         List<String> stationLine = new ArrayList<>();
         stationLine.add(station.getLine());
-        return new SubwayStationResponse(station.getName(), stationLine, station.calculateWalkingTime(latitude, longitude));
+        return new SubwayStationResponse(station.getName(), stationLine,
+                station.calculateWalkingTime(latitude, longitude));
     }
 
     public static SubwayStationResponse from(ChecklistStation checklistStation) {

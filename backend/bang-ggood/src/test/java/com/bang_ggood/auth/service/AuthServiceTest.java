@@ -165,8 +165,8 @@ class AuthServiceTest extends IntegrationTestSupport {
     @Test
     void assignGuestUser_UnexpectedGuestUserExist() {
         // given
-        userRepository.save(UserFixture.GUEST_USER());
-        userRepository.save(UserFixture.GUEST_USER());
+        userRepository.save(UserFixture.GUEST_USER1());
+        userRepository.save(UserFixture.GUEST_USER2());
 
         // when & then
         assertThatThrownBy(() -> authService.assignGuestUser())
@@ -187,7 +187,7 @@ class AuthServiceTest extends IntegrationTestSupport {
     @Test
     void assignGuestUser() {
         // given
-        User guestUser = userRepository.save(UserFixture.GUEST_USER());
+        User guestUser = userRepository.save(UserFixture.GUEST_USER1());
 
         // when
         User assignedGuestUser = authService.assignGuestUser();

@@ -39,7 +39,8 @@ CREATE TABLE users
     login_type   VARCHAR(255) NOT NULL,
     created_at  TIMESTAMP(6),
     modified_at TIMESTAMP(6),
-    deleted     BOOLEAN
+    deleted     BOOLEAN,
+    CONSTRAINT unique_email_login_type UNIQUE (email, login_type)
 );
 
 CREATE TABLE checklist

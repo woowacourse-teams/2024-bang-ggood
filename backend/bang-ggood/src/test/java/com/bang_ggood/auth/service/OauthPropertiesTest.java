@@ -1,7 +1,7 @@
 package com.bang_ggood.auth.service;
 
 import com.bang_ggood.IntegrationTestSupport;
-import com.bang_ggood.auth.OauthFixture;
+import com.bang_ggood.auth.AuthFixture;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.service.oauth.OauthRequestProperties;
 import com.bang_ggood.global.exception.BangggoodException;
@@ -16,9 +16,9 @@ class OauthPropertiesTest extends IntegrationTestSupport {
     @Test
     void createTokenRequestBodyFail_whenRedirectUriMisMatch() {
         // given
-        OauthRequestProperties oauthRequestProperties = OauthFixture.OAUTH_REQUEST_PROPERTIES();
+        OauthRequestProperties oauthRequestProperties = AuthFixture.OAUTH_REQUEST_PROPERTIES();
 
-        String invalidRedirectUri = OauthFixture.INVALID_REGISTERED_REDIRECT_URI;
+        String invalidRedirectUri = AuthFixture.INVALID_REGISTERED_REDIRECT_URI;
         OauthLoginRequest oauthLoginRequest = new OauthLoginRequest("testCode", invalidRedirectUri);
 
         // when & then
@@ -31,8 +31,8 @@ class OauthPropertiesTest extends IntegrationTestSupport {
     @Test
     void createTokenRequestBody() {
         // given
-        OauthRequestProperties oauthRequestProperties = OauthFixture.OAUTH_REQUEST_PROPERTIES();
-        String redirectUris = OauthFixture.REGISTERED_REDIRECT_URIS;
+        OauthRequestProperties oauthRequestProperties = AuthFixture.OAUTH_REQUEST_PROPERTIES();
+        String redirectUris = AuthFixture.REGISTERED_REDIRECT_URIS;
         OauthLoginRequest oauthLoginRequest = new OauthLoginRequest("testCode", "localhost:3000");
 
         // when & then

@@ -20,6 +20,7 @@ public enum ExceptionCode {
 
     // User
     USER_NOT_FOUND(HttpStatus.UNAUTHORIZED, "유저가 존재하지 않습니다."),
+    USER_INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "잘못된 비밀번호입니다."),
     GUEST_USER_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "게스트 유저가 존재하지 않습니다."),
     GUEST_USER_UNEXPECTED_EXIST(HttpStatus.INTERNAL_SERVER_ERROR, "예상치 못한 게스트 유저가 존재합니다. 데이터베이스를 확인해주세요."),
 

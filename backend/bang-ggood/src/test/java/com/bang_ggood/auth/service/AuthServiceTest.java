@@ -24,7 +24,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import static com.bang_ggood.auth.OauthFixture.OAUTH_LOGIN_REQUEST;
+import static com.bang_ggood.auth.AuthFixture.LOCAL_LOGIN_REQUEST;
+import static com.bang_ggood.auth.AuthFixture.LOCAL_LOGIN_REQUEST_INVALID_EMAIL;
+import static com.bang_ggood.auth.AuthFixture.LOCAL_LOGIN_REQUEST_INVALID_PASSWORD;
+import static com.bang_ggood.auth.AuthFixture.OAUTH_LOGIN_REQUEST;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
@@ -46,46 +49,75 @@ class AuthServiceTest extends IntegrationTestSupport {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
-    @DisplayName("로그인 성공 : 존재하지 않는 회원이면 데이터베이스에 새로운 유저를 추가하고 토큰을 반환한다.")
+    @DisplayName("로컬 로그인 성공")
     @Test
-    void login_signup() {
+    void localLogin() {
+        // given & when
+        AuthTokenResponse response = authService.localLogin(LOCAL_LOGIN_REQUEST);
+
+        // then
+        assertThat(response.accessToken()).isNotBlank();
+        assertThat(response.refreshToken()).isNotBlank();
+    }
+
+    @DisplayName("로컬 로그인 실패: 일치하는 유저가 없는 경우")
+    @Test
+    void localLogin_userNotFound() {
+        // given & when & then
+        assertThatThrownBy(() -> authService.localLogin(LOCAL_LOGIN_REQUEST_INVALID_EMAIL))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.USER_NOT_FOUND.getMessage());
+    }
+
+    @DisplayName("로컬 로그인 실패: 일치하는 유저가 없는 경우")
+    @Test
+    void localLogin_userInvalidPassword() {
+        // given & when & then
+        assertThatThrownBy(() -> authService.localLogin(LOCAL_LOGIN_REQUEST_INVALID_PASSWORD))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.USER_INVALID_PASSWORD.getMessage());
+    }
+
+    @DisplayName("카카오 로그인 성공 : 존재하지 않는 회원이면 데이터베이스에 새로운 유저를 추가하고 토큰을 반환한다.")
+    @Test
+    void authLogin_signup() {
         // given
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
-        AuthTokenResponse token = authService.login(OAUTH_LOGIN_REQUEST);
+        AuthTokenResponse token = authService.authLogin(OAUTH_LOGIN_REQUEST);
 
         // then
         assertThat(token.accessToken()).isNotBlank();
         assertThat(token.refreshToken()).isNotBlank();
     }
 
-    @DisplayName("로그인 성공 : 존재하는 회원이면 데이터베이스에 새로운 유저를 추가하지않고 토큰을 바로 반환한다.")
+    @DisplayName("카카오 로그인 성공 : 존재하는 회원이면 데이터베이스에 새로운 유저를 추가하지않고 토큰을 바로 반환한다.")
     @Test
-    void login() {
+    void authLogin() {
         // given
         userRepository.save(UserFixture.USER1());
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER1());
 
         // when
-        AuthTokenResponse token = authService.login(OAUTH_LOGIN_REQUEST);
+        AuthTokenResponse token = authService.authLogin(OAUTH_LOGIN_REQUEST);
 
         // then
         assertThat(token.accessToken()).isNotBlank();
         assertThat(token.refreshToken()).isNotBlank();
     }
 
-    @DisplayName("로그인 성공 : 회원 가입시 디폴트 체크리스트 질문을 추가한다.")
+    @DisplayName("카카오 로그인 성공 : 회원 가입시 디폴트 체크리스트 질문을 추가한다.")
     @Test
-    void login_default_checklist_question() {
+    void authLogin_default_checklist_question() {
         // given
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
-        AuthTokenResponse token = authService.login(OAUTH_LOGIN_REQUEST);
+        AuthTokenResponse token = authService.authLogin(OAUTH_LOGIN_REQUEST);
 
         // then
         User user = authService.getAuthUser(token.accessToken());
@@ -100,15 +132,15 @@ class AuthServiceTest extends IntegrationTestSupport {
         assertThat(sum).isEqualTo(Question.findDefaultQuestions().size());
     }
 
-    @DisplayName("로그인 성공 : 회원 가입시 디폴트 체크리스트를 추가한다.")
+    @DisplayName("카카오 로그인 성공 : 회원 가입시 디폴트 체크리스트를 추가한다.")
     @Test
-    void login_default_checklist() {
+    void authLogin_default_checklist() {
         // given
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
-        AuthTokenResponse token = authService.login(OAUTH_LOGIN_REQUEST);
+        AuthTokenResponse token = authService.authLogin(OAUTH_LOGIN_REQUEST);
 
         // then
         User user = authService.getAuthUser(token.accessToken());
@@ -174,7 +206,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         userRepository.save(UserFixture.USER1());
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER1());
-        AuthTokenResponse tokenResponse = authService.login(OAUTH_LOGIN_REQUEST);
+        AuthTokenResponse tokenResponse = authService.authLogin(OAUTH_LOGIN_REQUEST);
 
         // when & then
         assertThatCode(() -> authService.reIssueAccessToken(tokenResponse.refreshToken()))

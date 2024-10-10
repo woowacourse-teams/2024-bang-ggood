@@ -1,5 +1,6 @@
 package com.bang_ggood.auth.service;
 
+import com.bang_ggood.auth.dto.request.LocalLoginRequestV1;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.dto.response.OauthInfoApiResponse;
@@ -8,6 +9,7 @@ import com.bang_ggood.auth.service.oauth.OauthClient;
 import com.bang_ggood.global.DefaultChecklistService;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
+import com.bang_ggood.user.domain.LoginType;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.domain.UserType;
 import com.bang_ggood.user.repository.UserRepository;
@@ -28,18 +30,37 @@ public class AuthService {
     private final OauthClient oauthClient;
     private final JwtTokenProvider jwtTokenProvider;
     private final DefaultChecklistService defaultChecklistService;
-    private final UserRepository userRepository; // TODO 리팩토링
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
     @Transactional
-    public AuthTokenResponse login(OauthLoginRequest request) {
+    public AuthTokenResponse authLogin(OauthLoginRequest request) {
         OauthInfoApiResponse oauthInfoApiResponse = oauthClient.requestOauthInfo(request);
 
-        User user = userRepository.findByEmail(oauthInfoApiResponse.kakao_account().email())
+        User user = userRepository.findByEmailAndLoginType(oauthInfoApiResponse.kakao_account().email(), LoginType.KAKAO)
                 .orElseGet(() -> signUp(oauthInfoApiResponse));
 
         String accessToken = jwtTokenProvider.createAccessToken(user);
         String refreshToken = jwtTokenProvider.createRefreshToken(user);
         return AuthTokenResponse.of(accessToken, refreshToken);
+    }
+
+    @Transactional(readOnly = true)
+    public AuthTokenResponse localLogin(LocalLoginRequestV1 request) {
+        User user = userRepository.findByEmailAndLoginType(request.email(), LoginType.LOCAL)
+                .orElseThrow(() -> new BangggoodException(ExceptionCode.USER_NOT_FOUND));
+        checkPassword(request, user);
+
+        String accessToken = jwtTokenProvider.createAccessToken(user);
+        String refreshToken = jwtTokenProvider.createRefreshToken(user);
+        return AuthTokenResponse.of(accessToken, refreshToken);
+    }
+
+    private void checkPassword(LocalLoginRequestV1 request, User user) {
+        String encodingPassword = passwordEncoder.encode(request.email(), request.password());
+        if (user.isDifferentPassword(encodingPassword)) {
+            throw new BangggoodException(ExceptionCode.USER_INVALID_PASSWORD);
+        }
     }
 
     private User signUp(OauthInfoApiResponse oauthInfoApiResponse) {

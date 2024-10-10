@@ -26,13 +26,7 @@ public class Password {
 
     public Password(String value) {
         validatePassword(value);
-        this.value = value;
-    }
-
-    //TODO : Salt 정책 세운 뒤 삭제 예정
-    public Password(String email, String value) {
-        validatePassword(value);
-        this.value = passwordEncoder.encode(email, value);
+        this.value = passwordEncoder.encode(value);
     }
 
     public void validatePassword(String password) {

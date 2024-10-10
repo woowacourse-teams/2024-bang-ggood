@@ -31,7 +31,7 @@ public abstract class AcceptanceTest {
     private UserRepository userRepository;
 
     private User authenticatedUser;
-    protected ResponseCookie responseCookie;
+    protected Headers headers;
 
     @LocalServerPort
     private int port;

@@ -33,11 +33,21 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
+    private static void validateTokenOwnership(User user, AuthUser accessAuthUser, AuthUser refreshAuthUser) {
+        if (!accessAuthUser.id().equals(refreshAuthUser.id())) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_USER_MISMATCH);
+        }
+        if (!user.getId().equals(accessAuthUser.id())) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER);
+        }
+    }
+
     @Transactional
     public AuthTokenResponse authLogin(OauthLoginRequest request) {
         OauthInfoApiResponse oauthInfoApiResponse = oauthClient.requestOauthInfo(request);
 
-        User user = userRepository.findByEmailAndLoginType(oauthInfoApiResponse.kakao_account().email(), LoginType.KAKAO)
+        User user = userRepository.findByEmailAndLoginType(oauthInfoApiResponse.kakao_account().email(),
+                        LoginType.KAKAO)
                 .orElseGet(() -> signUp(oauthInfoApiResponse));
 
         String accessToken = jwtTokenProvider.createAccessToken(user);
@@ -88,15 +98,6 @@ public class AuthService {
         AuthUser accessAuthUser = jwtTokenProvider.resolveToken(accessToken);
         AuthUser refreshAuthUser = jwtTokenProvider.resolveToken(refreshToken);
         validateTokenOwnership(user, accessAuthUser, refreshAuthUser);
-    }
-
-    private static void validateTokenOwnership(User user, AuthUser accessAuthUser, AuthUser refreshAuthUser) {
-        if (!accessAuthUser.id().equals(refreshAuthUser.id())) {
-            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_USER_MISMATCH);
-        }
-        if (!user.getId().equals(accessAuthUser.id())) {
-            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER);
-        }
     }
 
     @Transactional(readOnly = true)

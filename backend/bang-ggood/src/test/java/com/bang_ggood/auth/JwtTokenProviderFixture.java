@@ -33,6 +33,6 @@ public class JwtTokenProviderFixture {
     }
 
     private static JwtTokenProperties PROPERTIES() {
-        return new JwtTokenProperties(THIRTY_MINUTE , THIRTY_MINUTE);
+        return new JwtTokenProperties(THIRTY_MINUTE, THIRTY_MINUTE);
     }
 }

@@ -32,6 +32,9 @@ public class AuthFixture {
     );
 
     public static final OauthLoginRequest OAUTH_LOGIN_REQUEST = new OauthLoginRequest("testCode", "localhost:3000");
+    public static final String REGISTERED_REDIRECT_URIS = "localhost:3000, localhost:3001";
+    public static final String INVALID_REGISTERED_REDIRECT_URI = "localhost:8081";
+
     public static final OauthRequestProperties OAUTH_REQUEST_PROPERTIES() {
         String tokenPostUri = "testTokenPostUri";
         String userInfoRequestUri = "testUserInfoRequestUri";
@@ -44,6 +47,4 @@ public class AuthFixture {
                 grantType, clientId,
                 REGISTERED_REDIRECT_URIS, clientSecret);
     }
-    public static final String REGISTERED_REDIRECT_URIS = "localhost:3000, localhost:3001";
-    public static final String INVALID_REGISTERED_REDIRECT_URI = "localhost:8081";
 }

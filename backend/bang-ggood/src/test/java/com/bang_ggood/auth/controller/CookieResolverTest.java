@@ -15,7 +15,7 @@ class CookieResolverTest {
         // given
         String expectedToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0Ijox";
         CookieResolver cookieResolver = new CookieResolver();
-        Cookie[] cookies = { new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, expectedToken) };
+        Cookie[] cookies = {new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, expectedToken)};
 
         // when
         String token = cookieResolver.extractAccessToken(cookies);
@@ -30,7 +30,7 @@ class CookieResolverTest {
         // given
         String expectedToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0Ijox";
         CookieResolver cookieResolver = new CookieResolver();
-        Cookie[] cookies = { new Cookie(CookieProvider.REFRESH_TOKEN_COOKIE_NAME, expectedToken) };
+        Cookie[] cookies = {new Cookie(CookieProvider.REFRESH_TOKEN_COOKIE_NAME, expectedToken)};
 
         // when
         String token = cookieResolver.extractRefreshToken(cookies);
@@ -59,7 +59,7 @@ class CookieResolverTest {
     void isAllTokenNotExist_returnFalse() {
         // given
         CookieResolver cookieResolver = new CookieResolver();
-        Cookie[] cookies =  { new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, "test"),
+        Cookie[] cookies = {new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, "test"),
                 new Cookie(CookieProvider.REFRESH_TOKEN_COOKIE_NAME, "test")};
 
         // when
@@ -74,7 +74,7 @@ class CookieResolverTest {
     void isTokenNotExist_returnTrue() {
         // given
         CookieResolver cookieResolver = new CookieResolver();
-        Cookie[] cookies =  { new Cookie("test", "test") };
+        Cookie[] cookies = {new Cookie("test", "test")};
 
         // when
         boolean result = cookieResolver.isTokenNotExist(cookies);
@@ -88,7 +88,7 @@ class CookieResolverTest {
     void isTokenNotExist_returnFalse() {
         // given
         CookieResolver cookieResolver = new CookieResolver();
-        Cookie[] cookies =  { new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, "test")};
+        Cookie[] cookies = {new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, "test")};
 
         // when
         boolean result = cookieResolver.isTokenNotExist(cookies);

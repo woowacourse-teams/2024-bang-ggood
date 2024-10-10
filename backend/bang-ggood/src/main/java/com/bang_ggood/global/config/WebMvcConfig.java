@@ -1,8 +1,8 @@
 package com.bang_ggood.global.config;
 
 import com.bang_ggood.auth.config.AuthRequiredPrincipalArgumentResolver;
-import com.bang_ggood.auth.controller.CookieResolver;
 import com.bang_ggood.auth.config.UserPrincipalArgumentResolver;
+import com.bang_ggood.auth.controller.CookieResolver;
 import com.bang_ggood.auth.service.AuthService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

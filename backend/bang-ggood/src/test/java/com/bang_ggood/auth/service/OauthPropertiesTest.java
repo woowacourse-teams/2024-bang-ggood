@@ -50,7 +50,7 @@ class OauthPropertiesTest extends IntegrationTestSupport {
 
         OauthRequestProperties oauthRequestProperties = new OauthRequestProperties(
                 "testPostUri", "testUserUri", "testGrantType",
-        "testClientId", testRegisteredUris, "testClientSecret");
+                "testClientId", testRegisteredUris, "testClientSecret");
 
         // when & then
         Assertions.assertThat(oauthRequestProperties.getRegisteredRedirectUris())

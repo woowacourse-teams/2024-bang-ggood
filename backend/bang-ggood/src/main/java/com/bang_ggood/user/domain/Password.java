@@ -26,11 +26,11 @@ public class Password {
     private String value;
 
     public Password(String value) {
-        validatePassword(value);
+        validatePasswordPattern(value);
         this.value = passwordEncoder.encode(value);
     }
 
-    public void validatePassword(String password) {
+    public void validatePasswordPattern(String password) {
         if (!PASSWORD_PATTERN.matcher(password).matches()) {
             throw new BangggoodException(ExceptionCode.PASSWORD_INVALID_FORMAT);
         }

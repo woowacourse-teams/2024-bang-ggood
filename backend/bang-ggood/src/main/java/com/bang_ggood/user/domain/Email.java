@@ -26,11 +26,11 @@ public class Email {
     private String value;
 
     public Email(String value) {
-        validateEmail(value);
+        validateEmailPattern(value);
         this.value = value;
     }
 
-    public void validateEmail(String email) {
+    public void validateEmailPattern(String email) {
         if(!EMAIL_PATTERN.matcher(email).matches()) {
             throw new BangggoodException(ExceptionCode.EMAIL_INVALID_FORMAT);
         }

@@ -27,10 +27,10 @@ public class AuthController {
     private final CookieProvider cookieProvider;
     private final CookieResolver cookieResolver;
 
-    @PostMapping("/v1/register")
+    @PostMapping("/v1/local-auth/register")
     public ResponseEntity<Void> register(@Valid @RequestBody RegisterRequestV1 request) {
         Long userId = authService.register(request);
-        return ResponseEntity.created(URI.create("/v1/register/" + userId)).build();
+        return ResponseEntity.created(URI.create("/v1/local-auth/register/" + userId)).build();
     }
 
     @PostMapping("/oauth/login")

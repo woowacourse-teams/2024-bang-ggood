@@ -76,6 +76,21 @@ class AuthServiceTest extends IntegrationTestSupport {
         assertThat(findUser.getPassword().getValue()).isNotEqualTo(password);
     }
 
+    @DisplayName("회원가입 실패 : 이미 사용되는 이메일인 경우")
+    @Test
+    void register_emailAlreadyUsed() {
+        //given
+        RegisterRequestV1 request = new RegisterRequestV1("방방이", "bang@gmail.com", "password1234");
+
+        //when
+        Long userId = authService.register(request);
+
+        //then
+        assertThatThrownBy(() -> authService.register(request))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.USER_EMAIL_ALREADY_USED.getMessage());
+    }
+
     @DisplayName("회원가입 실패 : 이미 사용중인 이메일인 경우")
     @Test
     void register_alreadyUsedEmail_exception() {

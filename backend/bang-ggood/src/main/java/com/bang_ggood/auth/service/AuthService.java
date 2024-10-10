@@ -18,6 +18,7 @@ import com.bang_ggood.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -35,14 +36,13 @@ public class AuthService {
     private final DefaultChecklistService defaultChecklistService;
     private final UserRepository userRepository; // TODO 리팩토링
 
-    //TODO : 동시성 문제 발생 가능, email, LoginType unique 논의 후 구현 방식 수정 예정
     @Transactional
     public Long register(RegisterRequestV1 request) {
-        if (userRepository.existsByEmailAndUserType(new Email(request.email()), LoginType.LOCAL)) {
+        try {
+            return userRepository.save(request.toUserEntity()).getId();
+        } catch (DataIntegrityViolationException e) {
             throw new BangggoodException(ExceptionCode.USER_EMAIL_ALREADY_USED);
         }
-
-        return userRepository.save(request.toUserEntity()).getId();
     }
 
     @Transactional

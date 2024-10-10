@@ -55,7 +55,6 @@ public enum ExceptionCode {
     MAINTENANCE_ITEM_INVALID(HttpStatus.BAD_REQUEST, "유효하지 않은 관리비 항목이 입력되었습니다."),
 
     //like
-    LIKE_ALREADY_EXISTS(HttpStatus.CONFLICT, "체크리스트가 이미 좋아요 상태입니다"),
     LIKE_NOT_EXISTS(HttpStatus.BAD_REQUEST, "체크리스트 좋아요가 존재하지 않아 삭제할 수 없습니다."),
 
     // Auth

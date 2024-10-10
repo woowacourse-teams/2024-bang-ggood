@@ -55,7 +55,7 @@ class ChecklistLikeE2ETest extends AcceptanceTest {
                 .headers(this.headers)
                 .when().post("/checklists/" + checklistId + "/like")
                 .then().log().all()
-                .statusCode(409);
+                .statusCode(204);
     }
 
     @DisplayName("체크리스트 좋아요 삭제 성공")

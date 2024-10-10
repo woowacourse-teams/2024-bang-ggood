@@ -65,9 +65,7 @@ class ChecklistLikeManageServiceTest extends IntegrationTestSupport {
         checklistLikeManageService.createLike(user, checklist.getId());
 
         //then
-        assertThatThrownBy(() -> checklistLikeManageService.createLike(user, checklist.getId()))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.LIKE_ALREADY_EXISTS.getMessage());
+        assertThat(checklistLikeRepository.count()).isEqualTo(1);
     }
 
     @DisplayName("체크리스트 좋아요 삭제 성공")

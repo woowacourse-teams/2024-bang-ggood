@@ -19,7 +19,6 @@ const ThirdSection = () => {
 
   return (
     <CS.Container>
-      <CS.EmptyBox height="1rem" mobileHeight="2rem" />
       <CS.TextBox>
         <CS.Text>
           방 구할 때 어디를 봐야 할지 <br />더 이상 고민하지 마세요!
@@ -31,8 +30,8 @@ const ThirdSection = () => {
           <CS.Highlight>제일 중요하고 필요한 질문들</CS.Highlight>만
           <br /> 모아놨어요.
         </CS.Text>
+        <S.DesktopEmptyBox />
         <CS.Observer ref={ref} />
-        <CS.EmptyBox height="2rem" mobileHeight="0rem" />
         <S.CardList>
           <CS.AnimationBox isIntersecting={isIntersecting}>
             <S.Card>
@@ -59,6 +58,8 @@ const ThirdSection = () => {
             </S.Card>
           </CS.AnimationBox>
         </S.CardList>
+        <CS.EmptyBox height="1rem" />
+        <S.DesktopEmptyBox />
         <CS.Text margin={25}>
           짧은 시간동안 <CS.Bold>O X</CS.Bold> 로<br /> <CS.Highlight>빠르게 체크해요!</CS.Highlight>
         </CS.Text>
@@ -98,11 +99,9 @@ const S = {
       margin-top: 0;
     }
   `,
-  EmptyBox: styled.div`
-    height: 10rem;
-
-    @media (height <= ${({ theme }) => theme.viewport.MOBILE}px) {
-      height: 2rem;
+  DesktopEmptyBox: styled.div`
+    @media (height > ${({ theme }) => theme.viewport.DESKTOP}px) {
+      height: 5rem;
     }
   `,
   ChecklistImgBox: styled.div`

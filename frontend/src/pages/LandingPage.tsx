@@ -32,6 +32,8 @@ const SectionColors: Record<string, Color> = {
   },
 };
 
+const LAST_SECTION_INDEX = 4;
+
 const LandingPage = () => {
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
 
@@ -42,7 +44,7 @@ const LandingPage = () => {
       {Object.keys(SectionColors).map((key, index) => {
         return (
           <S.Section
-            height={index === 4 ? '25rem' : undefined}
+            height={index === LAST_SECTION_INDEX ? '30rem' : undefined}
             key={key}
             ref={el => (sectionRefs.current[index] = el)}
             color={SectionColors[key].background}
@@ -75,6 +77,7 @@ const S = {
     background-color: ${({ color }) => color};
 
     color: ${({ theme }) => theme.palette.black};
+    justify-content: center;
   `,
   Container: styled.main`
     background-color: ${({ theme }) => theme.palette.background};

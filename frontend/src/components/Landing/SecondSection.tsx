@@ -13,7 +13,6 @@ const SecondSection = () => {
   return (
     <>
       <CS.TextBox>
-        <CS.EmptyBox height={'1rem'} />
         <CS.Text>
           방끗은 방 구할 때 기록하는
           <br />

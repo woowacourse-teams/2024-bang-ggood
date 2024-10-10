@@ -41,7 +41,6 @@ const CS = {
     ${flexColumn};
     width: 100%;
     justify-content: center;
-    margin-top: 30px;
     text-align: center;
   `,
   Bold: styled.span`
@@ -51,6 +50,10 @@ const CS = {
     margin: ${({ margin }) => margin ?? 5}px;
     line-height: 1.5;
     font-size: ${({ theme }) => theme.text.size.medium};
+
+    @media (height > ${({ theme }) => theme.viewport.DESKTOP}px) {
+      font-size: ${({ theme }) => theme.text.size.large};
+    }
   `,
   Highlight: styled.span`
     font-weight: ${({ theme }) => theme.text.weight.semiBold};

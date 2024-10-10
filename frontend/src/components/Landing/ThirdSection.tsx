@@ -3,7 +3,7 @@ import '@/styles/category-sprite-image.css';
 import styled from '@emotion/styled';
 import { useRef } from 'react';
 
-import { checkingPageScreen, PencilIcon } from '@/assets/assets';
+import { ArrowDownSmall, checkingPageScreen, PencilIcon } from '@/assets/assets';
 import CS from '@/components/Landing/style';
 import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';
@@ -73,6 +73,9 @@ const ThirdSection = () => {
           </S.ChecklistImgBox>
         </CS.AnimationBox>
       </CS.TextBox>
+      <CS.MoveUpDownAnimationBox>
+        <ArrowDownSmall aria-label="스크롤로 하단의 정보를 확인할 수 있어요" />
+      </CS.MoveUpDownAnimationBox>
     </CS.Container>
   );
 };

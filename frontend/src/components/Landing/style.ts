@@ -1,9 +1,18 @@
 import styled from '@emotion/styled';
 
-import { fadeIn } from '@/styles/animation';
+import { arrowMove, fadeIn } from '@/styles/animation';
 import { flexCenter, flexColumn } from '@/styles/common';
 
 const CS = {
+  MoveUpDownAnimationBox: styled.div`
+    flex-direction: column;
+    margin-top: 1.5rem;
+    ${flexCenter}
+    position: absolute;
+    bottom: 3rem;
+    animation: ${arrowMove} 1s infinite;
+    left: 50%;
+  `,
   AnimationBox: styled.div<{ isIntersecting: boolean }>`
     width: 100%;
     ${flexCenter};

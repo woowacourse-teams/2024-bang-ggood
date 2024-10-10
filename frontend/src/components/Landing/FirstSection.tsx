@@ -6,7 +6,7 @@ import Button from '@/components/_common/Button/Button';
 import KakaoLoginButton from '@/components/_common/KakaoLogin/KakaoLoginButton';
 import CS from '@/components/Landing/style';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { arrowMove, moveUpDown } from '@/styles/animation';
+import { moveUpDown } from '@/styles/animation';
 import { flexCenter, flexColumn } from '@/styles/common';
 
 const FirstSection = () => {
@@ -42,9 +42,9 @@ const FirstSection = () => {
       <CS.EmptyBox height="5rem" mobileHeight="10rem" />
       <S.MoreBox>
         <S.SubText>방끗을 소개할게요. 아래를 클릭해보세요!</S.SubText>
-        <S.MoveUpDownAnimationBox>
+        <CS.MoveUpDownAnimationBox>
           <ArrowDownSmall aria-label="스크롤로 하단의 정보를 확인할 수 있어요" />
-        </S.MoveUpDownAnimationBox>
+        </CS.MoveUpDownAnimationBox>
       </S.MoreBox>
     </S.CenterBox>
   );
@@ -130,6 +130,9 @@ const S = {
     cursor: pointer;
   `,
   SubText: styled.div`
+    position: absolute;
+    bottom: 5rem;
+
     font-size: ${({ theme }) => theme.text.size.medium};
   `,
   MoreBox: styled.div`
@@ -138,11 +141,6 @@ const S = {
     align-items: center;
 
     color: ${({ theme }) => theme.palette.grey500};
-  `,
-  MoveUpDownAnimationBox: styled.div`
-    margin-top: 1.5rem;
-
-    animation: ${arrowMove} 1s infinite;
   `,
   BangBangIcon: styled(BangBangIcon)`
     width: 30rem;

@@ -70,6 +70,7 @@ export default LandingPage;
 
 const S = {
   Section: styled.section<{ color: string; height?: string }>`
+    position: relative;
     ${flexColumn}
     width: 100%;
     height: ${({ height }) => (height ? height : '100dvh')};

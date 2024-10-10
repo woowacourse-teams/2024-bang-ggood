@@ -2,7 +2,6 @@ import { LampIcon } from '@/assets/assets';
 import TopButton from '@/components/_common/TopButton/TopButton';
 import CS from '@/components/Landing/style';
 
-//TODO: 여기만 200px
 const FifthSection = () => {
   return (
     <CS.Container>

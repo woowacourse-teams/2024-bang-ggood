@@ -30,6 +30,8 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String email;
 
+    private String password;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserType userType;
@@ -38,9 +40,10 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private LoginType loginType;
 
-    public User(String name, String email, UserType userType, LoginType loginType) {
+    public User(String name, String email, String password, UserType userType, LoginType loginType) {
         this.name = name;
         this.email = email;
+        this.password = password;
         this.userType = userType;
         this.loginType = loginType;
     }
@@ -49,6 +52,10 @@ public class User extends BaseEntity {
         this.id = id;
         this.name = name;
         this.email = email;
+    }
+
+    public boolean isDifferentPassword(String password) {
+        return !Objects.equals(this.password, password);
     }
 
     @Override

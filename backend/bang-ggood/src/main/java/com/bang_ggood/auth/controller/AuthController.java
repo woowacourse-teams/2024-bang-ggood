@@ -1,6 +1,7 @@
 package com.bang_ggood.auth.controller;
 
 import com.bang_ggood.auth.config.AuthRequiredPrincipal;
+import com.bang_ggood.auth.dto.request.LocalLoginRequestV1;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.service.AuthService;
@@ -28,8 +29,21 @@ public class AuthController {
     }
 
     @PostMapping("/oauth/login")
-    public ResponseEntity<Void> login(@Valid @RequestBody OauthLoginRequest request) {
-        AuthTokenResponse response = authService.login(request);
+    public ResponseEntity<Void> oauthLogin(@Valid @RequestBody OauthLoginRequest request) {
+        AuthTokenResponse response = authService.authLogin(request);
+
+        ResponseCookie accessTokenCookie = cookieProvider.createAccessTokenCookie(response.accessToken());
+        ResponseCookie refreshTokenCookie = cookieProvider.createRefreshTokenCookie(response.refreshToken());
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString())
+                .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
+                .build();
+    }
+
+    @PostMapping("/v1/local/login")
+    public ResponseEntity<Void> localLogin(@Valid @RequestBody LocalLoginRequestV1 request) {
+        AuthTokenResponse response = authService.localLogin(request);
 
         ResponseCookie accessTokenCookie = cookieProvider.createAccessTokenCookie(response.accessToken());
         ResponseCookie refreshTokenCookie = cookieProvider.createRefreshTokenCookie(response.refreshToken());

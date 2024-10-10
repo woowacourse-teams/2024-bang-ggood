@@ -16,6 +16,11 @@ public class AuthFixture {
             "bang-ggood"
     );
 
+    public static final LocalLoginRequestV1 LOCAL_LOGIN_REQUEST_NO_PASSWORD = new LocalLoginRequestV1(
+            "bang-ggood@gmail.com",
+            null
+    );
+
     public static final LocalLoginRequestV1 LOCAL_LOGIN_REQUEST_INVALID_EMAIL = new LocalLoginRequestV1(
             "bang-bad@gmail.com",
             "bang-ggood"

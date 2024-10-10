@@ -11,7 +11,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 
-import static com.bang_ggood.auth.OauthFixture.OAUTH_LOGIN_REQUEST;
+import static com.bang_ggood.auth.AuthFixture.LOCAL_LOGIN_REQUEST;
+import static com.bang_ggood.auth.AuthFixture.LOCAL_LOGIN_REQUEST_INVALID_PASSWORD;
+import static com.bang_ggood.auth.AuthFixture.LOCAL_LOGIN_REQUEST_NO_EMAIL;
+import static com.bang_ggood.auth.AuthFixture.LOCAL_LOGIN_REQUEST_NO_PASSWORD;
+import static com.bang_ggood.auth.AuthFixture.OAUTH_LOGIN_REQUEST;
 import static org.hamcrest.Matchers.containsString;
 
 class AuthE2ETest extends AcceptanceTest {
@@ -19,7 +23,42 @@ class AuthE2ETest extends AcceptanceTest {
     @Autowired
     private AuthService authService;
 
-    @DisplayName("로그인 실패 : 인가코드가 없는 경우")
+    @DisplayName("로컬 로그인 성공")
+    @Test
+    void localLogin() {
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(LOCAL_LOGIN_REQUEST)
+                .when().post("/v1/local/login")
+                .then().log().all()
+                .statusCode(200);
+    }
+
+    @DisplayName("로컬 로그인 실패: 이메일이 없는 경우")
+    @Test
+    void localLogin_noEmail_exception() {
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(LOCAL_LOGIN_REQUEST_NO_EMAIL)
+                .when().post("/v1/local/login")
+                .then().log().all()
+                .statusCode(400)
+                .body("message", containsString( "이메일이 존재하지 않습니다."));
+    }
+
+    @DisplayName("로컬 로그인 실패: 비밀번호가 없는 경우")
+    @Test
+    void localLogin_noPassword_exception() {
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(LOCAL_LOGIN_REQUEST_NO_PASSWORD)
+                .when().post("/v1/local/login")
+                .then().log().all()
+                .statusCode(400)
+                .body("message", containsString( "비밀번호가 존재하지 않습니다."));
+    }
+
+    @DisplayName("카카오 로그인 실패 : 인가코드가 없는 경우")
     @Test
     void login_code_notBlank_exception() {
         RestAssured.given().log().all()

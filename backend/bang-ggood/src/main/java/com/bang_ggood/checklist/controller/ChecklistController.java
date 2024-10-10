@@ -3,8 +3,10 @@ package com.bang_ggood.checklist.controller;
 import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.auth.config.UserPrincipal;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
-import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
+import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
+import com.bang_ggood.checklist.dto.response.SelectedChecklistResponseV1;
 import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.checklist.service.ChecklistService;
 import com.bang_ggood.user.domain.User;
@@ -37,10 +39,23 @@ public class ChecklistController {
         return ResponseEntity.created(URI.create("/checklist/" + checklistId)).build();
     }
 
+    @PostMapping("/v1/checklists")
+    public ResponseEntity<Void> createChecklistV1(@AuthRequiredPrincipal User user,
+                                                  @Valid @RequestBody ChecklistRequestV1 checklistRequestV1) {
+        long checklistId = checklistManageService.createChecklistV1(user, checklistRequestV1);
+        return ResponseEntity.created(URI.create("/checklists/" + checklistId)).build();
+    }
+
     @GetMapping("/checklists/{id}")
     public ResponseEntity<SelectedChecklistResponse> readChecklistById(@UserPrincipal User user,
                                                                        @PathVariable("id") Long checklistId) {
         return ResponseEntity.ok(checklistManageService.readChecklist(user, checklistId));
+    }
+
+    @GetMapping("v1/checklists/{id}")
+    public ResponseEntity<SelectedChecklistResponseV1> readChecklistByIdV1(@UserPrincipal User user,
+                                                                           @PathVariable("id") Long checklistId) {
+        return ResponseEntity.ok(checklistManageService.readChecklistV1(user, checklistId));
     }
 
     @GetMapping("/checklists")

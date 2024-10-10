@@ -5,6 +5,7 @@ import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.dto.response.OauthInfoApiResponse;
 import com.bang_ggood.auth.service.jwt.JwtTokenProvider;
+import com.bang_ggood.auth.service.jwt.JwtTokenResolver;
 import com.bang_ggood.auth.service.oauth.OauthClient;
 import com.bang_ggood.global.DefaultChecklistService;
 import com.bang_ggood.global.exception.BangggoodException;
@@ -29,6 +30,7 @@ public class AuthService {
 
     private final OauthClient oauthClient;
     private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenResolver jwtTokenResolver;
     private final DefaultChecklistService defaultChecklistService;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
@@ -95,24 +97,22 @@ public class AuthService {
     public void logout(String accessToken, String refreshToken, User user) {
         log.info("logout accessToken: {}", accessToken);
         log.info("logout refreshToken: {}", refreshToken);
-        AuthUser accessAuthUser = jwtTokenProvider.resolveToken(accessToken);
-        AuthUser refreshAuthUser = jwtTokenProvider.resolveToken(refreshToken);
+        AuthUser accessAuthUser = jwtTokenResolver.resolveAccessToken(accessToken);
+        AuthUser refreshAuthUser = jwtTokenResolver.resolveRefreshToken(refreshToken);
         validateTokenOwnership(user, accessAuthUser, refreshAuthUser);
     }
 
     @Transactional(readOnly = true)
     public User getAuthUser(String token) {
+        AuthUser authUser = jwtTokenResolver.resolveAccessToken(token);
         log.info("extractUser token: {}", token);
-        AuthUser authUser = jwtTokenProvider.resolveToken(token);
         log.info("extractUser authUserId: {}", authUser.id());
         return userRepository.getUserById(authUser.id());
     }
 
     @Transactional(readOnly = true)
-    public String reIssueAccessToken(String refreshToken) {
-        jwtTokenProvider.validateRefreshTokenType(refreshToken);
-        AuthUser authUser = jwtTokenProvider.resolveToken(refreshToken);
-
+    public String reissueAccessToken(String refreshToken) {
+        AuthUser authUser = jwtTokenResolver.resolveRefreshToken(refreshToken);
         User user = userRepository.getUserById(authUser.id());
         return jwtTokenProvider.createAccessToken(user);
     }

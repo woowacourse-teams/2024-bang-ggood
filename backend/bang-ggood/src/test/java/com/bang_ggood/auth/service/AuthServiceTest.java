@@ -201,7 +201,7 @@ class AuthServiceTest extends IntegrationTestSupport {
 
     @DisplayName("액세스 토큰 재발행 성공")
     @Test
-    void reIssueAccessToken() {
+    void reissueAccessToken() {
         // given
         userRepository.save(UserFixture.USER1());
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
@@ -209,7 +209,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         AuthTokenResponse tokenResponse = authService.authLogin(OAUTH_LOGIN_REQUEST);
 
         // when & then
-        assertThatCode(() -> authService.reIssueAccessToken(tokenResponse.refreshToken()))
+        assertThatCode(() -> authService.reissueAccessToken(tokenResponse.refreshToken()))
                 .doesNotThrowAnyException();
 
     }

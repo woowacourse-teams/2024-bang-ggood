@@ -84,6 +84,7 @@ public class ChecklistManageService {
                 .map(question -> new ChecklistQuestion(
                         checklist,
                         Question.fromId(question.questionId()),
+                        questionService.readQuestion(question.questionId()),
                         Answer.from(question.answer())))
                 .toList();
         checklistQuestionService.createQuestions(checklistQuestions);
@@ -236,6 +237,7 @@ public class ChecklistManageService {
                 .map(question -> new ChecklistQuestion(
                         checklist,
                         Question.fromId(question.questionId()),
+                        questionService.readQuestion(question.questionId()),
                         Answer.from(question.answer())))
                 .toList();
         checklistQuestionService.updateQuestions(questions, updateQuestions);

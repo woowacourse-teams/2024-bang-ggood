@@ -3,9 +3,7 @@ package com.bang_ggood.question.domain;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public enum Question {
 
@@ -51,11 +49,6 @@ public enum Question {
     OUTSIDE_5(31, Category.OUTSIDE, "옆 건물에서 보이는 구조인지 확인했나요?", null, List.of("보이는 구조"), false),
     OUTSIDE_6(32, Category.OUTSIDE, "주차할 수 있는 시설이 있나요?", null, List.of("주차할 수 있는 시설"), false);
 
-    static {
-        validateQuestionIdDuplication();
-        validateQuestionHighlightsMisMatch();
-    }
-
     private final int id;
     private final Category category;
     private final String title;
@@ -70,25 +63,6 @@ public enum Question {
         this.subtitle = subtitle;
         this.highlights = highlights;
         this.isDefault = isDefault;
-    }
-
-    private static void validateQuestionIdDuplication() {
-        Set<Integer> idSet = new HashSet<>();
-        for (Question question : Question.values()) {
-            if (!idSet.add(question.getId())) {
-                throw new BangggoodException(ExceptionCode.QUESTION_ID_ERROR);
-            }
-        }
-    }
-
-    private static void validateQuestionHighlightsMisMatch() {
-        for (Question question : Question.values()) {
-            for (String highlight : question.highlights) {
-                if (!question.getTitle().contains(highlight)) {
-                    throw new BangggoodException(ExceptionCode.QUESTION_HIGHLIGHT_ERROR);
-                }
-            }
-        }
     }
 
     public static Question fromId(int id) {

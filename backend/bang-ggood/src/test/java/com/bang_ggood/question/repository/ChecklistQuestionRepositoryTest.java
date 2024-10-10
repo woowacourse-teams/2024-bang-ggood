@@ -4,7 +4,11 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
+import com.bang_ggood.question.ChecklistQuestionFixture;
+import com.bang_ggood.question.QuestionFixture;
+import com.bang_ggood.question.domain.CategoryEntity;
 import com.bang_ggood.question.domain.ChecklistQuestion;
+import com.bang_ggood.question.domain.QuestionEntity;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
@@ -33,15 +37,26 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
     @Autowired
     private ChecklistQuestionRepository checklistQuestionRepository;
 
+    @Autowired
+    private QuestionRepository questionRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @DisplayName("질문 답변을 체크리스트 ID로 조회 성공")
     @Test
     void findAllByChecklistId() {
         //given
         Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
+
+        CategoryEntity category = categoryRepository.save(QuestionFixture.CATEGORY1());
+        QuestionEntity question1 = questionRepository.save(QuestionFixture.QUESTION1(category));
+        QuestionEntity question2 = questionRepository.save(QuestionFixture.QUESTION2(category));
+
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-        checklistQuestionRepository.save(ChecklistFixture.CHECKLIST_QUESTION_1(checklist));
-        checklistQuestionRepository.save(ChecklistFixture.CHECKLIST_QUESTION_2(checklist));
+        checklistQuestionRepository.save(ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, question1));
+        checklistQuestionRepository.save(ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, question2));
 
         // when
         List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findAllByChecklistId(
@@ -59,15 +74,20 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
         //given
         Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
+
+        CategoryEntity category = categoryRepository.save(QuestionFixture.CATEGORY1());
+        QuestionEntity question1 = questionRepository.save(QuestionFixture.QUESTION1(category));
+        QuestionEntity question2 = questionRepository.save(QuestionFixture.QUESTION2(category));
+
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
         ChecklistQuestion checklistQuestion1 = checklistQuestionRepository.save(
-                ChecklistFixture.CHECKLIST_QUESTION_1(checklist));
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, question1));
         ChecklistQuestion checklistQuestion2 = checklistQuestionRepository.save(
-                ChecklistFixture.CHECKLIST_QUESTION_2(checklist));
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, question2));
 
         //when
         checklistQuestionRepository.deleteAllByChecklistId(
-                ChecklistFixture.CHECKLIST_QUESTION_1(checklist).getChecklistId());
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, question1).getChecklistId());
 
         //then
         assertAll(

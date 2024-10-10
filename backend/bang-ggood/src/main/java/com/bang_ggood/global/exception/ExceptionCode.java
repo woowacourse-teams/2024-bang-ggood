@@ -15,6 +15,7 @@ public enum ExceptionCode {
     QUESTION_ID_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "중복된 질문 ID가 존재해 질문을 생성할 수 없습니다."),
     QUESTION_HIGHLIGHT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "잘못된 하이라이트 키워드가 존재해 질문을 생성할 수 없습니다."),
     QUESTION_INVALID(HttpStatus.BAD_REQUEST, "잘못된 질문 ID입니다."),
+    QUESTION_NOT_FOUND(HttpStatus.BAD_REQUEST, "질문이 존재하지 않습니다."),
     QUESTION_DUPLICATED(HttpStatus.BAD_REQUEST, "중복된 질문이 존재합니다."),
     QUESTION_DIFFERENT(HttpStatus.BAD_REQUEST, "수정할 질문 목록이 기존의 질문 목록과 동일하지 않습니다."),
 

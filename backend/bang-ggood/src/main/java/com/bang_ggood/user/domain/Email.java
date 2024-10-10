@@ -16,6 +16,9 @@ import static lombok.AccessLevel.PROTECTED;
 @NoArgsConstructor(access = PROTECTED)
 public class Email {
 
+    //이메일은 영문 대소문자, 숫자, 점, 하이픈, 언더스코어, 플러스 기호를 포함할 수 있으며,
+    // "@" 기호 뒤에 도메인 이름이 필요하고,
+    // 마지막에는 최소 2글자의 영문자로 이루어진 최상위 도메인이 포함되어야 한다..
     private static final Pattern EMAIL_PATTERN =
             Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
 

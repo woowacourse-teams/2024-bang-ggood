@@ -5,8 +5,6 @@ import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.service.ChecklistManageService;
-import com.bang_ggood.checklist.service.ChecklistService;
-import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.question.CustomChecklistFixture;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.room.RoomFixture;
@@ -25,15 +23,11 @@ class ChecklistE2ETest extends AcceptanceTest {
     @Autowired
     private ChecklistManageService checklistManageService;
     @Autowired
-    private ChecklistService checklistService;
-    @Autowired
     private ChecklistRepository checklistRepository;
     @Autowired
     private RoomRepository roomRepository;
     @Autowired
     private CustomChecklistQuestionRepository customChecklistQuestionRepository;
-    @Autowired
-    private ChecklistLikeRepository checklistLikeRepository;
 
     @DisplayName("체크리스트 작성 성공")
     @Test

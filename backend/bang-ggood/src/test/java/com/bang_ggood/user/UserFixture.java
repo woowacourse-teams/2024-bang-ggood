@@ -17,8 +17,12 @@ public class UserFixture {
         return new User("빵빵이", "bbang-bbang@gmail.com", UserType.USER, LoginType.LOCAL);
     }
 
-    public static User GUEST_USER() {
-        return new User("빵빵이", "bbang-bbang@gmail.com", UserType.GUEST, LoginType.LOCAL);
+    public static User GUEST_USER1() {
+        return new User("빵빵이", "bbang-bbang1@gmail.com", UserType.GUEST, LoginType.LOCAL);
+    }
+
+    public static User GUEST_USER2() {
+        return new User("빵빵이", "bbang-bbang2@gmail.com", UserType.GUEST, LoginType.LOCAL);
     }
 
     public static User USER1_WITH_ID() {
@@ -31,13 +35,13 @@ public class UserFixture {
 
     public static OauthInfoApiResponse OAUTH_INFO_RESPONSE_USER1() {
         return new OauthInfoApiResponse("", "",
-                new KakaoAccountResponse(USER1().getEmail(), USER1().getName(),
+                new KakaoAccountResponse(USER1().getEmail().getValue(), USER1().getName(),
                         new ProfileResponse("", "", "")));
     }
 
     public static OauthInfoApiResponse OAUTH_INFO_RESPONSE_USER2() {
         return new OauthInfoApiResponse("", "",
-                new KakaoAccountResponse(USER2().getEmail(), USER2().getName(),
+                new KakaoAccountResponse(USER2().getEmail().getValue(), USER2().getName(),
                         new ProfileResponse("", "", "")));
     }
 }

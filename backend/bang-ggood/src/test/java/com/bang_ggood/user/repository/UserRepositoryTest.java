@@ -34,7 +34,7 @@ class UserRepositoryTest extends IntegrationTestSupport {
     @Test
     void findByType() {
         // given
-        User expectedUser = userRepository.save(UserFixture.GUEST_USER());
+        User expectedUser = userRepository.save(UserFixture.GUEST_USER1());
 
         // when
         List<User> users = userRepository.findUserByUserType(UserType.GUEST);

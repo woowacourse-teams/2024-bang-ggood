@@ -30,7 +30,7 @@ class ArgumentResolverTest extends AcceptanceTest {
     @Test
     void resolveUserPrincipalArgument_returnGuestUser() {
         // given & when
-        userRepository.save(UserFixture.GUEST_USER());
+        userRepository.save(UserFixture.GUEST_USER1());
 
         User user = RestAssured.given().log().all()
                 .contentType(ContentType.JSON)

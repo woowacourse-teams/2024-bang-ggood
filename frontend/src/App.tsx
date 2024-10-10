@@ -14,12 +14,12 @@ const App = () => {
 
   const queryClient = new QueryClient({
     defaultOptions: {
-      mutations: { onError: error => showToast({ message: error.message }) },
+      mutations: { onError: error => showToast({ message: error.message, type: 'error' }) },
       queries: { throwOnError: true },
     },
     queryCache: new QueryCache({
       // get 일때 return => fallback
-      onError: error => showToast({ message: error.message }),
+      onError: error => showToast({ message: error.message, type: 'error' }),
     }),
   });
 

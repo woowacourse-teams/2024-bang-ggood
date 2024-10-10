@@ -1,10 +1,12 @@
 import styled from '@emotion/styled';
+import React, { useRef } from 'react';
 
 import FifthSection from '@/components/Landing/FifthSection';
 import FirstSection from '@/components/Landing/FirstSection';
 import FourthSection from '@/components/Landing/FourthSection';
 import SecondSection from '@/components/Landing/SecondSection';
 import ThirdSection from '@/components/Landing/ThirdSection';
+import useMoveSection from '@/hooks/useMoveSection';
 import { flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
 
@@ -30,39 +32,53 @@ const SectionColors: Record<string, Color> = {
   },
 };
 
+const LAST_SECTION_INDEX = 4;
+
 const LandingPage = () => {
+  const sectionRefs = useRef<(HTMLElement | null)[]>([]);
+
+  const { handleSectionClick } = useMoveSection(sectionRefs);
+
   return (
     <S.Container>
-      <S.Section height={65} color={SectionColors.first.background}>
-        <FirstSection />
-      </S.Section>
-      <S.Section height={75} color={SectionColors.second.background}>
-        <SecondSection />
-      </S.Section>
-      <S.Section height={82} color={SectionColors.third.background}>
-        <ThirdSection />
-      </S.Section>
-      <S.Section height={95} color={SectionColors.fourth.background}>
-        <FourthSection />
-      </S.Section>
-      <S.Section height={25} color={SectionColors.fifth.background}>
-        <FifthSection />
-      </S.Section>
+      {Object.keys(SectionColors).map((key, index) => {
+        return (
+          <S.Section
+            height={index === LAST_SECTION_INDEX ? '30rem' : undefined}
+            key={key}
+            ref={el => (sectionRefs.current[index] = el)}
+            color={SectionColors[key].background}
+            onClick={e => handleSectionClick(index, e)}
+          >
+            {React.createElement(sections[index])}
+          </S.Section>
+        );
+      })}
     </S.Container>
   );
 };
 
+const sections = [
+  () => <FirstSection />,
+  () => <SecondSection />,
+  () => <ThirdSection />,
+  () => <FourthSection />,
+  () => <FifthSection />,
+];
+
 export default LandingPage;
 
 const S = {
-  Section: styled.section<{ color: string; height: number }>`
+  Section: styled.section<{ color: string; height?: string }>`
+    position: relative;
     ${flexColumn}
     width: 100%;
-    height: ${({ height }) => height}rem;
+    height: ${({ height }) => (height ? height : '100dvh')};
 
     background-color: ${({ color }) => color};
 
     color: ${({ theme }) => theme.palette.black};
+    justify-content: center;
   `,
   Container: styled.main`
     background-color: ${({ theme }) => theme.palette.background};

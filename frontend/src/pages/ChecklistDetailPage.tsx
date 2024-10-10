@@ -47,7 +47,7 @@ const ChecklistDetailPage = () => {
             /* 정상적으로 검색이 완료됐으면*/
             if (status === kakao.maps.services.Status.OK) {
               const findSubway = async () => {
-                const nearSubways = await getNearSubways({ lat: result[0].y, lon: result[0].x });
+                const nearSubways = await getNearSubways({ latitude: result[0].y, longitude: result[0].x });
                 setNearSubways(nearSubways);
               };
               findSubway();

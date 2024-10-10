@@ -37,7 +37,7 @@ public class UserPrincipalArgumentResolver implements HandlerMethodArgumentResol
             return authService.assignGuestUser();
         }
 
-        String token = cookieResolver.extractAccessToken(request.getCookies());
+        String token = cookieResolver.extractAccessToken(request);
         return authService.getAuthUser(token);
     }
 }

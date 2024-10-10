@@ -89,7 +89,7 @@ public class AuthService {
     }
 
     @Transactional(readOnly = true)
-    public String reIssueAccessToken(String refreshToken) {
+    public String reissueAccessToken(String refreshToken) {
         AuthUser authUser = jwtTokenResolver.resolveRefreshToken(refreshToken);
         User user = userRepository.getUserById(authUser.id());
         return jwtTokenProvider.createAccessToken(user);

@@ -10,15 +10,20 @@ import {
   positiveValidator,
 } from '@/utils/validators';
 
-export const roomFormSpec: FormSpec<Omit<RoomInfo, 'includedMaintenances'>> = {
+type RoomInfoState = Omit<
+  Required<RoomInfo>,
+  'createdAt' | 'includedMaintenances' | 'station' | 'walkingTime' | 'address' | 'buildingName'
+>;
+
+export const roomFormSpec: FormSpec<RoomInfoState> = {
   roomName: { initialValue: '', type: 'string', validators: [lengthValidator(20)] },
   deposit: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
   rent: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
   maintenanceFee: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
   contractTerm: { initialValue: '', type: 'number', validators: [isNumericValidator, nonNegativeValidator] },
   type: { initialValue: '', type: 'string', validators: [] },
-  size: { initialValue: 0, type: 'number', validators: [isNumericValidator] },
-  floor: { initialValue: 0, type: 'number', validators: [isIntegerValidator, positiveValidator] },
+  size: { initialValue: '', type: 'number', validators: [isNumericValidator] },
+  floor: { initialValue: '', type: 'number', validators: [isIntegerValidator, positiveValidator] },
   floorLevel: { initialValue: roomFloorLevels[0], type: 'string', validators: [] },
   structure: { initialValue: 'NONE', type: 'string', validators: [] },
   realEstate: { initialValue: '', type: 'string', validators: [] },
@@ -30,10 +35,9 @@ export const roomFormSpec: FormSpec<Omit<RoomInfo, 'includedMaintenances'>> = {
   occupancyPeriod: { initialValue: roomOccupancyPeriods[0], type: 'string', validators: [] },
   summary: { initialValue: '', type: 'string', validators: [] },
   memo: { initialValue: '', type: 'string', validators: [] },
-  // includedMaintenances: { initialValue: '', type: 'number[]', validators: [] },
 };
 
-export const checklistRoomInfoStores = createFormFieldStores<RoomInfo>(roomFormSpec);
-checklistRoomInfoStores.address.getState().value
-checklistRoomInfoStores.floor.getState().value
+export const checklistRoomInfoStores = createFormFieldStores<RoomInfoState>(roomFormSpec);
+checklistRoomInfoStores.roomName.getState().value;
+checklistRoomInfoStores.floor.getState().value;
 export default checklistRoomInfoStores;

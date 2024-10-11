@@ -1,13 +1,13 @@
 import { ChangeEventHandler } from 'react';
-import { createStore } from 'zustand';
+import { createStore, StoreApi } from 'zustand';
 
-import { createFormFieldSlice } from '@/store/createFormFieldSlice';
+import { createFormFieldSlice, FormAction as FormFieldAction, FormFieldUnitState } from '@/store/createFormFieldSlice';
 import { Validator } from '@/utils/validators';
 
 export type FormFieldSpec = FormFieldSpecN | FormFieldSpecS;
 
 export interface FormFieldSpecN {
-  initialValue: number;
+  initialValue: string;
   type: 'number';
   validators: Validator[];
 }
@@ -30,13 +30,32 @@ function typedFromEntries<K extends string | number | symbol, V>(entries: [K, V]
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const createFormFieldStores = <ObjectState extends Record<string, any>>(formSpec: FormSpec<ObjectState>) => {
-  const stores = typedFromEntries(
-    typedEntries(formSpec).map(([key, value]) => [
-      key,
-      createStore(createFormFieldSlice<typeof value.initialValue>(value.initialValue, value.validators, value.type)),
-    ]),
+  const storesN = typedFromEntries(
+    typedEntries(formSpec)
+      .filter(([, value]) => value.type === 'number')
+      .map(([key, value]) => [
+        key,
+        createStore(createFormFieldSlice<number>(value.initialValue, value.validators, value.type)),
+      ]),
+  );
+  const storesS = typedFromEntries(
+    typedEntries(formSpec)
+      .filter(([, value]) => value.type === 'string')
+      .map(([key, value]) => [
+        key,
+        createStore(createFormFieldSlice<string>(value.initialValue, value.validators, value.type)),
+      ]),
   );
 
+  type B = {
+    readonly [k in keyof ObjectState]: StoreApi<
+      FormFieldUnitState<ObjectState[k]> & {
+        actions: FormFieldAction;
+      }
+    >;
+  };
+
+  const stores = { ...storesN, ...storesS } as B;
   // as 쓴 이유 : JS의 Object.entries 함수는 value에 대해 하나의 타입을 가정하고 만들어줬기때문에 지금은 써줘야 함.
   const setAllWithValidation = (rawValueObj: ObjectState) =>
     Object.entries(rawValueObj).forEach(([name, rawValue]) => set(name, rawValue)); // 인자 - (키: name, 밸류: rawValue인 객체)

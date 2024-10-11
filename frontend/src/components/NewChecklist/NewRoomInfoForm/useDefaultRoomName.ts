@@ -6,7 +6,7 @@ import checklistRoomInfoStore, { initialRoomInfo } from '@/store/checklistRoomIn
 
 const useDefaultRoomName = () => {
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
-  const roomName = useStore(checklistRoomInfoStore, state => state.rawValue.roomName);
+  const roomName = useStore(checklistRoomInfoStore.roomName);
 
   const { data: checklistList } = useGetChecklistListQuery();
 

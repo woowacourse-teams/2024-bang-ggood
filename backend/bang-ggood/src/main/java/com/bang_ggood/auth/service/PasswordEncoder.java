@@ -18,7 +18,11 @@ public class PasswordEncoder {
         return encode(password, getSalt());
     }
 
-    public static String encode(String password, byte[] salt) {
+    public static String encodeWithSpecificSalt(String password, String passwordWithSalt) {
+        return encode(password, extractSaltByPassword(passwordWithSalt));
+    }
+
+    private static String encode(String password, byte[] salt) {
         try {
             KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 512);
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
@@ -31,12 +35,23 @@ public class PasswordEncoder {
         }
     }
 
-    public static byte[] getSalt() {
+    private static byte[] getSalt() {
         SecureRandom secureRandom = new SecureRandom();
         byte[] salt = new byte[64];
         secureRandom.nextBytes(salt);
         return salt;
     }
+
+    private static byte[] extractSaltByPassword(String encodedPassword) {
+        String[] parts = encodedPassword.split(DELIMITER);
+        if (parts.length != 2) {
+            throw new BangggoodException(ExceptionCode.PASSWORD_HASHING_ERROR);
+        }
+
+        String encodedSalt = parts[1];
+        return Base64.getDecoder().decode(encodedSalt);
+    }
+
 
     private PasswordEncoder() {
     }

@@ -68,6 +68,14 @@ public class User extends BaseEntity {
         return !Objects.equals(this.password, password);
     }
 
+    public String getEmail() {
+        return this.email.getValue();
+    }
+
+    public String getPassword() {
+        return this.password.getValue();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

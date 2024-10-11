@@ -36,7 +36,6 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
     private final JwtTokenResolver jwtTokenResolver;
     private final DefaultChecklistService defaultChecklistService;
-    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
     private static void validateTokenOwnership(User user, AuthUser accessAuthUser, AuthUser refreshAuthUser) {
@@ -81,8 +80,9 @@ public class AuthService {
         return AuthTokenResponse.of(accessToken, refreshToken);
     }
 
+    // 로직 병경
     private void checkPassword(LocalLoginRequestV1 request, User user) {
-        String encodingPassword = passwordEncoder.encode(request.email(), request.password());
+        String encodingPassword = PasswordEncoder.encodeWithGeneralSalt(request.password());
         if (user.isDifferentPassword(encodingPassword)) {
             throw new BangggoodException(ExceptionCode.USER_INVALID_PASSWORD);
         }

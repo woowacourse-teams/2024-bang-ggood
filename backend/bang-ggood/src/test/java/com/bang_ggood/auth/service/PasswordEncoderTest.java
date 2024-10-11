@@ -11,9 +11,8 @@ class PasswordEncoderTest {
     @Test
     void encode() {
         // given & when
-        PasswordEncoder passwordEncoder = new PasswordEncoder();
-        String firstEncode = passwordEncoder.encode("bang-ggood@gmail.com", "bang-ggood");
-        String secondEncode = passwordEncoder.encode("bang-ggood@gmail.com", "bang-ggood");
+        String firstEncode = PasswordEncoder.encodeWithGeneralSalt("bang-ggood");
+        String secondEncode = PasswordEncoder.encodeWithGeneralSalt("bang-ggood");
 
         // then
         assertThat(firstEncode).isEqualTo(secondEncode);

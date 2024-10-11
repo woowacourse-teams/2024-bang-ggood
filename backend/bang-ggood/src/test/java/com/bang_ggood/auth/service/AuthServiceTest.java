@@ -71,7 +71,6 @@ class AuthServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.USER_NOT_FOUND.getMessage());
     }
 
-    @DisplayName("로컬 로그인 실패: 일치하는 유저가 없는 경우")
     @DisplayName("회원가입 성공")
     @Test
     void register() {
@@ -96,7 +95,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         // when
         Long userId = authService.register(request);
         User findUser = userRepository.findById(userId).orElseThrow();
-        String findPassword = findUser.getPassword().getValue();
+        String findPassword = findUser.getPassword();
 
         String[] passwordParts = findPassword.split(":");
         String salt = passwordParts[1];

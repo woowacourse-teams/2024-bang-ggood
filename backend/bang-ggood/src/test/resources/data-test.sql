@@ -1,5 +1,7 @@
-INSERT INTO users(name, email, user_type, login_type, created_at, modified_at, deleted)
-VALUES ('방방이', 'bang-ggood@gmail.com', 'USER', 'LOCAL', '2024-07-22 07:56:42', '2024-07-22 07:56:42', false);
+-- 비밀번호 : password1234
+INSERT INTO users(name, email, password, user_type, login_type, created_at, modified_at, deleted)
+VALUES ('방방이', 'bang-ggood@gmail.com', 'xDNYKEJqE/36U0Dt3nXRMFPNEMEgjCYM7R/A4B29baOsv4KYQ9MGgcO3HUa11sNKCFb9ZXyYBqJqxNglvBzFvg==:7yejAszEpxBb7AyZNKvAqpmMEJiKFXIa8JKwAx3n4loB2DRcAC2pfwkgo/dzKzRvBX4RbrATWaIlPYrgAhbHZQ==',
+        'USER', 'LOCAL', '2024-07-22 07:56:42', '2024-07-22 07:56:42', false);
 
 INSERT INTO custom_checklist_question(user_id, question, created_at, modified_at, deleted)
 VALUES (1, 'ROOM_CONDITION_1', '2024-07-22 07:56:42', '2024-07-22 07:56:42', false),

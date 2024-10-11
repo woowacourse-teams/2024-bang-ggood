@@ -23,7 +23,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     @Query("SELECT a FROM Article a " +
             "WHERE a.deleted = false " +
-            "ORDER BY a.createdAt DESC ")
+            "ORDER BY a.createdAt DESC, a.id DESC")
     List<Article> findLatestArticles();
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)

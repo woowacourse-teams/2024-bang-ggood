@@ -28,7 +28,7 @@ public class QuestionManageService {
     public void createDefaultCustomChecklistQuestions(User user) {
         List<CustomChecklistQuestion> customChecklistQuestions = Question.findDefaultQuestions()
                 .stream()
-                .map(question -> new CustomChecklistQuestion(user, question))
+                .map(question -> new CustomChecklistQuestion(user, question, questionService.readQuestion(question.getId()))) // TODO : 변경필요
                 .toList();
 
         checklistQuestionService.createDefaultCustomQuestions(customChecklistQuestions);

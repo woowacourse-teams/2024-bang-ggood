@@ -130,10 +130,12 @@ CREATE TABLE custom_checklist_question
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id     BIGINT,
     question    VARCHAR(255),
+    question_id INTEGER,
     created_at  TIMESTAMP(6),
     modified_at TIMESTAMP(6),
     deleted     BOOLEAN,
-    FOREIGN KEY (user_id) references users (id)
+    FOREIGN KEY (user_id) references users (id),
+    FOREIGN KEY (question_id) references question (id)
 );
 
 CREATE TABLE test_entity

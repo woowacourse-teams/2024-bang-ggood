@@ -6,11 +6,14 @@ import com.bang_ggood.auth.dto.response.ProfileResponse;
 import com.bang_ggood.user.domain.LoginType;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.domain.UserType;
+import com.bang_ggood.user.repository.UserRepository;
 
 public class UserFixture {
 
+    public static User USER1;
+
     public static User USER1() {
-        return new User("방방이", "bang-bang@gmail.com", UserType.USER, LoginType.LOCAL);
+        return new User("방방이", "bang-bang01@gmail.com", UserType.USER, LoginType.LOCAL);
     }
 
     public static User USER2() {
@@ -39,5 +42,9 @@ public class UserFixture {
         return new OauthInfoApiResponse("", "",
                 new KakaoAccountResponse(USER2().getEmail(), USER2().getName(),
                         new ProfileResponse("", "", "")));
+    }
+
+    public static void init(UserRepository userRepository) {
+        USER1 = userRepository.save(new User("방방이", "bang-bang@gmail.com", UserType.USER, LoginType.LOCAL));
     }
 }

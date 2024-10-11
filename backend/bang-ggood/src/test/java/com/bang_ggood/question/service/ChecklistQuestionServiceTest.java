@@ -190,8 +190,8 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
     void readCustomChecklistQuestions() {
         // given
         User user = userRepository.save(UserFixture.USER1());
-        CustomChecklistQuestion question1 = new CustomChecklistQuestion(user, Question.ROOM_CONDITION_5);
-        CustomChecklistQuestion question2 = new CustomChecklistQuestion(user, Question.BATHROOM_1);
+        CustomChecklistQuestion question1 = new CustomChecklistQuestion(user, Question.ROOM_CONDITION_5, QuestionFixture.QUESTION1);
+        CustomChecklistQuestion question2 = new CustomChecklistQuestion(user, Question.BATHROOM_1, QuestionFixture.QUESTION2);
         List<CustomChecklistQuestion> questions = List.of(question1, question2);
         customChecklistQuestionRepository.saveAll(questions);
 

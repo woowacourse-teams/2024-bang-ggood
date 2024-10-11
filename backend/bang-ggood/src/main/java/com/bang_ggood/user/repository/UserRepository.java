@@ -25,7 +25,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findUserByUserType(@Param("userType") UserType userType);
 
     @Query("SELECT u FROM User u WHERE u.email = :email and u.loginType = :loginType and u.deleted = false")
-    Optional<User> findByEmailAndLoginType(@Param("email") String email, @Param("loginType") LoginType loginType);
+    Optional<User> findByEmailAndLoginType(@Param("email") Email email, @Param("loginType") LoginType loginType);
 
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)

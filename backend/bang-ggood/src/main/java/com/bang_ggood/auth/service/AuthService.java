@@ -60,7 +60,7 @@ public class AuthService {
     public AuthTokenResponse authLogin(OauthLoginRequest request) {
         OauthInfoApiResponse oauthInfoApiResponse = oauthClient.requestOauthInfo(request);
 
-        User user = userRepository.findByEmailAndLoginType(oauthInfoApiResponse.kakao_account().email(),
+        User user = userRepository.findByEmailAndLoginType(new Email(oauthInfoApiResponse.kakao_account().email()),
                         LoginType.KAKAO)
                 .orElseGet(() -> signUp(oauthInfoApiResponse));
 
@@ -71,7 +71,7 @@ public class AuthService {
 
     @Transactional(readOnly = true)
     public AuthTokenResponse localLogin(LocalLoginRequestV1 request) {
-        User user = userRepository.findByEmailAndLoginType(request.email(), LoginType.LOCAL)
+        User user = userRepository.findByEmailAndLoginType(new Email(request.email()), LoginType.LOCAL)
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.USER_NOT_FOUND));
         checkPassword(request, user);
 

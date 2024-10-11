@@ -95,7 +95,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         // when
         Long userId = authService.register(request);
         User findUser = userRepository.findById(userId).orElseThrow();
-        String findPassword = findUser.getPassword();
+        String findPassword = findUser.getPassword().getValue();
 
         String[] passwordParts = findPassword.split(":");
         String salt = passwordParts[1];

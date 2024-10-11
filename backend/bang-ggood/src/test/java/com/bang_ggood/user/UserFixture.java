@@ -35,13 +35,13 @@ public class UserFixture {
 
     public static OauthInfoApiResponse OAUTH_INFO_RESPONSE_USER1() {
         return new OauthInfoApiResponse("", "",
-                new KakaoAccountResponse(USER1().getEmail(), USER1().getName(),
+                new KakaoAccountResponse(USER1().getEmail().getValue(), USER1().getName(),
                         new ProfileResponse("", "", "")));
     }
 
     public static OauthInfoApiResponse OAUTH_INFO_RESPONSE_USER2() {
         return new OauthInfoApiResponse("", "",
-                new KakaoAccountResponse(USER2().getEmail(), USER2().getName(),
+                new KakaoAccountResponse(USER2().getEmail().getValue(), USER2().getName(),
                         new ProfileResponse("", "", "")));
     }
 }

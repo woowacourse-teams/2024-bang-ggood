@@ -9,15 +9,11 @@ import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.question.ChecklistQuestionFixture;
 import com.bang_ggood.question.QuestionFixture;
 import com.bang_ggood.question.domain.Answer;
-import com.bang_ggood.question.domain.CategoryEntity;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
-import com.bang_ggood.question.domain.QuestionEntity;
-import com.bang_ggood.question.repository.CategoryRepository;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
-import com.bang_ggood.question.repository.QuestionRepository;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
@@ -54,24 +50,15 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-
-    @Autowired
-    private QuestionRepository questionRepository;
-
     @DisplayName("질문 작성 성공")
     @Test
     void createQuestions() {
         //given
         Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        CategoryEntity category = categoryRepository.save(QuestionFixture.CATEGORY1());
-        QuestionEntity question1 = questionRepository.save(QuestionFixture.QUESTION1(category));
-        QuestionEntity question2 = questionRepository.save(QuestionFixture.QUESTION2(category));
 
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-        List<ChecklistQuestion> checklistQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS(checklist, question1, question2);
+        List<ChecklistQuestion> checklistQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS(checklist, QuestionFixture.QUESTION1, QuestionFixture.QUESTION2);
 
         //when
         checklistQuestionService.createQuestions(checklistQuestions);
@@ -87,11 +74,9 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
         //given
         Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        CategoryEntity category = categoryRepository.save(QuestionFixture.CATEGORY1());
-        QuestionEntity question1 = questionRepository.save(QuestionFixture.QUESTION1(category));
 
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-        List<ChecklistQuestion> checklistQuestions = ChecklistQuestionFixture.CHECKLIST1_DUPLICATE(checklist, question1);
+        List<ChecklistQuestion> checklistQuestions = ChecklistQuestionFixture.CHECKLIST1_DUPLICATE(checklist, QuestionFixture.QUESTION1);
 
         // when & then
         assertThatThrownBy(
@@ -106,14 +91,11 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
         //given
         Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        CategoryEntity category = categoryRepository.save(QuestionFixture.CATEGORY1());
-        QuestionEntity question1 = questionRepository.save(QuestionFixture.QUESTION1(category));
-        QuestionEntity question2 = questionRepository.save(QuestionFixture.QUESTION2(category));
 
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
         List<ChecklistQuestion> checklistQuestions = List.of(
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, question1),
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, question2)
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1),
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, QuestionFixture.QUESTION2)
         );
         checklistQuestionService.createQuestions(checklistQuestions);
 
@@ -131,16 +113,13 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
         //given
         Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        CategoryEntity category = categoryRepository.save(QuestionFixture.CATEGORY1());
-        QuestionEntity question1 = questionRepository.save(QuestionFixture.QUESTION1(category));
-        QuestionEntity question2 = questionRepository.save(QuestionFixture.QUESTION2(category));
 
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-        List<ChecklistQuestion> checklistQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS(checklist, question1, question2);
+        List<ChecklistQuestion> checklistQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS(checklist, QuestionFixture.QUESTION1, QuestionFixture.QUESTION2);
         checklistQuestionService.createQuestions(checklistQuestions);
 
         //when
-        List<ChecklistQuestion> updateQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS_UPDATE(checklist, question1, question2);
+        List<ChecklistQuestion> updateQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS_UPDATE(checklist, QuestionFixture.QUESTION1, QuestionFixture.QUESTION2);
         checklistQuestionService.updateQuestions(checklistQuestions, updateQuestions);
 
         //then
@@ -153,16 +132,13 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
         //given
         Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        CategoryEntity category = categoryRepository.save(QuestionFixture.CATEGORY1());
-        QuestionEntity question1 = questionRepository.save(QuestionFixture.QUESTION1(category));
-        QuestionEntity question2 = questionRepository.save(QuestionFixture.QUESTION2(category));
 
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-        List<ChecklistQuestion> checklistQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS(checklist, question1, question2);
+        List<ChecklistQuestion> checklistQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS(checklist, QuestionFixture.QUESTION1, QuestionFixture.QUESTION2);
         checklistQuestionService.createQuestions(checklistQuestions);
 
         //when & then
-        List<ChecklistQuestion> updateQuestions = ChecklistQuestionFixture.CHECKLIST1_DUPLICATE(checklist, question1);
+        List<ChecklistQuestion> updateQuestions = ChecklistQuestionFixture.CHECKLIST1_DUPLICATE(checklist, QuestionFixture.QUESTION1);
         assertThatThrownBy(
                 () -> checklistQuestionService.updateQuestions(checklistQuestions, updateQuestions))
                 .isInstanceOf(BangggoodException.class)
@@ -175,17 +151,14 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
         //given
         Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        CategoryEntity category = categoryRepository.save(QuestionFixture.CATEGORY1());
-        QuestionEntity question1 = questionRepository.save(QuestionFixture.QUESTION1(category));
-        QuestionEntity question2 = questionRepository.save(QuestionFixture.QUESTION2(category));
 
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-        List<ChecklistQuestion> checklistQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS(checklist, question1, question2);
+        List<ChecklistQuestion> checklistQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS(checklist, QuestionFixture.QUESTION1, QuestionFixture.QUESTION2);
         checklistQuestionService.createQuestions(checklistQuestions);
 
         //when & then
         List<ChecklistQuestion> updateQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS_DIFFERENT_LENGTH(
-                checklist, question1);
+                checklist, QuestionFixture.QUESTION1);
         assertThatThrownBy(
                 () -> checklistQuestionService.updateQuestions(checklistQuestions, updateQuestions))
                 .isInstanceOf(BangggoodException.class)
@@ -198,17 +171,14 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
         //given
         Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        CategoryEntity category = categoryRepository.save(QuestionFixture.CATEGORY1());
-        QuestionEntity question1 = questionRepository.save(QuestionFixture.QUESTION1(category));
-        QuestionEntity question2 = questionRepository.save(QuestionFixture.QUESTION2(category));
 
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-        List<ChecklistQuestion> checklistQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS(checklist, question1, question2);
+        List<ChecklistQuestion> checklistQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS(checklist, QuestionFixture.QUESTION1, QuestionFixture.QUESTION2);
         checklistQuestionService.createQuestions(checklistQuestions);
 
         //when & then
         List<ChecklistQuestion> updateQuestions = ChecklistQuestionFixture.CHECKLIST1_QUESTIONS_DIFFERENT_QUESTION(
-                checklist, question2, question1);
+                checklist, QuestionFixture.QUESTION2, QuestionFixture.QUESTION1);
         assertThatThrownBy(
                 () -> checklistQuestionService.updateQuestions(checklistQuestions, updateQuestions))
                 .isInstanceOf(BangggoodException.class)

@@ -25,11 +25,20 @@ public class Password {
     private String value;
 
     public Password(String value) {
+        if (value == null || value.isEmpty()) {
+            this.value = value;
+            return;
+        }
         validatePasswordPattern(value);
         this.value = PasswordEncoder.encodeWithGeneralSalt(value);
     }
 
-    public void validatePasswordPattern(String password) {
+    public boolean isDifferent(String password) {
+        String targetPassword = PasswordEncoder.encodeWithSpecificSalt(password, value);
+        return !value.equals(targetPassword);
+    }
+
+    private void validatePasswordPattern(String password) {
         if (!PASSWORD_PATTERN.matcher(password).matches()) {
             throw new BangggoodException(ExceptionCode.PASSWORD_INVALID_FORMAT);
         }
@@ -43,8 +52,8 @@ public class Password {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Password password1 = (Password) o;
-        return Objects.equals(value, password1.value);
+        Password targetPassword = (Password) o;
+        return Objects.equals(value, targetPassword.value);
     }
 
     @Override

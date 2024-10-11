@@ -14,6 +14,9 @@ public class PasswordEncoder {
 
     private static final String DELIMITER = ":";
 
+    private PasswordEncoder() {
+    }
+
     public static String encodeWithGeneralSalt(String password) {
         return encode(password, getSalt());
     }
@@ -50,9 +53,5 @@ public class PasswordEncoder {
 
         String encodedSalt = parts[1];
         return Base64.getDecoder().decode(encodedSalt);
-    }
-
-
-    private PasswordEncoder() {
     }
 }

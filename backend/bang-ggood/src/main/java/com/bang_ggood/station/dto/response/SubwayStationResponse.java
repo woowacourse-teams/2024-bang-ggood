@@ -27,7 +27,8 @@ public class SubwayStationResponse {
     public static SubwayStationResponse from(ChecklistStation checklistStation) {
         List<String> stationLine = new ArrayList<>();
         stationLine.add(checklistStation.getStationLine());
-        return new SubwayStationResponse(checklistStation.getStationName(), stationLine, checklistStation.getWalkingTime());
+        return new SubwayStationResponse(checklistStation.getStationName(), stationLine,
+                checklistStation.getWalkingTime());
     }
 
     public SubwayStationResponse merge(SubwayStationResponse response) {

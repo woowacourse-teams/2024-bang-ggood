@@ -2,7 +2,6 @@ package com.bang_ggood.user.repository;
 
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
-import com.bang_ggood.user.domain.LoginType;
 import com.bang_ggood.user.domain.Email;
 import com.bang_ggood.user.domain.LoginType;
 import com.bang_ggood.user.domain.User;

@@ -25,7 +25,7 @@ class PasswordEncoderTest {
         String password = "bang-ggood";
         String encodedPassword = PasswordEncoder.encodeWithGeneralSalt(password);
 
-       // when
+        // when
         String targetPassword = PasswordEncoder.encodeWithSpecificSalt(password, encodedPassword);
 
         // then

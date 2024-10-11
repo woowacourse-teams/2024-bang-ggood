@@ -41,8 +41,12 @@ public class ChecklistStation extends BaseEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         ChecklistStation that = (ChecklistStation) o;
         return Objects.equals(id, that.id);
     }

@@ -1,6 +1,7 @@
 import { API_ERROR_MESSAGE } from '@/apis/error/ErrorMessage';
 import HTTPError from '@/apis/error/HttpError';
 import { postReissueAccessToken } from '@/apis/user';
+import { HTTP_STATUS_CODE } from '@/constants/httpErrorMessage';
 
 let reissueAccessToken = false;
 let reissueAccessTokenFailed = false;
@@ -42,7 +43,7 @@ const request = async ({ url, method, body, headers = {} }: RequestProps) => {
       }
       throw error;
     } else {
-      throw new HTTPError(400, '네트워크 에러가 발생했습니다.');
+      throw new HTTPError(HTTP_STATUS_CODE.NETWORK_ERROR, '');
     }
   }
 };
@@ -75,7 +76,7 @@ const retryRequest = async ({ url, method, body, headers = {}, signal }: Request
     if (error instanceof HTTPError) {
       throw new HTTPError(error.statusCode, error.message);
     } else {
-      throw new HTTPError(400, '네트워크 에러가 발생했습니다.');
+      throw new HTTPError(HTTP_STATUS_CODE.NETWORK_ERROR, '');
     }
   }
 };

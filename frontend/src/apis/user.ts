@@ -8,7 +8,10 @@ export const postLogin = async (code: string, redirectUri: string) => {
 };
 
 export const postLogout = async () => {
-  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.LOGOUT });
+  const response = await fetch(`${BASE_URL}${ENDPOINT.LOGOUT}`, {
+    method: 'POST',
+  });
+
   return response;
 };
 
@@ -22,4 +25,11 @@ export const getIsUserValid = async () => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.USER_VALID });
   const data = await response.json();
   return data.isRefreshTokenExist;
+};
+
+export const postReissueAccessToken = async () => {
+  const response = await fetch(`${BASE_URL}${ENDPOINT.USER_ACCESS_TOKEN_REISSUE}`, {
+    method: 'POST',
+  });
+  return response;
 };

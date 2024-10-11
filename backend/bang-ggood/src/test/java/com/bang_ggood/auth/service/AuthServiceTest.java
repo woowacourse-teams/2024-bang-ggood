@@ -17,6 +17,7 @@ import com.bang_ggood.question.service.QuestionManageService;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
+import org.apache.commons.codec.binary.Base64;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -64,16 +65,23 @@ class AuthServiceTest extends IntegrationTestSupport {
     @DisplayName("회원가입 성공 : 비밀번호 암호화")
     @Test
     void register_encodePassword() {
-        //given
+        // given
         String password = "password1234";
         RegisterRequestV1 request = new RegisterRequestV1("방방이", "bang@gmail.com", password);
+        PasswordEncoder passwordEncoder = new PasswordEncoder();
 
-        //when
+        // when
         Long userId = authService.register(request);
-
-        //then
         User findUser = userRepository.findById(userId).orElseThrow();
-        assertThat(findUser.getPassword().getValue()).isNotEqualTo(password);
+        String findPassword = findUser.getPassword().getValue();
+
+        String[] passwordParts = findPassword.split(":");
+        String salt = passwordParts[1];
+
+        String expectedPassword = passwordEncoder.encode(password, Base64.decodeBase64(salt));
+
+        // then
+        assertThat(findPassword).isEqualTo(expectedPassword);
     }
 
     @DisplayName("회원가입 실패 : 이미 사용되는 이메일인 경우")

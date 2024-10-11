@@ -14,21 +14,22 @@ import java.util.Base64;
 @Component
 public class PasswordEncoder {
 
-    public String encode(String password) {
+    private static final String DELIMITER = ":";
+
+    public String encode(String password, byte[] salt) {
         try {
-            byte[] salt = getSalt();
             KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 512);
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
             byte[] hash = factory.generateSecret(spec).getEncoded();
             String encodedPassword = Base64.getEncoder().encodeToString(hash);
             String encodedSalt = Base64.getEncoder().encodeToString(salt);
-            return encodedPassword + ":" + encodedSalt;
+            return encodedPassword + DELIMITER + encodedSalt;
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new BangggoodException(ExceptionCode.PASSWORD_HASHING_ERROR);
         }
     }
 
-    private byte[] getSalt() {
+    public byte[] getSalt() {
         SecureRandom secureRandom = new SecureRandom();
         byte[] salt = new byte[64];
         secureRandom.nextBytes(salt);

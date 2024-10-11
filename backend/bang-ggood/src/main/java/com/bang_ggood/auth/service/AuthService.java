@@ -37,15 +37,6 @@ public class AuthService {
     private final DefaultChecklistService defaultChecklistService;
     private final UserRepository userRepository;
 
-    private static void validateTokenOwnership(User user, AuthUser accessAuthUser, AuthUser refreshAuthUser) {
-        if (!accessAuthUser.id().equals(refreshAuthUser.id())) {
-            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_USER_MISMATCH);
-        }
-        if (!user.getId().equals(accessAuthUser.id())) {
-            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER);
-        }
-    }
-
     @Transactional
     public Long register(RegisterRequestV1 request) {
         try {
@@ -126,5 +117,14 @@ public class AuthService {
         AuthUser authUser = jwtTokenResolver.resolveRefreshToken(refreshToken);
         User user = userRepository.getUserById(authUser.id());
         return jwtTokenProvider.createAccessToken(user);
+    }
+
+    private static void validateTokenOwnership(User user, AuthUser accessAuthUser, AuthUser refreshAuthUser) {
+        if (!accessAuthUser.id().equals(refreshAuthUser.id())) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_USER_MISMATCH);
+        }
+        if (!user.getId().equals(accessAuthUser.id())) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER);
+        }
     }
 }

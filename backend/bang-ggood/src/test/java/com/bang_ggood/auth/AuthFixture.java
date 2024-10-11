@@ -8,12 +8,12 @@ public class AuthFixture {
 
     public static final LocalLoginRequestV1 LOCAL_LOGIN_REQUEST = new LocalLoginRequestV1(
             "bang-ggood@gmail.com",
-            "bang-ggood"
+            "password1234"
     );
 
     public static final LocalLoginRequestV1 LOCAL_LOGIN_REQUEST_NO_EMAIL = new LocalLoginRequestV1(
             null,
-            "bang-ggood"
+            "password1234"
     );
 
     public static final LocalLoginRequestV1 LOCAL_LOGIN_REQUEST_NO_PASSWORD = new LocalLoginRequestV1(
@@ -23,12 +23,12 @@ public class AuthFixture {
 
     public static final LocalLoginRequestV1 LOCAL_LOGIN_REQUEST_INVALID_EMAIL = new LocalLoginRequestV1(
             "bang-bad@gmail.com",
-            "bang-ggood"
+            "password1234"
     );
 
     public static final LocalLoginRequestV1 LOCAL_LOGIN_REQUEST_INVALID_PASSWORD = new LocalLoginRequestV1(
             "bang-ggood@gmail.com",
-            "bang-bad"
+            "password12345"
     );
 
     public static final OauthLoginRequest OAUTH_LOGIN_REQUEST = new OauthLoginRequest("testCode", "localhost:3000");

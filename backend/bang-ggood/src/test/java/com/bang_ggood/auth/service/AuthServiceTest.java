@@ -109,7 +109,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         String[] passwordParts = findPassword.split(":");
         String salt = passwordParts[1];
 
-        String expectedPassword = PasswordEncoder.encode(password, Base64.decodeBase64(salt));
+        String expectedPassword = PasswordEncoder.encodeWithSpecificSalt(password, findPassword);
 
         // then
         assertThat(findPassword).isEqualTo(expectedPassword);

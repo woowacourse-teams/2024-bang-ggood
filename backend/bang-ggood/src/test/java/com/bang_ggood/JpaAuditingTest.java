@@ -8,6 +8,7 @@ import jakarta.persistence.Table;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,8 +30,8 @@ class JpaAuditingTest extends IntegrationTestSupport {
 
         // then
         assertAll(
-                () -> assertThat(savedEntity.getCreatedAt()).isBefore(LocalDateTime.now()),
-                () -> assertThat(savedEntity.getModifiedAt()).isBefore(LocalDateTime.now())
+                () -> assertThat(savedEntity.getCreatedAt()).isBeforeOrEqualTo(LocalDateTime.now()),
+                () -> assertThat(savedEntity.getModifiedAt()).isBeforeOrEqualTo(LocalDateTime.now())
         );
     }
 

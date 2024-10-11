@@ -39,7 +39,7 @@ const LandingPage = () => {
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
 
   const { handleSectionClick } = useMoveSection(sectionRefs);
-  const { isValidUser } = useIsValidUser();
+  useIsValidUser();
 
   return (
     <S.Container>

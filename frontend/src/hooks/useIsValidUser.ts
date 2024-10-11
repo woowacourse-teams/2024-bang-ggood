@@ -1,24 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { getIsUserValid } from '@/apis/user';
+import { ROUTE_PATH } from '@/constants/routePath';
 
 const useIsValidUser = () => {
-  const [isValidUser, setIsValidUser] = useState(false);
+  const navigate = useNavigate();
+
+  const fetchIsUserValid = async () => {
+    try {
+      const isValid = await getIsUserValid();
+      if (isValid) {
+        navigate(ROUTE_PATH.home);
+        //TODO: 00님 환영합니다. 또는 자동 로그인 되었습니다. 토스트 띄워주기
+      }
+      //TODO: access 재발급 요청
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
-    const fetchIsUserValid = async () => {
-      const data = await getIsUserValid();
-      return data;
-    };
-
-    fetchIsUserValid()
-      .then(result => {
-        console.log('result', result);
-      })
-      .catch(err => {});
+    fetchIsUserValid();
   }, []);
 
-  return { isValidUser };
+  return null;
 };
 
 export default useIsValidUser;

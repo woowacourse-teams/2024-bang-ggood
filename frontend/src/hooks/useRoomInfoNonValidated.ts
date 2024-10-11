@@ -16,7 +16,6 @@ const useRoomInfoNonValidated = () => {
   const searchSubwayStationsByPosition = async ({ latitude, longitude }: Position) => {
     const nearSubways = await getNearSubways({ latitude, longitude });
     roomInfoNonValidated.set('position', { latitude, longitude });
-    roomInfoNonValidated.set('nearSubwayStation', nearSubways);
     return nearSubways;
   };
 

@@ -1,6 +1,6 @@
 import { Position } from '@/types/address';
 
 export const DEFAULT_POSITION: Position = {
-  latitude: 1,
-  longitude: 1,
+  latitude: 37.5061912,
+  longitude: 127.0508228,
 };

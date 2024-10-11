@@ -49,7 +49,7 @@ const useMutateChecklist = (
   }
 
   //TODO: 나중에 해당 키 이름 수정
-  const roomInfoUnvalidatedAnswerWithoutSubway = removeKey(roomInfoUnvalidatedAnswer, 'nearSubwayStation');
+  const roomInfoUnvalidatedAnswerWithoutSubway = removeKey(roomInfoUnvalidatedAnswer, 'position');
 
   const postData = {
     room: {
@@ -58,7 +58,7 @@ const useMutateChecklist = (
     },
     options: selectedOptions,
     questions: transformQuestions(checklistCategoryQnA),
-    position: roomInfoUnvalidated.position,
+    geolocation: roomInfoUnvalidated.position,
   };
 
   const putData = {
@@ -78,7 +78,6 @@ const useMutateChecklist = (
           if (onSuccessCallback) {
             onSuccessCallback();
           }
-
           const location = res.headers.get('location');
           if (location) navigate(location);
         },

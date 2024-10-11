@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -84,5 +85,16 @@ public class AuthController {
 
         RefreshTokenCheckResponse refreshTokenCheckResponse = RefreshTokenCheckResponse.from(isRefreshTokenExist);
         return ResponseEntity.ok(refreshTokenCheckResponse);
+    }
+
+    @DeleteMapping("/token")
+    public ResponseEntity<Void> deleteToken() {
+        ResponseCookie deletedAccessTokenCookie = cookieProvider.deleteAccessTokenCookie();
+        ResponseCookie deletedRefreshTokenCookie = cookieProvider.deleteRefreshTokenCookie();
+
+        return ResponseEntity.noContent()
+                .header(HttpHeaders.SET_COOKIE, deletedAccessTokenCookie.toString())
+                .header(HttpHeaders.SET_COOKIE, deletedRefreshTokenCookie.toString())
+                .build();
     }
 }

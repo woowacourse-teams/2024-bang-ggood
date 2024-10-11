@@ -27,7 +27,7 @@ public class Password {
 
     public Password(String value) {
         validatePasswordPattern(value);
-        this.value = passwordEncoder.encode(value, passwordEncoder.getSalt());
+        this.value = passwordEncoder.encodeWithGeneralSalt(value);
     }
 
     public void validatePasswordPattern(String password) {

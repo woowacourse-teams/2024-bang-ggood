@@ -16,6 +16,10 @@ public class PasswordEncoder {
 
     private static final String DELIMITER = ":";
 
+    public String encodeWithGeneralSalt(String password) {
+        return encode(password, getSalt());
+    }
+
     public String encode(String password, byte[] salt) {
         try {
             KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 512);

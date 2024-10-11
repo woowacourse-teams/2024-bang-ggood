@@ -68,7 +68,6 @@ class AuthServiceTest extends IntegrationTestSupport {
         // given
         String password = "password1234";
         RegisterRequestV1 request = new RegisterRequestV1("방방이", "bang@gmail.com", password);
-        PasswordEncoder passwordEncoder = new PasswordEncoder();
 
         // when
         Long userId = authService.register(request);
@@ -78,7 +77,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         String[] passwordParts = findPassword.split(":");
         String salt = passwordParts[1];
 
-        String expectedPassword = passwordEncoder.encode(password, Base64.decodeBase64(salt));
+        String expectedPassword = PasswordEncoder.encode(password, Base64.decodeBase64(salt));
 
         // then
         assertThat(findPassword).isEqualTo(expectedPassword);

@@ -2,6 +2,7 @@ import { AnswerType } from '@/types/answer';
 import { Category } from '@/types/category';
 import { Option } from '@/types/option';
 import { RoomInfo } from '@/types/room';
+import { SubwayStation } from '@/types/subway';
 
 export interface CategoryAndQuestion {
   categoryId: number;
@@ -60,6 +61,7 @@ export interface ChecklistInfo {
   room: RoomInfo;
   options: Option[];
   categories: ChecklistCategoryWithAnswer[];
+  stations: SubwayStation[];
 }
 
 export interface ChecklistSelectedQuestions {

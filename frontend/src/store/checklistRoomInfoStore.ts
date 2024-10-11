@@ -37,7 +37,10 @@ export const roomFormSpec: FormSpec<RoomInfoState> = {
   memo: { initialValue: '', type: 'string', validators: [] },
 };
 
-export const checklistRoomInfoStores = createFormFieldStores<RoomInfoState>(roomFormSpec);
+const initial = Object.entries(roomFormSpec).map(([key, value]) => [key, value.initialValue]);
+
+export const checklistRoomInfoStores = createFormFieldStores(roomFormSpec);
 checklistRoomInfoStores.roomName.getState().value;
 checklistRoomInfoStores.floor.getState().value;
+
 export default checklistRoomInfoStores;

@@ -1,4 +1,4 @@
-import { createStore } from 'zustand';
+import { createStore, useStore } from 'zustand';
 
 import { SubwayStation } from '@/types/subway';
 
@@ -18,7 +18,9 @@ const defaultStates = {
   address: '',
   buildingName: '',
 };
-
+const useValidStore = (value: keyof States) => {
+  const state = useStore(roomInfoUnvalidatedStore, state => state[value]);
+};
 const roomInfoUnvalidatedStore = createStore<States & { actions: Actions }>()(set => ({
   ...defaultStates,
   actions: {

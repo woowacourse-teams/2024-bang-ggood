@@ -6,7 +6,7 @@ import { useStore } from 'zustand';
 import { roomFormSpec } from '@/store/checklistRoomInfoStore';
 import { createFormFieldStores } from '@/store/createFormFieldStores';
 
-const { onChange, resetAll, ...stores } = createFormFieldStores(roomFormSpec);
+const { resetAll, onChange, ...stores } = createFormFieldStores(roomFormSpec);
 const makeEvent = (name: string, value: string) => ({ target: { name, value } }) as ChangeEvent<HTMLInputElement>;
 
 describe('useChecklistBasicInfoStore 테스트', () => {

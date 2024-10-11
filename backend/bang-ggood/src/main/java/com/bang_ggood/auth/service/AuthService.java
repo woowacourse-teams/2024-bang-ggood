@@ -80,10 +80,9 @@ public class AuthService {
         return AuthTokenResponse.of(accessToken, refreshToken);
     }
 
-    // 로직 병경
+
     private void checkPassword(LocalLoginRequestV1 request, User user) {
-        String encodingPassword = PasswordEncoder.encodeWithGeneralSalt(request.password());
-        if (user.isDifferentPassword(encodingPassword)) {
+        if (user.isDifferent(request.password())) {
             throw new BangggoodException(ExceptionCode.USER_INVALID_PASSWORD);
         }
     }

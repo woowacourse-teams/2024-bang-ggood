@@ -14,6 +14,7 @@ interface States {
 interface Actions {
   set: <T extends keyof States>(name: T, value: States[T]) => void;
   resetAll: () => void;
+  getFormValues: () => { address: string; buildingName: string };
 }
 
 const defaultStates = {
@@ -23,11 +24,17 @@ const defaultStates = {
   position: DEFAULT_POSITION,
 };
 
-const roomInfoNonValidatedStore = createStore<States & { actions: Actions }>()(set => ({
+const roomInfoNonValidatedStore = createStore<States & { actions: Actions }>()((set, get) => ({
   ...defaultStates,
   actions: {
     set: (name, value) => set({ [name]: value }),
     resetAll: () => set(defaultStates),
+    getFormValues: () => {
+      return {
+        address: get().address,
+        buildingName: get().buildingName,
+      };
+    },
   },
 }));
 

@@ -28,7 +28,7 @@ public class DBInitializer implements CommandLineRunner {
         List<User> foundGuestUser = userService.readUser(UserType.GUEST);
 
         if (foundGuestUser.isEmpty()) {
-            User guestUser = new User("방끗", "bang-ggood@gmail.com", null, UserType.GUEST, LoginType.LOCAL);
+            User guestUser = new User("방끗", "bang-ggood1@gmail.com", UserType.GUEST, LoginType.LOCAL);
             userService.createUser(guestUser);
             defaultChecklistService.createDefaultChecklistAndQuestions(guestUser);
         }

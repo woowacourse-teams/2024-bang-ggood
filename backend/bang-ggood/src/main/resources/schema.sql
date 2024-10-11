@@ -4,11 +4,11 @@ DROP TABLE IF EXISTS checklist_question CASCADE;
 DROP TABLE IF EXISTS article CASCADE;
 DROP TABLE IF EXISTS checklist_like CASCADE;
 DROP TABLE IF EXISTS checklist_maintenance CASCADE;
+DROP TABLE IF EXISTS checklist_station CASCADE;
 DROP TABLE IF EXISTS checklist CASCADE;
 DROP TABLE IF EXISTS room CASCADE;
 DROP TABLE IF EXISTS custom_checklist_question CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
-DROP TABLE IF EXISTS checklist_station CASCADE;
 
 -- Create tables
 CREATE TABLE room
@@ -38,7 +38,8 @@ CREATE TABLE users
     login_type  VARCHAR(255) NOT NULL,
     created_at  TIMESTAMP(6),
     modified_at TIMESTAMP(6),
-    deleted     BOOLEAN
+    deleted     BOOLEAN,
+    CONSTRAINT unique_email_login_type UNIQUE (email, login_type)
 );
 
 CREATE TABLE checklist

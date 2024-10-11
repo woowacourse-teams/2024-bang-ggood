@@ -2,6 +2,7 @@ package com.bang_ggood.auth.service;
 
 import com.bang_ggood.auth.dto.request.LocalLoginRequestV1;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
+import com.bang_ggood.auth.dto.request.RegisterRequestV1;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.dto.response.OauthInfoApiResponse;
 import com.bang_ggood.auth.service.jwt.JwtTokenProvider;
@@ -11,12 +12,15 @@ import com.bang_ggood.global.DefaultChecklistService;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.user.domain.LoginType;
+import com.bang_ggood.user.domain.Email;
+import com.bang_ggood.user.domain.LoginType;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.domain.UserType;
 import com.bang_ggood.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -41,6 +45,15 @@ public class AuthService {
         }
         if (!user.getId().equals(accessAuthUser.id())) {
             throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER);
+        }
+    }
+
+    @Transactional
+    public Long register(RegisterRequestV1 request) {
+        try {
+            return userRepository.save(request.toUserEntity()).getId();
+        } catch (DataIntegrityViolationException e) {
+            throw new BangggoodException(ExceptionCode.USER_EMAIL_ALREADY_USED);
         }
     }
 

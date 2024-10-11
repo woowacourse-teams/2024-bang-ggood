@@ -63,10 +63,6 @@ public class ChecklistStationServiceTest extends IntegrationTestSupport {
     @Test
     void readChecklistStations() {
         // given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
-        User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-
         ChecklistStation checklistStation1 = new ChecklistStation(checklist, "잠실", "2호선", 5);
         ChecklistStation checklistStation2 = new ChecklistStation(checklist, "잠실", "8호선", 6);
         checklistStationRepository.saveAll(List.of(checklistStation1, checklistStation2));

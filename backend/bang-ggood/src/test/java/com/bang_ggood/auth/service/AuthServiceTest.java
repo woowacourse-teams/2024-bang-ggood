@@ -2,6 +2,7 @@ package com.bang_ggood.auth.service;
 
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
+import com.bang_ggood.auth.dto.request.RegisterRequestV1;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.service.jwt.JwtTokenProvider;
 import com.bang_ggood.auth.service.oauth.OauthClient;
@@ -16,6 +17,7 @@ import com.bang_ggood.question.service.QuestionManageService;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
+import org.apache.commons.codec.binary.Base64;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -70,6 +72,57 @@ class AuthServiceTest extends IntegrationTestSupport {
     }
 
     @DisplayName("로컬 로그인 실패: 일치하는 유저가 없는 경우")
+    @DisplayName("회원가입 성공")
+    @Test
+    void register() {
+        //given
+        RegisterRequestV1 request = new RegisterRequestV1("방방이", "bang@gmail.com", "password1234");
+
+        //when
+        Long userId = authService.register(request);
+
+        //then
+        User findUser = userRepository.findById(userId).orElseThrow();
+        assertThat(findUser.getId()).isEqualTo(userId);
+    }
+
+    @DisplayName("회원가입 성공 : 비밀번호 암호화")
+    @Test
+    void register_encodePassword() {
+        // given
+        String password = "password1234";
+        RegisterRequestV1 request = new RegisterRequestV1("방방이", "bang@gmail.com", password);
+
+        // when
+        Long userId = authService.register(request);
+        User findUser = userRepository.findById(userId).orElseThrow();
+        String findPassword = findUser.getPassword().getValue();
+
+        String[] passwordParts = findPassword.split(":");
+        String salt = passwordParts[1];
+
+        String expectedPassword = PasswordEncoder.encode(password, Base64.decodeBase64(salt));
+
+        // then
+        assertThat(findPassword).isEqualTo(expectedPassword);
+    }
+
+    @DisplayName("회원가입 실패 : 이미 사용되는 이메일인 경우")
+    @Test
+    void register_emailAlreadyUsed() {
+        //given
+        RegisterRequestV1 request = new RegisterRequestV1("방방이", "bang@gmail.com", "password1234");
+
+        //when
+        authService.register(request);
+
+        //then
+        assertThatThrownBy(() -> authService.register(request))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.USER_EMAIL_ALREADY_USED.getMessage());
+    }
+
+    @DisplayName("로그인 성공 : 존재하지 않는 회원이면 데이터베이스에 새로운 유저를 추가하고 토큰 반환")
     @Test
     void localLogin_userInvalidPassword() {
         // given & when & then
@@ -152,8 +205,8 @@ class AuthServiceTest extends IntegrationTestSupport {
     @Test
     void assignGuestUser_UnexpectedGuestUserExist() {
         // given
-        userRepository.save(UserFixture.GUEST_USER());
-        userRepository.save(UserFixture.GUEST_USER());
+        userRepository.save(UserFixture.GUEST_USER1());
+        userRepository.save(UserFixture.GUEST_USER2());
 
         // when & then
         assertThatThrownBy(() -> authService.assignGuestUser())
@@ -174,7 +227,7 @@ class AuthServiceTest extends IntegrationTestSupport {
     @Test
     void assignGuestUser() {
         // given
-        User guestUser = userRepository.save(UserFixture.GUEST_USER());
+        User guestUser = userRepository.save(UserFixture.GUEST_USER1());
 
         // when
         User assignedGuestUser = authService.assignGuestUser();

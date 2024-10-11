@@ -26,12 +26,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.email = :email and u.deleted = false ")
     Optional<User> findByEmail(@Param("email") Email email);
 
-    @Query("SELECT COUNT(u) > 0 FROM User u "
-            + "WHERE u.email = :email "
-            + "AND u.loginType = :loginType "
-            + "AND u.deleted = false")
-    boolean existsByEmailAndUserType(Email email, LoginType loginType);
-
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("UPDATE User u SET u.deleted = true ")

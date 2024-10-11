@@ -6,6 +6,7 @@ import FirstSection from '@/components/Landing/FirstSection';
 import FourthSection from '@/components/Landing/FourthSection';
 import SecondSection from '@/components/Landing/SecondSection';
 import ThirdSection from '@/components/Landing/ThirdSection';
+import useIsValidUser from '@/hooks/useIsValidUser';
 import useMoveSection from '@/hooks/useMoveSection';
 import { flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
@@ -38,6 +39,7 @@ const LandingPage = () => {
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
 
   const { handleSectionClick } = useMoveSection(sectionRefs);
+  const { isValidUser } = useIsValidUser();
 
   return (
     <S.Container>

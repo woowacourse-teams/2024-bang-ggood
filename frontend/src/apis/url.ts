@@ -22,6 +22,7 @@ export const ENDPOINT = {
   LOGIN: '/oauth/login',
   LOGOUT: '/oauth/logout',
   USER_INFO: '/user/me',
+  USER_VALID: '/refreshToken-check',
   //subway
   SUBWAY: (position: Position) => `/stations/nearest?latitude=${position.lat}&longitude=${position.lon}`,
 };

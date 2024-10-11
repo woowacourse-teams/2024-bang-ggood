@@ -56,7 +56,7 @@ public class AuthService {
     }
 
     @Transactional
-    public AuthTokenResponse authLogin(OauthLoginRequest request) {
+    public AuthTokenResponse oauthLogin(OauthLoginRequest request) {
         OauthInfoApiResponse oauthInfoApiResponse = oauthClient.requestOauthInfo(request);
 
         User user = userRepository.findByEmailAndLoginType(new Email(oauthInfoApiResponse.kakao_account().email()),

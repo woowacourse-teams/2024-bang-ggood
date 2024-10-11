@@ -131,13 +131,13 @@ class AuthServiceTest extends IntegrationTestSupport {
 
     @DisplayName("카카오 로그인 성공 : 존재하지 않는 회원이면 데이터베이스에 새로운 유저를 추가하고 토큰 반환")
     @Test
-    void authLogin_signup() {
+    void oauthLogin_signup() {
         // given
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
-        AuthTokenResponse token = authService.authLogin(OAUTH_LOGIN_REQUEST);
+        AuthTokenResponse token = authService.oauthLogin(OAUTH_LOGIN_REQUEST);
 
         // then
         assertThat(token.accessToken()).isNotBlank();
@@ -146,14 +146,14 @@ class AuthServiceTest extends IntegrationTestSupport {
 
     @DisplayName("카카오 로그인 성공 : 존재하는 회원이면 데이터베이스에 새로운 유저를 추가하지 않고 토큰을 바로 반환")
     @Test
-    void authLogin() {
+    void oauthLogin() {
         // given
         userRepository.save(UserFixture.USER1());
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER1());
 
         // when
-        AuthTokenResponse token = authService.authLogin(OAUTH_LOGIN_REQUEST);
+        AuthTokenResponse token = authService.oauthLogin(OAUTH_LOGIN_REQUEST);
 
         // then
         assertThat(token.accessToken()).isNotBlank();
@@ -162,13 +162,13 @@ class AuthServiceTest extends IntegrationTestSupport {
 
     @DisplayName("카카오 로그인 성공 : 회원 가입시 디폴트 체크리스트 질문을 추가")
     @Test
-    void authLogin_default_checklist_question() {
+    void oauthLogin_default_checklist_question() {
         // given
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
-        AuthTokenResponse token = authService.authLogin(OAUTH_LOGIN_REQUEST);
+        AuthTokenResponse token = authService.oauthLogin(OAUTH_LOGIN_REQUEST);
 
         // then
         User user = authService.getAuthUser(token.accessToken());
@@ -185,13 +185,13 @@ class AuthServiceTest extends IntegrationTestSupport {
 
     @DisplayName("카카오 로그인 성공 : 회원 가입시 디폴트 체크리스트를 추가")
     @Test
-    void authLogin_default_checklist() {
+    void oauthLogin_default_checklist() {
         // given
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
-        AuthTokenResponse token = authService.authLogin(OAUTH_LOGIN_REQUEST);
+        AuthTokenResponse token = authService.oauthLogin(OAUTH_LOGIN_REQUEST);
 
         // then
         User user = authService.getAuthUser(token.accessToken());
@@ -257,7 +257,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         userRepository.save(UserFixture.USER1());
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER1());
-        AuthTokenResponse tokenResponse = authService.authLogin(OAUTH_LOGIN_REQUEST);
+        AuthTokenResponse tokenResponse = authService.oauthLogin(OAUTH_LOGIN_REQUEST);
 
         // when & then
         assertThatCode(() -> authService.reissueAccessToken(tokenResponse.refreshToken()))

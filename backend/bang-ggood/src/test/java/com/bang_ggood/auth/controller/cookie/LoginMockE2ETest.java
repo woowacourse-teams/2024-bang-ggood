@@ -39,7 +39,7 @@ class LoginMockE2ETest extends AcceptanceMockTestSupport {
         String oauthLoginRequestJson = objectMapper.writeValueAsString(OAUTH_LOGIN_REQUEST);
 
         // when & then
-        Mockito.when(authService.authLogin(any(OauthLoginRequest.class))).thenReturn(authTokenResponse);
+        Mockito.when(authService.oauthLogin(any(OauthLoginRequest.class))).thenReturn(authTokenResponse);
 
         mockMvc.perform(post("/oauth/login")
                         .contentType(MediaType.APPLICATION_JSON)

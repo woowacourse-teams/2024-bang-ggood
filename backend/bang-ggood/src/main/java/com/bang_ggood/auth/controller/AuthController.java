@@ -38,7 +38,7 @@ public class AuthController {
 
     @PostMapping("/oauth/login")
     public ResponseEntity<Void> oauthLogin(@Valid @RequestBody OauthLoginRequest request) {
-        AuthTokenResponse response = authService.authLogin(request);
+        AuthTokenResponse response = authService.oauthLogin(request);
 
         ResponseCookie accessTokenCookie = cookieProvider.createAccessTokenCookie(response.accessToken());
         ResponseCookie refreshTokenCookie = cookieProvider.createRefreshTokenCookie(response.refreshToken());

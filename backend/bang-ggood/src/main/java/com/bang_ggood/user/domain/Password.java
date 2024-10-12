@@ -26,7 +26,7 @@ public class Password {
 
     public Password(String value) {
         if (value == null || value.isEmpty()) {
-            this.value = value;
+            this.value = null;
             return;
         }
         validatePasswordPattern(value);

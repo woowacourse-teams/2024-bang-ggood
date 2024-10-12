@@ -13,6 +13,7 @@ import java.util.Base64;
 public class PasswordEncoder {
 
     private static final String DELIMITER = ":";
+    private static final int PASSWORD_AND_SALT_LENGTH = 2;
 
     private PasswordEncoder() {
     }
@@ -47,7 +48,7 @@ public class PasswordEncoder {
 
     private static byte[] extractSaltByPassword(String encodedPassword) {
         String[] parts = encodedPassword.split(DELIMITER);
-        if (parts.length != 2) {
+        if (parts.length != PASSWORD_AND_SALT_LENGTH) {
             throw new BangggoodException(ExceptionCode.PASSWORD_HASHING_ERROR);
         }
 

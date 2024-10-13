@@ -16,7 +16,7 @@ public enum ExceptionCode {
 
     // Question
     QUESTION_ID_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, BangggoodCode.QUESTION_ERROR, "중복된 질문 ID가 존재해 질문을 생성할 수 없습니다."),
-    QUESTION_HIGHLIGHT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, BangggoodCode.QUESTION_ERROR, "잘못된 하이라이트 키워드가 존재해 질문을 생성할 수 없습니다."),
+    QUESTION_HIGHLIGHT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, BangggoodCode.CHECKLIST_SERVER_ERROR, "잘못된 하이라이트 키워드가 존재해 질문을 생성할 수 없습니다."),
     QUESTION_INVALID(HttpStatus.BAD_REQUEST, BangggoodCode.QUESTION_ERROR, "잘못된 질문 ID입니다."),
     QUESTION_DUPLICATED(HttpStatus.BAD_REQUEST, BangggoodCode.QUESTION_ERROR, "중복된 질문이 존재합니다."),
     QUESTION_DIFFERENT(HttpStatus.BAD_REQUEST, BangggoodCode.QUESTION_ERROR, "수정할 질문 목록이 기존의 질문 목록과 동일하지 않습니다."),
@@ -40,7 +40,7 @@ public enum ExceptionCode {
     // Checklist
     CHECKLIST_NOT_FOUND(HttpStatus.BAD_REQUEST, BangggoodCode.CHECKLIST_NOT_FOUND, "체크리스트가 존재하지 않습니다."),
     CHECKLIST_MEMO_INVALID_LENGTH(HttpStatus.BAD_REQUEST, BangggoodCode.CHECKLIST_ERROR, "체크리스트 메모는 1000자 이하여야 합니다."),
-    CHECKLIST_NOT_OWNED_BY_USER(HttpStatus.BAD_REQUEST, BangggoodCode.CHECKLIST_ERROR, "유저의 체크리스트가 아닙니다."),
+    CHECKLIST_NOT_OWNED_BY_USER(HttpStatus.BAD_REQUEST, BangggoodCode.UNAUTH_ERROR, "유저의 체크리스트가 아닙니다."),
 
     // CustomChecklist
     CUSTOM_CHECKLIST_QUESTION_EMPTY(HttpStatus.BAD_REQUEST, BangggoodCode.CUSTOM_ERROR, "커스텀 질문 개수가 유효하지 않습니다."),
@@ -79,7 +79,7 @@ public enum ExceptionCode {
     AUTHENTICATION_TOKEN_USER_MISMATCH(HttpStatus.UNAUTHORIZED, BangggoodCode.AUTH_TOKEN_USER_MISMATCH, "엑세스 토큰과 리프레시 토큰의 소유자가 다릅니다."),
     AUTHENTICATION_TOKEN_TYPE_MISMATCH(HttpStatus.BAD_REQUEST, BangggoodCode.AUTH_TOKEN_INVALID, "토큰 타입이 올바르지 않습니다."),
     OAUTH_TOKEN_INTERNAL_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, BangggoodCode.OAUTH_SERVER_ERROR, "카카오 서버와 통신하는 과정 중 예상치 못한 예외가 발생했습니다."),
-    OAUTH_REDIRECT_URI_MISMATCH(HttpStatus.BAD_REQUEST, BangggoodCode.AUTH_TOKEN_INVALID, "일치하는 Redirect URI가 존재하지 않습니다."),
+    OAUTH_REDIRECT_URI_MISMATCH(HttpStatus.BAD_REQUEST, BangggoodCode.OAUTH_SERVER_ERROR, "일치하는 Redirect URI가 존재하지 않습니다."),
 
 
     // Article

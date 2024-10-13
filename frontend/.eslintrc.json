@@ -22,8 +22,7 @@
     "eqeqeq": "error",
     "dot-notation": "warn",
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["error"],
-    "unused-imports/no-unused-imports": "error",
+    "@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "^_" }],
     "unused-imports/no-unused-vars": [
       "warn",
       {
@@ -33,6 +32,7 @@
         "argsIgnorePattern": "^_"
       }
     ],
+    "unused-imports/no-unused-imports": "error",
     "react/react-in-jsx-scope": "off",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",

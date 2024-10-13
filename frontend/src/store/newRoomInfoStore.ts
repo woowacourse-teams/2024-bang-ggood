@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { createStore, useStore } from 'zustand';
 
 import { roomFloorLevels, roomOccupancyPeriods } from '@/constants/roomInfo';
@@ -13,9 +14,9 @@ import {
   Validator,
 } from '@/utils/validators';
 
-export const newRoomInfoStore = createStore<
-  AllString<RoomInfo0> & { actions: { set: (o: Partial<AllString<RoomInfo0>>) => void; get: () => void } }
->()((set, get, reset) => ({
+import { InputChangeEvent } from './../types/event';
+
+export const initialRoomInfo = {
   roomName: '',
   deposit: '',
   rent: '',
@@ -31,13 +32,18 @@ export const newRoomInfoStore = createStore<
   occupancyPeriod: roomOccupancyPeriods[0],
   summary: '',
   memo: '',
-  //
+
   buildingName: '',
   station: '',
   walkingTime: '',
   address: '',
   includedMaintenances: '',
+};
 
+export const newRoomInfoStore = createStore<
+  AllString<RoomInfo0> & { actions: { set: (o: Partial<AllString<RoomInfo0>>) => void; get: () => void } }
+>()((set, get, reset) => ({
+  ...initialRoomInfo,
   actions: {
     set,
     get,
@@ -45,7 +51,18 @@ export const newRoomInfoStore = createStore<
   },
 }));
 
-const isNumeric = new Set<keyof RoomInfo0>(['roomName']);
+const numerics = [
+  'deposit',
+  'rent',
+  'maintenanceFee',
+  'contractTerm',
+  'size',
+  'floor',
+  'occupancyMonth',
+  'occupancyPeriod',
+  'walkingTime',
+] as const satisfies (keyof RoomInfo0)[];
+const isNumeric = new Set<keyof RoomInfo0>(numerics);
 
 const validators: Record<keyof RoomInfo0, Validator[]> = {
   roomName: [lengthValidator(20)],
@@ -83,14 +100,30 @@ const validation = (rawValue: string, validators: Validator[]) => {
   return newErrorMessage;
 };
 
-const useValidatedStore = (name: keyof RoomInfo0) => {
+type Includes<T extends readonly string[], U extends string> = U extends T[number] ? true : false;
+const useValidatedStore = <Key extends keyof RoomInfo0>(name: Key) => {
   const rawValue = useStore(newRoomInfoStore, state => state[name])!;
   const actions = useStore(newRoomInfoStore, state => state.actions);
-
-  const set = (rawValue: string) => actions.set({ [name]: rawValue });
-  const value = isNumeric.has(name) ? Number(rawValue) : rawValue;
+  const value = (isNumeric.has(name) ? Number(rawValue) : rawValue) as Includes<
+    typeof numerics,
+    typeof name
+  > extends true
+    ? number
+    : string;
   const errorMessage = validation(rawValue, validators[name]);
-  if (!errorMessage) actions.set({ [name]: isNumeric.has(name) ? Number(rawValue) : rawValue });
 
-  return { rawValue, value, errorMessage, set };
+  const set = useCallback((rawValue: string) => actions.set({ [name]: rawValue }), [name, actions]);
+
+  // 에러메시지가 없을 경우만 set
+  const onChange = useCallback(
+    (e: InputChangeEvent) => {
+      if (errorMessage) return;
+      set(e.target.value);
+    },
+    [set, errorMessage],
+  );
+
+  return { rawValue, value, errorMessage, onChange, set };
 };
+
+export default useValidatedStore;

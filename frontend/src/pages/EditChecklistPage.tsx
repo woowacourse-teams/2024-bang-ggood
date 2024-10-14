@@ -6,9 +6,9 @@ import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import Tabs from '@/components/_common/Tabs/Tabs';
+import ChecklistContent from '@/components/NewChecklist/ChecklistContent';
 import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
 import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
-import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
@@ -88,7 +88,7 @@ const EditChecklistPage = () => {
         {/* 체크리스트 작성의 탭 */}
         <Tabs tabList={tabs} />
         {/*체크리스트 콘텐츠 섹션*/}
-        <NewChecklistContent />
+        <ChecklistContent />
       </TabProvider>
 
       {/* 메모 모달 */}

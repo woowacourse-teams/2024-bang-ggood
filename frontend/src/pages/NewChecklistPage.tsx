@@ -7,15 +7,14 @@ import AlertModal from '@/components/_common/Modal/AlertModal/AlertModal';
 import LoginModal from '@/components/_common/Modal/LoginModal/LoginModal';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import Tabs from '@/components/_common/Tabs/Tabs';
+import ChecklistContent from '@/components/NewChecklist/ChecklistContent';
 import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
 import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
-import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useChecklistTabs from '@/hooks/useChecklistTabs';
 import useHandleTip from '@/hooks/useHandleTip';
-import useChecklistTemplate from '@/hooks/useInitialChecklist';
 import useModal from '@/hooks/useModal';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
@@ -24,11 +23,11 @@ import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 
 const NewChecklistPage = () => {
   const navigate = useNavigate();
-  useChecklistTemplate(); // 체크리스트 질문 가져오기 및 준비
   const { tabs } = useChecklistTabs();
 
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
   const roomInfoNonValidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
+  // TODO: useStore 포맷 맞추기
   const checklistActions = useChecklistStore(state => state.actions);
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);
   const { resetShowTip } = useHandleTip('OPTION');
@@ -63,7 +62,7 @@ const NewChecklistPage = () => {
       />
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
         <Tabs tabList={tabs} />
-        <NewChecklistContent />
+        <ChecklistContent />
       </TabProvider>
 
       {isMemoModalOpen ? (

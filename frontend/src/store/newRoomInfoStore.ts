@@ -5,6 +5,7 @@ import { RoomInfo0 } from '@/types/room';
 
 type NumberToString<T> = T extends number | string ? string : T;
 
+// TODO : API POST때 사용할 Mapper 함수 필요. structure(방구조: 처음에 null)
 export const initialRoomInfo = {
   roomName: { rawValue: '', errorMessage: '' },
   deposit: { rawValue: '', errorMessage: '' },

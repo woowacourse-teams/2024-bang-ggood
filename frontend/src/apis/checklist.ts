@@ -30,7 +30,7 @@ export const getChecklists = async () => {
 export const postChecklist = async (checklist: ChecklistPostForm) => {
   checklist.room.structure = checklist.room.structure === 'NONE' ? undefined : checklist.room.structure;
   checklist.room = mapObjUndefinedToNull(checklist.room);
-  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.V1_CHECKLISTS, body: checklist });
+  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLISTS_V1, body: checklist });
   return response;
 };
 

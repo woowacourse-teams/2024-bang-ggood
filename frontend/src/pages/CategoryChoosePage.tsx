@@ -37,7 +37,7 @@ const CategoryChoosePage = () => {
       } else if (prev.length < MAX_SELECT_CATEGORY_COUNT) {
         return [...prev, id];
       }
-      showToast(TOAST_MESSAGE.MAX_SELECT);
+      showToast({ message: TOAST_MESSAGE.MAX_SELECT });
       return prev;
     });
   };

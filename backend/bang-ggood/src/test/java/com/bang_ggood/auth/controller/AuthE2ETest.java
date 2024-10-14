@@ -30,7 +30,7 @@ class AuthE2ETest extends AcceptanceTest {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .body(LOCAL_LOGIN_REQUEST)
-                .when().post("/v1/local/login")
+                .when().post("/v1/local-auth/login")
                 .then().log().all()
                 .statusCode(200);
     }
@@ -41,7 +41,7 @@ class AuthE2ETest extends AcceptanceTest {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .body(LOCAL_LOGIN_REQUEST_NO_EMAIL)
-                .when().post("/v1/local/login")
+                .when().post("/v1/local-auth/login")
                 .then().log().all()
                 .statusCode(400)
                 .body("message", containsString("이메일이 존재하지 않습니다."));
@@ -53,7 +53,7 @@ class AuthE2ETest extends AcceptanceTest {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .body(LOCAL_LOGIN_REQUEST_NO_PASSWORD)
-                .when().post("/v1/local/login")
+                .when().post("/v1/local-auth/login")
                 .then().log().all()
                 .statusCode(400)
                 .body("message", containsString("비밀번호가 존재하지 않습니다."));

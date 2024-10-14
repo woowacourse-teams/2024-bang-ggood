@@ -49,7 +49,7 @@ public class AuthController {
                 .build();
     }
 
-    @PostMapping("/v1/local/login")
+    @PostMapping("/v1/local-auth/login")
     public ResponseEntity<Void> localLogin(@Valid @RequestBody LocalLoginRequestV1 request) {
         AuthTokenResponse response = authService.localLogin(request);
 

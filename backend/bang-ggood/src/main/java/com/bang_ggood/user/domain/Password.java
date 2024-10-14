@@ -25,10 +25,6 @@ public class Password {
     private String value;
 
     public Password(String value) {
-        if (value == null || value.isEmpty()) {
-            this.value = null;
-            return;
-        }
         validatePasswordPattern(value);
         this.value = PasswordEncoder.encodeWithGeneralSalt(value);
     }
@@ -39,7 +35,7 @@ public class Password {
     }
 
     private void validatePasswordPattern(String password) {
-        if (!PASSWORD_PATTERN.matcher(password).matches()) {
+        if (password == null || !PASSWORD_PATTERN.matcher(password).matches()) {
             throw new BangggoodException(ExceptionCode.PASSWORD_INVALID_FORMAT);
         }
     }

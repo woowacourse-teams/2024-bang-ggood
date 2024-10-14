@@ -18,11 +18,12 @@ class PasswordTest {
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("비밀번호가 없을 경우 생성 성공")
+    @DisplayName("비밀번호 생성 실패 : null일 경우")
     @Test
-    void createPassword_null() {
-        assertThatCode(() -> new Password(null))
-                .doesNotThrowAnyException();
+    void createPassword_null_exception() {
+        assertThatThrownBy(() -> new Password(null))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.PASSWORD_INVALID_FORMAT.getMessage());
     }
 
     @DisplayName("비밀번호 생성 실패 : 영어가 포함되지 않은 경우")

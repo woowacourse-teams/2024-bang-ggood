@@ -29,7 +29,6 @@ export default ListErrorFallback;
 
 const S = {
   Container: styled.div`
-    width: 100%;
     height: 50%;
     ${flexColumn}
     ${flexCenter}

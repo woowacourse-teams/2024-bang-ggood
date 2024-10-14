@@ -7,9 +7,6 @@ export const SHOW_CHECKLIST_COUNT = 3;
 const SkChecklistSection = () => {
   return (
     <Sk.Wrapper>
-      <Sk.Row>
-        <Sk.Title />
-      </Sk.Row>
       <Sk.CardBox />
     </Sk.Wrapper>
   );

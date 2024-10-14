@@ -1,17 +1,17 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/_common/Button/Button';
 import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallback';
+import TitleErrorFallback from '@/components/_common/errorBoundary/TitleErrorFallback';
 import ChecklistCardContainer from '@/components/Main/ChecklistCardContainer';
+import ChecklistSectionTitle from '@/components/Main/ChecklistSectionTitle';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { boxShadow, boxShadowSpread, flexColumn, flexRow, flexSpaceBetween, title3, title4 } from '@/styles/common';
+import { boxShadow, boxShadowSpread, flexColumn, flexRow, flexSpaceBetween, title4 } from '@/styles/common';
 
 const ChecklistSection = () => {
   const navigate = useNavigate();
-  const [checklistSize, setChecklistSize] = useState<number>();
 
   const handleClickList = () => {
     navigate(ROUTE_PATH.checklistList);
@@ -22,13 +22,13 @@ const ChecklistSection = () => {
       <S.Title>방 둘러볼 때 꼭 필요한 체크리스트</S.Title>
       <S.Container>
         <S.Row>
-          <S.ContainerTitle>
-            나의 체크리스트 <S.Count>{checklistSize}</S.Count>
-          </S.ContainerTitle>
+          <ErrorBoundary fallback={<TitleErrorFallback title="나의 체크리스트" />}>
+            <ChecklistSectionTitle />
+          </ErrorBoundary>
           <Button size="xSmall" label="전체 보기" onClick={handleClickList} />
         </S.Row>
         <ErrorBoundary FallbackComponent={ListErrorFallback}>
-          <ChecklistCardContainer setChecklistSize={setChecklistSize} />
+          <ChecklistCardContainer />
         </ErrorBoundary>
       </S.Container>
     </>
@@ -61,12 +61,5 @@ const S = {
     ${flexRow};
     ${flexSpaceBetween};
     align-items: center;
-  `,
-  ContainerTitle: styled.div`
-    ${title3}
-  `,
-  Count: styled.span`
-    ${title3}
-    color: ${({ theme }) => theme.palette.green500};
   `,
 };

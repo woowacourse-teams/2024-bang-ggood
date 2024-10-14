@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { useEffect } from 'react';
 
 import ChecklistCard from '@/components/ChecklistList/ChecklistCard';
 import NoChecklistTemplate from '@/components/ChecklistList/NoChecklistTemplate';
@@ -8,18 +7,8 @@ import useGetChecklistListQuery from '@/hooks/query/useGetChecklistListQuery';
 import { flexColumn } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
 
-interface Props {
-  setChecklistSize: (size: number) => void;
-}
-
-const ChecklistListContainer = ({ setChecklistSize }: Props) => {
+const ChecklistListContainer = () => {
   const { data: checklistList, isLoading } = useGetChecklistListQuery();
-
-  useEffect(() => {
-    if (checklistList) {
-      setChecklistSize(checklistList.length);
-    }
-  }, [checklistList, setChecklistSize]);
 
   if (isLoading) return <SkChecklistList />;
 

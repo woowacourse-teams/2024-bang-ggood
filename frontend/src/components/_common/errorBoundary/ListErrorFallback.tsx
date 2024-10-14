@@ -5,7 +5,7 @@ import { FallbackProps } from 'react-error-boundary';
 import { Retry } from '@/assets/assets';
 import { flexCenter, flexColumn, title4 } from '@/styles/common';
 
-const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
+const ListErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
   const queryClient = useQueryClient();
 
   const handleRefresh = () => {
@@ -25,7 +25,7 @@ const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
   );
 };
 
-export default ErrorFallback;
+export default ListErrorFallback;
 
 const S = {
   Container: styled.div`

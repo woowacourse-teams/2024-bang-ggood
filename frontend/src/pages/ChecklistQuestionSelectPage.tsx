@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/_common/Button/Button';
+import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallback';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
@@ -10,7 +12,6 @@ import { ChecklistQuestionSelectTabs } from '@/components/ChecklistQuestionSelec
 import QuestionListTemplate from '@/components/ChecklistQuestionSelect/QuestionListTemplate/QuestionListTemplate';
 import { TOAST_MESSAGE } from '@/constants/message';
 import { ROUTE_PATH } from '@/constants/routePath';
-import useGetAllChecklistQuestionQuery from '@/hooks/query/useGetAllChecklistQuestionsQuery';
 import usePutCustomChecklist from '@/hooks/query/usePutCustomChecklist';
 import useHandleTip from '@/hooks/useHandleTip';
 import useToast from '@/hooks/useToast';
@@ -21,10 +22,8 @@ const ChecklistQuestionSelectPage = () => {
   const navigate = useNavigate();
   const { showToast } = useToast();
 
-  const { data: checklistQuestions } = useGetAllChecklistQuestionQuery();
   const { mutate: putCustomChecklist } = usePutCustomChecklist();
-  const { selectedQuestions, setValidCategory, setChecklistAllQuestionList } = useChecklistQuestionSelectStore();
-
+  const { selectedQuestions, setValidCategory } = useChecklistQuestionSelectStore();
   const { resetShowTip } = useHandleTip('CUSTOM_QUESTION');
 
   const handleSubmitChecklist = () => {
@@ -43,12 +42,11 @@ const ChecklistQuestionSelectPage = () => {
 
   useEffect(() => {
     const fetchChecklist = async () => {
-      /*체크리스트의 모든 질문 전역 상태로 저장 */
-      setChecklistAllQuestionList(checklistQuestions || []);
       /*체크리스트의 유효한 카테고리만 탭으로 생성 */
       setValidCategory();
     };
     fetchChecklist();
+
     /*팁 박스를 다시 보이도록 리셋*/
     resetShowTip();
   }, []);
@@ -57,7 +55,7 @@ const ChecklistQuestionSelectPage = () => {
     <>
       <Header
         left={<Header.Backward />}
-        center={<Header.Text>{'체크리스트 항목 편집'}</Header.Text>}
+        center={<Header.Text>{'체크리스트 질문 편집'}</Header.Text>}
         right={<Button label={'저장'} size="small" color="dark" onClick={handleSubmitChecklist} />}
       />
       <TabProvider defaultTab={1}>
@@ -66,7 +64,9 @@ const ChecklistQuestionSelectPage = () => {
         {/* 질문 콘텐츠 섹션*/}
         <Layout bgColor={theme.palette.background} withHeader withTab>
           <TipBox tipType={'CUSTOM_QUESTION'} />
-          <QuestionListTemplate />
+          <ErrorBoundary FallbackComponent={ListErrorFallback}>
+            <QuestionListTemplate />
+          </ErrorBoundary>
         </Layout>
       </TabProvider>
     </>

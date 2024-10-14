@@ -33,36 +33,14 @@ const useMutateChecklist = (
   // 체크리스트 답변
   const checklistCategoryQnA = useChecklistStore(state => state.checklistCategoryQnA);
 
-  //스토어에서 actions을 제외한 values 만 꺼내오는 함수
-  const roomInfoUnvalidatedValues = () => {
-    const { actions, ...values } = roomInfoUnvalidated;
-    void actions;
-    return values;
-  };
-
-  const roomInfoUnvalidatedAnswer = roomInfoUnvalidatedValues();
-
-  function removeKey<T extends object, K extends keyof T>(obj: T, key: K): Omit<T, K> {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { [key]: _, ...rest } = obj;
-    return rest;
-  }
-
-  //TODO: 나중에 해당 키 이름 수정
-  const roomInfoUnvalidatedAnswerWithoutSubway = removeKey(roomInfoUnvalidatedAnswer, 'nearSubwayStation');
-
-  const formattedUnvalidatedValues = {
-    station: roomInfoUnvalidatedAnswer.nearSubwayStation[0]?.stationName,
-    walkingTime: roomInfoUnvalidatedAnswer.nearSubwayStation[0]?.walkingTime,
-  };
-
   const postData = {
     room: {
       ...roomInfoAnswer,
-      ...{ ...roomInfoUnvalidatedAnswerWithoutSubway, ...formattedUnvalidatedValues },
+      ...roomInfoUnvalidatedActions.getFormValues(),
     },
     options: selectedOptions,
     questions: transformQuestions(checklistCategoryQnA),
+    geolocation: roomInfoUnvalidated.position,
   };
 
   const putData = {
@@ -82,7 +60,6 @@ const useMutateChecklist = (
           if (onSuccessCallback) {
             onSuccessCallback();
           }
-
           const location = res.headers.get('location');
           if (location) navigate(location);
         },

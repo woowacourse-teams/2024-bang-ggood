@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
+import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
 
+import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallback';
 import ArticleCardContainer from '@/components/Main/ArticleCardContainer';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { flexRow, flexSpaceBetween, title4 } from '@/styles/common';
@@ -18,7 +20,9 @@ const ArticleSection = () => {
         <S.Title>방 구하기 전 꼭 필요한 이야기</S.Title>
         <S.ShowMore onClick={handleClickShowMore}>더보기</S.ShowMore>
       </S.Row>
-      <ArticleCardContainer />
+      <ErrorBoundary FallbackComponent={ListErrorFallback}>
+        <ArticleCardContainer />
+      </ErrorBoundary>
     </>
   );
 };

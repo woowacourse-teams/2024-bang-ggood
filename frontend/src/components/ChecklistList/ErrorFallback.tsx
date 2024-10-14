@@ -34,7 +34,6 @@ const S = {
     gap: 1.4rem;
     padding: 2rem;
 
-    background-color: ${({ theme }) => theme.palette.background};
     border-radius: 8px;
   `,
   Message: styled.h2`

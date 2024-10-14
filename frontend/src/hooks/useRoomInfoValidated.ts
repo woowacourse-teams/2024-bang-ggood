@@ -27,6 +27,7 @@ const validators: Record<keyof ValidatedRoomInfo, Validator[]> = {
   structure: [],
   realEstate: [],
   occupancyMonth: [isIntegerValidator, positiveValidator, inRangeValidator(1, 12)],
+  occupancyPeriod: [],
 
   summary: [],
   memo: [],
@@ -46,12 +47,13 @@ const numerics = [
   'size',
   'floor',
   'occupancyMonth',
+  'occupancyPeriod',
   'walkingTime',
 ] as const satisfies (keyof ValidatedRoomInfo)[];
 
 const isNumeric = new Set<keyof ValidatedRoomInfo>(numerics);
 
-type ValidatedRoomInfo = Omit<RoomInfo0, 'includedMaintenances' | 'occupancyPeriod'>;
+type ValidatedRoomInfo = Omit<RoomInfo0, 'includedMaintenances'>;
 type Includes<T extends readonly string[], U extends string> = U extends T[number] ? true : false;
 
 const useRoomInfoValidated = <Key extends keyof ValidatedRoomInfo>(name: Key) => {

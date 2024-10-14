@@ -32,9 +32,10 @@ const useMoveSection = (sectionRefs: React.MutableRefObject<(HTMLElement | null)
     const sectionHeight = sectionElement.offsetHeight;
     const clickYPosition = event.clientY - sectionElement.getBoundingClientRect().top;
 
-    if (clickYPosition < sectionHeight / 2) {
+    if (clickYPosition < sectionHeight * 0.2) {
       scrollToPrevSection(index);
-    } else {
+    }
+    if (clickYPosition > sectionHeight * 0.8) {
       scrollToNextSection(index);
     }
   };

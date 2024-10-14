@@ -6,7 +6,7 @@ import com.bang_ggood.auth.controller.cookie.CookieResolver;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.request.RegisterRequestV1;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
-import com.bang_ggood.auth.dto.response.RefreshTokenCheckResponse;
+import com.bang_ggood.auth.dto.response.TokenExistResponse;
 import com.bang_ggood.auth.service.AuthService;
 import com.bang_ggood.user.domain.User;
 import jakarta.servlet.http.HttpServletRequest;
@@ -78,11 +78,12 @@ public class AuthController {
                 .build();
     }
 
-    @GetMapping("/refreshToken-check")
-    public ResponseEntity<RefreshTokenCheckResponse> check(HttpServletRequest httpServletRequest) {
+    @GetMapping("/token-exist")
+    public ResponseEntity<TokenExistResponse> check(HttpServletRequest httpServletRequest) {
+        boolean isAccessTokenExist = !cookieResolver.isAccessTokenEmpty(httpServletRequest);
         boolean isRefreshTokenExist = !cookieResolver.isRefreshTokenEmpty(httpServletRequest);
 
-        RefreshTokenCheckResponse refreshTokenCheckResponse = RefreshTokenCheckResponse.from(isRefreshTokenExist);
-        return ResponseEntity.ok(refreshTokenCheckResponse);
+        TokenExistResponse tokenExistResponse = TokenExistResponse.from(isAccessTokenExist, isRefreshTokenExist);
+        return ResponseEntity.ok(tokenExistResponse);
     }
 }

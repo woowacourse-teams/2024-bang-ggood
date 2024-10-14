@@ -1,6 +1,6 @@
 package com.bang_ggood.global.exception;
 
-public enum BangggoodCode {
+public enum ClientExceptionCode {
 
     ARTICLE_NOT_FOUND,
     AUTH_ACCESS_TOKEN_EMPTY,

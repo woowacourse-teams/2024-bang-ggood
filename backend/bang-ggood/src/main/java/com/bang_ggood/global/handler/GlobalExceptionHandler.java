@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
         ExceptionResponse response = new ExceptionResponse(
                 request.getMethod(),
                 request.getRequestURI(),
-                ExceptionCode.INTERNAL_SERVER_ERROR.getBangggoodCode().name(),
+                ExceptionCode.INTERNAL_SERVER_ERROR.getClientExceptionCode().name(),
                 ExceptionCode.INTERNAL_SERVER_ERROR.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(response);
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
         ExceptionResponse response = new ExceptionResponse(
                 request.getMethod(),
                 request.getRequestURI(),
-                ExceptionCode.INVALID_PARAMETER.getBangggoodCode().name(),
+                ExceptionCode.INVALID_PARAMETER.getClientExceptionCode().name(),
                 exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(response);

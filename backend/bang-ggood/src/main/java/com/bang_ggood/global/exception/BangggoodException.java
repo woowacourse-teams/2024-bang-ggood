@@ -20,6 +20,6 @@ public class BangggoodException extends RuntimeException {
     }
 
     public String getBangggoodCode() {
-        return exceptionCode.getBangggoodCode().name();
+        return exceptionCode.getClientExceptionCode().name();
     }
 }

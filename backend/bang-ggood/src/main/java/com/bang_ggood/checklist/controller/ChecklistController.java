@@ -43,7 +43,7 @@ public class ChecklistController {
     public ResponseEntity<Void> createChecklistV1(@AuthRequiredPrincipal User user,
                                                   @Valid @RequestBody ChecklistRequestV1 checklistRequestV1) {
         long checklistId = checklistManageService.createChecklistV1(user, checklistRequestV1);
-        return ResponseEntity.created(URI.create("/checklists/" + checklistId)).build();
+        return ResponseEntity.created(URI.create("/checklist/" + checklistId)).build();
     }
 
     @GetMapping("/checklists/{id}")

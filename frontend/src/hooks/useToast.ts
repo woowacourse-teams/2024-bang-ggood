@@ -1,15 +1,14 @@
 import { useEffect } from 'react';
 
 import { DEFAULT_TOAST_DURATION } from '@/constants/system';
-import useToastStore, { ToastType } from '@/store/useToastStore';
+import useToastStore from '@/store/useToastStore';
 
 interface Props {
   durationMinute?: number;
-  type?: ToastType;
 }
 
 const useToast = (props?: Props) => {
-  const { hideToast, toast, showToast, colorType } = useToastStore();
+  const { toast, type, showToast, hideToast } = useToastStore();
 
   const { durationMinute = DEFAULT_TOAST_DURATION } = props || {};
 
@@ -22,7 +21,7 @@ const useToast = (props?: Props) => {
     }
   }, [toast, durationMinute, hideToast]);
 
-  return { toast, showToast, colorType };
+  return { toast, type, showToast };
 };
 
 export default useToast;

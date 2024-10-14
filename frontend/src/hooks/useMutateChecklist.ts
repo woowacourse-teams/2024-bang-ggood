@@ -18,7 +18,7 @@ const useMutateChecklist = (
   onErrorCallback?: () => void,
 ) => {
   const navigate = useNavigate();
-  const { showToast } = useToast({ type: 'positive' });
+  const { showToast } = useToast();
   const { mutate: addChecklist } = useAddChecklistQuery();
   const { mutate: putChecklist } = usePutChecklistQuery();
 
@@ -54,7 +54,7 @@ const useMutateChecklist = (
     const postNewChecklist = () => {
       addChecklist(postData, {
         onSuccess: res => {
-          showToast(TOAST_MESSAGE.ADD);
+          showToast({ message: TOAST_MESSAGE.ADD });
           roomInfoActions.resetAll();
           roomInfoUnvalidatedActions.resetAll();
           if (onSuccessCallback) {
@@ -76,7 +76,7 @@ const useMutateChecklist = (
     const putEditedChecklist = () => {
       putChecklist(putData, {
         onSuccess: res => {
-          showToast(TOAST_MESSAGE.EDIT);
+          showToast({ message: TOAST_MESSAGE.EDIT });
           roomInfoActions.resetAll();
           roomInfoUnvalidatedActions.resetAll();
           if (onSuccessCallback) {

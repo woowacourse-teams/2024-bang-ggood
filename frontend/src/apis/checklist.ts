@@ -27,14 +27,6 @@ export const getChecklists = async () => {
   return data.checklists.map(mapObjNullToUndefined);
 };
 
-//TODO: 기존 form
-// export const postChecklist = async (checklist: ChecklistPostForm) => {
-//   checklist.room.structure = checklist.room.structure === 'NONE' ? undefined : checklist.room.structure;
-//   checklist.room = mapObjUndefinedToNull(checklist.room);
-//   const response = await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLISTS, body: checklist });
-//   return response;
-// };
-
 export const postChecklist = async (checklist: ChecklistPostForm) => {
   checklist.room.structure = checklist.room.structure === 'NONE' ? undefined : checklist.room.structure;
   checklist.room = mapObjUndefinedToNull(checklist.room);

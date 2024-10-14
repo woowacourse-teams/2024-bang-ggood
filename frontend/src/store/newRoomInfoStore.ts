@@ -3,7 +3,6 @@ import { createStore, useStore } from 'zustand';
 
 import { roomFloorLevels, roomOccupancyPeriods } from '@/constants/roomInfo';
 import { RoomInfo0 } from '@/types/room';
-import { AllString } from '@/utils/utilityTypes';
 import {
   inRangeValidator,
   isIntegerValidator,
@@ -16,6 +15,8 @@ import {
 
 import { InputChangeEvent } from './../types/event';
 
+type ValidatedRoomInfo = Omit<RoomInfo0, 'includedMaintenances' | 'occupancyPeriod'>;
+type NumberToString<T> = { [k in keyof T]: T[k] extends number | string ? string : T[k] };
 export const initialRoomInfo = {
   roomName: '',
   deposit: '',
@@ -37,11 +38,13 @@ export const initialRoomInfo = {
   station: '',
   walkingTime: '',
   address: '',
-  includedMaintenances: '',
+  includedMaintenances: [],
 };
 
 export const newRoomInfoStore = createStore<
-  AllString<RoomInfo0> & { actions: { set: (o: Partial<AllString<RoomInfo0>>) => void; get: () => void } }
+  NumberToString<RoomInfo0> & {
+    actions: { set: (o: Partial<NumberToString<RoomInfo0>>) => void; get: () => void };
+  }
 >()((set, get, reset) => ({
   ...initialRoomInfo,
   actions: {
@@ -59,12 +62,11 @@ const numerics = [
   'size',
   'floor',
   'occupancyMonth',
-  'occupancyPeriod',
   'walkingTime',
-] as const satisfies (keyof RoomInfo0)[];
-const isNumeric = new Set<keyof RoomInfo0>(numerics);
+] as const satisfies (keyof ValidatedRoomInfo)[];
+const isNumeric = new Set<keyof ValidatedRoomInfo>(numerics);
 
-const validators: Record<keyof RoomInfo0, Validator[]> = {
+const validators: Record<keyof ValidatedRoomInfo, Validator[]> = {
   roomName: [lengthValidator(20)],
   deposit: [isNumericValidator, nonNegativeValidator],
   rent: [isNumericValidator, nonNegativeValidator],
@@ -78,7 +80,6 @@ const validators: Record<keyof RoomInfo0, Validator[]> = {
   realEstate: [],
   occupancyMonth: [isIntegerValidator, positiveValidator, inRangeValidator(1, 12)],
 
-  occupancyPeriod: [],
   summary: [],
   memo: [],
 
@@ -87,13 +88,12 @@ const validators: Record<keyof RoomInfo0, Validator[]> = {
   address: [],
   createdAt: [],
   buildingName: [],
-  includedMaintenances: [],
 };
 
-const validation = (rawValue: string, validators: Validator[]) => {
+const validation = (rawValue: string, validators: Validator[] | undefined) => {
   const newErrorMessage =
     validators
-      .slice() //validatiors 가 런타임 때 undefined 일 경우를 대비해 ? 로 처리
+      ?.slice()
       .reverse()
       .reduce((acc, { validate, errorMessage }) => (!validate(rawValue) ? errorMessage : acc), '') ?? '';
 
@@ -101,7 +101,7 @@ const validation = (rawValue: string, validators: Validator[]) => {
 };
 
 type Includes<T extends readonly string[], U extends string> = U extends T[number] ? true : false;
-const useValidatedStore = <Key extends keyof RoomInfo0>(name: Key) => {
+const useValidatedStore = <Key extends keyof ValidatedRoomInfo>(name: Key) => {
   const rawValue = useStore(newRoomInfoStore, state => state[name])!;
   const actions = useStore(newRoomInfoStore, state => state.actions);
   const value = (isNumeric.has(name) ? Number(rawValue) : rawValue) as Includes<

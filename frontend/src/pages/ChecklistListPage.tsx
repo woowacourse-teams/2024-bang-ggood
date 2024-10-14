@@ -16,7 +16,7 @@ import theme from '@/styles/theme';
 
 const ChecklistListPage = () => {
   const navigate = useNavigate();
-  const [checklistSize, setChecklistSize] = useState<number>(0);
+  const [checklistSize, setChecklistSize] = useState<number>();
 
   const handleClickMoveCustomPage = () => {
     navigate(ROUTE_PATH.checklistQuestionSelect);

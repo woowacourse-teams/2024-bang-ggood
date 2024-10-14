@@ -1,28 +1,21 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/_common/Button/Button';
-import ChecklistPreviewCard from '@/components/Main/ChecklistPreviewCard';
-import SkChecklistSection from '@/components/skeleton/Main/SkChecklistSection';
+import ErrorFallback from '@/components/ChecklistList/ErrorFallback';
+import ChecklistCardContainer from '@/components/Main/ChecklistCardContainer';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { MAX_CHECKLISTS_DISPLAY_COUNT } from '@/constants/system';
-import useGetChecklistListQuery from '@/hooks/query/useGetChecklistListQuery';
 import { boxShadow, boxShadowSpread, flexColumn, flexRow, flexSpaceBetween, title3, title4 } from '@/styles/common';
-import { ChecklistPreview } from '@/types/checklist';
 
 const ChecklistSection = () => {
   const navigate = useNavigate();
-  const { data: checklists, isLoading } = useGetChecklistListQuery();
+  const [checklistSize, setChecklistSize] = useState<number>();
 
   const handleClickList = () => {
     navigate(ROUTE_PATH.checklistList);
   };
-
-  const handleNewChecklist = () => {
-    navigate(ROUTE_PATH.checklistNew);
-  };
-
-  if (isLoading) return <SkChecklistSection />;
 
   return (
     <>
@@ -30,16 +23,13 @@ const ChecklistSection = () => {
       <S.Container>
         <S.Row>
           <S.ContainerTitle>
-            나의 체크리스트 <S.Count>{checklists?.length}</S.Count>
+            나의 체크리스트 <S.Count>{checklistSize}</S.Count>
           </S.ContainerTitle>
           <Button size="xSmall" label="전체 보기" onClick={handleClickList} />
         </S.Row>
-        {checklists
-          ?.slice(0, MAX_CHECKLISTS_DISPLAY_COUNT)
-          .map((checklist: ChecklistPreview, index: number) => (
-            <ChecklistPreviewCard key={checklist.checklistId} index={index} checklist={checklist} />
-          ))}
-        <S.NewButton label="+ 새로운 체크리스트 생성하기" isSquare size="full" onClick={handleNewChecklist} />
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <ChecklistCardContainer setChecklistSize={setChecklistSize} />
+        </ErrorBoundary>
       </S.Container>
     </>
   );
@@ -78,12 +68,5 @@ const S = {
   Count: styled.span`
     ${title3}
     color: ${({ theme }) => theme.palette.green500};
-  `,
-  NewButton: styled(Button)`
-    width: 100%;
-    padding: 1.8rem 4.8rem;
-    border-radius: 0.8rem;
-
-    background-color: ${({ theme }) => theme.palette.grey50};
   `,
 };

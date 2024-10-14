@@ -17,10 +17,6 @@ const App = () => {
       mutations: { onError: error => showToast({ message: error.message, type: 'error' }) },
       queries: { throwOnError: true },
     },
-    queryCache: new QueryCache({
-      // get 일때 return => fallback
-      onError: error => showToast({ message: error.message, type: 'error' }),
-    }),
   });
 
   return (

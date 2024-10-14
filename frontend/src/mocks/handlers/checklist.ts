@@ -11,7 +11,7 @@ export const checklistHandlers = [
     return HttpResponse.json(checklistQuestions, { status: 200 });
   }),
 
-  http.get(BASE_URL + ENDPOINT.CHECKLIST_ID(1), () => {
+  http.get(BASE_URL + ENDPOINT.CHECKLIST_ID_V1(1), () => {
     return HttpResponse.json(Object.assign(checklistDetail, { isLiked: getLike(1) }), { status: 200 });
   }),
 

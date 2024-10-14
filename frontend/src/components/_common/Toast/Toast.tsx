@@ -72,13 +72,13 @@ const S = {
     background-color: ${({ theme }) => theme.palette.grey500};
   `,
   Text: styled.div`
-    ${flexColumn}
+    ${flexColumn};
     width: 100%;
 
     color: ${({ theme }) => theme.palette.white};
     line-height: 1.2;
     white-space: pre-line;
 
-    ${title4}
+    ${title4};
   `,
 };

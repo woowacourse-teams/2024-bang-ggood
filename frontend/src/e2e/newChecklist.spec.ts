@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
 
 test('빈 체크리스트를 제출할 수 있다.', async ({ page }) => {
-  await page.goto('http://localhost:3000/');
+  await page.goto('/');
   await page.getByRole('button', { name: '방끗 둘러보기' }).click();
   await page.getByRole('button', { name: '전체 보기' }).click();
   await page.getByLabel('add').click();

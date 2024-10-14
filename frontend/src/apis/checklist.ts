@@ -16,7 +16,7 @@ export const getChecklistAllQuestions = async () => {
 };
 
 export const getChecklistDetail = async (id: number) => {
-  const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_ID(id) });
+  const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_ID_V1(id) });
   const data = await response.json();
   return data as ChecklistInfo;
 };
@@ -30,7 +30,7 @@ export const getChecklists = async () => {
 export const postChecklist = async (checklist: ChecklistPostForm) => {
   checklist.room.structure = checklist.room.structure === 'NONE' ? undefined : checklist.room.structure;
   checklist.room = mapObjUndefinedToNull(checklist.room);
-  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLISTS, body: checklist });
+  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLISTS_V1, body: checklist });
   return response;
 };
 

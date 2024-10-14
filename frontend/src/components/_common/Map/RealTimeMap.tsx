@@ -44,7 +44,7 @@ const RealTimeMap = ({
       mapRef.current = map;
 
       /*마커 생성*/
-      const marker = createMarker(kakao, map, new kakao.maps.LatLng(position.lat, position.lon));
+      const marker = createMarker(kakao, map, new kakao.maps.LatLng(position.latitude, position.longitude));
       markerRef.current = marker;
 
       /*인포윈도우 생성*/
@@ -55,7 +55,7 @@ const RealTimeMap = ({
       kakao.maps.event.addListener(map, 'click', (mouseEvent: any) => {
         const latlng = mouseEvent.latLng;
         map.setCenter(latlng);
-        setPosition({ lat: latlng.getLat(), lon: latlng.getLng() });
+        setPosition({ latitude: latlng.getLat(), longitude: latlng.getLng() });
 
         if (markerRef.current) {
           markerRef.current.setPosition(latlng);
@@ -66,13 +66,13 @@ const RealTimeMap = ({
 
       /* 실시간 위치 찾기 */
       const successGeolocation = (position: GeolocationPosition) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
 
-        const locPosition = new kakao.maps.LatLng(lat, lon);
+        const locPosition = new kakao.maps.LatLng(latitude, longitude);
         const message = `<span id="info-title">이 위치가 맞나요?</span>`;
 
-        setPosition({ lat, lon });
+        setPosition({ latitude, longitude });
         map.setCenter(locPosition);
         setRealTimeLocationState('success');
 
@@ -121,7 +121,7 @@ const RealTimeMap = ({
     if (markerRef.current && mapRef.current && realTimeLocationState !== 'loading') {
       const { kakao } = window as any;
 
-      const locPosition = new kakao.maps.LatLng(position.lat, position.lon);
+      const locPosition = new kakao.maps.LatLng(position.latitude, position.longitude);
       markerRef.current.setPosition(locPosition);
       mapRef.current.setCenter(locPosition);
 

@@ -42,7 +42,7 @@ const NewChecklistPage = () => {
   // 로그인 요청 모달
   const { isModalOpen: isLoginModalOpen, openModal: openLoginModal, closeModal: closeLoginModal } = useModal();
 
-  const resetAndGoHome = () => {
+  const resetChecklist = () => {
     roomInfoActions.resetAll();
     roomInfoNonValidatedActions.resetAll();
     checklistActions.reset();
@@ -71,7 +71,7 @@ const NewChecklistPage = () => {
       <SubmitModalWithSummary
         isModalOpen={isSubmitModalOpen}
         modalClose={closeSummaryModal}
-        onConfirm={resetAndGoHome}
+        onConfirm={resetChecklist}
         onError={openLoginModal}
         mutateType="add"
       />
@@ -86,7 +86,7 @@ const NewChecklistPage = () => {
         }
         isOpen={isAlertModalOpen}
         onClose={closeAlertModal}
-        handleApprove={resetAndGoHome}
+        handleApprove={resetChecklist}
         approveButtonName="나가기"
       />
 

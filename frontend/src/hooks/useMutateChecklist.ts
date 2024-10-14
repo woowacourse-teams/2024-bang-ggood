@@ -5,7 +5,7 @@ import { TOAST_MESSAGE } from '@/constants/message';
 import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
 import usePutChecklistQuery from '@/hooks/query/usePutCheclistQuery';
 import useToast from '@/hooks/useToast';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import newRoomInfoStore from '@/store/newRoomInfoStore';
 import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
@@ -23,8 +23,10 @@ const useMutateChecklist = (
   const { mutate: putChecklist } = usePutChecklistQuery();
 
   // 방 기본 정보 - validated
-  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
-  const roomInfoAnswer = useStore(checklistRoomInfoStore, state => state.value);
+  const roomInfoActions = useStore(newRoomInfoStore, state => state.actions);
+  const { actions: _, ...answers } = useStore(newRoomInfoStore);
+  const roomInfo = Object.fromEntries(Object.entries(answers).map(([key, value]) => [key, value.rawValue]));
+
   // 방 기본 정보 - nonValidated
   const roomInfoUnvalidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
   const roomInfoUnvalidated = useStore(roomInfoNonValidatedStore, state => state);
@@ -35,7 +37,7 @@ const useMutateChecklist = (
 
   const postData = {
     room: {
-      ...roomInfoAnswer,
+      ...roomInfo,
       ...roomInfoUnvalidatedActions.getFormValues(),
     },
     options: selectedOptions,
@@ -55,7 +57,7 @@ const useMutateChecklist = (
       addChecklist(postData, {
         onSuccess: res => {
           showToast({ message: TOAST_MESSAGE.ADD });
-          roomInfoActions.resetAll();
+          roomInfoActions.reset();
           roomInfoUnvalidatedActions.resetAll();
           if (onSuccessCallback) {
             onSuccessCallback();
@@ -77,7 +79,7 @@ const useMutateChecklist = (
       putChecklist(putData, {
         onSuccess: res => {
           showToast({ message: TOAST_MESSAGE.EDIT });
-          roomInfoActions.resetAll();
+          roomInfoActions.reset();
           roomInfoUnvalidatedActions.resetAll();
           if (onSuccessCallback) {
             onSuccessCallback();

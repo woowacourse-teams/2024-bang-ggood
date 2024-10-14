@@ -35,7 +35,6 @@ const validators: Record<keyof ValidatedRoomInfo, Validator[]> = {
   station: [],
   walkingTime: [],
   address: [],
-  createdAt: [],
   buildingName: [],
 };
 

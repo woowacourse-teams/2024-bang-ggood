@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import useGetChecklistListQuery from '@/hooks/query/useGetChecklistListQuery';
 import useRoomInfoValidated from '@/hooks/useRoomInfoValidated';
-import { initialRoomInfo } from '@/store/checklistRoomInfoStore';
+import { initialRoomInfo } from '@/store/newRoomInfoStore';
 
 const useDefaultRoomName = () => {
   const roomName = useRoomInfoValidated('roomName');

@@ -44,7 +44,7 @@ export type RoomInfo0 = {
   summary: string;
   memo: string;
   type: string;
-  createdAt?: string;
+  // createdAt?: string;
   address: string;
   buildingName: string;
   includedMaintenances: number[]; // 관리비 포함항목

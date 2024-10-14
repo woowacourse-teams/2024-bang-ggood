@@ -11,6 +11,7 @@ export const ENDPOINT = {
   CHECKLIST_ALL_QUESTION: '/custom-checklist/all',
   CHECKLIST_CUSTOM: '/custom-checklist',
   CHECKLIST_ID: (id: number) => `/checklists/${id}`,
+  CHECKLIST_ID_V1: (id: number) => `/v1/checklists/${id}`,
   // like
   LIKE: (id: number) => `/checklists/${id}/like`,
   // category

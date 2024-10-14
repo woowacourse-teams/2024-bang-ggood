@@ -1,3 +1,4 @@
+import { nearSubway } from '@/mocks/fixtures/subway';
 import { ChecklistInfo } from '@/types/checklist';
 
 export const checklistDetail: ChecklistInfo = {
@@ -70,4 +71,5 @@ export const checklistDetail: ChecklistInfo = {
       ],
     },
   ],
+  stations: nearSubway,
 };

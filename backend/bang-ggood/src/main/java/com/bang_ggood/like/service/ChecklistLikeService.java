@@ -8,6 +8,7 @@ import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.Optional;
 
 @Service
 public class ChecklistLikeService {
@@ -47,8 +48,12 @@ public class ChecklistLikeService {
     @Transactional
     public void deleteLike(User user, Checklist checklist) {
         validateChecklistOwnership(user, checklist);
-        ChecklistLike checklistLike = checklistLikeRepository.getByChecklistId(checklist.getId());
+        Optional<ChecklistLike> checklistLike = checklistLikeRepository.findByChecklistId(checklist.getId());
 
-        checklistLikeRepository.deleteById(checklistLike.getId());
+        if (checklistLike.isEmpty()) {
+            return;
+        }
+
+        checklistLikeRepository.deleteById(checklistLike.get().getId());
     }
 }

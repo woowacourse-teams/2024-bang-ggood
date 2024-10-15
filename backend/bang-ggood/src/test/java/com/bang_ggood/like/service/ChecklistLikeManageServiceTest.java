@@ -4,8 +4,6 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
-import com.bang_ggood.global.exception.BangggoodException;
-import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.like.domain.ChecklistLike;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.room.RoomFixture;
@@ -19,7 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class ChecklistLikeManageServiceTest extends IntegrationTestSupport {
 
@@ -93,8 +91,7 @@ class ChecklistLikeManageServiceTest extends IntegrationTestSupport {
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
 
         // when & then
-        assertThatThrownBy(() -> checklistLikeManageService.deleteLike(user, checklist.getId()))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.LIKE_NOT_EXISTS.getMessage());
+        assertThatCode(() -> checklistLikeManageService.deleteLike(user, checklist.getId()))
+                .doesNotThrowAnyException();
     }
 }

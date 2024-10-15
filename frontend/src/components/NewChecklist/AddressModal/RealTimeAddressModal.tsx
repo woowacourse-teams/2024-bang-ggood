@@ -14,7 +14,7 @@ import { title4 } from '@/styles/common';
 import { Position } from '@/types/address';
 
 const RealTimeAddressModal = () => {
-  const DEFAULT_POSITION = { lat: 0, lon: 0 };
+  const DEFAULT_POSITION = { latitude: 0, longitude: 0 };
 
   const roomInfoUnvalidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
 
@@ -28,9 +28,10 @@ const RealTimeAddressModal = () => {
   const { searchSubwayStationsByPosition } = useRoomInfoNonValidated();
 
   const handleSubmitAddress = () => {
-    if (position.lat && position.lon) {
+    if (position.latitude && position.longitude) {
       roomInfoUnvalidatedActions.set('address', currentAddress);
       roomInfoUnvalidatedActions.set('buildingName', currentBuildingName);
+      roomInfoUnvalidatedActions.set('position', position);
 
       searchSubwayStationsByPosition(position);
       closeModal();

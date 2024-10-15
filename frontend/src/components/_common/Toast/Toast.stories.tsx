@@ -10,7 +10,7 @@ import useToast from '@/hooks/useToast';
  */
 const meta: Meta<typeof Toast> = {
   title: 'components/Toast',
-  component: Toast,
+  component: ToastContainer,
   decorators: [
     Story => (
       <>

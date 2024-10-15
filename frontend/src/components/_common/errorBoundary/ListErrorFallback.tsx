@@ -29,6 +29,7 @@ export default ListErrorFallback;
 
 const S = {
   Container: styled.div`
+    height: 50%;
     ${flexColumn}
     ${flexCenter}
     gap: 1.4rem;

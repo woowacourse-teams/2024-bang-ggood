@@ -8,7 +8,7 @@ npm run build
 
 or
 
-```
+```a
 yarn build
 ```
 

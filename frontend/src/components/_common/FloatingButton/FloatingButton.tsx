@@ -104,7 +104,7 @@ const S = {
     max-width: 60rem;
     justify-content: flex-end;
 
-    @media (min-width: ${theme.viewport.MOBILE}rem) {
+    @media (min-width: ${theme.viewport.MOBILE}px) {
       padding-right: 2rem;
     }
   `,

@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/_common/Button/Button';
@@ -10,19 +9,9 @@ import { MAX_CHECKLISTS_DISPLAY_COUNT } from '@/constants/system';
 import useGetChecklistListQuery from '@/hooks/query/useGetChecklistListQuery';
 import { ChecklistPreview } from '@/types/checklist';
 
-interface Props {
-  setChecklistSize: (size: number) => void;
-}
-
-const ChecklistCardContainer = ({ setChecklistSize }: Props) => {
+const ChecklistCardContainer = () => {
   const navigate = useNavigate();
   const { data: checklistList, isLoading } = useGetChecklistListQuery();
-
-  useEffect(() => {
-    if (checklistList) {
-      setChecklistSize(checklistList.length);
-    }
-  }, [checklistList, setChecklistSize]);
 
   const handleNewChecklist = () => {
     navigate(ROUTE_PATH.checklistNew);

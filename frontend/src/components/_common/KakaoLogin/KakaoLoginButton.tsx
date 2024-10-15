@@ -28,13 +28,12 @@ const S = {
     border-radius: 0.8rem;
 
     background-color: ${({ theme }) => theme.palette.kakao};
-
-    font-size: ${({ theme }) => theme.text.size.large};
     cursor: pointer;
   `,
   Text: styled.div`
     margin: 0.5rem;
 
+    font-weight: ${({ theme }) => theme.text.weight.bold};
     font-size: ${({ theme }) => theme.text.size.medium};
     line-height: 1.5;
   `,

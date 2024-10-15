@@ -8,9 +8,7 @@ export const postLogin = async (code: string, redirectUri: string) => {
 };
 
 export const postLogout = async () => {
-  const response = await fetch(`${BASE_URL}${ENDPOINT.LOGOUT}`, {
-    method: 'POST',
-  });
+  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.LOGOUT });
   return response;
 };
 
@@ -32,6 +30,9 @@ export const deleteToken = async () => {
 };
 
 export const postReissueAccessToken = async () => {
-  const response = await fetcher.post({ url: `${BASE_URL}${ENDPOINT.USER_ACCESS_TOKEN_REISSUE}` });
-  return response;
+  return await fetch(`${BASE_URL}${ENDPOINT.USER_ACCESS_TOKEN_REISSUE}`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+  });
 };

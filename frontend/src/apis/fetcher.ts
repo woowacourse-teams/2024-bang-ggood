@@ -55,7 +55,7 @@ const handleError = async (response: Response, { url, method, body, headers = {}
   }
 };
 
-const fetchRequest = async ({ url, method, body, headers = {}, signal }: RequestProps & { signal?: AbortSignal }) => {
+const fetchRequest = async ({ url, method, body, headers = {} }: RequestProps & { signal?: AbortSignal }) => {
   return await fetch(url, {
     method,
     credentials: 'include',
@@ -63,7 +63,6 @@ const fetchRequest = async ({ url, method, body, headers = {}, signal }: Request
     headers: {
       ...headers,
     },
-    signal: signal,
   });
 };
 

@@ -1,6 +1,7 @@
 package com.bang_ggood.global.handler;
 
 import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.global.exception.OauthException;
 import com.bang_ggood.global.exception.dto.ExceptionResponse;
 import com.bang_ggood.global.exception.dto.OauthExceptionResponse;
@@ -20,6 +21,7 @@ public class GlobalExceptionHandler {
         ExceptionResponse response = new ExceptionResponse(
                 request.getMethod(),
                 request.getRequestURI(),
+                exception.getClientExceptionCodeName(),
                 exception.getMessage());
 
         return ResponseEntity.status(exception.getHttpStatusCode())
@@ -32,7 +34,8 @@ public class GlobalExceptionHandler {
         ExceptionResponse response = new ExceptionResponse(
                 request.getMethod(),
                 request.getRequestURI(),
-                "예상치 못한 서버에러가 발생했습니다.");
+                ExceptionCode.INTERNAL_SERVER_ERROR.getClientExceptionCode().name(),
+                ExceptionCode.INTERNAL_SERVER_ERROR.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(response);
     }
@@ -44,6 +47,7 @@ public class GlobalExceptionHandler {
         ExceptionResponse response = new ExceptionResponse(
                 request.getMethod(),
                 request.getRequestURI(),
+                ExceptionCode.INVALID_PARAMETER.getClientExceptionCode().name(),
                 exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(response);

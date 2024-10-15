@@ -10,6 +10,8 @@ import { mapObjUndefinedToNull, objectMap } from '../utils/typeFunctions';
 
 type NumberToString<T> = T extends number | string ? string : T;
 
+type RoomInfoStoreState = Required<Omit<RoomInfo, 'createdAt'>>;
+
 // TODO : API POST때 사용할 Mapper 함수 필요. structure(방구조: 처음에 null)
 export const initialRoomInfo = {
   roomName: { rawValue: '', errorMessage: '' },
@@ -36,9 +38,9 @@ export const initialRoomInfo = {
 };
 
 export type oneItem = { rawValue: string; errorMessage: string };
-export type RawValues = { [k in keyof RoomInfo]: { rawValue: NumberToString<RoomInfo[k]> } };
+export type RawValues = { [k in keyof RoomInfoStoreState]: { rawValue: NumberToString<RoomInfoStoreState[k]> } };
 export type RoomInfoState = {
-  [k in keyof RoomInfo]: { rawValue: NumberToString<RoomInfo[k]>; errorMessage: string };
+  [k in keyof RoomInfoStoreState]: { rawValue: NumberToString<RoomInfoStoreState[k]>; errorMessage: string };
 };
 
 interface RoomInfoActions {

@@ -26,6 +26,7 @@ export const ENDPOINT = {
   USER_INFO: '/user/me',
   USER_VALID: '/token-exist',
   USER_ACCESS_TOKEN_REISSUE: '/accessToken/reissue',
+  TOKEN: '/token',
   //subway
   SUBWAY: (position: Position) => `/stations/nearest?latitude=${position.latitude}&longitude=${position.longitude}`,
 };

@@ -27,9 +27,12 @@ export const getIsUserValid = async () => {
   return data;
 };
 
+export const deleteToken = async () => {
+  const response = await fetcher.delete({ url: BASE_URL + ENDPOINT.TOKEN });
+  return response;
+};
+
 export const postReissueAccessToken = async () => {
-  const response = await fetch(`${BASE_URL}${ENDPOINT.USER_ACCESS_TOKEN_REISSUE}`, {
-    method: 'POST',
-  });
+  const response = await fetcher.post({ url: `${BASE_URL}${ENDPOINT.USER_ACCESS_TOKEN_REISSUE}` });
   return response;
 };

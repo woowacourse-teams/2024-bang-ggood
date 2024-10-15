@@ -2,7 +2,7 @@ import { roomOccupancyPeriods } from '@/constants/roomInfo';
 
 export type OccupancyPeriod = (typeof roomOccupancyPeriods)[number];
 
-export type RoomInfo = {
+export type RoomInfo = Partial<{
   roomName: string;
   deposit: number;
   rent: number;
@@ -24,7 +24,7 @@ export type RoomInfo = {
   address: string;
   buildingName: string;
   includedMaintenances: number[]; // 관리비 포함항목
-};
+}>;
 
 // export type RoomInfo0 = {
 //   roomName: string;

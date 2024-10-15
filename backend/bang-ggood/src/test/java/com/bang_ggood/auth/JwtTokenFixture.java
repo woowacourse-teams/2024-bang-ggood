@@ -29,6 +29,6 @@ public class JwtTokenFixture {
     }
 
     private static JwtTokenProperties PROPERTIES_WITH_INVALID_SECRET_KEY() {
-        return new JwtTokenProperties(createJwtSecretKey(), THIRTY_MINUTE , THIRTY_MINUTE);
+        return new JwtTokenProperties(createJwtSecretKey(), THIRTY_MINUTE, THIRTY_MINUTE);
     }
 }

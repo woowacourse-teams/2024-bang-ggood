@@ -23,7 +23,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 
@@ -119,7 +118,8 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
         checklistQuestionService.updateQuestions(checklistQuestions, updateQuestions);
 
         //then
-        assertThat(checklistQuestionRepository.findAllByChecklistId(checklist.getId()).get(1).getAnswer()).isEqualTo(Answer.BAD);
+        assertThat(checklistQuestionRepository.findAllByChecklistId(checklist.getId()).get(1).getAnswer()).isEqualTo(
+                Answer.BAD);
     }
 
     @DisplayName("질문 수정 실패: 질문 id가 중복일 경우")

@@ -5,6 +5,7 @@ import com.bang_ggood.global.exception.ExceptionCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -15,6 +16,14 @@ class PasswordTest {
     void createPassword() {
         assertThatCode(() -> new Password("password1234"))
                 .doesNotThrowAnyException();
+    }
+
+    @DisplayName("비밀번호 생성 실패 : null일 경우")
+    @Test
+    void createPassword_null_exception() {
+        assertThatThrownBy(() -> new Password(null))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.PASSWORD_INVALID_FORMAT.getMessage());
     }
 
     @DisplayName("비밀번호 생성 실패 : 영어가 포함되지 않은 경우")
@@ -47,5 +56,27 @@ class PasswordTest {
         assertThatThrownBy(() -> new Password("pas12"))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.PASSWORD_INVALID_FORMAT.getMessage());
+    }
+
+    @DisplayName("비밀번호 다름 확인: 일치하는 경우")
+    @Test
+    void isDifferent_false() {
+        // given
+        String passwordValue = "password1234";
+        Password password = new Password(passwordValue);
+
+        // when & then
+        assertThat(password.isDifferent(passwordValue)).isFalse();
+    }
+
+    @DisplayName("비밀번호 다름 확인: 일치하지 않는 경우")
+    @Test
+    void isDifferent_true() {
+        // given
+        String passwordValue = "password1234";
+        Password password = new Password(passwordValue);
+
+        // when & then
+        assertThat(password.isDifferent(passwordValue)).isFalse();
     }
 }

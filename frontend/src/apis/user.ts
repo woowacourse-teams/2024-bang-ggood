@@ -24,7 +24,7 @@ export const getUserInfo = async () => {
 export const getIsUserValid = async () => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.USER_VALID });
   const data = await response.json();
-  return data.isRefreshTokenExist;
+  return data;
 };
 
 export const postReissueAccessToken = async () => {

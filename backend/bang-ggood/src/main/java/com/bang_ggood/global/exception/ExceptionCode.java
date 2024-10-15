@@ -66,10 +66,6 @@ public enum ExceptionCode {
     MAINTENANCE_ITEM_DUPLICATE(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR, "중복된 관리비 항목이 존재합니다."),
     MAINTENANCE_ITEM_INVALID(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR, "유효하지 않은 관리비 항목이 입력되었습니다."),
 
-    //like
-    LIKE_ALREADY_EXISTS(HttpStatus.CONFLICT, ClientExceptionCode.LIKE_ALREADY_EXISTS, "체크리스트가 이미 좋아요 상태입니다."),
-    LIKE_NOT_EXISTS(HttpStatus.BAD_REQUEST, ClientExceptionCode.LIKE_NOT_EXISTS, "체크리스트 좋아요가 존재하지 않아 삭제할 수 없습니다."),
-
     // Auth
     AUTHENTICATION_ACCESS_TOKEN_EMPTY(HttpStatus.UNAUTHORIZED, ClientExceptionCode.AUTH_ACCESS_TOKEN_EMPTY, "액세스 토큰이 존재하지 않습니다. 액세스 토큰을 발급해주세요."),
     AUTHENTICATION_REFRESH_TOKEN_EMPTY(HttpStatus.UNAUTHORIZED, ClientExceptionCode.AUTH_TOKEN_EMPTY, "리프레시 토큰이 존재하지 않습니다. 다시 로그인해주세요."),

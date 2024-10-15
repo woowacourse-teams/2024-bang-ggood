@@ -19,12 +19,14 @@ public class ChecklistStationService {
 
     @Transactional
     public void createChecklistStations(Checklist checklist, double latitude, double longitude) {
-        List<SubwayStationResponse> responses = subwayStationService.readNearestStation(latitude, longitude).getStations();
+        List<SubwayStationResponse> responses = subwayStationService.readNearestStation(latitude, longitude)
+                .getStations();
         List<ChecklistStation> checklistStations = new ArrayList<>();
 
         for (SubwayStationResponse response : responses) {
             for (String stationLine : response.getStationLine()) {
-                checklistStations.add(new ChecklistStation(checklist, response.getStationName(), stationLine, response.getWalkingTime()));
+                checklistStations.add(new ChecklistStation(checklist, response.getStationName(), stationLine,
+                        response.getWalkingTime()));
             }
         }
 

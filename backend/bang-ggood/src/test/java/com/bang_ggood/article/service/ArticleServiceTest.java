@@ -76,7 +76,8 @@ public class ArticleServiceTest extends IntegrationTestSupport {
                 .toList();
 
         // then
-        assertThat(articleTitles).containsExactly(article4.getTitle(), article3.getTitle(), article2.getTitle(), article1.getTitle());
+        assertThat(articleTitles).containsExactly(article4.getTitle(), article3.getTitle(), article2.getTitle(),
+                article1.getTitle());
     }
 
     @DisplayName("아티클 삭제 성공")

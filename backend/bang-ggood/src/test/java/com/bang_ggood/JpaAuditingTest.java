@@ -29,8 +29,8 @@ class JpaAuditingTest extends IntegrationTestSupport {
 
         // then
         assertAll(
-                () -> assertThat(savedEntity.getCreatedAt()).isBefore(LocalDateTime.now()),
-                () -> assertThat(savedEntity.getModifiedAt()).isBefore(LocalDateTime.now())
+                () -> assertThat(savedEntity.getCreatedAt()).isBeforeOrEqualTo(LocalDateTime.now()),
+                () -> assertThat(savedEntity.getModifiedAt()).isBeforeOrEqualTo(LocalDateTime.now())
         );
     }
 

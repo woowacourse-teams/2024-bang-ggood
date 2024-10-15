@@ -33,6 +33,8 @@ public class ChecklistRepositoryTest extends IntegrationTestSupport {
     Room room;
     User user;
     Checklist checklist;
+    @Autowired
+    ChecklistStationRepository checklistStationRepository;
 
     @BeforeEach
     void setUp() {
@@ -40,9 +42,6 @@ public class ChecklistRepositoryTest extends IntegrationTestSupport {
         user = userRepository.save(UserFixture.USER1());
         checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
     }
-
-    @Autowired
-    ChecklistStationRepository checklistStationRepository;
 
     @DisplayName("체크리스트 아이디를 통한 조회 성공")
     @Test

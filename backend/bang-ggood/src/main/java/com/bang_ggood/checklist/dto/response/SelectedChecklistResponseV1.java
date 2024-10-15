@@ -16,6 +16,7 @@ public record SelectedChecklistResponseV1(SelectedRoomResponseV1 room,
     public static SelectedChecklistResponseV1 of(SelectedRoomResponse room, List<SelectedOptionResponse> options,
                                                  List<SelectedCategoryQuestionsResponse> categories, boolean isLiked,
                                                  SubwayStationResponses stations) {
-        return new SelectedChecklistResponseV1(SelectedRoomResponseV1.from(room), options, categories, isLiked, stations);
+        return new SelectedChecklistResponseV1(SelectedRoomResponseV1.from(room), options, categories, isLiked,
+                stations);
     }
 }

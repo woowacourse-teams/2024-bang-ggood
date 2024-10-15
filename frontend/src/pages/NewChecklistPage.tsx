@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
@@ -11,7 +10,6 @@ import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
 import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
-import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useChecklistTabs from '@/hooks/useChecklistTabs';
 import useHandleTip from '@/hooks/useHandleTip';
@@ -23,7 +21,6 @@ import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 
 const NewChecklistPage = () => {
-  const navigate = useNavigate();
   useChecklistTemplate(); // 체크리스트 질문 가져오기 및 준비
   const { tabs } = useChecklistTabs();
 
@@ -45,13 +42,12 @@ const NewChecklistPage = () => {
   // 로그인 요청 모달
   const { isModalOpen: isLoginModalOpen, openModal: openLoginModal, closeModal: closeLoginModal } = useModal();
 
-  const resetAndGoHome = () => {
+  const resetChecklist = () => {
     roomInfoActions.resetAll();
     roomInfoNonValidatedActions.resetAll();
     checklistActions.reset();
     selectedOptionActions.reset();
     resetShowTip(); // 옵션의 팁박스 다시표시
-    navigate(ROUTE_PATH.checklistList);
   };
 
   return (
@@ -75,7 +71,7 @@ const NewChecklistPage = () => {
       <SubmitModalWithSummary
         isModalOpen={isSubmitModalOpen}
         modalClose={closeSummaryModal}
-        onConfirm={resetAndGoHome}
+        onConfirm={resetChecklist}
         onError={openLoginModal}
         mutateType="add"
       />
@@ -90,7 +86,7 @@ const NewChecklistPage = () => {
         }
         isOpen={isAlertModalOpen}
         onClose={closeAlertModal}
-        handleApprove={resetAndGoHome}
+        handleApprove={resetChecklist}
         approveButtonName="나가기"
       />
 

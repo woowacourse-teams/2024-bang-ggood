@@ -20,7 +20,7 @@ const useToggleLikeQuery = () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CHECKLIST] });
     },
     onError: () => {
-      showToast('좋아요를 처리하는 중 문제가 발생했습니다. 나중에 다시 시도해주세요.');
+      showToast({ message: '좋아요를 처리하는 중 문제가 발생했습니다. 나중에 다시 시도해주세요.', type: 'error' });
       invalidateChecklistListQuery();
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CHECKLIST] });
     },

@@ -2,6 +2,7 @@ import { useStore } from 'zustand';
 
 import { getNearSubways } from '@/apis/subway';
 import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
+import { Position } from '@/types/address';
 /** 
 useRoomInfoNonValidated : 방 기본정보에서 인풋 형식이 아니고, 검증이 필요없는 필드에 대한
 함수를 모아놓은 훅입니다. (주소, 지하철, 관리비, 방구조)
@@ -12,9 +13,10 @@ useRoomInfoNonValidated : 방 기본정보에서 인풋 형식이 아니고, 검
 const useRoomInfoNonValidated = () => {
   const roomInfoNonValidated = useStore(roomInfoNonValidatedStore, state => state.actions);
 
-  const searchSubwayStationsByPosition = async ({ lat, lon }: { lat: number; lon: number }) => {
-    const nearSubways = await getNearSubways({ lat, lon });
-    roomInfoNonValidated.set('nearSubwayStation', nearSubways);
+  const searchSubwayStationsByPosition = async ({ latitude, longitude }: Position) => {
+    const nearSubways = await getNearSubways({ latitude, longitude });
+    roomInfoNonValidated.set('position', { latitude, longitude });
+    roomInfoNonValidated.set('nearSubwayStation', nearSubways.stations);
     return nearSubways;
   };
 
@@ -28,7 +30,7 @@ const useRoomInfoNonValidated = () => {
       geocoder.addressSearch(address, function (result: any, status: any) {
         /* 정상적으로 검색이 완료됐으면*/
         if (status === kakao.maps.services.Status.OK) {
-          return searchSubwayStationsByPosition({ lat: result[0].y, lon: result[0].x });
+          return searchSubwayStationsByPosition({ latitude: result[0].y, longitude: result[0].x });
         }
       });
     });

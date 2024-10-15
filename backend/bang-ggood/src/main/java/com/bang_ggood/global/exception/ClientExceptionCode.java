@@ -19,6 +19,7 @@ public enum ClientExceptionCode {
     USER_EMAIL_ALREADY_USED,
     USER_INVALID_FORMAT,
     USER_NOT_FOUND,
+    LOGIN_ERROR,
 
     // TODO: 임의 사용 지워질 코드
     AUTH_TOKEN_NOT_OWNED_BY_USER,

@@ -1,10 +1,10 @@
 import { API_ERROR_MESSAGE } from '@/apis/error/ErrorMessage';
 import HTTPError from '@/apis/error/HttpError';
-import { postReissueAccessToken } from '@/apis/user';
+import { deleteToken, postReissueAccessToken } from '@/apis/user';
 import { HTTP_STATUS_CODE } from '@/constants/httpErrorMessage';
+import { ROUTE_PATH } from '@/constants/routePath';
 
 let reissueAccessToken = false;
-let reissueAccessTokenFailed = false;
 
 interface RequestProps {
   url: string;
@@ -17,39 +17,46 @@ interface RequestProps {
 type FetchProps = Omit<RequestProps, 'method'>;
 
 const request = async ({ url, method, body, headers = {} }: RequestProps) => {
-  if (reissueAccessTokenFailed) {
-    //TODO: 토큰 재발급 실패 후 후 요청 안보내는 로직 필요
-    throw new HTTPError(400, 'Access Token 재발급 실패로 인해 요청이 중단되었습니다.');
-  }
-
   try {
     const response = await fetchRequest({ url, method, body, headers });
+    if (!response.ok) {
+      await handleError(response, { url, method, body, headers });
+    }
     return response;
   } catch (error) {
     if (error instanceof HTTPError) {
-      if (error.statusCode === 401 && error.message === API_ERROR_MESSAGE.REISSUE_TOKEN_NEED && !reissueAccessToken) {
-        reissueAccessToken = true;
-        const response = await postReissueAccessToken();
-
-        if (response.status === 200) {
-          reissueAccessToken = false;
-          return retryRequest({ url, method, body, headers });
-        }
-
-        reissueAccessTokenFailed = true;
-        //TODO: 로그아웃 후 이동시키는 로직 필요
-        //logout()
-        //window.location.href = ROUTE_PATH.root;
-      }
       throw error;
     } else {
-      throw new HTTPError(HTTP_STATUS_CODE.NETWORK_ERROR, '');
+      throw new HTTPError(HTTP_STATUS_CODE.NETWORK_ERROR, 'Network error occurred');
     }
   }
 };
 
+const handleError = async (response: Response, { url, method, body, headers = {} }: RequestProps) => {
+  const responseString = await response.text();
+  const errorMessage = JSON.parse(responseString).message;
+
+  if (response.status === 401 && errorMessage === API_ERROR_MESSAGE.REISSUE_TOKEN_NEED) {
+    if (!reissueAccessToken) {
+      reissueAccessToken = true;
+      try {
+        const accessTokenReissueResult = await postReissueAccessToken();
+        if (accessTokenReissueResult?.status === 200) {
+          reissueAccessToken = false;
+          return await fetchRequest({ url, method, body, headers });
+        }
+      } catch (err) {
+        await deleteToken();
+        window.location.href = ROUTE_PATH.root;
+      }
+    }
+  } else {
+    throw new HTTPError(response.status, errorMessage);
+  }
+};
+
 const fetchRequest = async ({ url, method, body, headers = {}, signal }: RequestProps & { signal?: AbortSignal }) => {
-  const response = await fetch(url, {
+  return await fetch(url, {
     method,
     credentials: 'include',
     body: body ? JSON.stringify(body) : undefined,
@@ -58,27 +65,6 @@ const fetchRequest = async ({ url, method, body, headers = {}, signal }: Request
     },
     signal: signal,
   });
-
-  if (!response.ok) {
-    const responseString = await response.text();
-    const errorMessage = JSON.parse(responseString).message;
-    throw new HTTPError(response.status, errorMessage);
-  }
-
-  return response;
-};
-
-const retryRequest = async ({ url, method, body, headers = {}, signal }: RequestProps & { signal?: AbortSignal }) => {
-  try {
-    const response = await fetchRequest({ url, method, body, headers, signal });
-    return response;
-  } catch (error) {
-    if (error instanceof HTTPError) {
-      throw new HTTPError(error.statusCode, error.message);
-    } else {
-      throw new HTTPError(HTTP_STATUS_CODE.NETWORK_ERROR, '');
-    }
-  }
 };
 
 const fetcher = {

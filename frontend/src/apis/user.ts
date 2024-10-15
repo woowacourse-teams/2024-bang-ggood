@@ -11,7 +11,6 @@ export const postLogout = async () => {
   const response = await fetch(`${BASE_URL}${ENDPOINT.LOGOUT}`, {
     method: 'POST',
   });
-
   return response;
 };
 

@@ -15,14 +15,14 @@ const useIsValidUser = () => {
       if (!isAccessTokenExist) {
         try {
           const accessTokenReissueResult = await postReissueAccessToken();
-          if (accessTokenReissueResult.status !== 200) return;
+          if (accessTokenReissueResult?.status !== 200) return;
         } catch (err) {
           return await deleteToken();
         }
       }
 
       const result = await getUserInfo();
-      showToast({ message: `${result.userName}님, 환영합니다.`, type: 'confirm' });
+      showToast({ message: `${result?.userName}님, 환영합니다.`, type: 'confirm' });
       return navigate(ROUTE_PATH.home);
     }
   };

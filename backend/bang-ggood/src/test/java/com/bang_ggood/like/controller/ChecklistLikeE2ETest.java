@@ -45,9 +45,9 @@ class ChecklistLikeE2ETest extends AcceptanceTest {
                 .statusCode(204);
     }
 
-    @DisplayName("체크리스트 좋아요 추가 실패 : 이미 좋아요가 추가가 된 체크리스트인 경우")
+    @DisplayName("체크리스트 좋아요 추가 시도 : 이미 좋아요가 추가가 된 체크리스트인 경우")
     @Test
-    void createChecklistLike_checklistAlreadyLiked_exception() {
+    void createChecklistLike_checklistAlreadyLiked() {
         long checklistId = checklistManageService.createChecklist(getAuthenticatedUser(),
                 ChecklistFixture.CHECKLIST_CREATE_REQUEST());
         checklistLikeManageService.createLike(getAuthenticatedUser(), checklistId);

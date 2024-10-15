@@ -21,7 +21,7 @@ public class CookieResolver {
         }
     }
 
-    private boolean isAccessTokenEmpty(HttpServletRequest request) {
+    public boolean isAccessTokenEmpty(HttpServletRequest request) {
         return isTokenEmpty(request, CookieProvider.ACCESS_TOKEN_COOKIE_NAME);
     }
 

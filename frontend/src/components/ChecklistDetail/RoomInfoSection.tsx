@@ -24,7 +24,7 @@ import formattedDate from '@/utils/formattedDate';
 import formattedUndefined from '@/utils/formattedUndefined';
 
 interface Props {
-  room: RoomInfo;
+  room: Partial<RoomInfo>;
   options: Option[];
   checklistId: number;
   isLiked: boolean;

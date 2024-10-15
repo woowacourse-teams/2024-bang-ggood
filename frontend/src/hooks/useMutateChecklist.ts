@@ -5,8 +5,8 @@ import { TOAST_MESSAGE } from '@/constants/message';
 import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
 import usePutChecklistQuery from '@/hooks/query/usePutCheclistQuery';
 import useToast from '@/hooks/useToast';
-import newRoomInfoStore from '@/store/newRoomInfoStore';
 import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
+import roomInfoStore from '@/store/roomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 import { ChecklistCategoryWithAnswer, MutateType } from '@/types/checklist';
@@ -23,9 +23,8 @@ const useMutateChecklist = (
   const { mutate: putChecklist } = usePutChecklistQuery();
 
   // 방 기본 정보 - validated
-  const roomInfoActions = useStore(newRoomInfoStore, state => state.actions);
-  const { actions: _, ...answers } = useStore(newRoomInfoStore);
-  const roomInfo = Object.fromEntries(Object.entries(answers).map(([key, value]) => [key, value.rawValue]));
+  const roomInfoActions = useStore(roomInfoStore, state => state.actions);
+  const roomInfo = roomInfoActions.getParsedValues();
 
   // 방 기본 정보 - nonValidated
   const roomInfoUnvalidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);

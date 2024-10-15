@@ -6,12 +6,12 @@ import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import { IncludedMaintenancesData } from '@/constants/roomInfo';
-import newRoomInfoStore from '@/store/newRoomInfoStore';
+import roomInfoStore from '@/store/roomInfoStore';
 
 const IncludedMaintenances = () => {
   // TODO : nonValidated 에서 관리해야함. 일단은 놔뒀음.
-  const includedMaintenances = useStore(newRoomInfoStore, state => state.includedMaintenances.rawValue);
-  const actions = useStore(newRoomInfoStore, state => state.actions);
+  const includedMaintenances = useStore(roomInfoStore, state => state.includedMaintenances.rawValue);
+  const actions = useStore(roomInfoStore, state => state.actions);
 
   const isIncluded = useCallback((id: number) => includedMaintenances.includes(id), [includedMaintenances]);
 

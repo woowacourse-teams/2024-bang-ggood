@@ -2,16 +2,16 @@ import { renderHook } from '@testing-library/react';
 import { act } from 'react';
 
 import useRoomInfoValidated from '@/hooks/useRoomInfoValidated';
-import { initialRoomInfo, newRoomInfoStore } from '@/store/newRoomInfoStore';
+import { initialRoomInfo, roomInfoStore } from '@/store/roomInfoStore';
 import { InputChangeEvent } from '@/types/event';
 
 const makeEvent = (rawValue: string) => ({ target: { value: rawValue } }) as InputChangeEvent;
 describe('새 스토어 테스트', () => {
   beforeEach(() => {
-    newRoomInfoStore.getState().actions.reset();
+    roomInfoStore.getState().actions.reset();
   });
   it('store의 초기값이 잘 형성된다.', () => {
-    const { actions: _, ...roomInfo } = { ...newRoomInfoStore.getState() };
+    const { actions: _, ...roomInfo } = { ...roomInfoStore.getState() };
     expect(roomInfo).toEqual(initialRoomInfo);
   });
   it('입력 변경이 작동한다.', () => {

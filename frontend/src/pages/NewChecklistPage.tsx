@@ -17,8 +17,8 @@ import useChecklistTabs from '@/hooks/useChecklistTabs';
 import useHandleTip from '@/hooks/useHandleTip';
 import useChecklistTemplate from '@/hooks/useInitialChecklist';
 import useModal from '@/hooks/useModal';
-import newRoomInfoStore from '@/store/newRoomInfoStore';
 import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
+import roomInfoStore from '@/store/roomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 
@@ -27,7 +27,7 @@ const NewChecklistPage = () => {
   const navigate = useNavigate();
   const { tabs } = useChecklistTabs();
 
-  const roomInfoActions = useStore(newRoomInfoStore, state => state.actions);
+  const roomInfoActions = useStore(roomInfoStore, state => state.actions);
   const roomInfoNonValidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
   const checklistActions = useChecklistStore(state => state.actions);
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);

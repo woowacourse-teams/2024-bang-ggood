@@ -1,7 +1,8 @@
 import fetcher from '@/apis/fetcher';
 import { BASE_URL, ENDPOINT } from '@/apis/url';
+import { roomInfoApiMapper } from '@/store/roomInfoStore';
 import { ChecklistInfo, ChecklistPostForm, ChecklistSelectedQuestions } from '@/types/checklist';
-import { mapObjNullToUndefined, mapObjUndefinedToNull } from '@/utils/typeFunctions';
+import { mapObjNullToUndefined } from '@/utils/typeFunctions';
 
 export const getChecklistQuestions = async () => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_QUESTION });
@@ -28,15 +29,16 @@ export const getChecklists = async () => {
 };
 
 export const postChecklist = async (checklist: ChecklistPostForm) => {
-  checklist.room.structure = checklist.room.structure === 'NONE' ? undefined : checklist.room.structure;
-  checklist.room = mapObjUndefinedToNull(checklist.room);
-  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLISTS_V1, body: checklist });
+  checklist.room = roomInfoApiMapper(checklist.room);
+  const response = await fetcher.post({
+    url: BASE_URL + ENDPOINT.CHECKLISTS_V1,
+    body: { ...checklist, room: checklist.room },
+  });
   return response;
 };
 
 export const putChecklist = async (id: number, checklist: ChecklistPostForm) => {
-  checklist.room.structure = checklist.room.structure === 'NONE' ? undefined : checklist.room.structure;
-  checklist.room = mapObjUndefinedToNull(checklist.room);
+  checklist.room = roomInfoApiMapper(checklist.room);
   const response = await fetcher.put({ url: BASE_URL + ENDPOINT.CHECKLIST_ID(id), body: checklist });
   return response;
 };

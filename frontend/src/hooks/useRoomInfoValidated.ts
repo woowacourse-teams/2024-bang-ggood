@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import { useStore } from 'zustand';
 
-import newRoomInfoStore from '@/store/newRoomInfoStore';
+import roomInfoStore from '@/store/roomInfoStore';
 import { InputChangeEvent } from '@/types/event';
-import { RoomInfo0 } from '@/types/room';
+import { RoomInfo } from '@/types/room';
 import {
   inRangeValidator,
   isIntegerValidator,
@@ -50,21 +50,21 @@ const numerics = [
   'walkingTime',
 ] as const satisfies (keyof ValidatedRoomInfo)[];
 
-const isNumeric = new Set<keyof ValidatedRoomInfo>(numerics);
+const isNumeric = new Set<keyof RoomInfo>(numerics);
 
-type ValidatedRoomInfo = Omit<RoomInfo0, 'includedMaintenances'>;
+type ValidatedRoomInfo = Omit<RoomInfo, 'includedMaintenances' | 'createdAt'>;
 type Includes<T extends readonly string[], U extends string> = U extends T[number] ? true : false;
 
-const useRoomInfoValidated = <Key extends keyof ValidatedRoomInfo>(name: Key) => {
-  const rawValue = useStore(newRoomInfoStore, state => state[name])!.rawValue!;
-  const errorMessage = useStore(newRoomInfoStore, state => state[name])!.errorMessage!;
-  const actions = useStore(newRoomInfoStore, state => state.actions);
-  const value = (isNumeric.has(name) ? Number(rawValue) : rawValue) as Includes<
-    typeof numerics,
-    typeof name
-  > extends true
+export const parseRoomInfo = (name: keyof RoomInfo, rawValue: string) =>
+  (isNumeric.has(name) ? Number(rawValue) : rawValue) as Includes<typeof numerics, typeof name> extends true
     ? number
     : string;
+
+const useRoomInfoValidated = <Key extends keyof ValidatedRoomInfo>(name: Key) => {
+  const rawValue = useStore(roomInfoStore, state => state[name])!.rawValue!;
+  const errorMessage = useStore(roomInfoStore, state => state[name])!.errorMessage!;
+  const actions = useStore(roomInfoStore, state => state.actions);
+  const value = parseRoomInfo(name, rawValue);
 
   const set = useCallback(
     (rawValue: string) => actions.set({ [name]: { rawValue, errorMessage } }),

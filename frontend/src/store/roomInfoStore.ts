@@ -2,9 +2,11 @@ import { createStore } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 import { roomFloorLevels, roomOccupancyPeriods } from '@/constants/roomInfo';
-import { RoomInfo0 } from '@/types/room';
+import { parseRoomInfo } from '@/hooks/useRoomInfoValidated';
+import { RoomInfo } from '@/types/room';
+import { Nullable } from '@/utils/utilityTypes';
 
-import { objectMap } from './../utils/typeFunctions';
+import { mapObjUndefinedToNull, objectMap } from '../utils/typeFunctions';
 
 type NumberToString<T> = T extends number | string ? string : T;
 
@@ -34,17 +36,21 @@ export const initialRoomInfo = {
 };
 
 export type oneItem = { rawValue: string; errorMessage: string };
-export type RawValues = { [k in keyof RoomInfo0]: { rawValue: NumberToString<RoomInfo0[k]> } };
+export type RawValues = { [k in keyof RoomInfo]: { rawValue: NumberToString<RoomInfo[k]> } };
 export type RoomInfoState = {
-  [k in keyof RoomInfo0]: { rawValue: NumberToString<RoomInfo0[k]>; errorMessage: string };
+  [k in keyof RoomInfo]: { rawValue: NumberToString<RoomInfo[k]>; errorMessage: string };
 };
 
-interface RoomInfoActions { set: (o: Partial<RoomInfoState>) => void; get: () => RoomInfoState; reset: () => void;
-  getRawValues: ()=>RoomInfo0
- }
+interface RoomInfoActions {
+  set: (o: Partial<RoomInfoState>) => void;
+  get: () => RoomInfoState;
+  reset: () => void;
+  setRawValues: (rawValues: Partial<RoomInfo>) => void;
+  getRawValues: () => RawValues;
+  getParsedValues: () => RoomInfo;
+}
 
-
-export const newRoomInfoStore = createStore< RoomInfoState & {actions: RoomInfoActions}>()(
+export const roomInfoStore = createStore<RoomInfoState & { actions: RoomInfoActions }>()(
   persist(
     (set, get) => ({
       ...initialRoomInfo,
@@ -54,9 +60,16 @@ export const newRoomInfoStore = createStore< RoomInfoState & {actions: RoomInfoA
           const { actions: _, ...state } = get();
           return state;
         },
+        setRawValues: (rawValues: Partial<RoomInfo>) => {
+          set({ ...objectMap(rawValues, ([key, value]) => [key, value.rawValue]) });
+        },
         getRawValues: () => {
           const state = { ...get().actions.get() };
-          return objectMap(state, ([key, value]) => [key, value.rawValue]) as RoomInfo0;
+          return objectMap(state, ([key, value]) => [key, value.rawValue]) as RawValues;
+        },
+        getParsedValues: () => {
+          const state = { ...get().actions.getRawValues() };
+          return objectMap(state, ([key, value]) => [key, parseRoomInfo(key as keyof RoomInfo, value)]) as RoomInfo;
         },
         reset: () => set({ ...initialRoomInfo }),
       },
@@ -71,11 +84,9 @@ export const newRoomInfoStore = createStore< RoomInfoState & {actions: RoomInfoA
   ),
 );
 
-const mapper = () => {
-  const rawValues = newRoomInfoStore.getState().actions.getRawValues();
-  const result = {};
-  rawValues.realEstate = 2;
-
+export const roomInfoApiMapper = (values: RoomInfo | Nullable<RoomInfo>) => {
+  const result = { ...values, structure: values.structure === '' ? undefined : '' };
+  return mapObjUndefinedToNull(result) as Nullable<RoomInfo>;
 };
 
-export default newRoomInfoStore;
+export default roomInfoStore;

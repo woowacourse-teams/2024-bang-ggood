@@ -4,6 +4,7 @@ import { Category } from '@/types/category';
 import { Option } from '@/types/option';
 import { RoomInfo } from '@/types/room';
 import { SubwayStation } from '@/types/subway';
+import { Nullable } from '@/utils/utilityTypes';
 
 export interface CategoryAndQuestion {
   categoryId: number;
@@ -59,7 +60,7 @@ export interface ChecklistPreview {
 export interface ChecklistInfo {
   checklistId: number;
   isLiked: boolean;
-  room: RoomInfo;
+  room: Partial<RoomInfo>;
   options: Option[];
   categories: ChecklistCategoryWithAnswer[];
   stations: SubwayStation[];
@@ -76,7 +77,7 @@ interface AnswerPostForm {
 }
 
 export interface ChecklistPostForm {
-  room: RoomInfo;
+  room: Nullable<RoomInfo>;
   options: number[];
   questions: AnswerPostForm[];
   geolocation?: Position; //TODO: 나중에 지우기

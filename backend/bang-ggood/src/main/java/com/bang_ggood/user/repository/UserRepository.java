@@ -23,8 +23,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.userType = :userType and u.deleted = false ")
     List<User> findUserByUserType(@Param("userType") UserType userType);
 
-    @Query("SELECT u FROM User u WHERE u.email = :email and u.deleted = false ")
-    Optional<User> findByEmail(@Param("email") Email email);
+    @Query("SELECT u FROM User u WHERE u.email = :email and u.loginType = :loginType and u.deleted = false")
+    Optional<User> findByEmailAndLoginType(@Param("email") Email email, @Param("loginType") LoginType loginType);
 
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)

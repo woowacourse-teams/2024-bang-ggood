@@ -64,6 +64,10 @@ public class User extends BaseEntity {
         this.email = new Email(email);
     }
 
+    public boolean isDifferent(String targetPassword) {
+        return password.isDifferent(targetPassword);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

@@ -31,7 +31,7 @@ public class Email {
     }
 
     public void validateEmailPattern(String email) {
-        if(!EMAIL_PATTERN.matcher(email).matches()) {
+        if (!EMAIL_PATTERN.matcher(email).matches()) {
             throw new BangggoodException(ExceptionCode.EMAIL_INVALID_FORMAT);
         }
     }

@@ -20,13 +20,15 @@ public class SubwayStationResponse {
     public static SubwayStationResponse of(SubwayStation station, double latitude, double longitude) {
         List<String> stationLine = new ArrayList<>();
         stationLine.add(station.getLine());
-        return new SubwayStationResponse(station.getName(), stationLine, station.calculateWalkingTime(latitude, longitude));
+        return new SubwayStationResponse(station.getName(), stationLine,
+                station.calculateWalkingTime(latitude, longitude));
     }
 
     public static SubwayStationResponse from(ChecklistStation checklistStation) {
         List<String> stationLine = new ArrayList<>();
         stationLine.add(checklistStation.getStationLine());
-        return new SubwayStationResponse(checklistStation.getStationName(), stationLine, checklistStation.getWalkingTime());
+        return new SubwayStationResponse(checklistStation.getStationName(), stationLine,
+                checklistStation.getWalkingTime());
     }
 
     public SubwayStationResponse merge(SubwayStationResponse response) {

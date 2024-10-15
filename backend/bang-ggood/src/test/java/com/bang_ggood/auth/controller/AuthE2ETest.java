@@ -1,7 +1,7 @@
 package com.bang_ggood.auth.controller;
 
 import com.bang_ggood.AcceptanceTest;
-import com.bang_ggood.auth.dto.response.RefreshTokenCheckResponse;
+import com.bang_ggood.auth.dto.response.TokenExistResponse;
 import com.bang_ggood.auth.service.AuthService;
 import com.bang_ggood.global.exception.ExceptionCode;
 import io.restassured.RestAssured;
@@ -13,7 +13,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 
-import static com.bang_ggood.auth.OauthFixture.OAUTH_LOGIN_REQUEST;
+import static com.bang_ggood.auth.AuthFixture.LOCAL_LOGIN_REQUEST;
+import static com.bang_ggood.auth.AuthFixture.LOCAL_LOGIN_REQUEST_NO_EMAIL;
+import static com.bang_ggood.auth.AuthFixture.LOCAL_LOGIN_REQUEST_NO_PASSWORD;
+import static com.bang_ggood.auth.AuthFixture.OAUTH_LOGIN_REQUEST;
 import static org.hamcrest.Matchers.containsString;
 
 class AuthE2ETest extends AcceptanceTest {
@@ -21,7 +24,42 @@ class AuthE2ETest extends AcceptanceTest {
     @Autowired
     private AuthService authService;
 
-    @DisplayName("로그인 실패 : 인가코드가 없는 경우")
+    @DisplayName("로컬 로그인 성공")
+    @Test
+    void localLogin() {
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(LOCAL_LOGIN_REQUEST)
+                .when().post("/v1/local-auth/login")
+                .then().log().all()
+                .statusCode(200);
+    }
+
+    @DisplayName("로컬 로그인 실패: 이메일이 없는 경우")
+    @Test
+    void localLogin_noEmail_exception() {
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(LOCAL_LOGIN_REQUEST_NO_EMAIL)
+                .when().post("/v1/local-auth/login")
+                .then().log().all()
+                .statusCode(400)
+                .body("message", containsString("이메일이 존재하지 않습니다."));
+    }
+
+    @DisplayName("로컬 로그인 실패: 비밀번호가 없는 경우")
+    @Test
+    void localLogin_noPassword_exception() {
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(LOCAL_LOGIN_REQUEST_NO_PASSWORD)
+                .when().post("/v1/local-auth/login")
+                .then().log().all()
+                .statusCode(400)
+                .body("message", containsString("비밀번호가 존재하지 않습니다."));
+    }
+
+    @DisplayName("카카오 로그인 실패 : 인가코드가 없는 경우")
     @Test
     void login_code_notBlank_exception() {
         RestAssured.given().log().all()
@@ -59,32 +97,33 @@ class AuthE2ETest extends AcceptanceTest {
                 .body("message", containsString(ExceptionCode.AUTHENTICATION_TOKEN_EMPTY.getMessage()));
     }
 
-    @DisplayName("리프레시 토큰 체크 성공 : 쿠키가 존재하지 않는 경우")
+    @DisplayName("토큰 존재여부 반환 성공 : 쿠키가 존재하지 않는 경우")
     @Test
-    void checkRefreshToken_returnFalse() {
-        RefreshTokenCheckResponse refreshTokenCheckResponse = RestAssured.given().log().all()
+    void checkTokenExist_returnFalse() {
+        TokenExistResponse tokenExistResponse = RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .when().get("/refreshToken-check")
+                .when().get("/token-exist")
                 .then().log().all()
                 .statusCode(200)
                 .extract()
-                .as(RefreshTokenCheckResponse.class);
+                .as(TokenExistResponse.class);
 
-        Assertions.assertThat(refreshTokenCheckResponse.isRefreshTokenExist()).isFalse();
+        Assertions.assertThat(tokenExistResponse.isRefreshTokenExist()).isFalse();
     }
 
-    @DisplayName("리프레시 토큰 체크 성공 : 리프레시 토큰이 존재하는 경우")
+    @DisplayName("토큰 존재여부 반환 성공 : 액세스 토큰이 존재하고 리프레시 토큰이 존재하는 경우")
     @Test
-    void checkRefreshToken_returnTrue() {
-        RefreshTokenCheckResponse refreshTokenCheckResponse = RestAssured.given().log().all()
+    void checkTokenExist_AccessTokenExist_RefreshTokenExist() {
+        TokenExistResponse tokenExistResponse = RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .headers(this.headers)
-                .when().get("/refreshToken-check")
+                .when().get("/token-exist")
                 .then().log().all()
                 .statusCode(200)
                 .extract()
-                .as(RefreshTokenCheckResponse.class);
+                .as(TokenExistResponse.class);
 
-        Assertions.assertThat(refreshTokenCheckResponse.isRefreshTokenExist()).isTrue();
+        Assertions.assertThat(tokenExistResponse.isAccessTokenExist()).isTrue();
+        Assertions.assertThat(tokenExistResponse.isRefreshTokenExist()).isTrue();
     }
 }

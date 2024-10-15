@@ -20,7 +20,7 @@ class CookieResolverTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         String expectedToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0Ijox";
         CookieResolver cookieResolver = new CookieResolver();
-        Cookie[] cookies = { new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, expectedToken) };
+        Cookie[] cookies = {new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, expectedToken)};
 
         // when
         when(request.getCookies()).thenReturn(cookies);
@@ -37,7 +37,7 @@ class CookieResolverTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         String expectedToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0Ijox";
         CookieResolver cookieResolver = new CookieResolver();
-        Cookie[] cookies = { new Cookie(CookieProvider.REFRESH_TOKEN_COOKIE_NAME, expectedToken) };
+        Cookie[] cookies = {new Cookie(CookieProvider.REFRESH_TOKEN_COOKIE_NAME, expectedToken)};
 
         // when
         when(request.getCookies()).thenReturn(cookies);
@@ -70,7 +70,7 @@ class CookieResolverTest {
         // given
         CookieResolver cookieResolver = new CookieResolver();
         HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
-        Cookie[] cookies =  { new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, "test"),
+        Cookie[] cookies = {new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, "test"),
                 new Cookie(CookieProvider.REFRESH_TOKEN_COOKIE_NAME, "test")};
 
         // when
@@ -87,7 +87,7 @@ class CookieResolverTest {
         // given
         CookieResolver cookieResolver = new CookieResolver();
         HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
-        Cookie[] cookies =  { new Cookie("test", "test"),
+        Cookie[] cookies = {new Cookie("test", "test"),
                 new Cookie("test", "test")};
 
         // when
@@ -104,7 +104,7 @@ class CookieResolverTest {
         // given
         CookieResolver cookieResolver = new CookieResolver();
         HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
-        Cookie[] cookies =  { new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, "test")};
+        Cookie[] cookies = {new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, "test")};
 
         // when
         when(httpServletRequest.getCookies()).thenReturn(cookies);

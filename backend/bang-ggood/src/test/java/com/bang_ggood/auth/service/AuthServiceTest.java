@@ -17,7 +17,6 @@ import com.bang_ggood.question.service.QuestionManageService;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
-import org.apache.commons.codec.binary.Base64;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +25,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import static com.bang_ggood.auth.OauthFixture.OAUTH_LOGIN_REQUEST;
+import static com.bang_ggood.auth.AuthFixture.LOCAL_LOGIN_REQUEST;
+import static com.bang_ggood.auth.AuthFixture.LOCAL_LOGIN_REQUEST_INVALID_EMAIL;
+import static com.bang_ggood.auth.AuthFixture.LOCAL_LOGIN_REQUEST_INVALID_PASSWORD;
+import static com.bang_ggood.auth.AuthFixture.OAUTH_LOGIN_REQUEST;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
@@ -47,6 +49,35 @@ class AuthServiceTest extends IntegrationTestSupport {
     private UserRepository userRepository;
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
+
+    @DisplayName("로컬 로그인 성공")
+    @Test
+    void localLogin() {
+        // given & when
+        AuthTokenResponse response = authService.localLogin(LOCAL_LOGIN_REQUEST);
+
+        // then
+        assertThat(response.accessToken()).isNotBlank();
+        assertThat(response.refreshToken()).isNotBlank();
+    }
+
+    @DisplayName("로컬 로그인 실패: 일치하는 유저가 없는 경우")
+    @Test
+    void localLogin_userNotFound() {
+        // given & when & then
+        assertThatThrownBy(() -> authService.localLogin(LOCAL_LOGIN_REQUEST_INVALID_EMAIL))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.USER_NOT_FOUND.getMessage());
+    }
+
+    @DisplayName("로컬 로그인 실패: 비밀번호가 일치하지 않는 경우")
+    @Test
+    void localLogin_userInvalidPassword() {
+        // given & when & then
+        assertThatThrownBy(() -> authService.localLogin(LOCAL_LOGIN_REQUEST_INVALID_PASSWORD))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.USER_INVALID_PASSWORD.getMessage());
+    }
 
     @DisplayName("회원가입 성공")
     @Test
@@ -77,7 +108,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         String[] passwordParts = findPassword.split(":");
         String salt = passwordParts[1];
 
-        String expectedPassword = PasswordEncoder.encode(password, Base64.decodeBase64(salt));
+        String expectedPassword = PasswordEncoder.encodeWithSpecificSalt(password, findPassword);
 
         // then
         assertThat(findPassword).isEqualTo(expectedPassword);
@@ -98,46 +129,46 @@ class AuthServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.USER_EMAIL_ALREADY_USED.getMessage());
     }
 
-    @DisplayName("로그인 성공 : 존재하지 않는 회원이면 데이터베이스에 새로운 유저를 추가하고 토큰 반환")
+    @DisplayName("카카오 로그인 성공 : 존재하지 않는 회원이면 데이터베이스에 새로운 유저를 추가하고 토큰 반환")
     @Test
-    void login_signup() {
+    void oauthLogin_signup() {
         // given
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
-        AuthTokenResponse token = authService.login(OAUTH_LOGIN_REQUEST);
+        AuthTokenResponse token = authService.oauthLogin(OAUTH_LOGIN_REQUEST);
 
         // then
         assertThat(token.accessToken()).isNotBlank();
         assertThat(token.refreshToken()).isNotBlank();
     }
 
-    @DisplayName("로그인 성공 : 존재하는 회원이면 데이터베이스에 새로운 유저를 추가하지않고 토큰 반환")
+    @DisplayName("카카오 로그인 성공 : 존재하는 회원이면 데이터베이스에 새로운 유저를 추가하지 않고 토큰을 바로 반환")
     @Test
-    void login() {
+    void oauthLogin() {
         // given
         userRepository.save(UserFixture.USER1());
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER1());
 
         // when
-        AuthTokenResponse token = authService.login(OAUTH_LOGIN_REQUEST);
+        AuthTokenResponse token = authService.oauthLogin(OAUTH_LOGIN_REQUEST);
 
         // then
         assertThat(token.accessToken()).isNotBlank();
         assertThat(token.refreshToken()).isNotBlank();
     }
 
-    @DisplayName("로그인 성공 : 회원 가입시 디폴트 체크리스트 질문 추가")
+    @DisplayName("카카오 로그인 성공 : 회원 가입시 디폴트 체크리스트 질문을 추가")
     @Test
-    void login_default_checklist_question() {
+    void oauthLogin_default_checklist_question() {
         // given
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
-        AuthTokenResponse token = authService.login(OAUTH_LOGIN_REQUEST);
+        AuthTokenResponse token = authService.oauthLogin(OAUTH_LOGIN_REQUEST);
 
         // then
         User user = authService.getAuthUser(token.accessToken());
@@ -152,15 +183,15 @@ class AuthServiceTest extends IntegrationTestSupport {
         assertThat(sum).isEqualTo(Question.findDefaultQuestions().size());
     }
 
-    @DisplayName("로그인 성공 : 회원 가입시 디폴트 체크리스트 추가")
+    @DisplayName("카카오 로그인 성공 : 회원 가입시 디폴트 체크리스트를 추가")
     @Test
-    void login_default_checklist() {
+    void oauthLogin_default_checklist() {
         // given
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
-        AuthTokenResponse token = authService.login(OAUTH_LOGIN_REQUEST);
+        AuthTokenResponse token = authService.oauthLogin(OAUTH_LOGIN_REQUEST);
 
         // then
         User user = authService.getAuthUser(token.accessToken());
@@ -168,7 +199,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         assertThat(response.checklists()).hasSize(1);
     }
 
-    @DisplayName("게스트 유저 할당 실패 : 게스트 유저의 수가 2명이면 예외 발생")
+    @DisplayName("게스트 유저 할당 실패 : 게스트 유저의 수가 2명이면 예외를 발생")
     @Test
     void assignGuestUser_UnexpectedGuestUserExist() {
         // given
@@ -181,7 +212,7 @@ class AuthServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.GUEST_USER_UNEXPECTED_EXIST.getMessage());
     }
 
-    @DisplayName("게스트 유저 할당 실패 : 게스트 유저가 존재하지 않으면 예외 발생")
+    @DisplayName("게스트 유저 할당 실패 : 게스트 유저가 존재하지 않으면 예외를 발생")
     @Test
     void assingGuestUser_GuestUserNotExist() {
         // when & then
@@ -226,7 +257,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         userRepository.save(UserFixture.USER1());
         Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER1());
-        AuthTokenResponse tokenResponse = authService.login(OAUTH_LOGIN_REQUEST);
+        AuthTokenResponse tokenResponse = authService.oauthLogin(OAUTH_LOGIN_REQUEST);
 
         // when & then
         assertThatCode(() -> authService.reissueAccessToken(tokenResponse.refreshToken()))

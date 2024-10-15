@@ -3,10 +3,11 @@ package com.bang_ggood.auth.controller;
 import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.auth.controller.cookie.CookieProvider;
 import com.bang_ggood.auth.controller.cookie.CookieResolver;
+import com.bang_ggood.auth.dto.request.LocalLoginRequestV1;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.request.RegisterRequestV1;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
-import com.bang_ggood.auth.dto.response.RefreshTokenCheckResponse;
+import com.bang_ggood.auth.dto.response.TokenExistResponse;
 import com.bang_ggood.auth.service.AuthService;
 import com.bang_ggood.user.domain.User;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,8 +38,21 @@ public class AuthController {
     }
 
     @PostMapping("/oauth/login")
-    public ResponseEntity<Void> login(@Valid @RequestBody OauthLoginRequest request) {
-        AuthTokenResponse response = authService.login(request);
+    public ResponseEntity<Void> oauthLogin(@Valid @RequestBody OauthLoginRequest request) {
+        AuthTokenResponse response = authService.oauthLogin(request);
+
+        ResponseCookie accessTokenCookie = cookieProvider.createAccessTokenCookie(response.accessToken());
+        ResponseCookie refreshTokenCookie = cookieProvider.createRefreshTokenCookie(response.refreshToken());
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString())
+                .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
+                .build();
+    }
+
+    @PostMapping("/v1/local-auth/login")
+    public ResponseEntity<Void> localLogin(@Valid @RequestBody LocalLoginRequestV1 request) {
+        AuthTokenResponse response = authService.localLogin(request);
 
         ResponseCookie accessTokenCookie = cookieProvider.createAccessTokenCookie(response.accessToken());
         ResponseCookie refreshTokenCookie = cookieProvider.createRefreshTokenCookie(response.refreshToken());
@@ -78,11 +93,23 @@ public class AuthController {
                 .build();
     }
 
-    @GetMapping("/refreshToken-check")
-    public ResponseEntity<RefreshTokenCheckResponse> check(HttpServletRequest httpServletRequest) {
+    @GetMapping("/token-exist")
+    public ResponseEntity<TokenExistResponse> check(HttpServletRequest httpServletRequest) {
+        boolean isAccessTokenExist = !cookieResolver.isAccessTokenEmpty(httpServletRequest);
         boolean isRefreshTokenExist = !cookieResolver.isRefreshTokenEmpty(httpServletRequest);
 
-        RefreshTokenCheckResponse refreshTokenCheckResponse = RefreshTokenCheckResponse.from(isRefreshTokenExist);
-        return ResponseEntity.ok(refreshTokenCheckResponse);
+        TokenExistResponse tokenExistResponse = TokenExistResponse.from(isAccessTokenExist, isRefreshTokenExist);
+        return ResponseEntity.ok(tokenExistResponse);
+    }
+
+    @DeleteMapping("/token")
+    public ResponseEntity<Void> deleteToken() {
+        ResponseCookie deletedAccessTokenCookie = cookieProvider.deleteAccessTokenCookie();
+        ResponseCookie deletedRefreshTokenCookie = cookieProvider.deleteRefreshTokenCookie();
+
+        return ResponseEntity.noContent()
+                .header(HttpHeaders.SET_COOKIE, deletedAccessTokenCookie.toString())
+                .header(HttpHeaders.SET_COOKIE, deletedRefreshTokenCookie.toString())
+                .build();
     }
 }

@@ -1,5 +1,6 @@
 package com.bang_ggood.auth.service;
 
+import com.bang_ggood.auth.dto.request.LocalLoginRequestV1;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.request.RegisterRequestV1;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
@@ -34,7 +35,7 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
     private final JwtTokenResolver jwtTokenResolver;
     private final DefaultChecklistService defaultChecklistService;
-    private final UserRepository userRepository; // TODO 리팩토링
+    private final UserRepository userRepository;
 
     @Transactional
     public Long register(RegisterRequestV1 request) {
@@ -46,15 +47,34 @@ public class AuthService {
     }
 
     @Transactional
-    public AuthTokenResponse login(OauthLoginRequest request) {
+    public AuthTokenResponse oauthLogin(OauthLoginRequest request) {
         OauthInfoApiResponse oauthInfoApiResponse = oauthClient.requestOauthInfo(request);
 
-        User user = userRepository.findByEmail(new Email(oauthInfoApiResponse.kakao_account().email()))
+        User user = userRepository.findByEmailAndLoginType(new Email(oauthInfoApiResponse.kakao_account().email()),
+                        LoginType.KAKAO)
                 .orElseGet(() -> signUp(oauthInfoApiResponse));
 
         String accessToken = jwtTokenProvider.createAccessToken(user);
         String refreshToken = jwtTokenProvider.createRefreshToken(user);
         return AuthTokenResponse.of(accessToken, refreshToken);
+    }
+
+    @Transactional(readOnly = true)
+    public AuthTokenResponse localLogin(LocalLoginRequestV1 request) {
+        User user = userRepository.findByEmailAndLoginType(new Email(request.email()), LoginType.LOCAL)
+                .orElseThrow(() -> new BangggoodException(ExceptionCode.USER_NOT_FOUND));
+        checkPassword(request, user);
+
+        String accessToken = jwtTokenProvider.createAccessToken(user);
+        String refreshToken = jwtTokenProvider.createRefreshToken(user);
+        return AuthTokenResponse.of(accessToken, refreshToken);
+    }
+
+
+    private void checkPassword(LocalLoginRequestV1 request, User user) {
+        if (user.isDifferent(request.password())) {
+            throw new BangggoodException(ExceptionCode.USER_INVALID_PASSWORD);
+        }
     }
 
     private User signUp(OauthInfoApiResponse oauthInfoApiResponse) {
@@ -84,15 +104,6 @@ public class AuthService {
         validateTokenOwnership(user, accessAuthUser, refreshAuthUser);
     }
 
-    private static void validateTokenOwnership(User user, AuthUser accessAuthUser, AuthUser refreshAuthUser) {
-        if (!accessAuthUser.id().equals(refreshAuthUser.id())) {
-            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_USER_MISMATCH);
-        }
-        if (!user.getId().equals(accessAuthUser.id())) {
-            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER);
-        }
-    }
-
     @Transactional(readOnly = true)
     public User getAuthUser(String token) {
         AuthUser authUser = jwtTokenResolver.resolveAccessToken(token);
@@ -106,5 +117,14 @@ public class AuthService {
         AuthUser authUser = jwtTokenResolver.resolveRefreshToken(refreshToken);
         User user = userRepository.getUserById(authUser.id());
         return jwtTokenProvider.createAccessToken(user);
+    }
+
+    private static void validateTokenOwnership(User user, AuthUser accessAuthUser, AuthUser refreshAuthUser) {
+        if (!accessAuthUser.id().equals(refreshAuthUser.id())) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_USER_MISMATCH);
+        }
+        if (!user.getId().equals(accessAuthUser.id())) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER);
+        }
     }
 }

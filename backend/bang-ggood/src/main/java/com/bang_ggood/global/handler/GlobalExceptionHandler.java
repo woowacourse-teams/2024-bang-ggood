@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
         ExceptionResponse response = new ExceptionResponse(
                 request.getMethod(),
                 request.getRequestURI(),
-                exception.getBangggoodCode(),
+                exception.getClientExceptionCodeName(),
                 exception.getMessage());
 
         return ResponseEntity.status(exception.getHttpStatusCode())

@@ -19,7 +19,7 @@ public class BangggoodException extends RuntimeException {
         return exceptionCode.getHttpStatus();
     }
 
-    public String getBangggoodCode() {
+    public String getClientExceptionCodeName() {
         return exceptionCode.getClientExceptionCode().name();
     }
 }

@@ -18,4 +18,8 @@ public class BangggoodException extends RuntimeException {
     public HttpStatusCode getHttpStatusCode() {
         return exceptionCode.getHttpStatus();
     }
+
+    public String getClientExceptionCodeName() {
+        return exceptionCode.getClientExceptionCode().name();
+    }
 }

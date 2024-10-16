@@ -16,6 +16,10 @@ class HTTPError extends Error {
         this.name = 'AUTHENTICATION_FAILED';
         this.message = HTTP_ERROR_MESSAGE.UNAUTHORIZED;
         break;
+      case statusCode >= HTTP_STATUS_CODE.CONFLICT:
+        this.name = 'CONFLICT';
+        this.message = HTTP_ERROR_MESSAGE.CONFLICT;
+        break;
       case statusCode === HTTP_STATUS_CODE.NETWORK_ERROR:
         this.name = 'NETWORK_ERROR';
         this.message = HTTP_ERROR_MESSAGE.NETWORK_ERROR;

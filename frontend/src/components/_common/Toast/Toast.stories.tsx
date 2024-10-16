@@ -10,7 +10,7 @@ import useToast from '@/hooks/useToast';
  */
 const meta: Meta<typeof Toast> = {
   title: 'components/Toast',
-  component: Toast,
+  component: ToastContainer,
   decorators: [
     Story => (
       <>
@@ -48,7 +48,9 @@ export const Error: Story = {
       <div style={{ height: '100px' }}>
         <Button
           label="토스트 생성"
-          onClick={() => showToast({ message: '에러 토스트가 생성되었습니다.', type: 'error' })}
+          onClick={() =>
+            showToast({ message: '에러 토스트가 생성되었습니다. \n잠시 후 다시 시도해 주세요.', type: 'error' })
+          }
         />
       </div>
     );

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import Layout from '@/components/_common/layout/Layout';
 import Address from '@/components/NewChecklist/NewRoomInfoForm/Address';
@@ -11,6 +12,7 @@ import RealEstate from '@/components/NewChecklist/NewRoomInfoForm/RealEstate';
 import RoomContractTerm from '@/components/NewChecklist/NewRoomInfoForm/RoomContractTerm';
 import RoomFloor from '@/components/NewChecklist/NewRoomInfoForm/RoomFloor';
 import RoomName from '@/components/NewChecklist/NewRoomInfoForm/RoomName';
+import RoomNameNoDefault from '@/components/NewChecklist/NewRoomInfoForm/RoomNameNoDefault';
 import RoomSize from '@/components/NewChecklist/NewRoomInfoForm/RoomSize';
 import RoomStructure from '@/components/NewChecklist/NewRoomInfoForm/RoomStructure';
 import { flexColumn } from '@/styles/common';
@@ -19,7 +21,9 @@ const NewChecklistInfoTemplate = () => {
   return (
     <Layout withHeader withTab>
       <S.Container>
-        <RoomName />
+        <ErrorBoundary FallbackComponent={RoomNameNoDefault}>
+          <RoomName />
+        </ErrorBoundary>
         <Address />
         <NearSubwayStations />
         <DepositAndRent />

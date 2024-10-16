@@ -9,6 +9,7 @@ import com.bang_ggood.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -19,20 +20,21 @@ public class ChecklistLikeService {
     @Transactional
     public void createLike(User user, Checklist checklist) {
         validateChecklistOwnership(user, checklist);
-        validateChecklistAlreadyLiked(checklist);
+
+        if (isChecklistAlreadyLiked(checklist)) {
+            return;
+        }
 
         checklistLikeRepository.save(new ChecklistLike(checklist));
+    }
+
+    private boolean isChecklistAlreadyLiked(Checklist checklist) {
+        return checklistLikeRepository.existsByChecklist(checklist);
     }
 
     private void validateChecklistOwnership(User user, Checklist checklist) {
         if (!checklist.isOwnedBy(user)) {
             throw new BangggoodException(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER);
-        }
-    }
-
-    private void validateChecklistAlreadyLiked(Checklist checklist) {
-        if (checklistLikeRepository.existsByChecklist(checklist)) {
-            throw new BangggoodException(ExceptionCode.LIKE_ALREADY_EXISTS);
         }
     }
 
@@ -44,8 +46,12 @@ public class ChecklistLikeService {
     @Transactional
     public void deleteLike(User user, Checklist checklist) {
         validateChecklistOwnership(user, checklist);
-        ChecklistLike checklistLike = checklistLikeRepository.getByChecklistId(checklist.getId());
+        Optional<ChecklistLike> checklistLike = checklistLikeRepository.findByChecklistId(checklist.getId());
 
-        checklistLikeRepository.deleteById(checklistLike.getId());
+        if (checklistLike.isEmpty()) {
+            return;
+        }
+
+        checklistLikeRepository.deleteById(checklistLike.get().getId());
     }
 }

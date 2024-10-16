@@ -2,6 +2,7 @@ package com.bang_ggood.user.domain;
 
 import com.bang_ggood.BaseEntity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -28,7 +29,11 @@ public class User extends BaseEntity {
     private String name;
 
     @Column(nullable = false)
-    private String email;
+    @Embedded
+    private Email email;
+
+    @Embedded
+    private Password password;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -40,7 +45,15 @@ public class User extends BaseEntity {
 
     public User(String name, String email, UserType userType, LoginType loginType) {
         this.name = name;
-        this.email = email;
+        this.email = new Email(email);
+        this.userType = userType;
+        this.loginType = loginType;
+    }
+
+    public User(String name, String email, String password, UserType userType, LoginType loginType) {
+        this.name = name;
+        this.email = new Email(email);
+        this.password = new Password(password);
         this.userType = userType;
         this.loginType = loginType;
     }
@@ -48,7 +61,11 @@ public class User extends BaseEntity {
     public User(Long id, String name, String email) { // TODO 테스트용
         this.id = id;
         this.name = name;
-        this.email = email;
+        this.email = new Email(email);
+    }
+
+    public boolean isDifferent(String targetPassword) {
+        return password.isDifferent(targetPassword);
     }
 
     @Override

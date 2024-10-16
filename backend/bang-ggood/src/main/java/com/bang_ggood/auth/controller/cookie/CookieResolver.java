@@ -16,47 +16,50 @@ public class CookieResolver {
             throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_EMPTY);
         }
 
-        if (isRefreshTokenEmpty(request.getCookies())) {
+        if (isRefreshTokenEmpty(request)) {
             throw new BangggoodException(ExceptionCode.AUTHENTICATION_REFRESH_TOKEN_EMPTY);
         }
     }
 
-    private boolean isAccessTokenEmpty(Cookie[] cookies) {
-        return isTokenEmpty(cookies, CookieProvider.ACCESS_TOKEN_COOKIE_NAME);
+    public boolean isAccessTokenEmpty(HttpServletRequest request) {
+        return isTokenEmpty(request, CookieProvider.ACCESS_TOKEN_COOKIE_NAME);
     }
 
-    private boolean isRefreshTokenEmpty(Cookie[] cookies) {
-        return isTokenEmpty(cookies, CookieProvider.REFRESH_TOKEN_COOKIE_NAME);
+    public boolean isRefreshTokenEmpty(HttpServletRequest request) {
+        return isTokenEmpty(request, CookieProvider.REFRESH_TOKEN_COOKIE_NAME);
     }
 
-    private boolean isTokenEmpty(Cookie[] cookies, String cookieName) {
-        return Arrays.stream(cookies)
+    private boolean isTokenEmpty(HttpServletRequest request, String cookieName) {
+        if (request.getCookies() == null) {
+            return true;
+        }
+
+        return Arrays.stream(request.getCookies())
                 .noneMatch(cookie -> cookie.getName().equals(cookieName));
     }
 
-    public String extractAccessToken(Cookie[] cookies) {
-        return extractToken(cookies, CookieProvider.ACCESS_TOKEN_COOKIE_NAME)
+    public String extractAccessToken(HttpServletRequest request) {
+        return extractToken(request, CookieProvider.ACCESS_TOKEN_COOKIE_NAME)
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.AUTHENTICATION_ACCESS_TOKEN_EMPTY));
     }
 
-    public String extractRefreshToken(Cookie[] cookies) {
-        return extractToken(cookies, CookieProvider.REFRESH_TOKEN_COOKIE_NAME)
+    public String extractRefreshToken(HttpServletRequest request) {
+        return extractToken(request, CookieProvider.REFRESH_TOKEN_COOKIE_NAME)
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.AUTHENTICATION_REFRESH_TOKEN_EMPTY));
     }
 
-    private Optional<String> extractToken(Cookie[] cookies, String cookieName) {
-        return Arrays.stream(cookies)
+    private Optional<String> extractToken(HttpServletRequest request, String cookieName) {
+        if (isTokenEmpty(request)) {
+            return Optional.empty();
+        }
+
+        return Arrays.stream(request.getCookies())
                 .filter(cookie -> cookie.getName().equals(cookieName))
                 .findAny()
                 .map(Cookie::getValue);
     }
 
     public boolean isTokenEmpty(HttpServletRequest request) {
-        if (request.getCookies() == null) {
-            return true;
-        }
-
-        Cookie[] cookies = request.getCookies();
-        return isAccessTokenEmpty(cookies) && isRefreshTokenEmpty(cookies);
+        return isAccessTokenEmpty(request) && isRefreshTokenEmpty(request);
     }
 }

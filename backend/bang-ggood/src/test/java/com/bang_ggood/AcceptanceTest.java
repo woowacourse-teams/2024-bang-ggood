@@ -23,16 +23,14 @@ import org.springframework.test.context.jdbc.Sql;
 @Sql(scripts = {"/schema-test.sql", "/data-test.sql"})
 public abstract class AcceptanceTest extends IntegrationTestSupport {
 
+    protected Headers headers;
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
     @Autowired
     private CookieProvider cookieProvider;
     @Autowired
     private UserRepository userRepository;
-
     private User authenticatedUser;
-    protected Headers headers;
-
     @LocalServerPort
     private int port;
 

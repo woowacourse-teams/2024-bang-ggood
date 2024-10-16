@@ -1,7 +1,5 @@
 package com.bang_ggood.auth.controller.cookie;
 
-import com.bang_ggood.auth.controller.cookie.CookieProvider;
-import com.bang_ggood.auth.controller.cookie.CookieResolver;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import jakarta.servlet.http.Cookie;
@@ -19,12 +17,14 @@ class CookieResolverTest {
     @Test
     void extractAccessToken() {
         // given
+        HttpServletRequest request = mock(HttpServletRequest.class);
         String expectedToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0Ijox";
         CookieResolver cookieResolver = new CookieResolver();
-        Cookie[] cookies = { new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, expectedToken) };
+        Cookie[] cookies = {new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, expectedToken)};
 
         // when
-        String token = cookieResolver.extractAccessToken(cookies);
+        when(request.getCookies()).thenReturn(cookies);
+        String token = cookieResolver.extractAccessToken(request);
 
         // then
         Assertions.assertThat(token).isEqualTo(expectedToken);
@@ -34,12 +34,14 @@ class CookieResolverTest {
     @Test
     void extractRefreshToken() {
         // given
+        HttpServletRequest request = mock(HttpServletRequest.class);
         String expectedToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0Ijox";
         CookieResolver cookieResolver = new CookieResolver();
-        Cookie[] cookies = { new Cookie(CookieProvider.REFRESH_TOKEN_COOKIE_NAME, expectedToken) };
+        Cookie[] cookies = {new Cookie(CookieProvider.REFRESH_TOKEN_COOKIE_NAME, expectedToken)};
 
         // when
-        String token = cookieResolver.extractRefreshToken(cookies);
+        when(request.getCookies()).thenReturn(cookies);
+        String token = cookieResolver.extractRefreshToken(request);
 
         // then
         Assertions.assertThat(token).isEqualTo(expectedToken);
@@ -49,12 +51,14 @@ class CookieResolverTest {
     @Test
     void tokenValueNotExist() {
         // given
+        HttpServletRequest request = mock(HttpServletRequest.class);
         CookieResolver cookieResolver = new CookieResolver();
         Cookie[] cookies = new Cookie[1];
         cookies[0] = new Cookie("testName", "testValue");
 
         // when & then
-        Assertions.assertThatThrownBy(() -> cookieResolver.extractAccessToken(cookies))
+        when(request.getCookies()).thenReturn(cookies);
+        Assertions.assertThatThrownBy(() -> cookieResolver.extractAccessToken(request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.AUTHENTICATION_ACCESS_TOKEN_EMPTY.getMessage());
 
@@ -66,7 +70,7 @@ class CookieResolverTest {
         // given
         CookieResolver cookieResolver = new CookieResolver();
         HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
-        Cookie[] cookies =  { new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, "test"),
+        Cookie[] cookies = {new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, "test"),
                 new Cookie(CookieProvider.REFRESH_TOKEN_COOKIE_NAME, "test")};
 
         // when
@@ -83,7 +87,7 @@ class CookieResolverTest {
         // given
         CookieResolver cookieResolver = new CookieResolver();
         HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
-        Cookie[] cookies =  { new Cookie("test", "test"),
+        Cookie[] cookies = {new Cookie("test", "test"),
                 new Cookie("test", "test")};
 
         // when
@@ -100,7 +104,7 @@ class CookieResolverTest {
         // given
         CookieResolver cookieResolver = new CookieResolver();
         HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
-        Cookie[] cookies =  { new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, "test")};
+        Cookie[] cookies = {new Cookie(CookieProvider.ACCESS_TOKEN_COOKIE_NAME, "test")};
 
         // when
         when(httpServletRequest.getCookies()).thenReturn(cookies);

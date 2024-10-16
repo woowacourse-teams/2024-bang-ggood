@@ -10,7 +10,7 @@ const useInitialChecklist = () => {
 
   useEffect(() => {
     initAnswerSheetIfEmpty(result.data ?? []); // 체크리스트 질문에 대한 답안지 객체 생성
-  }, [result.data]);
+  }, []);
 
   return result;
 };

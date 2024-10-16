@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
@@ -10,6 +11,7 @@ import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
 import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
+import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useChecklistTabs from '@/hooks/useChecklistTabs';
 import useHandleTip from '@/hooks/useHandleTip';
@@ -21,6 +23,7 @@ import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 
 const NewChecklistPage = () => {
   const { tabs } = useChecklistTabs();
+  const navigate = useNavigate();
 
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
   const roomInfoNonValidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
@@ -45,7 +48,11 @@ const NewChecklistPage = () => {
     roomInfoNonValidatedActions.resetAll();
     checklistActions.reset();
     selectedOptionActions.reset();
-    resetShowTip(); // 옵션의 팁박스 다시표시
+    resetShowTip();
+  };
+
+  const handleChecklistPage = () => {
+    navigate(ROUTE_PATH.checklistList);
   };
 
   return (
@@ -84,7 +91,7 @@ const NewChecklistPage = () => {
         }
         isOpen={isAlertModalOpen}
         onClose={closeAlertModal}
-        handleApprove={resetChecklist}
+        handleApprove={handleChecklistPage}
         approveButtonName="나가기"
       />
 

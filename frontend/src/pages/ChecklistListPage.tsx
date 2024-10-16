@@ -40,7 +40,7 @@ const ChecklistListPage = () => {
         </ErrorBoundary>
       </Layout>
       <FloatingButton size="extends" onClick={handleClickFloatingButton}>
-        <PlusBlack />방 체크하기
+        <PlusBlack aria-label="방 체크하기" />방 체크하기
       </FloatingButton>
     </>
   );

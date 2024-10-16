@@ -3,14 +3,12 @@ import styled from '@emotion/styled';
 import Layout from '@/components/_common/layout/Layout';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import ChecklistQuestionItem from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
-import useInitialChecklist from '@/hooks/useInitialChecklist';
 import useChecklistStore from '@/store/useChecklistStore';
 import { flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
 import { ChecklistQuestion } from '@/types/checklist';
 
 const NewChecklistTemplate = () => {
-  useInitialChecklist(); // 체크리스트 질문 가져오기 및 준비
   const { currentTabId } = useTabContext();
   const checklistActions = useChecklistStore(store => store.actions);
 

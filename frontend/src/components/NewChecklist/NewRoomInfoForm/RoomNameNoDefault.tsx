@@ -3,7 +3,7 @@ import React from 'react';
 import FormField from '@/components/_common/FormField/FormField';
 import useRoomInfoValidated from '@/hooks/useRoomInfoValidated';
 
-const RoomNameDefault = () => {
+const RoomNameNoDefault = () => {
   const roomName = useRoomInfoValidated('roomName');
 
   return (
@@ -21,4 +21,4 @@ const RoomNameDefault = () => {
   );
 };
 
-export default React.memo(RoomNameDefault);
+export default React.memo(RoomNameNoDefault);

@@ -4,7 +4,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallback';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import ChecklistQuestionTemplate from '@/components/NewChecklist/ChecklistQuestionTemplate';
-import OptionChecklistTemplate from '@/components/NewChecklist/Option/OptionChecklistTemplate';
+import OptionTemplate from '@/components/NewChecklist/Option/OptionTemplate';
 import RoomInfoTemplate from '@/components/NewChecklist/RoomInfoTemplate';
 
 const ChecklistContent = () => {
@@ -15,7 +15,7 @@ const ChecklistContent = () => {
       {/*방 기본정보 템플릿 */}
       {currentTabId === -1 && <RoomInfoTemplate />}
       {/* 옵션 선택 템플릿 */}
-      {currentTabId === 0 && <OptionChecklistTemplate />}
+      {currentTabId === 0 && <OptionTemplate />}
       {/* 체크리스트 템플릿 */}
       {currentTabId > 0 && (
         <ErrorBoundary FallbackComponent={ListErrorFallback}>

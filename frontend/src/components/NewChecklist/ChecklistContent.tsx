@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallback';
@@ -19,7 +20,9 @@ const ChecklistContent = () => {
       {/* 체크리스트 템플릿 */}
       {currentTabId > 0 && (
         <ErrorBoundary FallbackComponent={ListErrorFallback}>
-          <ChecklistQuestionTemplate />
+          <Suspense>
+            <ChecklistQuestionTemplate />
+          </Suspense>
         </ErrorBoundary>
       )}
     </S.Container>

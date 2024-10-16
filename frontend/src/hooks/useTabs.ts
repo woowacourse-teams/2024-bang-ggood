@@ -11,8 +11,20 @@ const useTabs = () => {
     })) as TabWithCompletion[];
   };
 
+  const getTabsForChecklist = (categories: Category[]) => {
+    const category = getTabs(categories);
+    const tabsWithBasicInfoAndOptions = [
+      { id: -1, name: '기본정보', hasIndicator: false },
+      { id: 0, name: '옵션', hasIndicator: false },
+      ...category,
+    ];
+
+    return tabsWithBasicInfoAndOptions;
+  };
+
   return {
     getTabs,
+    getTabsForChecklist,
   };
 };
 

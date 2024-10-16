@@ -1,10 +1,21 @@
+import { useMemo } from 'react';
+
 import Tabs from '@/components/_common/Tabs/Tabs';
-import useChecklistTabs from '@/hooks/useChecklistTabs';
+import useGetChecklistQuestionQuery from '@/hooks/query/useGetChecklistQuestionQuery';
+import useTabs from '@/hooks/useTabs';
 
 const ChecklistTab = () => {
-  const { tabs } = useChecklistTabs();
+  const { data: checklist, isFetched } = useGetChecklistQuestionQuery();
+  const { getTabsForChecklist } = useTabs();
 
-  return <Tabs tabList={tabs} />;
+  const categoryTabs = useMemo(() => {
+    if (isFetched && checklist) {
+      return getTabsForChecklist(checklist);
+    }
+    return [];
+  }, [isFetched, getTabsForChecklist]);
+
+  return <Tabs tabList={categoryTabs} />;
 };
 
 export default ChecklistTab;

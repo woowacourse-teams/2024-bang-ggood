@@ -12,7 +12,7 @@ interface Props {
   answer: AnswerType;
 }
 
-const ChecklistQuestionItem = ({ answer, question }: Props) => {
+const ChecklistQuestionItem = ({ question, answer }: Props) => {
   const { questionId, title, highlights } = question;
 
   return (

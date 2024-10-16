@@ -1,6 +1,6 @@
-import { TabWithCompletion } from '@/components/_common/Tabs/Tabs';
 import { findCategoryClassNameByName } from '@/constants/category';
 import { Category } from '@/types/category';
+import { TabWithCompletion } from '@/types/tab';
 
 const useTabs = () => {
   const getTabs = (categories: Category[]) => {

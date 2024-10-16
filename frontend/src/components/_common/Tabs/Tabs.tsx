@@ -1,21 +1,12 @@
 import styled from '@emotion/styled';
 import { useCallback } from 'react';
 
-import Tab from '@/components/_common/Tabs/Tab';
+import TabButton from '@/components/_common/Tabs/Tab';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
+import { Tab, TabWithCompletion } from '@/types/tab';
 
 interface Props {
   tabList: TabWithCompletion[] | Tab[];
-}
-
-export interface Tab {
-  name: string;
-  id: number;
-  className?: string;
-}
-
-export interface TabWithCompletion extends Tab {
-  hasIndicator: boolean;
 }
 
 const Tabs = ({ tabList }: Props) => {
@@ -37,7 +28,7 @@ const Tabs = ({ tabList }: Props) => {
             const hasIndicator = 'hasIndicator' in tab ? tab.hasIndicator : null;
 
             return (
-              <Tab
+              <TabButton
                 className={className}
                 id={id}
                 name={name}

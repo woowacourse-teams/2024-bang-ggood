@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { TabWithCompletion } from '@/components/_common/Tabs/Tabs';
 import { findCategoryClassNameByName } from '@/constants/category';
 import useGetChecklistQuestionQuery from '@/hooks/query/useGetChecklistQuestionQuery';
 import useChecklistStore from '@/store/useChecklistStore';
+import { TabWithCompletion } from '@/types/tab';
 
 /**
  * useChecklistTabs 체크리스트 페이지에서 기본 정보, 옵션, 카테고리를 포함한 탭을 만들어주는 훅 함수입니다.

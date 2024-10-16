@@ -12,7 +12,12 @@ type NumberToString<T> = T extends number | string ? string : T;
 
 type RoomInfoStoreState = Required<Omit<RoomInfo, 'createdAt'>>;
 
-// TODO : API POST때 사용할 Mapper 함수 필요. structure(방구조: 처음에 null)
+/** roomInfo 자료를 모두 담는 스토어입니다.
+ * rawValues: roomInfo 백엔드 스키마에 해당하는 자료를 모두 담을 수 있습니다. (다만 number 타입자료형만은 string으로 저장하고있습니다.)
+ * errorMessage: 기본값은 ''(에러없음) 입니다.
+ *
+ * 현재 구현상으로는 폼과 무관해서 안쓰더라도 errorMessage를 만들어줘야합니다.
+ */
 export const initialRoomInfo = {
   roomName: { rawValue: '', errorMessage: '' },
   deposit: { rawValue: '', errorMessage: '' },
@@ -52,6 +57,10 @@ interface RoomInfoActions {
   getParsedValues: () => RoomInfo;
 }
 
+/**
+ * getParsedValues: store에 저장된 걸 백엔드에 POST하는 등 데이터가 필요할때 사용합니다.
+ * getRawValues: errorMessages말고 rawValues들만을 담은 객체를 반환합니다.
+ */
 export const roomInfoStore = createStore<RoomInfoState & { actions: RoomInfoActions }>()(
   persist(
     (set, get) => ({

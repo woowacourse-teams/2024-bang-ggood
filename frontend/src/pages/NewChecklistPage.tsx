@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
@@ -21,6 +22,7 @@ import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 
 const NewChecklistPage = () => {
+  const navigate = useNavigate();
   const { tabs } = useChecklistTabs();
 
   const roomInfoActions = useStore(roomInfoStore, state => state.actions);

@@ -48,6 +48,5 @@ export const deleteChecklist = async (id: number) => {
 
 export const putCustomChecklist = async (questionIds: ChecklistSelectedQuestions) => {
   const response = await fetcher.put({ url: BASE_URL + ENDPOINT.CHECKLIST_CUSTOM, body: questionIds });
-
   return response;
 };

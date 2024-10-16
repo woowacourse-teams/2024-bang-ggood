@@ -82,25 +82,11 @@ const ThirdSection = () => {
 
 const S = {
   CardList: styled.div`
-    transform: scale(1.2);
+    transform: scale(1);
     transform-origin: center;
     ${flexColumn};
     gap: 1rem;
     align-items: center;
-
-    @media (width <= ${({ theme }) => theme.viewport.MOBILE}px) {
-      transform: none;
-      transform-origin: center;
-      width: 100%;
-      margin-top: 0;
-    }
-
-    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
-      transform: none;
-      transform-origin: center;
-      width: 100%;
-      margin-top: 0;
-    }
   `,
   DesktopEmptyBox: styled.div`
     @media (height > ${({ theme }) => theme.viewport.DESKTOP}px) {

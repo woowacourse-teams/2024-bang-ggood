@@ -37,6 +37,12 @@ public class AuthController {
         return ResponseEntity.created(URI.create("/v1/local-auth/register/" + userId)).build();
     }
 
+    @DeleteMapping("/v1/withdraw")
+    public ResponseEntity<Void> withdraw(@AuthRequiredPrincipal User user) {
+        authService.withdraw(user);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/oauth/login")
     public ResponseEntity<Void> oauthLogin(@Valid @RequestBody OauthLoginRequest request) {
         AuthTokenResponse response = authService.oauthLogin(request);

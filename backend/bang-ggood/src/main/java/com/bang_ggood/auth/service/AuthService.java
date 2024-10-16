@@ -47,6 +47,11 @@ public class AuthService {
     }
 
     @Transactional
+    public void withdraw(User user) {
+        userRepository.deleteById(user.getId());
+    }
+
+    @Transactional
     public AuthTokenResponse oauthLogin(OauthLoginRequest request) {
         OauthInfoApiResponse oauthInfoApiResponse = oauthClient.requestOauthInfo(request);
 

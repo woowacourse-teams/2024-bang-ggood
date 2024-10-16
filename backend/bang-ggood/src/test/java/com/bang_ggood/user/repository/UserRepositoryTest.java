@@ -21,7 +21,7 @@ class UserRepositoryTest extends IntegrationTestSupport {
     void findByEmail() {
         // given
         User user = userRepository.save(UserFixture.USER1());
-        userRepository.deleteByUser(user);
+        userRepository.deleteById(user.getId());
 
         // when
         Optional<User> findUser = userRepository.findByEmailAndLoginType(user.getEmail(), user.getLoginType());
@@ -41,5 +41,19 @@ class UserRepositoryTest extends IntegrationTestSupport {
 
         // then
         Assertions.assertThat(users).containsExactly(expectedUser);
+    }
+
+    @DisplayName("논리적 삭제 성공")
+    @Test
+    void deleteById() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+
+        // when
+        userRepository.deleteById(user.getId());
+
+        // then
+        Optional<User> findUser = userRepository.findById(user.getId());
+        Assertions.assertThat(findUser).isEmpty();
     }
 }

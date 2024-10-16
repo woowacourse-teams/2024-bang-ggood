@@ -20,6 +20,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
         return findById(id).orElseThrow(() -> new BangggoodException(ExceptionCode.USER_NOT_FOUND));
     }
 
+    @Query("SELECT u FROM User u WHERE u.id = :id AND u.deleted = false")
+    Optional<User> findById(@Param("id") Long id);
+
     @Query("SELECT u FROM User u WHERE u.userType = :userType and u.deleted = false ")
     List<User> findUserByUserType(@Param("userType") UserType userType);
 
@@ -28,6 +31,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)
-    @Query("UPDATE User u SET u.deleted = true ")
-    void deleteByUser(@Param("user") User user);
+    @Query("UPDATE User u SET u.deleted = true WHERE u.id = :id")
+    void deleteById(@Param("id") Long id);
+
 }

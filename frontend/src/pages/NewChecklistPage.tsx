@@ -1,3 +1,5 @@
+import { ErrorBoundary } from 'react-error-boundary';
+import { useNavigate } from 'react-router-dom';
 import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
@@ -5,13 +7,14 @@ import Header from '@/components/_common/Header/Header';
 import AlertModal from '@/components/_common/Modal/AlertModal/AlertModal';
 import LoginModal from '@/components/_common/Modal/LoginModal/LoginModal';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
-import Tabs from '@/components/_common/Tabs/Tabs';
 import ChecklistContent from '@/components/NewChecklist/ChecklistContent';
+import ChecklistTab from '@/components/NewChecklist/ChecklistTab/ChecklistTab';
+import ChecklistTabFallback from '@/components/NewChecklist/ChecklistTab/ChecklistTabFallback';
 import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
 import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
+import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
-import useChecklistTabs from '@/hooks/useChecklistTabs';
 import useHandleTip from '@/hooks/useHandleTip';
 import useModal from '@/hooks/useModal';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
@@ -20,7 +23,7 @@ import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 
 const NewChecklistPage = () => {
-  const { tabs } = useChecklistTabs();
+  const navigate = useNavigate();
 
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
   const roomInfoNonValidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
@@ -47,6 +50,7 @@ const NewChecklistPage = () => {
     checklistActions.reset();
     selectedOptionActions.reset();
     resetShowTip(); // 옵션의 팁박스 다시표시
+    navigate(ROUTE_PATH.checklistList);
   };
 
   return (
@@ -57,7 +61,9 @@ const NewChecklistPage = () => {
         right={<Button label="저장" size="xSmall" color="dark" onClick={openSummaryModal} />}
       />
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
-        <Tabs tabList={tabs} />
+        <ErrorBoundary fallback={<ChecklistTabFallback />}>
+          <ChecklistTab />
+        </ErrorBoundary>
         <ChecklistContent />
       </TabProvider>
 

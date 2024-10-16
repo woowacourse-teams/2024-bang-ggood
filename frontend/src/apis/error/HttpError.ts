@@ -3,9 +3,11 @@ import { HTTP_ERROR_MESSAGE, HTTP_STATUS_CODE } from '@/constants/httpErrorMessa
 class HTTPError extends Error {
   statusCode: number;
 
-  constructor(statusCode: number) {
+  //TODO: 나중에 메세지를 에러 상태코드 객체를 사용하도록 바꾸기
+  constructor(statusCode: number, message: string) {
     super();
     this.statusCode = statusCode;
+    this.message = message;
 
     switch (true) {
       case statusCode >= HTTP_STATUS_CODE.SERVER_ERROR:
@@ -14,7 +16,11 @@ class HTTPError extends Error {
         break;
       case statusCode === HTTP_STATUS_CODE.UNAUTHORIZED:
         this.name = 'AUTHENTICATION_FAILED';
-        this.message = HTTP_ERROR_MESSAGE.UNAUTHORIZED;
+        //this.message = HTTP_ERROR_MESSAGE.UNAUTHORIZED;
+        break;
+      case statusCode >= HTTP_STATUS_CODE.CONFLICT:
+        this.name = 'CONFLICT';
+        this.message = HTTP_ERROR_MESSAGE.CONFLICT;
         break;
       case statusCode === HTTP_STATUS_CODE.NETWORK_ERROR:
         this.name = 'NETWORK_ERROR';

@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
@@ -15,7 +14,6 @@ import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useChecklistTabs from '@/hooks/useChecklistTabs';
 import useHandleTip from '@/hooks/useHandleTip';
-import useChecklistTemplate from '@/hooks/useInitialChecklist';
 import useModal from '@/hooks/useModal';
 import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
 import roomInfoStore from '@/store/roomInfoStore';
@@ -23,8 +21,6 @@ import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 
 const NewChecklistPage = () => {
-  useChecklistTemplate(); // 체크리스트 질문 가져오기 및 준비
-  const navigate = useNavigate();
   const { tabs } = useChecklistTabs();
 
   const roomInfoActions = useStore(roomInfoStore, state => state.actions);

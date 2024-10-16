@@ -6,7 +6,6 @@ import useRoomInfoValidated from '@/hooks/useRoomInfoValidated';
 
 const RoomName = () => {
   const roomName = useRoomInfoValidated('roomName');
-
   useDefaultRoomName();
 
   return (

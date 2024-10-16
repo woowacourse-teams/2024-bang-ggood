@@ -3,7 +3,7 @@ import { useStore } from 'zustand';
 
 import { TOAST_MESSAGE } from '@/constants/message';
 import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
-import usePutChecklistQuery from '@/hooks/query/usePutCheclistQuery';
+import usePutChecklistQuery from '@/hooks/query/usePutChecklistQuery';
 import useToast from '@/hooks/useToast';
 import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
 import roomInfoStore from '@/store/roomInfoStore';

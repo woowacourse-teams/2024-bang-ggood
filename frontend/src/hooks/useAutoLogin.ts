@@ -5,7 +5,7 @@ import { deleteToken, getIsUserValid, getUserInfo, postReissueAccessToken } from
 import { ROUTE_PATH } from '@/constants/routePath';
 import useToast from '@/hooks/useToast';
 
-const useIsValidUser = () => {
+const useAutoLogin = () => {
   const navigate = useNavigate();
   const { showToast } = useToast();
 
@@ -30,8 +30,6 @@ const useIsValidUser = () => {
   useEffect(() => {
     fetchIsUserValid();
   }, []);
-
-  return null;
 };
 
-export default useIsValidUser;
+export default useAutoLogin;

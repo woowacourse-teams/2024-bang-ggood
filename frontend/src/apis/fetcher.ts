@@ -24,11 +24,8 @@ const request = async ({ url, method, body, headers = {} }: RequestProps) => {
     }
     return response;
   } catch (error) {
-    if (error instanceof HTTPError) {
-      throw error;
-    } else {
-      throw new HTTPError(HTTP_STATUS_CODE.NETWORK_ERROR, 'Network error occurred');
-    }
+    if (error instanceof HTTPError) throw error;
+    throw new HTTPError(HTTP_STATUS_CODE.NETWORK_ERROR, '네트워크 에러가 발생했습니다.');
   }
 };
 
@@ -37,21 +34,21 @@ const handleError = async (response: Response, { url, method, body, headers = {}
   const errorMessage = JSON.parse(responseString).message;
 
   if (response.status === 401 && errorMessage === API_ERROR_MESSAGE.REISSUE_TOKEN_NEED) {
-    if (!reissueAccessToken) {
-      reissueAccessToken = true;
-      try {
-        const accessTokenReissueResult = await postReissueAccessToken();
-        if (accessTokenReissueResult?.status === 200) {
-          reissueAccessToken = false;
-          return await fetchRequest({ url, method, body, headers });
-        }
-      } catch (err) {
-        await deleteToken();
-        window.location.href = ROUTE_PATH.root;
-      }
+    if (reissueAccessToken) {
+      throw new HTTPError(response.status, errorMessage);
     }
-  } else {
-    throw new HTTPError(response.status, errorMessage);
+    /* accessToken 발급을 한번도 시도 안했을 때 */
+    reissueAccessToken = true;
+    try {
+      const accessTokenReissueResult = await postReissueAccessToken();
+      if (accessTokenReissueResult?.status === 200) {
+        reissueAccessToken = false;
+        return await fetchRequest({ url, method, body, headers });
+      }
+    } catch (err) {
+      await deleteToken();
+      window.location.href = ROUTE_PATH.root;
+    }
   }
 };
 

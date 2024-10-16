@@ -1,1 +1,1 @@
-export type ToastType = 'error' | 'confirm' | 'info' | 'none';
+export type ToastType = 'error' | 'confirm' | 'info';

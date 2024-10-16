@@ -1,24 +1,17 @@
 import styled from '@emotion/styled';
-import { useEffect } from 'react';
 
 import CounterBox from '@/components/_common/CounterBox/CounterBox';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import QuestionCardList from '@/components/ChecklistQuestionSelect/QuestionCardList/QuestionCardList';
-import useGetAllChecklistQuestionQuery from '@/hooks/query/useGetAllChecklistQuestionsQuery';
 import useChecklistQuestionSelectStore from '@/store/useChecklistQuestionSelectStore';
 
 const QuestionListTemplate = () => {
-  const { data: checklistQuestions } = useGetAllChecklistQuestionQuery();
-  const { checklistAllQuestionList, selectedQuestions, setChecklistAllQuestionList, getCategoryQuestions } =
-    useChecklistQuestionSelectStore();
+  const { getCategoryQuestions, checklistAllQuestionList, selectedQuestions } = useChecklistQuestionSelectStore();
   const { currentTabId } = useTabContext();
 
   const currentCategoryQnA = getCategoryQuestions(currentTabId);
-  const allQuestionCount = checklistAllQuestionList.flatMap(category => category.questions);
 
-  useEffect(() => {
-    setChecklistAllQuestionList(checklistQuestions || []);
-  }, [checklistQuestions]);
+  const allQuestionCount = checklistAllQuestionList.flatMap(category => category.questions);
 
   return (
     <S.Container>
@@ -27,7 +20,7 @@ const QuestionListTemplate = () => {
         <CounterBox currentCount={selectedQuestions.length} totalCount={allQuestionCount.length} />
       </S.CounterBox>
       <QuestionCardList
-        key={`${currentTabId}-customList`}
+        key={`${currentTabId}-customlist`}
         currentTabId={currentTabId}
         questions={currentCategoryQnA?.questions}
       />

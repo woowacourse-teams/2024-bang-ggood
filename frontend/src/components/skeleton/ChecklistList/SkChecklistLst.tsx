@@ -1,17 +1,30 @@
 import styled from '@emotion/styled';
 
+import Header from '@/components/_common/Header/Header';
+import Layout from '@/components/_common/layout/Layout';
 import { boxShadow, flexCenter, flexColumn, Skeleton } from '@/styles/common';
 import theme from '@/styles/theme';
 
-const SHOW_MOCK_COUNT = 4;
+const SHOW_MOCK_COUNT = 3;
 
 const SkChecklistList = () => {
   return (
-    <S.ListBox>
-      {Array.from({ length: SHOW_MOCK_COUNT }).map((e, i) => {
-        return <S.PreviewCard key={i} />;
-      })}
-    </S.ListBox>
+    <>
+      <Header center={<Header.Text>체크리스트</Header.Text>} />
+      <S.FlexBox>
+        <S.Banner />
+      </S.FlexBox>
+      <Layout>
+        <S.ListBox>
+          {Array.from({ length: SHOW_MOCK_COUNT }).map((e, i) => {
+            return <S.PreviewCard key={i} />;
+          })}
+        </S.ListBox>
+      </Layout>
+      <S.Wrapper>
+        <S.Button />
+      </S.Wrapper>
+    </>
   );
 };
 

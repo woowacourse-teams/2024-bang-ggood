@@ -1,7 +1,5 @@
 import styled from '@emotion/styled';
-import { ErrorBoundary } from 'react-error-boundary';
 
-import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallback';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import NewChecklistInfoTemplate from '@/components/NewChecklist/NewChecklistInfoTemplate';
 import NewChecklistTemplate from '@/components/NewChecklist/NewChecklistTemplate';
@@ -17,11 +15,7 @@ const NewChecklistContent = () => {
       {/* 옵션 선택 템플릿 */}
       {currentTabId === 0 && <OptionChecklistTemplate />}
       {/* 체크리스트 템플릿 */}
-      {currentTabId > 0 && (
-        <ErrorBoundary FallbackComponent={ListErrorFallback}>
-          <NewChecklistTemplate />
-        </ErrorBoundary>
-      )}
+      {currentTabId > 0 && <NewChecklistTemplate />}
     </S.Container>
   );
 };

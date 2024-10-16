@@ -6,10 +6,11 @@ import useDefaultRoomName from '@/components/NewChecklist/NewRoomInfoForm/useDef
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 
 const RoomName = () => {
-  useDefaultRoomName();
   const actions = useStore(checklistRoomInfoStore, state => state.actions);
   const roomName = useStore(checklistRoomInfoStore, state => state.rawValue.roomName);
   const errorMessage = useStore(checklistRoomInfoStore, state => state.errorMessage.roomName);
+
+  useDefaultRoomName();
 
   return (
     <FormField>

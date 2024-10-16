@@ -1,17 +1,21 @@
 import styled from '@emotion/styled';
 
-import { MAX_ARTICLES_DISPLAY_COUNT } from '@/constants/system';
 import { flexRow, flexSpaceBetween, Skeleton } from '@/styles/common';
 
 const SkArticleSection = () => {
   return (
-    <S.CardList>
-      {new Array(MAX_ARTICLES_DISPLAY_COUNT).fill(0).map((e, i) => (
-        <S.CardWrapper key={i}>
-          <S.Card />
-        </S.CardWrapper>
-      ))}
-    </S.CardList>
+    <>
+      <S.Row>
+        <S.Title />
+      </S.Row>
+      <S.CardList>
+        {new Array(3).fill(0).map((e, i) => (
+          <S.CardWrapper key={i}>
+            <S.Card />
+          </S.CardWrapper>
+        ))}
+      </S.CardList>
+    </>
   );
 };
 

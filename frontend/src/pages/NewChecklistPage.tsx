@@ -13,6 +13,7 @@ import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSum
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useChecklistTabs from '@/hooks/useChecklistTabs';
 import useHandleTip from '@/hooks/useHandleTip';
+import useChecklistTemplate from '@/hooks/useInitialChecklist';
 import useModal from '@/hooks/useModal';
 import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
@@ -20,6 +21,7 @@ import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 
 const NewChecklistPage = () => {
+  useChecklistTemplate(); // 체크리스트 질문 가져오기 및 준비
   const { tabs } = useChecklistTabs();
 
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);

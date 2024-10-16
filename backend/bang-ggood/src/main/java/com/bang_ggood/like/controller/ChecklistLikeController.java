@@ -24,7 +24,6 @@ public class ChecklistLikeController {
         return ResponseEntity.noContent().build();
     }
 
-
     @DeleteMapping("/checklists/{id}/like")
     public ResponseEntity<Void> deleteChecklistLikeByChecklistId(@AuthRequiredPrincipal User user,
                                                                  @PathVariable("id") long id) {

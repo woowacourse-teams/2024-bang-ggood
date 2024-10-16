@@ -4,8 +4,6 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
-import com.bang_ggood.global.exception.BangggoodException;
-import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.like.domain.ChecklistLike;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.room.RoomFixture;
@@ -19,7 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class ChecklistLikeServiceTest extends IntegrationTestSupport {
 
@@ -53,20 +51,19 @@ class ChecklistLikeServiceTest extends IntegrationTestSupport {
         assertThat(checklistLikeRepository.existsByChecklist(checklist)).isTrue();
     }
 
-    @DisplayName("체크리스트 좋아요 추가 실패 : 이미 좋아요가 추가가 된 체크리스트인 경우")
+    @DisplayName("체크리스트 좋아요 추가 시도 : 이미 좋아요가 추가가 된 체크리스트인 경우")
     @Test
-    void createChecklistLike_checklistAlreadyLiked_exception() {
+    void createChecklistLike_checklistAlreadyLiked() {
         //given
         Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
         // when
         checklistLikeService.createLike(user, checklist);
+        checklistLikeService.createLike(user, checklist);
 
         //then
-        assertThatThrownBy(() -> checklistLikeService.createLike(user, checklist))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.LIKE_ALREADY_EXISTS.getMessage());
+        assertThat(checklistLikeRepository.count()).isEqualTo(1);
     }
 
     @DisplayName("체크리스트 좋아요 삭제 성공")
@@ -85,17 +82,16 @@ class ChecklistLikeServiceTest extends IntegrationTestSupport {
         assertThat(checklistLikeRepository.existsById(checklistLike.getId())).isFalse();
     }
 
-    @DisplayName("체크리스트 좋아요 삭제 실패 : 체크리스트 좋아요가 없는 경우")
+    @DisplayName("체크리스트 좋아요 삭제 시도 : 체크리스트 좋아요가 없는 경우")
     @Test
-    void deleteChecklistLikeByChecklistId_notFound_exception() {
+    void deleteChecklistLikeByChecklistId_notFound() {
         // given
         Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
 
         // when & then
-        assertThatThrownBy(() -> checklistLikeService.deleteLike(user, checklist))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.LIKE_NOT_EXISTS.getMessage());
+        assertThatCode(() -> checklistLikeService.deleteLike(user, checklist))
+                .doesNotThrowAnyException();
     }
 }

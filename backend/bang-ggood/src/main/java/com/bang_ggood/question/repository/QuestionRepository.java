@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface QuestionRepository extends JpaRepository<QuestionEntity, Integer> {
 
     default QuestionEntity getById(Integer id) {
-        return findById(id).orElseThrow(() -> new BangggoodException(ExceptionCode.QUESTION_NOT_FOUND));
+        return findById(id).orElseThrow(() -> new BangggoodException(ExceptionCode.QUESTION_INVALID));
     }
 }

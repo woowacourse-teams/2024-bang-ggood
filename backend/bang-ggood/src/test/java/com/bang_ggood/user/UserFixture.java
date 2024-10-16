@@ -13,7 +13,7 @@ public class UserFixture {
     public static User USER1;
 
     public static User USER1() {
-        return new User("방방이", "bang-bang01@gmail.com", UserType.USER, LoginType.LOCAL);
+        return new User("방방이", "bang-bang01@gmail.com", "password1234", UserType.USER, LoginType.LOCAL);
     }
 
     public static User USER2() {

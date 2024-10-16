@@ -1,13 +1,11 @@
 import styled from '@emotion/styled';
 
-import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import { flexSpaceBetween, Skeleton } from '@/styles/common';
 
 const SKArticleDetail = () => {
   return (
     <>
-      <Header left={<Header.Backward />} isTransparent />
       <S.SkeletonThumbnail />
       <Layout withHeader>
         <S.Row>

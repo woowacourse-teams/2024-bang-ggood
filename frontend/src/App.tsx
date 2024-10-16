@@ -1,5 +1,5 @@
 import { Global, ThemeProvider } from '@emotion/react';
-import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider, QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider } from 'react-router-dom';
 
@@ -14,23 +14,21 @@ const App = () => {
 
   const queryClient = new QueryClient({
     defaultOptions: {
-      mutations: { onError: error => showToast({ message: error.message }) },
+      mutations: { onError: error => showToast({ message: error.message, type: 'error' }) },
       queries: { throwOnError: true },
     },
-    queryCache: new QueryCache({
-      // get 일때 return => fallback
-      onError: error => showToast({ message: error.message }),
-    }),
   });
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <ToastContainer />
-        <Global styles={baseStyle} />
-        <RouterProvider router={router} />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </ThemeProvider>
+      <QueryErrorResetBoundary>
+        <ThemeProvider theme={theme}>
+          <ToastContainer />
+          <Global styles={baseStyle} />
+          <RouterProvider router={router} />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </ThemeProvider>
+      </QueryErrorResetBoundary>
     </QueryClientProvider>
   );
 };

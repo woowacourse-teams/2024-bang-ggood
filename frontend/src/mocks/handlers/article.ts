@@ -12,4 +12,8 @@ export const ArticleHandlers = [
   http.get(BASE_URL + ENDPOINT.ARTICLE_ID(1), () => {
     return HttpResponse.json(article, { status: 200 });
   }),
+
+  http.get(BASE_URL + ENDPOINT.ARTICLE_ID(2), () => {
+    return HttpResponse.json(article, { status: 404 });
+  }),
 ];

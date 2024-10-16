@@ -1,17 +1,15 @@
 import styled from '@emotion/styled';
+import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallback';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import AlertModal from '@/components/_common/Modal/AlertModal/AlertModal';
-import ChecklistAnswerSection from '@/components/ChecklistDetail/ChecklistAnswerSection';
-import MemoSection from '@/components/ChecklistDetail/MemoSection';
-import RoomInfoSection from '@/components/ChecklistDetail/RoomInfoSection';
-import SkChecklistDetail from '@/components/skeleton/ChecklistDetail/SkChecklistDetail';
+import ChecklistDetailSection from '@/components/ChecklistDetail/ChecklistDetailSection';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useDeleteChecklistQuery from '@/hooks/query/useDeleteChecklistQuery';
-import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery';
 import useModal from '@/hooks/useModal';
 import theme from '@/styles/theme';
 
@@ -20,16 +18,11 @@ type RouteParams = {
 };
 
 const ChecklistDetailPage = () => {
-  const navigate = useNavigate();
-  const { isModalOpen, openModal, closeModal } = useModal();
-
   const { checklistId } = useParams() as RouteParams;
-  const { data: checklist, isLoading, isError } = useGetChecklistDetailQuery(checklistId);
-  const { mutate: deleteChecklist } = useDeleteChecklistQuery();
+  const navigate = useNavigate();
 
-  if (isError) navigate(ROUTE_PATH.checklistList);
-  if (isLoading) return <SkChecklistDetail />;
-  if (!checklist) return;
+  const { isModalOpen: isAlertModalOpen, openModal, closeModal } = useModal();
+  const { mutate: deleteChecklist } = useDeleteChecklistQuery();
 
   const handleDelete = async () => {
     deleteChecklist(Number(checklistId), {
@@ -60,15 +53,15 @@ const ChecklistDetailPage = () => {
         }
       />
       <Layout bgColor={theme.palette.grey50} withHeader>
-        <RoomInfoSection
-          room={checklist?.room}
-          options={checklist?.options}
-          isLiked={checklist?.isLiked}
-          checklistId={Number(checklistId)}
-          nearSubways={checklist.stations}
-        />
-        <ChecklistAnswerSection categories={checklist?.categories} />
-        <MemoSection memo={checklist?.room?.memo} />
+        <ErrorBoundary
+          fallbackRender={({ error, resetErrorBoundary }) => (
+            <Layout withHeader>
+              <ListErrorFallback error={error} resetErrorBoundary={resetErrorBoundary} />
+            </Layout>
+          )}
+        >
+          <ChecklistDetailSection />
+        </ErrorBoundary>
       </Layout>
 
       <AlertModal
@@ -78,7 +71,7 @@ const ChecklistDetailPage = () => {
           </div>
         }
         subtitle="삭제한 체크리스트는 다시 확인할 수 없습니다."
-        isOpen={isModalOpen}
+        isOpen={isAlertModalOpen}
         onClose={closeModal}
         handleApprove={handleDelete}
       />

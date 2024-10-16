@@ -1,5 +1,6 @@
 package com.bang_ggood.question.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +28,7 @@ public class QuestionEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private CategoryEntity category;
 
+    @Column(nullable = false)
     private String title;
 
     private String subtitle;

@@ -1,5 +1,6 @@
 package com.bang_ggood.question.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +26,7 @@ public class Highlight {
     @ManyToOne(fetch = FetchType.LAZY)
     private QuestionEntity question;
 
+    @Column(nullable = false)
     private String name;
 
     public Highlight(QuestionEntity question, String name) {

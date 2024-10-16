@@ -2,12 +2,11 @@ import styled from '@emotion/styled';
 import { useNavigate, useRouteError } from 'react-router-dom';
 
 import HttpError from '@/apis/error/HttpError';
-import { BangBangCryIcon } from '@/assets/assets';
-import Button from '@/components/_common/Button/Button';
+import { BangBangCryIcon, Error500 } from '@/assets/assets';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { flexCenter, flexColumn } from '@/styles/common';
+import { flexCenter, flexColumn, title4 } from '@/styles/common';
 
 const ErrorPage = () => {
   const navigate = useNavigate();
@@ -24,11 +23,12 @@ const ErrorPage = () => {
       <Header left={<Header.Logo />} />
       <Layout withHeader>
         <S.Wrapper>
-          <BangBangCryIcon width={300} height={100} />
+          <BangBangCryIcon width={150} height={150} />
+          <Error500 />
           <S.TextWrapper>
-            <S.Text>에러가 발생했습니다!</S.Text>
+            <S.Text>에러가 발생했습니다</S.Text>
             <S.Text>{message}</S.Text>
-            <S.HomeButton onClick={reset} label="홈페이지로 돌아가기" />
+            <S.ResetButton onClick={reset}>홈으로 돌아가기</S.ResetButton>
           </S.TextWrapper>
         </S.Wrapper>
       </Layout>
@@ -39,24 +39,39 @@ const ErrorPage = () => {
 export default ErrorPage;
 
 const S = {
-  Wrapper: styled.article`
-    display: flex;
-    width: 100%;
-    gap: 1rem;
+  Wrapper: styled.div`
+    ${flexColumn}
     ${flexCenter}
-  `,
-  Text: styled.div<{ $cursor?: boolean }>`
-    font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: ${({ theme }) => theme.text.size.medium};
-    ${({ $cursor }) => $cursor && `cursor:pointer;`}
+    width: 100%;
+    height: 100%;
+    gap: 1rem;
   `,
   TextWrapper: styled.div`
     ${flexColumn}
     align-items: center;
     gap: 1rem;
-    margin-top: 2rem;
+    margin-top: 4rem;
   `,
-  HomeButton: styled(Button)`
-    margin-top: 3rem;
+  Text: styled.div`
+    margin-bottom: 2rem;
+
+    font-size: ${({ theme }) => theme.text.size.medium};
+  `,
+  ResetButton: styled.button`
+    ${flexCenter}
+    gap: .5rem;
+    padding: 0.8rem 1.6rem;
+    border: none;
+
+    background-color: ${({ theme }) => theme.palette.green500};
+
+    color: ${({ theme }) => theme.palette.white};
+    ${title4}
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.palette.green600};
+    }
   `,
 };

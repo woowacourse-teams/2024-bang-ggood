@@ -6,7 +6,8 @@ export interface UpdateCheckProps extends CategoryAndQuestion {
 }
 
 const useChecklistQuestionSelect = () => {
-  const { setChecklistAllQuestionList, checklistAllQuestionList } = useChecklistQuestionSelectStore();
+  const { setChecklistAllQuestionList, checklistAllQuestionList, selectedQuestions } =
+    useChecklistQuestionSelectStore();
 
   const toggleQuestionSelect = ({ categoryId, questionId, isSelected }: UpdateCheckProps) => {
     const targetCategory = checklistAllQuestionList.find(category => category.categoryId === categoryId);

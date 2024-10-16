@@ -4,8 +4,3 @@ export interface User {
   userEmail: string;
   createdAt: string;
 }
-
-export interface UserTokenValid {
-  isAccessTokenExist: boolean;
-  isRefreshTokenExist: boolean;
-}

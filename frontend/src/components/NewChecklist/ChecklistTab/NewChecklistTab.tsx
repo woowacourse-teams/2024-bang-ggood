@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
 
+import ChecklistTabFallback from '@/components/_common/errorBoundary/ChecklistTabFallback';
 import Tabs from '@/components/_common/Tabs/Tabs';
 import useGetChecklistQuestionQuery from '@/hooks/query/useGetChecklistQuestionQuery';
 import useTabs from '@/hooks/useTabs';
 
-const ChecklistTab = () => {
-  const { data: checklist, isFetched } = useGetChecklistQuestionQuery();
+const NewChecklistTab = () => {
+  const { data: checklist, isFetched, isLoading } = useGetChecklistQuestionQuery();
   const { getTabsForChecklist } = useTabs();
 
   const categoryTabs = useMemo(() => {
@@ -15,7 +16,9 @@ const ChecklistTab = () => {
     return [];
   }, [isFetched, getTabsForChecklist]);
 
+  if (isLoading) return <ChecklistTabFallback />;
+
   return <Tabs tabList={categoryTabs} />;
 };
 
-export default ChecklistTab;
+export default NewChecklistTab;

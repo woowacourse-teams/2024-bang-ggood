@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
+import ChecklistTabFallback from '@/components/_common/errorBoundary/ChecklistTabFallback';
 import Header from '@/components/_common/Header/Header';
 import AlertModal from '@/components/_common/Modal/AlertModal/AlertModal';
 import LoginModal from '@/components/_common/Modal/LoginModal/LoginModal';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import ChecklistContent from '@/components/NewChecklist/ChecklistContent';
-import ChecklistTab from '@/components/NewChecklist/ChecklistTab/ChecklistTab';
-import ChecklistTabFallback from '@/components/NewChecklist/ChecklistTab/ChecklistTabFallback';
+import NewChecklistTab from '@/components/NewChecklist/ChecklistTab/NewChecklistTab';
 import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
 import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
@@ -62,7 +62,7 @@ const NewChecklistPage = () => {
       />
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
         <ErrorBoundary fallback={<ChecklistTabFallback />}>
-          <ChecklistTab />
+          <NewChecklistTab />
         </ErrorBoundary>
         <ChecklistContent />
       </TabProvider>

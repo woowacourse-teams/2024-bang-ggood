@@ -4,9 +4,9 @@ import { ErrorBoundary } from 'react-error-boundary';
 
 import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallback';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
-import ChecklistQuestionTemplate from '@/components/NewChecklist/ChecklistQuestionTemplate';
+import ChecklistQuestionTemplate from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestionTemplate';
+import RoomInfoTemplate from '@/components/NewChecklist/NewRoomInfoForm/RoomInfoTemplate';
 import OptionTemplate from '@/components/NewChecklist/Option/OptionTemplate';
-import RoomInfoTemplate from '@/components/NewChecklist/RoomInfoTemplate';
 
 const ChecklistContent = () => {
   const { currentTabId } = useTabContext();

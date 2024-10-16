@@ -10,12 +10,17 @@ import theme from '@/styles/theme';
 import { ChecklistQuestion } from '@/types/checklist';
 
 const ChecklistQuestionTemplate = () => {
+  console.log('A');
   useInitialChecklist(); // 체크리스트 질문 가져오기 + 형태 변환
   useChecklistStore(store => store.checklistCategoryQnA);
+
+  console.log('B');
 
   const { currentTabId } = useTabContext();
   const checklistActions = useChecklistStore(store => store.actions);
   const questions = checklistActions.getCategory(currentTabId);
+
+  console.log('C');
 
   return (
     <Layout bgColor={theme.palette.background} withHeader withTab>

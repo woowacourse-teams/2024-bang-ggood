@@ -19,7 +19,7 @@ const SignInPage = () => {
 
   const {
     value: email,
-    errors: emailErrors,
+    getErrorMessage: getEmailErrors,
     onChange: onChangeEmail,
     isValidated: isEmailValidated,
   } = useValidateInput({
@@ -66,7 +66,7 @@ const SignInPage = () => {
             name="email"
             onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChangeEmail(e)}
           />
-          <FormField.ErrorMessage value={Array.from(emailErrors)[0]} />
+          <FormField.ErrorMessage value={getEmailErrors()} />
         </FormField>
         <FormField>
           <FormField.Label label="비밀번호" />

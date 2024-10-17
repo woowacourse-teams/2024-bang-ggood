@@ -10,7 +10,7 @@ import { ROUTE_PATH } from '@/constants/routePath';
 import useToast from '@/hooks/useToast';
 import useValidateInput from '@/hooks/useValidateInput';
 import { flexCenter, title3 } from '@/styles/common';
-import { validateLength, validatePassword, validatePasswordConfirm } from '@/utils/authValidation';
+import { validateEmail, validateLength, validatePassword, validatePasswordConfirm } from '@/utils/authValidation';
 
 const SignUpPage = () => {
   const { showToast } = useToast();
@@ -19,17 +19,17 @@ const SignUpPage = () => {
 
   const {
     value: email,
-    errors: emailErrors,
+    getErrorMessage: getEmailError,
     onChange: onChangeEmail,
     isValidated: isEmailValidated,
   } = useValidateInput({
     initialValue: '',
-    validates: [],
+    validates: [validateEmail],
   });
 
   const {
     value: name,
-    errors: nameErrors,
+    getErrorMessage: getNameError,
     onChange: onChangeName,
     isValidated: isNameValidated,
   } = useValidateInput({
@@ -39,7 +39,7 @@ const SignUpPage = () => {
 
   const {
     value: password,
-    errors: passwordErrors,
+    getErrorMessage: getPasswordError,
     onChange: onChangePassword,
     isValidated: isPasswordValidated,
   } = useValidateInput({
@@ -49,7 +49,7 @@ const SignUpPage = () => {
 
   const {
     value: passwordConfirm,
-    errors: passwordConfirmErrors,
+    getErrorMessage: getPasswordConfirmError,
     onChange: onChangePasswordConfirm,
     isValidated: isPasswordConfirmValidated,
   } = useValidateInput({
@@ -87,7 +87,7 @@ const SignUpPage = () => {
               name="email"
               onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChangeEmail(e)}
             />
-            <FormField.ErrorMessage value={Array.from(emailErrors)[0]} />
+            <FormField.ErrorMessage value={getEmailError()} />
           </FormField>
           <FormField>
             <FormField.Label label="닉네임" />
@@ -96,7 +96,7 @@ const SignUpPage = () => {
               name="name"
               onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChangeName(e)}
             />
-            <FormField.ErrorMessage value={Array.from(nameErrors)[0]} />
+            <FormField.ErrorMessage value={getNameError()} />
           </FormField>
           <FormField>
             <FormField.Label label="비밀번호" />
@@ -105,7 +105,7 @@ const SignUpPage = () => {
               name="password"
               onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChangePassword(e)}
             />
-            <FormField.ErrorMessage value={Array.from(passwordErrors)[0]} />
+            <FormField.ErrorMessage value={getPasswordError()} />
           </FormField>
           <FormField>
             <FormField.Label label="비밀번호 확인" />
@@ -114,7 +114,7 @@ const SignUpPage = () => {
               name="passwordConfirm"
               onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChangePasswordConfirm(e)}
             />
-            <FormField.ErrorMessage value={Array.from(passwordConfirmErrors)[0]} />
+            <FormField.ErrorMessage value={getPasswordConfirmError()} />
           </FormField>
           <FormField.ErrorMessage value={postErrorMessage} />
           <Button

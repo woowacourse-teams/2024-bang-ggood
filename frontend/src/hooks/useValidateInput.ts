@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { ValidationError } from '@/constants/message/validationErrorMessage';
+import { VALIDATION_ERROR_MESSAGE, ValidationError } from '@/constants/message/validationErrorMessage';
 
 export type ValidationReturnType = {
   isValid: boolean;
@@ -53,13 +53,17 @@ const useValidateInput = ({ initialValue, validates }: Props) => {
     }
   }, [errors, value]);
 
+  const getErrorMessage = () => {
+    return VALIDATION_ERROR_MESSAGE[Array.from(errors)[0] as ValidationError];
+  };
+
   return {
     value,
     setValue,
-    errors,
     onChange,
     isValidated,
     setErrors,
+    getErrorMessage,
   };
 };
 

@@ -2,12 +2,12 @@ import useGetChecklistQuestionQuery from '@/hooks/query/useGetChecklistQuestionQ
 import useChecklistStore from '@/store/useChecklistStore';
 
 const useInitialChecklist = () => {
-  const { data: checklist } = useGetChecklistQuestionQuery();
+  const result = useGetChecklistQuestionQuery();
 
   const initAnswerSheetIfEmpty = useChecklistStore(state => state.actions.initAnswerSheetIfEmpty);
-  initAnswerSheetIfEmpty(checklist ?? []); // 체크리스트 질문에 대한 답안지 객체 생성
+  initAnswerSheetIfEmpty(result.data ?? []); // 체크리스트 질문에 대한 답안지 객체 생성
 
-  return checklist;
+  return result;
 };
 
 export default useInitialChecklist;

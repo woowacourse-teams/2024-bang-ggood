@@ -4,6 +4,7 @@ import ChecklistTabFallback from '@/components/_common/errorBoundary/ChecklistTa
 import Tabs from '@/components/_common/Tabs/Tabs';
 import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery';
 import useTabs from '@/hooks/useTabs';
+import useChecklistStore from '@/store/useChecklistStore';
 
 interface Props {
   checklistId: string;
@@ -11,14 +12,15 @@ interface Props {
 
 const EditChecklistTab = ({ checklistId }: Props) => {
   const { data: checklist, isFetched, isLoading } = useGetChecklistDetailQuery(checklistId);
+  const checklistStore = useChecklistStore(state => state.checklistCategoryQnA);
   const { getTabsForChecklist } = useTabs();
 
   const categoryTabs = useMemo(() => {
-    if (isFetched && checklist) {
+    if (isFetched && checklist && checklistStore.length) {
       return getTabsForChecklist(checklist.categories);
     }
     return [];
-  }, [isFetched, getTabsForChecklist]);
+  }, [isFetched, getTabsForChecklist, checklistStore]);
 
   if (isLoading) return <ChecklistTabFallback />;
 

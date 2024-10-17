@@ -8,7 +8,7 @@ public enum ExceptionCode {
 
     // 전체
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.INTERNAL_SERVER_ERROR, "예상치 못한 서버에러가 발생했습니다"),
-    INVALID_PARAMETER(HttpStatus.BAD_REQUEST, ClientExceptionCode.INTERNAL_SERVER_ERROR, "잘못된 인자입니다."),
+    INVALID_PARAMETER(HttpStatus.BAD_REQUEST, ClientExceptionCode.INVALID_PARAMETER, "잘못된 인자입니다."),
 
     // Option
     OPTION_INVALID(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR, "잘못된 옵션 ID입니다."),

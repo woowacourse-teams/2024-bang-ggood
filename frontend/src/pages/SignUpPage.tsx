@@ -4,11 +4,14 @@ import { postSignUp } from '@/apis/user';
 import { BangBangIcon, BangGgoodTextIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
+import useToast from '@/hooks/useToast';
 import useValidateInput from '@/hooks/useValidateInput';
 import { flexCenter, title3 } from '@/styles/common';
 import { validateEmail, validateLength, validatePassword, validatePasswordConfirm } from '@/utils/validate';
 
-const AuthPage = () => {
+const SignUpPage = () => {
+  const { showToast } = useToast();
+
   const {
     value: email,
     errors: emailErrors,
@@ -51,9 +54,11 @@ const AuthPage = () => {
 
   const disabled = !isEmailValidated || !isNameValidated || !isPasswordValidated || !isPasswordConfirmValidated;
 
+  //TODO: 회원가입 제대로 안되면 에러 메세지 띄워주기
   const handleSubmit = async () => {
     const response = await postSignUp();
     if (response.status === 201) {
+      showToast({ message: '회원가입이 완료되었습니다.', type: 'confirm' });
     }
   };
 
@@ -103,7 +108,7 @@ const AuthPage = () => {
             <FormField.ErrorMessage value={Array.from(passwordConfirmErrors)[0]} />
           </FormField>
           <Button
-            label="회원가입"
+            label="회원가입 하기"
             size="full"
             isSquare={true}
             color={'dark'}
@@ -116,7 +121,7 @@ const AuthPage = () => {
   );
 };
 
-export default AuthPage;
+export default SignUpPage;
 
 const S = {
   Wrapper: styled.div`

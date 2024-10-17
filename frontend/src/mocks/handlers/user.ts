@@ -16,4 +16,7 @@ export const userHandlers = [
   http.post(BASE_URL + ENDPOINT.USER_ACCESS_TOKEN_REISSUE, () => {
     return HttpResponse.json(null, { status: 200 });
   }),
+  http.post(BASE_URL + ENDPOINT.REGISTER, () => {
+    return HttpResponse.json(null, { status: 201 });
+  }),
 ];

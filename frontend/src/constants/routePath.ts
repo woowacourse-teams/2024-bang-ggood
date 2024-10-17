@@ -1,7 +1,7 @@
 export const ROUTE_PATH = {
   root: '/',
   home: '/home',
-  login: '/login',
+  signIn: '/sign-in',
   signUp: '/sign-up',
   /*checklist */
   checklistList: '/checklist',

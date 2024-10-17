@@ -3,7 +3,8 @@ import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 import FooterLayout from '@/components/_common/layout/FooterLayout';
 import { ROUTE_PATH } from '@/constants/routePath';
-import AuthPage from '@/pages/AuthPage';
+import SignInPage from '@/pages/SignInPage';
+import SignUpPage from '@/pages/SignUpPage';
 import GoogleAnalytics from '@/routers/GoogleAnalytics';
 
 const MainPage = React.lazy(() => import('@/pages/MainPage'));
@@ -75,8 +76,12 @@ const router = createBrowserRouter([
         path: ROUTE_PATH.root,
       },
       {
-        element: <AuthPage />,
-        path: ROUTE_PATH.login,
+        element: <SignUpPage />,
+        path: ROUTE_PATH.signUp,
+      },
+      {
+        element: <SignInPage />,
+        path: ROUTE_PATH.signIn,
       },
       {
         element: <NotFound />,

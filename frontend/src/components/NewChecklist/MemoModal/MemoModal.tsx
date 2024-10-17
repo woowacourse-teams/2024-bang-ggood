@@ -1,12 +1,11 @@
 import styled from '@emotion/styled';
 import { useRef } from 'react';
-import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
 import Textarea from '@/components/_common/Textarea/Textarea';
 import useInput from '@/hooks/useInput';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import useRoomInfoValidated from '@/hooks/useRoomInfoValidated';
 import { flexCenter, title3 } from '@/styles/common';
 import theme from '@/styles/theme';
 
@@ -17,9 +16,8 @@ interface Props {
 
 const MemoModal = ({ isModalOpen, modalClose }: Props) => {
   const intervalRef = useRef<number | undefined>(undefined);
-  const checklistRoomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
-  const memo = useStore(checklistRoomInfoStore, state => state.value.memo);
-  const { value: memoValue, onChange } = useInput<string>(memo || '');
+  const memo = useRoomInfoValidated('memo');
+  const { value: memoValue, onChange } = useInput<string>(memo.rawValue || '');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e);
@@ -33,7 +31,7 @@ const MemoModal = ({ isModalOpen, modalClose }: Props) => {
   };
 
   const handleSubmit = (addModalClose: boolean) => {
-    checklistRoomInfoActions.set('memo', memoValue);
+    memo.set(memoValue);
     if (addModalClose) modalClose();
   };
 

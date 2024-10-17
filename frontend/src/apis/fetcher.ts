@@ -30,7 +30,7 @@ const request = async ({ url, method, body, headers = {} }: RequestProps) => {
 };
 
 const handleError = async (response: Response, { url, method, body, headers = {} }: RequestProps) => {
-  const responseString = await response.text();
+  const responseString = await response.clone().text();
   const errorMessage = JSON.parse(responseString).message;
 
   if (response.status === 401 && errorMessage === API_ERROR_MESSAGE.REISSUE_TOKEN_NEED) {

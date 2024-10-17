@@ -1,5 +1,5 @@
 export type Nullable<T> = {
-  [P in keyof T]?: T[P] | null;
+  [P in keyof T]: T[P] | null;
 };
 
 export type AllString<T> = {

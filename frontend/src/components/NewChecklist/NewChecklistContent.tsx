@@ -6,8 +6,10 @@ import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import NewChecklistInfoTemplate from '@/components/NewChecklist/NewChecklistInfoTemplate';
 import NewChecklistTemplate from '@/components/NewChecklist/NewChecklistTemplate';
 import OptionChecklistTemplate from '@/components/NewChecklist/Option/OptionChecklistTemplate';
+import useInitialChecklist from '@/hooks/useInitialChecklist';
 
 const NewChecklistContent = () => {
+  useInitialChecklist();
   const { currentTabId } = useTabContext();
 
   return (

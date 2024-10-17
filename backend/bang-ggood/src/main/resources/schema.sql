@@ -1,4 +1,5 @@
 -- Drop tables if they exist
+DROP TABLE IF EXISTS checklist CASCADE;
 DROP TABLE IF EXISTS checklist_option CASCADE;
 DROP TABLE IF EXISTS checklist_question CASCADE;
 DROP TABLE IF EXISTS checklist_maintenance CASCADE;

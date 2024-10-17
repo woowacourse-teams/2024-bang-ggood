@@ -12,7 +12,6 @@ import { ChecklistQuestion } from '@/types/checklist';
 const ChecklistQuestionTemplate = () => {
   useInitialChecklist(); // 체크리스트 질문 가져오기 + 형태 변환
   useChecklistStore(store => store.checklistCategoryQnA);
-
   const { currentTabId } = useTabContext();
   const checklistActions = useChecklistStore(store => store.actions);
   const questions = checklistActions.getCategory(currentTabId);

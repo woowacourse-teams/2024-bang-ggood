@@ -36,3 +36,11 @@ export const postReissueAccessToken = async () => {
     headers: { 'Content-Type': 'application/json' },
   });
 };
+
+export const postSignUp = async () => {
+  return await fetch(`${BASE_URL}${ENDPOINT.REGISTER}`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+  });
+};

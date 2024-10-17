@@ -54,10 +54,10 @@ const useValidateInput = ({ initialValue, validates }: Props) => {
   };
 
   useEffect(() => {
-    if (errors.size !== 0) {
-      setIsValidated(true);
-    } else {
+    if (errors.size !== 0 || !value.length) {
       setIsValidated(false);
+    } else {
+      setIsValidated(true);
     }
   }, [errors, value]);
 

@@ -1,31 +1,19 @@
 import styled from '@emotion/styled';
 
+import { postSignUp } from '@/apis/user';
 import { BangBangIcon, BangGgoodTextIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
 import useValidateInput from '@/hooks/useValidateInput';
 import { flexCenter, title3 } from '@/styles/common';
+import { validateEmail, validateLength, validatePassword, validatePasswordConfirm } from '@/utils/validate';
 
 const AuthPage = () => {
-  const validateEmail = (value: string) => {
-    const regex = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!regex.test(value)) {
-      return { errorType: '이메일 형식이 맞지 않습니다.', isValid: false };
-    }
-    return { errorType: '이메일 형식이 맞지 않습니다.', isValid: true };
-  };
-
-  const validateLength = (value: string, minLength: number, maxLength: number) => {
-    if (value.length < minLength || value.length > maxLength) {
-      return { errorType: '이름은 2~20자 이내로 입력해 주세요.', isValid: false };
-    }
-    return { errorType: '이름은 2~20자 이내로 입력해 주세요.', isValid: true };
-  };
-
   const {
     value: email,
     errors: emailErrors,
     onChange: onChangeEmail,
+    isValidated: isEmailValidated,
   } = useValidateInput({
     initialValue: '',
     validates: [validateEmail],
@@ -35,10 +23,39 @@ const AuthPage = () => {
     value: name,
     errors: nameErrors,
     onChange: onChangeName,
+    isValidated: isNameValidated,
   } = useValidateInput({
     initialValue: '',
     validates: [(value: string) => validateLength(value, 2, 20)],
   });
+
+  const {
+    value: password,
+    errors: passwordErrors,
+    onChange: onChangePassword,
+    isValidated: isPasswordValidated,
+  } = useValidateInput({
+    initialValue: '',
+    validates: [validatePassword],
+  });
+
+  const {
+    value: passwordConfirm,
+    errors: passwordConfirmErrors,
+    onChange: onChangePasswordConfirm,
+    isValidated: isPasswordConfirmValidated,
+  } = useValidateInput({
+    initialValue: '',
+    validates: [(value: string) => validatePasswordConfirm(value, password)],
+  });
+
+  const disabled = !isEmailValidated || !isNameValidated || !isPasswordValidated || !isPasswordConfirmValidated;
+
+  const handleSubmit = async () => {
+    const response = await postSignUp();
+    if (response.status === 201) {
+    }
+  };
 
   return (
     <>
@@ -69,15 +86,30 @@ const AuthPage = () => {
           </FormField>
           <FormField>
             <FormField.Label label="비밀번호" />
-            <FormField.Input />
-            <FormField.ErrorMessage />
+            <FormField.Input
+              value={password}
+              name="password"
+              onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChangePassword(e)}
+            />
+            <FormField.ErrorMessage value={Array.from(passwordErrors)[0]} />
           </FormField>
           <FormField>
             <FormField.Label label="비밀번호 확인" />
-            <FormField.Input />
-            <FormField.ErrorMessage />
+            <FormField.Input
+              value={passwordConfirm}
+              name="passwordConfirm"
+              onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChangePasswordConfirm(e)}
+            />
+            <FormField.ErrorMessage value={Array.from(passwordConfirmErrors)[0]} />
           </FormField>
-          <Button label="회원가입" size="full" isSquare={true} color={'dark'} />
+          <Button
+            label="회원가입"
+            size="full"
+            isSquare={true}
+            color={'dark'}
+            onClick={handleSubmit}
+            disabled={disabled}
+          />
         </S.Box>
       </S.Wrapper>
     </>

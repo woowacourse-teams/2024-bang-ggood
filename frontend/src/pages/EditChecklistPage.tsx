@@ -1,14 +1,14 @@
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
+import ChecklistTabFallback from '@/components/_common/errorBoundary/ChecklistTabFallback';
 import Header from '@/components/_common/Header/Header';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
+import EditChecklistTab from '@/components/EditChecklist/ChecklistTab/EditChecklistTab';
 import ChecklistContent from '@/components/NewChecklist/ChecklistContent';
-import ChecklistTab from '@/components/NewChecklist/ChecklistTab/ChecklistTab';
-import ChecklistTabFallback from '@/components/NewChecklist/ChecklistTab/ChecklistTabFallback';
 import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
 import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
@@ -32,7 +32,7 @@ const EditChecklistPage = () => {
   const { checklistId } = useParams() as RouteParams;
   const { data: checklist, isSuccess } = useGetChecklistDetailQuery(checklistId);
 
-  const checklistActions = useChecklistStore(state => state.actions);
+  const checklistQuestionActions = useChecklistStore(state => state.actions);
 
   const { searchSubwayStationsByAddress } = useRoomInfoNonValidated();
   const roomInfoActions = useStore(roomInfoStore, state => state.actions);
@@ -50,7 +50,7 @@ const EditChecklistPage = () => {
   const resetAndGoDetailPage = () => {
     roomInfoActions.reset();
     roomInfoUnvalidatedActions.resetAll();
-    checklistActions.reset();
+    checklistQuestionActions.reset();
     selectedOptionActions.reset();
     navigate(ROUTE_PATH.checklistOne(Number(checklistId)));
   };
@@ -67,7 +67,7 @@ const EditChecklistPage = () => {
       loadExternalScriptWithCallback('kakaoMap', () => searchSubwayStationsByAddress(checklist.room.address!));
 
       selectedOptionActions.set(checklist.options.map(option => option.optionId));
-      checklistActions.set(checklist.categories);
+      checklistQuestionActions.set(checklist.categories);
     };
 
     setChecklistDataToStore();
@@ -82,7 +82,9 @@ const EditChecklistPage = () => {
       />
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
         <ErrorBoundary fallback={<ChecklistTabFallback />}>
-          <ChecklistTab />
+          <Suspense>
+            <EditChecklistTab checklistId={checklistId} />
+          </Suspense>
         </ErrorBoundary>
         <ChecklistContent />
       </TabProvider>

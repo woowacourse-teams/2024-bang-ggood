@@ -1,15 +1,16 @@
+import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
+import ChecklistTabFallback from '@/components/_common/errorBoundary/ChecklistTabFallback';
 import Header from '@/components/_common/Header/Header';
 import AlertModal from '@/components/_common/Modal/AlertModal/AlertModal';
 import LoginModal from '@/components/_common/Modal/LoginModal/LoginModal';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import ChecklistContent from '@/components/NewChecklist/ChecklistContent';
-import ChecklistTab from '@/components/NewChecklist/ChecklistTab/ChecklistTab';
-import ChecklistTabFallback from '@/components/NewChecklist/ChecklistTab/ChecklistTabFallback';
+import NewChecklistTab from '@/components/NewChecklist/ChecklistTab/NewChecklistTab';
 import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
 import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
@@ -34,8 +35,11 @@ const NewChecklistPage = () => {
 
   // 메모 모달
   const { isModalOpen: isMemoModalOpen, openModal: openMemoModal, closeModal: closeMemoModal } = useModal();
+  // 한줄평 모달
   const { isModalOpen: isSubmitModalOpen, openModal: openSummaryModal, closeModal: closeSummaryModal } = useModal();
+  // 뒤로가기 시 휘발 경고 모달
   const { isModalOpen: isAlertModalOpen, openModal: openAlertModal, closeModal: closeAlertModal } = useModal();
+  // 로그인 요청 모달
   const { isModalOpen: isLoginModalOpen, openModal: openLoginModal, closeModal: closeLoginModal } = useModal();
 
   const resetChecklist = () => {
@@ -56,7 +60,9 @@ const NewChecklistPage = () => {
       />
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
         <ErrorBoundary fallback={<ChecklistTabFallback />}>
-          <ChecklistTab />
+          <Suspense>
+            <NewChecklistTab />
+          </Suspense>
         </ErrorBoundary>
         <ChecklistContent />
       </TabProvider>
@@ -87,7 +93,6 @@ const NewChecklistPage = () => {
         onClose={closeAlertModal}
         handleApprove={() => {
           resetChecklist();
-          navigate(ROUTE_PATH.articleList);
         }}
         approveButtonName="나가기"
       />

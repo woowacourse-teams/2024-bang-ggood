@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
+import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallback';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
-import ChecklistQuestionTemplate from '@/components/NewChecklist/ChecklistQuestionTemplate';
+import ChecklistQuestionTemplate from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestionTemplate';
+import RoomInfoTemplate from '@/components/NewChecklist/NewRoomInfoForm/RoomInfoTemplate';
 import OptionTemplate from '@/components/NewChecklist/Option/OptionTemplate';
-import RoomInfoTemplate from '@/components/NewChecklist/RoomInfoTemplate';
 
 const ChecklistContent = () => {
   const { currentTabId } = useTabContext();
@@ -19,7 +20,9 @@ const ChecklistContent = () => {
       {/* 체크리스트 템플릿 */}
       {currentTabId > 0 && (
         <ErrorBoundary FallbackComponent={ListErrorFallback}>
-          <ChecklistQuestionTemplate />
+          <Suspense>
+            <ChecklistQuestionTemplate />
+          </Suspense>
         </ErrorBoundary>
       )}
     </S.Container>

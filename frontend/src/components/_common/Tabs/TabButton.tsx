@@ -4,26 +4,24 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 import { flexCenter, title3 } from '@/styles/common';
+import { Tab } from '@/types/tab';
 
-interface Props {
-  id: number;
+interface Props extends Tab {
   onMoveTab: (id: number) => void;
-  name: string;
   active: boolean;
-  hasIndicator: boolean | null;
-  className?: string;
+  isCompleted?: boolean;
 }
 
-const Tab = ({ id, onMoveTab, name, active, hasIndicator, className }: Props) => {
+const TabButton = ({ id, onMoveTab, name, active, className, isCompleted }: Props) => {
   return (
     <S.Container key={id} onClick={() => onMoveTab(id)} active={active}>
       <S.TextBox className={className && `sprite-icon ${className}`}>{name}</S.TextBox>
-      {hasIndicator && hasIndicator !== null && <S.UncompletedIndicator />}
+      {isCompleted === false && <S.UncompletedIndicator />}
     </S.Container>
   );
 };
 
-export default React.memo(Tab);
+export default React.memo(TabButton);
 
 const S = {
   Container: styled.div<{ active: boolean }>`

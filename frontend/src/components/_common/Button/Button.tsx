@@ -45,6 +45,7 @@ const Button = ({
       {...rest}
       disabled={disabled}
       aria-label={label}
+      tabIndex={1}
     >
       <FlexBox.Horizontal>
         {Icon && <Icon aria-hidden="true" />}

@@ -8,7 +8,7 @@ const KakaoLoginButton = () => {
   const { moveToKakao } = useLogin();
 
   return (
-    <S.KakaoLoginButton onClick={moveToKakao}>
+    <S.KakaoLoginButton onClick={moveToKakao} tabIndex={1}>
       <KakaoLogo aria-hidden="true" />
       <S.Text>카카오톡으로 시작하기</S.Text>
     </S.KakaoLoginButton>

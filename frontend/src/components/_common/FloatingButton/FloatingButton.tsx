@@ -26,7 +26,7 @@ const FloatingButton = ({
 }: Props) => {
   return (
     <S.Wrapper>
-      <S.Button size={size} color={color} aria-label={ariaLabel} onClick={onClick} {...rest}>
+      <S.Button size={size} color={color} aria-label={ariaLabel} onClick={onClick} {...rest} tabIndex={1}>
         {children}
       </S.Button>
     </S.Wrapper>

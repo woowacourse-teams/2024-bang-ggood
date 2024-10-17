@@ -12,7 +12,7 @@ interface Props extends Tab {
   isCompleted?: boolean;
 }
 
-const Tab = ({ id, onMoveTab, name, active, className, isCompleted }: Props) => {
+const TabButton = ({ id, onMoveTab, name, active, className, isCompleted }: Props) => {
   return (
     <S.Container key={id} onClick={() => onMoveTab(id)} active={active}>
       <S.TextBox className={className && `sprite-icon ${className}`}>{name}</S.TextBox>
@@ -21,7 +21,7 @@ const Tab = ({ id, onMoveTab, name, active, className, isCompleted }: Props) => 
   );
 };
 
-export default React.memo(Tab);
+export default React.memo(TabButton);
 
 const S = {
   Container: styled.div<{ active: boolean }>`

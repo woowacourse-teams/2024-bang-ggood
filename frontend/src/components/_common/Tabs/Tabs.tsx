@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useCallback } from 'react';
 
-import TabButton from '@/components/_common/Tabs/Tab';
+import TabButton from '@/components/_common/Tabs/TabButton';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import { Tab, TabWithCompletion } from '@/types/tab';
 

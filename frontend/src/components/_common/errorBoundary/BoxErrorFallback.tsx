@@ -3,9 +3,9 @@ import { useQueryClient } from '@tanstack/react-query';
 import { FallbackProps } from 'react-error-boundary';
 
 import { Retry } from '@/assets/assets';
-import { flexCenter, flexColumn, title4 } from '@/styles/common';
+import { flexCenter, flexColumn } from '@/styles/common';
 
-const ListErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
+const BoxErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
   const queryClient = useQueryClient();
 
   const handleRefresh = () => {
@@ -15,36 +15,35 @@ const ListErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
 
   return (
     <S.Container role="alert">
-      <S.Message>에러가 발생했습니다 :(</S.Message>
+      <S.Message aria-live="polite">에러가 발생했습니다 :(</S.Message>
       <S.Error>{error.message}</S.Error>
-      <S.RefreshButton onClick={handleRefresh}>
+      <S.RefreshButton onClick={handleRefresh} tabIndex={1}>
         다시 시도하기
-        <Retry width={20} />
+        <Retry width={15} />
       </S.RefreshButton>
     </S.Container>
   );
 };
 
-export default ListErrorFallback;
+export default BoxErrorFallback;
 
 const S = {
   Container: styled.div`
-    height: 50vh;
     ${flexColumn}
     ${flexCenter}
-    gap: 1.4rem;
+    gap: 1rem;
     padding: 2rem;
 
     border-radius: 8px;
   `,
   Message: styled.h2`
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
 
     color: ${({ theme }) => theme.palette.red500};
-    font-size: ${({ theme }) => theme.text.size.medium};
+    font-size: ${({ theme }) => theme.text.size.small};
   `,
   Error: styled.pre`
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 
     color: ${({ theme }) => theme.palette.grey600};
     white-space: pre-wrap;
@@ -53,17 +52,18 @@ const S = {
   RefreshButton: styled.button`
     ${flexCenter}
     gap: .5rem;
-    padding: 0.8rem 1.6rem;
+    padding: 0.6rem 1.2rem;
     border: none;
 
     background-color: ${({ theme }) => theme.palette.green500};
 
     color: ${({ theme }) => theme.palette.white};
-    ${title4}
+    font-size: ${({ theme }) => theme.text.size.small};
     border-radius: 4px;
     cursor: pointer;
 
-    &:hover {
+    &:hover,
+    &:active {
       background-color: ${({ theme }) => theme.palette.green600};
     }
   `,

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { TabWithCompletion } from '@/components/_common/Tabs/Tabs';
 import { findCategoryClassNameByName } from '@/constants/category';
+import useGetChecklistQuestionQuery from '@/hooks/query/useGetChecklistQuestionQuery';
 import useChecklistStore from '@/store/useChecklistStore';
 
 /**
@@ -9,7 +10,12 @@ import useChecklistStore from '@/store/useChecklistStore';
  * isCategoryQuestionAllCompleted : 해당 카테고리의 답변이 다 채워졌는지를 알려줍니다.
  */
 const useChecklistTabs = () => {
-  const categories = useChecklistStore(state => state.categories);
+  const { data: checklist } = useGetChecklistQuestionQuery();
+  const categories =
+    checklist?.map(category => ({
+      categoryId: category.categoryId,
+      categoryName: category.categoryName,
+    })) || [];
   const checklistCategoryQnA = useChecklistStore(state => state.checklistCategoryQnA);
   const actions = useChecklistStore(state => state.actions);
 

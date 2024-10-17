@@ -1,19 +1,20 @@
 import { useEffect } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
-import Tabs from '@/components/_common/Tabs/Tabs';
+import ChecklistContent from '@/components/NewChecklist/ChecklistContent';
+import ChecklistTab from '@/components/NewChecklist/ChecklistTab/ChecklistTab';
+import ChecklistTabFallback from '@/components/NewChecklist/ChecklistTab/ChecklistTabFallback';
 import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
 import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
-import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery';
-import useChecklistTabs from '@/hooks/useChecklistTabs';
 import useModal from '@/hooks/useModal';
 import useRoomInfoNonValidated from '@/hooks/useRoomInfoNonValidated';
 import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
@@ -31,7 +32,6 @@ const EditChecklistPage = () => {
   const { checklistId } = useParams() as RouteParams;
   const { data: checklist, isSuccess } = useGetChecklistDetailQuery(checklistId);
 
-  const { tabs } = useChecklistTabs();
   const checklistActions = useChecklistStore(state => state.actions);
 
   const { searchSubwayStationsByAddress } = useRoomInfoNonValidated();
@@ -81,10 +81,10 @@ const EditChecklistPage = () => {
         right={<Button label="저장" size="small" color="dark" onClick={summaryModalOpen} />}
       />
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
-        {/* 체크리스트 작성의 탭 */}
-        <Tabs tabList={tabs} />
-        {/*체크리스트 콘텐츠 섹션*/}
-        <NewChecklistContent />
+        <ErrorBoundary fallback={<ChecklistTabFallback />}>
+          <ChecklistTab />
+        </ErrorBoundary>
+        <ChecklistContent />
       </TabProvider>
 
       {/* 메모 모달 */}

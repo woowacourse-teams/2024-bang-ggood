@@ -29,7 +29,7 @@ export const useTabContext = () => {
   const context = useContext(TabContext);
 
   if (!context) {
-    throw new Error(ERROR_MESSAGE.USETABCONTEXT);
+    throw new Error(ERROR_MESSAGE.USE_TAB_CONTEXT);
   }
 
   return context;

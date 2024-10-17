@@ -66,13 +66,11 @@ const NewChecklistPage = () => {
         <Tabs tabList={tabs} />
         <NewChecklistContent />
       </TabProvider>
-
       {isMemoModalOpen ? (
         <MemoModal isModalOpen={isMemoModalOpen} modalClose={closeMemoModal} />
       ) : (
         <MemoButton onClick={openMemoModal} />
       )}
-
       <SubmitModalWithSummary
         isModalOpen={isSubmitModalOpen}
         modalClose={closeSummaryModal}
@@ -80,7 +78,6 @@ const NewChecklistPage = () => {
         onError={openLoginModal}
         mutateType="add"
       />
-
       <AlertModal
         title={
           <div>
@@ -94,7 +91,6 @@ const NewChecklistPage = () => {
         handleApprove={handleChecklistPage}
         approveButtonName="나가기"
       />
-
       <LoginModal isModalOpen={isLoginModalOpen} modalClose={closeLoginModal} />
     </>
   );

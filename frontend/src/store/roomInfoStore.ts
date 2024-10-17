@@ -43,7 +43,7 @@ export const initialRoomInfo = {
 };
 
 export type oneItem = { rawValue: string; errorMessage: string };
-export type RawValues = { [k in keyof RoomInfoStoreState]: { rawValue: NumberToString<RoomInfoStoreState[k]> } };
+export type RawValues = { [k in keyof RoomInfoStoreState]: NumberToString<RoomInfoStoreState[k]> };
 export type RoomInfoState = {
   [k in keyof RoomInfoStoreState]: { rawValue: NumberToString<RoomInfoStoreState[k]>; errorMessage: string };
 };
@@ -72,7 +72,7 @@ export const roomInfoStore = createStore<RoomInfoState & { actions: RoomInfoActi
           return state;
         },
         setRawValues: (rawValues: Partial<RoomInfo>) => {
-          set({ ...objectMap(rawValues, ([key, value]) => [key, value.rawValue]) });
+          set({ ...objectMap(rawValues, ([key, value]) => [key, { rawValue: value, errorMessage: '' }]) });
         },
         getRawValues: () => {
           const state = { ...get().actions.get() };
@@ -80,7 +80,10 @@ export const roomInfoStore = createStore<RoomInfoState & { actions: RoomInfoActi
         },
         getParsedValues: () => {
           const state = { ...get().actions.getRawValues() };
-          return objectMap(state, ([key, value]) => [key, parseRoomInfo(key as keyof RoomInfo, value)]) as RoomInfo;
+          return objectMap(state, ([key, value]) => [
+            key,
+            typeof value === 'string' ? parseRoomInfo(key as keyof RoomInfo, value) : value,
+          ]) as RoomInfo;
         },
         reset: () => set({ ...initialRoomInfo }),
       },
@@ -95,9 +98,9 @@ export const roomInfoStore = createStore<RoomInfoState & { actions: RoomInfoActi
   ),
 );
 
-export const roomInfoApiMapper = (values: RoomInfo | Nullable<RoomInfo>) => {
+export const roomInfoApiMapper = (values: Partial<RoomInfoStoreState>) => {
   const result = { ...values, structure: values.structure === '' ? undefined : '' };
-  return mapObjUndefinedToNull(result) as Nullable<RoomInfo>;
+  return mapObjUndefinedToNull(result) as Nullable<Partial<RoomInfoStoreState>>;
 };
 
 export default roomInfoStore;

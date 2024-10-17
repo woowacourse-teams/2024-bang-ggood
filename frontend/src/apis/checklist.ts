@@ -29,17 +29,17 @@ export const getChecklists = async () => {
 };
 
 export const postChecklist = async (checklist: ChecklistPostForm) => {
-  checklist.room = roomInfoApiMapper(checklist.room);
+  const room = roomInfoApiMapper(checklist.room);
   const response = await fetcher.post({
     url: BASE_URL + ENDPOINT.CHECKLISTS_V1,
-    body: { ...checklist, room: checklist.room },
+    body: { ...checklist, room },
   });
   return response;
 };
 
 export const putChecklist = async (id: number, checklist: ChecklistPostForm) => {
-  checklist.room = roomInfoApiMapper(checklist.room);
-  const response = await fetcher.put({ url: BASE_URL + ENDPOINT.CHECKLIST_ID(id), body: checklist });
+  const room = roomInfoApiMapper(checklist.room);
+  const response = await fetcher.put({ url: BASE_URL + ENDPOINT.CHECKLIST_ID(id), body: { ...checklist, room } });
   return response;
 };
 

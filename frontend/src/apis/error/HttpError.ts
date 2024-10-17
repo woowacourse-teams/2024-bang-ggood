@@ -1,4 +1,4 @@
-import { HTTP_ERROR_MESSAGE, HTTP_STATUS_CODE } from '@/constants/httpErrorMessage';
+import { HTTP_ERROR_MESSAGE, HTTP_STATUS_CODE } from '@/constants/message/httpErrorMessage';
 
 class HTTPError extends Error {
   statusCode: number;

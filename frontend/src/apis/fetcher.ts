@@ -1,7 +1,7 @@
 import { API_ERROR_MESSAGE } from '@/apis/error/ErrorMessage';
 import HTTPError from '@/apis/error/HttpError';
 import { deleteToken, postReissueAccessToken } from '@/apis/user';
-import { HTTP_STATUS_CODE } from '@/constants/httpErrorMessage';
+import { HTTP_STATUS_CODE } from '@/constants/message/httpErrorMessage';
 import { ROUTE_PATH } from '@/constants/routePath';
 
 let reissueAccessToken = false;

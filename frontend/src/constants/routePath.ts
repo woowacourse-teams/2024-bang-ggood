@@ -1,6 +1,8 @@
 export const ROUTE_PATH = {
   root: '/',
   home: '/home',
+  signIn: '/sign-in',
+  signUp: '/sign-up',
   /*checklist */
   checklistList: '/checklist',
   checklistNew: '/checklist/new',
@@ -18,6 +20,4 @@ export const ROUTE_PATH = {
   /* etc */
   location: '/location',
   myPage: '/my-page',
-  /* kakao login path */
-  login: '/login',
 };

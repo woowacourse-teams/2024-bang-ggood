@@ -67,7 +67,8 @@ jobs:
           name: bang-ggood-be-develop-jar
 
       - name: Create unhealth_flag file
-        run: sudo echo "unhealth" > /etc/nginx/sites-available/unhealth_flag.txt
+        run: echo "unhealth" | sudo tee /etc/nginx/sites-available/unhealth_flag.txt > /dev/null
+
 
       - name: Sleep for 30 seconds
         run: sleep 30

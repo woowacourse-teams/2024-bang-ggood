@@ -69,5 +69,8 @@ jobs:
       - name: Turn off the server 8080 if runs
         run: sudo fuser -k -n tcp 8080 || true
 
+      - name: Create unhealth_flag file
+        run: echo "unhealth" > unhealth_flag.txt
+        
       - name: Start server
         run: sudo nohup java -jar -Dspring.profiles.active=dev -Duser.timezone=Asia/Seoul ./backend/bang-ggood/build/libs/*SNAPSHOT.jar > /home/ubuntu/actions-runner/server.log 2>&1 &

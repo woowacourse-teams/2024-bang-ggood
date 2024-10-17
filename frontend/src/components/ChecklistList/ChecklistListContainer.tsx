@@ -15,11 +15,9 @@ const ChecklistListContainer = () => {
   return (
     <S.ListBox>
       {checklistList?.length ? (
-        <>
-          {checklistList?.map((checklist: ChecklistPreview) => (
-            <ChecklistCard key={checklist.checklistId} checklist={checklist} />
-          ))}
-        </>
+        checklistList?.map((checklist: ChecklistPreview) => (
+          <ChecklistCard key={checklist.checklistId} checklist={checklist} />
+        ))
       ) : (
         <NoChecklistTemplate />
       )}

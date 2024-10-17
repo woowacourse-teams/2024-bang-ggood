@@ -6,6 +6,7 @@ import { PlusBlack } from '@/assets/assets';
 import Like from '@/assets/icons/like/Like';
 import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallback';
 import TitleErrorFallback from '@/components/_common/errorBoundary/TitleErrorFallback';
+import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FloatingButton from '@/components/_common/FloatingButton/FloatingButton';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
@@ -30,11 +31,13 @@ const ChecklistListPage = () => {
       <Header center={<Header.Text>체크리스트</Header.Text>} />
       <Layout bgColor={theme.palette.background} withFooter withHeader>
         <ErrorBoundary fallback={<TitleErrorFallback title="방 둘러볼 때 꼭 필요한 체크리스트" />}>
-          <ChecklistListTitle />
-          <S.LikeFilterBox onClick={toggle} $isChecked={isEnabled}>
-            <Like fill={theme.palette.red500} stroke={theme.palette.red500} width="2rem" />
-            좋아요
-          </S.LikeFilterBox>
+          <FlexBox.Horizontal justify="space-between">
+            <ChecklistListTitle />
+            <S.LikeFilterBox onClick={toggle} $isChecked={isEnabled}>
+              <Like fill={theme.palette.red500} stroke={theme.palette.red500} width="2rem" />
+              좋아요
+            </S.LikeFilterBox>
+          </FlexBox.Horizontal>
         </ErrorBoundary>
         <S.FlexBox>
           <CustomBanner onClick={handleClickMoveCustomPage} />

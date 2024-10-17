@@ -30,7 +30,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const mockTabsWithCompletion = newChecklistTabs.map(tab => ({ ...tab, isCompleted: true }));
+const mockTabsWithCompletion = newChecklistTabs.map(tab => ({ ...tab, isCompleted: false }));
 
 export const Default: Story = {
   args: {

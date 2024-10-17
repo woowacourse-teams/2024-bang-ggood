@@ -50,6 +50,7 @@ const handleError = async (response: Response, { url, method, body, headers = {}
       window.location.href = ROUTE_PATH.root;
     }
   }
+  throw new HTTPError(response.status, errorMessage);
 };
 
 const fetchRequest = async ({ url, method, body, headers = {} }: RequestProps & { signal?: AbortSignal }) => {

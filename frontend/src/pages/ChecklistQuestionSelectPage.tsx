@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
 
@@ -60,12 +60,16 @@ const ChecklistQuestionSelectPage = () => {
       />
       <TabProvider defaultTab={1}>
         {/* 질문 카테고리 탭 */}
-        <ChecklistQuestionSelectTabs />
+        <ErrorBoundary fallback={<div style={{ height: '5.4rem' }} />}>
+          <ChecklistQuestionSelectTabs />
+        </ErrorBoundary>
         {/* 질문 콘텐츠 섹션*/}
         <Layout bgColor={theme.palette.background} withHeader withTab>
           <TipBox tipType={'CUSTOM_QUESTION'} />
           <ErrorBoundary FallbackComponent={ListErrorFallback}>
-            <QuestionListTemplate />
+            <Suspense>
+              <QuestionListTemplate />
+            </Suspense>
           </ErrorBoundary>
         </Layout>
       </TabProvider>

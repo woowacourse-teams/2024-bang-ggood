@@ -57,7 +57,7 @@ export const useAccordionContext = () => {
   const context = useContext(AccordionContext);
 
   if (!context) {
-    throw new Error(ERROR_MESSAGE.USEACCORDIONCONTEXT);
+    throw new Error(ERROR_MESSAGE.USE_ACCORDION_CONTEXT);
   }
   return context;
 };

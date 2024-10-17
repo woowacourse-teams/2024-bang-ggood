@@ -54,6 +54,10 @@ import ToastConfirm from '@/assets/icons/toast/toast-confirm.svg';
 import ToastError from '@/assets/icons/toast/toast-error.svg';
 import ToastInfo from '@/assets/icons/toast/toast-info.svg';
 
+// error
+import Error404 from '@/assets/icons/error/404.svg';
+import Error500 from '@/assets/icons/error/500.svg';
+
 export {
   ArrowBack,
   ArrowDownSmall,
@@ -68,6 +72,8 @@ export {
   CheckIcon,
   CloseIcon,
   DropdownMark,
+  Error404,
+  Error500,
   InputRequiredDot,
   KakaoLogo,
   LampIcon,

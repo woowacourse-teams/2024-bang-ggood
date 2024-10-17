@@ -7,7 +7,7 @@ import { OptionList } from '@/components/NewChecklist/Option/OptionList';
 import { flexCenter, flexColumn, flexRow, flexSpaceBetween, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
 
-const OptionChecklistTemplate = () => {
+const OptionTemplate = () => {
   return (
     <Layout bgColor={theme.palette.background} withHeader withTab>
       <TipBox tipType={'OPTION'} />
@@ -21,7 +21,7 @@ const OptionChecklistTemplate = () => {
   );
 };
 
-export default OptionChecklistTemplate;
+export default OptionTemplate;
 
 const S = {
   InnerBox: styled.div`

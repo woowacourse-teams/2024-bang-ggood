@@ -67,7 +67,7 @@ jobs:
           name: bang-ggood-be-develop-jar
 
       - name: Create unhealth_flag file
-        run: echo "unhealth" > /etc/nginx/sites-available/unhealth_flag.txt
+        run: sudo echo "unhealth" > /etc/nginx/sites-available/unhealth_flag.txt
 
       - name: Sleep for 30 seconds
         run: sleep 30
@@ -79,4 +79,4 @@ jobs:
         run: sudo nohup java -jar -Dspring.profiles.active=dev -Duser.timezone=Asia/Seoul ./backend/bang-ggood/build/libs/*SNAPSHOT.jar > /home/ubuntu/actions-runner/server.log 2>&1 &
 
       - name: Delete unhealth_flag file
-        run: rm /etc/nginx/sites-available/unhealth_flag.txt
+        run: sudo rm /etc/nginx/sites-available/unhealth_flag.txt

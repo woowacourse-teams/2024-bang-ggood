@@ -41,19 +41,21 @@ export const checklistHandlers = [
     return HttpResponse.json(checklistAllQuestions, { status: 200 });
   }),
 
-  http.post(BASE_URL + ENDPOINT.LIKE(1), () => {
-    const id = 1;
+  http.post<{ id: string }>(BASE_URL + ENDPOINT.LIKE(':id'), ({ params }) => {
+    const id = Number(params.id);
     addLike(id);
     return HttpResponse.json(null, { status: 200 });
   }),
 
-  http.delete(BASE_URL + ENDPOINT.LIKE(1), () => {
-    removeLike(1);
+  http.delete<{ id: string }>(BASE_URL + ENDPOINT.LIKE(':id'), ({ params }) => {
+    const id = Number(params.id);
+    removeLike(id);
     return HttpResponse.json(null, { status: 200 });
   }),
 
-  http.get(BASE_URL + ENDPOINT.LIKE(1), () => {
-    return HttpResponse.json(checklist.get(1), { status: 200 });
+  http.get<{ id: string }>(BASE_URL + ENDPOINT.LIKE(':id'), ({ params }) => {
+    const id = Number(params.id);
+    return HttpResponse.json(checklist.get(id), { status: 200 });
   }),
 
   http.put(BASE_URL + ENDPOINT.CHECKLIST_CUSTOM, () => {

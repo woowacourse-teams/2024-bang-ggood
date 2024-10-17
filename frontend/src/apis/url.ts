@@ -14,7 +14,7 @@ export const ENDPOINT = {
   CHECKLIST_ID: (id: number) => `/checklists/${id}`,
   CHECKLIST_ID_V1: (id: number) => `/v1/checklists/${id}`,
   // like
-  LIKE: (id: number) => `/checklists/${id}/like`,
+  LIKE: (id: number | ':id') => `/checklists/${id}/like`,
   // category
   CATEGORY: '/categories',
   CATEGORY_ADD: '/categories/priority',

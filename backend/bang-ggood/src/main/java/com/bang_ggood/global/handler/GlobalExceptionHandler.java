@@ -8,6 +8,7 @@ import com.bang_ggood.global.exception.dto.OauthExceptionResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -44,11 +45,17 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionResponse> handleMethodArgumentNotValidException(
             MethodArgumentNotValidException exception,
             HttpServletRequest request) {
+        FieldError fieldError = exception.getFieldError();
+        String errorMessage = ExceptionCode.INVALID_PARAMETER.getMessage(); // TODO 리팩터링 필요
+        if (fieldError != null) {
+            errorMessage = fieldError.getDefaultMessage();
+        }
+
         ExceptionResponse response = new ExceptionResponse(
                 request.getMethod(),
                 request.getRequestURI(),
                 ExceptionCode.INVALID_PARAMETER.getClientExceptionCode().name(),
-                exception.getMessage());
+                errorMessage);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(response);
     }

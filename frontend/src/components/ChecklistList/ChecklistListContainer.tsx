@@ -3,12 +3,12 @@ import styled from '@emotion/styled';
 import ChecklistCard from '@/components/ChecklistList/ChecklistCard';
 import NoChecklistTemplate from '@/components/ChecklistList/NoChecklistTemplate';
 import SkChecklistList from '@/components/skeleton/ChecklistList/SkChecklistLst';
-import useGetChecklistListQuery from '@/hooks/query/useGetChecklistListQuery';
+import useGetChecklistList from '@/hooks/useGetChecklistList';
 import { flexColumn } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
 
 const ChecklistListContainer = () => {
-  const { data: checklistList, isLoading } = useGetChecklistListQuery();
+  const { data: checklistList, isLoading } = useGetChecklistList();
 
   if (isLoading) return <SkChecklistList />;
 

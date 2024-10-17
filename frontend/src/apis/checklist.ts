@@ -22,7 +22,9 @@ export const getChecklistDetail = async (id: number) => {
 };
 
 export const getChecklists = async (isLikeFiltered: boolean = false) => {
-  const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLISTS + (isLikeFiltered ? '/like' : '') });
+  const response = await fetcher.get({
+    url: BASE_URL + (isLikeFiltered ? ENDPOINT.CHECKLISTS_LIKE : ENDPOINT.CHECKLISTS),
+  });
   const data = await response.json();
   return data.checklists.map(mapObjNullToUndefined);
 };

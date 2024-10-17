@@ -11,19 +11,20 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   left?: ReactNode;
   center?: ReactNode;
   right?: ReactNode;
+  isTransparent?: boolean;
 }
 
-const HeaderWrapper = ({ left, right, center, ...rest }: Props) => {
+const HeaderWrapper = ({ left, right, center, isTransparent = false, ...rest }: Props) => {
   return (
     <>
-      <S.Wrapper {...rest}>
+      <S.Wrapper {...rest} isTransparent={isTransparent}>
         <S.FlexBox>
           <S.Left>{left ? left : <div />}</S.Left>
           <S.Center>{center ? center : <div />}</S.Center>
           <S.Right>{right ? right : <div />}</S.Right>
         </S.FlexBox>
       </S.Wrapper>
-      <S.EmptyBox />
+      {!isTransparent && <S.EmptyBox />}
     </>
   );
 };
@@ -32,7 +33,7 @@ const S = {
   EmptyBox: styled.div`
     height: ${HEADER_SIZE}rem;
   `,
-  Wrapper: styled.header`
+  Wrapper: styled.header<{ isTransparent: boolean }>`
     display: flex;
     position: fixed;
     z-index: ${({ theme }) => theme.zIndex.HEADER};
@@ -41,6 +42,7 @@ const S = {
     padding: 2rem 1.6rem 1.2rem;
 
     background-color: ${({ theme }) => theme.palette.white};
+    opacity: ${({ isTransparent }) => isTransparent && 0.3};
     max-width: 60rem;
     align-items: center;
     box-sizing: border-box;

@@ -3,6 +3,7 @@ export const article = {
   keyword: '아파트 임대',
   title: '완벽한 아파트 찾는 팁',
   summary: '첫 임대자를 위한 아파트 찾기 필수 팁',
+  thumbnail: 'https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/168217562696278839.jpeg',
   content: `
 **첫 임대자를 위한 아파트 찾기 필수 팁**
 

@@ -54,9 +54,9 @@ const S = {
     position: relative;
   `,
   DropDownHeader: styled.div`
-    cursor: pointer;
     width: 12.5rem;
     height: 100%;
+    cursor: pointer;
   `,
   SelectedOption: styled.label`
     ${flexSpaceBetween}
@@ -70,6 +70,7 @@ const S = {
     box-sizing: border-box;
     border-radius: 0.4rem;
     column-gap: 0.4rem;
+    cursor: pointer;
   `,
   OptionList: styled.ul`
     position: absolute;
@@ -99,7 +100,7 @@ const S = {
 
     &:hover,
     &:active {
-      background-color: ${theme.palette.grey400};
+      background-color: ${theme.palette.grey200};
     }
   `,
 };

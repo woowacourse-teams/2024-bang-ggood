@@ -1,34 +1,28 @@
-import homeImgUrl from '../../public/image/home.png';
-import outdoorImgUrl from '../../public/image/outdoor.png';
-import securityImgUrl from '../../public/image/security.png';
-import toiletImgUrl from '../../public/image/toilet.png';
-import windowImgUrl from '../../public/image/window.png';
-
 export const CATEGORY_COUNT = 7;
 
 export const CATEGORY_WITH_EMOJI = [
   {
     name: '방 컨디션',
-    imgUrl: homeImgUrl,
+    className: 'sprite-home',
   },
   {
     name: '창문',
-    imgUrl: windowImgUrl,
+    className: 'sprite-window',
   },
   {
     name: '화장실',
-    imgUrl: toiletImgUrl,
+    className: 'sprite-toilet',
   },
   {
     name: '보안',
-    imgUrl: securityImgUrl,
+    className: 'sprite-security',
   },
   {
     name: '외부',
-    imgUrl: outdoorImgUrl,
+    className: 'sprite-outdoor',
   },
 ];
 
-export const findCategoryEmojiByName = (targetName: string) => {
-  return CATEGORY_WITH_EMOJI.find(e => e.name === targetName)?.imgUrl;
+export const findCategoryClassNameByName = (targetName: string) => {
+  return CATEGORY_WITH_EMOJI.find(e => e.name === targetName)?.className;
 };

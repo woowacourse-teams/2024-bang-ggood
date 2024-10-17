@@ -17,7 +17,7 @@ const NoChecklistTemplate = () => {
         <div>체크리스트가 아직 없어요!</div>
         <div>첫 체크리스트를 작성하러 가볼까요?</div>
       </S.TextBox>
-      <Button label="새 체크리스트 만들기" onClick={handleMoveNewChecklist} size="small" />
+      <Button color="dark" label="새 체크리스트 만들기" onClick={handleMoveNewChecklist} size="small" />
     </S.Container>
   );
 };

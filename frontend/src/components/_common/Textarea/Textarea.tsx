@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { ChangeEvent, useCallback } from 'react';
+import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
 
 import { flexCenter } from '@/styles/common';
 
@@ -38,17 +38,29 @@ const Textarea = ({
   hasBorder = false,
   ...rest
 }: Props) => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
   const handleChange = useCallback(
     (event: TextareaChangeEvent) => {
       if (!onChange) return;
+
       onChange(event);
     },
     [onChange],
   );
 
+  useEffect(() => {
+    if (textareaRef.current) {
+      const length = textareaRef.current.value.length;
+      textareaRef.current.focus();
+      textareaRef.current.setSelectionRange(length, length);
+    }
+  }, []);
+
   return (
     <S.Box hasBorder={hasBorder}>
       <S.Textarea
+        ref={textareaRef}
         width={widthSize[width]}
         height={heightSize[height]}
         {...rest}

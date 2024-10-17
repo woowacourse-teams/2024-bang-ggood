@@ -1,24 +1,32 @@
-import { createBrowserRouter } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 import FooterLayout from '@/components/_common/layout/FooterLayout';
 import { ROUTE_PATH } from '@/constants/routePath';
-import ArticleDetailPage from '@/pages/ArticleDetailPage';
-import ArticleListPage from '@/pages/ArticleListPage';
-import ChecklistCustomPage from '@/pages/ChecklistCustomPage';
-import ChecklistDetailPage from '@/pages/ChecklistDetailPage';
-import ChecklistListPage from '@/pages/ChecklistListPage';
-import EditChecklistPage from '@/pages/EditChecklistPage';
-import ErrorPage from '@/pages/ErrorPage';
-import LandingPage from '@/pages/LandingPage';
-import MainPage from '@/pages/MainPage';
-import MyPage from '@/pages/MyPage';
-import NewChecklistPage from '@/pages/NewChecklistPage';
-import NotFound from '@/pages/NotFound';
-import AuthGuard from '@/routers/AuthGuard';
+import GoogleAnalytics from '@/routers/GoogleAnalytics';
+
+const MainPage = React.lazy(() => import('@/pages/MainPage'));
+const ChecklistListPage = React.lazy(() => import('@/pages/ChecklistListPage'));
+const ArticleListPage = React.lazy(() => import('@/pages/ArticleListPage'));
+const MyPage = React.lazy(() => import('@/pages/MyPage'));
+const NewChecklistPage = React.lazy(() => import('@/pages/NewChecklistPage'));
+const EditChecklistPage = React.lazy(() => import('@/pages/EditChecklistPage'));
+const ChecklistDetailPage = React.lazy(() => import('@/pages/ChecklistDetailPage'));
+const ChecklistCustomPage = React.lazy(() => import('@/pages/ChecklistCustomPage'));
+const ArticleDetailPage = React.lazy(() => import('@/pages/ArticleDetailPage'));
+const LandingPage = React.lazy(() => import('@/pages/LandingPage'));
+const LoginPage = React.lazy(() => import('@/pages/LoginPage'));
+const NotFound = React.lazy(() => import('@/pages/NotFound'));
+const ErrorPage = React.lazy(() => import('@/pages/ErrorPage'));
 
 const router = createBrowserRouter([
   {
-    element: <AuthGuard />,
+    element: (
+      <Suspense>
+        <GoogleAnalytics />
+        <Outlet />
+      </Suspense>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {
@@ -47,12 +55,12 @@ const router = createBrowserRouter([
         path: ROUTE_PATH.checklistNew,
       },
       {
-        element: <EditChecklistPage />,
-        path: ROUTE_PATH.checklistEdit,
-      },
-      {
         element: <ChecklistDetailPage />,
         path: ROUTE_PATH.checklistId,
+      },
+      {
+        element: <EditChecklistPage />,
+        path: ROUTE_PATH.checklistEdit,
       },
       {
         element: <ChecklistCustomPage />,
@@ -62,15 +70,19 @@ const router = createBrowserRouter([
         element: <ArticleDetailPage />,
         path: ROUTE_PATH.articleId,
       },
+      {
+        element: <LandingPage />,
+        path: ROUTE_PATH.root,
+      },
+      {
+        element: <LoginPage />,
+        path: ROUTE_PATH.login,
+      },
+      {
+        element: <NotFound />,
+        path: '*',
+      },
     ],
-  },
-  {
-    element: <LandingPage />,
-    path: ROUTE_PATH.root,
-  },
-  {
-    element: <NotFound />,
-    path: '*',
   },
 ]);
 

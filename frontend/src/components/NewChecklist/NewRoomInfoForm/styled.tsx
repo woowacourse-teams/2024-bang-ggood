@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import { Button } from 'storybook/internal/components';
 
+import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
 import RadioGroup from '@/components/_common/RadioGroup/RadioGroup';

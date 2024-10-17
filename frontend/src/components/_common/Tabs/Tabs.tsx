@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useCallback } from 'react';
 
 import Tab from '@/components/_common/Tabs/Tab';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
@@ -10,7 +11,7 @@ interface Props {
 export interface Tab {
   name: string;
   id: number;
-  imgUrl?: string;
+  className?: string;
 }
 
 export interface TabWithCompletion extends Tab {
@@ -20,21 +21,24 @@ export interface TabWithCompletion extends Tab {
 const Tabs = ({ tabList }: Props) => {
   const { currentTabId, setCurrentTabId } = useTabContext();
 
-  const onMoveTab = (tabId: number) => {
-    setCurrentTabId(tabId);
-  };
+  const onMoveTab = useCallback(
+    (tabId: number) => {
+      setCurrentTabId(tabId);
+    },
+    [setCurrentTabId],
+  );
 
   return (
     <S.VisibleContainer>
       <S.Container>
         <S.FlexContainer>
           {tabList?.map(tab => {
-            const { id, name, imgUrl } = tab;
+            const { id, name, className } = tab;
             const hasIndicator = 'hasIndicator' in tab ? tab.hasIndicator : null;
 
             return (
               <Tab
-                imgUrl={imgUrl}
+                className={className}
                 id={id}
                 name={name}
                 onMoveTab={onMoveTab}

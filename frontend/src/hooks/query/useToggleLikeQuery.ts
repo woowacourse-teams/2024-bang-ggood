@@ -10,8 +10,8 @@ const useToggleLikeQuery = () => {
 
   return useMutation({
     mutationFn: async ({ checklistId, isLiked }: { checklistId: number; isLiked: boolean }) => {
-      if (isLiked) return deleteLike(checklistId);
-      return postLike(checklistId);
+      if (isLiked) return postLike(checklistId);
+      return deleteLike(checklistId);
     },
     onSuccess: () => {
       invalidateChecklistListQuery();

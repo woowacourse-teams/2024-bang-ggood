@@ -10,6 +10,10 @@ logs
 node_modules
 dist
 .env
+.env.*
+.env.msw
+.env.production
+.env.development
 
 stories
 *storybook.log

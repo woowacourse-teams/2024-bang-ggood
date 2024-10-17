@@ -17,8 +17,8 @@ export default TopButton;
 
 const S = {
   ButtonBox: styled(Button)`
-    width: 140px;
-    padding: 10px;
+    width: 14rem;
+    padding: 1rem;
 
     background-color: ${({ theme }) => theme.palette.yellow600};
 

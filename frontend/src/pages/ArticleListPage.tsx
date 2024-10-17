@@ -19,7 +19,7 @@ const ArticleListPage = () => {
       <Header center={<Header.Text>아티클</Header.Text>} />
       <Layout bgColor={theme.palette.background} withHeader withFooter>
         <S.Title>
-          집 구하기 전 꼭 필요한 이야기 <S.Count>{articles?.length}</S.Count>
+          방 구하기 전 꼭 필요한 이야기 <S.Count>{articles?.length}</S.Count>
         </S.Title>
         <S.ListContainer>
           {articles?.map((article: Article) => <ArticleCard key={article.articleId} article={article} />)}

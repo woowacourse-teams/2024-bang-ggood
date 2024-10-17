@@ -1,27 +1,29 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { TabWithCompletion } from '@/components/_common/Tabs/Tabs';
-import { findCategoryEmojiByName } from '@/constants/category';
+import { findCategoryClassNameByName } from '@/constants/category';
 import useChecklistStore from '@/store/useChecklistStore';
 
 const useNewChecklistTabs = () => {
-  const { getCategoryQnA, validCategory, checklistCategoryQnA } = useChecklistStore();
+  const categories = useChecklistStore(state => state.categories);
+  const checklistCategoryQnA = useChecklistStore(state => state.checklistCategoryQnA);
+  const actions = useChecklistStore(state => state.actions);
 
   const [tabs, setTabs] = useState<TabWithCompletion[]>([]);
 
   const isCategoryQuestionAllCompleted = useCallback(
     (targetId: number) => {
-      const targetCategory = getCategoryQnA(targetId);
+      const targetCategory = actions.getCategory(targetId);
       return targetCategory?.questions.every(question => question.answer !== 'NONE');
     },
-    [getCategoryQnA],
+    [actions.getCategory],
   );
 
   useEffect(() => {
-    const newChecklistTabsWithCompletion = validCategory.map(category => ({
+    const newChecklistTabsWithCompletion = categories.map(category => ({
       id: category.categoryId,
       name: category.categoryName,
-      imgUrl: findCategoryEmojiByName(category.categoryName),
+      className: findCategoryClassNameByName(category.categoryName),
       hasIndicator: !isCategoryQuestionAllCompleted(category.categoryId),
     }));
 
@@ -36,7 +38,7 @@ const useNewChecklistTabs = () => {
     if (newTabsString !== prevTabsString) {
       setTabs(tabsWithBasicInfoAndOptions);
     }
-  }, [validCategory, checklistCategoryQnA, isCategoryQuestionAllCompleted]);
+  }, [categories, checklistCategoryQnA, isCategoryQuestionAllCompleted]);
 
   return { tabs };
 };

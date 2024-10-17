@@ -1,10 +1,9 @@
 import { useRef } from 'react';
 
+import { mainPageScreen } from '@/assets/assets';
 import S from '@/components/Landing/style';
 import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';
-
-import mainScreenShotUrl from '../../../public/image/mainScreenShot.png';
 
 const SecondSection = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -33,7 +32,7 @@ const SecondSection = () => {
       </S.TextBox>
       <S.Observer ref={ref} />
       <S.AnimationBox isIntersecting={isIntersecting}>
-        <img src={mainScreenShotUrl} width="200px" />
+        <img src={mainPageScreen} width="200px" />
       </S.AnimationBox>
     </>
   );

@@ -27,10 +27,12 @@ const FormField = Object.assign(FormFieldWrapper, {
       {required && <S.MovedRequiredDot />}
     </S.LabelContainer>
   ),
+  TextBox: ({ text }: { text: string }) => <S.TextBox>{text}</S.TextBox>,
   Input: ({ ...rest }: GetProps<typeof Input>) => <Input {...rest} />,
-  ErrorMessage: ({ value, ...rest }: { value: string } & HTMLAttributes<HTMLParagraphElement>) => (
-    <S.ErrorMessage {...rest}>{value}</S.ErrorMessage>
+  ErrorMessage: ({ value, ...rest }: { value?: string } & HTMLAttributes<HTMLParagraphElement>) => (
+    <S.ErrorMessage {...rest}>{value ?? ''}</S.ErrorMessage>
   ),
+  BottomEmptyBox: () => <S.EmptyBox />,
 });
 
 const S = {
@@ -48,6 +50,16 @@ const S = {
 
     color: ${({ theme }) => theme.palette.red500};
     font-size: ${({ theme }) => theme.text.size.xSmall};
+  `,
+  EmptyBox: styled.div`
+    height: 1rem;
+  `,
+  TextBox: styled.div`
+    width: 100%;
+    height: 3rem;
+    padding: 0.6rem 1rem;
+
+    box-sizing: border-box;
   `,
 };
 export default FormField;

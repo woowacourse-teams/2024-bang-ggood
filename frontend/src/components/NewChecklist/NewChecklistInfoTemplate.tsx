@@ -3,8 +3,9 @@ import styled from '@emotion/styled';
 import Layout from '@/components/_common/layout/Layout';
 import Address from '@/components/NewChecklist/NewRoomInfoForm/Address';
 import DepositAndRent from '@/components/NewChecklist/NewRoomInfoForm/DepositAndRent';
+import IncludedMaintenances from '@/components/NewChecklist/NewRoomInfoForm/IncludedMaintenances';
 import MaintenanceFee from '@/components/NewChecklist/NewRoomInfoForm/MaintenanceFee';
-import NearTransportation from '@/components/NewChecklist/NewRoomInfoForm/NearTransportation';
+import NearSubwayStations from '@/components/NewChecklist/NewRoomInfoForm/NearSubwayStations';
 import OccupancyMonth from '@/components/NewChecklist/NewRoomInfoForm/OccupancyMonth';
 import RealEstate from '@/components/NewChecklist/NewRoomInfoForm/RealEstate';
 import RoomContractTerm from '@/components/NewChecklist/NewRoomInfoForm/RoomContractTerm';
@@ -20,9 +21,10 @@ const NewChecklistInfoTemplate = () => {
       <S.Container>
         <RoomName />
         <Address />
-        <NearTransportation />
+        <NearSubwayStations />
         <DepositAndRent />
         <MaintenanceFee />
+        <IncludedMaintenances />
         <RoomFloor />
         <RoomStructure />
         <RoomSize />

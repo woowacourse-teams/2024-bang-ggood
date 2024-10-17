@@ -22,6 +22,7 @@ public class ChecklistQuestionService {
 
     private final ChecklistQuestionRepository checklistQuestionRepository;
     private final CustomChecklistQuestionRepository customChecklistQuestionRepository;
+    private final QuestionService questionService; // TODO 리팩터링
 
     @Transactional
     public void createDefaultCustomQuestions(List<CustomChecklistQuestion> customChecklistQuestions) {
@@ -56,7 +57,7 @@ public class ChecklistQuestionService {
         customChecklistQuestionRepository.deleteAllByUser(user);
 
         List<CustomChecklistQuestion> customChecklistQuestions = questions.stream()
-                .map(question -> new CustomChecklistQuestion(user, question))
+                .map(question -> new CustomChecklistQuestion(user, question, questionService.readQuestion(question.getId())))
                 .toList();
         customChecklistQuestionRepository.saveAll(customChecklistQuestions);
     }

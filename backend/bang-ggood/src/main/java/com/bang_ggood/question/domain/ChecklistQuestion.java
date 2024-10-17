@@ -9,6 +9,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,13 +32,18 @@ public class ChecklistQuestion extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Question question;
 
+    @JoinColumn(name = "question_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private QuestionEntity questionEntity;
+
     @Enumerated(EnumType.STRING)
     private Answer answer;
 
-    public ChecklistQuestion(Checklist checklist, Question question, Answer answer) {
+    public ChecklistQuestion(Checklist checklist, Question question, QuestionEntity questionEntity, Answer answer) {
         this.checklist = checklist;
         this.question = question;
         this.answer = answer;
+        this.questionEntity = questionEntity;
     }
 
     public void change(ChecklistQuestion checklistQuestion) {
@@ -56,7 +62,7 @@ public class ChecklistQuestion extends BaseEntity {
         return question.getId();
     }
 
-    public boolean isCategory(Category category) {
+    public boolean isCategory(CategoryEntity category) {
         return question.isCategory(category);
     }
 

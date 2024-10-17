@@ -9,6 +9,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,9 +31,14 @@ public class CustomChecklistQuestion extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Question question;
 
-    public CustomChecklistQuestion(User user, Question question) {
+    @JoinColumn(name = "question_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private QuestionEntity questionEntity;
+
+    public CustomChecklistQuestion(User user, Question question, QuestionEntity questionEntity) {
         this.user = user;
         this.question = question;
+        this.questionEntity = questionEntity;
     }
 
     public Integer getQuestionId() {
@@ -42,5 +48,4 @@ public class CustomChecklistQuestion extends BaseEntity {
     public Category getCategory() {
         return question.getCategory();
     }
-
 }

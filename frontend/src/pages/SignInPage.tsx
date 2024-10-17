@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getUserInfo, postSignIn } from '@/apis/user';
@@ -13,6 +14,7 @@ import { validateEmail } from '@/utils/validate';
 
 const SignInPage = () => {
   const { showToast } = useToast();
+  const [postErrorMessage, setPostErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const {
@@ -37,11 +39,15 @@ const SignInPage = () => {
   const disabled = !isEmailValidated || !isPasswordValidated;
 
   const handleSubmit = async () => {
-    const response = await postSignIn();
-    if (response.status === 201) {
+    const response = await postSignIn({ email, password });
+    if (response.status === 200) {
       const result = await getUserInfo();
       showToast({ message: `${result?.userName}님, 환영합니다.`, type: 'confirm' });
       return navigate(ROUTE_PATH.home);
+    } else {
+      const errorData = await response.json();
+      const errorMessage = errorData.message;
+      setPostErrorMessage(errorMessage);
     }
   };
 
@@ -72,6 +78,7 @@ const SignInPage = () => {
           {/*로그인 오류 메세지 넣어주기*/}
           <FormField.ErrorMessage value={''} />
         </FormField>
+        <FormField.ErrorMessage value={postErrorMessage} />
         <Button
           label="로그인 하기"
           size="full"

@@ -18,7 +18,7 @@ export const userHandlers = [
   }),
   /*일반 회원가입 / 로그인*/
   http.post(BASE_URL + ENDPOINT.REGISTER, () => {
-    return HttpResponse.json(null, { status: 201 });
+    return HttpResponse.json(null, { status: 409 });
   }),
   http.post(BASE_URL + ENDPOINT.SINGIN, () => {
     return HttpResponse.json(null, { status: 201 });

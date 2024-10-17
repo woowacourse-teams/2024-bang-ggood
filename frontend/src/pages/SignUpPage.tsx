@@ -1,16 +1,21 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { postSignUp } from '@/apis/user';
 import { BangBangIcon, BangGgoodTextIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
+import { ROUTE_PATH } from '@/constants/routePath';
 import useToast from '@/hooks/useToast';
 import useValidateInput from '@/hooks/useValidateInput';
 import { flexCenter, title3 } from '@/styles/common';
-import { validateEmail, validateLength, validatePassword, validatePasswordConfirm } from '@/utils/validate';
+import { validateLength, validatePassword, validatePasswordConfirm } from '@/utils/validate';
 
 const SignUpPage = () => {
   const { showToast } = useToast();
+  const [postErrorMessage, setPostErrorMessage] = useState('');
+  const navigate = useNavigate();
 
   const {
     value: email,
@@ -19,7 +24,7 @@ const SignUpPage = () => {
     isValidated: isEmailValidated,
   } = useValidateInput({
     initialValue: '',
-    validates: [validateEmail],
+    validates: [],
   });
 
   const {
@@ -54,11 +59,15 @@ const SignUpPage = () => {
 
   const disabled = !isEmailValidated || !isNameValidated || !isPasswordValidated || !isPasswordConfirmValidated;
 
-  //TODO: 회원가입 제대로 안되면 에러 메세지 띄워주기
   const handleSubmit = async () => {
-    const response = await postSignUp();
+    const response = await postSignUp({ name, email, password });
     if (response.status === 201) {
       showToast({ message: '회원가입이 완료되었습니다.', type: 'confirm' });
+      navigate(ROUTE_PATH.signIn);
+    } else {
+      const errorData = await response.json();
+      const errorMessage = errorData.message;
+      setPostErrorMessage(errorMessage);
     }
   };
 
@@ -107,6 +116,7 @@ const SignUpPage = () => {
             />
             <FormField.ErrorMessage value={Array.from(passwordConfirmErrors)[0]} />
           </FormField>
+          <FormField.ErrorMessage value={postErrorMessage} />
           <Button
             label="회원가입 하기"
             size="full"

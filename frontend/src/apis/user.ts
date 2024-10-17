@@ -37,17 +37,19 @@ export const postReissueAccessToken = async () => {
   });
 };
 
-export const postSignUp = async () => {
+export const postSignUp = async ({ name, email, password }: { name: string; email: string; password: string }) => {
   return await fetch(`${BASE_URL}${ENDPOINT.REGISTER}`, {
     method: 'POST',
+    body: JSON.stringify({ name, email, password }),
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
   });
 };
 
-export const postSignIn = async () => {
+export const postSignIn = async ({ email, password }: { email: string; password: string }) => {
   return await fetch(`${BASE_URL}${ENDPOINT.SINGIN}`, {
     method: 'POST',
+    body: JSON.stringify({ email, password }),
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
   });

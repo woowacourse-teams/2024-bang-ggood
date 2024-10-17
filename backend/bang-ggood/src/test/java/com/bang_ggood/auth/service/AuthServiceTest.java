@@ -17,6 +17,7 @@ import com.bang_ggood.question.service.QuestionManageService;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,6 +25,9 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.expression.spel.support.ReflectivePropertyAccessor.OptimalPropertyAccessor;
+
+import java.util.Optional;
 
 import static com.bang_ggood.auth.AuthFixture.LOCAL_LOGIN_REQUEST;
 import static com.bang_ggood.auth.AuthFixture.LOCAL_LOGIN_REQUEST_INVALID_EMAIL;
@@ -127,6 +131,20 @@ class AuthServiceTest extends IntegrationTestSupport {
         assertThatThrownBy(() -> authService.register(request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.USER_EMAIL_ALREADY_USED.getMessage());
+    }
+
+    @DisplayName("회원 탈퇴 성공")
+    @Test
+    void withdraw() {
+        //given
+        userRepository.save(UserFixture.USER1());
+
+        //when
+        authService.withdraw(UserFixture.USER1_WITH_ID());
+
+        //then
+        Optional<User> findUser = userRepository.findById(UserFixture.USER1_WITH_ID().getId());
+        assertThat(findUser).isEmpty();
     }
 
     @DisplayName("카카오 로그인 성공 : 존재하지 않는 회원이면 데이터베이스에 새로운 유저를 추가하고 토큰 반환")

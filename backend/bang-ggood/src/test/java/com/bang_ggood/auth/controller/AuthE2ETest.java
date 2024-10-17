@@ -3,6 +3,7 @@ package com.bang_ggood.auth.controller;
 import com.bang_ggood.AcceptanceTest;
 import com.bang_ggood.auth.dto.response.TokenExistResponse;
 import com.bang_ggood.auth.service.AuthService;
+import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.global.exception.ExceptionCode;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -68,6 +69,17 @@ class AuthE2ETest extends AcceptanceTest {
                 .when().post("/oauth/login")
                 .then().log().all()
                 .statusCode(400);
+    }
+
+    @DisplayName("회원 탈퇴 성공")
+    @Test
+    void withdraw() {
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .headers(this.headers)
+                .when().delete("v1/withdraw")
+                .then().log().all()
+                .statusCode(204);
     }
 
     @DisplayName("인증 실패 : 쿠키가 없는 경우")

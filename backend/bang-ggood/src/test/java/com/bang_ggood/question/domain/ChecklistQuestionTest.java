@@ -1,6 +1,7 @@
 package com.bang_ggood.question.domain;
 
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.question.ChecklistQuestionFixture;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.user.UserFixture;
@@ -18,10 +19,11 @@ class ChecklistQuestionTest {
         //given
         Room room = RoomFixture.ROOM_1();
         User user = UserFixture.USER1();
-        ChecklistQuestion checklistQuestion1 = ChecklistFixture.CHECKLIST_QUESTION_1(
-                ChecklistFixture.CHECKLIST1_USER1(room, user));
-        ChecklistQuestion checklistQuestion2 = ChecklistFixture.CHECKLIST_QUESTION_2(
-                ChecklistFixture.CHECKLIST1_USER1(room, user));
+
+        ChecklistQuestion checklistQuestion1 = ChecklistQuestionFixture.CHECKLIST1_QUESTION1(
+                ChecklistFixture.CHECKLIST1_USER1(room, user), null);
+        ChecklistQuestion checklistQuestion2 = ChecklistQuestionFixture.CHECKLIST1_QUESTION2(
+                ChecklistFixture.CHECKLIST1_USER1(room, user), null);
 
         //when & then
         assertThat(checklistQuestion1.isDifferentQuestionId(checklistQuestion2)).isTrue();
@@ -33,10 +35,10 @@ class ChecklistQuestionTest {
         //given
         Room room = RoomFixture.ROOM_1();
         User user = UserFixture.USER1();
-        ChecklistQuestion checklistQuestion = ChecklistFixture.CHECKLIST_QUESTION_1(
-                ChecklistFixture.CHECKLIST1_USER1(room, user));
-        ChecklistQuestion compareChecklistQuestion = ChecklistFixture.CHECKLIST_QUESTION_1(
-                ChecklistFixture.CHECKLIST1_USER1(room, user));
+        ChecklistQuestion checklistQuestion = ChecklistQuestionFixture.CHECKLIST1_QUESTION1(
+                ChecklistFixture.CHECKLIST1_USER1(room, user), null);
+        ChecklistQuestion compareChecklistQuestion = ChecklistQuestionFixture.CHECKLIST1_QUESTION1(
+                ChecklistFixture.CHECKLIST1_USER1(room, user), null);
 
         //when & then
         assertThat(checklistQuestion.isDifferentQuestionId(compareChecklistQuestion)).isFalse();

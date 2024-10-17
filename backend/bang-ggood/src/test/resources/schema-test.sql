@@ -10,8 +10,36 @@ DROP TABLE IF EXISTS custom_checklist_question CASCADE;
 DROP TABLE IF EXISTS checklist_like CASCADE;
 DROP TABLE IF EXISTS article CASCADE;
 DROP TABLE IF EXISTS checklist_station CASCADE;
+DROP TABLE IF EXISTS highlight CASCADE;
+DROP TABLE IF EXISTS question CASCADE;
+DROP TABLE IF EXISTS category CASCADE;
 
 -- Create tables
+
+CREATE TABLE category
+(
+    id    INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name  VARCHAR(255)
+);
+
+CREATE TABLE question
+(
+    id          INTEGER AUTO_INCREMENT PRIMARY KEY,
+    category_id INTEGER,
+    title       VARCHAR(255),
+    subtitle    VARCHAR(255),
+    is_default  BOOLEAN,
+    FOREIGN KEY (category_id) REFERENCES category (id)
+);
+
+CREATE TABLE highlight
+(
+    id          INTEGER AUTO_INCREMENT PRIMARY KEY,
+    question_id INTEGER,
+    name        VARCHAR(255),
+    FOREIGN KEY (question_id) REFERENCES question (id)
+);
+
 CREATE TABLE room
 (
     id            BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -79,14 +107,15 @@ CREATE TABLE checklist_question
 (
     id           BIGINT AUTO_INCREMENT PRIMARY KEY,
     question     VARCHAR(255) NOT NULL,
+    question_id  INTEGER NOT NULL,
     checklist_id BIGINT       NOT NULL,
     answer       VARCHAR(255),
     created_at   TIMESTAMP(6),
     modified_at  TIMESTAMP(6),
     deleted      BOOLEAN,
-    FOREIGN KEY (checklist_id) REFERENCES checklist (id)
+    FOREIGN KEY (checklist_id) REFERENCES checklist (id),
+    FOREIGN KEY (question_id) REFERENCES question (id)
 );
-
 CREATE TABLE checklist_option
 (
     id           BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -103,10 +132,12 @@ CREATE TABLE custom_checklist_question
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id     BIGINT,
     question    VARCHAR(255),
+    question_id INTEGER,
     created_at  TIMESTAMP(6),
     modified_at TIMESTAMP(6),
     deleted     BOOLEAN,
-    FOREIGN KEY (user_id) references users (id)
+    FOREIGN KEY (user_id) references users (id),
+    FOREIGN KEY (question_id) references question (id)
 );
 
 CREATE TABLE test_entity
@@ -154,3 +185,4 @@ CREATE TABLE checklist_station
     deleted      BOOLEAN,
     FOREIGN KEY (checklist_id) REFERENCES checklist (id)
 );
+

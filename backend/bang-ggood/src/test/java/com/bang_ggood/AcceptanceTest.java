@@ -21,7 +21,7 @@ import org.springframework.test.context.jdbc.Sql;
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(scripts = {"/schema-test.sql", "/data-test.sql"})
-public abstract class AcceptanceTest {
+public abstract class AcceptanceTest extends IntegrationTestSupport {
 
     protected Headers headers;
     @Autowired
@@ -45,7 +45,7 @@ public abstract class AcceptanceTest {
     }
 
     private void setResponseCookie() {
-        authenticatedUser = userRepository.save(UserFixture.USER1());
+        authenticatedUser = userRepository.save(UserFixture.USER1);
         String accessToken = jwtTokenProvider.createAccessToken(authenticatedUser);
         String refreshToken = jwtTokenProvider.createRefreshToken(authenticatedUser);
         ResponseCookie accessTokenResponseCookie = cookieProvider.createAccessTokenCookie(accessToken);

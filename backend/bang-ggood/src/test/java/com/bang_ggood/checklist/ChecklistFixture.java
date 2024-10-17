@@ -9,8 +9,6 @@ import com.bang_ggood.like.domain.ChecklistLike;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.domain.MaintenanceItem;
 import com.bang_ggood.option.domain.Option;
-import com.bang_ggood.question.domain.Answer;
-import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.request.QuestionRequest;
 import com.bang_ggood.room.RoomFixture;
@@ -187,14 +185,6 @@ public class ChecklistFixture {
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
                         QUESTION_3_CREATE_REQUEST(), QUESTION_CREATE_REQUEST_NO_ID())
         );
-    }
-
-    public static ChecklistQuestion CHECKLIST_QUESTION_1(Checklist checklist) {
-        return new ChecklistQuestion(checklist, Question.fromId(1), Answer.BAD);
-    }
-
-    public static ChecklistQuestion CHECKLIST_QUESTION_2(Checklist checklist) {
-        return new ChecklistQuestion(checklist, Question.fromId(2), Answer.BAD);
     }
 
     public static ChecklistLike CHECKLIST1_LIKE(Checklist checklist) {

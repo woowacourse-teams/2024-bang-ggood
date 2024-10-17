@@ -15,12 +15,13 @@ import com.bang_ggood.option.domain.ChecklistOption;
 import com.bang_ggood.option.dto.response.SelectedOptionResponse;
 import com.bang_ggood.option.service.ChecklistOptionService;
 import com.bang_ggood.question.domain.Answer;
-import com.bang_ggood.question.domain.Category;
+import com.bang_ggood.question.domain.CategoryEntity;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.response.SelectedCategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.SelectedQuestionResponse;
 import com.bang_ggood.question.service.ChecklistQuestionService;
+import com.bang_ggood.question.service.QuestionService;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import com.bang_ggood.room.service.RoomService;
@@ -33,7 +34,6 @@ import com.bang_ggood.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -47,6 +47,7 @@ public class ChecklistManageService {
     private final ChecklistMaintenanceService checklistMaintenanceService;
     private final ChecklistLikeService checklistLikeService;
     private final ChecklistStationService checklistStationService;
+    private final QuestionService questionService;
 
     @Transactional
     public Long createChecklist(User user, ChecklistRequest checklistRequest) {
@@ -83,6 +84,7 @@ public class ChecklistManageService {
                 .map(question -> new ChecklistQuestion(
                         checklist,
                         Question.fromId(question.questionId()),
+                        questionService.readQuestion(question.questionId()),
                         Answer.from(question.answer())))
                 .toList();
         checklistQuestionService.createQuestions(checklistQuestions);
@@ -146,12 +148,13 @@ public class ChecklistManageService {
     private List<SelectedCategoryQuestionsResponse> readChecklistQuestions(Checklist checklist) {
         List<ChecklistQuestion> checklistQuestions = checklistQuestionService.readChecklistQuestions(checklist);
 
-        return Arrays.stream(Category.values())
+
+        return questionService.findAllCategories().stream()
                 .map(category -> categorizeChecklistQuestions(category, checklistQuestions))
                 .toList();
     }
 
-    private SelectedCategoryQuestionsResponse categorizeChecklistQuestions(Category category,
+    private SelectedCategoryQuestionsResponse categorizeChecklistQuestions(CategoryEntity category,
                                                                            List<ChecklistQuestion> checklistQuestions) {
         List<SelectedQuestionResponse> selectedQuestionResponse = Question.filter(category, checklistQuestions)
                 .stream()
@@ -234,6 +237,7 @@ public class ChecklistManageService {
                 .map(question -> new ChecklistQuestion(
                         checklist,
                         Question.fromId(question.questionId()),
+                        questionService.readQuestion(question.questionId()),
                         Answer.from(question.answer())))
                 .toList();
         checklistQuestionService.updateQuestions(questions, updateQuestions);

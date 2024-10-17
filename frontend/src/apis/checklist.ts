@@ -1,8 +1,7 @@
 import fetcher from '@/apis/fetcher';
 import { BASE_URL, ENDPOINT } from '@/apis/url';
-import { roomInfoApiMapper } from '@/store/roomInfoStore';
 import { ChecklistInfo, ChecklistPostForm, ChecklistSelectedQuestions } from '@/types/checklist';
-import { mapObjNullToUndefined } from '@/utils/typeFunctions';
+import { mapObjNullToUndefined, mapObjUndefinedToNull } from '@/utils/typeFunctions';
 
 export const getChecklistQuestions = async () => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_QUESTION });
@@ -22,24 +21,23 @@ export const getChecklistDetail = async (id: number) => {
   return data as ChecklistInfo;
 };
 
-export const getChecklists = async () => {
-  const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLISTS });
+export const getChecklists = async (isLikeFiltered: boolean = false) => {
+  const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLISTS + (isLikeFiltered ? '/like' : '') });
   const data = await response.json();
   return data.checklists.map(mapObjNullToUndefined);
 };
 
 export const postChecklist = async (checklist: ChecklistPostForm) => {
-  const room = roomInfoApiMapper(checklist.room);
-  const response = await fetcher.post({
-    url: BASE_URL + ENDPOINT.CHECKLISTS_V1,
-    body: { ...checklist, room },
-  });
+  checklist.room.structure = checklist.room.structure === 'NONE' ? undefined : checklist.room.structure;
+  checklist.room = mapObjUndefinedToNull(checklist.room);
+  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLISTS_V1, body: checklist });
   return response;
 };
 
 export const putChecklist = async (id: number, checklist: ChecklistPostForm) => {
-  const room = roomInfoApiMapper(checklist.room);
-  const response = await fetcher.put({ url: BASE_URL + ENDPOINT.CHECKLIST_ID(id), body: { ...checklist, room } });
+  checklist.room.structure = checklist.room.structure === 'NONE' ? undefined : checklist.room.structure;
+  checklist.room = mapObjUndefinedToNull(checklist.room);
+  const response = await fetcher.put({ url: BASE_URL + ENDPOINT.CHECKLIST_ID(id), body: checklist });
   return response;
 };
 
@@ -50,5 +48,6 @@ export const deleteChecklist = async (id: number) => {
 
 export const putCustomChecklist = async (questionIds: ChecklistSelectedQuestions) => {
   const response = await fetcher.put({ url: BASE_URL + ENDPOINT.CHECKLIST_CUSTOM, body: questionIds });
+
   return response;
 };

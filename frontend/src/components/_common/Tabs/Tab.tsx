@@ -16,7 +16,7 @@ const Tab = ({ id, onMoveTab, name, active, className, isCompleted }: Props) => 
   return (
     <S.Container key={id} onClick={() => onMoveTab(id)} active={active}>
       <S.TextBox className={className && `sprite-icon ${className}`}>{name}</S.TextBox>
-      {!isCompleted && <S.UncompletedIndicator />}
+      {isCompleted === false && <S.UncompletedIndicator />}
     </S.Container>
   );
 };

@@ -93,7 +93,6 @@ const NewChecklistPage = () => {
         onClose={closeAlertModal}
         handleApprove={() => {
           resetChecklist();
-          navigate(ROUTE_PATH.articleList);
         }}
         approveButtonName="나가기"
       />

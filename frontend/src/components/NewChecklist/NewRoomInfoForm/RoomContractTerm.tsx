@@ -1,15 +1,12 @@
 import styled from '@emotion/styled';
-import { useStore } from 'zustand';
 
 import FormField from '@/components/_common/FormField/FormField';
 import Input from '@/components/_common/Input/Input';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import useRoomInfoValidated from '@/hooks/useRoomInfoValidated';
 
 const RoomContractTerm = () => {
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const contractTerm = useStore(checklistRoomInfoStore, state => state.rawValue.contractTerm);
-  const errorMessage = useStore(checklistRoomInfoStore, state => state.errorMessage.contractTerm);
+  const contractTerm = useRoomInfoValidated('contractTerm');
 
   return (
     <FormField>
@@ -18,14 +15,14 @@ const RoomContractTerm = () => {
         <Input
           width="medium"
           placeholder=""
-          onChange={actions.onChange}
+          onChange={contractTerm.onChange}
           name="contractTerm"
-          value={contractTerm}
+          value={contractTerm.rawValue}
           id="contractTerm"
         />
         <FormStyled.FlexLabel label="개월"></FormStyled.FlexLabel>
       </S.FieldBox>
-      <FormField.ErrorMessage value={errorMessage} />
+      <FormField.ErrorMessage value={contractTerm.errorMessage} />
     </FormField>
   );
 };

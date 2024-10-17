@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
-import { useStore } from 'zustand';
 
 import useGetChecklistListQuery from '@/hooks/query/useGetChecklistListQuery';
-import checklistRoomInfoStore, { initialRoomInfo } from '@/store/checklistRoomInfoStore';
+import useRoomInfoValidated from '@/hooks/useRoomInfoValidated';
+import { initialRoomInfo } from '@/store/roomInfoStore';
 
 const useDefaultRoomName = () => {
-  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
-  const roomName = useStore(checklistRoomInfoStore, state => state.rawValue.roomName);
+  const roomName = useRoomInfoValidated('roomName');
 
   const { data: checklistList } = useGetChecklistListQuery();
 
@@ -20,21 +19,10 @@ const useDefaultRoomName = () => {
     ).length;
 
     const date = new Date();
-    roomInfoActions.set('roomName', `${date.getMonth() + 1}월 ${date.getDate()}일 ${count}번째 방`);
+    roomName.set(`${date.getMonth() + 1}월 ${date.getDate()}일 ${count}번째 방`);
   }, [checklistList]);
 
-  // 그이후부터는 폼은 안건드리고, 내부 value에만 적용
-  useEffect(() => {
-    if (!checklistList) return;
-    if (roomName !== initialRoomInfo.roomName) return;
-
-    const count = checklistList.filter(
-      checklist => new Date(checklist.createdAt).getUTCDay() === new Date().getUTCDay(),
-    ).length;
-
-    const date = new Date();
-    roomInfoActions.setValueForced('roomName', `${date.getMonth() + 1}월 ${date.getDate()}일 ${count}번째 방`);
-  }, [checklistList, roomName]);
+  // value를 직접건드려서 N번째방 value 넣어주던 로직지웠음.
 };
 
 export default useDefaultRoomName;

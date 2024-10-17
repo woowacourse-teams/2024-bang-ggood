@@ -9,6 +9,7 @@ import OptionChecklistTemplate from '@/components/NewChecklist/Option/OptionChec
 import useInitialChecklist from '@/hooks/useInitialChecklist';
 
 const NewChecklistContent = () => {
+  useInitialChecklist();
   const { currentTabId } = useTabContext();
   useInitialChecklist();
   return (

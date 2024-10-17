@@ -6,7 +6,7 @@ import { SubwayStation } from '@/types/subway';
 const SubwayStations = ({ stations }: { stations: SubwayStation[] }) => {
   return (
     <FlexBox.Vertical>
-      {stations.length ? (
+      {stations?.length ? (
         stations?.map(station => <SubwayStationItem key={station.stationName} station={station} />)
       ) : (
         <FormField.TextBox text={'보신 방과 가까운 지하철역을 찾아드릴게요.'} />

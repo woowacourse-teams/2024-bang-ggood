@@ -6,25 +6,24 @@ import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import { IncludedMaintenancesData } from '@/constants/roomInfo';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import roomInfoStore from '@/store/roomInfoStore';
 
 const IncludedMaintenances = () => {
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const includedMaintenances = useStore(checklistRoomInfoStore, state => state.value.includedMaintenances);
+  // TODO : nonValidated 에서 관리해야함. 일단은 놔뒀음.
 
-  const handleCheckIncluded = (id: number) => !!includedMaintenances?.includes(id);
+  const includedMaintenances = useStore(roomInfoStore, state => state.includedMaintenances).rawValue;
+  const actions = useStore(roomInfoStore, state => state.actions);
+
+  const isIncluded = useCallback((id: number) => includedMaintenances.includes(id), [includedMaintenances]);
 
   const handleToggleButton = useCallback(
-    (value: number) => {
-      const isIncluded = handleCheckIncluded(value);
-
-      const updatedValue = isIncluded
-        ? includedMaintenances?.filter(id => id !== value)
-        : [...(includedMaintenances || []), value];
-
-      actions.set('includedMaintenances', updatedValue);
+    (clickedId: number) => {
+      const updatedValue = isIncluded(clickedId)
+        ? includedMaintenances.filter(id => id !== clickedId)
+        : [...(includedMaintenances || []), clickedId];
+      actions.set({ includedMaintenances: { rawValue: updatedValue, errorMessage: '' } });
     },
-    [includedMaintenances, actions],
+    [includedMaintenances, actions, isIncluded],
   );
 
   return (
@@ -37,7 +36,7 @@ const IncludedMaintenances = () => {
             label={displayName}
             name={displayName}
             size="button"
-            isSelected={handleCheckIncluded(id)}
+            isSelected={isIncluded(id)}
             onClick={() => handleToggleButton(id)}
           />
         ))}

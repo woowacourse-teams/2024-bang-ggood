@@ -5,8 +5,8 @@ import { TOAST_MESSAGE } from '@/constants/message';
 import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
 import usePutChecklistQuery from '@/hooks/query/usePutChecklistQuery';
 import useToast from '@/hooks/useToast';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
+import roomInfoStore from '@/store/roomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 import { ChecklistCategoryWithAnswer, MutateType } from '@/types/checklist';
@@ -23,8 +23,9 @@ const useMutateChecklist = (
   const { mutate: putChecklist } = usePutChecklistQuery();
 
   // 방 기본 정보 - validated
-  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
-  const roomInfoAnswer = useStore(checklistRoomInfoStore, state => state.value);
+  const roomInfoActions = useStore(roomInfoStore, state => state.actions);
+  const roomInfo = roomInfoActions.getParsedValues();
+
   // 방 기본 정보 - nonValidated
   const roomInfoUnvalidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
   const roomInfoUnvalidated = useStore(roomInfoNonValidatedStore, state => state);
@@ -35,7 +36,7 @@ const useMutateChecklist = (
 
   const postData = {
     room: {
-      ...roomInfoAnswer,
+      ...roomInfo,
       ...roomInfoUnvalidatedActions.getFormValues(),
     },
     options: selectedOptions,
@@ -55,7 +56,7 @@ const useMutateChecklist = (
       addChecklist(postData, {
         onSuccess: res => {
           showToast({ message: TOAST_MESSAGE.ADD });
-          roomInfoActions.resetAll();
+          roomInfoActions.reset();
           roomInfoUnvalidatedActions.resetAll();
           if (onSuccessCallback) {
             onSuccessCallback();
@@ -77,7 +78,7 @@ const useMutateChecklist = (
       putChecklist(putData, {
         onSuccess: res => {
           showToast({ message: TOAST_MESSAGE.EDIT });
-          roomInfoActions.resetAll();
+          roomInfoActions.reset();
           roomInfoUnvalidatedActions.resetAll();
           if (onSuccessCallback) {
             onSuccessCallback();

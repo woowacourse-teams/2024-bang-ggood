@@ -1,17 +1,12 @@
-import { useStore } from 'zustand';
-
 import FormField from '@/components/_common/FormField/FormField';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import useRoomInfoValidated from '@/hooks/useRoomInfoValidated';
 
 const DepositAndRent = () => {
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const deposit = useStore(checklistRoomInfoStore, state => state.rawValue.deposit);
-  const rent = useStore(checklistRoomInfoStore, state => state.rawValue.rent);
-  const errorMessageDeposit = useStore(checklistRoomInfoStore, state => state.errorMessage.deposit);
-  const errorMessageRent = useStore(checklistRoomInfoStore, state => state.errorMessage.rent);
+  const deposit = useRoomInfoValidated('deposit');
+  const rent = useRoomInfoValidated('rent');
 
-  const errorMessage = errorMessageDeposit || errorMessageRent;
+  const errorMessage = deposit.errorMessage || rent.errorMessage;
 
   return (
     <FormField>
@@ -19,18 +14,18 @@ const DepositAndRent = () => {
       <FormStyled.FieldBox>
         <FormField.Input
           width="medium"
-          onChange={actions.onChange}
+          onChange={deposit.onChange}
           name="deposit"
-          value={deposit}
+          value={deposit.rawValue}
           aria-label="보증금"
         />
         <FormStyled.FlexLabel label=" / " />
         <FormField.Input
           width="medium"
           placeholder=""
-          onChange={actions.onChange}
+          onChange={rent.onChange}
           name="rent"
-          value={rent}
+          value={rent.rawValue}
           aria-label="월세"
         />
       </FormStyled.FieldBox>

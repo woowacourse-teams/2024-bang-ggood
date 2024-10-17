@@ -22,7 +22,7 @@
     "eqeqeq": "error",
     "dot-notation": "warn",
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["error"],
+    "@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "_" }],
     "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": [
       "warn",

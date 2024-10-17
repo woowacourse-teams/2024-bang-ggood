@@ -1,44 +1,90 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { BangBangIcon } from '@/assets/assets';
-import Button from '@/components/_common/Button/Button';
+import { ArrowRightCircle, BangBangIcon3D } from '@/assets/assets';
 import Header from '@/components/_common/Header/Header';
-import Layout from '@/components/_common/layout/Layout';
 import LogoutModal from '@/components/MyPage/LogoutModal';
 import SKMyPage from '@/components/skeleton/MyPage/SKMyPage';
 import { ROUTE_PATH } from '@/constants/routePath';
+import { FOOTER_SIZE, HEADER_SIZE } from '@/constants/style';
 import useUserQuery from '@/hooks/query/useUserQuery';
 import useModal from '@/hooks/useModal';
-import { boxShadow, boxShadowSpread, flexCenter, flexColumn, title2 } from '@/styles/common';
-import theme from '@/styles/theme';
+import { boxShadowSpread, flexCenter, flexColumn, flexRow, flexSpaceBetween, title2, title4 } from '@/styles/common';
 
 const MyPage = () => {
+  const count = 12;
   const navigate = useNavigate();
-  const { isModalOpen, openModal, closeModal } = useModal();
+  const { isModalOpen, closeModal } = useModal();
   const { data: user, isError, isLoading } = useUserQuery();
+
+  const handleMoveVoc = () => {
+    window.location.href = '#';
+  };
 
   if (isLoading) return <SKMyPage />;
 
   return (
     <>
-      <Header center={<Header.Text>마이페이지</Header.Text>} />
-      <Layout bgColor={theme.palette.background} withFooter withHeader>
-        <S.InnerWrapper>
-          <S.Container style={{ width: '100%' }}>
-            <S.Profile>
-              <S.ProfileIcon>
-                <BangBangIcon width="100" height="100" aria-hidden="true" />
-              </S.ProfileIcon>
-              {`안녕하세요 ${isError ? '게스트' : user?.userName}님`}
-            </S.Profile>
-          </S.Container>
-          {!isError && <Button label="로그아웃" size="full" color="dark" onClick={openModal} />}
-          {isError && (
-            <Button label="로그인하러 가기" size="full" color="dark" onClick={() => navigate(ROUTE_PATH.root)} />
+      <Header center={<Header.Text>마이페이지</Header.Text>} isTransparent />
+
+      <S.Profile>
+        <S.ProfileText>
+          <div>{`${isError ? '게스트' : user?.userName}님`}</div>
+          <div>오늘도 방끗과 함께 방긋 웃어요! :)</div>
+        </S.ProfileText>
+        <S.ProfileIcon>
+          <BangBangIcon3D aria-hidden="true" />
+        </S.ProfileIcon>
+      </S.Profile>
+      <S.Container>
+        <S.LabelContainer>
+          {!isError ? (
+            <>
+              <span>🎉 축하드려요!</span>
+              <span>
+                지금까지 <S.Count>{count}개</S.Count>의 체크리스트를 작성했어요!
+              </span>
+            </>
+          ) : (
+            <span>방끗을 더 잘 사용하기 위해 로그인해보세요!</span>
           )}
-        </S.InnerWrapper>
-      </Layout>
+        </S.LabelContainer>
+
+        <S.Section>
+          <S.LabelContainer>방끗이 도움되었나요? 한마디 남겨주세요!</S.LabelContainer>
+          <S.Button tabIndex={1} onClick={handleMoveVoc}>
+            방끗이 기다려요, 의견 남기기!
+            <ArrowRightCircle aria-hidden="true" />
+          </S.Button>
+        </S.Section>
+
+        {isError ? (
+          <>
+            <S.Section>
+              <S.LabelContainer>방끗 시작하기!</S.LabelContainer>
+              <S.Button onClick={() => navigate(ROUTE_PATH.root)} tabIndex={1}>
+                로그인/회원가입 바로가기
+                <ArrowRightCircle aria-hidden="true" />
+              </S.Button>
+            </S.Section>
+          </>
+        ) : (
+          <>
+            <S.Section>
+              <S.LabelContainer>방끗이랑 이별하기..</S.LabelContainer>
+              <S.ButtonContainer>
+                <S.Button onClick={() => navigate(ROUTE_PATH.root)} isCenter tabIndex={1}>
+                  방끗 탈퇴하기
+                </S.Button>
+                <S.Button onClick={() => navigate(ROUTE_PATH.root)} isCenter tabIndex={1}>
+                  로그아웃하기
+                </S.Button>
+              </S.ButtonContainer>
+            </S.Section>
+          </>
+        )}
+      </S.Container>
+
       <LogoutModal isOpen={isModalOpen} onClose={closeModal} />
     </>
   );
@@ -47,43 +93,68 @@ const MyPage = () => {
 export default MyPage;
 
 const S = {
-  Container: styled.div`
-    max-width: 100%;
+  Profile: styled.div`
+    ${flexColumn};
+    width: 100%;
+    height: 40rem;
     box-sizing: border-box;
-    margin: 1.6rem;
-    padding: 2.4rem 1.6rem;
 
-    border-radius: 1.6rem;
+    padding: 8rem 2rem;
+
+    border-radius: 0 0 1.6rem 1.6rem;
     gap: 1.2rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
-    ${boxShadow};
-    ${flexColumn};
+    background-color: ${({ theme }) => theme.palette.yellow500};
+
     ${boxShadowSpread}
   `,
-  InnerWrapper: styled.article`
-    ${flexCenter}
-    ${flexColumn}
+  ProfileText: styled.h1`
+    ${title2}
+    color: ${({ theme }) => theme.palette.white};
   `,
   ProfileIcon: styled.div`
+    width: 100%;
     ${flexCenter}
-    overflow: hidden;
-    width: 13.6rem;
-    height: 13.6rem;
-
-    border-radius: 50%;
-
-    background-color: ${({ theme }) => theme.palette.yellow200};
   `,
-  Profile: styled.div`
+  Container: styled.div`
     ${flexColumn}
-    row-gap:.8rem;
+    ${flexSpaceBetween}
+    height: calc(100dvh - (40rem + ${HEADER_SIZE}rem + ${FOOTER_SIZE}rem));
+    padding: 1.6rem;
 
-    ${title2}
+    gap: 3rem;
+  `,
+  Section: styled.section`
+    ${flexColumn}
+    gap: 1rem;
+  `,
+  LabelContainer: styled.div`
+    ${flexColumn}
+    gap: .5rem;
+    ${title4}
+  `,
+  Count: styled.span`
+    color: ${({ theme }) => theme.palette.green500};
+  `,
+  Button: styled.button<{ isCenter?: boolean }>`
+    width: 100%;
+    ${flexRow}
+    padding: 1.6rem;
     align-items: center;
+
+    background-color: ${({ theme }) => theme.palette.white};
+
+    justify-content: ${({ isCenter }) => (isCenter ? 'center' : 'space-between')};
+
+    border-radius: 1.6rem;
+    ${boxShadowSpread}
+
+    &:hover, &:active {
+      background-color: ${({ theme }) => theme.palette.grey50};
+    }
   `,
   ButtonContainer: styled.div`
-    ${flexCenter}
-    column-gap:2rem;
+    ${flexRow}
+    gap: 1rem;
   `,
 };

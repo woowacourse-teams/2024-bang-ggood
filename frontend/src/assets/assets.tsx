@@ -1,6 +1,7 @@
 // Arrow
 import ArrowBack from '@/assets/icons/arrow/arrow-back.svg';
 import ArrowDownSmall from '@/assets/icons/arrow/arrow-down-small.svg';
+import ArrowRightCircle from '@/assets/icons/arrow/arrow-right-circle.svg';
 import ArrowRightGreen from '@/assets/icons/arrow/arrow-right-green.svg';
 import ArrowRightYellow from '@/assets/icons/arrow/arrow-right-yellow.svg';
 import ArrowUpSmall from '@/assets/icons/arrow/arrow-up-small.svg';
@@ -31,6 +32,7 @@ import Utils from '@/assets/icons/room/utils.svg';
 import DropdownMark from '@/assets/icons/dropdown/dropdown-mark.svg';
 
 // mascot
+import BangBangIcon3D from '@/assets/icons/mascot/3D-bang-bang-icon.svg';
 import BangBangCryIcon from '@/assets/icons/mascot/bang-bang-cry-icon.svg';
 import BangBangIcon from '@/assets/icons/mascot/bang-bang-icon.svg';
 import LampIcon from '@/assets/icons/mascot/lamp-icon.svg';
@@ -61,11 +63,13 @@ import Error500 from '@/assets/icons/error/500.svg';
 export {
   ArrowBack,
   ArrowDownSmall,
+  ArrowRightCircle,
   ArrowRightGreen,
   ArrowRightYellow,
   ArrowUpSmall,
   BangBangCryIcon,
   BangBangIcon,
+  BangBangIcon3D,
   BangGgoodTextIcon,
   Building,
   Calendar,

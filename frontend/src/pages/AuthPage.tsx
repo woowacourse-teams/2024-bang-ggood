@@ -15,6 +15,13 @@ const AuthPage = () => {
     return { errorType: '이메일 형식이 맞지 않습니다.', isValid: true };
   };
 
+  const validateLength = (value: string, minLength: number, maxLength: number) => {
+    if (value.length < minLength || value.length > maxLength) {
+      return { errorType: '이름은 2~20자 이내로 입력해 주세요.', isValid: false };
+    }
+    return { errorType: '이름은 2~20자 이내로 입력해 주세요.', isValid: true };
+  };
+
   const {
     value: email,
     errors: emailErrors,
@@ -22,6 +29,15 @@ const AuthPage = () => {
   } = useValidateInput({
     initialValue: '',
     validates: [validateEmail],
+  });
+
+  const {
+    value: name,
+    errors: nameErrors,
+    onChange: onChangeName,
+  } = useValidateInput({
+    initialValue: '',
+    validates: [(value: string) => validateLength(value, 2, 20)],
   });
 
   return (
@@ -44,8 +60,12 @@ const AuthPage = () => {
           </FormField>
           <FormField>
             <FormField.Label label="닉네임" />
-            <FormField.Input />
-            <FormField.ErrorMessage />
+            <FormField.Input
+              value={name}
+              name="name"
+              onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChangeName(e)}
+            />
+            <FormField.ErrorMessage value={Array.from(nameErrors)[0]} />
           </FormField>
           <FormField>
             <FormField.Label label="비밀번호" />

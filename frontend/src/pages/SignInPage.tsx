@@ -10,7 +10,7 @@ import { ROUTE_PATH } from '@/constants/routePath';
 import useToast from '@/hooks/useToast';
 import useValidateInput from '@/hooks/useValidateInput';
 import { flexCenter, title3 } from '@/styles/common';
-import { validateEmail } from '@/utils/validate';
+import { validateEmail } from '@/utils/authValidation';
 
 const SignInPage = () => {
   const { showToast } = useToast();
@@ -75,8 +75,6 @@ const SignInPage = () => {
             name="password"
             onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChangePassword(e)}
           />
-          {/*로그인 오류 메세지 넣어주기*/}
-          <FormField.ErrorMessage value={''} />
         </FormField>
         <FormField.ErrorMessage value={postErrorMessage} />
         <Button

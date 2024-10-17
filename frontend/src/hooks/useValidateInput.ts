@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
-// import { ErrorStatus } from '@/utils/validation';
+import { ValidationError } from '@/constants/message/validationErrorMessage';
 
-export enum ErrorStatus {
-  INVALID_FORMAT = 'invalidFormat',
-  // EXPIRED_CARD_DATE = 'expiredCardDate',
-  // INVALID_MONTH = 'invalidMonth',
-  // NAME_SHOULD_BE_CAPITAL = 'nameCapital',
-  // DOUBLE_SPACE = 'doubleSpace',
-  // ENTER_REQUIRED = 'enter',
-  // IS_NOT_NUMBER = 'is_not_number',
-}
+export type ValidationReturnType = {
+  isValid: boolean;
+  errorType: ValidationError;
+};
 
-export type ValidateFuncWithPropsType = (
-  value: string,
-  currentName: string,
-) => { isValid: boolean; errorType?: string };
+export type ValidateFuncWithPropsType = (value: string, currentName: string) => ValidationReturnType;
 
 export type InputChangeCallbackType = (value: string) => string;
 interface Props {

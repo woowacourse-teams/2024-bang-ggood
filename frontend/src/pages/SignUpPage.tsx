@@ -10,7 +10,7 @@ import { ROUTE_PATH } from '@/constants/routePath';
 import useToast from '@/hooks/useToast';
 import useValidateInput from '@/hooks/useValidateInput';
 import { flexCenter, title3 } from '@/styles/common';
-import { validateLength, validatePassword, validatePasswordConfirm } from '@/utils/validate';
+import { validateLength, validatePassword, validatePasswordConfirm } from '@/utils/authValidation';
 
 const SignUpPage = () => {
   const { showToast } = useToast();

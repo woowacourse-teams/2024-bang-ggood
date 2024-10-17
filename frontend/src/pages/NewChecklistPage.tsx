@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from 'zustand';
@@ -34,13 +35,10 @@ const NewChecklistPage = () => {
 
   // 메모 모달
   const { isModalOpen: isMemoModalOpen, openModal: openMemoModal, closeModal: closeMemoModal } = useModal();
-
   // 한줄평 모달
   const { isModalOpen: isSubmitModalOpen, openModal: openSummaryModal, closeModal: closeSummaryModal } = useModal();
-
   // 뒤로가기 시 휘발 경고 모달
   const { isModalOpen: isAlertModalOpen, openModal: openAlertModal, closeModal: closeAlertModal } = useModal();
-
   // 로그인 요청 모달
   const { isModalOpen: isLoginModalOpen, openModal: openLoginModal, closeModal: closeLoginModal } = useModal();
 
@@ -62,7 +60,9 @@ const NewChecklistPage = () => {
       />
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
         <ErrorBoundary fallback={<ChecklistTabFallback />}>
-          <NewChecklistTab />
+          <Suspense>
+            <NewChecklistTab />
+          </Suspense>
         </ErrorBoundary>
         <ChecklistContent />
       </TabProvider>

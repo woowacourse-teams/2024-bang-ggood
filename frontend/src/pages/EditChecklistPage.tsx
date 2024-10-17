@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useStore } from 'zustand';
@@ -32,7 +32,7 @@ const EditChecklistPage = () => {
   const { checklistId } = useParams() as RouteParams;
   const { data: checklist, isSuccess } = useGetChecklistDetailQuery(checklistId);
 
-  const checklistActions = useChecklistStore(state => state.actions);
+  const checklistQuestionActions = useChecklistStore(state => state.actions);
 
   const { searchSubwayStationsByAddress } = useRoomInfoNonValidated();
   const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
@@ -50,7 +50,7 @@ const EditChecklistPage = () => {
   const resetAndGoDetailPage = () => {
     roomInfoActions.resetAll();
     roomInfoUnvalidatedActions.resetAll();
-    checklistActions.reset();
+    checklistQuestionActions.reset();
     selectedOptionActions.reset();
     navigate(ROUTE_PATH.checklistOne(Number(checklistId)));
   };
@@ -71,7 +71,7 @@ const EditChecklistPage = () => {
       loadExternalScriptWithCallback('kakaoMap', () => searchSubwayStationsByAddress(checklist.room.address!));
 
       selectedOptionActions.set(checklist.options.map(option => option.optionId));
-      checklistActions.set(checklist.categories);
+      checklistQuestionActions.set(checklist.categories);
     };
 
     setChecklistDataToStore();
@@ -86,7 +86,9 @@ const EditChecklistPage = () => {
       />
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
         <ErrorBoundary fallback={<ChecklistTabFallback />}>
-          <EditChecklistTab checklistId={checklistId} />
+          <Suspense>
+            <EditChecklistTab checklistId={checklistId} />
+          </Suspense>
         </ErrorBoundary>
         <ChecklistContent />
       </TabProvider>

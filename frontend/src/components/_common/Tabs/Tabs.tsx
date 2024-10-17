@@ -25,7 +25,7 @@ const Tabs = ({ tabList }: Props) => {
         <S.FlexContainer>
           {tabList?.map(tab => {
             const { id, name, className } = tab;
-            const hasIndicator = 'hasIndicator' in tab ? tab.hasIndicator : null;
+            const isCompleted = 'isCompleted' in tab ? tab.isCompleted : undefined;
 
             return (
               <TabButton
@@ -35,7 +35,7 @@ const Tabs = ({ tabList }: Props) => {
                 onMoveTab={onMoveTab}
                 key={id}
                 active={tab.id === currentTabId}
-                hasIndicator={hasIndicator}
+                isCompleted={isCompleted}
               />
             );
           })}

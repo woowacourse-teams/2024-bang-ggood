@@ -1,9 +1,9 @@
 export interface Tab {
-  name: string;
   id: number;
+  name: string;
   className?: string;
 }
 
 export interface TabWithCompletion extends Tab {
-  hasIndicator: boolean;
+  isCompleted: boolean;
 }

@@ -59,7 +59,7 @@ export interface ChecklistPreview {
 export interface ChecklistInfo {
   checklistId: number;
   isLiked: boolean;
-  room: RoomInfo;
+  room: Partial<RoomInfo>;
   options: Option[];
   categories: ChecklistCategoryWithAnswer[];
   stations: SubwayStation[];

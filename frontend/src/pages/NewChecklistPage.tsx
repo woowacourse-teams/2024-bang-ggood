@@ -18,15 +18,15 @@ import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useHandleTip from '@/hooks/useHandleTip';
 import useModal from '@/hooks/useModal';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
 import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
+import roomInfoStore from '@/store/roomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 
 const NewChecklistPage = () => {
   const navigate = useNavigate();
 
-  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
+  const roomInfoActions = useStore(roomInfoStore, state => state.actions);
   const roomInfoNonValidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
   // TODO: useStore 포맷 맞추기
   const checklistActions = useChecklistStore(state => state.actions);
@@ -43,7 +43,7 @@ const NewChecklistPage = () => {
   const { isModalOpen: isLoginModalOpen, openModal: openLoginModal, closeModal: closeLoginModal } = useModal();
 
   const resetChecklist = () => {
-    roomInfoActions.resetAll();
+    roomInfoActions.reset();
     roomInfoNonValidatedActions.resetAll();
     checklistActions.reset();
     selectedOptionActions.reset();
@@ -91,7 +91,10 @@ const NewChecklistPage = () => {
         }
         isOpen={isAlertModalOpen}
         onClose={closeAlertModal}
-        handleApprove={resetChecklist}
+        handleApprove={() => {
+          resetChecklist();
+          navigate(ROUTE_PATH.articleList);
+        }}
         approveButtonName="나가기"
       />
 

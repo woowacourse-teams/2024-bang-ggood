@@ -14,3 +14,35 @@
   font-weight: 300 900;
   src: url('./assets/fonts/SUITE-Variable.woff2') format('woff2-variations');
 }
+/*접근성*/
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-to {
+  position: absolute;
+  top: -99px;
+  left: 0;
+  background: #333;
+  color: #fff;
+  width: 100%;
+  padding: 10px 0;
+  text-align: center;
+  text-decoration: none;
+  z-index: 100;
+  height: 100px;
+}
+.skip-to:hover,
+.skip-to:focus,
+.skip-to:active {
+  display: block;
+  top: 0;
+}

@@ -11,7 +11,7 @@ import useInitialChecklist from '@/hooks/useInitialChecklist';
 const NewChecklistContent = () => {
   useInitialChecklist();
   const { currentTabId } = useTabContext();
-
+  useInitialChecklist();
   return (
     <S.Container>
       {/*방 기본정보 템플릿 */}

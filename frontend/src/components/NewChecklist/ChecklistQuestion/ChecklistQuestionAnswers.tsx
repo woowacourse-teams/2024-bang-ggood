@@ -7,7 +7,7 @@ import useChecklistQuestionAnswer from '@/hooks/useChecklistQuestionAnswer';
 import { Answer, AnswerType } from '@/types/answer';
 
 const ChecklistQuestionAnswers = ({ answer, questionId }: { answer: AnswerType; questionId: number }) => {
-  const { toggleAnswer } = useChecklistQuestionAnswer();
+  const { toggleAnswer, statusMessage } = useChecklistQuestionAnswer();
   const { currentTabId } = useTabContext();
 
   const handleClick = useCallback(
@@ -33,6 +33,11 @@ const ChecklistQuestionAnswers = ({ answer, questionId }: { answer: AnswerType; 
           />
         );
       })}
+      {statusMessage && (
+        <div className="visually-hidden" role="alert">
+          {statusMessage}
+        </div>
+      )}
     </>
   );
 };

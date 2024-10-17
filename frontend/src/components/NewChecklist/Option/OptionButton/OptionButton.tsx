@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useState } from 'react';
 
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 import { flexCenter, flexColumn } from '@/styles/common';
@@ -10,8 +10,17 @@ const OptionButton = ({ option, isSelected }: { option: OptionWithIcon; isSelect
   const { FilledIcon, UnFilledIcon, displayName, id } = option;
 
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);
+  const [statusMessage, setStatusMessage] = useState('');
 
-  const handleClick = isSelected ? () => selectedOptionActions.remove(id) : () => selectedOptionActions.add(id);
+  const handleClick = () => {
+    if (isSelected) {
+      selectedOptionActions.remove(id);
+      setStatusMessage(`${option.displayName} 선택 취소되었습니다.`);
+    } else {
+      selectedOptionActions.add(id);
+      setStatusMessage(`${option.displayName} 선택되었습니다.`);
+    }
+  };
 
   if (!option) {
     return null;
@@ -33,13 +42,16 @@ const OptionButton = ({ option, isSelected }: { option: OptionWithIcon; isSelect
   const currentColor = isSelected ? BUTTON_COLOR.selected : BUTTON_COLOR.unSelected;
 
   return (
-    <S.Box
-      color={currentColor.fill}
-      borderColor={currentColor.border}
-      onClick={handleClick}
-    >
+    <S.Box color={currentColor.fill} borderColor={currentColor.border} onClick={handleClick}>
       <S.IconBox>{isSelected ? <FilledIcon aria-hidden="true" /> : <UnFilledIcon aria-hidden="true" />}</S.IconBox>
-      <S.TextBox color={currentColor.text}>{displayName}</S.TextBox>
+      <S.TextBox aria-label={`${option.displayName}를 선택하려면 두번 탭하세요.`} color={currentColor.text}>
+        {displayName}
+      </S.TextBox>{' '}
+      {statusMessage && (
+        <div className="visually-hidden" role="alert">
+          {statusMessage}
+        </div>
+      )}
     </S.Box>
   );
 };

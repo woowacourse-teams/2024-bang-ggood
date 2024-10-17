@@ -46,7 +46,7 @@ const OptionButton = ({ option, isSelected }: { option: OptionWithIcon; isSelect
       <S.IconBox>{isSelected ? <FilledIcon aria-hidden="true" /> : <UnFilledIcon aria-hidden="true" />}</S.IconBox>
       <S.TextBox aria-label={`${option.displayName}를 선택하려면 두번 탭하세요.`} color={currentColor.text}>
         {displayName}
-      </S.TextBox>{' '}
+      </S.TextBox>
       {statusMessage && (
         <div className="visually-hidden" role="alert">
           {statusMessage}

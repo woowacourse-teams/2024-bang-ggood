@@ -15,10 +15,12 @@ import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery';
 import useChecklistTabs from '@/hooks/useChecklistTabs';
 import useModal from '@/hooks/useModal';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import useRoomInfoNonValidated from '@/hooks/useRoomInfoNonValidated';
 import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
+import roomInfoStore from '@/store/roomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
+import loadExternalScriptWithCallback from '@/utils/loadScript';
 
 type RouteParams = {
   checklistId: string;
@@ -28,10 +30,12 @@ const EditChecklistPage = () => {
   const navigate = useNavigate();
   const { checklistId } = useParams() as RouteParams;
   const { data: checklist, isSuccess } = useGetChecklistDetailQuery(checklistId);
+
   const { tabs } = useChecklistTabs();
   const checklistActions = useChecklistStore(state => state.actions);
 
-  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
+  const { searchSubwayStationsByAddress } = useRoomInfoNonValidated();
+  const roomInfoActions = useStore(roomInfoStore, state => state.actions);
   const roomInfoUnvalidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
 
   // 한줄평 모달
@@ -44,7 +48,7 @@ const EditChecklistPage = () => {
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);
 
   const resetAndGoDetailPage = () => {
-    roomInfoActions.resetAll();
+    roomInfoActions.reset();
     roomInfoUnvalidatedActions.resetAll();
     checklistActions.reset();
     selectedOptionActions.reset();
@@ -55,10 +59,12 @@ const EditChecklistPage = () => {
     const setChecklistDataToStore = async () => {
       if (!isSuccess) return;
 
-      roomInfoActions.setAll({
-        rawValue: checklist.room,
-        value: checklist.room,
-      });
+      roomInfoActions.setRawValues(checklist.room);
+      roomInfoUnvalidatedActions.set('address', checklist.room.address!);
+      roomInfoUnvalidatedActions.set('buildingName', checklist.room.buildingName!);
+      //TODO: 가까운 지하철은 나중에 api 수정되면 저장
+
+      loadExternalScriptWithCallback('kakaoMap', () => searchSubwayStationsByAddress(checklist.room.address!));
 
       selectedOptionActions.set(checklist.options.map(option => option.optionId));
       checklistActions.set(checklist.categories);
@@ -89,6 +95,7 @@ const EditChecklistPage = () => {
       )}
 
       {/* 한줄평 모달*/}
+
       <SubmitModalWithSummary
         isModalOpen={isSubmitModalOpen}
         onConfirm={resetAndGoDetailPage}

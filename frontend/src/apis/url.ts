@@ -29,6 +29,7 @@ export const ENDPOINT = {
   TOKEN: '/token',
   //일반 로그인
   REGISTER: '/register',
+  SINGIN: '/v1/local-auth/login',
   //subway
   SUBWAY: (position: Position) => `/stations/nearest?latitude=${position.latitude}&longitude=${position.longitude}`,
 };

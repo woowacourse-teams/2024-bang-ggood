@@ -1,13 +1,20 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
+import { getUserInfo, postSignIn } from '@/apis/user';
 import { BangBangIcon, BangGgoodTextIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
+import { ROUTE_PATH } from '@/constants/routePath';
+import useToast from '@/hooks/useToast';
 import useValidateInput from '@/hooks/useValidateInput';
 import { flexCenter, title3 } from '@/styles/common';
 import { validateEmail } from '@/utils/validate';
 
 const SignInPage = () => {
+  const { showToast } = useToast();
+  const navigate = useNavigate();
+
   const {
     value: email,
     errors: emailErrors,
@@ -28,6 +35,15 @@ const SignInPage = () => {
   });
 
   const disabled = !isEmailValidated || !isPasswordValidated;
+
+  const handleSubmit = async () => {
+    const response = await postSignIn();
+    if (response.status === 201) {
+      const result = await getUserInfo();
+      showToast({ message: `${result?.userName}님, 환영합니다.`, type: 'confirm' });
+      return navigate(ROUTE_PATH.home);
+    }
+  };
 
   return (
     <S.Wrapper>
@@ -56,7 +72,14 @@ const SignInPage = () => {
           {/*로그인 오류 메세지 넣어주기*/}
           <FormField.ErrorMessage value={''} />
         </FormField>
-        <Button label="로그인 하기" size="full" isSquare={true} color={'dark'} onClick={() => {}} disabled={disabled} />
+        <Button
+          label="로그인 하기"
+          size="full"
+          isSquare={true}
+          color={'dark'}
+          onClick={handleSubmit}
+          disabled={disabled}
+        />
       </S.Box>
     </S.Wrapper>
   );

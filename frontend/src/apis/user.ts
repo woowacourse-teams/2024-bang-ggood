@@ -44,3 +44,11 @@ export const postSignUp = async () => {
     headers: { 'Content-Type': 'application/json' },
   });
 };
+
+export const postSignIn = async () => {
+  return await fetch(`${BASE_URL}${ENDPOINT.SINGIN}`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+  });
+};

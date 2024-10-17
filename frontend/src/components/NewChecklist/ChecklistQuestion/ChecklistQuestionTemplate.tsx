@@ -3,15 +3,17 @@ import styled from '@emotion/styled';
 import Layout from '@/components/_common/layout/Layout';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import ChecklistQuestionItem from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
+import useInitialChecklist from '@/hooks/useInitialChecklist';
 import useChecklistStore from '@/store/useChecklistStore';
 import { flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
 import { ChecklistQuestion } from '@/types/checklist';
 
-const NewChecklistTemplate = () => {
+const ChecklistQuestionTemplate = () => {
+  useInitialChecklist(); // 체크리스트 질문 가져오기 + 형태 변환
+  useChecklistStore(store => store.checklistCategoryQnA);
   const { currentTabId } = useTabContext();
   const checklistActions = useChecklistStore(store => store.actions);
-
   const questions = checklistActions.getCategory(currentTabId);
 
   return (
@@ -31,7 +33,7 @@ const NewChecklistTemplate = () => {
   );
 };
 
-export default NewChecklistTemplate;
+export default ChecklistQuestionTemplate;
 
 const S = {
   ContentBox: styled.div`

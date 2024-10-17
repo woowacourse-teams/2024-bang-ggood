@@ -17,7 +17,7 @@ import RoomSize from '@/components/NewChecklist/NewRoomInfoForm/RoomSize';
 import RoomStructure from '@/components/NewChecklist/NewRoomInfoForm/RoomStructure';
 import { flexColumn } from '@/styles/common';
 
-const NewChecklistInfoTemplate = () => {
+const RoomInfoTemplate = () => {
   return (
     <Layout withHeader withTab>
       <S.Container>
@@ -50,4 +50,4 @@ const S = {
   `,
 };
 
-export default NewChecklistInfoTemplate;
+export default RoomInfoTemplate;

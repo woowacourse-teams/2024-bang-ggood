@@ -3,7 +3,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/_common/Button/Button';
-import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallback';
+import BoxErrorFallback from '@/components/_common/errorBoundary/BoxErrorFallback';
 import TitleErrorFallback from '@/components/_common/errorBoundary/TitleErrorFallback';
 import ChecklistCardContainer from '@/components/Main/ChecklistCardContainer';
 import ChecklistSectionTitle from '@/components/Main/ChecklistSectionTitle';
@@ -27,7 +27,7 @@ const ChecklistSection = () => {
           </ErrorBoundary>
           <Button size="xSmall" label="전체 보기" onClick={handleClickList} />
         </S.Row>
-        <ErrorBoundary FallbackComponent={ListErrorFallback}>
+        <ErrorBoundary FallbackComponent={BoxErrorFallback}>
           <ChecklistCardContainer />
         </ErrorBoundary>
       </S.Container>

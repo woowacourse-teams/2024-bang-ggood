@@ -1,15 +1,23 @@
+import { Suspense, useMemo } from 'react';
+
 import Tabs from '@/components/_common/Tabs/Tabs';
-import { findCategoryClassNameByName } from '@/constants/category';
-import useChecklistQuestionSelectStore from '@/store/useChecklistQuestionSelectStore';
+import useGetAllChecklistQuestionQuery from '@/hooks/query/useGetAllChecklistQuestionsQuery';
+import useTabs from '@/hooks/useTabs';
 
 export const ChecklistQuestionSelectTabs = () => {
-  const { validCategory: validCategoryEditMode } = useChecklistQuestionSelectStore();
+  const { data: checklistQuestions, isFetched } = useGetAllChecklistQuestionQuery();
+  const { getTabs } = useTabs();
 
-  const checklistQuestionSelectTabs = validCategoryEditMode.map(category => ({
-    id: category.categoryId,
-    name: category.categoryName as string,
-    className: findCategoryClassNameByName(category.categoryName),
-  }));
+  const selectTabs = useMemo(() => {
+    if (isFetched && checklistQuestions) {
+      return getTabs(checklistQuestions);
+    }
+    return [];
+  }, [isFetched, getTabs]);
 
-  return <Tabs tabList={checklistQuestionSelectTabs} />;
+  return (
+    <Suspense>
+      <Tabs tabList={selectTabs} />
+    </Suspense>
+  );
 };

@@ -6,9 +6,14 @@ import { ANSWER_OPTIONS } from '@/constants/answer';
 import useChecklistQuestionAnswer from '@/hooks/useChecklistQuestionAnswer';
 import { Answer, AnswerType } from '@/types/answer';
 
-const ChecklistQuestionAnswers = ({ answer, questionId }: { answer: AnswerType; questionId: number }) => {
-  const { toggleAnswer } = useChecklistQuestionAnswer();
+interface Props {
+  questionId: number;
+  answer: AnswerType;
+}
+
+const ChecklistQuestionAnswers = ({ questionId, answer }: Props) => {
   const { currentTabId } = useTabContext();
+  const { toggleAnswer } = useChecklistQuestionAnswer();
 
   const handleClick = useCallback(
     (newAnswer: AnswerType) => {

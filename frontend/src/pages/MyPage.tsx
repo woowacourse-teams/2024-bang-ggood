@@ -26,7 +26,6 @@ const MyPage = () => {
   return (
     <>
       <Header center={<Header.Text>마이페이지</Header.Text>} isTransparent />
-
       <S.Profile>
         <S.ProfileText>
           <div>{`${isError ? '게스트' : user?.userName}님`}</div>

@@ -5,7 +5,6 @@ import { QUERY_KEYS } from '@/constants/queryKeys';
 import useRefetchGetChecklistList from '@/hooks/query/useRefetchGetChecklistList';
 
 const useToggleLikeQuery = () => {
-  // const { showToast } = useToast();
   const queryClient = useQueryClient();
   const { invalidateChecklistListQuery } = useRefetchGetChecklistList();
 

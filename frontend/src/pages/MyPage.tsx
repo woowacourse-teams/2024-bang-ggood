@@ -1,10 +1,12 @@
 import styled from '@emotion/styled';
+import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { ArrowRightCircle, BangBangIcon3D } from '@/assets/assets';
 import Header from '@/components/_common/Header/Header';
 import LogoutModal from '@/components/MyPage/LogoutModal';
 import SKMyPage from '@/components/skeleton/MyPage/SKMyPage';
+import { QUERY_KEYS } from '@/constants/queryKeys';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { FOOTER_SIZE, HEADER_SIZE } from '@/constants/style';
 import useUserQuery from '@/hooks/query/useUserQuery';
@@ -12,9 +14,11 @@ import useModal from '@/hooks/useModal';
 import { boxShadowSpread, flexCenter, flexColumn, flexRow, flexSpaceBetween, title2, title4 } from '@/styles/common';
 
 const MyPage = () => {
-  const count = 12;
+  const queryClient = useQueryClient();
+  const checklist = queryClient.getQueryData([QUERY_KEYS.CHECKLIST_LIST]);
+
   const navigate = useNavigate();
-  const { isModalOpen, closeModal } = useModal();
+  const { isModalOpen, openModal, closeModal } = useModal();
   const { data: user, isError, isLoading } = useUserQuery();
 
   const handleMoveVoc = () => {
@@ -39,10 +43,13 @@ const MyPage = () => {
         <S.LabelContainer>
           {!isError ? (
             <>
-              <span>🎉 축하드려요!</span>
-              <span>
-                지금까지 <S.Count>{count}개</S.Count>의 체크리스트를 작성했어요!
-              </span>
+              <span>🎉 훌륭해요!</span>
+              {checklist && Array.isArray(checklist) && (
+                <span>
+                  지금까지 <S.Count>{checklist.length}개</S.Count>의 체크리스트를 작성했어요!
+                </span>
+              )}
+              <span>이제 좋은 집을 만나는 일만 남았어요!</span>
             </>
           ) : (
             <span>방끗을 더 잘 사용하기 위해 로그인해보세요!</span>
@@ -70,21 +77,20 @@ const MyPage = () => {
         ) : (
           <>
             <S.Section>
-              <S.LabelContainer>방끗이랑 이별하기..</S.LabelContainer>
-              <S.ButtonContainer>
-                <S.Button onClick={() => navigate(ROUTE_PATH.root)} isCenter tabIndex={1}>
-                  방끗 탈퇴하기
-                </S.Button>
-                <S.Button onClick={() => navigate(ROUTE_PATH.root)} isCenter tabIndex={1}>
-                  로그아웃하기
-                </S.Button>
-              </S.ButtonContainer>
+              <S.LabelContainer>방끗 잠시 안녕!</S.LabelContainer>
+              <S.Button onClick={openModal} isCenter tabIndex={1}>
+                로그아웃하기
+              </S.Button>
+              <S.TextButton onClick={() => navigate(ROUTE_PATH.root)} tabIndex={1}>
+                방끗 탈퇴하기
+              </S.TextButton>
             </S.Section>
           </>
         )}
       </S.Container>
 
       <LogoutModal isOpen={isModalOpen} onClose={closeModal} />
+      {/* <DeleteAccountModal isOpen={isModalOpen} onClose={closeModal} /> */}
     </>
   );
 };
@@ -149,11 +155,16 @@ const S = {
     ${boxShadowSpread}
 
     &:hover, &:active {
-      background-color: ${({ theme }) => theme.palette.grey50};
+      background-color: ${({ theme }) => theme.palette.grey100};
+
+      font-weight: ${({ theme }) => theme.text.weight.bold};
     }
   `,
-  ButtonContainer: styled.div`
-    ${flexRow}
-    gap: 1rem;
+  TextButton: styled.button`
+    width: fit-content;
+
+    color: ${({ theme }) => theme.palette.grey500};
+    font-size: ${({ theme }) => theme.text.size.xxSmall};
+    border-bottom: 1px solid ${({ theme }) => theme.palette.grey500};
   `,
 };

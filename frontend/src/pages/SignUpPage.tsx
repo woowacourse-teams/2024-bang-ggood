@@ -6,10 +6,11 @@ import { postSignUp } from '@/apis/user';
 import { BangBangIcon, BangGgoodTextIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
+import Header from '@/components/_common/Header/Header';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useToast from '@/hooks/useToast';
 import useValidateInput from '@/hooks/useValidateInput';
-import { flexCenter, title3 } from '@/styles/common';
+import { flexCenter, title3, title4 } from '@/styles/common';
 import { validateEmail, validateLength, validatePassword, validatePasswordConfirm } from '@/utils/authValidation';
 
 const SignUpPage = () => {
@@ -71,8 +72,17 @@ const SignUpPage = () => {
     }
   };
 
+  const handleMoveSignIn = () => {
+    navigate(ROUTE_PATH.signIn);
+  };
+
+  const handleClickLanding = () => {
+    navigate(ROUTE_PATH.root);
+  };
+
   return (
     <>
+      <Header left={<Header.Backward onClick={handleClickLanding} />} />
       <S.Wrapper>
         <S.LogoBox>
           <BangBangIcon />
@@ -82,38 +92,22 @@ const SignUpPage = () => {
           <S.Label>회원가입</S.Label>
           <FormField>
             <FormField.Label label="이메일" />
-            <FormField.Input
-              value={email}
-              name="email"
-              onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChangeEmail(e)}
-            />
+            <FormField.Input value={email} name="email" onChange={onChangeEmail} />
             <FormField.ErrorMessage value={getEmailError()} />
           </FormField>
           <FormField>
             <FormField.Label label="닉네임" />
-            <FormField.Input
-              value={name}
-              name="name"
-              onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChangeName(e)}
-            />
+            <FormField.Input value={name} name="name" onChange={onChangeName} />
             <FormField.ErrorMessage value={getNameError()} />
           </FormField>
           <FormField>
             <FormField.Label label="비밀번호" />
-            <FormField.Input
-              value={password}
-              name="password"
-              onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChangePassword(e)}
-            />
+            <FormField.Input value={password} name="password" onChange={onChangePassword} />
             <FormField.ErrorMessage value={getPasswordError()} />
           </FormField>
           <FormField>
             <FormField.Label label="비밀번호 확인" />
-            <FormField.Input
-              value={passwordConfirm}
-              name="passwordConfirm"
-              onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChangePasswordConfirm(e)}
-            />
+            <FormField.Input value={passwordConfirm} name="passwordConfirm" onChange={onChangePasswordConfirm} />
             <FormField.ErrorMessage value={getPasswordConfirmError()} />
           </FormField>
           <FormField.ErrorMessage value={postErrorMessage} />
@@ -126,6 +120,7 @@ const SignUpPage = () => {
             disabled={disabled}
           />
         </S.Box>
+        <S.NavigateButton onClick={handleMoveSignIn}>방끗 로그인</S.NavigateButton>
       </S.Wrapper>
     </>
   );
@@ -136,7 +131,7 @@ export default SignUpPage;
 const S = {
   Wrapper: styled.div`
     ${flexCenter}
-    height:100dvh;
+    height:calc(100dvh - 56px);
     flex-direction: column;
     gap: 10px;
   `,
@@ -166,5 +161,16 @@ const S = {
 
     background-color: ${({ theme }) => theme.palette.background};
     gap: 20px;
+  `,
+  NavigateButton: styled.div`
+    margin-top: 20px;
+
+    ${title4};
+    color: ${({ theme }) => theme.palette.grey400};
+    cursor: pointer;
+
+    :hover {
+      color: ${({ theme }) => theme.palette.green600};
+    }
   `,
 };

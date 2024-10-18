@@ -27,13 +27,13 @@ const useValidateInput = ({ initialValue, validates }: Props) => {
 
     setValue(newValue);
 
-    const updateErrors = (errorType: string | undefined, isValid: boolean) => {
+    const updateErrors = (errorType: string, isValid: boolean) => {
       setErrors(prevErrors => {
         const updatedErrors = new Set(prevErrors);
         if (isValid) {
-          updatedErrors.delete(errorType!);
+          updatedErrors.delete(errorType);
         } else {
-          updatedErrors.add(errorType!);
+          updatedErrors.add(errorType);
         }
         return updatedErrors;
       });
@@ -46,14 +46,11 @@ const useValidateInput = ({ initialValue, validates }: Props) => {
   };
 
   useEffect(() => {
-    if (errors.size !== 0 || !value.length) {
-      setIsValidated(false);
-    } else {
-      setIsValidated(true);
-    }
+    setIsValidated(errors.size === 0 && value.length > 0);
   }, [errors, value]);
 
   const getErrorMessage = () => {
+    if (errors.size === 0) return '';
     return VALIDATION_ERROR_MESSAGE[Array.from(errors)[0] as ValidationError];
   };
 

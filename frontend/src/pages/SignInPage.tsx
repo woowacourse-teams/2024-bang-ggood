@@ -6,10 +6,11 @@ import { getUserInfo, postSignIn } from '@/apis/user';
 import { BangBangIcon, BangGgoodTextIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
+import Header from '@/components/_common/Header/Header';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useToast from '@/hooks/useToast';
 import useValidateInput from '@/hooks/useValidateInput';
-import { flexCenter, title3 } from '@/styles/common';
+import { flexCenter, title3, title4 } from '@/styles/common';
 import { validateEmail } from '@/utils/authValidation';
 
 const SignInPage = () => {
@@ -51,42 +52,46 @@ const SignInPage = () => {
     }
   };
 
+  const handleMoveSignUp = () => {
+    navigate(ROUTE_PATH.signUp);
+  };
+
+  const handleClickBackward = () => {
+    navigate(ROUTE_PATH.root);
+  };
+
   return (
-    <S.Wrapper>
-      <S.LogoBox>
-        <BangBangIcon />
-        <BangGgoodTextIcon aria-label="방끗 로고" />
-      </S.LogoBox>
-      <S.Box>
-        <S.Label>로그인</S.Label>
-        <FormField>
-          <FormField.Label label="이메일" />
-          <FormField.Input
-            value={email}
-            name="email"
-            onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChangeEmail(e)}
+    <>
+      <Header left={<Header.Backward onClick={handleClickBackward} />} />
+      <S.Wrapper>
+        <S.LogoBox>
+          <BangBangIcon />
+          <BangGgoodTextIcon aria-label="방끗 로고" />
+        </S.LogoBox>
+        <S.Box>
+          <S.Label>로그인</S.Label>
+          <FormField>
+            <FormField.Label label="이메일" />
+            <FormField.Input value={email} name="email" onChange={onChangeEmail} />
+            <FormField.ErrorMessage value={getEmailErrors()} />
+          </FormField>
+          <FormField>
+            <FormField.Label label="비밀번호" />
+            <FormField.Input value={password} name="password" onChange={onChangePassword} type="password" />
+          </FormField>
+          <FormField.ErrorMessage value={postErrorMessage} />
+          <Button
+            label="로그인 하기"
+            size="full"
+            isSquare={true}
+            color={'dark'}
+            onClick={handleSubmit}
+            disabled={disabled}
           />
-          <FormField.ErrorMessage value={getEmailErrors()} />
-        </FormField>
-        <FormField>
-          <FormField.Label label="비밀번호" />
-          <FormField.Input
-            value={password}
-            name="password"
-            onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChangePassword(e)}
-          />
-        </FormField>
-        <FormField.ErrorMessage value={postErrorMessage} />
-        <Button
-          label="로그인 하기"
-          size="full"
-          isSquare={true}
-          color={'dark'}
-          onClick={handleSubmit}
-          disabled={disabled}
-        />
-      </S.Box>
-    </S.Wrapper>
+        </S.Box>
+        <S.NavigateButton onClick={handleMoveSignUp}>아직 방끗 회원이 아니신가요?</S.NavigateButton>
+      </S.Wrapper>
+    </>
   );
 };
 
@@ -95,7 +100,7 @@ export default SignInPage;
 const S = {
   Wrapper: styled.div`
     ${flexCenter}
-    height:100dvh;
+    height:calc(100dvh - 56px);
     flex-direction: column;
     gap: 10px;
   `,
@@ -125,5 +130,16 @@ const S = {
 
     background-color: ${({ theme }) => theme.palette.background};
     gap: 20px;
+  `,
+  NavigateButton: styled.div`
+    margin-top: 20px;
+
+    ${title4};
+    color: ${({ theme }) => theme.palette.grey400};
+    cursor: pointer;
+
+    :hover {
+      color: ${({ theme }) => theme.palette.green600};
+    }
   `,
 };

@@ -17,6 +17,7 @@ const FirstSection = () => {
       <CS.EmptyBox height="5rem" mobileHeight="12rem" />
       <S.LogoTextBox>
         <S.BangBangIcon />
+        <CS.EmptyBox height="1rem" />
         <S.LogoBox>
           <S.TextWrapper>
             <S.SubtitleText>방 구하기</S.SubtitleText>
@@ -34,8 +35,15 @@ const FirstSection = () => {
           <S.BangGgoodTextIcon />
         </S.LogoBox>
       </S.LogoTextBox>
-      <CS.EmptyBox mobileHeight="2rem" height="4rem" />
+      <CS.EmptyBox mobileHeight="0rem" height="0.5rem" />
       <S.ButtonWrapper>
+        <S.Button
+          color={'dark'}
+          label="방끗 로그인하기"
+          size="full"
+          isSquare
+          onClick={() => navigate(ROUTE_PATH.signIn)}
+        />
         <KakaoLoginButton />
         <S.Button label="방끗 둘러보기" size="full" isSquare onClick={() => navigate(ROUTE_PATH.home)} />
       </S.ButtonWrapper>
@@ -54,10 +62,10 @@ const S = {
   LogoTextBox: styled.div`
     ${flexCenter};
     flex-direction: column;
-    gap: 2rem;
+    gap: 0.5rem;
 
     @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
-      gap: 5rem;
+      gap: 1rem;
     }
   `,
   CheckRelativeText: styled.span`
@@ -65,7 +73,7 @@ const S = {
   `,
   CenterBox: styled.div`
     ${flexCenter};
-    gap: 4rem;
+    gap: 2rem;
     flex-direction: column;
     height: 100%;
 
@@ -143,15 +151,10 @@ const S = {
     color: ${({ theme }) => theme.palette.grey500};
   `,
   BangBangIcon: styled(BangBangIcon)`
-    width: 30rem;
-    height: 15rem;
+    width: 25rem;
+    height: 13rem;
 
     animation: ${moveUpDown} 1s infinite;
-
-    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
-      width: 30rem;
-      height: 10rem;
-    }
   `,
   BangGgoodTextIcon: styled(BangGgoodTextIcon)`
     width: 15rem;

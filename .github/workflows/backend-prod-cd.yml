@@ -85,7 +85,7 @@ jobs:
         run: sleep 30
 
   deploy2:
-    needs: build
+    needs: deploy1
     runs-on: bang-ggood-prod2
     steps:
       - name: change permission

@@ -1,14 +1,14 @@
 import styled from '@emotion/styled';
 
-import useGetChecklistListQuery from '@/hooks/query/useGetChecklistListQuery';
+import useGetChecklistList from '@/hooks/useGetChecklistList';
 import { title3 } from '@/styles/common';
 
 const ChecklistListTitle = () => {
-  const { data: checklistList } = useGetChecklistListQuery();
+  const { data: checklistList } = useGetChecklistList();
 
   return (
     <S.Title>
-      방 둘러볼 때 꼭 필요한 체크리스트 <S.Count>{checklistList?.length}</S.Count>
+      내가 둘러본 방 <S.Count>{checklistList?.length}</S.Count>
     </S.Title>
   );
 };
@@ -21,9 +21,5 @@ const S = {
   `,
   Count: styled.span`
     color: ${({ theme }) => theme.palette.green500};
-  `,
-  FlexBox: styled.div`
-    display: flex;
-    margin: 1.6rem 0 1rem;
   `,
 };

@@ -6,6 +6,7 @@ export const BASE_URL = API_URL;
 export const ENDPOINT = {
   // checklist
   CHECKLISTS: '/checklists',
+  CHECKLISTS_LIKE: '/checklists/like',
   CHECKLISTS_V1: '/v1/checklists',
   CHECKLIST_QUESTION: '/checklists/questions',
   CHECKLIST_ALL_QUESTION: '/custom-checklist/all',
@@ -13,7 +14,7 @@ export const ENDPOINT = {
   CHECKLIST_ID: (id: number) => `/checklists/${id}`,
   CHECKLIST_ID_V1: (id: number) => `/v1/checklists/${id}`,
   // like
-  LIKE: (id: number) => `/checklists/${id}/like`,
+  LIKE: (id: number | ':id') => `/checklists/${id}/like`,
   // category
   CATEGORY: '/categories',
   CATEGORY_ADD: '/categories/priority',

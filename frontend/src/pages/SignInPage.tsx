@@ -72,12 +72,18 @@ const SignInPage = () => {
           <S.Label>로그인</S.Label>
           <FormField>
             <FormField.Label label="이메일" />
-            <FormField.Input value={email} name="email" onChange={onChangeEmail} />
+            <FormField.Input maxLength={254} value={email} name="email" onChange={onChangeEmail} />
             <FormField.ErrorMessage value={getEmailErrors()} />
           </FormField>
           <FormField>
             <FormField.Label label="비밀번호" />
-            <FormField.Input value={password} name="password" onChange={onChangePassword} type="password" />
+            <FormField.Input
+              maxLength={64}
+              value={password}
+              name="password"
+              onChange={onChangePassword}
+              type="password"
+            />
           </FormField>
           <FormField.ErrorMessage value={postErrorMessage} />
           <Button
@@ -102,37 +108,37 @@ const S = {
     ${flexCenter}
     height:calc(100dvh - 56px);
     flex-direction: column;
-    gap: 10px;
+    gap: 1rem;
   `,
   LogoBox: styled.div`
     ${flexCenter}
     margin-bottom:50px;
-    gap: 20px;
+    gap: 2rem;
   `,
   Label: styled.div`
     position: absolute;
-    top: -42px;
-    padding: 10px 14px;
-    border-radius: 10px 10px 0 0;
+    top: -4.2rem;
+    padding: 1rem 1.4rem;
+    border-radius: 1rem 1rem 0 0;
     ${title3}
 
-    background-color: ${({ theme }) => theme.palette.green400};
+    background-color: ${({ theme }) => theme.palette.green500};
 
     color: ${({ theme }) => theme.palette.white};
   `,
   Box: styled.div`
     display: flex;
     position: relative;
-    width: 300px;
+    width: 30rem;
     flex-direction: column;
-    padding: 16px;
-    border-radius: 10px;
+    padding: 1.6rem;
+    border-radius: 1rem;
 
     background-color: ${({ theme }) => theme.palette.background};
-    gap: 20px;
+    gap: 2rem;
   `,
   NavigateButton: styled.div`
-    margin-top: 20px;
+    margin-top: 2rem;
 
     ${title4};
     color: ${({ theme }) => theme.palette.grey400};

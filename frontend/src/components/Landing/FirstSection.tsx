@@ -37,8 +37,7 @@ const FirstSection = () => {
       </S.LogoTextBox>
       <CS.EmptyBox mobileHeight="0rem" height="0.5rem" />
       <S.ButtonWrapper>
-        <S.Button
-          color={'dark'}
+        <S.ServiceLoginButton
           label="방끗 로그인하기"
           size="full"
           isSquare
@@ -68,6 +67,13 @@ const S = {
       gap: 1rem;
     }
   `,
+  ServiceLoginButton: styled(Button)`
+    background-color: ${({ theme }) => theme.palette.green500};
+    border-radius: 1rem;
+
+    color: ${({ theme }) => theme.palette.white};
+  `,
+
   CheckRelativeText: styled.span`
     position: relative;
   `,
@@ -141,7 +147,7 @@ const S = {
     position: absolute;
     bottom: 5rem;
 
-    font-size: ${({ theme }) => theme.text.size.medium};
+    font-size: ${({ theme }) => theme.text.size.small};
   `,
   MoreBox: styled.div`
     width: 100%;

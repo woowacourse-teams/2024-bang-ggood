@@ -92,22 +92,34 @@ const SignUpPage = () => {
           <S.Label>회원가입</S.Label>
           <FormField>
             <FormField.Label label="이메일" />
-            <FormField.Input value={email} name="email" onChange={onChangeEmail} />
+            <FormField.Input value={email} name="email" onChange={onChangeEmail} maxLength={254} />
             <FormField.ErrorMessage value={getEmailError()} />
           </FormField>
           <FormField>
             <FormField.Label label="닉네임" />
-            <FormField.Input value={name} name="name" onChange={onChangeName} />
+            <FormField.Input value={name} name="name" onChange={onChangeName} maxLength={20} />
             <FormField.ErrorMessage value={getNameError()} />
           </FormField>
           <FormField>
             <FormField.Label label="비밀번호" />
-            <FormField.Input value={password} name="password" onChange={onChangePassword} />
+            <FormField.Input
+              value={password}
+              name="password"
+              onChange={onChangePassword}
+              type="password"
+              maxLength={64}
+            />
             <FormField.ErrorMessage value={getPasswordError()} />
           </FormField>
           <FormField>
             <FormField.Label label="비밀번호 확인" />
-            <FormField.Input value={passwordConfirm} name="passwordConfirm" onChange={onChangePasswordConfirm} />
+            <FormField.Input
+              value={passwordConfirm}
+              name="passwordConfirm"
+              onChange={onChangePasswordConfirm}
+              type="password"
+              maxLength={64}
+            />
             <FormField.ErrorMessage value={getPasswordConfirmError()} />
           </FormField>
           <FormField.ErrorMessage value={postErrorMessage} />
@@ -133,38 +145,36 @@ const S = {
     ${flexCenter}
     height:calc(100dvh - 56px);
     flex-direction: column;
-    gap: 10px;
+    gap: 1rem;
   `,
   LogoBox: styled.div`
     ${flexCenter}
-    margin-bottom:50px;
-    gap: 20px;
+    margin-bottom:4rem;
+    gap: 2rem;
   `,
   Label: styled.div`
     position: absolute;
-    top: -42px;
-    padding: 10px 14px;
-    border-radius: 10px 10px 0 0;
+    top: -4.2rem;
+    padding: 1rem 1.4rem;
+    border-radius: 1rem 1rem 0 0;
     ${title3}
 
-    background-color: ${({ theme }) => theme.palette.green400};
+    background-color: ${({ theme }) => theme.palette.green500};
 
     color: ${({ theme }) => theme.palette.white};
   `,
   Box: styled.div`
     display: flex;
     position: relative;
-    width: 300px;
+    width: 30rem;
     flex-direction: column;
-    padding: 16px;
-    border-radius: 10px;
+    padding: 1.6rem;
+    border-radius: 1rem;
 
     background-color: ${({ theme }) => theme.palette.background};
-    gap: 20px;
+    gap: 1.5rem;
   `,
   NavigateButton: styled.div`
-    margin-top: 20px;
-
     ${title4};
     color: ${({ theme }) => theme.palette.grey400};
     cursor: pointer;

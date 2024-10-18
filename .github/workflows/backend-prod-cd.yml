@@ -76,7 +76,7 @@ jobs:
         run: sudo fuser -k -n tcp 8080 || true
         
       - name: Start server
-        run: sudo nohup java -jar -Dspring.profiles.active=dev -Duser.timezone=Asia/Seoul ./backend/bang-ggood/build/libs/*SNAPSHOT.jar > /home/ubuntu/actions-runner/server.log 2>&1 &
+        run: sudo nohup java -jar -Dspring.profiles.active=prod -Duser.timezone=Asia/Seoul ./backend/bang-ggood/build/libs/*SNAPSHOT.jar > /home/ubuntu/actions-runner/server.log 2>&1 &
 
       - name: Delete unhealth_flag file
         run: sudo rm /etc/nginx/sites-available/unhealth_flag.txt
@@ -106,7 +106,7 @@ jobs:
         run: sudo fuser -k -n tcp 8080 || true
         
       - name: Start server
-        run: sudo nohup java -jar -Dspring.profiles.active=dev -Duser.timezone=Asia/Seoul ./backend/bang-ggood/build/libs/*SNAPSHOT.jar > /home/ubuntu/actions-runner/server.log 2>&1 &
+        run: sudo nohup java -jar -Dspring.profiles.active=prod -Duser.timezone=Asia/Seoul ./backend/bang-ggood/build/libs/*SNAPSHOT.jar > /home/ubuntu/actions-runner/server.log 2>&1 &
 
       - name: Delete unhealth_flag file
         run: sudo rm /etc/nginx/sites-available/unhealth_flag.txt

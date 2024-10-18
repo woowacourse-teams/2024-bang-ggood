@@ -14,12 +14,14 @@ const FlexBox = {
     flexWrap?: string;
     width?: string;
     justify?: 'space-between' | 'around';
+    align?: 'center';
   }>`
     ${flexRow}
     gap:  ${({ gap }) => gap ?? '6%'};
-    ${({ flexWrap }) => flexWrap && `flex-wrap:${flexWrap};`}
-    ${({ width }) => width && `width:${width};`}
-    ${({ justify }) => justify && `justify-content:${justify};`}
+    flex-wrap: ${({ flexWrap }) => flexWrap};
+    width: ${({ width }) => width};
+    justify-content: ${({ justify }) => justify};
+    align-items: ${({ align }) => align};
   `,
 };
 

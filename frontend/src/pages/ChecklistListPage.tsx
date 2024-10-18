@@ -30,8 +30,12 @@ const ChecklistListPage = () => {
     <>
       <Header center={<Header.Text>체크리스트</Header.Text>} />
       <Layout bgColor={theme.palette.background} withFooter withHeader>
-        <ErrorBoundary fallback={<TitleErrorFallback title="방 둘러볼 때 꼭 필요한 체크리스트" />}>
-          <FlexBox.Horizontal justify="space-between">
+        <S.FlexBox>
+          <CustomBanner onClick={handleClickMoveCustomPage} />
+        </S.FlexBox>
+        <S.Spacer height="1.4rem" />
+        <ErrorBoundary fallback={<TitleErrorFallback title="내가 둘러본 방" />}>
+          <FlexBox.Horizontal justify="space-between" align="center">
             <ChecklistListTitle />
             <S.LikeFilterBox onClick={toggle} $isChecked={isEnabled}>
               <Like fill={theme.palette.red500} stroke={theme.palette.red500} width="2rem" />
@@ -39,9 +43,7 @@ const ChecklistListPage = () => {
             </S.LikeFilterBox>
           </FlexBox.Horizontal>
         </ErrorBoundary>
-        <S.FlexBox>
-          <CustomBanner onClick={handleClickMoveCustomPage} />
-        </S.FlexBox>
+        <S.Spacer height="1rem" />
         <ErrorBoundary FallbackComponent={ListErrorFallback}>
           <ChecklistListContainer />
         </ErrorBoundary>
@@ -58,7 +60,6 @@ export default ChecklistListPage;
 const S = {
   FlexBox: styled.div`
     display: flex;
-    margin: 1.6rem 0 1rem;
   `,
   LikeFilterBox: styled.section<{ $isChecked: boolean }>`
     ${flexRow}
@@ -73,5 +74,9 @@ const S = {
     background-color: ${({ theme, $isChecked }) => ($isChecked ? theme.palette.red200 : theme.palette.white)};
     ${boxShadow};
     cursor: pointer;
+  `,
+  Spacer: styled.div<{ width?: string; height?: string }>`
+    width: ${({ width }) => width};
+    height: ${({ height }) => height};
   `,
 };

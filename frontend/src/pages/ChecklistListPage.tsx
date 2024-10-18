@@ -21,7 +21,7 @@ import theme from '@/styles/theme';
 const ChecklistListPage = () => {
   const navigate = useNavigate();
 
-  const { isEnabled, toggle } = useGetChecklistList();
+  const { isLikeFiltered: isEnabled, toggle } = useGetChecklistList();
 
   const handleClickMoveCustomPage = () => navigate(ROUTE_PATH.checklistQuestionSelect);
   const handleClickFloatingButton = () => navigate(ROUTE_PATH.checklistNew);

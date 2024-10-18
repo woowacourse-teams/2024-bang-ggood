@@ -3,22 +3,22 @@ import { create } from 'zustand';
 import useGetChecklistListQuery from '@/hooks/query/useGetChecklistListQuery';
 
 interface IsLikeFilterEnabledState {
-  isEnabled: boolean;
+  isLikeFiltered: boolean;
   actions: {
     toggle: () => void;
   };
 }
 export const useLikeFilterStore = create<IsLikeFilterEnabledState>((set, get) => ({
-  isEnabled: false,
-  actions: { toggle: () => set({ isEnabled: !get().isEnabled }) },
+  isLikeFiltered: false,
+  actions: { toggle: () => set({ isLikeFiltered: !get().isLikeFiltered }) },
 }));
 
 const useGetChecklistList = () => {
   const {
-    isEnabled,
+    isLikeFiltered,
     actions: { toggle },
   } = useLikeFilterStore();
-  return { ...useGetChecklistListQuery(isEnabled), isEnabled, toggle };
+  return { ...useGetChecklistListQuery(isLikeFiltered), isLikeFiltered, toggle };
 };
 
 export default useGetChecklistList;

@@ -35,7 +35,7 @@ const CS = {
     width: 100%;
     margin-top: ${({ height }) => height};
 
-    @media (height: ${({ theme }) => theme.viewport.TABLET}px) {
+    @media (min-height < ${({ theme }) => theme.viewport.TABLET}px) {
       margin-top: ${({ mobileHeight, height }) => mobileHeight || height};
     }
   `,

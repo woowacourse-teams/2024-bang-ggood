@@ -28,6 +28,9 @@ export const ENDPOINT = {
   USER_VALID: '/token-exist',
   USER_ACCESS_TOKEN_REISSUE: '/accessToken/reissue',
   TOKEN: '/token',
+  //일반 로그인
+  REGISTER: '/v1/local-auth/register',
+  SINGIN: '/v1/local-auth/login',
   //subway
   SUBWAY: (position: Position) => `/stations/nearest?latitude=${position.latitude}&longitude=${position.longitude}`,
 };

@@ -1,6 +1,7 @@
 import { createStore } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+import { DEFAULT_POSITION } from '@/constants/map';
 import { roomFloorLevels, roomOccupancyPeriods } from '@/constants/roomInfo';
 import { parseRoomInfo } from '@/hooks/useRoomInfoValidated';
 import { RoomInfo } from '@/types/room';
@@ -35,9 +36,11 @@ export const initialRoomInfo = {
   summary: { rawValue: '', errorMessage: '' },
   memo: { rawValue: '', errorMessage: '' },
 
+  /* 위치 */
   buildingName: { rawValue: '', errorMessage: '' },
-  station: { rawValue: '', errorMessage: '' },
-  walkingTime: { rawValue: '', errorMessage: '' },
+  station: { rawValue: [], errorMessage: '' },
+  position: { rawValue: DEFAULT_POSITION, errorMessage: '' },
+
   address: { rawValue: '', errorMessage: '' },
   includedMaintenances: { rawValue: [], errorMessage: '' },
 };
@@ -98,6 +101,8 @@ export const roomInfoStore = createStore<RoomInfoState & { actions: RoomInfoActi
   ),
 );
 
+//TODO: api 에 안들어갈 데이터 제외 (subways)
+// position 은 마지막에 빼기
 export const roomInfoApiMapper = (values: Partial<RoomInfoStoreState>) => {
   const result = { ...values, structure: values.structure === '' ? undefined : '' };
   return mapObjUndefinedToNull(result) as Nullable<Partial<RoomInfoStoreState>>;

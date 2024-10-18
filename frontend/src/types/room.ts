@@ -1,4 +1,5 @@
 import { roomOccupancyPeriods } from '@/constants/roomInfo';
+import { SubwayStation } from '@/types/subway';
 
 export type OccupancyPeriod = (typeof roomOccupancyPeriods)[number];
 
@@ -10,8 +11,7 @@ export type RoomInfo = Partial<{
   contractTerm: number;
   floorLevel: string;
   floor: number;
-  station: string;
-  walkingTime: number;
+  station: SubwayStation[];
   realEstate: string;
   size: number;
   structure: string;

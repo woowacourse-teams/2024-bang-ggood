@@ -14,7 +14,7 @@ import {
   Validator,
 } from '@/utils/validators';
 
-const validators: Record<keyof ValidatedRoomInfo, Validator[]> = {
+const validators: Record<keyof Omit<RoomInfo, 'createdAt'>, Validator[]> = {
   roomName: [lengthValidator(20)],
   deposit: [isNumericValidator, nonNegativeValidator],
   rent: [isNumericValidator, nonNegativeValidator],
@@ -33,9 +33,9 @@ const validators: Record<keyof ValidatedRoomInfo, Validator[]> = {
   memo: [],
 
   station: [],
-  walkingTime: [],
   address: [],
   buildingName: [],
+  includedMaintenances: [],
 };
 
 const numerics = [
@@ -47,12 +47,11 @@ const numerics = [
   'floor',
   'occupancyMonth',
   'occupancyPeriod',
-  'walkingTime',
 ] as const satisfies (keyof ValidatedRoomInfo)[];
 
 const isNumeric = new Set<keyof RoomInfo>(numerics);
 
-type ValidatedRoomInfo = Omit<RoomInfo, 'includedMaintenances' | 'createdAt'>;
+type ValidatedRoomInfo = Omit<RoomInfo, 'includedMaintenances' | 'createdAt' | 'station'>;
 type Includes<T extends readonly string[], U extends string> = U extends T[number] ? true : false;
 
 export const parseRoomInfo = (name: keyof RoomInfo, rawValue: string) =>
@@ -89,6 +88,7 @@ const useRoomInfoValidated = <Key extends keyof ValidatedRoomInfo>(name: Key) =>
     [name, rawValue, actions],
   );
 
+  //
   return { rawValue, value, errorMessage, onChange, set };
 };
 

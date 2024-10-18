@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { FunctionComponent, SVGProps } from 'react';
 
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
-import { flexCenter, title3, title4 } from '@/styles/common';
+import { flexCenter, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
 
 type ButtonSize = 'xSmall' | 'small' | 'medium' | 'full';
@@ -104,19 +104,19 @@ const sizeStyles = {
   xSmall: css`
     padding: 0.8rem 1.5rem;
     ${title4}
-    min-width:7rem;
+    min-width: 7rem;
   `,
   small: css`
     padding: 1rem 2rem;
     ${title4}
   `,
   medium: css`
-    padding: 1.2rem 2.4rem;
-    ${title3}
+    padding: 1rem 4rem;
+    ${title4}
   `,
   full: css`
     width: 100%;
-    padding: 1.4rem 2rem;
-    ${title3}
+    padding: 1.2rem 1rem;
+    ${title4}
   `,
 };

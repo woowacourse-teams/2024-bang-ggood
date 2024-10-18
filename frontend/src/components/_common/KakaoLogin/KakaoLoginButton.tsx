@@ -22,7 +22,7 @@ const S = {
     width: 100%;
     height: 5rem;
     ${flexRow}
-    gap: 0.5rem;
+    gap: 1rem;
     justify-content: center;
     align-items: center;
     border-radius: 0.8rem;
@@ -34,7 +34,7 @@ const S = {
     margin: 0.5rem;
 
     font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: ${({ theme }) => theme.text.size.medium};
+    font-size: ${({ theme }) => theme.text.size.small};
     line-height: 1.5;
   `,
 };

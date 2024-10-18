@@ -74,16 +74,14 @@ const S = {
     }
   `,
   SubtitleText: styled.div`
-    font-size: 2.8rem;
+    font-size: ${({ theme }) => theme.text.size.large};
 
     @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
-      font-size: 2rem;
+      font-size: ${({ theme }) => theme.text.size.medium};
     }
   `,
   Button: styled(Button)`
     height: 5rem;
-
-    font-size: ${({ theme }) => theme.text.size.medium};
     border-radius: 1rem;
   `,
   LogoBox: styled.div`
@@ -113,11 +111,11 @@ const S = {
   `,
   ButtonWrapper: styled.div`
     ${flexColumn}
-    width: calc(100% - 10rem);
-    margin: 0 2rem;
+    width: calc(100% - 3rem);
+    margin: 0 1rem;
     box-sizing: border-box;
 
-    gap: 2rem;
+    gap: 1rem;
   `,
   GuestLoginButton: styled.button`
     width: 100%;
@@ -133,7 +131,7 @@ const S = {
     position: absolute;
     bottom: 5rem;
 
-    font-size: ${({ theme }) => theme.text.size.medium};
+    font-size: ${({ theme }) => theme.text.size.small};
   `,
   MoreBox: styled.div`
     width: 100%;

@@ -33,29 +33,19 @@ export const checklistHandlers = [
   http.post(BASE_URL + ENDPOINT.CHECKLISTS, () => {
     return HttpResponse.json({}, { status: 201 });
   }),
+
   http.post(BASE_URL + ENDPOINT.CHECKLISTS_V1, () => {
-    return HttpResponse.json({}, { status: 201 });
+    return HttpResponse.json(
+      JSON.stringify({
+        bangggoodCode: 'LIKE_ALREADY_EXISTS',
+        message: '체크리스트가 이미 좋아요 상태입니다.', // 추가적인 메시지 제공
+      }),
+      { status: 500 },
+    );
   }),
 
   http.get(BASE_URL + ENDPOINT.CHECKLIST_ALL_QUESTION, () => {
     return HttpResponse.json(checklistAllQuestions, { status: 200 });
-  }),
-
-  http.post<{ id: string }>(BASE_URL + ENDPOINT.LIKE(':id'), ({ params }) => {
-    const id = Number(params.id);
-    addLike(id);
-    return HttpResponse.json(null, { status: 200 });
-  }),
-
-  http.delete<{ id: string }>(BASE_URL + ENDPOINT.LIKE(':id'), ({ params }) => {
-    const id = Number(params.id);
-    removeLike(id);
-    return HttpResponse.json(null, { status: 200 });
-  }),
-
-  http.get<{ id: string }>(BASE_URL + ENDPOINT.LIKE(':id'), ({ params }) => {
-    const id = Number(params.id);
-    return HttpResponse.json(checklist.get(id), { status: 200 });
   }),
 
   http.put(BASE_URL + ENDPOINT.CHECKLIST_CUSTOM, () => {
@@ -64,6 +54,4 @@ export const checklistHandlers = [
 ];
 
 const checklist = new Map();
-const addLike = (id: number) => checklist.set(id, true);
-const removeLike = (id: number) => checklist.set(id, false);
 const getLike = (id: number) => checklist.get(id);

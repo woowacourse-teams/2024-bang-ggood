@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useStore } from 'zustand';
 
-import { TOAST_MESSAGE } from '@/constants/message';
+import { TOAST_MESSAGE } from '@/constants/messages/message';
 import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
 import usePutChecklistQuery from '@/hooks/query/usePutChecklistQuery';
 import useToast from '@/hooks/useToast';

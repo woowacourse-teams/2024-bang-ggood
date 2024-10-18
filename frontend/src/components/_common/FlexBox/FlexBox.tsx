@@ -9,11 +9,17 @@ const FlexBox = {
     flex: auto;
     ${({ width }) => width && `width:${width};`}
   `,
-  Horizontal: styled.div<{ gap?: number | string; flexWrap?: string; width?: string; type?: 'spaceBetween' | 'row' }>`
+  Horizontal: styled.div<{
+    gap?: number | string;
+    flexWrap?: string;
+    width?: string;
+    justify?: 'space-between' | 'around';
+  }>`
     ${flexRow}
     gap:  ${({ gap }) => gap ?? '6%'};
     ${({ flexWrap }) => flexWrap && `flex-wrap:${flexWrap};`}
     ${({ width }) => width && `width:${width};`}
+    ${({ justify }) => justify && `justify-content:${justify};`}
   `,
 };
 

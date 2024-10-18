@@ -1,0 +1,49 @@
+{
+  "room": {
+    "roomName": "aag",
+    "deposit": 1,
+    "rent": 2,
+    "maintenanceFee": 1,
+    "contractTerm": 2,
+    // "type": "", 없어져야함
+    "size": 2,
+    "floor": 2,
+    "floorLevel": "지상",
+    "structure": "쓰리룸 이상",
+    "realEstate": "ffef",
+    "occupancyMonth": 11,
+    "occupancyPeriod": null,
+    "summary": "",
+    "memo": "",
+    "buildingName": "",
+    // "station": "",  안보내야함
+    // "walkingTime": 0,
+    "address": "서울특별시 강남구 선릉로86길 10",
+    "includedMaintenances": [1, 3]
+  },
+  "options": [1, 2, 5],
+  "questions": [
+    { "questionId": 1, "answer": "GOOD" },
+    { "questionId": 2, "answer": "GOOD" },
+    { "questionId": 3, "answer": "NONE" },
+    { "questionId": 4, "answer": "NONE" },
+    { "questionId": 5, "answer": "NONE" },
+    { "questionId": 6, "answer": "NONE" },
+    { "questionId": 7, "answer": "NONE" },
+    { "questionId": 8, "answer": "NONE" },
+    { "questionId": 9, "answer": "NONE" },
+    { "questionId": 1, "answer": "BAD" },
+    { "questionId": 2, "answer": "BAD" },
+    { "questionId": 3, "answer": "NONE" },
+    { "questionId": 1, "answer": "GOOD" },
+    { "questionId": 2, "answer": "NONE" },
+    { "questionId": 3, "answer": "NONE" },
+    { "questionId": 1, "answer": "GOOD" },
+    { "questionId": 2, "answer": "GOOD" },
+    { "questionId": 3, "answer": "NONE" },
+    { "questionId": 1, "answer": "GOOD" },
+    { "questionId": 2, "answer": "NONE" },
+    { "questionId": 3, "answer": "NONE" }
+  ],
+  "geolocation": { "latitude": 37.5030042, "longitude": 127.0507571 }
+}

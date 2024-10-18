@@ -24,7 +24,6 @@ export const initialRoomInfo = {
   rent: { rawValue: '', errorMessage: '' },
   maintenanceFee: { rawValue: '', errorMessage: '' },
   contractTerm: { rawValue: '', errorMessage: '' },
-  type: { rawValue: '', errorMessage: '' },
   size: { rawValue: '', errorMessage: '' },
   floor: { rawValue: '', errorMessage: '' },
   floorLevel: { rawValue: roomFloorLevels[0], errorMessage: '' },
@@ -40,7 +39,7 @@ export const initialRoomInfo = {
   walkingTime: { rawValue: '', errorMessage: '' },
   address: { rawValue: '', errorMessage: '' },
   includedMaintenances: { rawValue: [], errorMessage: '' },
-};
+} satisfies Record<keyof RoomInfoState, unknown>;
 
 export type oneItem = { rawValue: string; errorMessage: string };
 export type RawValues = { [k in keyof RoomInfoStoreState]: NumberToString<RoomInfoStoreState[k]> };
@@ -98,8 +97,10 @@ export const roomInfoStore = createStore<RoomInfoState & { actions: RoomInfoActi
   ),
 );
 
-export const roomInfoApiMapper = (values: Partial<RoomInfoStoreState>) => {
-  const result = { ...values, structure: values.structure === '' ? undefined : '' };
+export const roomInfoApiMapper = (values: RoomInfoStoreState) => {
+  const { station: _station, walkingTime: _walkingTime, ...omitted } = values;
+  const result = { ...omitted, structure: omitted.structure === '' ? undefined : '' };
+
   return mapObjUndefinedToNull(result) as Nullable<Partial<RoomInfoStoreState>>;
 };
 

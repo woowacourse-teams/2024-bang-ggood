@@ -19,7 +19,6 @@ export type RoomInfo = Partial<{
   occupancyPeriod: OccupancyPeriod;
   summary: string;
   memo: string;
-  type: string;
   createdAt?: string;
   address: string;
   buildingName: string;

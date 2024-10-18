@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useNavigate, useRouteError } from 'react-router-dom';
 
-import HttpError from '@/apis/error/HttpError';
+import APIError from '@/apis/error/APIError';
 import { BangBangCryIcon, Error500 } from '@/assets/assets';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
@@ -16,7 +16,7 @@ const ErrorPage = () => {
   };
 
   const error = useRouteError() as Error;
-  const { message } = error as HttpError;
+  const { message } = error as APIError;
 
   return (
     <>

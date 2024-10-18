@@ -10,7 +10,7 @@ import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import TipBox from '@/components/_common/TipBox/TipBox';
 import { ChecklistQuestionSelectTabs } from '@/components/ChecklistQuestionSelect/ChecklistQuestionSelectTabs';
 import QuestionListTemplate from '@/components/ChecklistQuestionSelect/QuestionListTemplate/QuestionListTemplate';
-import { TOAST_MESSAGE } from '@/constants/message';
+import { TOAST_MESSAGE } from '@/constants/messages/message';
 import { ROUTE_PATH } from '@/constants/routePath';
 import usePutCustomChecklist from '@/hooks/query/usePutCustomChecklist';
 import useHandleTip from '@/hooks/useHandleTip';

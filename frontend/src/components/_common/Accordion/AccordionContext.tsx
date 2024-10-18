@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 
-import { ERROR_MESSAGE } from '@/constants/message/errorMessage';
+import { ERROR_MESSAGE } from '@/constants/messages/errorMessage';
 
 interface AccordionProps {
   id: number;

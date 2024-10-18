@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { CloseIcon } from '@/assets/assets';
-import { TIP_MESSAGE } from '@/constants/message';
+import { TIP_MESSAGE } from '@/constants/messages/message';
 import useHandleTip, { TipType } from '@/hooks/useHandleTip';
 import { flexCenter, flexSpaceBetween, title4 } from '@/styles/common';
 

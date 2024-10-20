@@ -87,7 +87,7 @@ public class AuthController {
                 .build();
     }
 
-    @PostMapping("/v1/password-reset/email")
+    @PostMapping("/v1/password-reset/send-code")
     public ResponseEntity<Void> sendPasswordResetEmail(@Valid @RequestBody ForgotPasswordRequest request) {
         authService.sendPasswordResetEmail(request);
         return ResponseEntity.noContent().build();

@@ -38,16 +38,19 @@ public class QuestionManageService {
     public CustomChecklistQuestionsResponse readCustomChecklistQuestions(User user) {
         List<CustomChecklistQuestion> customChecklistQuestions = checklistQuestionService.readCustomChecklistQuestions(
                 user);
-        List<CategoryQuestionsResponse> categoryQuestionsResponses = categorizeCustomChecklistQuestions(
-                customChecklistQuestions);
+        List<CategoryQuestionsResponse> categoryQuestionsResponses = categorizeCustomChecklistQuestions(user, customChecklistQuestions).stream()
+                .filter(categoryQuestionsResponse -> !categoryQuestionsResponse.questions().isEmpty())
+                .toList();
+
         return new CustomChecklistQuestionsResponse(categoryQuestionsResponses);
     }
 
     private List<CategoryQuestionsResponse> categorizeCustomChecklistQuestions(
+            User user,
             List<CustomChecklistQuestion> customChecklistQuestions) {
         List<CategoryQuestionsResponse> categoryQuestionsResponses = new ArrayList<>();
 
-        for (CategoryEntity category : questionService.findAllCategories()) {
+        for (CategoryEntity category : questionService.findAllCustomQuestionCategories(user)) {
             List<QuestionResponse> questionResponses = customChecklistQuestions.stream()
                     .filter(customChecklistQuestion -> customChecklistQuestion.getCategory().getName().equals(category.getName())) // TODO 리팩토링
                     .map(customChecklistQuestion -> new QuestionResponse(customChecklistQuestion.getQuestion()))

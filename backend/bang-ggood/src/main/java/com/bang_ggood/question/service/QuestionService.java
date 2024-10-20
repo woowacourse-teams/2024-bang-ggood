@@ -4,6 +4,7 @@ import com.bang_ggood.question.domain.CategoryEntity;
 import com.bang_ggood.question.domain.QuestionEntity;
 import com.bang_ggood.question.repository.CategoryRepository;
 import com.bang_ggood.question.repository.QuestionRepository;
+import com.bang_ggood.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,11 @@ public class QuestionService {
     @Transactional(readOnly = true)
     public List<CategoryEntity> findAllCategories() {
         return categoryRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public List<CategoryEntity> findAllCustomQuestionCategories(User user) {
+        return categoryRepository.findAllCustomQuestionCategoriesById(user.getId());
     }
 
     @Transactional(readOnly = true)

@@ -43,8 +43,8 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
         User user = userRepository.save(UserFixture.USER1());
 
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-        checklistQuestionRepository.save(ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1));
-        checklistQuestionRepository.save(ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, QuestionFixture.QUESTION2));
+        checklistQuestionRepository.save(ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1_CATEGORY1));
+        checklistQuestionRepository.save(ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, QuestionFixture.QUESTION2_CATEGORY1));
 
         // when
         List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findAllByChecklistId(
@@ -65,13 +65,13 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
 
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
         ChecklistQuestion checklistQuestion1 = checklistQuestionRepository.save(
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1));
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1_CATEGORY1));
         ChecklistQuestion checklistQuestion2 = checklistQuestionRepository.save(
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, QuestionFixture.QUESTION2));
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, QuestionFixture.QUESTION2_CATEGORY1));
 
         //when
         checklistQuestionRepository.deleteAllByChecklistId(
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1).getChecklistId());
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1_CATEGORY1).getChecklistId());
 
         //then
         assertAll(

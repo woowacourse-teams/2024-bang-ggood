@@ -3,6 +3,7 @@ package com.bang_ggood.auth.controller;
 import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.auth.controller.cookie.CookieProvider;
 import com.bang_ggood.auth.controller.cookie.CookieResolver;
+import com.bang_ggood.auth.dto.request.ForgotPasswordRequest;
 import com.bang_ggood.auth.dto.request.LocalLoginRequestV1;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.request.RegisterRequestV1;
@@ -85,6 +86,13 @@ public class AuthController {
                 .header(HttpHeaders.SET_COOKIE, deletedRefreshTokenCookie.toString())
                 .build();
     }
+
+    @PostMapping("/v1/password-reset/email")
+    public ResponseEntity<Void> sendPasswordResetEmail(@Valid @RequestBody ForgotPasswordRequest request) {
+        authService.sendPasswordResetEmail(request);
+        return ResponseEntity.noContent().build();
+    }
+
 
     @PostMapping("/accessToken/reissue")
     public ResponseEntity<Void> reissueAccessToken(HttpServletRequest httpServletRequest) {

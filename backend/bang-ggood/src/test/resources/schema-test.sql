@@ -193,5 +193,6 @@ CREATE TABLE password_reset_code
     email       VARCHAR(255) NOT NULL,
     code        VARCHAR(255) NOT NULL,
     created_at  TIMESTAMP(6),
-    modified_at TIMESTAMP(6)
+    modified_at TIMESTAMP(6),
+    deleted      BOOLEAN
 );

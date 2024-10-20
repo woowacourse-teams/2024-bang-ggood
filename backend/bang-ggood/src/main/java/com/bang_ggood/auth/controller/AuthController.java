@@ -3,6 +3,7 @@ package com.bang_ggood.auth.controller;
 import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.auth.controller.cookie.CookieProvider;
 import com.bang_ggood.auth.controller.cookie.CookieResolver;
+import com.bang_ggood.auth.dto.request.ConfirmPasswordResetCodeRequest;
 import com.bang_ggood.auth.dto.request.ForgotPasswordRequest;
 import com.bang_ggood.auth.dto.request.LocalLoginRequestV1;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
@@ -103,6 +104,12 @@ public class AuthController {
     @PostMapping("/v1/password-reset/send-code")
     public ResponseEntity<Void> sendPasswordResetEmail(@Valid @RequestBody ForgotPasswordRequest request) {
         authService.sendPasswordResetEmail(request);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/v1/password-reset/confirm")
+    public ResponseEntity<Void> confirmPasswordResetCode(@RequestBody ConfirmPasswordResetCodeRequest request) {
+        authService.confirmPasswordResetCode(request);
         return ResponseEntity.noContent().build();
     }
 

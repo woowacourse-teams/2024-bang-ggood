@@ -106,8 +106,8 @@ CREATE TABLE checklist_maintenance
 CREATE TABLE checklist_question
 (
     id           BIGINT AUTO_INCREMENT PRIMARY KEY,
-    question     VARCHAR(255),
-    question_id  INTEGER NOT NULL,
+    question     VARCHAR(255) NOT NULL,
+    question_id  INTEGER      NOT NULL,
     checklist_id BIGINT       NOT NULL,
     answer       VARCHAR(255),
     created_at   TIMESTAMP(6),
@@ -178,9 +178,10 @@ CREATE TABLE checklist_station
 
 CREATE TABLE password_reset_code
 (
-    id         BIGINT AUTO_INCREMENT PRIMARY KEY,
-    email      VARCHAR(255) NOT NULL,
-    code       VARCHAR(255) NOT NULL,
-    created_at   TIMESTAMP(6),
-    modified_at  TIMESTAMP(6)
+    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
+    email       VARCHAR(255) NOT NULL,
+    code        VARCHAR(255) NOT NULL,
+    created_at  TIMESTAMP(6),
+    modified_at TIMESTAMP(6),
+    deleted     BOOLEAN
 );

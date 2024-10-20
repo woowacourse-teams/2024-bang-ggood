@@ -84,7 +84,10 @@ public enum ExceptionCode {
 
     // Station
     STATION_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.STATION_SERVER_ERROR, "지하철 역을 찾을 수 없습니다."),
-    STATION_NAME_NOT_SAME(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.STATION_SERVER_ERROR, "지하철 역을 찾을 수 없습니다.");
+    STATION_NAME_NOT_SAME(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.STATION_SERVER_ERROR, "지하철 역을 찾을 수 없습니다."),
+
+    //Mail
+    MAIL_SEND_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.MAIL_SEND_ERROR, "메일 전송 중 오류가 발생했습니다.");
 
     private final HttpStatus httpStatus;
     private final ClientExceptionCode clientExceptionCode;

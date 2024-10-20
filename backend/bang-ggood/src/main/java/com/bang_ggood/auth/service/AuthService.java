@@ -116,7 +116,7 @@ public class AuthService {
 
     public void sendPasswordResetEmail(ForgotPasswordRequest request) {
         String code = mailSender.sendPasswordResetEmail(request.email());
-        passwordResetCodeRepository.save(new PasswordResetCode(code));
+        passwordResetCodeRepository.save(new PasswordResetCode(request.email(), code));
     }
 
     @Transactional(readOnly = true)

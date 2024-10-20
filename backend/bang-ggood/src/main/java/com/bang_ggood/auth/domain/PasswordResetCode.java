@@ -1,13 +1,13 @@
 package com.bang_ggood.auth.domain;
 
 import com.bang_ggood.BaseEntity;
+import com.bang_ggood.user.domain.Email;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.util.Objects;
 
 import static lombok.AccessLevel.PROTECTED;
@@ -21,9 +21,12 @@ public class PasswordResetCode extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Email email;
+
     private String code;
 
-    public PasswordResetCode(String code) {
+    public PasswordResetCode(String email, String code) {
+        this.email = new Email(email);
         this.code = code;
     }
 

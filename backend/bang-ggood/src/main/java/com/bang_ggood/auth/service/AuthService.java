@@ -1,6 +1,7 @@
 package com.bang_ggood.auth.service;
 
 import com.bang_ggood.auth.domain.PasswordResetCode;
+import com.bang_ggood.auth.dto.request.ConfirmPasswordResetCodeRequest;
 import com.bang_ggood.auth.dto.request.ForgotPasswordRequest;
 import com.bang_ggood.auth.dto.request.LocalLoginRequestV1;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
@@ -25,6 +26,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -33,6 +36,7 @@ public class AuthService {
 
     private static final Logger log = LoggerFactory.getLogger(AuthService.class);
     private static final int GUEST_USER_LIMIT = 1;
+    private static final int PASSWORD_RESET_CODE_EXPIRED_MINUTES = 3;
 
     private final OauthClient oauthClient;
     private final JwtTokenProvider jwtTokenProvider;
@@ -41,6 +45,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final MailSender mailSender;
     private final PasswordResetCodeRepository passwordResetCodeRepository;
+    private final Clock clock;
 
     @Transactional
     public Long register(RegisterRequestV1 request) {
@@ -117,6 +122,16 @@ public class AuthService {
     public void sendPasswordResetEmail(ForgotPasswordRequest request) {
         String code = mailSender.sendPasswordResetEmail(request.email());
         passwordResetCodeRepository.save(new PasswordResetCode(request.email(), code));
+    }
+
+    @Transactional(readOnly = true)
+    public void confirmPasswordResetCode(ConfirmPasswordResetCodeRequest request) {
+        LocalDateTime timeLimit = LocalDateTime.now(clock).minusMinutes(PASSWORD_RESET_CODE_EXPIRED_MINUTES);
+        boolean isValid = passwordResetCodeRepository.existsByEmailAndCodeAndCreatedAtAfter(
+                new Email(request.email()), request.code(), timeLimit);
+        if (!isValid) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_PASSWORD_CODE_NOT_FOUND);
+        }
     }
 
     @Transactional(readOnly = true)

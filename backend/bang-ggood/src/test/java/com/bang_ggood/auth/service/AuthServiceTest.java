@@ -1,9 +1,12 @@
 package com.bang_ggood.auth.service;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.auth.domain.PasswordResetCode;
+import com.bang_ggood.auth.dto.request.ConfirmPasswordResetCodeRequest;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.request.RegisterRequestV1;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
+import com.bang_ggood.auth.repository.PasswordResetCodeRepository;
 import com.bang_ggood.auth.service.jwt.JwtTokenProvider;
 import com.bang_ggood.auth.service.oauth.OauthClient;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
@@ -17,16 +20,18 @@ import com.bang_ggood.question.service.QuestionManageService;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.expression.spel.support.ReflectivePropertyAccessor.OptimalPropertyAccessor;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 
+import java.time.Clock;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Optional;
 
 import static com.bang_ggood.auth.AuthFixture.LOCAL_LOGIN_REQUEST;
@@ -37,6 +42,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class AuthServiceTest extends IntegrationTestSupport {
@@ -53,6 +59,10 @@ class AuthServiceTest extends IntegrationTestSupport {
     private UserRepository userRepository;
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    private PasswordResetCodeRepository passwordResetCodeRepository;
+    @SpyBean
+    private Clock clock;
 
     @DisplayName("로컬 로그인 성공")
     @Test
@@ -109,9 +119,6 @@ class AuthServiceTest extends IntegrationTestSupport {
         User findUser = userRepository.findById(userId).orElseThrow();
         String findPassword = findUser.getPassword().getValue();
 
-        String[] passwordParts = findPassword.split(":");
-        String salt = passwordParts[1];
-
         String expectedPassword = PasswordEncoder.encodeWithSpecificSalt(password, findPassword);
 
         // then
@@ -151,7 +158,7 @@ class AuthServiceTest extends IntegrationTestSupport {
     @Test
     void oauthLogin_signup() {
         // given
-        Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
+        when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
@@ -167,7 +174,7 @@ class AuthServiceTest extends IntegrationTestSupport {
     void oauthLogin() {
         // given
         userRepository.save(UserFixture.USER1());
-        Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
+        when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER1());
 
         // when
@@ -182,7 +189,7 @@ class AuthServiceTest extends IntegrationTestSupport {
     @Test
     void oauthLogin_default_checklist_question() {
         // given
-        Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
+        when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
@@ -205,7 +212,7 @@ class AuthServiceTest extends IntegrationTestSupport {
     @Test
     void oauthLogin_default_checklist() {
         // given
-        Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
+        when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
@@ -268,12 +275,55 @@ class AuthServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER.getMessage());
     }
 
+    @DisplayName("비밀번호 초기화 코드 인증 성공")
+    @Test
+    void confirmPasswordResetCode() {
+        //given
+        int VALID_TIME_MINUTES = 3;
+        String email = "bang-ggood@gmail.com";
+        String code = "abc123";
+        ConfirmPasswordResetCodeRequest request = new ConfirmPasswordResetCodeRequest(email, code);
+
+        //when
+        PasswordResetCode resetCode = passwordResetCodeRepository.save(new PasswordResetCode(email, code));
+        LocalDateTime createdAt = resetCode.getCreatedAt();
+        Instant instant = createdAt.plusMinutes(VALID_TIME_MINUTES).toInstant(ZoneOffset.UTC);
+        when(clock.instant()).thenReturn(instant);
+        when(clock.getZone()).thenReturn(ZoneOffset.UTC);
+
+        //then
+        assertThatCode(() -> authService.confirmPasswordResetCode(request))
+                .doesNotThrowAnyException();
+    }
+
+    @DisplayName("비밀번호 초기화 코드 인증 실패 : 유효기간이 지난 경우")
+    @Test
+    void confirmPasswordResetCode_timeOver_exception() {
+        //given
+        int EXPIRED_TIME_MINUTES = 4;
+        String email = "bang-ggood@gmail.com";
+        String code = "abc123";
+        ConfirmPasswordResetCodeRequest request = new ConfirmPasswordResetCodeRequest(email, code);
+
+        //when
+        PasswordResetCode resetCode = passwordResetCodeRepository.save(new PasswordResetCode(email, code));
+        LocalDateTime createdAt = resetCode.getCreatedAt();
+        Instant instant = createdAt.plusMinutes(EXPIRED_TIME_MINUTES).toInstant(ZoneOffset.UTC);
+        when(clock.instant()).thenReturn(instant);
+        when(clock.getZone()).thenReturn(ZoneOffset.UTC);
+
+        //then
+        assertThatThrownBy(() -> authService.confirmPasswordResetCode(request))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.AUTHENTICATION_PASSWORD_CODE_NOT_FOUND.getMessage());
+    }
+
     @DisplayName("액세스 토큰 재발행 성공")
     @Test
     void reissueAccessToken() {
         // given
         userRepository.save(UserFixture.USER1());
-        Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
+        when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER1());
         AuthTokenResponse tokenResponse = authService.oauthLogin(OAUTH_LOGIN_REQUEST);
 

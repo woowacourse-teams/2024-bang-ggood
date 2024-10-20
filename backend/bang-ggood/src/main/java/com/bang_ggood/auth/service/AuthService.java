@@ -1,11 +1,13 @@
 package com.bang_ggood.auth.service;
 
+import com.bang_ggood.auth.domain.PasswordResetCode;
 import com.bang_ggood.auth.dto.request.ForgotPasswordRequest;
 import com.bang_ggood.auth.dto.request.LocalLoginRequestV1;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.request.RegisterRequestV1;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.dto.response.OauthInfoApiResponse;
+import com.bang_ggood.auth.repository.PasswordResetCodeRepository;
 import com.bang_ggood.auth.service.jwt.JwtTokenProvider;
 import com.bang_ggood.auth.service.jwt.JwtTokenResolver;
 import com.bang_ggood.auth.service.oauth.OauthClient;
@@ -38,6 +40,7 @@ public class AuthService {
     private final DefaultChecklistService defaultChecklistService;
     private final UserRepository userRepository;
     private final MailSender mailSender;
+    private final PasswordResetCodeRepository passwordResetCodeRepository;
 
     @Transactional
     public Long register(RegisterRequestV1 request) {
@@ -112,7 +115,8 @@ public class AuthService {
     }
 
     public void sendPasswordResetEmail(ForgotPasswordRequest request) {
-        mailSender.sendPasswordResetEmail(request.email());
+        String code = mailSender.sendPasswordResetEmail(request.email());
+        passwordResetCodeRepository.save(new PasswordResetCode(code));
     }
 
     @Transactional(readOnly = true)

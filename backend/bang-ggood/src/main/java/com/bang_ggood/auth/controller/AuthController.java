@@ -8,6 +8,7 @@ import com.bang_ggood.auth.dto.request.ForgotPasswordRequest;
 import com.bang_ggood.auth.dto.request.LocalLoginRequestV1;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.request.RegisterRequestV1;
+import com.bang_ggood.auth.dto.request.ResetPasswordRequest;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.dto.response.TokenExistResponse;
 import com.bang_ggood.auth.service.AuthService;
@@ -110,6 +111,12 @@ public class AuthController {
     @PostMapping("/v1/password-reset/confirm")
     public ResponseEntity<Void> confirmPasswordResetCode(@RequestBody ConfirmPasswordResetCodeRequest request) {
         authService.confirmPasswordResetCode(request);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/v1/password-reset/new-password")
+    public ResponseEntity<Void> resetPassword(@RequestBody ResetPasswordRequest request) {
+        authService.resetPassword(request);
         return ResponseEntity.noContent().build();
     }
 

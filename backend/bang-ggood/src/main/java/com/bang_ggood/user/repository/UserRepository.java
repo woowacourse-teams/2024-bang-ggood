@@ -4,6 +4,7 @@ import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.user.domain.Email;
 import com.bang_ggood.user.domain.LoginType;
+import com.bang_ggood.user.domain.Password;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.domain.UserType;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,6 +29,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u FROM User u WHERE u.email = :email and u.loginType = :loginType and u.deleted = false")
     Optional<User> findByEmailAndLoginType(@Param("email") Email email, @Param("loginType") LoginType loginType);
+
+    @Transactional
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("UPDATE User u SET u.password = :newPassword WHERE u.email = :email AND u.deleted = false")
+    void updatePasswordByEmail(@Param("email") Email email, @Param("newPassword") Password newPassword);
 
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)

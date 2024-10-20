@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 
 public interface PasswordResetCodeRepository extends JpaRepository<PasswordResetCode, Long> {
 
+    boolean existsByEmailAndCode(Email email, String code);
+
     @Query("SELECT CASE WHEN COUNT(p) > 0 THEN true ELSE false END " +
             "FROM PasswordResetCode p " +
             "WHERE p.email = :email " +

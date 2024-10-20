@@ -6,6 +6,7 @@ import com.bang_ggood.auth.dto.request.ForgotPasswordRequest;
 import com.bang_ggood.auth.dto.request.LocalLoginRequestV1;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.request.RegisterRequestV1;
+import com.bang_ggood.auth.dto.request.ResetPasswordRequest;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.dto.response.OauthInfoApiResponse;
 import com.bang_ggood.auth.repository.PasswordResetCodeRepository;
@@ -17,6 +18,7 @@ import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.user.domain.Email;
 import com.bang_ggood.user.domain.LoginType;
+import com.bang_ggood.user.domain.Password;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.domain.UserType;
 import com.bang_ggood.user.repository.UserRepository;
@@ -132,6 +134,16 @@ public class AuthService {
         if (!isValid) {
             throw new BangggoodException(ExceptionCode.AUTHENTICATION_PASSWORD_CODE_NOT_FOUND);
         }
+    }
+
+    @Transactional
+    public void resetPassword(ResetPasswordRequest request) {
+        if (!passwordResetCodeRepository.existsByEmailAndCode(new Email(request.email()), request.code())) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_PASSWORD_CODE_NOT_FOUND);
+        }
+
+        userRepository.updatePasswordByEmail(
+                new Email(request.email()), new Password(request.newPassword()));
     }
 
     @Transactional(readOnly = true)

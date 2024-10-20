@@ -5,6 +5,7 @@ import com.bang_ggood.auth.domain.PasswordResetCode;
 import com.bang_ggood.auth.dto.request.ConfirmPasswordResetCodeRequest;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.request.RegisterRequestV1;
+import com.bang_ggood.auth.dto.request.ResetPasswordRequest;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.repository.PasswordResetCodeRepository;
 import com.bang_ggood.auth.service.jwt.JwtTokenProvider;
@@ -18,6 +19,7 @@ import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
 import com.bang_ggood.question.service.QuestionManageService;
 import com.bang_ggood.user.UserFixture;
+import com.bang_ggood.user.domain.Password;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -316,6 +318,27 @@ class AuthServiceTest extends IntegrationTestSupport {
         assertThatThrownBy(() -> authService.confirmPasswordResetCode(request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.AUTHENTICATION_PASSWORD_CODE_NOT_FOUND.getMessage());
+    }
+
+    @DisplayName("비밀번호 재설정 선공")
+    @Test
+    void resetPassword() {
+        //given
+        User user = UserFixture.USER1();
+        userRepository.save(user);
+        Password oldPassword = user.getPassword();
+        String code = "abc123";
+        String newPassword = "newPassword1234";
+        ResetPasswordRequest request = new ResetPasswordRequest(
+                user.getEmail().getValue(), code, newPassword);
+        passwordResetCodeRepository.save(new PasswordResetCode(user.getEmail().getValue(), code));
+
+        //when
+        authService.resetPassword(request);
+
+        //then
+        Password changedPassword = userRepository.findById(user.getId()).get().getPassword();
+        assertThat(changedPassword).isNotEqualTo(oldPassword);
     }
 
     @DisplayName("액세스 토큰 재발행 성공")

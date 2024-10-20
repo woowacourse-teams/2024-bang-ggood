@@ -17,14 +17,16 @@ public class MailSender {
 
     private final JavaMailSender javaMailSender;
 
-    public void sendPasswordResetEmail(String email) {
+    public String sendPasswordResetEmail(String email) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
+            String code = generatePasswordResetCode();
             mimeMessageHelper.setTo(email);
             mimeMessageHelper.setSubject(FIND_PASSWORD_MAIL_SUBJECT);
-            mimeMessageHelper.setText(generatePasswordResetCode());
+            mimeMessageHelper.setText(code);
             javaMailSender.send(mimeMessage);
+            return code;
         } catch (MessagingException e) {
             throw new BangggoodException(ExceptionCode.MAIL_SEND_ERROR);
         }

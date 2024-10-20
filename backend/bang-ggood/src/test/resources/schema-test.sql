@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS room CASCADE;
 DROP TABLE IF EXISTS highlight CASCADE;
 DROP TABLE IF EXISTS question CASCADE;
 DROP TABLE IF EXISTS category CASCADE;
+DROP TABLE IF EXISTS password_reset_code CASCADE;
 
 -- Create tables
 
@@ -186,3 +187,11 @@ CREATE TABLE checklist_station
     FOREIGN KEY (checklist_id) REFERENCES checklist (id)
 );
 
+CREATE TABLE password_reset_code
+(
+    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
+    email       VARCHAR(255) NOT NULL,
+    code        VARCHAR(255) NOT NULL,
+    created_at  TIMESTAMP(6),
+    modified_at TIMESTAMP(6)
+);

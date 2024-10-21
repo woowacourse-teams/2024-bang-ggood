@@ -39,7 +39,7 @@ const Button = ({
 
   return (
     <S.Button
-    id={id}
+      id={id}
       size={size}
       color={color}
       isSquare={isSquare}

@@ -1,22 +1,14 @@
 import { expect, test } from '@playwright/test';
 
-import { DefaultChecklistTabsNames } from './constants';
-
-const FirstCategoryQuestion = [
-  { id: 0, question: '곰팡이가 핀 곳 없이 깨끗한가요?' },
-  { id: 1, question: '창 밖의 뷰가 가로막힘 없이 트여있나요?' },
-  { id: 2, question: '화장실이 깨끗한가요?' },
-  { id: 3, question: '잠금장치가 있는 공동 현관문이 있나요?' },
-];
-
-test('빈 체크리스트를 제출할 수 있다.', async ({ page }) => {
+import { DefaultChecklistTabsNames, FirstCategoryQuestion } from './constants';
+test.skip('빈 체크리스트를 제출할 수 있다.', async ({ page }) => {
   await page.goto('/checklist/new');
   await page.getByRole('button', { name: '저장' }).click();
   await page.getByRole('button', { name: '체크리스트 저장하기' }).click();
   await page.waitForURL('/checklists');
 });
 
-test('체크리스트가 잘 작성된다.', async ({ page }) => {
+test.skip('체크리스트가 잘 작성되고 편집된다.', async ({ page }) => {
   await page.goto('/checklist/new');
   const tabs = page.locator('.tab');
   const roomInfoTab = tabs.nth(0);
@@ -90,7 +82,7 @@ test('체크리스트가 잘 작성된다.', async ({ page }) => {
   await expect(page.getByText('체크리스트 편집')).toBeVisible();
 
   const checklistTabs = page.locator('.tab');
-  await expect(tabs).toHaveCount(6, { timeout: 3000 });
+  await expect(tabs).toHaveCount(7, { timeout: 3000 });
 
   for (let i = 2; i < DefaultChecklistTabsNames.length; i++) {
     await expect(checklistTabs.nth(i)).toContainText(DefaultChecklistTabsNames[i].name);

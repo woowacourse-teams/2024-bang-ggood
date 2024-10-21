@@ -17,7 +17,7 @@ const QuestionSelectCard = ({ question }: { question: ChecklistQuestionWithIsSel
   };
 
   return (
-    <S.Container isChecked={isSelected} onClick={handleCheckQuestion}>
+    <S.Container isChecked={isSelected} onClick={handleCheckQuestion} className="question">
       <S.FlexColumn>
         <FlexBox.Vertical>
           <S.Title>{title}</S.Title>

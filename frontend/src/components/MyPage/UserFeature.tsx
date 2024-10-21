@@ -8,7 +8,7 @@ import { QUERY_KEYS } from '@/constants/queryKeys';
 import useModal from '@/hooks/useModal';
 import { boxShadowSpread, flexColumn, flexRow, flexSpaceBetween, title4 } from '@/styles/common';
 
-const UserFunction = () => {
+const UserFeature = () => {
   const queryClient = useQueryClient();
   const checklist = queryClient.getQueryData([QUERY_KEYS.CHECKLIST_LIST]);
 
@@ -59,7 +59,7 @@ const UserFunction = () => {
   );
 };
 
-export default UserFunction;
+export default UserFeature;
 
 const S = {
   Container: styled.div`

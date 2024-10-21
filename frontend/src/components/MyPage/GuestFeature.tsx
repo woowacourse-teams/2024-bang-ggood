@@ -5,7 +5,7 @@ import { ArrowRightCircle } from '@/assets/assets';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { boxShadowSpread, flexColumn, flexRow, flexSpaceBetween, title4 } from '@/styles/common';
 
-const GuestFunction = () => {
+const GuestFeature = () => {
   const navigate = useNavigate();
   const handleMoveVoc = () => {
     window.location.href = '#';
@@ -38,7 +38,7 @@ const GuestFunction = () => {
   );
 };
 
-export default GuestFunction;
+export default GuestFeature;
 
 const S = {
   Container: styled.div`

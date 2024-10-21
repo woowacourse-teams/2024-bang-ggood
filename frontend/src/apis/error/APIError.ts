@@ -1,7 +1,7 @@
 import { API_ERROR_MESSAGE } from '@/constants/messages/apiErrorMessage';
 
 const getErrorMessage = (errorCode: string): string => {
-  return API_ERROR_MESSAGE[errorCode as keyof typeof API_ERROR_MESSAGE] || '알 수 없는 에러가 발생했습니다.';
+  return API_ERROR_MESSAGE[errorCode as keyof typeof API_ERROR_MESSAGE] ?? '알 수 없는 에러가 발생했습니다.';
 };
 
 class APIError extends Error {

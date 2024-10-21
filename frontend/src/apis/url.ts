@@ -24,6 +24,7 @@ export const ENDPOINT = {
   LOGIN: '/oauth/login',
   LOGOUT: '/oauth/logout',
   USER_INFO: '/user/me',
+  DELETE_ACCOUNT: '/v1/withdraw',
   USER_VALID: '/token-exist',
   USER_ACCESS_TOKEN_REISSUE: '/accessToken/reissue',
   TOKEN: '/token',

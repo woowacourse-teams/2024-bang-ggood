@@ -24,6 +24,11 @@ export const getIsUserValid = async () => {
   return data as UserTokenValid;
 };
 
+export const deleteAccount = async () => {
+  const response = await fetcher.delete({ url: BASE_URL + ENDPOINT.DELETE_ACCOUNT });
+  return response;
+};
+
 export const deleteToken = async () => {
   const response = await fetcher.delete({ url: BASE_URL + ENDPOINT.TOKEN });
   return response;

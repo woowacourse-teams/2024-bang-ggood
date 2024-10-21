@@ -4,11 +4,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { ArrowRightCircle, BangBangIcon3D } from '@/assets/assets';
 import Header from '@/components/_common/Header/Header';
+import DeleteAccountModal from '@/components/MyPage/DeleteAccountModal';
 import LogoutModal from '@/components/MyPage/LogoutModal';
 import SKMyPage from '@/components/skeleton/MyPage/SKMyPage';
 import { QUERY_KEYS } from '@/constants/queryKeys';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { FOOTER_SIZE, HEADER_SIZE } from '@/constants/style';
+import { HEADER_SIZE } from '@/constants/style';
 import useUserQuery from '@/hooks/query/useUserQuery';
 import useModal from '@/hooks/useModal';
 import { boxShadowSpread, flexCenter, flexColumn, flexRow, flexSpaceBetween, title2, title4 } from '@/styles/common';
@@ -18,7 +19,8 @@ const MyPage = () => {
   const checklist = queryClient.getQueryData([QUERY_KEYS.CHECKLIST_LIST]);
 
   const navigate = useNavigate();
-  const { isModalOpen, openModal, closeModal } = useModal();
+  const { isModalOpen: isLogoutModalOpen, openModal: openLogoutModal, closeModal: closeLogoutModal } = useModal();
+  const { isModalOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
   const { data: user, isError, isLoading } = useUserQuery();
 
   const handleMoveVoc = () => {
@@ -36,7 +38,7 @@ const MyPage = () => {
           <div>오늘도 방끗과 함께 방긋 웃어요! :)</div>
         </S.ProfileText>
         <S.ProfileIcon>
-          <BangBangIcon3D aria-hidden="true" />
+          <BangBangIcon3D aria-hidden="true" width={200} />
         </S.ProfileIcon>
       </S.Profile>
       <S.Container>
@@ -78,10 +80,10 @@ const MyPage = () => {
           <>
             <S.Section>
               <S.LabelContainer>방끗 잠시 안녕!</S.LabelContainer>
-              <S.Button onClick={openModal} isCenter tabIndex={1}>
+              <S.Button onClick={openLogoutModal} isCenter tabIndex={1}>
                 로그아웃하기
               </S.Button>
-              <S.TextButton onClick={() => navigate(ROUTE_PATH.root)} tabIndex={1}>
+              <S.TextButton onClick={openDeleteModal} tabIndex={1}>
                 방끗 탈퇴하기
               </S.TextButton>
             </S.Section>
@@ -89,8 +91,8 @@ const MyPage = () => {
         )}
       </S.Container>
 
-      <LogoutModal isOpen={isModalOpen} onClose={closeModal} />
-      {/* <DeleteAccountModal isOpen={isModalOpen} onClose={closeModal} /> */}
+      <LogoutModal isOpen={isLogoutModalOpen} onClose={closeLogoutModal} />
+      <DeleteAccountModal isOpen={isDeleteModalOpen} onClose={closeDeleteModal} />
     </>
   );
 };
@@ -101,13 +103,12 @@ const S = {
   Profile: styled.div`
     ${flexColumn};
     width: 100%;
-    height: 40rem;
     box-sizing: border-box;
 
-    padding: 8rem 2rem;
+    padding: ${HEADER_SIZE + 1}rem 2rem 0;
 
     border-radius: 0 0 1.6rem 1.6rem;
-    gap: 1.2rem;
+    gap: 1rem;
 
     background-color: ${({ theme }) => theme.palette.yellow500};
 
@@ -124,10 +125,8 @@ const S = {
   Container: styled.div`
     ${flexColumn}
     ${flexSpaceBetween}
-    height: calc(100dvh - (40rem + ${HEADER_SIZE}rem + ${FOOTER_SIZE}rem));
+    height: calc(40dvh);
     padding: 1.6rem;
-
-    gap: 3rem;
   `,
   Section: styled.section`
     ${flexColumn}

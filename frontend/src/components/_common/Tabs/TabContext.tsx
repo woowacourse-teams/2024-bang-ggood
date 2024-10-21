@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 
-import { ERROR_MESSAGE } from '@/constants/errorMessage';
+import { ERROR_MESSAGE } from '@/constants/message/errorMessage';
 
 interface ContextProps {
   currentTabId: number;

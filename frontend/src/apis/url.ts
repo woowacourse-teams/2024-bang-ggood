@@ -6,6 +6,7 @@ export const BASE_URL = API_URL;
 export const ENDPOINT = {
   // checklist
   CHECKLISTS: '/checklists',
+  CHECKLISTS_LIKE: '/checklists/like',
   CHECKLISTS_V1: '/v1/checklists',
   CHECKLIST_QUESTION: '/checklists/questions',
   CHECKLIST_ALL_QUESTION: '/custom-checklist/all',
@@ -13,7 +14,7 @@ export const ENDPOINT = {
   CHECKLIST_ID: (id: number) => `/checklists/${id}`,
   CHECKLIST_ID_V1: (id: number) => `/v1/checklists/${id}`,
   // like
-  LIKE: (id: number) => `/checklists/${id}/like`,
+  LIKE: (id: number | ':id') => `/checklists/${id}/like`,
   // category
   CATEGORY: '/categories',
   CATEGORY_ADD: '/categories/priority',
@@ -28,6 +29,9 @@ export const ENDPOINT = {
   USER_VALID: '/token-exist',
   USER_ACCESS_TOKEN_REISSUE: '/accessToken/reissue',
   TOKEN: '/token',
+  //일반 로그인
+  REGISTER: '/v1/local-auth/register',
+  SINGIN: '/v1/local-auth/login',
   //subway
   SUBWAY: (position: Position) => `/stations/nearest?latitude=${position.latitude}&longitude=${position.longitude}`,
 };

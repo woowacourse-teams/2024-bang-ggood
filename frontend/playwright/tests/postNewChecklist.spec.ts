@@ -8,7 +8,7 @@ test.skip('빈 체크리스트를 제출할 수 있다.', async ({ page }) => {
   await page.waitForURL('/checklists');
 });
 
-test.skip('체크리스트가 잘 작성되고 편집된다.', async ({ page }) => {
+test.skip('체크리스트가 인풋을 채우고 제출할 수 있다.', async ({ page }) => {
   await page.goto('/checklist/new');
   const tabs = page.locator('.tab');
   const roomInfoTab = tabs.nth(0);

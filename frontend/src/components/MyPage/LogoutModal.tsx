@@ -27,8 +27,8 @@ const LogoutModal = ({ isOpen, onClose }: Props) => {
       </Modal.body>
       <Modal.footer>
         <S.ButtonContainer>
-          <Button label="취소할게요" size="full" onClick={onClose} isSquare />
-          <Button label="로그아웃할래요" size="full" color="dark" onClick={handleLogout} isSquare />
+          <Button label="취소하기" size="full" onClick={onClose} isSquare />
+          <Button label="로그아웃하기" size="full" color="dark" onClick={handleLogout} isSquare />
         </S.ButtonContainer>
       </Modal.footer>
     </Modal>

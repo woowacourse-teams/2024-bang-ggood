@@ -11,10 +11,15 @@ useRoomInfoNonValidated : 방 기본정보에서 인풋 형식이 아니고, 검
 * searchSubwayStationsByAddress : 주소를 기반으로 위도, 경도를 찾아서 지하철 역을 찾아주는 함수입니다.
 */
 const useRoomInfoNonValidated = () => {
+  // const address = useStore(roomInfoStore, state=>state.address)
+  // const buildingName = useStore(roomInfoStore, state=>state.buildingName)
+  // const roomInfoActions = useStore(roomInfoStore, state=>state.actions)
+
   const roomInfoNonValidated = useStore(roomInfoNonValidatedStore, state => state.actions);
 
   const searchSubwayStationsByPosition = async ({ latitude, longitude }: Position) => {
     const nearSubways = await getNearSubways({ latitude, longitude });
+    // roomInfoActions.set('address')
     roomInfoNonValidated.set('position', { latitude, longitude });
     roomInfoNonValidated.set('nearSubwayStation', nearSubways.stations);
     return nearSubways;

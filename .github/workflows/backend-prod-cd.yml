@@ -86,7 +86,7 @@ jobs:
 
       - name: Health check
         run: |
-          for i in {1..10}; do
+          for i in {1..2}; do
             if curl -s http://localhost:8080/health-check | grep "200"; then
               echo "Health check passed"
               exit 0

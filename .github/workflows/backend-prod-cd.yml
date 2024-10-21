@@ -84,6 +84,19 @@ jobs:
       - name: Sleep for 30 seconds to be healthy
         run: sleep 30
 
+      - name: Health check
+        run: |
+          for i in {1..2}; do
+            if curl -s http://localhost:8080/health-check | grep "200"; then
+              echo "Health check passed"
+              exit 0
+            fi
+            echo "Waiting for server to be healthy..."
+            sleep 10
+          done
+          echo "Health check failed"
+          exit 1
+
   deploy2:
     needs: deploy1
     runs-on: bang-ggood-prod2

@@ -87,7 +87,9 @@ jobs:
       - name: Health check
         run: |
           for i in {1..2}; do
-            if curl -s http://localhost:8080/health-check | grep "200"; then
+            RESPONSE=$(curl -s -w "%{http_code}" -o /dev/null http://localhost:8080/health-check)
+            echo "Response: $RESPONSE"
+            if [ "$RESPONSE" -eq 200 ]; then
               echo "Health check passed"
               exit 0
             fi

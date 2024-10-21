@@ -22,9 +22,7 @@ const LogoutModal = ({ isOpen, onClose }: Props) => {
       <Modal.header>로그아웃하기</Modal.header>
       <Modal.body>
         <S.Contents>
-          <span>잠깐만요!</span>
-          <span>로그아웃하면 방끗에서 작성한 체크리스트에 접근할 수 없어요.</span>
-          <span>다시 로그인하면 언제든 확인할 수 있으니 걱정 마세요!</span>
+          <span>정말 로그하웃 하시겠습니다?</span>
         </S.Contents>
       </Modal.body>
       <Modal.footer>

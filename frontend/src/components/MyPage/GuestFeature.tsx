@@ -3,12 +3,13 @@ import { useNavigate } from 'react-router-dom';
 
 import { ArrowRightCircle } from '@/assets/assets';
 import { ROUTE_PATH } from '@/constants/routePath';
+import { VOC_URL } from '@/constants/VoC';
 import { boxShadowSpread, flexColumn, flexRow, flexSpaceBetween, title4 } from '@/styles/common';
 
 const GuestFeature = () => {
   const navigate = useNavigate();
   const handleMoveVoc = () => {
-    window.location.href = '#';
+    window.location.href = VOC_URL;
   };
 
   return (

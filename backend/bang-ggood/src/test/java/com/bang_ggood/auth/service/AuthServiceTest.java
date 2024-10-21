@@ -281,7 +281,7 @@ class AuthServiceTest extends IntegrationTestSupport {
     @Test
     void confirmPasswordResetCode() {
         //given
-        int VALID_TIME_MINUTES = 3;
+        int VALID_TIME_MINUTES = 2;
         String email = "bang-ggood@gmail.com";
         String code = "abc123";
         ConfirmPasswordResetCodeRequest request = new ConfirmPasswordResetCodeRequest(email, code);

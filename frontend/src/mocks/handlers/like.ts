@@ -15,7 +15,7 @@ export const likeHandlers = [
 
     return HttpResponse.json(
       {
-        bangggoodCode: 'LIKE_ALREADY_EXISTS',
+        bangggoodCode: 'AUTH_ACCESS_TOKEN_EMPTY',
       },
       {
         status: 409,

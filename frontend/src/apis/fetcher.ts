@@ -34,7 +34,7 @@ const handleError = async (response: Response, requestProps: RequestProps) => {
   const responseString = await response.clone().text();
   const errorCode = JSON.parse(responseString).bangggoodCode;
 
-  if (response.status === 401 && errorCode === API_ERROR_MESSAGE.AUTH_TOKEN_EMPTY) {
+  if (response.status === 401 && errorCode === API_ERROR_MESSAGE.AUTH_ACCESS_TOKEN_EMPTY) {
     return handleUnauthorizedError(response, requestProps, errorCode);
   }
 

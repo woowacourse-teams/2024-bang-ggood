@@ -24,7 +24,7 @@ public class QuestionService {
 
     @Transactional(readOnly = true)
     public List<CategoryEntity> findAllCustomQuestionCategories(User user) {
-        return categoryRepository.findAllCustomQuestionCategoriesById(user.getId());
+        return categoryRepository.findAllCustomQuestionCategoriesByUserId(user.getId());
     }
 
     @Transactional(readOnly = true)

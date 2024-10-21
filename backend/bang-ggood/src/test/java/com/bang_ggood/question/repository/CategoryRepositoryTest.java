@@ -39,7 +39,7 @@ class CategoryRepositoryTest extends IntegrationTestSupport {
         customChecklistQuestionRepository.saveAll(List.of(customChecklistQuestion1, customChecklistQuestion2, customChecklistQuestion3));
 
         // when
-        List<CategoryEntity> categories = categoryRepository.findAllCustomQuestionCategoriesById(UserFixture.USER1.getId());
+        List<CategoryEntity> categories = categoryRepository.findAllCustomQuestionCategoriesByUserId(UserFixture.USER1.getId());
 
         // then
         Assertions.assertThat(categories)

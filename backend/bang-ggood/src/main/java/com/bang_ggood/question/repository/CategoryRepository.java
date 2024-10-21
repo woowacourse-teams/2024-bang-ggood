@@ -11,7 +11,7 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Intege
     @Query(value = "SELECT distinct c.* FROM category c "
             + "JOIN question q ON q.category_id = c.id "
             + "JOIN custom_checklist_question ccq ON ccq.question_id = q.id "
-            + "WHERE ccq.user_id = :id AND ccq.deleted = false ",
+            + "WHERE ccq.user_id = :userId AND ccq.deleted = false ",
             nativeQuery = true)
-    List<CategoryEntity> findAllCustomQuestionCategoriesById(@Param("id") Long id);
+    List<CategoryEntity> findAllCustomQuestionCategoriesByUserId(@Param("userId") Long userId);
 }

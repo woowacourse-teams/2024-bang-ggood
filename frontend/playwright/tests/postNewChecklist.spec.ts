@@ -1,19 +1,23 @@
-import { test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
-import { ROUTE_PATH } from '@/constants/routePath';
+import { DefaultChecklistTabsNames } from './constants';
+
+const FirstCategoryQuestion = [
+  { id: 0, question: '곰팡이가 핀 곳 없이 깨끗한가요?' },
+  { id: 1, question: '창 밖의 뷰가 가로막힘 없이 트여있나요?' },
+  { id: 2, question: '화장실이 깨끗한가요?' },
+  { id: 3, question: '잠금장치가 있는 공동 현관문이 있나요?' },
+];
 
 test('빈 체크리스트를 제출할 수 있다.', async ({ page }) => {
-  await page.goto(ROUTE_PATH.checklistNew);
+  await page.goto('/checklist/new');
   await page.getByRole('button', { name: '저장' }).click();
   await page.getByRole('button', { name: '체크리스트 저장하기' }).click();
+  await page.waitForURL('/checklists');
 });
 
 test('체크리스트가 잘 작성된다.', async ({ page }) => {
-  await page.goto('/');
-  await page.getByRole('button', { name: '방끗 둘러보기' }).click();
-  await page.getByRole('button', { name: '전체 보기' }).click();
-  await page.getByLabel('add').click();
-
+  await page.goto('/checklist/new');
   const tabs = page.locator('.tab');
   const roomInfoTab = tabs.nth(0);
 
@@ -78,5 +82,22 @@ test('체크리스트가 잘 작성된다.', async ({ page }) => {
 
   //TODO: 이후 일반 로그인이 되면 저장되는 것도 확인
   //디테일 페이지 이동
-  // await expect(page).toHaveURL(/\/detail\/\d+/);
+  await expect(page).toHaveURL(/\/detail\/\d+/);
+
+  const checklistEditButton = page.locator('button[id="checklistEditButton"]');
+  await checklistEditButton.click();
+
+  await expect(page.getByText('체크리스트 편집')).toBeVisible();
+
+  const checklistTabs = page.locator('.tab');
+  await expect(tabs).toHaveCount(6, { timeout: 3000 });
+
+  for (let i = 2; i < DefaultChecklistTabsNames.length; i++) {
+    await expect(checklistTabs.nth(i)).toContainText(DefaultChecklistTabsNames[i].name);
+    await tabs.nth(i).click();
+    const actualText = await page.locator('.question').nth(0).textContent();
+    const expectedText = FirstCategoryQuestion[i - 2].question;
+
+    expect(actualText).toBe(expectedText);
+  }
 });

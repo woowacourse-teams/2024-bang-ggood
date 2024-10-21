@@ -53,5 +53,5 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:storybook/recommended"
   ],
-  "ignorePatterns": ["dist", "webpack.*.js", "tsconfig.json", "public", "assets", "*.config.js"]
+  "ignorePatterns": ["dist", "webpack.*.js", "tsconfig.json", "public", "assets", "*.config.js", "playwright/**"]
 }

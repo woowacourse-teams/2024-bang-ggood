@@ -17,6 +17,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   onClick?: () => void;
   disabled?: boolean;
   Icon?: FunctionComponent<SVGProps<SVGSVGElement>>;
+  id?: string;
 }
 
 const Button = ({
@@ -26,6 +27,7 @@ const Button = ({
   isSquare = false,
   onClick = () => {},
   disabled,
+  id,
   Icon,
   ...rest
 }: Props) => {
@@ -37,6 +39,7 @@ const Button = ({
 
   return (
     <S.Button
+    id={id}
       size={size}
       color={color}
       isSquare={isSquare}

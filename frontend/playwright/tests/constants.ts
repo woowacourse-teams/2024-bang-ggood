@@ -1,6 +1,4 @@
-import { Tab } from '@/types/tab';
-
-export const DefaultChecklistTabsNames: Tab[] = [
+export const DefaultChecklistTabsNames = [
   { id: 0, name: '기본 정보' },
   {
     id: 1,

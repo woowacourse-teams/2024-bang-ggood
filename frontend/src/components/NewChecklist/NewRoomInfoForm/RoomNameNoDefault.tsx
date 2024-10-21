@@ -5,6 +5,7 @@ import useRoomInfoValidated from '@/hooks/useRoomInfoValidated';
 
 const RoomNameNoDefault = () => {
   const roomName = useRoomInfoValidated('roomName');
+  console.log('nodefault');
 
   return (
     <FormField>

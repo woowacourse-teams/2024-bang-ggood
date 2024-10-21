@@ -1,21 +1,12 @@
 import styled from '@emotion/styled';
 import { useCallback } from 'react';
 
-import Tab from '@/components/_common/Tabs/Tab';
+import TabButton from '@/components/_common/Tabs/TabButton';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
+import { Tab, TabWithCompletion } from '@/types/tab';
 
 interface Props {
   tabList: TabWithCompletion[] | Tab[];
-}
-
-export interface Tab {
-  name: string;
-  id: number;
-  className?: string;
-}
-
-export interface TabWithCompletion extends Tab {
-  hasIndicator: boolean;
 }
 
 const Tabs = ({ tabList }: Props) => {
@@ -34,17 +25,17 @@ const Tabs = ({ tabList }: Props) => {
         <S.FlexContainer>
           {tabList?.map(tab => {
             const { id, name, className } = tab;
-            const hasIndicator = 'hasIndicator' in tab ? tab.hasIndicator : null;
+            const isCompleted = 'isCompleted' in tab ? tab.isCompleted : undefined;
 
             return (
-              <Tab
+              <TabButton
                 className={className}
                 id={id}
                 name={name}
                 onMoveTab={onMoveTab}
                 key={id}
                 active={tab.id === currentTabId}
-                hasIndicator={hasIndicator}
+                isCompleted={isCompleted}
               />
             );
           })}

@@ -1,7 +1,7 @@
 import { API_ERROR_MESSAGE } from '@/apis/error/ErrorMessage';
 import HTTPError from '@/apis/error/HttpError';
 import { deleteToken, postReissueAccessToken } from '@/apis/user';
-import { HTTP_STATUS_CODE } from '@/constants/httpErrorMessage';
+import { HTTP_STATUS_CODE } from '@/constants/message/httpErrorMessage';
 import { ROUTE_PATH } from '@/constants/routePath';
 
 let reissueAccessToken = false;
@@ -50,6 +50,7 @@ const handleError = async (response: Response, { url, method, body, headers = {}
       window.location.href = ROUTE_PATH.root;
     }
   }
+  throw new HTTPError(response.status, errorMessage);
 };
 
 const fetchRequest = async ({ url, method, body, headers = {} }: RequestProps & { signal?: AbortSignal }) => {

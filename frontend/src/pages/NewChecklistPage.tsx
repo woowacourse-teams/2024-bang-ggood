@@ -1,19 +1,21 @@
+import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
+import ChecklistTabFallback from '@/components/_common/errorBoundary/ChecklistTabFallback';
 import Header from '@/components/_common/Header/Header';
 import AlertModal from '@/components/_common/Modal/AlertModal/AlertModal';
 import LoginModal from '@/components/_common/Modal/LoginModal/LoginModal';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
-import Tabs from '@/components/_common/Tabs/Tabs';
+import ChecklistContent from '@/components/NewChecklist/ChecklistContent';
+import NewChecklistTab from '@/components/NewChecklist/ChecklistTab/NewChecklistTab';
 import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
 import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
-import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
-import useChecklistTabs from '@/hooks/useChecklistTabs';
 import useHandleTip from '@/hooks/useHandleTip';
 import useModal from '@/hooks/useModal';
 import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
@@ -23,18 +25,21 @@ import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 
 const NewChecklistPage = () => {
   const navigate = useNavigate();
-  const { tabs } = useChecklistTabs();
 
   const roomInfoActions = useStore(roomInfoStore, state => state.actions);
   const roomInfoNonValidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
+  // TODO: useStore 포맷 맞추기
   const checklistActions = useChecklistStore(state => state.actions);
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);
   const { resetShowTip } = useHandleTip('OPTION');
 
   // 메모 모달
   const { isModalOpen: isMemoModalOpen, openModal: openMemoModal, closeModal: closeMemoModal } = useModal();
+  // 한줄평 모달
   const { isModalOpen: isSubmitModalOpen, openModal: openSummaryModal, closeModal: closeSummaryModal } = useModal();
+  // 뒤로가기 시 휘발 경고 모달
   const { isModalOpen: isAlertModalOpen, openModal: openAlertModal, closeModal: closeAlertModal } = useModal();
+  // 로그인 요청 모달
   const { isModalOpen: isLoginModalOpen, openModal: openLoginModal, closeModal: closeLoginModal } = useModal();
 
   const resetChecklist = () => {
@@ -42,10 +47,14 @@ const NewChecklistPage = () => {
     roomInfoNonValidatedActions.resetAll();
     checklistActions.reset();
     selectedOptionActions.reset();
+<<<<<<< HEAD
     resetShowTip();
   };
 
   const handleChecklistPage = () => {
+=======
+    resetShowTip(); // 옵션의 팁박스 다시표시
+>>>>>>> 6e976eb2c3447b7835fac11bb79d8b2ac88424f8
     navigate(ROUTE_PATH.checklistList);
   };
 
@@ -57,8 +66,12 @@ const NewChecklistPage = () => {
         right={<Button label="저장" size="xSmall" color="dark" onClick={openSummaryModal} />}
       />
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
-        <Tabs tabList={tabs} />
-        <NewChecklistContent />
+        <ErrorBoundary fallback={<ChecklistTabFallback />}>
+          <Suspense>
+            <NewChecklistTab />
+          </Suspense>
+        </ErrorBoundary>
+        <ChecklistContent />
       </TabProvider>
       {isMemoModalOpen ? (
         <MemoModal isModalOpen={isMemoModalOpen} modalClose={closeMemoModal} />
@@ -82,7 +95,13 @@ const NewChecklistPage = () => {
         }
         isOpen={isAlertModalOpen}
         onClose={closeAlertModal}
+<<<<<<< HEAD
         handleApprove={handleChecklistPage}
+=======
+        handleApprove={() => {
+          resetChecklist();
+        }}
+>>>>>>> 6e976eb2c3447b7835fac11bb79d8b2ac88424f8
         approveButtonName="나가기"
       />
       <LoginModal isModalOpen={isLoginModalOpen} modalClose={closeLoginModal} />

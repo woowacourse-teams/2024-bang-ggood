@@ -16,8 +16,8 @@ public class CustomChecklistFixture {
 
 
     public static List<CustomChecklistQuestion> CUSTOM_CHECKLIST_QUESTION_DEFAULT(User user) {
-        return List.of(new CustomChecklistQuestion(user, Question.ROOM_CONDITION_1, QuestionFixture.QUESTION1),
-                new CustomChecklistQuestion(user, Question.WINDOW_1, QuestionFixture.QUESTION2));
+        return List.of(new CustomChecklistQuestion(user, Question.ROOM_CONDITION_1, QuestionFixture.QUESTION1_CATEGORY1),
+                new CustomChecklistQuestion(user, Question.WINDOW_1, QuestionFixture.QUESTION3_CATEGORY2));
     }
 
     public static CustomChecklistUpdateRequest CUSTOM_CHECKLIST_UPDATE_REQUEST() {
@@ -40,7 +40,7 @@ public class CustomChecklistFixture {
     }
 
     public static void init() {
-        CUSTOM_CHECKLIST_QUESTION_DEFAULT = List.of(new CustomChecklistQuestion(UserFixture.USER1, Question.ROOM_CONDITION_1, QuestionFixture.QUESTION1),
-                new CustomChecklistQuestion(UserFixture.USER1, Question.WINDOW_1, QuestionFixture.QUESTION2));
+        CUSTOM_CHECKLIST_QUESTION_DEFAULT = List.of(new CustomChecklistQuestion(UserFixture.USER1, Question.ROOM_CONDITION_1, QuestionFixture.QUESTION1_CATEGORY1),
+                new CustomChecklistQuestion(UserFixture.USER1, Question.WINDOW_1, QuestionFixture.QUESTION2_CATEGORY1));
     }
 }

@@ -1,7 +1,8 @@
 import fetcher from '@/apis/fetcher';
 import { BASE_URL, ENDPOINT } from '@/apis/url';
+import { roomInfoApiMapper } from '@/store/roomInfoStore';
 import { ChecklistInfo, ChecklistPostForm, ChecklistSelectedQuestions } from '@/types/checklist';
-import { mapObjNullToUndefined, mapObjUndefinedToNull } from '@/utils/typeFunctions';
+import { mapObjNullToUndefined } from '@/utils/typeFunctions';
 
 export const getChecklistQuestions = async () => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_QUESTION });
@@ -26,20 +27,20 @@ export const getChecklists = async (isLikeFiltered: boolean = false) => {
     url: BASE_URL + (isLikeFiltered ? ENDPOINT.CHECKLISTS_LIKE : ENDPOINT.CHECKLISTS),
   });
   const data = await response.json();
-  return data.checklists.map(mapObjNullToUndefined);
+  return data.checklists.map(mapObjNullToUndefined).slice(0, 10);
 };
 
 export const postChecklist = async (checklist: ChecklistPostForm) => {
-  checklist.room.structure = checklist.room.structure === 'NONE' ? undefined : checklist.room.structure;
-  checklist.room = mapObjUndefinedToNull(checklist.room);
-  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLISTS_V1, body: checklist });
+  const mappedRoomInfo = roomInfoApiMapper(checklist.room);
+  const mappedChecklist = { ...checklist, room: mappedRoomInfo };
+  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.CHECKLISTS_V1, body: mappedChecklist });
   return response;
 };
 
 export const putChecklist = async (id: number, checklist: ChecklistPostForm) => {
-  checklist.room.structure = checklist.room.structure === 'NONE' ? undefined : checklist.room.structure;
-  checklist.room = mapObjUndefinedToNull(checklist.room);
-  const response = await fetcher.put({ url: BASE_URL + ENDPOINT.CHECKLIST_ID(id), body: checklist });
+  const mappedRoomInfo = roomInfoApiMapper(checklist.room);
+  const mappedChecklist = { ...checklist, room: mappedRoomInfo };
+  const response = await fetcher.put({ url: BASE_URL + ENDPOINT.CHECKLIST_ID(id), body: mappedChecklist });
   return response;
 };
 

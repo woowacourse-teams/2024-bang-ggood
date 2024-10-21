@@ -41,7 +41,7 @@ const S = {
   `,
   ProfileText: styled.h1`
     ${title2}
-    color: ${({ theme }) => theme.palette.white};
+    color: ${({ theme }) => theme.palette.black};
   `,
   ProfileIcon: styled.div`
     width: 100%;

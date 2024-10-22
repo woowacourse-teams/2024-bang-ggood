@@ -6,6 +6,7 @@ import Button from '@/components/_common/Button/Button';
 import KakaoLoginButton from '@/components/_common/KakaoLogin/KakaoLoginButton';
 import CS from '@/components/Landing/style';
 import { ROUTE_PATH } from '@/constants/routePath';
+import { trackBasicLoginButton, trackGuestLoginButton } from '@/service/amplitude/trackEvent';
 import { moveUpDown } from '@/styles/animation';
 import { flexCenter, flexColumn } from '@/styles/common';
 
@@ -37,14 +38,25 @@ const FirstSection = () => {
       </S.LogoTextBox>
       <CS.EmptyBox mobileHeight="0rem" height="0.5rem" />
       <S.ButtonWrapper>
-        <S.ServiceLoginButton
-          label="방끗 로그인하기"
+        <S.BasicLoginButton
+          label="이메일로 로그인하기"
           size="full"
           isSquare
-          onClick={() => navigate(ROUTE_PATH.signIn)}
+          onClick={() => {
+            navigate(ROUTE_PATH.signIn);
+            trackBasicLoginButton();
+          }}
         />
         <KakaoLoginButton />
-        <S.Button label="방끗 둘러보기" size="full" isSquare onClick={() => navigate(ROUTE_PATH.home)} />
+        <S.Button
+          label="방끗 둘러보기"
+          size="full"
+          isSquare
+          onClick={() => {
+            navigate(ROUTE_PATH.home);
+            trackGuestLoginButton();
+          }}
+        />
       </S.ButtonWrapper>
       <CS.EmptyBox height="5rem" mobileHeight="10rem" />
       <S.MoreBox>
@@ -67,7 +79,7 @@ const S = {
       gap: 1rem;
     }
   `,
-  ServiceLoginButton: styled(Button)`
+  BasicLoginButton: styled(Button)`
     background-color: ${({ theme }) => theme.palette.green500};
     border-radius: 1rem;
 

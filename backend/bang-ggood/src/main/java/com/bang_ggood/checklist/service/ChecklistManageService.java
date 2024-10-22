@@ -87,7 +87,7 @@ public class ChecklistManageService {
                         questionService.readQuestion(question.questionId()),
                         Answer.from(question.answer())))
                 .toList();
-        checklistQuestionService.createQuestions(checklistQuestions);
+        checklistQuestionService.createQuestionsBulk(checklistQuestions);
     }
 
     private void createChecklistMaintenances(ChecklistRequest checklistRequest, Checklist checklist) {

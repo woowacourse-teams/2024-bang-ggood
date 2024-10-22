@@ -6,6 +6,7 @@ import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
+import com.bang_ggood.question.repository.BulkChecklistQuestionRepository;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.user.domain.User;
@@ -23,6 +24,7 @@ public class ChecklistQuestionService {
     private final ChecklistQuestionRepository checklistQuestionRepository;
     private final CustomChecklistQuestionRepository customChecklistQuestionRepository;
     private final QuestionService questionService; // TODO 리팩터링
+    private final BulkChecklistQuestionRepository bulkChecklistQuestionRepository;
 
     @Transactional
     public void createDefaultCustomQuestions(List<CustomChecklistQuestion> customChecklistQuestions) {
@@ -33,6 +35,12 @@ public class ChecklistQuestionService {
     public void createQuestions(List<ChecklistQuestion> checklistQuestions) {
         validateQuestionDuplicate(checklistQuestions);
         checklistQuestionRepository.saveAll(checklistQuestions);
+    }
+
+    @Transactional
+    public void createQuestionsBulk(List<ChecklistQuestion> checklistQuestions) {
+        validateQuestionDuplicate(checklistQuestions);
+        bulkChecklistQuestionRepository.saveAll(checklistQuestions);
     }
 
     private void validateQuestionDuplicate(List<ChecklistQuestion> questions) {

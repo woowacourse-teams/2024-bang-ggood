@@ -58,10 +58,10 @@ const CS = {
   Text: styled.div<{ margin?: number }>`
     margin: ${({ margin }) => margin ?? 5}px;
     line-height: 1.5;
-    font-size: ${({ theme }) => theme.text.size.medium};
+    font-size: ${({ theme }) => theme.text.size.small};
 
     @media (height > ${({ theme }) => theme.viewport.DESKTOP}px) {
-      font-size: ${({ theme }) => theme.text.size.large};
+      font-size: ${({ theme }) => theme.text.size.medium};
     }
   `,
   Highlight: styled.span`
@@ -74,7 +74,6 @@ const CS = {
     width: 100%;
     ${flexCenter}
   `,
-
   PencilIconBox: styled.div`
     position: absolute;
     right: -2rem;

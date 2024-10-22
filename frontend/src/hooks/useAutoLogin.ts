@@ -14,16 +14,14 @@ const useAutoLogin = () => {
     if (isRefreshTokenExist) {
       if (!isAccessTokenExist) {
         try {
-          const accessTokenReissueResult = await postReissueAccessToken();
-          if (accessTokenReissueResult?.status !== 200) return;
+          await postReissueAccessToken();
+          const result = await getUserInfo();
+          showToast({ message: `${result?.userName}님, 환영합니다.`, type: 'confirm' });
+          return navigate(ROUTE_PATH.home);
         } catch (err) {
           return await deleteToken();
         }
       }
-
-      const result = await getUserInfo();
-      showToast({ message: `${result?.userName}님, 환영합니다.`, type: 'confirm' });
-      return navigate(ROUTE_PATH.home);
     }
   };
 

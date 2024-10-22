@@ -48,8 +48,8 @@ const ChecklistListPage = () => {
           <ChecklistListContainer />
         </ErrorBoundary>
       </Layout>
-      <FloatingButton size="extends" onClick={handleClickFloatingButton}>
-        <PlusBlack aria-label="방 체크하기" />방 체크하기
+      <FloatingButton size="extends" onClick={handleClickFloatingButton} tabIndex={1}>
+        <PlusBlack />방 체크하기
       </FloatingButton>
     </>
   );

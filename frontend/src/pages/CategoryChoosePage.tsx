@@ -8,7 +8,7 @@ import Badge from '@/components/_common/Badge/Badge';
 import Button from '@/components/_common/Button/Button';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
-import { TOAST_MESSAGE } from '@/constants/message';
+import { TOAST_MESSAGE } from '@/constants/messages/message';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { MAX_SELECT_CATEGORY_COUNT } from '@/constants/system';
 import useToast from '@/hooks/useToast';

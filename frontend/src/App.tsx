@@ -6,6 +6,7 @@ import { RouterProvider } from 'react-router-dom';
 import ToastContainer from '@/components/_common/Toast/ToastContainer';
 import useToast from '@/hooks/useToast';
 import router from '@/routers/router';
+import AmplitudeInitializer from '@/service/amplitude/AmplitudeInitializer';
 import { baseStyle } from '@/styles/global';
 import theme from '@/styles/theme';
 
@@ -22,12 +23,14 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <QueryErrorResetBoundary>
-        <ThemeProvider theme={theme}>
-          <ToastContainer />
-          <Global styles={baseStyle} />
-          <RouterProvider router={router} />
-          <ReactQueryDevtools initialIsOpen={false} />
-        </ThemeProvider>
+        <AmplitudeInitializer>
+          <ThemeProvider theme={theme}>
+            <ToastContainer />
+            <Global styles={baseStyle} />
+            <RouterProvider router={router} />
+            <ReactQueryDevtools initialIsOpen={false} />
+          </ThemeProvider>
+        </AmplitudeInitializer>
       </QueryErrorResetBoundary>
     </QueryClientProvider>
   );

@@ -1,12 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-import { DefaultChecklistTabsNames, FirstCategoryQuestion } from './constants';
-test.skip('빈 체크리스트를 제출할 수 있다.', async ({ page }) => {
-  await page.goto('/checklist/new');
-  await page.getByRole('button', { name: '저장' }).click();
-  await page.getByRole('button', { name: '체크리스트 저장하기' }).click();
-  await page.waitForURL('/checklists');
-});
+import { DefaultChecklistTabsNames, FirstCategoryQuestion } from '../constants/constants';
 
 test.skip('체크리스트가 인풋을 채우고 제출할 수 있다.', async ({ page }) => {
   await page.goto('/checklist/new');

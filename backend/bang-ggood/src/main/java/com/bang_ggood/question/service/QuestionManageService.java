@@ -3,6 +3,7 @@ package com.bang_ggood.question.service;
 import com.bang_ggood.question.domain.CategoryEntity;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
+import com.bang_ggood.question.domain.QuestionEntity;
 import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionResponse;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
@@ -52,8 +53,8 @@ public class QuestionManageService {
 
         for (CategoryEntity category : questionService.findAllCustomQuestionCategories(user)) {
             List<QuestionResponse> questionResponses = customChecklistQuestions.stream()
-                    .filter(customChecklistQuestion -> customChecklistQuestion.getCategory().getName().equals(category.getName())) // TODO 리팩토링
-                    .map(customChecklistQuestion -> new QuestionResponse(customChecklistQuestion.getQuestion()))
+                    .filter(customChecklistQuestion -> customChecklistQuestion.isSameCategory(category)) // TODO 리팩토링
+                    .map(customChecklistQuestion -> new QuestionResponse(customChecklistQuestion.getQuestionEntity(), questionService.readHighlights(customChecklistQuestion.getQuestionId())))
                     .toList();
 
             categoryQuestionsResponses.add(CategoryQuestionsResponse.of(category, questionResponses));
@@ -74,9 +75,11 @@ public class QuestionManageService {
         List<CategoryCustomChecklistQuestionResponse> response = new ArrayList<>();
 
         for (CategoryEntity category : questionService.findAllCategories()) {
-            List<Question> categoryQuestions = Question.findQuestionsByCategory(category);
+            List<QuestionEntity> categoryQuestions = questionService.readQuestionsByCategory(category);
             List<CustomChecklistQuestionResponse> questions = categoryQuestions.stream()
-                    .map(question -> new CustomChecklistQuestionResponse(question,
+                    .map(question -> new CustomChecklistQuestionResponse(
+                            question,
+                            questionService.readHighlights(question.getId()),
                             question.isSelected(customChecklistQuestions)))
                     .toList();
             response.add(CategoryCustomChecklistQuestionResponse.of(category, questions));

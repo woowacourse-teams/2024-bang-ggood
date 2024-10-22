@@ -50,8 +50,8 @@ public class ChecklistQuestion extends BaseEntity {
         this.answer = checklistQuestion.answer;
     }
 
-    public boolean isDifferentQuestionId(ChecklistQuestion checklistQuestion) {
-        return this.question != checklistQuestion.question;
+    public boolean isDifferentQuestionId(ChecklistQuestion checklistQuestion) { // TODO 리팩토링
+        return !getQuestionId().equals(checklistQuestion.getQuestionId());
     }
 
     public Long getChecklistId() {
@@ -59,11 +59,11 @@ public class ChecklistQuestion extends BaseEntity {
     }
 
     public Integer getQuestionId() {
-        return question.getId();
+        return questionEntity.getId();
     }
 
     public boolean isCategory(CategoryEntity category) {
-        return question.isCategory(category);
+        return questionEntity.getCategory().equals(category);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class ChecklistQuestion extends BaseEntity {
         return "ChecklistQuestion{" +
                 "id=" + id +
                 ", checklist=" + checklist +
-                ", question=" + question +
+                ", questionEntity=" + questionEntity +
                 ", answer=" + answer +
                 '}';
     }

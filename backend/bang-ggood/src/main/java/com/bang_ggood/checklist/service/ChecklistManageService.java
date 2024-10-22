@@ -156,9 +156,9 @@ public class ChecklistManageService {
 
     private SelectedCategoryQuestionsResponse categorizeChecklistQuestions(CategoryEntity category,
                                                                            List<ChecklistQuestion> checklistQuestions) {
-        List<SelectedQuestionResponse> selectedQuestionResponse = Question.filter(category, checklistQuestions)
+        List<SelectedQuestionResponse> selectedQuestionResponse = checklistQuestionService.categorizeChecklistQuestions(category, checklistQuestions)
                 .stream()
-                .map(SelectedQuestionResponse::new)
+                .map(checklistQuestion -> new SelectedQuestionResponse(checklistQuestion, questionService.readHighlights(checklistQuestion.getQuestionId())))
                 .toList();
 
         return SelectedCategoryQuestionsResponse.of(category, selectedQuestionResponse);

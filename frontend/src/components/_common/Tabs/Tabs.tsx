@@ -20,9 +20,9 @@ const Tabs = ({ tabList }: Props) => {
   );
 
   return (
-    <S.VisibleContainer>
+    <S.VisibleContainer role="navigation" aria-label="탭 내비게이션">
       <S.Container>
-        <S.FlexContainer>
+        <S.FlexContainer role="tablist">
           {tabList?.map(tab => {
             const { id, name, className } = tab;
             const isCompleted = 'isCompleted' in tab ? tab.isCompleted : undefined;
@@ -35,6 +35,8 @@ const Tabs = ({ tabList }: Props) => {
                 onMoveTab={onMoveTab}
                 key={id}
                 active={tab.id === currentTabId}
+                tabIndex={tab.id === currentTabId ? 0 : -1}
+                aria-selected={tab.id === currentTabId}
                 isCompleted={isCompleted}
               />
             );

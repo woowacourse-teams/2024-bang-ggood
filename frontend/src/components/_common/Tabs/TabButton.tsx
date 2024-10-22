@@ -10,11 +10,12 @@ interface Props extends Tab {
   onMoveTab: (id: number) => void;
   active: boolean;
   isCompleted?: boolean;
+  tabIndex?: number;
 }
 
-const TabButton = ({ id, onMoveTab, name, active, className, isCompleted }: Props) => {
+const TabButton = ({ id, onMoveTab, name, active, className, isCompleted, ...rest }: Props) => {
   return (
-    <S.Container key={id} onClick={() => onMoveTab(id)} active={active}>
+    <S.Container key={id} onClick={() => onMoveTab(id)} active={active} role="tab" {...rest}>
       <S.TextBox className={className && `sprite-icon ${className}`}>{name}</S.TextBox>
       {isCompleted === false && <S.UncompletedIndicator />}
     </S.Container>

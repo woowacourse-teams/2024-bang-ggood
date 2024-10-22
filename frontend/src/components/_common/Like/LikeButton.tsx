@@ -41,6 +41,7 @@ const LikeButton = ({ isLiked = false, checklistId }: Props) => {
       onClick={handleClickLike}
       fill={fill ? theme.palette.red500 : 'NONE'}
       stroke={fill ? theme.palette.red500 : theme.palette.grey500}
+      tabIndex={1}
       aria-label="좋아요 버튼"
     />
   );

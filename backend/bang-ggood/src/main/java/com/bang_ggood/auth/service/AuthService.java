@@ -1,20 +1,30 @@
 package com.bang_ggood.auth.service;
 
+import com.bang_ggood.auth.dto.request.LocalLoginRequestV1;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
+import com.bang_ggood.auth.dto.request.RegisterRequestV1;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.dto.response.OauthInfoApiResponse;
+import com.bang_ggood.auth.service.jwt.JwtTokenProvider;
+import com.bang_ggood.auth.service.jwt.JwtTokenResolver;
+import com.bang_ggood.auth.service.oauth.OauthClient;
 import com.bang_ggood.global.DefaultChecklistService;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
+import com.bang_ggood.user.domain.Email;
+import com.bang_ggood.user.domain.LoginType;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.domain.UserType;
 import com.bang_ggood.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class AuthService {
 
@@ -23,27 +33,53 @@ public class AuthService {
 
     private final OauthClient oauthClient;
     private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenResolver jwtTokenResolver;
     private final DefaultChecklistService defaultChecklistService;
-    private final UserRepository userRepository; // TODO 리팩토링
+    private final UserRepository userRepository;
 
-    public AuthService(OauthClient oauthClient, JwtTokenProvider jwtTokenProvider,
-                       DefaultChecklistService defaultChecklistService, UserRepository userRepository) {
-        this.oauthClient = oauthClient;
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.defaultChecklistService = defaultChecklistService;
-        this.userRepository = userRepository;
+    @Transactional
+    public Long register(RegisterRequestV1 request) {
+        try {
+            return userRepository.save(request.toUserEntity()).getId();
+        } catch (DataIntegrityViolationException e) {
+            throw new BangggoodException(ExceptionCode.USER_EMAIL_ALREADY_USED);
+        }
     }
 
     @Transactional
-    public AuthTokenResponse login(OauthLoginRequest request) {
+    public void withdraw(User user) {
+        userRepository.deleteById(user.getId());
+    }
+
+    @Transactional
+    public AuthTokenResponse oauthLogin(OauthLoginRequest request) {
         OauthInfoApiResponse oauthInfoApiResponse = oauthClient.requestOauthInfo(request);
 
-        User user = userRepository.findByEmail(oauthInfoApiResponse.kakao_account().email())
+        User user = userRepository.findByEmailAndLoginType(new Email(oauthInfoApiResponse.kakao_account().email()),
+                        LoginType.KAKAO)
                 .orElseGet(() -> signUp(oauthInfoApiResponse));
 
         String accessToken = jwtTokenProvider.createAccessToken(user);
         String refreshToken = jwtTokenProvider.createRefreshToken(user);
         return AuthTokenResponse.of(accessToken, refreshToken);
+    }
+
+    @Transactional(readOnly = true)
+    public AuthTokenResponse localLogin(LocalLoginRequestV1 request) {
+        User user = userRepository.findByEmailAndLoginType(new Email(request.email()), LoginType.LOCAL)
+                .orElseThrow(() -> new BangggoodException(ExceptionCode.USER_NOT_FOUND));
+        checkPassword(request, user);
+
+        String accessToken = jwtTokenProvider.createAccessToken(user);
+        String refreshToken = jwtTokenProvider.createRefreshToken(user);
+        return AuthTokenResponse.of(accessToken, refreshToken);
+    }
+
+
+    private void checkPassword(LocalLoginRequestV1 request, User user) {
+        if (user.isDifferent(request.password())) {
+            throw new BangggoodException(ExceptionCode.USER_INVALID_PASSWORD);
+        }
     }
 
     private User signUp(OauthInfoApiResponse oauthInfoApiResponse) {
@@ -54,7 +90,7 @@ public class AuthService {
 
     @Transactional(readOnly = true)
     public User assignGuestUser() {
-        List<User> foundGuestUser = userRepository.findUserByType(UserType.GUEST);
+        List<User> foundGuestUser = userRepository.findUserByUserType(UserType.GUEST);
 
         if (foundGuestUser.size() > GUEST_USER_LIMIT) {
             throw new BangggoodException(ExceptionCode.GUEST_USER_UNEXPECTED_EXIST);
@@ -68,9 +104,24 @@ public class AuthService {
     public void logout(String accessToken, String refreshToken, User user) {
         log.info("logout accessToken: {}", accessToken);
         log.info("logout refreshToken: {}", refreshToken);
-        AuthUser accessAuthUser = jwtTokenProvider.resolveToken(accessToken);
-        AuthUser refreshAuthUser = jwtTokenProvider.resolveToken(refreshToken);
+        AuthUser accessAuthUser = jwtTokenResolver.resolveAccessToken(accessToken);
+        AuthUser refreshAuthUser = jwtTokenResolver.resolveRefreshToken(refreshToken);
         validateTokenOwnership(user, accessAuthUser, refreshAuthUser);
+    }
+
+    @Transactional(readOnly = true)
+    public User getAuthUser(String token) {
+        AuthUser authUser = jwtTokenResolver.resolveAccessToken(token);
+        log.info("extractUser token: {}", token);
+        log.info("extractUser authUserId: {}", authUser.id());
+        return userRepository.getUserById(authUser.id());
+    }
+
+    @Transactional(readOnly = true)
+    public String reissueAccessToken(String refreshToken) {
+        AuthUser authUser = jwtTokenResolver.resolveRefreshToken(refreshToken);
+        User user = userRepository.getUserById(authUser.id());
+        return jwtTokenProvider.createAccessToken(user);
     }
 
     private static void validateTokenOwnership(User user, AuthUser accessAuthUser, AuthUser refreshAuthUser) {
@@ -80,22 +131,5 @@ public class AuthService {
         if (!user.getId().equals(accessAuthUser.id())) {
             throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER);
         }
-    }
-
-    @Transactional(readOnly = true)
-    public User getAuthUser(String token) {
-        log.info("extractUser token: {}", token);
-        AuthUser authUser = jwtTokenProvider.resolveToken(token);
-        log.info("extractUser authUserId: {}", authUser.id());
-        return userRepository.getUserById(authUser.id());
-    }
-
-    @Transactional(readOnly = true)
-    public String reIssueAccessToken(String refreshToken) {
-        jwtTokenProvider.validateRefreshTokenType(refreshToken);
-        AuthUser authUser = jwtTokenProvider.resolveToken(refreshToken);
-
-        User user = userRepository.getUserById(authUser.id());
-        return jwtTokenProvider.createAccessToken(user);
     }
 }

@@ -4,6 +4,8 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
+import com.bang_ggood.question.ChecklistQuestionFixture;
+import com.bang_ggood.question.QuestionFixture;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
@@ -39,9 +41,10 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
         //given
         Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
+
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-        checklistQuestionRepository.save(ChecklistFixture.CHECKLIST_QUESTION_1(checklist));
-        checklistQuestionRepository.save(ChecklistFixture.CHECKLIST_QUESTION_2(checklist));
+        checklistQuestionRepository.save(ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1_CATEGORY1));
+        checklistQuestionRepository.save(ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, QuestionFixture.QUESTION2_CATEGORY1));
 
         // when
         List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findAllByChecklistId(
@@ -59,15 +62,16 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
         //given
         Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
+
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
         ChecklistQuestion checklistQuestion1 = checklistQuestionRepository.save(
-                ChecklistFixture.CHECKLIST_QUESTION_1(checklist));
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1_CATEGORY1));
         ChecklistQuestion checklistQuestion2 = checklistQuestionRepository.save(
-                ChecklistFixture.CHECKLIST_QUESTION_2(checklist));
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, QuestionFixture.QUESTION2_CATEGORY1));
 
         //when
         checklistQuestionRepository.deleteAllByChecklistId(
-                ChecklistFixture.CHECKLIST_QUESTION_1(checklist).getChecklist().getId());
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1_CATEGORY1).getChecklistId());
 
         //then
         assertAll(

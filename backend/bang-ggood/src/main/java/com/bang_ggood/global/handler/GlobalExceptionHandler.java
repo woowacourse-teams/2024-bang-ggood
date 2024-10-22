@@ -1,12 +1,14 @@
 package com.bang_ggood.global.handler;
 
 import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.global.exception.OauthException;
 import com.bang_ggood.global.exception.dto.ExceptionResponse;
 import com.bang_ggood.global.exception.dto.OauthExceptionResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -20,6 +22,7 @@ public class GlobalExceptionHandler {
         ExceptionResponse response = new ExceptionResponse(
                 request.getMethod(),
                 request.getRequestURI(),
+                exception.getClientExceptionCodeName(),
                 exception.getMessage());
 
         return ResponseEntity.status(exception.getHttpStatusCode())
@@ -32,7 +35,8 @@ public class GlobalExceptionHandler {
         ExceptionResponse response = new ExceptionResponse(
                 request.getMethod(),
                 request.getRequestURI(),
-                "예상치 못한 서버에러가 발생했습니다.");
+                ExceptionCode.INTERNAL_SERVER_ERROR.getClientExceptionCode().name(),
+                ExceptionCode.INTERNAL_SERVER_ERROR.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(response);
     }
@@ -41,10 +45,17 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionResponse> handleMethodArgumentNotValidException(
             MethodArgumentNotValidException exception,
             HttpServletRequest request) {
+        FieldError fieldError = exception.getFieldError();
+        String errorMessage = ExceptionCode.INVALID_PARAMETER.getMessage(); // TODO 리팩터링 필요
+        if (fieldError != null) {
+            errorMessage = fieldError.getDefaultMessage();
+        }
+
         ExceptionResponse response = new ExceptionResponse(
                 request.getMethod(),
                 request.getRequestURI(),
-                exception.getMessage());
+                ExceptionCode.INVALID_PARAMETER.getClientExceptionCode().name(),
+                errorMessage);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(response);
     }

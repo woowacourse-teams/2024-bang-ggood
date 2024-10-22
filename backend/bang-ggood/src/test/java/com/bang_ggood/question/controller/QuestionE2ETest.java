@@ -4,10 +4,8 @@ import com.bang_ggood.AcceptanceTest;
 import com.bang_ggood.question.CustomChecklistFixture;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.http.Header;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpHeaders;
 
 class QuestionE2ETest extends AcceptanceTest {
 
@@ -16,7 +14,7 @@ class QuestionE2ETest extends AcceptanceTest {
     void readCustomChecklistQuestions() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .when().get("/checklists/questions")
                 .then().log().all()
                 .statusCode(200);
@@ -27,7 +25,7 @@ class QuestionE2ETest extends AcceptanceTest {
     void readAllCustomChecklistQuestion() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .when().get("/custom-checklist/all")
                 .then().log().all()
                 .statusCode(200);
@@ -38,7 +36,7 @@ class QuestionE2ETest extends AcceptanceTest {
     void updateCustomChecklist() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .body(CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST())
                 .when().put("/custom-checklist")
                 .then().log().all()

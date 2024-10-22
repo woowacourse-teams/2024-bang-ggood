@@ -22,7 +22,8 @@ public class SubwayReader {
     public static List<SubwayStation> readSubwayStationData() {
         List<SubwayStation> stations = new ArrayList<>();
         try (CSVReader csvReader = new CSVReaderBuilder(
-                new InputStreamReader(getSubwayStationResource().getInputStream(), Charset.forName("EUC-KR"))).build()) {
+                new InputStreamReader(getSubwayStationResource().getInputStream(),
+                        Charset.forName("EUC-KR"))).build()) {
             String[] line = csvReader.readNext(); // drop first row
             while ((line = csvReader.readNext()) != null) {
                 SubwayStation station = new SubwayStation(

@@ -3,29 +3,28 @@ package com.bang_ggood.question.service;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
+import com.bang_ggood.question.domain.CategoryEntity;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.user.domain.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@RequiredArgsConstructor
 @Service
 public class ChecklistQuestionService {
 
     private final ChecklistQuestionRepository checklistQuestionRepository;
     private final CustomChecklistQuestionRepository customChecklistQuestionRepository;
-
-    public ChecklistQuestionService(ChecklistQuestionRepository checklistQuestionRepository,
-                                    CustomChecklistQuestionRepository customChecklistQuestionRepository) {
-        this.checklistQuestionRepository = checklistQuestionRepository;
-        this.customChecklistQuestionRepository = customChecklistQuestionRepository;
-    }
+    private final QuestionService questionService; // TODO 리팩터링
 
     @Transactional
     public void createDefaultCustomQuestions(List<CustomChecklistQuestion> customChecklistQuestions) {
@@ -60,7 +59,7 @@ public class ChecklistQuestionService {
         customChecklistQuestionRepository.deleteAllByUser(user);
 
         List<CustomChecklistQuestion> customChecklistQuestions = questions.stream()
-                .map(question -> new CustomChecklistQuestion(user, question))
+                .map(question -> new CustomChecklistQuestion(user, question, questionService.readQuestion(question.getId())))
                 .toList();
         customChecklistQuestionRepository.saveAll(customChecklistQuestions);
     }
@@ -79,7 +78,29 @@ public class ChecklistQuestionService {
 
     @Transactional(readOnly = true)
     public List<ChecklistQuestion> readChecklistQuestions(Checklist checklist) {
-        return checklistQuestionRepository.findAllByChecklistId(checklist.getId());
+        List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findAllByChecklistId(checklist.getId());
+
+        List<ChecklistQuestion> result = new ArrayList<>();
+        for (ChecklistQuestion checklistQuestion : checklistQuestions) {
+            if (checklistQuestion.getQuestionEntity() == null) {
+                ChecklistQuestion checklistQuestion1 = checklistQuestionRepository.updateChecklistQuestionId(
+                        checklistQuestion.getQuestionId(), checklistQuestion.getId());
+
+                result.add(checklistQuestion1);
+                continue;
+            }
+
+            result.add(checklistQuestion);
+        }
+
+        return result;
+    }
+
+    @Transactional(readOnly = true)
+    public List<ChecklistQuestion> categorizeChecklistQuestions(CategoryEntity category, List<ChecklistQuestion> questions) {
+        return questions.stream()
+                .filter(question -> question.isCategory(category) && question.getAnswer() != null)
+                .toList();
     }
 
     @Transactional

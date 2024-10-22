@@ -2,18 +2,18 @@ package com.bang_ggood.checklist;
 
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
+import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
 import com.bang_ggood.contract.domain.OccupancyMonth;
 import com.bang_ggood.contract.domain.OccupancyPeriod;
 import com.bang_ggood.like.domain.ChecklistLike;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.domain.MaintenanceItem;
 import com.bang_ggood.option.domain.Option;
-import com.bang_ggood.question.domain.Answer;
-import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.request.QuestionRequest;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
+import com.bang_ggood.station.dto.request.ChecklistStationRequest;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import java.util.List;
@@ -110,15 +110,30 @@ public class ChecklistFixture {
 
     public static ChecklistRequest CHECKLIST_CREATE_REQUEST() {
         return new ChecklistRequest(
-                RoomFixture.ROOM_CREATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(), Option.SHOE_RACK.getId()),
+                RoomFixture.ROOM_CREATE_REQUEST(),
+                List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(),
+                        Option.SHOE_RACK.getId()),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
                         QUESTION_3_CREATE_REQUEST(), QUESTION_5_CREATE_REQUEST())
         );
     }
 
+    public static ChecklistRequestV1 CHECKLIST_CREATE_REQUEST_V1() {
+        return new ChecklistRequestV1(
+                RoomFixture.ROOM_CREATE_REQUEST(),
+                List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(),
+                        Option.SHOE_RACK.getId()),
+                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
+                        QUESTION_3_CREATE_REQUEST(), QUESTION_5_CREATE_REQUEST()),
+                ChecklistStationRequest.of(38, 127)
+        );
+    }
+
     public static ChecklistRequest CHECKLIST_CREATE_REQUEST2() {
         return new ChecklistRequest(
-                RoomFixture.ROOM_CREATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(), Option.CLOSET.getId()),
+                RoomFixture.ROOM_CREATE_REQUEST(),
+                List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(),
+                        Option.CLOSET.getId()),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
                         QUESTION_4_CREATE_REQUEST())
         );
@@ -126,7 +141,9 @@ public class ChecklistFixture {
 
     public static ChecklistRequest CHECKLIST_CREATE_REQUEST_NO_ROOM_NAME() {
         return new ChecklistRequest(
-                RoomFixture.ROOM_CREATE_REQUEST_NO_ROOM_NAME(),List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(), Option.SHOE_RACK.getId()),
+                RoomFixture.ROOM_CREATE_REQUEST_NO_ROOM_NAME(),
+                List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(),
+                        Option.SHOE_RACK.getId()),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
                         QUESTION_3_CREATE_REQUEST(), QUESTION_5_CREATE_REQUEST())
         );
@@ -142,7 +159,9 @@ public class ChecklistFixture {
 
     public static ChecklistRequest CHECKLIST_UPDATE_REQUEST_NO_ROOM_NAME() {
         return new ChecklistRequest(
-                RoomFixture.ROOM_CREATE_REQUEST_NO_ROOM_NAME(), List.of(Option.REFRIGERATOR.getId(), Option.BED.getId(), Option.INDUCTION.getId(), Option.SHOE_RACK.getId()),
+                RoomFixture.ROOM_CREATE_REQUEST_NO_ROOM_NAME(),
+                List.of(Option.REFRIGERATOR.getId(), Option.BED.getId(), Option.INDUCTION.getId(),
+                        Option.SHOE_RACK.getId()),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
                         QUESTION_3_CREATE_REQUEST(), QUESTION_5_UPDATE_REQUEST())
         );
@@ -150,7 +169,9 @@ public class ChecklistFixture {
 
     public static ChecklistRequest CHECKLIST_CREATE_REQUEST_NO_QUESTION_ID() {
         return new ChecklistRequest(
-                RoomFixture.ROOM_CREATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(), Option.SHOE_RACK.getId()),
+                RoomFixture.ROOM_CREATE_REQUEST(),
+                List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(),
+                        Option.SHOE_RACK.getId()),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
                         QUESTION_3_CREATE_REQUEST(), QUESTION_CREATE_REQUEST_NO_ID())
         );
@@ -158,18 +179,12 @@ public class ChecklistFixture {
 
     public static ChecklistRequest CHECKLIST_UPDATE_REQUEST_NO_QUESTION_ID() {
         return new ChecklistRequest(
-                RoomFixture.ROOM_UPDATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.BED.getId(), Option.INDUCTION.getId(), Option.SHOE_RACK.getId()),
+                RoomFixture.ROOM_UPDATE_REQUEST(),
+                List.of(Option.REFRIGERATOR.getId(), Option.BED.getId(), Option.INDUCTION.getId(),
+                        Option.SHOE_RACK.getId()),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
                         QUESTION_3_CREATE_REQUEST(), QUESTION_CREATE_REQUEST_NO_ID())
         );
-    }
-
-    public static ChecklistQuestion CHECKLIST_QUESTION_1(Checklist checklist) {
-        return new ChecklistQuestion(checklist, Question.fromId(1), Answer.BAD);
-    }
-
-    public static ChecklistQuestion CHECKLIST_QUESTION_2(Checklist checklist) {
-        return new ChecklistQuestion(checklist, Question.fromId(2), Answer.BAD);
     }
 
     public static ChecklistLike CHECKLIST1_LIKE(Checklist checklist) {

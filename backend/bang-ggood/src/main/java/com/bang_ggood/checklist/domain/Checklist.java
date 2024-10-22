@@ -20,9 +20,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.Objects;
 
+import static lombok.AccessLevel.PROTECTED;
+
+@Getter
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 public class Checklist extends BaseEntity {
 
@@ -61,7 +67,6 @@ public class Checklist extends BaseEntity {
     @OneToMany(mappedBy = "checklist")
     private List<ChecklistQuestion> questions;
 
-
     public Checklist(Room room, User user, Integer deposit, Integer rent, Integer maintenanceFee,
                      Integer contractTerm, OccupancyMonth occupancyMonth, OccupancyPeriod occupancyPeriod,
                      String realEstate, String memo, String summary) {
@@ -77,16 +82,6 @@ public class Checklist extends BaseEntity {
         this.memo = memo;
         this.summary = summary;
         validateMemoLength();
-    }
-
-    public Checklist(Integer deposit, Integer rent, Integer maintenanceFee, Integer contractTerm,
-                     OccupancyMonth occupancyMonth, OccupancyPeriod occupancyPeriod, String realEstate,
-                     String memo, String summary) {
-        this(null, null, deposit, rent, maintenanceFee, contractTerm, occupancyMonth, occupancyPeriod, realEstate, memo,
-                summary);
-    }
-
-    protected Checklist() {
     }
 
     public boolean isOwnedBy(User user) {
@@ -113,44 +108,8 @@ public class Checklist extends BaseEntity {
         }
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public Integer getDeposit() {
-        return deposit;
-    }
-
-    public Integer getRent() {
-        return rent;
-    }
-
-    public Integer getMaintenanceFee() {
-        return maintenanceFee;
-    }
-
-    public Integer getContractTerm() {
-        return contractTerm;
-    }
-
-    public String getRealEstate() {
-        return realEstate;
-    }
-
-    public String getMemo() {
-        return memo;
-    }
-
-    public String getSummary() {
-        return summary;
+    public Long getRoomId() {
+        return room.getId();
     }
 
     public String getRoomName() {
@@ -195,10 +154,6 @@ public class Checklist extends BaseEntity {
 
     public String getOccupancyPeriod() {
         return occupancyPeriod.getPeriod();
-    }
-
-    public List<ChecklistQuestion> getQuestions() {
-        return questions;
     }
 
     @Override

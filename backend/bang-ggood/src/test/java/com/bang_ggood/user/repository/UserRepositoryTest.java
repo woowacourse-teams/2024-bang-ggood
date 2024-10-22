@@ -16,15 +16,15 @@ class UserRepositoryTest extends IntegrationTestSupport {
     @Autowired
     private UserRepository userRepository;
 
-    @DisplayName("유저 이메일 조회 성공 : 유저 삭제 후 유저를 조회하면(논리적 삭제) 조회되지 않는다.")
+    @DisplayName("유저 이메일 및 로그인 타입 조회 성공 : 유저 삭제 후 유저를 조회하면(논리적 삭제) 조회되지 않는다.")
     @Test
     void findByEmail() {
         // given
         User user = userRepository.save(UserFixture.USER1());
-        userRepository.deleteByUser(user);
+        userRepository.deleteById(user.getId());
 
         // when
-        Optional<User> findUser = userRepository.findByEmail(user.getEmail());
+        Optional<User> findUser = userRepository.findByEmailAndLoginType(user.getEmail(), user.getLoginType());
 
         // then
         Assertions.assertThat(findUser).isEmpty();
@@ -34,12 +34,26 @@ class UserRepositoryTest extends IntegrationTestSupport {
     @Test
     void findByType() {
         // given
-        User expectedUser = userRepository.save(UserFixture.GUEST_USER());
+        User expectedUser = userRepository.save(UserFixture.GUEST_USER1());
 
         // when
-        List<User> users = userRepository.findUserByType(UserType.GUEST);
+        List<User> users = userRepository.findUserByUserType(UserType.GUEST);
 
         // then
         Assertions.assertThat(users).containsExactly(expectedUser);
+    }
+
+    @DisplayName("논리적 삭제 성공")
+    @Test
+    void deleteById() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+
+        // when
+        userRepository.deleteById(user.getId());
+
+        // then
+        Optional<User> findUser = userRepository.findById(user.getId());
+        Assertions.assertThat(findUser).isEmpty();
     }
 }

@@ -1,6 +1,7 @@
 package com.bang_ggood.auth.config;
 
 import com.bang_ggood.AcceptanceTest;
+import com.bang_ggood.auth.controller.cookie.CookieProvider;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
@@ -21,13 +22,15 @@ import static org.hamcrest.Matchers.containsString;
 class ArgumentResolverTest extends AcceptanceTest {
 
     @Autowired
+    private CookieProvider cookieProvider;
+    @Autowired
     private UserRepository userRepository;
 
     @DisplayName("@UserPrincipal 어노테이션 동작 성공 : 토큰값이 없으면 게스트 유저가 할당된다.")
     @Test
     void resolveUserPrincipalArgument_returnGuestUser() {
         // given & when
-        userRepository.save(UserFixture.GUEST_USER());
+        userRepository.save(UserFixture.GUEST_USER1());
 
         User user = RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
@@ -37,7 +40,7 @@ class ArgumentResolverTest extends AcceptanceTest {
                 .extract().as(User.class);
 
         // then
-        Assertions.assertThat(user.getType()).isEqualTo(UserType.GUEST);
+        Assertions.assertThat(user.getUserType()).isEqualTo(UserType.GUEST);
     }
 
     @DisplayName("@UserPrincipal 어노테이션 동작 성공 : 토큰값이 있으면 인증된 유저를 할당한다.")
@@ -46,14 +49,14 @@ class ArgumentResolverTest extends AcceptanceTest {
         // given & when
         User user = RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .when().get(TestController.USER_PRINCIPAL_URL)
                 .then().log().all()
                 .statusCode(200)
                 .extract().as(User.class);
 
         // then
-        Assertions.assertThat(user.getType()).isEqualTo(UserType.USER);
+        Assertions.assertThat(user.getUserType()).isEqualTo(UserType.USER);
     }
 
     @DisplayName("@AuthPrincipal 어노테이션 동작 성공 : 쿠키값이 없으면 예외를 발생시킨다.")
@@ -81,5 +84,35 @@ class ArgumentResolverTest extends AcceptanceTest {
                 .then().log().all()
                 .statusCode(401)
                 .body("message", containsString(ExceptionCode.AUTHENTICATION_TOKEN_EMPTY.getMessage()));
+    }
+
+    @DisplayName("@AuthPrinciapl 어노테이션 동작 성공 : 액세스 토큰 존재 X, 리프레시 토큰 존재 O 일때 예외를 발생시킨다.")
+    @Test
+    void resolveAuthPrincipalArgument_throwException_whenAccessTokenEmpty() {
+        // given & when & then
+        ResponseCookie refreshTokenCookie = cookieProvider.createRefreshTokenCookie("testToken");
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, refreshTokenCookie.toString()))
+                .when().get(TestController.AUTH_PRINCIPAL_URL)
+                .then().log().all()
+                .statusCode(401)
+                .body("message", containsString(ExceptionCode.AUTHENTICATION_ACCESS_TOKEN_EMPTY.getMessage()));
+    }
+
+    @DisplayName("@AuthPrinciapl 어노테이션 동작 성공 : 액세스 토큰 존재 O, 리프레시 토큰 존재 X 일때 예외를 발생시킨다.")
+    @Test
+    void resolveAuthPrincipalArgument_throwException_whenRefreshTokenEmpty() {
+        // given & when & then
+        ResponseCookie accessTokenCookie = cookieProvider.createAccessTokenCookie("testToken");
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .header(new Header(HttpHeaders.COOKIE, accessTokenCookie.toString()))
+                .when().get(TestController.AUTH_PRINCIPAL_URL)
+                .then().log().all()
+                .statusCode(401)
+                .body("message", containsString(ExceptionCode.AUTHENTICATION_REFRESH_TOKEN_EMPTY.getMessage()));
     }
 }

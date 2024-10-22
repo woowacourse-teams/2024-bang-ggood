@@ -2,6 +2,7 @@ package com.bang_ggood.user.domain;
 
 import com.bang_ggood.BaseEntity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -9,9 +10,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import java.util.Objects;
 
+import static lombok.AccessLevel.PROTECTED;
+
 @Table(name = "users")
+@Getter
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 public class User extends BaseEntity {
 
@@ -22,41 +29,43 @@ public class User extends BaseEntity {
     private String name;
 
     @Column(nullable = false)
-    private String email;
+    @Embedded
+    private Email email;
+
+    @Embedded
+    private Password password;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private UserType type;
+    private UserType userType;
 
-    public User(String name, String email, UserType type) {
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private LoginType loginType;
+
+    public User(String name, String email, UserType userType, LoginType loginType) {
         this.name = name;
-        this.email = email;
-        this.type = type;
+        this.email = new Email(email);
+        this.userType = userType;
+        this.loginType = loginType;
+    }
+
+    public User(String name, String email, String password, UserType userType, LoginType loginType) {
+        this.name = name;
+        this.email = new Email(email);
+        this.password = new Password(password);
+        this.userType = userType;
+        this.loginType = loginType;
     }
 
     public User(Long id, String name, String email) { // TODO 테스트용
         this.id = id;
         this.name = name;
-        this.email = email;
+        this.email = new Email(email);
     }
 
-    protected User() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public UserType getType() {
-        return type;
+    public boolean isDifferent(String targetPassword) {
+        return password.isDifferent(targetPassword);
     }
 
     @Override

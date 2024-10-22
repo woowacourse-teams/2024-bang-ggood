@@ -5,10 +5,8 @@ import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.dto.UserResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.http.Header;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpHeaders;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -21,7 +19,7 @@ class UserE2ETest extends AcceptanceTest {
         User user = this.getAuthenticatedUser();
         UserResponse response = RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .header(new Header(HttpHeaders.COOKIE, this.responseCookie.toString()))
+                .headers(this.headers)
                 .when().get("/user/me")
                 .then().log().all()
                 .statusCode(200)
@@ -31,7 +29,7 @@ class UserE2ETest extends AcceptanceTest {
         assertAll(
                 () -> assertThat(response.userId()).isEqualTo(user.getId()),
                 () -> assertThat(response.userName()).isEqualTo(user.getName()),
-                () -> assertThat(response.userEmail()).isEqualTo(user.getEmail())
+                () -> assertThat(response.userEmail()).isEqualTo(user.getEmail().getValue())
         );
     }
 }

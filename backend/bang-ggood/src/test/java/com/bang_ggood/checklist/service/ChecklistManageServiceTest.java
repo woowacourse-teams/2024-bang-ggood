@@ -4,6 +4,7 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
+import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
@@ -22,7 +23,6 @@ import com.bang_ggood.user.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -53,6 +53,20 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
 
         // when
         long checklistId = checklistManageService.createChecklist(user, checklist);
+
+        //then
+        assertThat(checklistId).isGreaterThan(0);
+    }
+
+    @DisplayName("체크리스트 작성 v1 성공")
+    @Test
+    void createChecklistV1() {
+        //given
+        User user = userRepository.save(UserFixture.USER1());
+        ChecklistRequestV1 checklistRequestV1 = ChecklistFixture.CHECKLIST_CREATE_REQUEST_V1();
+
+        // when
+        long checklistId = checklistManageService.createChecklistV1(user, checklistRequestV1);
 
         //then
         assertThat(checklistId).isGreaterThan(0);

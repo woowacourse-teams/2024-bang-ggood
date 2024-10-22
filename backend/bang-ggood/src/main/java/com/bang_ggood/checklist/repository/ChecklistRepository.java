@@ -28,7 +28,7 @@ public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
     @Query("SELECT c FROM Checklist c "
             + "WHERE c.user = :user "
             + "AND c.deleted = false "
-            + "ORDER BY c.createdAt DESC ")
+            + "ORDER BY c.createdAt DESC, c.id DESC ")
     List<Checklist> findAllByUserOrderByLatest(@Param("user") User user);
 
     @Query("SELECT c FROM Checklist c "

@@ -9,9 +9,16 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import java.util.Objects;
 
+import static lombok.AccessLevel.PROTECTED;
+
+@Getter
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 public class ChecklistQuestion extends BaseEntity {
 
@@ -25,44 +32,38 @@ public class ChecklistQuestion extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Question question;
 
+    @JoinColumn(name = "question_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private QuestionEntity questionEntity;
+
     @Enumerated(EnumType.STRING)
     private Answer answer;
 
-    public ChecklistQuestion(Checklist checklist, Question question, Answer answer) {
+    public ChecklistQuestion(Checklist checklist, Question question, QuestionEntity questionEntity, Answer answer) {
         this.checklist = checklist;
         this.question = question;
         this.answer = answer;
-    }
-
-    protected ChecklistQuestion() {
+        this.questionEntity = questionEntity;
     }
 
     public void change(ChecklistQuestion checklistQuestion) {
         this.answer = checklistQuestion.answer;
     }
 
-    public boolean isDifferentQuestionId(ChecklistQuestion checklistQuestion) {
-        return this.question != checklistQuestion.question;
+    public boolean isDifferentQuestionId(ChecklistQuestion checklistQuestion) { // TODO 리팩토링
+        return !getQuestionId().equals(checklistQuestion.getQuestionId());
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public Checklist getChecklist() {
-        return checklist;
-    }
-
-    public Question getQuestion() {
-        return question;
+    public Long getChecklistId() {
+        return checklist.getId();
     }
 
     public Integer getQuestionId() {
-        return question.getId();
+        return questionEntity.getId();
     }
 
-    public Answer getAnswer() {
-        return answer;
+    public boolean isCategory(CategoryEntity category) {
+        return questionEntity.getCategory().equals(category);
     }
 
     @Override
@@ -87,7 +88,7 @@ public class ChecklistQuestion extends BaseEntity {
         return "ChecklistQuestion{" +
                 "id=" + id +
                 ", checklist=" + checklist +
-                ", question=" + question +
+                ", questionEntity=" + questionEntity +
                 ", answer=" + answer +
                 '}';
     }

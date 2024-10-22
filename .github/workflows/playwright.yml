@@ -54,7 +54,7 @@ jobs:
       - name: Run Playwright tests
         run: |
           cd frontend
-          yarn playwright test
+          yarn e2e:mock
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:

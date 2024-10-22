@@ -28,6 +28,7 @@ const ArticlePreviewCard = ({ index, article }: Props) => {
       bgColor={color500}
       hoverColor={color600}
       onClick={handleClickArticle}
+      tabIndex={1}
       aria-label="클릭하면 해당 아티클 페이지로 이동합니다"
     >
       <S.Keyword bgColor={color600}>{keyword}</S.Keyword>

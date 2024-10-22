@@ -41,8 +41,8 @@ const S = {
     height: ${HEADER_SIZE}rem;
     padding: 2rem 1.6rem 1.2rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
-    opacity: ${({ isTransparent }) => isTransparent && 0.3};
+    background-color: ${({ theme, isTransparent }) => (isTransparent ? 'rgba(255,255,255, 0.3)' : theme.palette.white)};
+
     max-width: 60rem;
     align-items: center;
     box-sizing: border-box;

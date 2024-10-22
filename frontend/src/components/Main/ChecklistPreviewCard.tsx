@@ -25,7 +25,7 @@ const ChecklistPreviewCard = ({ index, checklist }: Props) => {
   };
 
   return (
-    <S.Container onClick={handleClick}>
+    <S.Container onClick={handleClick} tabIndex={1}>
       <HomeCircle color={color500} bgColor={color200} aria-hidden="true" />
       <S.Column>
         <S.Label>

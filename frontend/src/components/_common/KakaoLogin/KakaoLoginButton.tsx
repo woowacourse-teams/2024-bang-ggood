@@ -8,7 +8,7 @@ const KakaoLoginButton = () => {
   const { moveToKakao } = useLogin();
 
   return (
-    <S.KakaoLoginButton onClick={moveToKakao}>
+    <S.KakaoLoginButton onClick={moveToKakao} tabIndex={1}>
       <KakaoLogo aria-hidden="true" />
       <S.Text>카카오톡으로 시작하기</S.Text>
     </S.KakaoLoginButton>
@@ -22,7 +22,7 @@ const S = {
     width: 100%;
     height: 5rem;
     ${flexRow}
-    gap: 0.5rem;
+    gap: 1rem;
     justify-content: center;
     align-items: center;
     border-radius: 0.8rem;
@@ -34,7 +34,7 @@ const S = {
     margin: 0.5rem;
 
     font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: ${({ theme }) => theme.text.size.medium};
+    font-size: ${({ theme }) => theme.text.size.small};
     line-height: 1.5;
   `,
 };

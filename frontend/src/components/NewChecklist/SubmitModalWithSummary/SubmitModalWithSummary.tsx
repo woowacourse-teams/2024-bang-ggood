@@ -4,7 +4,7 @@ import Button from '@/components/_common/Button/Button';
 import CounterBox from '@/components/_common/CounterBox/CounterBox';
 import FormField from '@/components/_common/FormField/FormField';
 import Modal from '@/components/_common/Modal/Modal';
-import { MODAL_MESSAGE } from '@/constants/message';
+import { MODAL_MESSAGE } from '@/constants/messages/message';
 import useMutateChecklist from '@/hooks/useMutateChecklist';
 import useRoomInfoValidated from '@/hooks/useRoomInfoValidated';
 import { flexColumn, title3 } from '@/styles/common';

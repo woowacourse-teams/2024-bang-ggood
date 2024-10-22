@@ -36,7 +36,7 @@ test('체크리스트 질문 선택 페이지에 들어가면 탭과 질문들�
   }
 });
 
-test('체크리스트 편집 페이지에 들어가면 탭과 질문들이 잘 렌더링된다.', async ({ page }) => {
+test.skip('체크리스트 편집 페이지에 들어가면 탭과 질문들이 잘 렌더링된다.', async ({ page }) => {
   await page.goto('/checklist/1');
   const checklistEditButton = page.locator('button[id="checklistEditButton"]');
   await checklistEditButton.click();

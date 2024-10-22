@@ -9,7 +9,7 @@ import { ChecklistQuestionWithIsSelected } from '@/types/checklist';
 
 const QuestionSelectCard = ({ question }: { question: ChecklistQuestionWithIsSelected }) => {
   const { title, subtitle, isSelected, questionId } = question;
-  const { toggleQuestionSelect } = useChecklistQuestionSelect();
+  const { toggleQuestionSelect, statusMessage } = useChecklistQuestionSelect();
   const { currentTabId: categoryId } = useTabContext();
 
   const handleCheckQuestion = () => {
@@ -17,17 +17,24 @@ const QuestionSelectCard = ({ question }: { question: ChecklistQuestionWithIsSel
   };
 
   return (
-    <S.Container isChecked={isSelected} onClick={handleCheckQuestion}>
-      <S.FlexColumn>
-        <FlexBox.Vertical>
-          <S.Title>{title}</S.Title>
-          {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
-        </FlexBox.Vertical>
-      </S.FlexColumn>
-      <S.CheckBoxContainer>
-        <Checkbox iconType="plus" isChecked={isSelected} onClick={handleCheckQuestion} />
-      </S.CheckBoxContainer>
-    </S.Container>
+    <>
+      <S.Container isChecked={isSelected} onClick={handleCheckQuestion}>
+        <S.FlexColumn>
+          <FlexBox.Vertical>
+            <S.Title>{title}</S.Title>
+            {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
+          </FlexBox.Vertical>
+        </S.FlexColumn>
+        <S.CheckBoxContainer>
+          <Checkbox iconType="plus" isChecked={isSelected} onClick={handleCheckQuestion} />
+        </S.CheckBoxContainer>
+      </S.Container>
+      {statusMessage && (
+        <div className="visually-hidden" role="alert">
+          {title + statusMessage}
+        </div>
+      )}
+    </>
   );
 };
 

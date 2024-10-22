@@ -30,8 +30,8 @@ const AlertModal = ({
       <Modal.body>
         <S.Container>
           <S.IconBox>{hasIcon && <BangBangCryIcon width={70} height={70} />}</S.IconBox>
-          <S.Title>{title}</S.Title>
-          {subtitle && <S.subtitle>{subtitle}</S.subtitle>}
+          <S.Title tabIndex={0}>{title}</S.Title>
+          {subtitle && <S.subtitle tabIndex={0}>{subtitle}</S.subtitle>}
         </S.Container>
       </Modal.body>
       <Modal.footer>

@@ -21,7 +21,7 @@ const ChecklistQuestionItem = ({ question, answer }: Props) => {
         <HighlightText title={title} highlights={highlights} />
       </S.Question>
       <S.Options>
-        <ChecklistQuestionAnswers answer={answer} questionId={questionId} />
+        <ChecklistQuestionAnswers title={title} answer={answer} questionId={questionId} />
       </S.Options>
     </S.Container>
   );

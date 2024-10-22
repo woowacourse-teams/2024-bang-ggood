@@ -47,14 +47,7 @@ const NewChecklistPage = () => {
     roomInfoNonValidatedActions.resetAll();
     checklistActions.reset();
     selectedOptionActions.reset();
-<<<<<<< HEAD
     resetShowTip();
-  };
-
-  const handleChecklistPage = () => {
-=======
-    resetShowTip(); // 옵션의 팁박스 다시표시
->>>>>>> 6e976eb2c3447b7835fac11bb79d8b2ac88424f8
     navigate(ROUTE_PATH.checklistList);
   };
 
@@ -95,13 +88,9 @@ const NewChecklistPage = () => {
         }
         isOpen={isAlertModalOpen}
         onClose={closeAlertModal}
-<<<<<<< HEAD
-        handleApprove={handleChecklistPage}
-=======
         handleApprove={() => {
           resetChecklist();
         }}
->>>>>>> 6e976eb2c3447b7835fac11bb79d8b2ac88424f8
         approveButtonName="나가기"
       />
       <LoginModal isModalOpen={isLoginModalOpen} modalClose={closeLoginModal} />

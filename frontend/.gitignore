@@ -6,6 +6,7 @@
 logs
 **/*.backup.*
 **/*.back.*
+user.json
 
 node_modules
 dist
@@ -28,3 +29,5 @@ test-results/
 playwright-report/
 blob-report/
 playwright/.cache/
+*/.auth
+.auth

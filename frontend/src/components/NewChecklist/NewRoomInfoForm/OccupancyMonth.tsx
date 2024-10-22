@@ -23,6 +23,7 @@ const OccupancyMonth = () => {
         />
         <FormStyled.FlexLabel label="월  " />
         <Dropdown
+          id="occupancyPeriod"
           initialValue={occupancyPeriod.rawValue}
           options={roomOccupancyPeriods.map(value => ({ value }))}
           onSelectSetter={(level: string) => occupancyPeriod.set(level)}

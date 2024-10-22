@@ -14,7 +14,7 @@ interface Props extends Tab {
 
 const TabButton = ({ id, onMoveTab, name, active, className, isCompleted }: Props) => {
   return (
-    <S.Container key={id} onClick={() => onMoveTab(id)} active={active}>
+    <S.Container className={'tab'} key={id} onClick={() => onMoveTab(id)} active={active}>
       <S.TextBox className={className && `sprite-icon ${className}`}>{name}</S.TextBox>
       {isCompleted === false && <S.UncompletedIndicator />}
     </S.Container>

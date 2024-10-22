@@ -42,17 +42,27 @@ const OptionButton = ({ option, isSelected }: { option: OptionWithIcon; isSelect
   const currentColor = isSelected ? BUTTON_COLOR.selected : BUTTON_COLOR.unSelected;
 
   return (
-    <S.Box id={option.name} color={currentColor.fill} borderColor={currentColor.border} onClick={handleClick}>
-      <S.IconBox>{isSelected ? <FilledIcon aria-hidden="true" /> : <UnFilledIcon aria-hidden="true" />}</S.IconBox>
-      <S.TextBox aria-label={`${option.displayName}를 선택하려면 두번 탭하세요.`} color={currentColor.text}>
-        {displayName}
-      </S.TextBox>
-      {statusMessage && (
-        <div className="visually-hidden" role="alert">
-          {statusMessage}
-        </div>
-      )}
-    </S.Box>
+    <>
+      <S.Box
+        id={option.name}
+        color={currentColor.fill}
+        borderColor={currentColor.border}
+        onClick={handleClick}
+        aria-label={
+          !isSelected
+            ? `${displayName}을 옵션에 추가하려면 두번 탭하세요.`
+            : `${displayName}을 옵션에서 해제하려면 두번 탭하세요.`
+        }
+      >
+        <S.IconBox>{isSelected ? <FilledIcon aria-hidden="true" /> : <UnFilledIcon aria-hidden="true" />}</S.IconBox>
+        <S.TextBox aria-hidden color={currentColor.text}>
+          {displayName}
+        </S.TextBox>
+      </S.Box>
+      <div className="visually-hidden" aria-live="assertive">
+        {statusMessage}
+      </div>
+    </>
   );
 };
 

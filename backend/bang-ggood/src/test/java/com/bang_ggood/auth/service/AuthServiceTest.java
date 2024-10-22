@@ -1,6 +1,7 @@
 package com.bang_ggood.auth.service;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.auth.dto.request.LocalLoginRequestV1;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.request.RegisterRequestV1;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
@@ -36,6 +37,7 @@ import static com.bang_ggood.auth.AuthFixture.OAUTH_LOGIN_REQUEST;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
@@ -61,8 +63,10 @@ class AuthServiceTest extends IntegrationTestSupport {
         AuthTokenResponse response = authService.localLogin(LOCAL_LOGIN_REQUEST);
 
         // then
-        assertThat(response.accessToken()).isNotBlank();
-        assertThat(response.refreshToken()).isNotBlank();
+        assertAll(
+                () -> assertThat(response.accessToken()).isNotBlank(),
+                () -> assertThat(response.refreshToken()).isNotBlank()
+        );
     }
 
     @DisplayName("로컬 로그인 실패: 일치하는 유저가 없는 경우")
@@ -83,9 +87,9 @@ class AuthServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.USER_INVALID_PASSWORD.getMessage());
     }
 
-    @DisplayName("회원가입 성공")
+    @DisplayName("회원가입 성공 : 회원가입 이력 없는 회원인 경우")
     @Test
-    void register() {
+    void register_newUser() {
         //given
         RegisterRequestV1 request = new RegisterRequestV1("방방이", "bang@gmail.com", "password1234");
 
@@ -96,6 +100,62 @@ class AuthServiceTest extends IntegrationTestSupport {
         User findUser = userRepository.findById(userId).orElseThrow();
         assertThat(findUser.getId()).isEqualTo(userId);
     }
+
+    @DisplayName("회원가입 성공 : 탈퇴한 회원인 경우")
+    @Test
+    void register_deletedUser() {
+        // given
+        RegisterRequestV1 request = new RegisterRequestV1("방방이", "bang@gmail.com", "password1234");
+        User existingUser = userRepository.save(request.toUserEntity());
+        userRepository.deleteById(existingUser.getId());
+
+        // when
+        Long userId = authService.register(request);
+
+        // then
+        User findUser = userRepository.findById(userId).orElseThrow();
+        assertThat(findUser.getId()).isEqualTo(userId);
+    }
+
+    @DisplayName("회원 가입 성공 : 회원 가입 시 디폴트 체크리스트 질문을 추가")
+    @Test
+    void register_default_checklist_question() {
+        // given
+        RegisterRequestV1 request = new RegisterRequestV1("방방이", "bang@gmail.com", "password1234");
+        authService.register(request);
+
+        // when
+        AuthTokenResponse token = authService.localLogin(new LocalLoginRequestV1("bang@gmail.com", "password1234"));
+
+        // then
+        User user = authService.getAuthUser(token.accessToken());
+        CustomChecklistQuestionsResponse customChecklistQuestions = questionManageService.readCustomChecklistQuestions(
+                user);
+
+        int sum = 0;
+        for (CategoryQuestionsResponse response : customChecklistQuestions.categories()) {
+            sum += response.questions().size();
+        }
+
+        assertThat(sum).isEqualTo(Question.findDefaultQuestions().size());
+    }
+
+    @DisplayName("회원 가입 성공 : 회원 가입시 디폴트 체크리스트를 추가")
+    @Test
+    void register_default_checklist() {
+        // given
+        RegisterRequestV1 request = new RegisterRequestV1("방방이", "bang@gmail.com", "password1234");
+        Long userId = authService.register(request);
+
+        // when
+        AuthTokenResponse token = authService.localLogin(new LocalLoginRequestV1("bang@gmail.com", "password1234"));
+
+        // then
+        User user = authService.getAuthUser(token.accessToken());
+        ChecklistsPreviewResponse response = checklistManageService.readAllChecklistsPreview(user);
+        assertThat(response.checklists()).hasSize(1);
+    }
+
 
     @DisplayName("회원가입 성공 : 비밀번호 암호화")
     @Test
@@ -147,7 +207,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         assertThat(findUser).isEmpty();
     }
 
-    @DisplayName("카카오 로그인 성공 : 존재하지 않는 회원이면 데이터베이스에 새로운 유저를 추가하고 토큰 반환")
+    @DisplayName("카카오 로그인 성공 : 존재하지 않는 회원이면 회원 가입 후 로그인")
     @Test
     void oauthLogin_signup() {
         // given
@@ -158,11 +218,13 @@ class AuthServiceTest extends IntegrationTestSupport {
         AuthTokenResponse token = authService.oauthLogin(OAUTH_LOGIN_REQUEST);
 
         // then
-        assertThat(token.accessToken()).isNotBlank();
-        assertThat(token.refreshToken()).isNotBlank();
+        assertAll(
+                () ->  assertThat(token.accessToken()).isNotBlank(),
+                () -> assertThat(token.refreshToken()).isNotBlank()
+        );
     }
 
-    @DisplayName("카카오 로그인 성공 : 존재하는 회원이면 데이터베이스에 새로운 유저를 추가하지 않고 토큰을 바로 반환")
+    @DisplayName("카카오 로그인 성공 : 존재하는 회원이면 로그인")
     @Test
     void oauthLogin() {
         // given
@@ -174,8 +236,29 @@ class AuthServiceTest extends IntegrationTestSupport {
         AuthTokenResponse token = authService.oauthLogin(OAUTH_LOGIN_REQUEST);
 
         // then
-        assertThat(token.accessToken()).isNotBlank();
-        assertThat(token.refreshToken()).isNotBlank();
+        assertAll(
+                () ->  assertThat(token.accessToken()).isNotBlank(),
+                () -> assertThat(token.refreshToken()).isNotBlank()
+        );
+    }
+
+    @DisplayName("카카오 로그인 성공 : 탈퇴한 회원이면 재가입")
+    @Test
+    void oauthLogin_withdrawUser() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        userRepository.deleteById(user.getId());
+        Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
+                .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER1());
+
+        // when
+        AuthTokenResponse token = authService.oauthLogin(OAUTH_LOGIN_REQUEST);
+
+        // then
+        assertAll(
+                () ->  assertThat(token.accessToken()).isNotBlank(),
+                () -> assertThat(token.refreshToken()).isNotBlank()
+        );
     }
 
     @DisplayName("카카오 로그인 성공 : 회원 가입시 디폴트 체크리스트 질문을 추가")

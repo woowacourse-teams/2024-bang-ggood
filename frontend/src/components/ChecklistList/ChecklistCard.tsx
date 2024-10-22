@@ -21,7 +21,7 @@ const ChecklistCard = ({ checklist }: Props) => {
   };
 
   return (
-    <S.Container onClick={handleMoveToDetail} tabIndex={1}>
+    <S.Container data-testid="checklist-card" onClick={handleMoveToDetail} tabIndex={1}>
       <S.Row>
         <S.LocationWrapper>
           <LocationLineIcon aria-hidden="true" />

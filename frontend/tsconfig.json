@@ -20,6 +20,6 @@
     "strict": true,
     "sourceMap": true
   },
-  "include": ["src/**/*", "*.ts", "playwright/**/*"],
+  "include": ["src/**/*", "*.ts"],
   "exclude": ["playwright/**/*"]
 }

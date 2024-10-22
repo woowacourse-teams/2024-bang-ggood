@@ -11,6 +11,7 @@ import ChecklistDetailSection from '@/components/ChecklistDetail/ChecklistDetail
 import { ROUTE_PATH } from '@/constants/routePath';
 import useDeleteChecklistQuery from '@/hooks/query/useDeleteChecklistQuery';
 import useModal from '@/hooks/useModal';
+import { useTrackPageView } from '@/service/amplitude/useTrackPageView';
 import theme from '@/styles/theme';
 
 type RouteParams = {
@@ -18,6 +19,8 @@ type RouteParams = {
 };
 
 const ChecklistDetailPage = () => {
+  useTrackPageView({ eventName: '[View] 체크리스트 디테일 페이지' });
+
   const { checklistId } = useParams() as RouteParams;
   const navigate = useNavigate();
 

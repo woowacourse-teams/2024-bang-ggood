@@ -80,6 +80,12 @@ const SignUpPage = () => {
     navigate(ROUTE_PATH.root);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.keyCode === 13 && !disabled) {
+      handleSubmit();
+    }
+  };
+
   return (
     <>
       <Header left={<Header.Backward onClick={handleClickLanding} />} />
@@ -90,7 +96,7 @@ const SignUpPage = () => {
         </S.LogoBox>
         <S.Box>
           <S.Label>회원가입</S.Label>
-          <FormField>
+          <FormField onKeyDown={handleKeyDown}>
             <FormField.Label label="이메일" />
             <FormField.Input value={email} name="email" onChange={onChangeEmail} maxLength={254} />
             <FormField.ErrorMessage value={getEmailError()} />

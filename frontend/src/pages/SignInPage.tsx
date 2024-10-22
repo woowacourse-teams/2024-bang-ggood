@@ -52,6 +52,12 @@ const SignInPage = () => {
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.keyCode === 13 && !disabled) {
+      handleSubmit();
+    }
+  };
+
   const handleMoveSignUp = () => {
     navigate(ROUTE_PATH.signUp);
   };
@@ -70,7 +76,7 @@ const SignInPage = () => {
         </S.LogoBox>
         <S.Box>
           <S.Label>로그인</S.Label>
-          <FormField>
+          <FormField onKeyDown={handleKeyDown}>
             <FormField.Label label="이메일" />
             <FormField.Input maxLength={254} value={email} name="email" onChange={onChangeEmail} />
             <FormField.ErrorMessage value={getEmailErrors()} />

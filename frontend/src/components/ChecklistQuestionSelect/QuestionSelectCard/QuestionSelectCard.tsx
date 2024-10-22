@@ -18,14 +18,19 @@ const QuestionSelectCard = ({ question }: { question: ChecklistQuestionWithIsSel
 
   return (
     <>
-      <S.Container isChecked={isSelected} onClick={handleCheckQuestion}>
-        <S.FlexColumn>
+      <S.Container
+        isChecked={isSelected}
+        onClick={handleCheckQuestion}
+        aria-label={`${title} ${subtitle ?? ''} 해당 질문을 선택하려면 두번 탭하세요.`}
+        tabIndex={0}
+      >
+        <S.FlexColumn aria-hidden="true" tabIndex={-1}>
           <FlexBox.Vertical>
             <S.Title>{title}</S.Title>
             {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
           </FlexBox.Vertical>
         </S.FlexColumn>
-        <S.CheckBoxContainer>
+        <S.CheckBoxContainer aria-hidden="true" tabIndex={-1}>
           <Checkbox iconType="plus" isChecked={isSelected} onClick={handleCheckQuestion} />
         </S.CheckBoxContainer>
       </S.Container>

@@ -22,6 +22,7 @@ export const checklistHandlers = [
   http.get(BASE_URL + ENDPOINT.CHECKLISTS, () => {
     return HttpResponse.json(checklistList, { status: 200 });
   }),
+
   http.get(BASE_URL + ENDPOINT.CHECKLISTS_LIKE, () => {
     const newChecklistList = {
       ...checklistList,
@@ -30,32 +31,12 @@ export const checklistHandlers = [
     return HttpResponse.json(newChecklistList, { status: 200 });
   }),
 
-  http.post(BASE_URL + ENDPOINT.CHECKLISTS, () => {
-    return HttpResponse.json({}, { status: 201 });
-  }),
-  http.post(BASE_URL + ENDPOINT.CHECKLISTS_V1, () => {
-    return HttpResponse.json({}, { status: 201 });
-  }),
-
   http.get(BASE_URL + ENDPOINT.CHECKLIST_ALL_QUESTION, () => {
     return HttpResponse.json(checklistAllQuestions, { status: 200 });
   }),
 
-  http.post<{ id: string }>(BASE_URL + ENDPOINT.LIKE(':id'), ({ params }) => {
-    const id = Number(params.id);
-    addLike(id);
-    return HttpResponse.json(null, { status: 200 });
-  }),
-
-  http.delete<{ id: string }>(BASE_URL + ENDPOINT.LIKE(':id'), ({ params }) => {
-    const id = Number(params.id);
-    removeLike(id);
-    return HttpResponse.json(null, { status: 200 });
-  }),
-
-  http.get<{ id: string }>(BASE_URL + ENDPOINT.LIKE(':id'), ({ params }) => {
-    const id = Number(params.id);
-    return HttpResponse.json(checklist.get(id), { status: 200 });
+  http.post(BASE_URL + ENDPOINT.CHECKLISTS_V1, () => {
+    return HttpResponse.json(checklistList, { status: 201 });
   }),
 
   http.put(BASE_URL + ENDPOINT.CHECKLIST_CUSTOM, () => {
@@ -64,6 +45,4 @@ export const checklistHandlers = [
 ];
 
 const checklist = new Map();
-const addLike = (id: number) => checklist.set(id, true);
-const removeLike = (id: number) => checklist.set(id, false);
 const getLike = (id: number) => checklist.get(id);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { VALIDATION_ERROR_MESSAGE, ValidationError } from '@/constants/message/validationErrorMessage';
+import { VALIDATION_ERROR_MESSAGE, ValidationError } from '@/constants/messages/validationErrorMessage';
 
 export type ValidationReturnType = {
   isValid: boolean;

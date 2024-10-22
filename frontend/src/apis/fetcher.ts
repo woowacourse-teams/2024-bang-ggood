@@ -1,7 +1,6 @@
-import { API_ERROR_MESSAGE } from '@/apis/error/ErrorMessage';
-import HTTPError from '@/apis/error/HttpError';
+import APIError from '@/apis/error/APIError';
 import { deleteToken, postReissueAccessToken } from '@/apis/user';
-import { HTTP_STATUS_CODE } from '@/constants/message/httpErrorMessage';
+import { API_ERROR_MESSAGE } from '@/constants/messages/apiErrorMessage';
 import { ROUTE_PATH } from '@/constants/routePath';
 
 let reissueAccessToken = false;
@@ -16,41 +15,49 @@ interface RequestProps {
 
 type FetchProps = Omit<RequestProps, 'method'>;
 
-const request = async ({ url, method, body, headers = {} }: RequestProps) => {
+const request = async (requestProps: RequestProps) => {
   try {
-    const response = await fetchRequest({ url, method, body, headers });
+    const response = await fetchRequest(requestProps);
+
     if (!response.ok) {
-      await handleError(response, { url, method, body, headers });
+      await handleError(response, requestProps);
     }
+
     return response;
   } catch (error) {
-    if (error instanceof HTTPError) throw error;
-    throw new HTTPError(HTTP_STATUS_CODE.NETWORK_ERROR, '네트워크 에러가 발생했습니다.');
+    if (error instanceof APIError) throw error;
+    throw new APIError(404, API_ERROR_MESSAGE.NETWORK_ERROR);
   }
 };
 
-const handleError = async (response: Response, { url, method, body, headers = {} }: RequestProps) => {
+const handleError = async (response: Response, requestProps: RequestProps) => {
   const responseString = await response.clone().text();
-  const errorMessage = JSON.parse(responseString).message;
+  const errorCode = JSON.parse(responseString).bangggoodCode;
 
-  if (response.status === 401 && errorMessage === API_ERROR_MESSAGE.REISSUE_TOKEN_NEED) {
-    if (reissueAccessToken) {
-      throw new HTTPError(response.status, errorMessage);
-    }
-    /* accessToken 발급을 한번도 시도 안했을 때 */
-    reissueAccessToken = true;
-    try {
-      const accessTokenReissueResult = await postReissueAccessToken();
-      if (accessTokenReissueResult?.status === 200) {
-        reissueAccessToken = false;
-        return await fetchRequest({ url, method, body, headers });
-      }
-    } catch (err) {
-      await deleteToken();
-      window.location.href = ROUTE_PATH.root;
-    }
+  if (response.status === 401 && errorCode === API_ERROR_MESSAGE.AUTH_ACCESS_TOKEN_EMPTY) {
+    return handleUnauthorizedError(response, requestProps, errorCode);
   }
-  throw new HTTPError(response.status, errorMessage);
+
+  throw new APIError(response.status, errorCode);
+};
+
+const handleUnauthorizedError = async (response: Response, requestProps: RequestProps, errorCode: string) => {
+  if (reissueAccessToken) {
+    throw new APIError(response.status, errorCode);
+  }
+
+  /* accessToken 발급을 한번도 시도 안했을 때 */
+  reissueAccessToken = true;
+  try {
+    const accessTokenReissueResult = await postReissueAccessToken();
+    if (accessTokenReissueResult?.status === 200) {
+      reissueAccessToken = false;
+      return await fetchRequest(requestProps);
+    }
+  } catch (err) {
+    await deleteToken();
+    window.location.href = ROUTE_PATH.root;
+  }
 };
 
 const fetchRequest = async ({ url, method, body, headers = {} }: RequestProps & { signal?: AbortSignal }) => {

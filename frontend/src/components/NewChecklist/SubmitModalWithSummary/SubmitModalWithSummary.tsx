@@ -7,6 +7,7 @@ import Modal from '@/components/_common/Modal/Modal';
 import { MODAL_MESSAGE } from '@/constants/messages/message';
 import useMutateChecklist from '@/hooks/useMutateChecklist';
 import useRoomInfoValidated from '@/hooks/useRoomInfoValidated';
+import { trackSubmitChecklist } from '@/service/amplitude/trackEvent';
 import { flexColumn, title3 } from '@/styles/common';
 import { MutateType } from '@/types/checklist';
 
@@ -38,6 +39,7 @@ const SubmitModalWithSummary = ({
   );
 
   const handleSaveChecklist = () => {
+    trackSubmitChecklist();
     handleSubmitChecklist();
   };
 

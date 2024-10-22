@@ -18,6 +18,7 @@ import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useHandleTip from '@/hooks/useHandleTip';
 import useModal from '@/hooks/useModal';
+import { trackNotCompleteChecklist, trackSaveChecklist } from '@/service/amplitude/trackEvent';
 import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
 import roomInfoStore from '@/store/roomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
@@ -51,12 +52,22 @@ const NewChecklistPage = () => {
     navigate(ROUTE_PATH.checklistList);
   };
 
+  const handleSaveChecklistButton = () => {
+    openSummaryModal();
+    trackSaveChecklist();
+  };
+
+  const handleNotCompleteChecklist = () => {
+    trackNotCompleteChecklist();
+    resetChecklist();
+  };
+
   return (
     <>
       <Header
         left={<Header.Backward onClick={openAlertModal} />}
         center={<Header.Text>새 체크리스트</Header.Text>}
-        right={<Button label="저장" size="xSmall" color="dark" onClick={openSummaryModal} />}
+        right={<Button label="저장" size="xSmall" color="dark" onClick={handleSaveChecklistButton} />}
       />
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
         <ErrorBoundary fallback={<ChecklistTabFallback />}>
@@ -91,9 +102,7 @@ const NewChecklistPage = () => {
         }
         isOpen={isAlertModalOpen}
         onClose={closeAlertModal}
-        handleApprove={() => {
-          resetChecklist();
-        }}
+        handleApprove={handleNotCompleteChecklist}
         approveButtonName="나가기"
       />
 

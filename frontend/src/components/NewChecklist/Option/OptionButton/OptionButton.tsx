@@ -42,7 +42,7 @@ const OptionButton = ({ option, isSelected }: { option: OptionWithIcon; isSelect
   const currentColor = isSelected ? BUTTON_COLOR.selected : BUTTON_COLOR.unSelected;
 
   return (
-    <S.Box color={currentColor.fill} borderColor={currentColor.border} onClick={handleClick}>
+    <S.Box id={option.name} color={currentColor.fill} borderColor={currentColor.border} onClick={handleClick}>
       <S.IconBox>{isSelected ? <FilledIcon aria-hidden="true" /> : <UnFilledIcon aria-hidden="true" />}</S.IconBox>
       <S.TextBox aria-label={`${option.displayName}를 선택하려면 두번 탭하세요.`} color={currentColor.text}>
         {displayName}
@@ -59,7 +59,7 @@ const OptionButton = ({ option, isSelected }: { option: OptionWithIcon; isSelect
 export default React.memo(OptionButton);
 
 const S = {
-  Box: styled.div<{ color: string; borderColor: string }>`
+  Box: styled.button<{ color: string; borderColor: string }>`
     position: relative;
     width: 100%;
     padding-top: 100%;

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import Tabs from '@/components/_common/Tabs/Tabs';
-import { newChecklistTabs } from '@/constants/tabs';
+import { DefaultChecklistTabsNames } from '@/constants/tabs';
 
 import mobileDecorator from '../../../../.storybook/common';
 
@@ -30,7 +30,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const mockTabsWithCompletion = newChecklistTabs.map(tab => ({ ...tab, isCompleted: false }));
+const mockTabsWithCompletion = DefaultChecklistTabsNames.map(tab => ({ ...tab, isCompleted: false }));
 
 export const Default: Story = {
   args: {

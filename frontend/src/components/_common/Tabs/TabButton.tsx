@@ -1,7 +1,7 @@
 import '@/styles/category-sprite-image.css';
 
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import { flexCenter, title3 } from '@/styles/common';
 import { Tab } from '@/types/tab';
@@ -13,14 +13,25 @@ interface Props extends Tab {
   tabIndex?: number;
 }
 
-const TabButton = ({ id, onMoveTab, name, active, className, isCompleted, ...rest }: Props) => {
-  return (
-    <S.Container className={'tab'} key={id} onClick={() => onMoveTab(id)} active={active} role="tab" {...rest}>
-      <S.TextBox className={className && `sprite-icon ${className}`}>{name}</S.TextBox>
-      {isCompleted === false && <S.UncompletedIndicator />}
-    </S.Container>
-  );
-};
+const TabButton = forwardRef<HTMLDivElement, Props>(
+  ({ id, onMoveTab, name, active, className, isCompleted, ...rest }, ref) => {
+    return (
+      <S.Container
+        className={`tab ${className || ''}`}
+        onClick={() => onMoveTab(id)}
+        active={active}
+        role="tab"
+        ref={ref}
+        {...rest}
+      >
+        <S.TextBox className={className ? `sprite-icon ${className}` : ''}>{name}</S.TextBox>
+        {isCompleted === false && <S.UncompletedIndicator />}
+      </S.Container>
+    );
+  },
+);
+
+TabButton.displayName = 'TabButton';
 
 export default React.memo(TabButton);
 

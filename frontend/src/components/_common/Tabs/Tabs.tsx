@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 import TabButton from '@/components/_common/Tabs/TabButton';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
@@ -12,6 +12,14 @@ interface Props {
 const Tabs = ({ tabList }: Props) => {
   const { currentTabId, setCurrentTabId } = useTabContext();
 
+  const tabRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    if (tabRefs.current[currentTabId]) {
+      tabRefs.current[currentTabId]?.focus();
+    }
+  }, [currentTabId]);
+
   const onMoveTab = useCallback(
     (tabId: number) => {
       setCurrentTabId(tabId);
@@ -19,16 +27,31 @@ const Tabs = ({ tabList }: Props) => {
     [setCurrentTabId],
   );
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const currentIndex = tabList.findIndex(tab => tab.id === currentTabId);
+
+    if (e.key === 'ArrowRight') {
+      if (currentIndex === tabList.length - 1) return;
+      const nextIndex = (currentIndex + 1) % tabList.length;
+      setCurrentTabId(tabList[nextIndex].id);
+    } else if (e.key === 'ArrowLeft') {
+      if (currentIndex === 0) return;
+      const prevIndex = (currentIndex - 1 + tabList.length) % tabList.length;
+      setCurrentTabId(tabList[prevIndex].id);
+    }
+  };
+
   return (
     <S.VisibleContainer role="navigation" aria-label="탭 내비게이션">
       <S.Container>
-        <S.FlexContainer role="tablist">
-          {tabList?.map(tab => {
+        <S.FlexContainer role="tablist" onKeyDown={handleKeyDown}>
+          {tabList?.map((tab, index) => {
             const { id, name, className } = tab;
             const isCompleted = 'isCompleted' in tab ? tab.isCompleted : undefined;
 
             return (
               <TabButton
+                ref={el => (tabRefs.current[index - 1] = el)}
                 className={className}
                 id={id}
                 name={name}

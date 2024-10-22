@@ -42,10 +42,10 @@ public class CustomChecklistQuestion extends BaseEntity {
     }
 
     public Integer getQuestionId() {
-        return question.getId();
+        return questionEntity.getId();
     }
 
-    public Category getCategory() {
-        return question.getCategory();
+    public boolean isSameCategory(CategoryEntity category) {
+        return this.questionEntity.getCategory().equals(category);
     }
 }

@@ -11,6 +11,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Objects;
 
 import static lombok.AccessLevel.PROTECTED;
@@ -40,6 +41,11 @@ public class QuestionEntity {
         this.title = title;
         this.subtitle = subtitle;
         this.isDefault = isDefault;
+    }
+
+    public boolean isSelected(List<CustomChecklistQuestion> questions) {
+        return questions.stream()
+                .anyMatch(question -> question.getQuestionId() == this.id);
     }
 
     @Override

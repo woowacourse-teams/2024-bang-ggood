@@ -99,7 +99,20 @@ export const roomInfoStore = createStore<RoomInfoState & { actions: RoomInfoActi
 );
 
 export const roomInfoApiMapper = (values: Partial<RoomInfoStoreState>) => {
-  const result = { ...values, structure: values.structure === '' ? undefined : '' };
+  const result = {
+    ...values,
+    structure: values.structure === '' ? undefined : values.structure,
+
+    rent: values.rent === 0 ? undefined : values.rent,
+
+    deposit: values.deposit === 0 ? undefined : values.deposit,
+    maintenanceFee: values.maintenanceFee === 0 ? undefined : values.maintenanceFee,
+    floor: values.floor === 0 ? undefined : values.floor,
+    size: values.size === 0 ? undefined : values.size,
+    contractTerm: values.contractTerm === 0 ? undefined : values.contractTerm,
+    occupancyMonth: values.occupancyMonth === 0 ? undefined : values.occupancyMonth,
+  };
+
   return mapObjUndefinedToNull(result) as Nullable<Partial<RoomInfoStoreState>>;
 };
 

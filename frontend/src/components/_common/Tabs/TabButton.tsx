@@ -3,6 +3,7 @@ import '@/styles/category-sprite-image.css';
 import styled from '@emotion/styled';
 import React from 'react';
 
+import { trackTabButton } from '@/service/amplitude/trackEvent';
 import { flexCenter, title3 } from '@/styles/common';
 import { Tab } from '@/types/tab';
 
@@ -13,8 +14,13 @@ interface Props extends Tab {
 }
 
 const TabButton = ({ id, onMoveTab, name, active, className, isCompleted }: Props) => {
+  const handleClickTab = () => {
+    trackTabButton(name);
+    onMoveTab(id);
+  };
+
   return (
-    <S.Container className={'tab'} key={id} onClick={() => onMoveTab(id)} active={active}>
+    <S.Container className={'tab'} key={id} onClick={handleClickTab} active={active}>
       <S.TextBox className={className && `sprite-icon ${className}`}>{name}</S.TextBox>
       {isCompleted === false && <S.UncompletedIndicator />}
     </S.Container>

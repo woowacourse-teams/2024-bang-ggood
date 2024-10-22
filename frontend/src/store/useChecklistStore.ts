@@ -60,8 +60,10 @@ const useChecklistStore = create<ChecklistState>()(
             })),
           }));
 
-          set({ checklistCategoryQnA });
-          get().actions._parseCategory();
+          if (checklistCategoryQnA.length) {
+            set({ checklistCategoryQnA });
+            get().actions._parseCategory();
+          }
         },
 
         set: (checklistCategoryQnA: ChecklistCategoryWithAnswer[]) => {

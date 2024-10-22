@@ -142,7 +142,7 @@ const RealTimeMap = ({
           <S.MapEmptyBox>
             <S.InfoTextBox>
               <LoadingSpinner />
-              <S.LoadingMessage>
+              <S.LoadingMessage tabIndex={0}>
                 <div>현재 위치를 찾고 있어요.</div>
                 <div>위치 권한을 허용해 주세요.</div>
               </S.LoadingMessage>

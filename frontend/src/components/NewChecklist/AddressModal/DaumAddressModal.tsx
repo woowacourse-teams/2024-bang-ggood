@@ -1,13 +1,11 @@
 import styled from '@emotion/styled';
 import { useRef } from 'react';
-import { useStore } from 'zustand';
 
 import { Search } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
 import useModal from '@/hooks/useModal';
 import useRoomInfoNonValidated from '@/hooks/useRoomInfoNonValidated';
-import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
 import { Address, Postcode, PostcodeOptions } from '@/types/address';
 import loadExternalScriptWithCallback from '@/utils/loadScript';
 
@@ -22,9 +20,9 @@ declare global {
 const DaumAddressModal = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const postcodeContainerRef = useRef<HTMLDivElement | null>(null);
+  const { set } = useRoomInfoNonValidated();
 
   const { searchSubwayStationsByAddress } = useRoomInfoNonValidated();
-  const roomInfoUnvalidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
 
   const handleAddress = () => {
     openModal();
@@ -37,8 +35,8 @@ const DaumAddressModal = () => {
         width: '100%',
         height: '60rem',
         oncomplete: async (data: Address) => {
-          roomInfoUnvalidatedActions.set('address', data.address);
-          roomInfoUnvalidatedActions.set('buildingName', data.buildingName);
+          set('address', data.address);
+          set('buildingName', data.buildingName);
 
           loadExternalScriptWithCallback('kakaoMap', () => searchSubwayStationsByAddress(data.address));
           closeModal();

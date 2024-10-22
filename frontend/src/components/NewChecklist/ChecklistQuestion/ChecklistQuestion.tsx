@@ -17,7 +17,7 @@ const ChecklistQuestionItem = ({ question, answer }: Props) => {
 
   return (
     <S.Container>
-      <S.Question>
+      <S.Question className="question">
         <HighlightText title={title} highlights={highlights} />
       </S.Question>
       <S.Options>

@@ -56,7 +56,9 @@ const ChecklistQuestionSelectPage = () => {
       <Header
         left={<Header.Backward />}
         center={<Header.Text>{'체크리스트 질문 편집'}</Header.Text>}
-        right={<Button label={'저장'} size="small" color="dark" onClick={handleSubmitChecklist} />}
+        right={
+          <Button label="저장" size="small" color="dark" onClick={handleSubmitChecklist} id="checklistSubmitButton" />
+        }
       />
       <TabProvider defaultTab={1}>
         {/* 질문 카테고리 탭 */}

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { CSSProperties, useState } from 'react';
 
 import { DropdownMark } from '@/assets/assets';
 import { flexColumn, flexRow, flexSpaceBetween } from '@/styles/common';
@@ -9,13 +9,14 @@ interface Option {
   [key: string]: string;
 }
 
-interface Props {
+interface Props extends CSSProperties {
   initialValue?: string;
   options: Option[];
   onSelectSetter: (value: string) => void;
+  id?: string;
 }
 
-const Dropdown = ({ initialValue, options, onSelectSetter }: Props) => {
+const Dropdown = ({ initialValue, options, onSelectSetter, id }: Props) => {
   const [selectedValue, setSelectedValue] = useState(initialValue ?? options[0].value ?? '');
   const [isVisibleOptions, setIsVisibleOptions] = useState(false);
 
@@ -26,7 +27,7 @@ const Dropdown = ({ initialValue, options, onSelectSetter }: Props) => {
   };
 
   return (
-    <S.Wrapper>
+    <S.Wrapper id={id}>
       <S.DropDownHeader onClick={() => setIsVisibleOptions(prev => !prev)}>
         <S.SelectedOption>
           <div>{selectedValue}</div>
@@ -36,7 +37,7 @@ const Dropdown = ({ initialValue, options, onSelectSetter }: Props) => {
       {isVisibleOptions && (
         <S.OptionList>
           {options.map(option => (
-            <S.OptionItem key={option.value} onClick={() => handleOptionClick(option)}>
+            <S.OptionItem id={option.value} key={option.value} onClick={() => handleOptionClick(option)}>
               {option.value}
             </S.OptionItem>
           ))}

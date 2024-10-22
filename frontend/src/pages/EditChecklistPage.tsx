@@ -34,7 +34,7 @@ const EditChecklistPage = () => {
 
   const checklistQuestionActions = useChecklistStore(state => state.actions);
 
-  const { searchSubwayStationsByAddress } = useRoomInfoNonValidated();
+  const { searchSubwayStationsByAddress, set } = useRoomInfoNonValidated();
   const roomInfoActions = useStore(roomInfoStore, state => state.actions);
   const roomInfoUnvalidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
 
@@ -60,8 +60,8 @@ const EditChecklistPage = () => {
       if (!isSuccess) return;
 
       roomInfoActions.setRawValues(checklist.room);
-      roomInfoUnvalidatedActions.set('address', checklist.room.address!);
-      roomInfoUnvalidatedActions.set('buildingName', checklist.room.buildingName!);
+      set('address', checklist.room.address!);
+      set('buildingName', checklist.room.buildingName!);
       //TODO: 가까운 지하철은 나중에 api 수정되면 저장
 
       loadExternalScriptWithCallback('kakaoMap', () => searchSubwayStationsByAddress(checklist.room.address!));

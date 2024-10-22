@@ -7,11 +7,12 @@ type Position = 'left' | 'center';
 interface Props extends React.PropsWithChildren {
   title?: string;
   position?: Position;
+  tabIndex?: number;
 }
 
-const ModalHeader = ({ title, children, position = 'left' }: Props) => {
+const ModalHeader = ({ title, children, position = 'left', ...rest }: Props) => {
   return (
-    <S.Container position={position}>
+    <S.Container position={position} {...rest}>
       {title && <S.Title>{title}</S.Title>}
       {children}
     </S.Container>

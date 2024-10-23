@@ -23,7 +23,7 @@ public interface ChecklistQuestionRepository extends JpaRepository<ChecklistQues
     void deleteAllByChecklistId(@Param("checklistId") Long checklistId);
 
     @Query("UPDATE ChecklistQuestion cq "
-            + "SET cq.questionEntity = :questionId "
+            + "SET cq.question = :questionId "
             + "WHERE cq.id = :id ")
     ChecklistQuestion updateChecklistQuestionId(@Param("questionId") Integer questionId, @Param("id") Long id);
 }

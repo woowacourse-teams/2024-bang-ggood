@@ -7,10 +7,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -18,16 +16,15 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-@Table(name = "question") //TODO 변경필요
 @Entity
-public class QuestionEntity {
+public class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private CategoryEntity category;
+    private Category category;
 
     @Column(nullable = false)
     private String title;
@@ -36,7 +33,7 @@ public class QuestionEntity {
 
     private boolean isDefault;
 
-    public QuestionEntity(CategoryEntity category, String title, String subtitle, boolean isDefault) {
+    public Question(Category category, String title, String subtitle, boolean isDefault) {
         this.category = category;
         this.title = title;
         this.subtitle = subtitle;
@@ -56,7 +53,7 @@ public class QuestionEntity {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        QuestionEntity that = (QuestionEntity) o;
+        Question that = (Question) o;
         return Objects.equals(id, that.id);
     }
 

@@ -11,7 +11,7 @@ import com.bang_ggood.question.QuestionFixture;
 import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
-import com.bang_ggood.question.domain.QuestionEntity;
+import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.room.RoomFixture;
@@ -209,7 +209,7 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
     void updateCustomChecklist() {
         // given
         User user = userRepository.save(UserFixture.USER1());
-        List<QuestionEntity> questions = List.of(QuestionFixture.QUESTION1_CATEGORY1, QuestionFixture.QUESTION3_CATEGORY2);
+        List<Question> questions = List.of(QuestionFixture.QUESTION1_CATEGORY1, QuestionFixture.QUESTION3_CATEGORY2);
 
         // when
         checklistQuestionService.updateCustomChecklist(user, questions);
@@ -223,7 +223,7 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
     @Test
     void updateCustomChecklist_empty_exception() {
         // given
-        List<QuestionEntity> questions = Collections.emptyList();
+        List<Question> questions = Collections.emptyList();
 
         // when & then
         assertThatThrownBy(() -> checklistQuestionService.updateCustomChecklist(UserFixture.USER1(), questions))
@@ -235,7 +235,7 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
     @Test
     void updateCustomChecklist_duplicatedQuestion_exception() {
         // given
-        List<QuestionEntity> questions = List.of(QuestionFixture.QUESTION1_CATEGORY1, QuestionFixture.QUESTION1_CATEGORY1);
+        List<Question> questions = List.of(QuestionFixture.QUESTION1_CATEGORY1, QuestionFixture.QUESTION1_CATEGORY1);
 
         // when & then
         assertThatThrownBy(() -> checklistQuestionService.updateCustomChecklist(UserFixture.USER1, questions))

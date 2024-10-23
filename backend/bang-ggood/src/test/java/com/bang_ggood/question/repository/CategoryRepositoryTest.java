@@ -2,7 +2,7 @@ package com.bang_ggood.question.repository;
 
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.question.QuestionFixture;
-import com.bang_ggood.question.domain.CategoryEntity;
+import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.user.UserFixture;
 import org.assertj.core.api.Assertions;
@@ -35,7 +35,7 @@ class CategoryRepositoryTest extends IntegrationTestSupport {
         customChecklistQuestionRepository.saveAll(List.of(customChecklistQuestion1, customChecklistQuestion2, customChecklistQuestion3));
 
         // when
-        List<CategoryEntity> categories = categoryRepository.findAllCustomQuestionCategoriesByUserId(UserFixture.USER1.getId());
+        List<Category> categories = categoryRepository.findAllCustomQuestionCategoriesByUserId(UserFixture.USER1.getId());
 
         // then
         Assertions.assertThat(categories)

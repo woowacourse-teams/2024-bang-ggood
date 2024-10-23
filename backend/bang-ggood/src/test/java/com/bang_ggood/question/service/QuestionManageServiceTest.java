@@ -5,7 +5,7 @@ import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.question.CustomChecklistFixture;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
-import com.bang_ggood.question.domain.QuestionEntity;
+import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
@@ -49,8 +49,8 @@ public class QuestionManageServiceTest extends IntegrationTestSupport {
 
         // then
         List<Integer> defaultQuestionsIds = customChecklistQuestions.stream()
-                .map(CustomChecklistQuestion::getQuestionEntity)
-                .map(QuestionEntity::getId)
+                .map(CustomChecklistQuestion::getQuestion)
+                .map(Question::getId)
                 .toList();
         List<Integer> responseQuestionsIds = customChecklistQuestionsResponse.categories().stream()
                 .map(CategoryQuestionsResponse::questions)

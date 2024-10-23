@@ -1,8 +1,8 @@
 package com.bang_ggood.question.service;
 
-import com.bang_ggood.question.domain.CategoryEntity;
+import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.Highlight;
-import com.bang_ggood.question.domain.QuestionEntity;
+import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.repository.CategoryRepository;
 import com.bang_ggood.question.repository.HighlightRepository;
 import com.bang_ggood.question.repository.QuestionRepository;
@@ -21,22 +21,22 @@ public class QuestionService {
     private final HighlightRepository highlightRepository;
 
     @Transactional(readOnly = true)
-    public List<CategoryEntity> findAllCategories() {
+    public List<Category> findAllCategories() {
         return categoryRepository.findAll();
     }
 
     @Transactional(readOnly = true)
-    public List<CategoryEntity> findAllCustomQuestionCategories(User user) {
+    public List<Category> findAllCustomQuestionCategories(User user) {
         return categoryRepository.findAllCustomQuestionCategoriesByUserId(user.getId());
     }
 
     @Transactional(readOnly = true)
-    public List<QuestionEntity> findAllDefaultQuestions() {
+    public List<Question> findAllDefaultQuestions() {
         return questionRepository.findByIsDefaultTrue();
     }
 
     @Transactional(readOnly = true)
-    public QuestionEntity readQuestion(Integer questionId) {
+    public Question readQuestion(Integer questionId) {
         return questionRepository.getById(questionId);
     }
 
@@ -46,7 +46,7 @@ public class QuestionService {
     }
 
     @Transactional(readOnly = true)
-    public List<QuestionEntity> readQuestionsByCategory(CategoryEntity category) {
+    public List<Question> readQuestionsByCategory(Category category) {
         return questionRepository.findAllByCategoryId(category.getId());
     }
 }

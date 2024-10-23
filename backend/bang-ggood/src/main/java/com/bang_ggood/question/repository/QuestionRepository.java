@@ -2,17 +2,17 @@ package com.bang_ggood.question.repository;
 
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
-import com.bang_ggood.question.domain.QuestionEntity;
+import com.bang_ggood.question.domain.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
-public interface QuestionRepository extends JpaRepository<QuestionEntity, Integer> {
+public interface QuestionRepository extends JpaRepository<Question, Integer> {
 
-    default QuestionEntity getById(Integer id) {
+    default Question getById(Integer id) {
         return findById(id).orElseThrow(() -> new BangggoodException(ExceptionCode.QUESTION_INVALID));
     }
 
-    List<QuestionEntity> findAllByCategoryId(Integer id);
+    List<Question> findAllByCategoryId(Integer id);
 
-    List<QuestionEntity> findByIsDefaultTrue();
+    List<Question> findByIsDefaultTrue();
 }

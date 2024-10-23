@@ -28,18 +28,18 @@ public class CustomChecklistQuestion extends BaseEntity {
 
     @JoinColumn(name = "question_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private QuestionEntity questionEntity;
+    private Question question;
 
-    public CustomChecklistQuestion(User user, QuestionEntity questionEntity) {
+    public CustomChecklistQuestion(User user, Question question) {
         this.user = user;
-        this.questionEntity = questionEntity;
+        this.question = question;
     }
 
     public Integer getQuestionId() {
-        return questionEntity.getId();
+        return question.getId();
     }
 
-    public boolean isSameCategory(CategoryEntity category) {
-        return this.questionEntity.getCategory().equals(category);
+    public boolean isSameCategory(Category category) {
+        return this.question.getCategory().equals(category);
     }
 }

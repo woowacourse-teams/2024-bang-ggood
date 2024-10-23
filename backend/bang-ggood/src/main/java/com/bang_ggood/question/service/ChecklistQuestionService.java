@@ -3,10 +3,10 @@ package com.bang_ggood.question.service;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
-import com.bang_ggood.question.domain.CategoryEntity;
+import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
-import com.bang_ggood.question.domain.QuestionEntity;
+import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.user.domain.User;
@@ -52,7 +52,7 @@ public class ChecklistQuestionService {
     }
 
     @Transactional
-    public void updateCustomChecklist(User user, List<QuestionEntity> questions) {
+    public void updateCustomChecklist(User user, List<Question> questions) {
         validateCustomChecklistQuestionsIsNotEmpty(questions);
         validateCustomChecklistQuestionsDuplication(questions);
 
@@ -64,13 +64,13 @@ public class ChecklistQuestionService {
         customChecklistQuestionRepository.saveAll(customChecklistQuestions);
     }
 
-    private void validateCustomChecklistQuestionsIsNotEmpty(List<QuestionEntity> questions) {
+    private void validateCustomChecklistQuestionsIsNotEmpty(List<Question> questions) {
         if (questions.isEmpty()) {
             throw new BangggoodException(ExceptionCode.CUSTOM_CHECKLIST_QUESTION_EMPTY);
         }
     }
 
-    private void validateCustomChecklistQuestionsDuplication(List<QuestionEntity> questions) {
+    private void validateCustomChecklistQuestionsDuplication(List<Question> questions) {
         if (questions.size() != Set.copyOf(questions).size()) {
             throw new BangggoodException(ExceptionCode.QUESTION_DUPLICATED);
         }
@@ -82,7 +82,7 @@ public class ChecklistQuestionService {
 
         List<ChecklistQuestion> result = new ArrayList<>();
         for (ChecklistQuestion checklistQuestion : checklistQuestions) {
-            if (checklistQuestion.getQuestionEntity() == null) {
+            if (checklistQuestion.getQuestion() == null) {
                 ChecklistQuestion checklistQuestion1 = checklistQuestionRepository.updateChecklistQuestionId(
                         checklistQuestion.getQuestionId(), checklistQuestion.getId());
 
@@ -97,7 +97,7 @@ public class ChecklistQuestionService {
     }
 
     @Transactional(readOnly = true)
-    public List<ChecklistQuestion> categorizeChecklistQuestions(CategoryEntity category, List<ChecklistQuestion> questions) {
+    public List<ChecklistQuestion> categorizeChecklistQuestions(Category category, List<ChecklistQuestion> questions) {
         return questions.stream()
                 .filter(question -> question.isCategory(category) && question.getAnswer() != null)
                 .toList();

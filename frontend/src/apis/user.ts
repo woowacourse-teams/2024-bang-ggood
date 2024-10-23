@@ -8,7 +8,7 @@ export const postLogin = async (code: string, redirectUri: string) => {
 };
 
 export const postLogout = async () => {
-  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.LOGOUT });
+  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.LOGOUT_V1 });
   return response;
 };
 
@@ -52,7 +52,7 @@ export const postSignUp = async ({ name, email, password }: { name: string; emai
 };
 
 export const postSignIn = async ({ email, password }: { email: string; password: string }) => {
-  return await fetch(`${BASE_URL}${ENDPOINT.SINGIN}`, {
+  return await fetch(`${BASE_URL}${ENDPOINT.SIGN_IN}`, {
     method: 'POST',
     body: JSON.stringify({ email, password }),
     credentials: 'include',

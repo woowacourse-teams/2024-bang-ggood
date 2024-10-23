@@ -99,7 +99,7 @@ public class ChecklistManageService {
 
     private void createChecklistStation(ChecklistRequestV1 checklistRequestV1, Checklist checklist) {
         ChecklistStationRequest geolocation = checklistRequestV1.geolocation();
-        checklistStationService.createChecklistStations(checklist, geolocation.latitude(), geolocation.latitude());
+        checklistStationService.createChecklistStations(checklist, geolocation.latitude(), geolocation.longitude());
     }
 
     @Transactional(readOnly = true)

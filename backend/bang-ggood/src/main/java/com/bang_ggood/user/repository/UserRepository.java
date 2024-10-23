@@ -34,4 +34,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("UPDATE User u SET u.deleted = true WHERE u.id = :id")
     void deleteById(@Param("id") Long id);
 
+    @Transactional
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("UPDATE User u SET u.deleted = false WHERE u.email = :email AND u.loginType = :loginType")
+    void resaveByEmailAndLoginType(@Param("email") Email email, @Param("loginType") LoginType loginType);
+
+    @Query("SELECT u FROM User u WHERE u.email = :email and u.loginType = :loginType")
+    Optional<User> findByEmailAndLoginTypeWithDeleted(Email email, LoginType loginType);
 }

@@ -84,7 +84,7 @@ public class ChecklistQuestion extends BaseEntity {
         return "ChecklistQuestion{" +
                 "id=" + id +
                 ", checklist=" + checklist +
-                ", questionEntity=" + question +
+                ", question=" + question +
                 ", answer=" + answer +
                 '}';
     }

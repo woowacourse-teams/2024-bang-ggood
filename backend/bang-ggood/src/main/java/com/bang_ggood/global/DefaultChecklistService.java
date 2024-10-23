@@ -4,7 +4,6 @@ import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.option.domain.Option;
 import com.bang_ggood.question.domain.Answer;
-import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.request.QuestionRequest;
 import com.bang_ggood.question.service.QuestionManageService;
 import com.bang_ggood.room.dto.request.RoomRequest;
@@ -45,15 +44,15 @@ public class DefaultChecklistService {
                 Option.BED.getId());
     }
 
-    private static List<QuestionRequest> createDefaultQuestionRequest() {
+    private static List<QuestionRequest> createDefaultQuestionRequest() { // TODO 수정 필요
         return List.of(
-                new QuestionRequest(Question.ROOM_CONDITION_1.getId(), Answer.GOOD.name()),
-                new QuestionRequest(Question.ROOM_CONDITION_2.getId(), Answer.BAD.name()),
-                new QuestionRequest(Question.ROOM_CONDITION_3.getId(), Answer.GOOD.name()),
-                new QuestionRequest(Question.WINDOW_1.getId(), Answer.GOOD.name()),
-                new QuestionRequest(Question.WINDOW_2.getId(), Answer.BAD.name()),
-                new QuestionRequest(Question.BATHROOM_1.getId(), Answer.GOOD.name()),
-                new QuestionRequest(Question.BATHROOM_2.getId(), Answer.GOOD.name()));
+                new QuestionRequest(1, Answer.GOOD.name()),
+                new QuestionRequest(2, Answer.BAD.name()),
+                new QuestionRequest(3, Answer.GOOD.name()),
+                new QuestionRequest(10, Answer.GOOD.name()),
+                new QuestionRequest(11, Answer.BAD.name()),
+                new QuestionRequest(16, Answer.GOOD.name()),
+                new QuestionRequest(17, Answer.GOOD.name()));
     }
 
     @Transactional

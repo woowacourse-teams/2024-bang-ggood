@@ -29,9 +29,6 @@ public class ChecklistQuestion extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Checklist checklist;
 
-    @Enumerated(EnumType.STRING)
-    private Question question;
-
     @JoinColumn(name = "question_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private QuestionEntity questionEntity;
@@ -39,9 +36,8 @@ public class ChecklistQuestion extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Answer answer;
 
-    public ChecklistQuestion(Checklist checklist, Question question, QuestionEntity questionEntity, Answer answer) {
+    public ChecklistQuestion(Checklist checklist, QuestionEntity questionEntity, Answer answer) {
         this.checklist = checklist;
-        this.question = question;
         this.answer = answer;
         this.questionEntity = questionEntity;
     }

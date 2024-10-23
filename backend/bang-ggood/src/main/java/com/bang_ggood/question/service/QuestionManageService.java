@@ -2,7 +2,6 @@ package com.bang_ggood.question.service;
 
 import com.bang_ggood.question.domain.CategoryEntity;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
-import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.domain.QuestionEntity;
 import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionResponse;
@@ -27,9 +26,9 @@ public class QuestionManageService {
 
     @Transactional
     public void createDefaultCustomChecklistQuestions(User user) {
-        List<CustomChecklistQuestion> customChecklistQuestions = Question.findDefaultQuestions()
+        List<CustomChecklistQuestion> customChecklistQuestions = questionService.findAllDefaultQuestions()
                 .stream()
-                .map(question -> new CustomChecklistQuestion(user, question, questionService.readQuestion(question.getId()))) // TODO : 변경필요
+                .map(question -> new CustomChecklistQuestion(user, questionService.readQuestion(question.getId()))) // TODO : 변경필요
                 .toList();
 
         checklistQuestionService.createDefaultCustomQuestions(customChecklistQuestions);
@@ -90,9 +89,9 @@ public class QuestionManageService {
 
     @Transactional
     public void updateCustomChecklist(User user, CustomChecklistUpdateRequest request) {
-        List<Question> questions = request.questionIds().stream()
-                .map(Question::fromId)
-                .toList();
+        List<QuestionEntity> questions = request.questionIds().stream()
+                .map(questionService::readQuestion)
+                .toList(); // TODO 리팩토링
 
         checklistQuestionService.updateCustomChecklist(user, questions);
     }

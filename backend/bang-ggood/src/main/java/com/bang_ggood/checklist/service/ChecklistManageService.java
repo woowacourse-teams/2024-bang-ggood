@@ -17,7 +17,6 @@ import com.bang_ggood.option.service.ChecklistOptionService;
 import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.question.domain.CategoryEntity;
 import com.bang_ggood.question.domain.ChecklistQuestion;
-import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.response.SelectedCategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.SelectedQuestionResponse;
 import com.bang_ggood.question.service.ChecklistQuestionService;
@@ -83,7 +82,6 @@ public class ChecklistManageService {
         List<ChecklistQuestion> checklistQuestions = checklistRequest.questions().stream()
                 .map(question -> new ChecklistQuestion(
                         checklist,
-                        Question.fromId(question.questionId()),
                         questionService.readQuestion(question.questionId()),
                         Answer.from(question.answer())))
                 .toList();
@@ -236,7 +234,6 @@ public class ChecklistManageService {
         List<ChecklistQuestion> updateQuestions = checklistRequest.questions().stream()
                 .map(question -> new ChecklistQuestion(
                         checklist,
-                        Question.fromId(question.questionId()),
                         questionService.readQuestion(question.questionId()),
                         Answer.from(question.answer())))
                 .toList();

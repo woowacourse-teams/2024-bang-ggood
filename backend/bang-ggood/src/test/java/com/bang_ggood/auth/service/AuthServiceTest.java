@@ -10,14 +10,13 @@ import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
-import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
 import com.bang_ggood.question.service.QuestionManageService;
+import com.bang_ggood.question.service.QuestionService;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +24,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.expression.spel.support.ReflectivePropertyAccessor.OptimalPropertyAccessor;
 
 import java.util.Optional;
 
@@ -45,6 +43,8 @@ class AuthServiceTest extends IntegrationTestSupport {
     private OauthClient oauthClient;
     @Autowired
     private AuthService authService;
+    @Autowired
+    private QuestionService questionService;
     @Autowired
     private ChecklistManageService checklistManageService;
     @Autowired
@@ -198,7 +198,7 @@ class AuthServiceTest extends IntegrationTestSupport {
             sum += response.questions().size();
         }
 
-        assertThat(sum).isEqualTo(Question.findDefaultQuestions().size());
+        assertThat(sum).isEqualTo(questionService.findAllDefaultQuestions().size());
     }
 
     @DisplayName("카카오 로그인 성공 : 회원 가입시 디폴트 체크리스트를 추가")

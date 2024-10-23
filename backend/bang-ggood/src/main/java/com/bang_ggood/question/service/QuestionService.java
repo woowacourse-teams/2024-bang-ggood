@@ -31,6 +31,11 @@ public class QuestionService {
     }
 
     @Transactional(readOnly = true)
+    public List<QuestionEntity> findAllDefaultQuestions() {
+        return questionRepository.findByIsDefaultTrue();
+    }
+
+    @Transactional(readOnly = true)
     public QuestionEntity readQuestion(Integer questionId) {
         return questionRepository.getById(questionId);
     }

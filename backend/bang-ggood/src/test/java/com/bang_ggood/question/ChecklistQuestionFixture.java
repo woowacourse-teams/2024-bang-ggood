@@ -3,7 +3,6 @@ package com.bang_ggood.question;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.question.domain.ChecklistQuestion;
-import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.domain.QuestionEntity;
 import java.util.List;
 
@@ -12,7 +11,6 @@ public class ChecklistQuestionFixture {
     public static ChecklistQuestion CHECKLIST1_QUESTION1(Checklist checklist, QuestionEntity question) {
         return new ChecklistQuestion(
                 checklist,
-                Question.ROOM_CONDITION_1,
                 question,
                 Answer.BAD
         );
@@ -21,7 +19,6 @@ public class ChecklistQuestionFixture {
     public static ChecklistQuestion CHECKLIST1_QUESTION2(Checklist checklist, QuestionEntity question) {
         return new ChecklistQuestion(
                 checklist,
-                Question.WINDOW_1,
                 question,
                 Answer.GOOD
         );
@@ -30,7 +27,6 @@ public class ChecklistQuestionFixture {
     public static ChecklistQuestion CHECKLIST1_QUESTION2_UPDATE_ANSWER(Checklist checklist, QuestionEntity question) {
         return new ChecklistQuestion(
                 checklist,
-                Question.WINDOW_1,
                 question,
                 Answer.BAD
         );
@@ -39,7 +35,6 @@ public class ChecklistQuestionFixture {
     public static ChecklistQuestion CHECKLIST1_QUESTION11(Checklist checklist, QuestionEntity question) {
         return new ChecklistQuestion(
                 checklist,
-                Question.WINDOW_2,
                 question,
                 null
         );

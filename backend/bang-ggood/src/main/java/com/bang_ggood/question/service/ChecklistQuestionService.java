@@ -6,7 +6,7 @@ import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.question.domain.CategoryEntity;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
-import com.bang_ggood.question.domain.Question;
+import com.bang_ggood.question.domain.QuestionEntity;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.user.domain.User;
@@ -52,25 +52,25 @@ public class ChecklistQuestionService {
     }
 
     @Transactional
-    public void updateCustomChecklist(User user, List<Question> questions) {
+    public void updateCustomChecklist(User user, List<QuestionEntity> questions) {
         validateCustomChecklistQuestionsIsNotEmpty(questions);
         validateCustomChecklistQuestionsDuplication(questions);
 
         customChecklistQuestionRepository.deleteAllByUser(user);
 
         List<CustomChecklistQuestion> customChecklistQuestions = questions.stream()
-                .map(question -> new CustomChecklistQuestion(user, question, questionService.readQuestion(question.getId())))
+                .map(question -> new CustomChecklistQuestion(user, questionService.readQuestion(question.getId())))
                 .toList();
         customChecklistQuestionRepository.saveAll(customChecklistQuestions);
     }
 
-    private void validateCustomChecklistQuestionsIsNotEmpty(List<Question> questions) {
+    private void validateCustomChecklistQuestionsIsNotEmpty(List<QuestionEntity> questions) {
         if (questions.isEmpty()) {
             throw new BangggoodException(ExceptionCode.CUSTOM_CHECKLIST_QUESTION_EMPTY);
         }
     }
 
-    private void validateCustomChecklistQuestionsDuplication(List<Question> questions) {
+    private void validateCustomChecklistQuestionsDuplication(List<QuestionEntity> questions) {
         if (questions.size() != Set.copyOf(questions).size()) {
             throw new BangggoodException(ExceptionCode.QUESTION_DUPLICATED);
         }

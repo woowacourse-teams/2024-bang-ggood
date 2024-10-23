@@ -13,4 +13,6 @@ public interface QuestionRepository extends JpaRepository<QuestionEntity, Intege
     }
 
     List<QuestionEntity> findAllByCategoryId(Integer id);
+
+    List<QuestionEntity> findByIsDefaultTrue();
 }

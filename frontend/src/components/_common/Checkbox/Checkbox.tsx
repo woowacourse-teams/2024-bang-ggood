@@ -10,6 +10,7 @@ interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
   hoverColor?: string;
   onClick?: () => void;
   iconType?: 'check' | 'plus';
+  ariaLabel?: string;
 }
 
 const Checkbox = ({
@@ -18,11 +19,12 @@ const Checkbox = ({
   hoverColor,
   iconType = 'check',
   onClick,
+  ariaLabel,
 }: StyledProps) => {
   const checkedColor = isChecked ? color || theme.palette.green500 : theme.palette.grey400;
 
   return (
-    <S.Checkbox $color={checkedColor} $hoverColor={hoverColor} onClick={onClick}>
+    <S.Checkbox $color={checkedColor} $hoverColor={hoverColor} onClick={onClick} aria-label={ariaLabel}>
       <S.FlexBox>
         {iconType === 'check' ? <CheckIcon aria-hidden="true" /> : <PlusWhite aria-hidden="true" />}
       </S.FlexBox>

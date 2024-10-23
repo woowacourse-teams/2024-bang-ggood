@@ -26,9 +26,9 @@ public class QuestionManageService {
 
     @Transactional
     public void createDefaultCustomChecklistQuestions(User user) {
-        List<CustomChecklistQuestion> customChecklistQuestions = questionService.findAllDefaultQuestions()
+        List<CustomChecklistQuestion> customChecklistQuestions = questionService.findDefaultQuestions()
                 .stream()
-                .map(question -> new CustomChecklistQuestion(user, questionService.readQuestion(question.getId()))) // TODO : 변경필요
+                .map(question -> new CustomChecklistQuestion(user, question))
                 .toList();
 
         checklistQuestionService.createDefaultCustomQuestions(customChecklistQuestions);
@@ -45,14 +45,12 @@ public class QuestionManageService {
         return new CustomChecklistQuestionsResponse(categoryQuestionsResponses);
     }
 
-    private List<CategoryQuestionsResponse> categorizeCustomChecklistQuestions(
-            User user,
-            List<CustomChecklistQuestion> customChecklistQuestions) {
+    private List<CategoryQuestionsResponse> categorizeCustomChecklistQuestions(User user, List<CustomChecklistQuestion> customChecklistQuestions) {
         List<CategoryQuestionsResponse> categoryQuestionsResponses = new ArrayList<>();
 
         for (Category category : questionService.findAllCustomQuestionCategories(user)) {
             List<QuestionResponse> questionResponses = customChecklistQuestions.stream()
-                    .filter(customChecklistQuestion -> customChecklistQuestion.isSameCategory(category)) // TODO 리팩토링
+                    .filter(customChecklistQuestion -> customChecklistQuestion.isSameCategory(category))
                     .map(customChecklistQuestion -> new QuestionResponse(customChecklistQuestion.getQuestion(), questionService.readHighlights(customChecklistQuestion.getQuestionId())))
                     .toList();
 

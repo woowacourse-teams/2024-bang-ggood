@@ -34,8 +34,8 @@ public class QuestionService {
     }
 
     @Transactional(readOnly = true)
-    public List<Question> findAllDefaultQuestions() {
-        return questionRepository.findByIsDefaultTrue();
+    public List<Question> findDefaultQuestions() {
+        return questionRepository.findAllByIsDefaultTrue();
     }
 
     @Transactional(readOnly = true)

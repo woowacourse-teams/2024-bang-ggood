@@ -198,7 +198,7 @@ class AuthServiceTest extends IntegrationTestSupport {
             sum += response.questions().size();
         }
 
-        assertThat(sum).isEqualTo(questionService.findAllDefaultQuestions().size());
+        assertThat(sum).isEqualTo(questionService.findDefaultQuestions().size());
     }
 
     @DisplayName("카카오 로그인 성공 : 회원 가입시 디폴트 체크리스트를 추가")

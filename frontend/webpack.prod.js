@@ -2,7 +2,6 @@ const { merge } = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { sentryWebpackPlugin } = require('@sentry/webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
@@ -22,15 +21,6 @@ module.exports = merge(common, {
       }),
 
     process.env.BUNDLE_ANALYZE && new BundleAnalyzerPlugin(),
-
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: 'src/assets/images/og',
-          to: 'images',
-        },
-      ],
-    }),
   ],
   module: {
     rules: [

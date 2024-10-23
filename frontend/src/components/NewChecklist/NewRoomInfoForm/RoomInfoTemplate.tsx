@@ -15,12 +15,17 @@ import RoomName from '@/components/NewChecklist/NewRoomInfoForm/RoomName';
 import RoomNameNoDefault from '@/components/NewChecklist/NewRoomInfoForm/RoomNameNoDefault';
 import RoomSize from '@/components/NewChecklist/NewRoomInfoForm/RoomSize';
 import RoomStructure from '@/components/NewChecklist/NewRoomInfoForm/RoomStructure';
+import { trackRoomInfoInput } from '@/service/amplitude/trackEvent';
 import { flexColumn } from '@/styles/common';
 
 const RoomInfoTemplate = () => {
+  const handleTrackInput = (e: React.FocusEvent<HTMLInputElement>) => {
+    trackRoomInfoInput(e.target.name);
+  };
+
   return (
     <Layout withHeader withTab>
-      <S.Container>
+      <S.Container onBlur={handleTrackInput}>
         <ErrorBoundary FallbackComponent={RoomNameNoDefault}>
           <RoomName />
         </ErrorBoundary>

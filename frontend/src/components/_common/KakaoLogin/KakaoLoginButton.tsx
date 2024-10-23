@@ -2,13 +2,19 @@ import styled from '@emotion/styled';
 
 import { KakaoLogo } from '@/assets/assets';
 import useLogin from '@/hooks/useLogin';
+import { trackKakaoLoginButton } from '@/service/amplitude/trackEvent';
 import { flexRow } from '@/styles/common';
 
 const KakaoLoginButton = () => {
   const { moveToKakao } = useLogin();
 
+  const handleClickKakao = () => {
+    trackKakaoLoginButton();
+    moveToKakao();
+  };
+
   return (
-    <S.KakaoLoginButton onClick={moveToKakao} tabIndex={1}>
+    <S.KakaoLoginButton onClick={handleClickKakao} tabIndex={1}>
       <KakaoLogo aria-hidden="true" />
       <S.Text>카카오톡으로 시작하기</S.Text>
     </S.KakaoLoginButton>

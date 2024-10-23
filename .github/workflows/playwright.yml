@@ -3,11 +3,11 @@ on:
   pull_request:
     branches: [main, dev-fe]
     paths:
-      - "frontend/**"
+      - 'frontend/**'
   push:
     branches: [main, dev-fe]
     paths:
-      - "frontend/**"
+      - 'frontend/**'
 jobs:
   test:
     timeout-minutes: 10
@@ -22,7 +22,7 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          path: "**/node_modules"
+          path: '**/node_modules'
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
@@ -51,6 +51,7 @@ jobs:
           echo "API_ENV=${{ secrets.API_ENV }}" >> .env
           echo "API_URL=${{ secrets.API_URL }}" >> .env
           echo "REDIRECT_URI=${{ secrets.REDIRECT_URI }}" >> .env
+          echo "AMPLITUDE_API_KEY=${{ secrets.AMPLITUDE_API_KEY }}" >> .env
       - name: Run Playwright tests
         run: |
           cd frontend

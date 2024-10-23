@@ -20,7 +20,7 @@ export const userHandlers = [
   http.post(BASE_URL + ENDPOINT.REGISTER, () => {
     return HttpResponse.json(null, { status: 200 });
   }),
-  http.post(BASE_URL + ENDPOINT.SINGIN, () => {
+  http.post(BASE_URL + ENDPOINT.SIGN_IN, () => {
     return HttpResponse.json(null, { status: 201 });
   }),
 ];

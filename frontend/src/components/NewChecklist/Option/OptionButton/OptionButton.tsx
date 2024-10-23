@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
 
+import { trackOption } from '@/service/amplitude/trackEvent';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 import { flexCenter, flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
@@ -13,6 +14,8 @@ const OptionButton = ({ option, isSelected }: { option: OptionWithIcon; isSelect
   const [statusMessage, setStatusMessage] = useState('');
 
   const handleClick = () => {
+    trackOption(option.displayName);
+
     if (isSelected) {
       selectedOptionActions.remove(id);
       setStatusMessage(`${option.displayName} 선택 취소되었습니다.`);

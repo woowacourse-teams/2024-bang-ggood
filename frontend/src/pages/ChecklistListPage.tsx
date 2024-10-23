@@ -15,12 +15,14 @@ import ChecklistListTitle from '@/components/ChecklistList/ChecklistListTitle';
 import CustomBanner from '@/components/ChecklistList/CustomBanner';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useGetChecklistList from '@/hooks/useGetChecklistList';
+import { useTrackPageView } from '@/service/amplitude/useTrackPageView';
 import { boxShadow, flexRow } from '@/styles/common';
 import theme from '@/styles/theme';
 
 const ChecklistListPage = () => {
-  const navigate = useNavigate();
+  useTrackPageView({ eventName: '[View] 체크리스트 리스트 페이지' });
 
+  const navigate = useNavigate();
   const { isLikeFiltered: isEnabled, toggle } = useGetChecklistList();
 
   const handleClickMoveCustomPage = () => navigate(ROUTE_PATH.checklistQuestionSelect);

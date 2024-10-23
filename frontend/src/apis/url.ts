@@ -21,17 +21,19 @@ export const ENDPOINT = {
   // article
   ARTICLES: '/articles',
   ARTICLE_ID: (id: number) => `/articles/${id}`,
-  // login
+  // kakao login
   LOGIN: '/oauth/login',
+  // basic login
+  REGISTER: '/v1/local-auth/register',
+  SIGN_IN: '/v1/local-auth/login',
+  // user
   LOGOUT: '/oauth/logout',
+  LOGOUT_V1: '/v1/logout',
   USER_INFO: '/user/me',
   DELETE_ACCOUNT: '/v1/withdraw',
   USER_VALID: '/token-exist',
   USER_ACCESS_TOKEN_REISSUE: '/accessToken/reissue',
   TOKEN: '/token',
-  //일반 로그인
-  REGISTER: '/v1/local-auth/register',
-  SINGIN: '/v1/local-auth/login',
   //subway
   SUBWAY: (position: Position) => `/stations/nearest?latitude=${position.latitude}&longitude=${position.longitude}`,
 };

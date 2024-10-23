@@ -3,6 +3,7 @@ import '@/styles/category-sprite-image.css';
 import styled from '@emotion/styled';
 import React, { forwardRef } from 'react';
 
+import { trackTabButton } from '@/service/amplitude/trackEvent';
 import { flexCenter, title3 } from '@/styles/common';
 import { Tab } from '@/types/tab';
 
@@ -15,10 +16,15 @@ interface Props extends Tab {
 
 const TabButton = forwardRef<HTMLDivElement, Props>(
   ({ id, onMoveTab, name, active, className, isCompleted, ...rest }, ref) => {
+    const handleClickTab = () => {
+      trackTabButton(name);
+      onMoveTab(id);
+    };
+
     return (
       <S.Container
         className={`tab ${className || ''}`}
-        onClick={() => onMoveTab(id)}
+        onClick={handleClickTab}
         active={active}
         role="tab"
         ref={ref}

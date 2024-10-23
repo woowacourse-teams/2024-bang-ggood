@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const dotenv = require('dotenv');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // 공통 환경 변수 로드
 const commonEnv = dotenv.config({ path: path.resolve(__dirname, '.env') }).parsed || {};
@@ -31,6 +32,14 @@ module.exports = {
     new webpack.DefinePlugin(envKeys),
     new HtmlWebpackPlugin({
       template: './public/index.html',
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'src/assets/images/og',
+          to: 'images',
+        },
+      ],
     }),
   ],
   module: {

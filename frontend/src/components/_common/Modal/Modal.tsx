@@ -4,6 +4,7 @@ import { ComponentPropsWithRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import { CloseIcon } from '@/assets/assets';
+import FocusTrap from '@/components/_common/Modal/FocusTrap/FocusTrap';
 import ModalBody from '@/components/_common/Modal/ModalBody';
 import ModalFooter from '@/components/_common/Modal/ModalFooter';
 import ModalHeader from '@/components/_common/Modal/ModalHeader';
@@ -38,19 +39,21 @@ const Modal = ({
   if (!modalRoot) return null;
 
   return createPortal(
-    <S.ModalWrapper open={isOpen}>
-      {hasDim && <S.ModalBackground onClick={hasDim ? onClose : () => {}} hasDim={hasDim} />}
-      <S.ModalOuter $position={position} $size={size} color={color} isOpen={isOpen}>
-        <S.ModalInner isOpen={isOpen}>
-          {children}
-          {hasCloseButton && (
-            <S.CloseButton>
-              <CloseIcon onClick={onClose} />
-            </S.CloseButton>
-          )}
-        </S.ModalInner>
-      </S.ModalOuter>
-    </S.ModalWrapper>,
+    <FocusTrap onEscapeFocusTrap={onClose}>
+      <S.ModalWrapper open={isOpen}>
+        {hasDim && <S.ModalBackground onClick={hasDim ? onClose : () => {}} hasDim={hasDim} />}
+        <S.ModalOuter $position={position} $size={size} color={color} isOpen={isOpen}>
+          <S.ModalInner isOpen={isOpen}>
+            {children}
+            {hasCloseButton && (
+              <S.CloseButton role="button" onClick={onClose} aria-label="모달 끄기">
+                <CloseIcon />
+              </S.CloseButton>
+            )}
+          </S.ModalInner>
+        </S.ModalOuter>
+      </S.ModalWrapper>
+    </FocusTrap>,
     modalRoot,
   );
 };
@@ -62,7 +65,7 @@ Modal.body = ModalBody;
 export default Modal;
 
 const S = {
-  ModalWrapper: styled.div<{ open: boolean }>`
+  ModalWrapper: styled.aside<{ open: boolean }>`
     display: ${({ open }) => (open ? 'flex' : 'none')};
     position: fixed;
     z-index: ${({ theme }) => theme.zIndex.MODAL};

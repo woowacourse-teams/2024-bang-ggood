@@ -15,12 +15,17 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "concurrently --names ,[TYPE] --prefix {name} \"jest\" \"tsc --noEmit\"",
+    "e2e:mock": "playwright test --config=playwright.mock.config.ts",
+    "e2e:mock-ui": "playwright test --config=playwright.mock.config.ts --ui",
+    "e2e:api": "playwright test --config=playwright.api.config.ts",
+    "e2e:api-ui": "playwright test --config=playwright.api.config.ts --ui",
     "postinstall": "cd .. && husky frontend/.husky",
     "format": "prettier --cache --write .",
     "lint": "eslint --cache .",
     "lint:styled": "stylelint --cache --fix ./*"
   },
   "dependencies": {
+    "@amplitude/analytics-browser": "^2.11.8",
     "@babel/cli": "^7.25.6",
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.4",
@@ -37,6 +42,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-draggable": "^4.4.6",
+    "react-error-boundary": "^4.0.13",
     "react-ga4": "^2.1.0",
     "react-router-dom": "^6.24.1",
     "zustand": "^4.5.4"
@@ -44,6 +50,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^1.6.1",
     "@eslint/js": "^8.6.0",
+    "@playwright/test": "^1.47.2",
     "@sentry/webpack-plugin": "^2.22.4",
     "@storybook/addon-docs": "^8.3.0",
     "@storybook/addon-essentials": "^8.2.4",
@@ -62,6 +69,7 @@
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.0",
     "@types/jest": "^29.5.12",
+    "@types/node": "^22.7.4",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@webpack-cli/generators": "^3.0.7",

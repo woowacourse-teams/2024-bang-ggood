@@ -23,7 +23,7 @@ const AddressMap = ({ location }: { location: string }) => {
       kakao.maps.load(() => {
         if (!mapContainerRef.current) return;
         const mapOption = {
-          center: new kakao.maps.LatLng(DEFAULT_POSITION.lat, DEFAULT_POSITION.lon),
+          center: new kakao.maps.LatLng(DEFAULT_POSITION.latitude, DEFAULT_POSITION.longitude),
           level: 3,
         };
         // 지도 생성

@@ -1,25 +1,22 @@
-import { useStore } from 'zustand';
-
 import FormField from '@/components/_common/FormField/FormField';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import useRoomInfoValidated from '@/hooks/useRoomInfoValidated';
 
 const RealEstate = () => {
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const realEstate = useStore(checklistRoomInfoStore, state => state.rawValue.realEstate);
-  const errorMessage = useStore(checklistRoomInfoStore, state => state.errorMessage.realEstate);
+  const realEstate = useRoomInfoValidated('realEstate');
 
   return (
     <FormField>
-      <FormField.Label label={'부동산 이름'} required={false} />
+      <FormField.Label label={'부동산 이름'} required={false} htmlFor="realEstate" />
       <FormField.Input
         placeholder=""
         width="full"
         type={'string'}
-        onChange={actions.onChange}
+        onChange={realEstate.onChange}
         name={'realEstate'}
-        value={realEstate}
+        value={realEstate.rawValue}
+        id="realEstate"
       />
-      <FormField.ErrorMessage value={errorMessage} />
+      <FormField.ErrorMessage value={realEstate.errorMessage} />
     </FormField>
   );
 };

@@ -1,18 +1,17 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { BangBangCryIcon } from '@/assets/assets';
-import Button from '@/components/_common/Button/Button';
+import { BangBangCryIcon, Error404 } from '@/assets/assets';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { flexCenter, flexColumn, title1, title2 } from '@/styles/common';
+import { flexCenter, flexColumn, title3 } from '@/styles/common';
 
 const NotFound = () => {
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate(ROUTE_PATH.home);
+  const reset = () => {
+    navigate(ROUTE_PATH.home, { replace: true });
   };
 
   return (
@@ -20,11 +19,11 @@ const NotFound = () => {
       <Header left={<Header.Logo />} />
       <Layout withHeader>
         <S.Wrapper>
-          <BangBangCryIcon width={100} height={100} />
+          <BangBangCryIcon width={150} height={150} />
+          <Error404 />
           <S.TextWrapper>
-            <S.NotFound>404</S.NotFound>
-            <S.Text> 접근할 수 없는 페이지입니다</S.Text>
-            <Button label="홈으로 돌아가기" color="dark" onClick={handleClick} />
+            <S.Text>접근할 수 없는 페이지입니다</S.Text>
+            <S.ResetButton onClick={reset}>홈으로 돌아가기</S.ResetButton>
           </S.TextWrapper>
         </S.Wrapper>
       </Layout>
@@ -36,22 +35,38 @@ export default NotFound;
 
 const S = {
   Wrapper: styled.div`
-    display: flex;
-    width: 100%;
-    gap: 1rem;
+    ${flexColumn}
     ${flexCenter}
-  `,
-  NotFound: styled.div`
-    ${title1}
-  `,
-  Text: styled.div`
-    ${title2}
-    margin-bottom: 4rem;
+    width: 100%;
+    height: 100%;
+    gap: 1rem;
   `,
   TextWrapper: styled.div`
     ${flexColumn}
     align-items: center;
     gap: 1rem;
-    margin-top: 2rem;
+    margin-top: 4rem;
+  `,
+  Text: styled.div`
+    margin-bottom: 2rem;
+
+    font-size: ${({ theme }) => theme.text.size.medium};
+  `,
+  ResetButton: styled.button`
+    ${flexCenter}
+    gap: .5rem;
+    padding: 0.8rem 1.6rem;
+    border: none;
+
+    background-color: ${({ theme }) => theme.palette.green500};
+
+    color: ${({ theme }) => theme.palette.white};
+    ${title3}
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.palette.green600};
+    }
   `,
 };

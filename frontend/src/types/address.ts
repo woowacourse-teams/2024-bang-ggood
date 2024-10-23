@@ -5,8 +5,8 @@ export interface Address {
 }
 
 export interface Position {
-  lat: number;
-  lon: number;
+  latitude: number;
+  longitude: number;
 }
 
 export interface OpenOptions {

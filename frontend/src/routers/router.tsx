@@ -3,6 +3,8 @@ import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 import FooterLayout from '@/components/_common/layout/FooterLayout';
 import { ROUTE_PATH } from '@/constants/routePath';
+import SignInPage from '@/pages/SignInPage';
+import SignUpPage from '@/pages/SignUpPage';
 import GoogleAnalytics from '@/routers/GoogleAnalytics';
 
 const MainPage = React.lazy(() => import('@/pages/MainPage'));
@@ -12,10 +14,9 @@ const MyPage = React.lazy(() => import('@/pages/MyPage'));
 const NewChecklistPage = React.lazy(() => import('@/pages/NewChecklistPage'));
 const EditChecklistPage = React.lazy(() => import('@/pages/EditChecklistPage'));
 const ChecklistDetailPage = React.lazy(() => import('@/pages/ChecklistDetailPage'));
-const ChecklistCustomPage = React.lazy(() => import('@/pages/ChecklistCustomPage'));
+const ChecklistQuestionSelectPage = React.lazy(() => import('@/pages/ChecklistQuestionSelectPage'));
 const ArticleDetailPage = React.lazy(() => import('@/pages/ArticleDetailPage'));
 const LandingPage = React.lazy(() => import('@/pages/LandingPage'));
-const LoginPage = React.lazy(() => import('@/pages/LoginPage'));
 const NotFound = React.lazy(() => import('@/pages/NotFound'));
 const ErrorPage = React.lazy(() => import('@/pages/ErrorPage'));
 
@@ -63,8 +64,8 @@ const router = createBrowserRouter([
         path: ROUTE_PATH.checklistEdit,
       },
       {
-        element: <ChecklistCustomPage />,
-        path: ROUTE_PATH.checklistCustom,
+        element: <ChecklistQuestionSelectPage />,
+        path: ROUTE_PATH.checklistQuestionSelect,
       },
       {
         element: <ArticleDetailPage />,
@@ -75,8 +76,12 @@ const router = createBrowserRouter([
         path: ROUTE_PATH.root,
       },
       {
-        element: <LoginPage />,
-        path: ROUTE_PATH.login,
+        element: <SignUpPage />,
+        path: ROUTE_PATH.signUp,
+      },
+      {
+        element: <SignInPage />,
+        path: ROUTE_PATH.signIn,
       },
       {
         element: <NotFound />,

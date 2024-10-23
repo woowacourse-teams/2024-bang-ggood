@@ -6,6 +6,7 @@
 logs
 **/*.backup.*
 **/*.back.*
+user.json
 
 node_modules
 dist
@@ -24,3 +25,10 @@ stories
 
 
 private*
+test-results/
+playwright-report/
+blob-report/
+playwright/.auth/*
+playwright/.cache/
+*/.auth
+

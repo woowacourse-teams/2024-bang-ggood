@@ -23,7 +23,7 @@ Accordion.header = AccordionHeader;
 Accordion.body = AccordionBody;
 
 const S = {
-  Container: styled.div<{ width: string }>`
+  Container: styled.section<{ width: string }>`
     ${flexColumn};
     width: ${({ width }) => width};
     gap: 1rem;

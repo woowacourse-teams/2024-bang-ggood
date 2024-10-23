@@ -21,10 +21,10 @@ const ChecklistCard = ({ checklist }: Props) => {
   };
 
   return (
-    <S.Container onClick={handleMoveToDetail}>
+    <S.Container data-testid="checklist-card" onClick={handleMoveToDetail} tabIndex={1}>
       <S.Row>
         <S.LocationWrapper>
-          <LocationLineIcon />
+          <LocationLineIcon aria-hidden="true" />
           {formattedUndefined(address, 'string', '주소')}
         </S.LocationWrapper>
         <LikeButton isLiked={isLiked} checklistId={checklistId} />

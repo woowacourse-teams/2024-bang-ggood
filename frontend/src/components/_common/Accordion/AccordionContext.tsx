@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 
-import { ERROR_MESSAGE } from '@/constants/errorMessage';
+import { ERROR_MESSAGE } from '@/constants/messages/errorMessage';
 
 interface AccordionProps {
   id: number;
@@ -57,7 +57,7 @@ export const useAccordionContext = () => {
   const context = useContext(AccordionContext);
 
   if (!context) {
-    throw new Error(ERROR_MESSAGE.USEACCORDIONCONTEXT);
+    throw new Error(ERROR_MESSAGE.USE_ACCORDION_CONTEXT);
   }
   return context;
 };

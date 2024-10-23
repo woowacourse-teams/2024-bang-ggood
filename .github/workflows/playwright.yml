@@ -1,0 +1,64 @@
+name: Playwright Tests
+on:
+  pull_request:
+    branches: [main, dev-fe]
+    paths:
+      - 'frontend/**'
+  push:
+    branches: [main, dev-fe]
+    paths:
+      - 'frontend/**'
+jobs:
+  test:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    environment: frontend-msw
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          cd frontend
+          yarn install --frozen-lockfile
+      - name: Install Playwright Browsers
+        run: |
+          cd frontend
+          yarn playwright install --with-deps
+      - name: Create .env File
+        run: |
+          cd frontend
+          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> .env
+          echo "GA_ID=${{ secrets.GA_ID }}" >> .env
+          echo "COOKIE=${{ secrets.COOKIE }}" >> .env
+          echo "KAKAO_MAP_KEY=${{ secrets.KAKAO_MAP_KEY }}" >> .env
+          echo "SENTRY_DSN_TOKEN=${{ secrets.SENTRY_DSN_TOKEN }}" >> .env
+          echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> .env
+          echo "SENTRY_ORG=${{ secrets.SENTRY_ORG }}" >> .env
+          echo "SENTRY_PROJECT=${{ secrets.SENTRY_PROJECT }}" >> .env
+          echo "ANALYZE_BUNDLE=${{ secrets.ANALYZE_BUNDLE }}" >> .env
+          echo "CI=${{ secrets.CI }}" >> .env
+          echo "API_ENV=${{ secrets.API_ENV }}" >> .env
+          echo "API_URL=${{ secrets.API_URL }}" >> .env
+          echo "REDIRECT_URI=${{ secrets.REDIRECT_URI }}" >> .env
+          echo "AMPLITUDE_API_KEY=${{ secrets.AMPLITUDE_API_KEY }}" >> .env
+      - name: Run Playwright tests
+        run: |
+          cd frontend
+          yarn e2e:mock
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: frontend/playwright-report/
+          retention-days: 30

@@ -22,7 +22,7 @@ const ArticleCard = ({ article }: Props) => {
   };
 
   return (
-    <S.Container onClick={handleClick}>
+    <S.Container onClick={handleClick} tabIndex={1}>
       <S.Keyword bgColor={color500}> {keyword}</S.Keyword>
       <S.Title>{title}</S.Title>
       <S.Label>{summary}</S.Label>

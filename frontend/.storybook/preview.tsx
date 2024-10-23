@@ -10,7 +10,9 @@ const decorator = Story => (
     <Global
       styles={css`
         ${normalize}
-        font-size: 10px;
+        html {
+          font-size: 62.5%;
+        }
       `}
     />
     <ThemeProvider theme={theme}>

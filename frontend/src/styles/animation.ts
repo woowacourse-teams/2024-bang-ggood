@@ -26,13 +26,30 @@ export const fadeOut = css`
   `}
 `;
 
-export const moveUpDown = css`
-  ${keyframes`
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  `}
+export const moveUpDown = keyframes`
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+`;
+
+export const arrowMove = keyframes`
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(0.3rem); 
+    opacity: 0;
+  }
+  51% {
+    transform: translateY(0.3rem); 
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 `;

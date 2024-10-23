@@ -1,4 +1,4 @@
-export const CATEGORY_COUNT = 7;
+export const CATEGORY_COUNT = 5;
 
 export const CATEGORY_WITH_EMOJI = [
   {

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { DEFAULT_POSITION } from '@/constants/map';
 
 const createKakaoMapElements = () => {
@@ -6,7 +7,7 @@ const createKakaoMapElements = () => {
     const container = document.getElementById('map');
     if (!container) return;
 
-    const center = new kakao.maps.LatLng(DEFAULT_POSITION.lat, DEFAULT_POSITION.lon);
+    const center = new kakao.maps.LatLng(DEFAULT_POSITION.latitude, DEFAULT_POSITION.longitude);
 
     const options = {
       center,

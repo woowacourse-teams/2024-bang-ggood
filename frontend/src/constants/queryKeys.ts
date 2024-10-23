@@ -5,4 +5,5 @@ export const QUERY_KEYS = {
   CHECKLIST: 'checklist',
   CHECKLIST_LIST: 'checklist-list',
   CHECKLIST_QUESTIONS: 'checklists/questions',
+  CHECKLIST_ALL_QUESTIONS: 'checklists/questions/all',
 };

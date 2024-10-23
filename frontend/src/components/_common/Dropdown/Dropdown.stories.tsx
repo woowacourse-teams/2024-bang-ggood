@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import Dropdown from '@/components/_common/Dropdown/Dropdown';
 
 const meta: Meta<typeof Dropdown> = {
-  title: 'components/Select',
+  title: 'components/Dropdown',
   component: Dropdown,
 };
 

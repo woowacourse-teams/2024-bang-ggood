@@ -8,8 +8,12 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class UserRepositoryTest extends IntegrationTestSupport {
 
@@ -27,7 +31,7 @@ class UserRepositoryTest extends IntegrationTestSupport {
         Optional<User> findUser = userRepository.findByEmailAndLoginType(user.getEmail(), user.getLoginType());
 
         // then
-        Assertions.assertThat(findUser).isEmpty();
+        assertThat(findUser).isEmpty();
     }
 
     @DisplayName("유저 타입으로 조회 성공")
@@ -40,7 +44,7 @@ class UserRepositoryTest extends IntegrationTestSupport {
         List<User> users = userRepository.findUserByUserType(UserType.GUEST);
 
         // then
-        Assertions.assertThat(users).containsExactly(expectedUser);
+        assertThat(users).containsExactly(expectedUser);
     }
 
     @DisplayName("논리적 삭제 성공")
@@ -54,6 +58,41 @@ class UserRepositoryTest extends IntegrationTestSupport {
 
         // then
         Optional<User> findUser = userRepository.findById(user.getId());
-        Assertions.assertThat(findUser).isEmpty();
+        assertThat(findUser).isEmpty();
+    }
+
+    @DisplayName("이메일과 로그인 타입으로 재저장 성공")
+    @Test
+    void resaveByEmailAndLoginType() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        userRepository.deleteById(user.getId());
+
+        // when
+        userRepository.resaveByEmailAndLoginType(user.getEmail(), user.getLoginType());
+
+        // then
+        Optional<User> deletedUser = userRepository.findByEmailAndLoginType(user.getEmail(), user.getLoginType());
+        assertAll(
+                () -> assertThat(deletedUser).isPresent(),
+                () -> assertThat(deletedUser.get().isDeleted()).isFalse()
+        );
+    }
+
+    @DisplayName("논리적 삭제된 유저를 포함해 이메일과 로그인 타입으로 조회 성공")
+    @Test
+    void findByEmailAndLoginTypeWithDeleted() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        userRepository.deleteById(user.getId());
+
+        // when
+        Optional<User> deletedUser = userRepository.findByEmailAndLoginTypeWithDeleted(user.getEmail(), user.getLoginType());
+
+        // then
+        assertAll(
+                () -> assertThat(deletedUser).isPresent(),
+                () -> assertThat(deletedUser.get().isDeleted()).isTrue()
+        );
     }
 }

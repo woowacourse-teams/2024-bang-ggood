@@ -1,6 +1,8 @@
+import styled from '@emotion/styled';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import Accordion from '@/components/_common/Accordion/Accordion';
+import { flexSpaceBetween, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
 
 /**
@@ -29,16 +31,27 @@ export const Default: Story = {
   render: () => {
     return (
       <Accordion totalCount={1}>
-        <Accordion.header id={1} text="청결도" />
+        <Accordion.header id={1} text="제목" />
         <Accordion.body id={1}>
-          <ul>
-            <li>list 1</li>
-            <li>list 2</li>
-            <li>list 3</li>
-          </ul>
+          <S.Content>카테고리의 내용이 있습니다.</S.Content>
         </Accordion.body>
       </Accordion>
     );
   },
   args: { totalCount: 1 },
+};
+
+const S = {
+  Content: styled.div`
+    ${flexSpaceBetween}
+    width: 100%;
+    padding: 1rem;
+    gap: 1rem;
+
+    ${title4}
+    background-color: ${({ theme }) => theme.palette.white};
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+  `,
 };

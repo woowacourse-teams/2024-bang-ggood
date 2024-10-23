@@ -12,16 +12,16 @@ interface Props {
   answer: AnswerType;
 }
 
-const ChecklistQuestionItem = ({ answer, question }: Props) => {
+const ChecklistQuestionItem = ({ question, answer }: Props) => {
   const { questionId, title, highlights } = question;
 
   return (
     <S.Container>
-      <S.Question>
+      <S.Question className="question">
         <HighlightText title={title} highlights={highlights} />
       </S.Question>
       <S.Options>
-        <ChecklistQuestionAnswers answer={answer} questionId={questionId} />
+        <ChecklistQuestionAnswers title={title} answer={answer} questionId={questionId} />
       </S.Options>
     </S.Container>
   );

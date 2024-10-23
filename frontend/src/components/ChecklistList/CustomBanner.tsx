@@ -11,10 +11,10 @@ const CustomBanner = ({ onClick }: Props) => {
   return (
     <S.Banner onClick={onClick}>
       <S.Wrapper>
-        <PencilIcon width={30} height={30} />
-        <S.Title>체크리스트 질문</S.Title>
+        <PencilIcon width={30} height={30} aria-hidden="true" />
+        <S.Title>체크리스트 질문 선택하기</S.Title>
       </S.Wrapper>
-      <S.Button>편집하기</S.Button>
+      <S.Button aria-label="체크리스트 질문을 편집하려면 이 버튼을 누르세요.">편집하기</S.Button>
     </S.Banner>
   );
 };
@@ -46,7 +46,7 @@ const S = {
   Title: styled.span`
     ${flexCenter}
   `,
-  Button: styled.div`
+  Button: styled.button`
     padding: 0.4rem 0.8rem;
 
     background-color: ${({ theme }) => theme.palette.green500};

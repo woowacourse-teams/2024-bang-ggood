@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import { BangBangIcon } from '@/assets/assets';
 import KakaoLoginButton from '@/components/_common/KakaoLogin/KakaoLoginButton';
 import Modal from '@/components/_common/Modal/Modal';
-import { ROUTE_PATH } from '@/constants/routePath';
 import { flexCenter, flexColumn, title3 } from '@/styles/common';
 
 interface Props {
@@ -25,7 +24,7 @@ const LoginModal = ({ isModalOpen, modalClose }: Props) => {
       </Modal.body>
       <Modal.footer>
         <S.Column>
-          <KakaoLoginButton afterLoginPath={ROUTE_PATH.checklistList} />
+          <KakaoLoginButton />
           <S.CancelButton onClick={modalClose}>다음에 로그인하기</S.CancelButton>
         </S.Column>
       </Modal.footer>

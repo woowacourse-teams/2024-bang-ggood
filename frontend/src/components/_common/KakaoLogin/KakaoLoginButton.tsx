@@ -1,25 +1,21 @@
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
 
 import { KakaoLogo } from '@/assets/assets';
-import { ROUTE_PATH } from '@/constants/routePath';
+import useLogin from '@/hooks/useLogin';
+import { trackKakaoLoginButton } from '@/service/amplitude/trackEvent';
 import { flexRow } from '@/styles/common';
 
-interface Props {
-  afterLoginPath: string;
-}
+const KakaoLoginButton = () => {
+  const { moveToKakao } = useLogin();
 
-const KakaoLoginButton = ({ afterLoginPath }: Props) => {
-  const navigate = useNavigate();
-
-  const handleMoveLogin = () => {
-    localStorage.setItem('afterLoginPath', afterLoginPath);
-    navigate(ROUTE_PATH.login);
+  const handleClickKakao = () => {
+    trackKakaoLoginButton();
+    moveToKakao();
   };
 
   return (
-    <S.KakaoLoginButton onClick={handleMoveLogin}>
-      <KakaoLogo />
+    <S.KakaoLoginButton onClick={handleClickKakao} tabIndex={1}>
+      <KakaoLogo aria-hidden="true" />
       <S.Text>카카오톡으로 시작하기</S.Text>
     </S.KakaoLoginButton>
   );
@@ -32,19 +28,19 @@ const S = {
     width: 100%;
     height: 5rem;
     ${flexRow}
-    justify-content: space-evenly;
+    gap: 1rem;
+    justify-content: center;
     align-items: center;
     border-radius: 0.8rem;
 
     background-color: ${({ theme }) => theme.palette.kakao};
-
-    font-size: ${({ theme }) => theme.text.size.large};
     cursor: pointer;
   `,
   Text: styled.div`
     margin: 0.5rem;
 
-    font-size: ${({ theme }) => theme.text.size.medium};
+    font-weight: ${({ theme }) => theme.text.weight.bold};
+    font-size: ${({ theme }) => theme.text.size.small};
     line-height: 1.5;
   `,
 };

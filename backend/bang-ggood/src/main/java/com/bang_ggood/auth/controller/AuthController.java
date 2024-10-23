@@ -3,9 +3,12 @@ package com.bang_ggood.auth.controller;
 import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.auth.controller.cookie.CookieProvider;
 import com.bang_ggood.auth.controller.cookie.CookieResolver;
+import com.bang_ggood.auth.dto.request.ConfirmPasswordResetCodeRequest;
+import com.bang_ggood.auth.dto.request.ForgotPasswordRequest;
 import com.bang_ggood.auth.dto.request.LocalLoginRequestV1;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.request.RegisterRequestV1;
+import com.bang_ggood.auth.dto.request.ResetPasswordRequest;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.dto.response.TokenExistResponse;
 import com.bang_ggood.auth.service.AuthService;
@@ -85,6 +88,25 @@ public class AuthController {
                 .header(HttpHeaders.SET_COOKIE, deletedRefreshTokenCookie.toString())
                 .build();
     }
+
+    @PostMapping("/v1/password-reset/send-code")
+    public ResponseEntity<Void> sendPasswordResetEmail(@Valid @RequestBody ForgotPasswordRequest request) {
+        authService.sendPasswordResetEmail(request);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/v1/password-reset/confirm")
+    public ResponseEntity<Void> confirmPasswordResetCode(@RequestBody ConfirmPasswordResetCodeRequest request) {
+        authService.confirmPasswordResetCode(request);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/v1/password-reset/new-password")
+    public ResponseEntity<Void> resetPassword(@RequestBody ResetPasswordRequest request) {
+        authService.resetPassword(request);
+        return ResponseEntity.noContent().build();
+    }
+
 
     @PostMapping("/accessToken/reissue")
     public ResponseEntity<Void> reissueAccessToken(HttpServletRequest httpServletRequest) {

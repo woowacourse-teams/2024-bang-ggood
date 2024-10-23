@@ -12,13 +12,14 @@ DROP TABLE IF EXISTS room CASCADE;
 DROP TABLE IF EXISTS highlight CASCADE;
 DROP TABLE IF EXISTS question CASCADE;
 DROP TABLE IF EXISTS category CASCADE;
+DROP TABLE IF EXISTS password_reset_code CASCADE;
 
 -- Create tables
 
 CREATE TABLE category
 (
-    id    INTEGER AUTO_INCREMENT PRIMARY KEY,
-    name  VARCHAR(255)
+    id   INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255)
 );
 
 CREATE TABLE question
@@ -106,7 +107,7 @@ CREATE TABLE checklist_question
 (
     id           BIGINT AUTO_INCREMENT PRIMARY KEY,
     question     VARCHAR(255) NOT NULL,
-    question_id  INTEGER NOT NULL,
+    question_id  INTEGER      NOT NULL,
     checklist_id BIGINT       NOT NULL,
     answer       VARCHAR(255),
     created_at   TIMESTAMP(6),
@@ -175,3 +176,12 @@ CREATE TABLE checklist_station
     FOREIGN KEY (checklist_id) REFERENCES checklist (id)
 );
 
+CREATE TABLE password_reset_code
+(
+    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
+    email       VARCHAR(255) NOT NULL,
+    code        VARCHAR(255) NOT NULL,
+    created_at  TIMESTAMP(6),
+    modified_at TIMESTAMP(6),
+    deleted     BOOLEAN
+);

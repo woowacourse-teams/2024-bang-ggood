@@ -18,6 +18,13 @@ class PasswordTest {
                 .doesNotThrowAnyException();
     }
 
+    @DisplayName("영어와 숫자를 모두 포함하고 6자 이상인 비밀번호 생성 성공")
+    @Test
+    void createPassword_containSpecialCharacter() {
+        assertThatCode(() -> new Password("password1234!@"))
+                .doesNotThrowAnyException();
+    }
+
     @DisplayName("비밀번호 생성 실패 : null일 경우")
     @Test
     void createPassword_null_exception() {

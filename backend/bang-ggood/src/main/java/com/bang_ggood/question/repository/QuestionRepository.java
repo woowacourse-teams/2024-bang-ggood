@@ -15,4 +15,6 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     List<Question> findAllByCategoryId(Integer id);
 
     List<Question> findByIsDefaultTrue();
+
+    List<Question> findAllByIdIn(List<Integer> questionIds);
 }

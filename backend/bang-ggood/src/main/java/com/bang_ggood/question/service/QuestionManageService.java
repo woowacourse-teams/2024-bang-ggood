@@ -89,10 +89,7 @@ public class QuestionManageService {
 
     @Transactional
     public void updateCustomChecklist(User user, CustomChecklistUpdateRequest request) {
-        List<Question> questions = request.questionIds().stream()
-                .map(questionService::readQuestion)
-                .toList(); // TODO 리팩토링
-
+        List<Question> questions = questionService.readAllQuestionByIds(request.questionIds());
         checklistQuestionService.updateCustomChecklist(user, questions);
     }
 }

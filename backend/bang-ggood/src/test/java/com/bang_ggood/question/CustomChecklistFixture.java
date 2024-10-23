@@ -30,7 +30,7 @@ public class CustomChecklistFixture {
     }
 
     public static CustomChecklistUpdateRequest CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED() {
-        return new CustomChecklistUpdateRequest(List.of(1, 1, 1));
+        return new CustomChecklistUpdateRequest(List.of(1, 1));
     }
 
     public static CustomChecklistUpdateRequest CUSTOM_CHECKLIST_UPDATE_REQUEST_INVALID() {

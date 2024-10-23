@@ -13,7 +13,6 @@ import com.bang_ggood.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -78,22 +77,7 @@ public class ChecklistQuestionService {
 
     @Transactional(readOnly = true)
     public List<ChecklistQuestion> readChecklistQuestions(Checklist checklist) {
-        List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findAllByChecklistId(checklist.getId());
-
-        List<ChecklistQuestion> result = new ArrayList<>();
-        for (ChecklistQuestion checklistQuestion : checklistQuestions) {
-            if (checklistQuestion.getQuestion() == null) {
-                ChecklistQuestion checklistQuestion1 = checklistQuestionRepository.updateChecklistQuestionId(
-                        checklistQuestion.getQuestionId(), checklistQuestion.getId());
-
-                result.add(checklistQuestion1);
-                continue;
-            }
-
-            result.add(checklistQuestion);
-        }
-
-        return result;
+        return checklistQuestionRepository.findAllByChecklistId(checklist.getId());
     }
 
     @Transactional(readOnly = true)

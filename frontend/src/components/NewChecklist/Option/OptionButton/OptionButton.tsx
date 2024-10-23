@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
+import { trackOption } from '@/service/amplitude/trackEvent';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 import { flexCenter, flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
@@ -11,7 +12,10 @@ const OptionButton = ({ option, isSelected }: { option: OptionWithIcon; isSelect
 
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);
 
-  const handleClick = isSelected ? () => selectedOptionActions.remove(id) : () => selectedOptionActions.add(id);
+  const handleClick = () => {
+    trackOption(option.displayName);
+    isSelected ? selectedOptionActions.remove(id) : selectedOptionActions.add(id);
+  };
 
   if (!option) {
     return null;

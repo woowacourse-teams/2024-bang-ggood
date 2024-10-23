@@ -4,6 +4,7 @@ import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import AnswerIcon from '@/components/Answer/AnswerIcon';
 import { ANSWER_OPTIONS } from '@/constants/answer';
 import useChecklistQuestionAnswer from '@/hooks/useChecklistQuestionAnswer';
+import { trackChecklistQuestion } from '@/service/amplitude/trackEvent';
 import { Answer, AnswerType } from '@/types/answer';
 
 interface Props {
@@ -18,6 +19,7 @@ const ChecklistQuestionAnswers = ({ questionId, answer }: Props) => {
   const handleClick = useCallback(
     (newAnswer: AnswerType) => {
       toggleAnswer({ categoryId: currentTabId, questionId: questionId, newAnswer });
+      trackChecklistQuestion(questionId);
     },
     [currentTabId, questionId, toggleAnswer],
   );

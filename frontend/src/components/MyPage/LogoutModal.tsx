@@ -22,7 +22,7 @@ const LogoutModal = ({ isOpen, onClose }: Props) => {
       <Modal.header>로그아웃하기</Modal.header>
       <Modal.body>
         <S.Contents>
-          <span>정말 로그하웃 하시겠습니다?</span>
+          <span>정말 로그아웃 하시겠습니까?</span>
         </S.Contents>
       </Modal.body>
       <Modal.footer>

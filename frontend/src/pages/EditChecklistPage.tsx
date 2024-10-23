@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from 'react';
+import { useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useStore } from 'zustand';
@@ -82,9 +82,7 @@ const EditChecklistPage = () => {
       />
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
         <ErrorBoundary fallback={<ChecklistTabFallback />}>
-          <Suspense>
-            <EditChecklistTab checklistId={checklistId} />
-          </Suspense>
+          <EditChecklistTab checklistId={checklistId} />
         </ErrorBoundary>
         <ChecklistContent />
       </TabProvider>

@@ -48,7 +48,7 @@ const NewChecklistPage = () => {
     roomInfoNonValidatedActions.resetAll();
     checklistActions.reset();
     selectedOptionActions.reset();
-    resetShowTip(); // 옵션의 팁박스 다시표시
+    resetShowTip();
     navigate(ROUTE_PATH.checklistList);
   };
 
@@ -77,13 +77,11 @@ const NewChecklistPage = () => {
         </ErrorBoundary>
         <ChecklistContent />
       </TabProvider>
-
       {isMemoModalOpen ? (
         <MemoModal isModalOpen={isMemoModalOpen} modalClose={closeMemoModal} />
       ) : (
         <MemoButton onClick={openMemoModal} />
       )}
-
       <SubmitModalWithSummary
         isModalOpen={isSubmitModalOpen}
         modalClose={closeSummaryModal}
@@ -91,7 +89,6 @@ const NewChecklistPage = () => {
         onError={openLoginModal}
         mutateType="add"
       />
-
       <AlertModal
         title={
           <div>
@@ -105,7 +102,6 @@ const NewChecklistPage = () => {
         handleApprove={handleNotCompleteChecklist}
         approveButtonName="나가기"
       />
-
       <LoginModal isModalOpen={isLoginModalOpen} modalClose={closeLoginModal} />
     </>
   );

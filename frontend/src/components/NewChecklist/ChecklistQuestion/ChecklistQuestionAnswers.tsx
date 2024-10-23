@@ -10,11 +10,12 @@ import { Answer, AnswerType } from '@/types/answer';
 interface Props {
   questionId: number;
   answer: AnswerType;
+  title: string;
 }
 
-const ChecklistQuestionAnswers = ({ questionId, answer }: Props) => {
+const ChecklistQuestionAnswers = ({ questionId, answer, title }: Props) => {
   const { currentTabId } = useTabContext();
-  const { toggleAnswer } = useChecklistQuestionAnswer();
+  const { toggleAnswer, statusMessage } = useChecklistQuestionAnswer();
 
   const handleClick = useCallback(
     (newAnswer: AnswerType) => {
@@ -40,6 +41,11 @@ const ChecklistQuestionAnswers = ({ questionId, answer }: Props) => {
           />
         );
       })}
+      {statusMessage && (
+        <div className="visually-hidden" role="alert">
+          {title + statusMessage}
+        </div>
+      )}
     </>
   );
 };

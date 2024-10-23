@@ -1,7 +1,7 @@
 import '@/styles/category-sprite-image.css';
 
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import { trackTabButton } from '@/service/amplitude/trackEvent';
 import { flexCenter, title3 } from '@/styles/common';
@@ -11,21 +11,33 @@ interface Props extends Tab {
   onMoveTab: (id: number) => void;
   active: boolean;
   isCompleted?: boolean;
+  tabIndex?: number;
 }
 
-const TabButton = ({ id, onMoveTab, name, active, className, isCompleted }: Props) => {
-  const handleClickTab = () => {
-    trackTabButton(name);
-    onMoveTab(id);
-  };
+const TabButton = forwardRef<HTMLDivElement, Props>(
+  ({ id, onMoveTab, name, active, className, isCompleted, ...rest }, ref) => {
+    const handleClickTab = () => {
+      trackTabButton(name);
+      onMoveTab(id);
+    };
 
-  return (
-    <S.Container className={'tab'} key={id} onClick={handleClickTab} active={active}>
-      <S.TextBox className={className && `sprite-icon ${className}`}>{name}</S.TextBox>
-      {isCompleted === false && <S.UncompletedIndicator />}
-    </S.Container>
-  );
-};
+    return (
+      <S.Container
+        className={`tab ${className || ''}`}
+        onClick={handleClickTab}
+        active={active}
+        role="tab"
+        ref={ref}
+        {...rest}
+      >
+        <S.TextBox className={className ? `sprite-icon ${className}` : ''}>{name}</S.TextBox>
+        {isCompleted === false && <S.UncompletedIndicator />}
+      </S.Container>
+    );
+  },
+);
+
+TabButton.displayName = 'TabButton';
 
 export default React.memo(TabButton);
 

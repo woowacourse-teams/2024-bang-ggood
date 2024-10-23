@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import useChecklistStore from '@/store/useChecklistStore';
 import { AnswerType } from '@/types/answer';
 import { CategoryAndQuestion } from '@/types/checklist';
@@ -12,17 +14,28 @@ interface UpdateAnswerProps extends CategoryAndQuestion {
 const useChecklistQuestionAnswer = () => {
   const checklistActions = useChecklistStore(store => store.actions);
   const checklistCategoryQnA = useChecklistStore(store => store.checklistCategoryQnA);
+  const [statusMessage, setStatusMessage] = useState('');
 
   const toggleAnswer = ({ categoryId, questionId, newAnswer }: UpdateAnswerProps) => {
     const { category } = checklistActions.getCategoryAndQuestion({ categoryId, questionId });
 
     const updatedAnswer = {
       ...category,
-      questions: category.questions.map(question =>
-        question.questionId === questionId
-          ? { ...question, answer: question.answer === newAnswer ? 'NONE' : newAnswer }
-          : question,
-      ),
+      questions: category.questions.map(question => {
+        if (question.questionId !== questionId) return question;
+
+        const isAnswerSelected = question.answer === newAnswer;
+        const updatedAnswer = isAnswerSelected ? 'NONE' : newAnswer;
+
+        const ariaLabel = `${updatedAnswer === 'NONE' ? '선택이 해제되었습니다' : updatedAnswer === 'BAD' ? '싫어요가 선택되었습니다.' : '좋아요가 선택되었습니다.'}`;
+
+        setStatusMessage(ariaLabel);
+
+        return {
+          ...question,
+          answer: updatedAnswer,
+        };
+      }),
     };
 
     const newCategoryQnA = checklistCategoryQnA.map(category =>
@@ -32,7 +45,7 @@ const useChecklistQuestionAnswer = () => {
     checklistActions.set(newCategoryQnA);
   };
 
-  return { toggleAnswer };
+  return { toggleAnswer, statusMessage };
 };
 
 export default useChecklistQuestionAnswer;

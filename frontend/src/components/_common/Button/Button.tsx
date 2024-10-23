@@ -8,6 +8,7 @@ import theme from '@/styles/theme';
 
 type ButtonSize = 'xSmall' | 'small' | 'medium' | 'full';
 type ColorOption = 'light' | 'dark' | 'disabled';
+type ButtonType = 'button' | 'submit' | 'reset';
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   size?: ButtonSize;
@@ -18,6 +19,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   disabled?: boolean;
   Icon?: FunctionComponent<SVGProps<SVGSVGElement>>;
   id?: string;
+  type?: ButtonType;
 }
 
 const Button = ({
@@ -27,6 +29,7 @@ const Button = ({
   isSquare = false,
   onClick = () => {},
   disabled,
+  type = 'button',
   id,
   Icon,
   ...rest
@@ -49,6 +52,7 @@ const Button = ({
       disabled={disabled}
       aria-label={label}
       tabIndex={1}
+      type={type}
     >
       <FlexBox.Horizontal>
         {Icon && <Icon aria-hidden="true" />}

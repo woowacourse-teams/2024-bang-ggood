@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import useChecklistQuestionSelectStore from '@/store/useChecklistQuestionSelectStore';
 import { CategoryAndQuestion } from '@/types/checklist';
 
@@ -7,6 +9,7 @@ export interface UpdateCheckProps extends CategoryAndQuestion {
 
 const useChecklistQuestionSelect = () => {
   const { setChecklistAllQuestionList, checklistAllQuestionList } = useChecklistQuestionSelectStore();
+  const [statusMessage, setStatusMessage] = useState('');
 
   const toggleQuestionSelect = ({ categoryId, questionId, isSelected }: UpdateCheckProps) => {
     const targetCategory = checklistAllQuestionList.find(category => category.categoryId === categoryId);
@@ -23,11 +26,13 @@ const useChecklistQuestionSelect = () => {
         category.categoryId === categoryId ? updatedCategory : category,
       );
 
+      setStatusMessage(isSelected ? '질문이 선택되었습니다' : '질문 선택이 취소되었습니다.');
+
       setChecklistAllQuestionList(newCategories);
     }
   };
 
-  return { toggleQuestionSelect };
+  return { toggleQuestionSelect, statusMessage };
 };
 
 export default useChecklistQuestionSelect;

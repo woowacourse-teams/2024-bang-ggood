@@ -9,7 +9,7 @@ import { ChecklistQuestionWithIsSelected } from '@/types/checklist';
 
 const QuestionSelectCard = ({ question }: { question: ChecklistQuestionWithIsSelected }) => {
   const { title, subtitle, isSelected, questionId } = question;
-  const { toggleQuestionSelect } = useChecklistQuestionSelect();
+  const { toggleQuestionSelect, statusMessage } = useChecklistQuestionSelect();
   const { currentTabId: categoryId } = useTabContext();
 
   const handleCheckQuestion = () => {
@@ -17,17 +17,29 @@ const QuestionSelectCard = ({ question }: { question: ChecklistQuestionWithIsSel
   };
 
   return (
-    <S.Container isChecked={isSelected} onClick={handleCheckQuestion} className="question">
-      <S.FlexColumn>
-        <FlexBox.Vertical>
-          <S.Title>{title}</S.Title>
-          {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
-        </FlexBox.Vertical>
-      </S.FlexColumn>
-      <S.CheckBoxContainer>
-        <Checkbox iconType="plus" isChecked={isSelected} onClick={handleCheckQuestion} />
-      </S.CheckBoxContainer>
-    </S.Container>
+    <>
+      <S.Container
+        isChecked={isSelected}
+        onClick={handleCheckQuestion}
+        aria-label={`${title} ${subtitle ?? ''} 해당 질문을 선택하려면 두번 탭하세요.`}
+        tabIndex={0}
+      >
+        <S.FlexColumn aria-hidden="true" tabIndex={-1}>
+          <FlexBox.Vertical>
+            <S.Title>{title}</S.Title>
+            {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
+          </FlexBox.Vertical>
+        </S.FlexColumn>
+        <S.CheckBoxContainer aria-hidden="true" tabIndex={-1}>
+          <Checkbox iconType="plus" isChecked={isSelected} onClick={handleCheckQuestion} />
+        </S.CheckBoxContainer>
+      </S.Container>
+      {statusMessage && (
+        <div className="visually-hidden" role="alert">
+          {title + statusMessage}
+        </div>
+      )}
+    </>
   );
 };
 

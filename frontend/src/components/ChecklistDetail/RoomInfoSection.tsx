@@ -17,6 +17,7 @@ import AddressMap from '@/components/_common/Map/AddressMap';
 import SubwayStations from '@/components/_common/Subway/SubwayStations';
 import { IncludedMaintenancesData } from '@/constants/roomInfo';
 import { flexColumn, flexRow, flexSpaceBetween, title2 } from '@/styles/common';
+import { ChecklistInfo } from '@/types/checklist';
 import { Option } from '@/types/option';
 import { RoomInfo } from '@/types/room';
 import { SubwayStation } from '@/types/subway';
@@ -29,9 +30,10 @@ interface Props {
   checklistId: number;
   isLiked: boolean;
   nearSubways: SubwayStation[];
+  checklist: ChecklistInfo;
 }
 
-const RoomInfoSection = ({ nearSubways, room, options, checklistId, isLiked }: Props) => {
+const RoomInfoSection = ({ checklist, nearSubways, room, options, checklistId, isLiked }: Props) => {
   const {
     roomName,
     deposit,
@@ -95,7 +97,7 @@ const RoomInfoSection = ({ nearSubways, room, options, checklistId, isLiked }: P
       </S.Row>
       <S.Row>
         <Subway aria-label="가까운 지하철" />
-        <SubwayStations stations={nearSubways} />
+        <SubwayStations stations={nearSubways} checklist={checklist} />
       </S.Row>
       <S.GapBox>
         <S.Row>

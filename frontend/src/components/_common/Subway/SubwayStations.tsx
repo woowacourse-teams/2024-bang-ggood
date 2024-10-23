@@ -1,18 +1,32 @@
-import FlexBox from '@/components/_common/FlexBox/FlexBox';
-import FormField from '@/components/_common/FormField/FormField';
+import styled from '@emotion/styled';
+
 import SubwayStationItem from '@/components/_common/Subway/SubwayStationItem';
+import { flexColumn } from '@/styles/common';
+import { ChecklistInfo } from '@/types/checklist';
 import { SubwayStation } from '@/types/subway';
 
-const SubwayStations = ({ stations }: { stations: SubwayStation[] }) => {
+interface Props {
+  checklist?: ChecklistInfo;
+  stations: SubwayStation[];
+}
+
+const SubwayStations = ({ stations }: Props) => {
   return (
-    <FlexBox.Vertical>
-      {stations?.length ? (
-        stations?.map(station => <SubwayStationItem key={station.stationName} station={station} />)
+    <>
+      {stations.length ? (
+        <S.Box>{stations?.map(station => <SubwayStationItem station={station} key={station.stationName} />)}</S.Box>
       ) : (
-        <FormField.TextBox text={'보신 방과 가까운 지하철역을 찾아드릴게요.'} />
+        <span>{'보신 방과 가까운 지하철역을 찾아드릴게요.'}</span>
       )}
-    </FlexBox.Vertical>
+    </>
   );
 };
 
 export default SubwayStations;
+
+const S = {
+  Box: styled.div`
+    ${flexColumn};
+    gap: 1rem;
+  `,
+};

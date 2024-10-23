@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useStore } from 'zustand';
 
+import APIError from '@/apis/error/APIError';
 import { TOAST_MESSAGE } from '@/constants/messages/message';
 import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
 import usePutChecklistQuery from '@/hooks/query/usePutChecklistQuery';
@@ -64,7 +65,8 @@ const useMutateChecklist = (
           if (location) navigate(location);
         },
         onError: error => {
-          if (error.name === 'AUTHENTICATION_FAILED') {
+          if (!(error instanceof APIError)) return;
+          if (error.errorCode === 'AUTH_TOKEN_EMPTY') {
             if (onErrorCallback) {
               onErrorCallback();
             }
@@ -87,7 +89,8 @@ const useMutateChecklist = (
           if (location) navigate(location);
         },
         onError: error => {
-          if (error.name === 'AUTHENTICATION_FAILED') {
+          if (!(error instanceof APIError)) return;
+          if (error.errorCode === 'AUTH_TOKEN_EMPTY') {
             if (onErrorCallback) {
               onErrorCallback();
             }

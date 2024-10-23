@@ -137,7 +137,7 @@ class AuthServiceTest extends IntegrationTestSupport {
             sum += response.questions().size();
         }
 
-        assertThat(sum).isEqualTo(Question.findDefaultQuestions().size());
+        assertThat(sum).isEqualTo(questionService.findDefaultQuestions().size());
     }
 
     @DisplayName("회원 가입 성공 : 회원 가입시 디폴트 체크리스트를 추가")

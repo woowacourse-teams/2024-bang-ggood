@@ -80,10 +80,12 @@ const S = {
     }
   `,
   BasicLoginButton: styled(Button)`
+    height: 4.5rem;
+
     background-color: ${({ theme }) => theme.palette.green500};
-    border-radius: 1rem;
 
     color: ${({ theme }) => theme.palette.white};
+    border-radius: 0.8rem;
   `,
 
   CheckRelativeText: styled.span`
@@ -107,8 +109,9 @@ const S = {
     }
   `,
   Button: styled(Button)`
-    height: 5rem;
-    border-radius: 1rem;
+    border-radius: 0.8rem;
+
+    height: 4.5rem;
   `,
   LogoBox: styled.div`
     width: 100%;

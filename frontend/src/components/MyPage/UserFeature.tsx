@@ -6,10 +6,13 @@ import DeleteAccountModal from '@/components/MyPage/DeleteAccountModal';
 import LogoutModal from '@/components/MyPage/LogoutModal';
 import { QUERY_KEYS } from '@/constants/queryKeys';
 import { VOC_URL } from '@/constants/VoC';
+import useUserQuery from '@/hooks/query/useUserQuery';
 import useModal from '@/hooks/useModal';
 import { boxShadowSpread, flexColumn, flexRow, flexSpaceBetween, title4 } from '@/styles/common';
 
 const UserFeature = () => {
+  useUserQuery();
+
   const queryClient = useQueryClient();
   const checklist = queryClient.getQueryData([QUERY_KEYS.CHECKLIST_LIST]);
 

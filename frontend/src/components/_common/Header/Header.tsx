@@ -19,9 +19,9 @@ const HeaderWrapper = ({ left, right, center, isTransparent = false, ...rest }: 
     <>
       <S.Wrapper {...rest} isTransparent={isTransparent}>
         <S.FlexBox>
-          <S.Left>{left ? left : <div />}</S.Left>
-          <S.Center>{center ? center : <div />}</S.Center>
-          <S.Right>{right ? right : <div />}</S.Right>
+          {left && <S.Left>{left}</S.Left>}
+          {center && <S.Center>{center}</S.Center>}
+          {right && <S.Right>{right}</S.Right>}
         </S.FlexBox>
       </S.Wrapper>
       {!isTransparent && <S.EmptyBox />}

@@ -49,6 +49,8 @@ const useChecklistStore = create<ChecklistState>()(
          * 받은 질문들을 바탕으로 answer 를 추가한 답안지 객체를 생성합니다.
          */
         initAnswerSheetIfEmpty: (questions: ChecklistCategory[]) => {
+          if (get().checklistCategoryQnA.length !== 0) return;
+
           const checklistCategoryQnA: ChecklistCategoryWithAnswer[] = questions.map(category => ({
             categoryId: category.categoryId,
             categoryName: category.categoryName,

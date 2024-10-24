@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
 
 import ChecklistTabFallback from '@/components/_common/errorBoundary/ChecklistTabFallback';
 import Tabs from '@/components/_common/Tabs/Tabs';
@@ -7,19 +6,21 @@ import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery
 import useTabs from '@/hooks/useTabs';
 import useChecklistStore from '@/store/useChecklistStore';
 
-const EditChecklistTab = () => {
-  const { checklistId } = useParams();
-  if (!checklistId) throw new Error('잘못된 체크리스트 입니다.');
+interface Props {
+  checklistId: string;
+}
+
+const EditChecklistTab = ({ checklistId }: Props) => {
   const { data: checklist, isFetched, isLoading } = useGetChecklistDetailQuery(checklistId);
   const checklistStore = useChecklistStore(state => state.checklistCategoryQnA);
   const { getTabsForChecklist } = useTabs();
 
   const categoryTabs = useMemo(() => {
-    if (isFetched && checklist) {
+    if (isFetched && checklist && checklistStore.length) {
       return getTabsForChecklist(checklist.categories);
     }
     return [];
-  }, [isFetched, getTabsForChecklist, checklistStore, checklistId]);
+  }, [isFetched, getTabsForChecklist, checklistStore]);
 
   if (isLoading) return <ChecklistTabFallback />;
 

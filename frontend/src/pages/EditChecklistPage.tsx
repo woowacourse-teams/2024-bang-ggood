@@ -82,9 +82,9 @@ const EditChecklistPage = () => {
       />
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
         <ErrorBoundary fallback={<ChecklistTabFallback />}>
-          <EditChecklistTab />
+          <EditChecklistTab checklistId={checklistId} />
         </ErrorBoundary>
-        <ChecklistContent />
+        {checklist && <ChecklistContent />}
       </TabProvider>
 
       {/* 메모 모달 */}

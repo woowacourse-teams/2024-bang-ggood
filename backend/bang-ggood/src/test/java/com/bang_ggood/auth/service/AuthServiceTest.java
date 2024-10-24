@@ -300,6 +300,34 @@ class AuthServiceTest extends IntegrationTestSupport {
         assertThat(response.checklists()).hasSize(1);
     }
 
+    @DisplayName("로그아웃 성공")
+    @Test
+    void logout() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        String accessToken = jwtTokenProvider.createAccessToken(user);
+        String refreshToken = jwtTokenProvider.createRefreshToken(user);
+
+        // when & then
+        assertThatCode(() -> authService.logout(accessToken, refreshToken))
+                .doesNotThrowAnyException();
+    }
+
+    @DisplayName("로그아웃 실패 : accessToken 유저와 refreshToken 유저가 다른 경우")
+    @Test
+    void logout_userMismatch_exception() {
+        // given
+        User user1 = userRepository.save(UserFixture.USER1());
+        User user2 = userRepository.save(UserFixture.USER2());
+        String accessToken = jwtTokenProvider.createAccessToken(user1);
+        String refreshToken = jwtTokenProvider.createRefreshToken(user2);
+
+        // when & then
+        assertThatThrownBy(() -> authService.logout(accessToken, refreshToken))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.AUTHENTICATION_TOKEN_USER_MISMATCH.getMessage());
+    }
+
     @DisplayName("게스트 유저 할당 실패 : 게스트 유저의 수가 2명이면 예외를 발생")
     @Test
     void assignGuestUser_UnexpectedGuestUserExist() {
@@ -333,22 +361,6 @@ class AuthServiceTest extends IntegrationTestSupport {
 
         // then
         assertThat(assignedGuestUser).isEqualTo(guestUser);
-    }
-
-    @DisplayName("로그아웃 실패 : 다른 유저의 토큰인 경우")
-    @Test
-    void logout_invalid_ownership_exception() {
-        // given
-        String accessToken = jwtTokenProvider.createAccessToken(UserFixture.USER1_WITH_ID());
-        String refreshToken = jwtTokenProvider.createRefreshToken(UserFixture.USER1_WITH_ID());
-
-        //when & then
-        assertThatThrownBy(() -> authService.logout(
-                accessToken,
-                refreshToken,
-                UserFixture.USER2_WITH_ID()))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER.getMessage());
     }
 
     @DisplayName("액세스 토큰 재발행 성공")

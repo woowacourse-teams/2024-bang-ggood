@@ -48,11 +48,10 @@ export interface ChecklistPreview {
   address: string;
   deposit: number;
   rent: number;
+  station: SubwayStation;
   createdAt: string;
   summary: string;
   isLiked: boolean;
-  station: string;
-  walkingTime: number;
 }
 
 // 체크리스트 디테일

@@ -69,6 +69,11 @@ public class ChecklistController {
         return ResponseEntity.ok(checklistManageService.readLikedChecklistsPreview(user));
     }
 
+    @GetMapping("/v1/checklists/like")
+    public ResponseEntity<ChecklistsPreviewResponseV1> readLikedChecklistsPreviewV1(@AuthRequiredPrincipal User user) {
+        return ResponseEntity.ok(checklistManageService.readLikedChecklistsPreviewV1(user));
+    }
+
     @PutMapping("/checklists/{id}")
     public ResponseEntity<Void> updateChecklistById(
             @AuthRequiredPrincipal User user,

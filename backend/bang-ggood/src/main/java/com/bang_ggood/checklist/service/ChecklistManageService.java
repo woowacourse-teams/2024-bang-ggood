@@ -187,6 +187,15 @@ public class ChecklistManageService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    public ChecklistsPreviewResponseV1 readLikedChecklistsPreviewV1(User user) {
+        List<Checklist> likedChecklists = checklistService.readLikedChecklistsPreview(user);
+        List<ChecklistPreviewResponseV1> responses = likedChecklists.stream()
+                .map(this::mapToChecklistPreviewV1)
+                .toList();
+        return ChecklistsPreviewResponseV1.from(responses);
+    }
+
     @Transactional
     public void deleteChecklistById(User user, Long id) {
         Checklist checklist = checklistService.readChecklist(user, id);

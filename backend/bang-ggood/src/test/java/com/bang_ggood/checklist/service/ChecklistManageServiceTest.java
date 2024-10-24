@@ -189,7 +189,7 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         assertThat(previewResponse2.checklistId()).isEqualTo(checklistId1);
     }
 
-    @DisplayName("좋아요된 체크리스트 리스트 조회 성공")
+    @DisplayName("좋아요된 체크리스트 리스트 최신순으로 조회 성공")
     @Test
     void readLikedChecklistsPreview() {
         //given
@@ -215,8 +215,8 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         //then
         assertAll(
                 () -> assertThat(response.checklists()).hasSize(EXPECTED_LIKE_COUNT),
-                () -> assertThat(response.checklists().get(0).checklistId()).isEqualTo(checklist1.getId()),
-                () -> assertThat(response.checklists().get(1).checklistId()).isEqualTo(checklist2.getId())
+                () -> assertThat(response.checklists().get(0).checklistId()).isEqualTo(checklist2.getId()),
+                () -> assertThat(response.checklists().get(1).checklistId()).isEqualTo(checklist1.getId())
         );
     }
 

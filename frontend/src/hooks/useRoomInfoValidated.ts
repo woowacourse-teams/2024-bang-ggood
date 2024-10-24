@@ -19,7 +19,7 @@ const validators: Record<keyof ValidatedRoomInfo, Validator[]> = {
   deposit: [isNumericValidator, nonNegativeValidator],
   rent: [isNumericValidator, nonNegativeValidator],
   maintenanceFee: [isNumericValidator, nonNegativeValidator],
-  contractTerm: [isNumericValidator, nonNegativeValidator],
+  contractTerm: [isNumericValidator, nonNegativeValidator, inRangeValidator(0, 10000)],
   type: [],
   size: [isNumericValidator],
   floor: [isIntegerValidator, positiveValidator],

@@ -8,16 +8,9 @@ interface Props {
 }
 
 const LikeButton = ({ isLiked = false, checklistId }: Props) => {
-  // const [localIsLiked, setLocalIsLiked] = useState(isLiked);
-
   const { mutate: toggleLike, variables, isPending } = useToggleLikeQuery();
-  // const debouncedIsLiked = useDebounce({ value: localIsLiked, delay: 200 });
 
   const handleClick = () => toggleLike({ checklistId, isLiked: !isLiked });
-  // useEffect(() => {
-  //   // if (debouncedIsLiked !== isLiked) {
-  //   // }
-  // }, [debouncedIsLiked]);
 
   const handleClickLike = (e: React.MouseEvent<SVGSVGElement>) => {
     handleClick();

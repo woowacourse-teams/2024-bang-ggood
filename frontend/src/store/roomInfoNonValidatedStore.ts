@@ -1,4 +1,5 @@
 import { createStore } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 import { DEFAULT_POSITION } from '@/constants/map';
 import { Position } from '@/types/address';
@@ -21,12 +22,23 @@ const defaultStates = {
   position: DEFAULT_POSITION,
 };
 
-const roomInfoNonValidatedStore = createStore<States & { actions: Actions }>()(set => ({
-  ...defaultStates,
-  actions: {
-    set: (name, value) => set({ [name]: value }),
-    resetAll: () => set(defaultStates),
-  },
-}));
+const roomInfoNonValidatedStore = createStore<States & { actions: Actions }>()(
+  persist(
+    set => ({
+      ...defaultStates,
+      actions: {
+        set: (name, value) => set({ [name]: value }),
+        resetAll: () => set(defaultStates),
+      },
+    }),
+    {
+      name: 'roomInfo-nonvalidated',
+      partialize: store => {
+        const { actions: _, ...state } = store;
+        return { ...state };
+      },
+    },
+  ),
+);
 
 export default roomInfoNonValidatedStore;

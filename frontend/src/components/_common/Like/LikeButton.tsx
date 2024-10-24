@@ -14,7 +14,7 @@ const LikeButton = ({ isLiked = false, checklistId }: Props) => {
   const [localIsLiked, setLocalIsLiked] = useState(isLiked);
 
   const { mutate: toggleLike, variables, isPending } = useToggleLikeQuery();
-  const debouncedIsLiked = useDebounce({ value: localIsLiked, delay: 500 });
+  const debouncedIsLiked = useDebounce({ value: localIsLiked, delay: 200 });
 
   useEffect(() => {
     if (debouncedIsLiked !== isLiked) {
@@ -41,7 +41,6 @@ const LikeButton = ({ isLiked = false, checklistId }: Props) => {
       onClick={handleClickLike}
       fill={fill ? theme.palette.red500 : 'NONE'}
       stroke={fill ? theme.palette.red500 : theme.palette.grey500}
-      tabIndex={1}
       aria-label="좋아요 버튼"
     />
   );

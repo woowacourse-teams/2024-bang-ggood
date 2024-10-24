@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 import { PencilIcon } from '@/assets/assets';
+import Button from '@/components/_common/Button/Button';
 import { boxShadow, flexCenter, flexRow } from '@/styles/common';
 
 interface Props {
@@ -12,9 +13,9 @@ const CustomBanner = ({ onClick }: Props) => {
     <S.Banner onClick={onClick}>
       <S.Wrapper>
         <PencilIcon width={30} height={30} aria-hidden="true" />
-        <S.Title>체크리스트 질문 선택하기</S.Title>
+        <S.Title>체크리스트 질문 템플릿</S.Title>
       </S.Wrapper>
-      <S.Button aria-label="체크리스트 질문을 편집하려면 이 버튼을 누르세요.">편집하기</S.Button>
+      <S.Button aria-label="체크리스트 질문 템플릿을 편집하려면 이 버튼을 누르세요." label={'수정하기'} />
     </S.Banner>
   );
 };
@@ -46,15 +47,15 @@ const S = {
   Title: styled.span`
     ${flexCenter}
   `,
-  Button: styled.button`
-    padding: 0.4rem 0.8rem;
+  Button: styled(Button)`
+    padding: 0.6rem 1rem;
 
     background-color: ${({ theme }) => theme.palette.green500};
 
     color: ${({ theme }) => theme.palette.white};
     border-radius: 0.8rem;
 
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    font-size: ${({ theme }) => theme.text.size.small};
 
     cursor: pointer;
   `,

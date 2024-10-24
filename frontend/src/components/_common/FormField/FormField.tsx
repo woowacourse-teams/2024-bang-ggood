@@ -16,7 +16,6 @@ interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
 
 const FormFieldWrapper = styled.div<{ rowGap?: string }>`
   ${flexColumn}
-  background-color: white;
 
   flex: auto;
   row-gap: ${({ rowGap }) => (rowGap ? rowGap : '1rem')};
@@ -64,7 +63,7 @@ const S = {
   `,
   TextBox: styled.div`
     width: 100%;
-    height: 3rem;
+    height: 2rem;
     padding: 0.6rem 1rem;
 
     box-sizing: border-box;

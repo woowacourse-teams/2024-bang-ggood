@@ -47,9 +47,8 @@ const S = {
     z-index: ${({ theme }) => theme.zIndex.TABS};
 
     ${flexCenter};
-    margin-top: 1rem;
     padding: 1rem 1.6rem;
-    border: ${({ active, theme }) => (active ? `.3rem solid ${theme.palette.yellow400}` : null)};
+    border: ${({ active, theme }) => `.3rem solid ${active ? theme.palette.yellow400 : theme.palette.background}`};
 
     background-color: ${({ theme, active }) => (active ? theme.palette.yellow100 : theme.palette.background)};
 

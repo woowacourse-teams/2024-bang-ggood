@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { useMemo } from 'react';
 
 import ChecklistTabFallback from '@/components/_common/errorBoundary/ChecklistTabFallback';
@@ -24,8 +25,14 @@ const NewChecklistTab = () => {
   return (
     <FlexBox.Vertical gap={'1rem'}>
       <Tabs tabList={categoryTabs} />
+      <S.Box />
     </FlexBox.Vertical>
   );
 };
 
+const S = {
+  Box: styled.div`
+    height: 0.5rem;
+  `,
+};
 export default NewChecklistTab;

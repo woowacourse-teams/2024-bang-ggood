@@ -39,6 +39,6 @@ const S = {
     padding: 1.8rem 4.8rem;
     border-radius: 0.8rem;
 
-    background-color: ${({ theme }) => theme.palette.grey50};
+    background-color: ${({ theme }) => theme.palette.grey100};
   `,
 };

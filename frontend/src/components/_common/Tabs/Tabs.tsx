@@ -76,7 +76,6 @@ export default Tabs;
 const S = {
   VisibleContainer: styled.nav`
     max-width: 60rem;
-    height: 7rem;
   `,
   EmptyBox: styled.div`
     height: 5.4rem;

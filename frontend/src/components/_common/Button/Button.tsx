@@ -75,7 +75,7 @@ const S = {
   `,
   Text: styled.span<{ size: ButtonSize }>`
     ${flexCenter}
-    min-width: ${({ size }) => size === 'full' && 8}rem;
+    min-width: ${({ size }) => (size === 'full' ? '10rem' : '3rem')};
   `,
 };
 
@@ -119,16 +119,16 @@ const ColorStyles = {
 
 const sizeStyles = {
   xSmall: css`
-    padding: 0.8rem 1.5rem;
+    padding: 0.8rem 1.2rem;
     ${title4}
     min-width: 7rem;
   `,
   small: css`
-    padding: 1rem 2rem;
+    padding: 1rem 1.6rem;
     ${title3}
   `,
   medium: css`
-    padding: 1rem 4rem;
+    padding: 1rem 1.8rem;
     ${title4}
   `,
   full: css`

@@ -20,7 +20,7 @@ const HeaderWrapper = ({ left, right, center, isTransparent = false, ...rest }: 
       <S.Wrapper {...rest} isTransparent={isTransparent}>
         <S.FlexBox>
           {left && <S.Left>{left}</S.Left>}
-          {center && <S.Center>{center}</S.Center>}
+          <S.Center>{center && <div>{center}</div>}</S.Center>
           {right && <S.Right>{right}</S.Right>}
         </S.FlexBox>
       </S.Wrapper>
@@ -39,7 +39,7 @@ const S = {
     z-index: ${({ theme }) => theme.zIndex.HEADER};
     width: 100%;
     height: ${HEADER_SIZE}rem;
-    padding: 2rem 1.6rem 1.2rem;
+    padding: 1rem 0.8rem;
 
     background-color: ${({ theme, isTransparent }) => (isTransparent ? 'rgba(255,255,255, 0.3)' : theme.palette.white)};
 
@@ -52,6 +52,7 @@ const S = {
     display: flex;
     flex-direction: row;
     width: 100%;
+    height: 100%;
   `,
   Left: styled.div`
     display: flex;

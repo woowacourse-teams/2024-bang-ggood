@@ -35,7 +35,6 @@ import com.bang_ggood.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.filter.CharacterEncodingFilter;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -231,15 +230,12 @@ public class ChecklistManageService {
 
     private SubwayStationResponse readNearstStation(Checklist checklist) {
         List<ChecklistStation> checklistStations = checklistStationService.readChecklistStationsByChecklist(checklist);
-        if (checklistStations.isEmpty()) {
-            return null;
-        }
-
         List<SubwayStationResponse> stationResponses = checklistStations.stream()
                 .map(SubwayStationResponse::from)
                 .toList();
         SubwayStationResponses subwayStationResponses = SubwayStationResponses.from(stationResponses);
-        return subwayStationResponses.getStations().get(0);
+
+        return subwayStationResponses.getNearestStation();
     }
 
     @Transactional

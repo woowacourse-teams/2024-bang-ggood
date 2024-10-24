@@ -74,6 +74,7 @@ const NewChecklistPage = () => {
         </ErrorBoundary>
         <ChecklistContent />
       </TabProvider>
+
       {isMemoModalOpen ? (
         <MemoModal isModalOpen={isMemoModalOpen} modalClose={closeMemoModal} />
       ) : (

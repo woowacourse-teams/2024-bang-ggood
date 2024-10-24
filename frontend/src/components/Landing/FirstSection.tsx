@@ -3,10 +3,11 @@ import { useNavigate } from 'react-router-dom';
 
 import { ArrowDownSmall, BangBangIcon, BangGgoodTextIcon, SmallCheck } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
-import KakaoLoginButton from '@/components/_common/KakaoLogin/KakaoLoginButton';
+import EmailLoginButton from '@/components/_common/LoginButton/EmailLoginButton';
+import KakaoLoginButton from '@/components/_common/LoginButton/KakaoLoginButton';
 import CS from '@/components/Landing/style';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { trackBasicLoginButton, trackGuestLoginButton } from '@/service/amplitude/trackEvent';
+import { trackGuestLoginButton } from '@/service/amplitude/trackEvent';
 import { moveUpDown } from '@/styles/animation';
 import { flexCenter, flexColumn } from '@/styles/common';
 
@@ -38,16 +39,8 @@ const FirstSection = () => {
       </S.LogoTextBox>
       <CS.EmptyBox mobileHeight="0rem" height="0.5rem" />
       <S.ButtonWrapper>
-        <S.BasicLoginButton
-          label="이메일로 로그인하기"
-          size="full"
-          isSquare
-          onClick={() => {
-            navigate(ROUTE_PATH.signIn);
-            trackBasicLoginButton();
-          }}
-        />
         <KakaoLoginButton />
+        <EmailLoginButton />
         <S.Button
           label="방끗 둘러보기"
           size="full"
@@ -79,13 +72,6 @@ const S = {
       gap: 1rem;
     }
   `,
-  BasicLoginButton: styled(Button)`
-    background-color: ${({ theme }) => theme.palette.green500};
-    border-radius: 1rem;
-
-    color: ${({ theme }) => theme.palette.white};
-  `,
-
   CheckRelativeText: styled.span`
     position: relative;
   `,

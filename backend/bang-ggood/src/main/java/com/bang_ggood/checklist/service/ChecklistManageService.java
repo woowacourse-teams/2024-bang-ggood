@@ -4,7 +4,9 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponseV1;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponseV1;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponseV1;
 import com.bang_ggood.like.service.ChecklistLikeService;
@@ -34,6 +36,7 @@ import com.bang_ggood.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -210,6 +213,31 @@ public class ChecklistManageService {
     private ChecklistPreviewResponse mapToChecklistPreview(Checklist checklist) {
         boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
         return ChecklistPreviewResponse.of(checklist, isLiked);
+    }
+
+    @Transactional(readOnly = true)
+    public ChecklistsPreviewResponseV1 readAllChecklistsPreviewV1(User user) {
+        List<Checklist> checklists = checklistService.readAllChecklistsOrderByLatest(user);
+        List<ChecklistPreviewResponseV1> responses = checklists.stream()
+                .map(this::mapToChecklistPreviewV1)
+                .toList();
+
+        return ChecklistsPreviewResponseV1.from(responses);
+    }
+
+    private ChecklistPreviewResponseV1 mapToChecklistPreviewV1(Checklist checklist) {
+        boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
+        SubwayStationResponse stationResponse = readNearstStation(checklist);
+        return ChecklistPreviewResponseV1.of(checklist, stationResponse, isLiked);
+    }
+
+    private SubwayStationResponse readNearstStation(Checklist checklist) {
+        List<ChecklistStation> checklistStations = checklistStationService.readChecklistStationsByChecklist(checklist);
+        List<SubwayStationResponse> stationResponses = checklistStations.stream()
+                .map(SubwayStationResponse::from)
+                .toList();
+        SubwayStationResponses from = SubwayStationResponses.from(stationResponses);
+        return from.getStations().get(0);
     }
 
     @Transactional

@@ -2,8 +2,8 @@ import fetcher from '@/apis/fetcher';
 import { BASE_URL, ENDPOINT } from '@/apis/url';
 import { User, UserTokenValid } from '@/types/user';
 
-export const postLogin = async (code: string, redirectUri: string) => {
-  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.LOGIN, body: { code, redirectUri } });
+export const postOAuthLogin = async (code: string, redirectUri: string) => {
+  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.OAUTH_LOGIN, body: { code, redirectUri } });
   return response;
 };
 

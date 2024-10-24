@@ -7,6 +7,7 @@ export const ENDPOINT = {
   // checklist
   CHECKLISTS: '/checklists',
   CHECKLISTS_LIKE: '/checklists/like',
+  CHECKLISTS_LIKE_V1: '/v1/checklists/like',
   CHECKLISTS_V1: '/v1/checklists',
   CHECKLIST_QUESTION: '/checklists/questions',
   CHECKLIST_ALL_QUESTION: '/custom-checklist/all',

@@ -5,7 +5,7 @@ import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.question.CustomChecklistFixture;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
-import com.bang_ggood.question.domain.QuestionEntity;
+import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class QuestionManageServiceTest extends IntegrationTestSupport {
+class QuestionManageServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private QuestionManageService questionManageService;
@@ -49,8 +49,8 @@ public class QuestionManageServiceTest extends IntegrationTestSupport {
 
         // then
         List<Integer> defaultQuestionsIds = customChecklistQuestions.stream()
-                .map(CustomChecklistQuestion::getQuestionEntity)
-                .map(QuestionEntity::getId)
+                .map(CustomChecklistQuestion::getQuestion)
+                .map(Question::getId)
                 .toList();
         List<Integer> responseQuestionsIds = customChecklistQuestionsResponse.categories().stream()
                 .map(CategoryQuestionsResponse::questions)
@@ -92,7 +92,7 @@ public class QuestionManageServiceTest extends IntegrationTestSupport {
         CustomChecklistUpdateRequest request = CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_DUPLICATED();
 
         // when & then
-        assertThatThrownBy(() -> questionManageService.updateCustomChecklist(UserFixture.USER1(), request))
+        assertThatThrownBy(() -> questionManageService.updateCustomChecklist(UserFixture.USER1, request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
     }
@@ -104,7 +104,7 @@ public class QuestionManageServiceTest extends IntegrationTestSupport {
         CustomChecklistUpdateRequest request = CustomChecklistFixture.CUSTOM_CHECKLIST_UPDATE_REQUEST_INVALID();
 
         // when & then
-        assertThatThrownBy(() -> questionManageService.updateCustomChecklist(UserFixture.USER1(), request))
+        assertThatThrownBy(() -> questionManageService.updateCustomChecklist(UserFixture.USER1, request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
     }

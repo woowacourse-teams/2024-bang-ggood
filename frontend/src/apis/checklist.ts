@@ -18,13 +18,14 @@ export const getChecklistAllQuestions = async () => {
 
 export const getChecklistDetail = async (id: number) => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_ID_V1(id) });
-  const data = await response.json();
-  return data as ChecklistInfo;
+  const data = (await response.json()) as ChecklistInfo;
+  data.room = Object.fromEntries(Object.entries(data.room).filter(([, value]) => value !== null));
+  return data;
 };
 
 export const getChecklists = async (isLikeFiltered: boolean = false) => {
   const response = await fetcher.get({
-    url: BASE_URL + (isLikeFiltered ? ENDPOINT.CHECKLISTS_LIKE : ENDPOINT.CHECKLISTS),
+    url: BASE_URL + (isLikeFiltered ? ENDPOINT.CHECKLISTS_LIKE_V1 : ENDPOINT.CHECKLISTS_V1),
   });
   const data = await response.json();
   return data.checklists.map(mapObjNullToUndefined).slice(0, 10);
@@ -40,7 +41,7 @@ export const postChecklist = async (checklist: ChecklistPostForm) => {
 export const putChecklist = async (id: number, checklist: ChecklistPostForm) => {
   const mappedRoomInfo = roomInfoApiMapper(checklist.room);
   const mappedChecklist = { ...checklist, room: mappedRoomInfo };
-  const response = await fetcher.put({ url: BASE_URL + ENDPOINT.CHECKLIST_ID(id), body: mappedChecklist });
+  const response = await fetcher.put({ url: BASE_URL + ENDPOINT.CHECKLIST_ID_V1(id), body: mappedChecklist });
   return response;
 };
 

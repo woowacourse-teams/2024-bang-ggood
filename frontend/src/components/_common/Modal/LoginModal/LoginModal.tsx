@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 
 import { BangBangIcon } from '@/assets/assets';
-import KakaoLoginButton from '@/components/_common/KakaoLogin/KakaoLoginButton';
+import EmailLoginButton from '@/components/_common/LoginButton/EmailLoginButton';
+import KakaoLoginButton from '@/components/_common/LoginButton/KakaoLoginButton';
 import Modal from '@/components/_common/Modal/Modal';
 import { flexCenter, flexColumn, title3 } from '@/styles/common';
 
@@ -19,12 +20,15 @@ const LoginModal = ({ isModalOpen, modalClose }: Props) => {
             <BangBangIcon width={70} height={70} />
           </S.IconBox>
           <S.Title>로그인 후 방끗을 이용하실 수 있어요!</S.Title>
-          <S.Wrapper>작성한 체크리스트는 자동으로 저장됩니다!</S.Wrapper>
+          <S.Wrapper>
+            작성한 체크리스트는<S.Accent>자동</S.Accent>으로 저장되어요!
+          </S.Wrapper>
         </S.Container>
       </Modal.body>
       <Modal.footer>
         <S.Column>
           <KakaoLoginButton />
+          <EmailLoginButton />
           <S.CancelButton onClick={modalClose}>다음에 로그인하기</S.CancelButton>
         </S.Column>
       </Modal.footer>
@@ -52,8 +56,13 @@ const S = {
   Wrapper: styled.div`
     position: relative;
     width: 100%;
-    ${flexColumn}
-    gap: 2rem;
+  `,
+  Accent: styled.span`
+    width: fit-content;
+    margin-left: 5px;
+
+    font-weight: bold;
+    background: ${({ theme }) => `linear-gradient(to top, ${theme.palette.yellow400} 50%, transparent 50%)`};
   `,
   Title: styled.div`
     ${title3}

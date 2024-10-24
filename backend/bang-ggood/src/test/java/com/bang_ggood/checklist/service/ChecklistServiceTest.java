@@ -120,7 +120,7 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         assertThat(checklists).containsExactly(checklist2, checklist1);
     }
 
-    @DisplayName("좋아요된 체크리스트 리스트 조회 성공")
+    @DisplayName("좋아요된 체크리스트 리스트 최신순 조회 성공")
     @Test
     void readLikedChecklistsPreview() {
         //given
@@ -145,8 +145,8 @@ class ChecklistServiceTest extends IntegrationTestSupport {
         //then
         assertAll(
                 () -> assertThat(checklists.size()).isEqualTo(2),
-                () -> assertThat(checklists.get(0).getId()).isEqualTo(checklist1.getId()),
-                () -> assertThat(checklists.get(1).getId()).isEqualTo(checklist2.getId())
+                () -> assertThat(checklists.get(0).getId()).isEqualTo(checklist2.getId()),
+                () -> assertThat(checklists.get(1).getId()).isEqualTo(checklist1.getId())
         );
     }
 }

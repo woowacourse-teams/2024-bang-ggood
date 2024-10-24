@@ -1,26 +1,46 @@
 package com.bang_ggood.question.domain;
 
-public enum Category {
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import java.util.Objects;
 
-    ROOM_CONDITION(1, "방 컨디션"),
-    WINDOW(2, "창문"),
-    BATHROOM(3, "화장실"),
-    SECURITY(4, "보안"),
-    OUTSIDE(5, "외부");
+import static lombok.AccessLevel.PROTECTED;
 
-    private final int id;
-    private final String name;
+@Getter
+@NoArgsConstructor(access = PROTECTED)
+@Entity
+public class Category {
 
-    Category(int id, String name) {
-        this.id = id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false)
+    private String name;
+
+    public Category(String name) {
         this.name = name;
     }
 
-    public int getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Category that = (Category) o;
+        return Objects.equals(id, that.id);
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

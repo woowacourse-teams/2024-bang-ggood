@@ -37,7 +37,7 @@ module.exports = {
       patterns: [
         {
           from: 'src/assets/images/og',
-          to: 'images',
+          to: 'static/images',
         },
       ],
     }),
@@ -52,11 +52,26 @@ module.exports = {
           },
         ],
       },
-      { test: /\.(eot|ttf|woff|woff2)$/i, type: 'asset' },
-      { test: /\.(png|jpg|gif|webp|mp4)/i, type: 'asset/resource' },
+      {
+        test: /\.(eot|ttf|woff|woff2)$/i,
+        type: 'asset',
+        generator: {
+          filename: 'static/fonts/[name][ext]',
+        },
+      },
+      {
+        test: /\.(png|jpg|gif|webp|mp4)/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'static/images/[name][ext]',
+        },
+      },
       {
         test: /\.svg$/i,
         issuer: /\.[jt]sx?$/,
+        generator: {
+          filename: 'static/images/[name][ext]',
+        },
         use: [
           {
             loader: '@svgr/webpack',

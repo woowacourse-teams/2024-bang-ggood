@@ -16,8 +16,7 @@ import LikeButton from '@/components/_common/Like/LikeButton';
 import AddressMap from '@/components/_common/Map/AddressMap';
 import SubwayStations from '@/components/_common/Subway/SubwayStations';
 import { IncludedMaintenancesData } from '@/constants/roomInfo';
-import { flexColumn, flexRow, flexSpaceBetween, title2 } from '@/styles/common';
-import { ChecklistInfo } from '@/types/checklist';
+import { flexColumn, flexRow, flexSpaceBetween, title2, title3, title4 } from '@/styles/common';
 import { Option } from '@/types/option';
 import { RoomInfo } from '@/types/room';
 import { SubwayStation } from '@/types/subway';
@@ -30,10 +29,9 @@ interface Props {
   checklistId: number;
   isLiked: boolean;
   nearSubways: SubwayStation[];
-  checklist: ChecklistInfo;
 }
 
-const RoomInfoSection = ({ checklist, nearSubways, room, options, checklistId, isLiked }: Props) => {
+const RoomInfoSection = ({ nearSubways, room, options, checklistId, isLiked }: Props) => {
   const {
     roomName,
     deposit,
@@ -61,6 +59,7 @@ const RoomInfoSection = ({ checklist, nearSubways, room, options, checklistId, i
           <S.Title>{roomName}</S.Title>
           <LikeButton isLiked={isLiked} checklistId={checklistId} />
         </S.Row>
+
         <S.Row>
           <S.MoneyText>
             <div>
@@ -70,59 +69,106 @@ const RoomInfoSection = ({ checklist, nearSubways, room, options, checklistId, i
           </S.MoneyText>
         </S.Row>
       </S.GreenWrapper>
-      <S.GapBox>
-        <S.Row>
-          <Room aria-label="방 구조" />
-          {formattedUndefined(structure, 'string', '방 구조')} / {formattedUndefined(size)} 평
-        </S.Row>
-        <S.Row>
-          <Stairs aria-label="방 종류" />
-          {floorLevel === '지상'
-            ? `${formattedUndefined(floor)}층`
-            : formattedUndefined(floorLevel, 'string', '방 종류')}
-        </S.Row>
-      </S.GapBox>
+
       <S.Row>
-        <Utils aria-label="관리비 포함 항목" /> 관리비 포함 항목 :
-        {includedMaintenances
-          ?.map(id => IncludedMaintenancesData.find(item => item.id === id)?.displayName)
-          .filter(Boolean)
-          .join(', ')}
-        {!includedMaintenances?.length && formattedUndefined(includedMaintenances?.length, 'string', '')}
+        <S.Label>
+          <Summary aria-label="한줄평" />
+          한줄평
+        </S.Label>
+        <S.Text>{formattedUndefined(summary, 'string')}</S.Text>
       </S.Row>
+
       <S.Row>
-        <Calendar aria-label="계약 월수 / 입주 가능일" />
-        {formattedUndefined(contractTerm)}개월 계약 <br />
-        입주 가능일 : {formattedUndefined(occupancyMonth)}월 {occupancyPeriod}
+        <S.Label>
+          <Pencil aria-label="작성 일자" />방 둘러본 날
+        </S.Label>
+        <S.Text>{formattedDate(createdAt ?? '', '.')}</S.Text>
       </S.Row>
+
       <S.Row>
-        <Subway aria-label="가까운 지하철" />
-        <SubwayStations stations={nearSubways} checklist={checklist} />
+        <S.Label>
+          <Room aria-label="방 구조 / 방 평수" />
+          방 구조 <br />/ 방 평수
+        </S.Label>
+        <S.Text>
+          {formattedUndefined(structure, 'string')} <br />/ {formattedUndefined(size)} 평
+        </S.Text>
       </S.Row>
-      <S.GapBox>
-        <S.Row>
+
+      <S.Row>
+        <S.Label>
+          <Stairs aria-label="방 층수" />방 층수
+        </S.Label>
+        <S.Text>
+          {floorLevel === '지상' ? `${formattedUndefined(floor)}층` : formattedUndefined(floorLevel, 'string')}
+        </S.Text>
+      </S.Row>
+
+      <S.Row>
+        <S.Label>
+          <Utils aria-label="관리비 포함 항목" />
+          관리비 포함 항목
+        </S.Label>
+        <S.Text>
+          {includedMaintenances
+            ?.map(id => IncludedMaintenancesData.find(item => item.id === id)?.displayName)
+            .filter(Boolean)
+            .join(', ')}
+          {!includedMaintenances?.length && formattedUndefined(includedMaintenances?.length, 'string')}
+        </S.Text>
+      </S.Row>
+
+      <S.Row>
+        <S.Label>
+          <Calendar aria-label="계약 기간 / 입주 가능일" />
+          계약 기간 <br />/ 입주 가능일
+        </S.Label>
+        <S.Text>
+          {formattedUndefined(contractTerm)}개월 계약 <br />/{formattedUndefined(occupancyMonth)}월 {occupancyPeriod}
+        </S.Text>
+      </S.Row>
+
+      <S.Row>
+        <S.Label>
+          <Options aria-label="옵션" />
+          옵션
+        </S.Label>
+        <S.Text>
+          {options.length
+            ? options.map(option => option.optionName).join(', ')
+            : formattedUndefined(options.length, 'string')}
+        </S.Text>
+      </S.Row>
+
+      <S.Row>
+        <S.Label>
           <Building aria-label="부동산" />
-          {formattedUndefined(realEstate, 'string', '부동산')}
-        </S.Row>
-        <S.Row>
-          <Pencil aria-label="작성 일자" />
-          {formattedDate(createdAt ?? '', '.')}
-        </S.Row>
-      </S.GapBox>
-      <S.Row>
-        <Options aria-label="옵션" />
-        {options.length
-          ? options.map(option => option.optionName).join(', ')
-          : formattedUndefined(options.length, 'string', '옵션')}
+          부동산
+        </S.Label>
+        <S.Text>{formattedUndefined(realEstate, 'string')}</S.Text>
       </S.Row>
-      <S.Row>
-        <Summary aria-label="한줄평" />
-        {formattedUndefined(summary, 'string', '한줄평')}
-      </S.Row>
-      <S.Row>
-        <LocationLineIcon height={20} width={20} aria-label="주소" />
-        {formattedUndefined(address, 'string', '주소')} <br /> {buildingName}
-      </S.Row>
+
+      <S.Column>
+        <S.Label>
+          <LocationLineIcon height={20} width={20} aria-label="주소" />
+          주소
+        </S.Label>
+        <S.Text>
+          {formattedUndefined(address, 'string')} <br />
+          {buildingName}
+        </S.Text>
+      </S.Column>
+
+      <S.Column>
+        <S.Label>
+          <Subway aria-label="가까운 지하철" />
+          가까운 지하철
+        </S.Label>
+        <S.Text>
+          <SubwayStations stations={nearSubways} />
+        </S.Text>
+      </S.Column>
+
       <AddressMap location={address ?? ''} />
     </S.Container>
   );
@@ -149,12 +195,29 @@ const S = {
     background-color: ${({ theme }) => theme.palette.green500};
 
     color: ${({ theme }) => theme.palette.white};
-    font-size: ${({ theme }) => theme.text.size.medium};
+    font-size: ${({ theme }) => theme.text.size.small};
     box-sizing: border-box;
     border-radius: 1.6rem;
   `,
-  Row: styled.div`
+  Label: styled.div`
+    width: 100%;
     ${flexRow}
+    gap: 1rem;
+
+    font-weight: ${({ theme }) => theme.text.weight.bold};
+  `,
+  Text: styled.div`
+    ${flexRow}
+    width: 100%;
+  `,
+  Row: styled.div`
+    width: 100%;
+    ${flexRow}
+    gap: 1rem;
+  `,
+  Column: styled.div`
+    width: 100%;
+    ${flexColumn}
     gap: 1rem;
   `,
   GapBox: styled.div`
@@ -174,7 +237,8 @@ const S = {
   MoneyText: styled.div`
     width: 100%;
 
-    font-size: ${({ theme }) => theme.text.size.small};
+    /* ${title4} */
+    ${title3}
     ${flexRow}
     ${flexSpaceBetween}
   `,

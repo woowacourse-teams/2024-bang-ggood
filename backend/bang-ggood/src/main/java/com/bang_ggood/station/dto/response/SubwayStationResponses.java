@@ -34,4 +34,11 @@ public class SubwayStationResponses {
                 .limit(REQUESTED_STATION_NUMBER)
                 .toList();
     }
+
+    public SubwayStationResponse getNearestStation() {
+        if (stations.isEmpty()) {
+            return null;
+        }
+        return stations.get(0);
+    }
 }

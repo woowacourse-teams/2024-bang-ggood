@@ -38,23 +38,26 @@ const Modal = ({
 }: ModalProps) => {
   if (!modalRoot) return null;
 
-  return createPortal(
-    <FocusTrap onEscapeFocusTrap={onClose}>
-      <S.ModalWrapper open={isOpen}>
-        {hasDim && <S.ModalBackground onClick={hasDim ? onClose : () => {}} hasDim={hasDim} />}
-        <S.ModalOuter $position={position} $size={size} color={color} isOpen={isOpen}>
-          <S.ModalInner isOpen={isOpen}>
-            {children}
-            {hasCloseButton && (
-              <S.CloseButton role="button" onClick={onClose} aria-label="모달 끄기">
-                <CloseIcon />
-              </S.CloseButton>
-            )}
-          </S.ModalInner>
-        </S.ModalOuter>
-      </S.ModalWrapper>
-    </FocusTrap>,
-    modalRoot,
+  return (
+    isOpen &&
+    createPortal(
+      <FocusTrap onEscapeFocusTrap={onClose}>
+        <S.ModalWrapper open={isOpen}>
+          {hasDim && <S.ModalBackground onClick={hasDim ? onClose : () => {}} hasDim={hasDim} />}
+          <S.ModalOuter $position={position} $size={size} color={color} isOpen={isOpen}>
+            <S.ModalInner isOpen={isOpen}>
+              {children}
+              {hasCloseButton && (
+                <S.CloseButton role="button" onClick={onClose} aria-label="모달 끄기">
+                  <CloseIcon />
+                </S.CloseButton>
+              )}
+            </S.ModalInner>
+          </S.ModalOuter>
+        </S.ModalWrapper>
+      </FocusTrap>,
+      modalRoot,
+    )
   );
 };
 

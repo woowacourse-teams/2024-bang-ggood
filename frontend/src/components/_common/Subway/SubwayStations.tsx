@@ -13,7 +13,7 @@ interface Props {
 const SubwayStations = ({ stations }: Props) => {
   return (
     <>
-      {stations.length ? (
+      {stations?.length ? (
         <S.Box>{stations?.map(station => <SubwayStationItem station={station} key={station.stationName} />)}</S.Box>
       ) : (
         <span>{'보신 방과 가까운 지하철역을 찾아드릴게요.'}</span>
@@ -27,6 +27,6 @@ export default SubwayStations;
 const S = {
   Box: styled.div`
     ${flexColumn};
-    gap: 1rem;
+    gap: 0.5rem;
   `,
 };

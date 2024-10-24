@@ -5,7 +5,6 @@ import FooterLayout from '@/components/_common/layout/FooterLayout';
 import { ROUTE_PATH } from '@/constants/routePath';
 import SignInPage from '@/pages/SignInPage';
 import SignUpPage from '@/pages/SignUpPage';
-import GoogleAnalytics from '@/routers/GoogleAnalytics';
 
 const MainPage = React.lazy(() => import('@/pages/MainPage'));
 const ChecklistListPage = React.lazy(() => import('@/pages/ChecklistListPage'));
@@ -24,7 +23,6 @@ const router = createBrowserRouter([
   {
     element: (
       <Suspense>
-        <GoogleAnalytics />
         <Outlet />
       </Suspense>
     ),

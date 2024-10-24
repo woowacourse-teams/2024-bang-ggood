@@ -22,7 +22,7 @@ const ChecklistSection = () => {
       <S.Title>방 둘러볼 때 꼭 필요한 체크리스트</S.Title>
       <S.Container>
         <S.Row>
-          <ErrorBoundary fallback={<TitleErrorFallback title="나의 체크리스트" />}>
+          <ErrorBoundary fallback={<TitleErrorFallback title="내가 둘러본 방" />}>
             <ChecklistSectionTitle />
           </ErrorBoundary>
           <Button size="xSmall" label="전체 보기" onClick={handleClickList} />

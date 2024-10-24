@@ -23,6 +23,10 @@ export const checklistHandlers = [
     return HttpResponse.json(checklistList, { status: 200 });
   }),
 
+  http.get(BASE_URL + ENDPOINT.CHECKLISTS_V1, () => {
+    return HttpResponse.json(checklistList, { status: 200 });
+  }),
+
   http.get(BASE_URL + ENDPOINT.CHECKLISTS_LIKE, () => {
     const newChecklistList = {
       ...checklistList,
@@ -36,8 +40,17 @@ export const checklistHandlers = [
   }),
 
   http.post(BASE_URL + ENDPOINT.CHECKLISTS_V1, () => {
-    return HttpResponse.json(checklistList, { status: 201 });
+    return HttpResponse.json({}, { status: 200 });
   }),
+
+  // http.post(BASE_URL + ENDPOINT.CHECKLISTS_V1, () => {
+  //   return HttpResponse.json(
+  //     {
+  //       bangggoodCode: 'AUTH_TOKEN_EMPTY',
+  //     },
+  //     { status: 401 },
+  //   );
+  // }),
 
   http.put(BASE_URL + ENDPOINT.CHECKLIST_CUSTOM, () => {
     return HttpResponse.json({ status: 200 });

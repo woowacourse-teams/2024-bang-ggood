@@ -23,8 +23,8 @@ const ChecklistListPage = () => {
   useTrackPageView({ eventName: '[View] 체크리스트 리스트 페이지' });
 
   const navigate = useNavigate();
-  const { isLikeFiltered: isEnabled, toggle } = useGetChecklistList();
-
+  const { isLikeFiltered: isEnabled, toggleFilter } = useGetChecklistList();
+  // const {  } = useUserQuery();
   const handleClickMoveCustomPage = () => navigate(ROUTE_PATH.checklistQuestionSelect);
   const handleClickFloatingButton = () => navigate(ROUTE_PATH.checklistNew);
 
@@ -39,7 +39,7 @@ const ChecklistListPage = () => {
         <ErrorBoundary fallback={<TitleErrorFallback title="내가 둘러본 방" />}>
           <FlexBox.Horizontal justify="space-between" align="center">
             <ChecklistListTitle />
-            <S.LikeFilterBox onClick={toggle} $isChecked={isEnabled}>
+            <S.LikeFilterBox onClick={toggleFilter} $isChecked={isEnabled}>
               <Like fill={theme.palette.red500} stroke={theme.palette.red500} width="2rem" />
               좋아요
             </S.LikeFilterBox>

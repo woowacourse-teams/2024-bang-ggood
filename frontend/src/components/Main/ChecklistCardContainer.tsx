@@ -26,7 +26,7 @@ const ChecklistCardContainer = () => {
         .map((checklist: ChecklistPreview, index: number) => (
           <ChecklistPreviewCard key={checklist.checklistId} index={index} checklist={checklist} />
         ))}
-      <S.NewButton label="+ 새로운 체크리스트 생성하기" isSquare size="full" onClick={handleNewChecklist} />
+      <S.NewButton label="+ 새로운 방 체크하기" isSquare size="full" onClick={handleNewChecklist} />
     </>
   );
 };
@@ -39,6 +39,6 @@ const S = {
     padding: 1.8rem 4.8rem;
     border-radius: 0.8rem;
 
-    background-color: ${({ theme }) => theme.palette.grey50};
+    background-color: ${({ theme }) => theme.palette.grey100};
   `,
 };

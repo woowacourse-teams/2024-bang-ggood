@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import Button from '@/components/_common/Button/Button';
 import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallback';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import Header from '@/components/_common/Header/Header';
@@ -50,10 +51,8 @@ const ChecklistDetailPage = () => {
         left={<Header.Backward onClick={handleClickBackward} />}
         right={
           <FlexBox.Horizontal gap="1.5rem">
-            <Header.TextButton onClick={handleEditButton} id="checklistEditButton">
-              편집
-            </Header.TextButton>
-            <Header.TextButton onClick={openModal}>삭제</Header.TextButton>
+            <Button label={'편집'} isSquare={true} onClick={handleEditButton} id="checklistEditButton" />
+            <Button label={'삭제'} isSquare={true} onClick={openModal} id="checklistEditButton" />
           </FlexBox.Horizontal>
         }
       />

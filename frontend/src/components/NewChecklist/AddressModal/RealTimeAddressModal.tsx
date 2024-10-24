@@ -91,10 +91,10 @@ export default RealTimeAddressModal;
 const S = {
   AddressButton: styled(Button)`
     width: 50%;
-    height: 4.2rem;
+    height: 4.5rem;
     padding: 0.4rem;
 
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    font-size: ${({ theme }) => theme.text.size.small};
   `,
   AddressText: styled.span`
     ${title4}

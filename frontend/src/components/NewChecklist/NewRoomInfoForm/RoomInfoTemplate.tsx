@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import Layout from '@/components/_common/layout/Layout';
+import FocusTrap from '@/components/_common/Modal/FocusTrap/FocusTrap';
 import Address from '@/components/NewChecklist/NewRoomInfoForm/Address';
 import DepositAndRent from '@/components/NewChecklist/NewRoomInfoForm/DepositAndRent';
 import IncludedMaintenances from '@/components/NewChecklist/NewRoomInfoForm/IncludedMaintenances';
@@ -25,22 +26,24 @@ const RoomInfoTemplate = () => {
 
   return (
     <Layout withHeader withTab>
-      <S.Container onBlur={handleTrackInput}>
-        <ErrorBoundary FallbackComponent={RoomNameNoDefault}>
-          <RoomName />
-        </ErrorBoundary>
-        <Address />
-        <NearSubwayStations />
-        <DepositAndRent />
-        <MaintenanceFee />
-        <IncludedMaintenances />
-        <RoomFloor />
-        <RoomStructure />
-        <RoomSize />
-        <RoomContractTerm />
-        <OccupancyMonth />
-        <RealEstate />
-      </S.Container>
+      <FocusTrap>
+        <S.Container onBlur={handleTrackInput}>
+          <ErrorBoundary FallbackComponent={RoomNameNoDefault}>
+            <RoomName />
+          </ErrorBoundary>
+          <Address />
+          <NearSubwayStations />
+          <DepositAndRent />
+          <MaintenanceFee />
+          <IncludedMaintenances />
+          <RoomFloor />
+          <RoomStructure />
+          <RoomSize />
+          <RoomContractTerm />
+          <OccupancyMonth />
+          <RealEstate />
+        </S.Container>
+      </FocusTrap>
     </Layout>
   );
 };
@@ -49,8 +52,7 @@ const S = {
   Container: styled.div`
     ${flexColumn}
     justify-content: start;
-    row-gap: 2rem;
-
+    row-gap: 1.5rem;
     margin-bottom: 2rem;
   `,
 };

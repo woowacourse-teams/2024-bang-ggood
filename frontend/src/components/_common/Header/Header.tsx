@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ArrowBack, BangGgoodTextIcon } from '@/assets/assets';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { HEADER_SIZE } from '@/constants/style';
-import { flexCenter, title3 } from '@/styles/common';
+import { flexCenter, title2, title3 } from '@/styles/common';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   left?: ReactNode;
@@ -19,9 +19,9 @@ const HeaderWrapper = ({ left, right, center, isTransparent = false, ...rest }: 
     <>
       <S.Wrapper {...rest} isTransparent={isTransparent}>
         <S.FlexBox>
-          <S.Left>{left ? left : <div />}</S.Left>
-          <S.Center>{center ? center : <div />}</S.Center>
-          <S.Right>{right ? right : <div />}</S.Right>
+          {left && <S.Left>{left}</S.Left>}
+          <S.Center>{center && <div>{center}</div>}</S.Center>
+          {right && <S.Right>{right}</S.Right>}
         </S.FlexBox>
       </S.Wrapper>
       {!isTransparent && <S.EmptyBox />}
@@ -39,7 +39,7 @@ const S = {
     z-index: ${({ theme }) => theme.zIndex.HEADER};
     width: 100%;
     height: ${HEADER_SIZE}rem;
-    padding: 2rem 1.6rem 1.2rem;
+    padding: 1rem 0.8rem;
 
     background-color: ${({ theme, isTransparent }) => (isTransparent ? 'rgba(255,255,255, 0.3)' : theme.palette.white)};
 
@@ -52,10 +52,13 @@ const S = {
     display: flex;
     flex-direction: row;
     width: 100%;
+    height: 100%;
   `,
   Left: styled.div`
     display: flex;
     justify-content: flex-start;
+    align-items: center;
+    min-width: 70px;
   `,
   Center: styled.div`
     ${flexCenter}
@@ -73,7 +76,7 @@ const S = {
     box-sizing: content-box;
 
     color: ${({ theme }) => theme.palette.black};
-    ${title3}
+    ${title2}
   `,
 };
 

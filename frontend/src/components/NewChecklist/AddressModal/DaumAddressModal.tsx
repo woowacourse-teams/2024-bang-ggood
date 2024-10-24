@@ -54,7 +54,7 @@ const DaumAddressModal = () => {
         label="주소 검색"
         size="full"
         isSquare={true}
-        color="dark"
+        color="light"
         Icon={Search}
       />
       <Modal position="bottom" isOpen={isModalOpen} onClose={closeModal}>
@@ -72,10 +72,10 @@ export default DaumAddressModal;
 const S = {
   AddressButton: styled(Button)`
     width: 50%;
-    height: 4.2rem;
+    height: 4.5rem;
     padding: 0.4rem;
 
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    font-size: ${({ theme }) => theme.text.size.small};
   `,
   EmptyBox: styled.div`
     width: 100%;

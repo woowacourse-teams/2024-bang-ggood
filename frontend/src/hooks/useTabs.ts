@@ -9,7 +9,7 @@ const useTabs = () => {
   const getTabs = (categories: Category[]) => {
     return categories.map(category => ({
       id: category.categoryId,
-      name: category.categoryName as string,
+      name: category.categoryName,
       className: findCategoryClassNameByName(category.categoryName),
     })) as Tab[];
   };

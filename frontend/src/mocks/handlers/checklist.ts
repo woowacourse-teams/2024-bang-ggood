@@ -40,13 +40,17 @@ export const checklistHandlers = [
   }),
 
   http.post(BASE_URL + ENDPOINT.CHECKLISTS_V1, () => {
-    return HttpResponse.json(
-      {
-        bangggoodCode: 'AUTH_TOKEN_EMPTY',
-      },
-      { status: 401 },
-    );
+    return HttpResponse.json({}, { status: 200 });
   }),
+
+  // http.post(BASE_URL + ENDPOINT.CHECKLISTS_V1, () => {
+  //   return HttpResponse.json(
+  //     {
+  //       bangggoodCode: 'AUTH_TOKEN_EMPTY',
+  //     },
+  //     { status: 401 },
+  //   );
+  // }),
 
   http.put(BASE_URL + ENDPOINT.CHECKLIST_CUSTOM, () => {
     return HttpResponse.json({ status: 200 });

@@ -36,11 +36,7 @@ export const checklistList = {
       address: '서울 동작구 사당동',
       deposit: 500,
       rent: 45,
-      station: {
-        stationName: '사당',
-        stationLine: ['4호선', '2호선'],
-        walkingTime: 10,
-      },
+      station: null,
       createdAt: '2024-03-01T10:00:00Z',
       summary: '방은 좁으나 싼 가격이 장점!',
       isLiked: false,

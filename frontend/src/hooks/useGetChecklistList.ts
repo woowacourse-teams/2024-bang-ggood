@@ -18,7 +18,7 @@ const useGetChecklistList = () => {
     isLikeFiltered,
     actions: { toggle },
   } = useLikeFilterStore();
-  return { ...useGetChecklistListQuery(isLikeFiltered), isLikeFiltered, toggle };
+  return { ...useGetChecklistListQuery(isLikeFiltered), isLikeFiltered, toggleFilter: toggle };
 };
 
 export default useGetChecklistList;

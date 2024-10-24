@@ -3,7 +3,6 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
 
 import { PlusBlack } from '@/assets/assets';
-import Like from '@/assets/icons/like/Like';
 import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallback';
 import TitleErrorFallback from '@/components/_common/errorBoundary/TitleErrorFallback';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
@@ -13,8 +12,8 @@ import Layout from '@/components/_common/layout/Layout';
 import ChecklistListContainer from '@/components/ChecklistList/ChecklistListContainer';
 import ChecklistListTitle from '@/components/ChecklistList/ChecklistListTitle';
 import CustomBanner from '@/components/ChecklistList/CustomBanner';
+import LikeFilterButton from '@/components/ChecklistList/LikeFilterButton';
 import { ROUTE_PATH } from '@/constants/routePath';
-import useGetChecklistList from '@/hooks/useGetChecklistList';
 import { useTrackPageView } from '@/service/amplitude/useTrackPageView';
 import { boxShadow, flexRow } from '@/styles/common';
 import theme from '@/styles/theme';
@@ -23,8 +22,6 @@ const ChecklistListPage = () => {
   useTrackPageView({ eventName: '[View] 체크리스트 리스트 페이지' });
 
   const navigate = useNavigate();
-  const { isLikeFiltered: isEnabled, toggle } = useGetChecklistList();
-
   const handleClickMoveCustomPage = () => navigate(ROUTE_PATH.checklistQuestionSelect);
   const handleClickFloatingButton = () => navigate(ROUTE_PATH.checklistNew);
 
@@ -39,10 +36,7 @@ const ChecklistListPage = () => {
         <ErrorBoundary fallback={<TitleErrorFallback title="내가 둘러본 방" />}>
           <FlexBox.Horizontal justify="space-between" align="center">
             <ChecklistListTitle />
-            <S.LikeFilterBox onClick={toggle} $isChecked={isEnabled}>
-              <Like fill={theme.palette.red500} stroke={theme.palette.red500} width="2rem" />
-              좋아요
-            </S.LikeFilterBox>
+            <LikeFilterButton />
           </FlexBox.Horizontal>
         </ErrorBoundary>
         <S.Spacer height="1rem" />

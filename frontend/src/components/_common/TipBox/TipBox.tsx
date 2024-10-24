@@ -7,15 +7,16 @@ import { flexCenter, flexSpaceBetween, title4 } from '@/styles/common';
 
 interface Props {
   tipType: TipType;
+  color?: 'white' | 'grey';
 }
 
-const TipBox = ({ tipType }: Props) => {
+const TipBox = ({ tipType, color = 'white' }: Props) => {
   const { isTipOpen, closeTip } = useHandleTip(tipType);
 
   if (!isTipOpen) return;
 
   return (
-    <S.TipBox>
+    <S.TipBox color={color}>
       <S.TipText>
         <span aria-hidden="true">💡</span> <S.Bold>TIP</S.Bold> : {TIP_MESSAGE[tipType]}
       </S.TipText>
@@ -25,13 +26,13 @@ const TipBox = ({ tipType }: Props) => {
 };
 
 const S = {
-  TipBox: styled.article`
+  TipBox: styled.article<{ color?: 'white' | 'grey' }>`
     width: 100%;
     ${flexCenter}
     ${flexSpaceBetween}
     padding: 1.2rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme, color }) => (color === 'grey' ? theme.palette.grey100 : theme.palette.white)};
 
     font-size: ${({ theme }) => theme.text.size.small};
     border-radius: 1rem;

@@ -36,12 +36,11 @@ const S = {
     ${flexRow}
     ${flexSpaceBetween}
     padding: 1.6rem;
-    gap: 0.5rem;
+    border-radius: 0.8rem;
 
     box-sizing: border-box;
 
     background-color: ${({ theme }) => theme.palette.white};
-    border-radius: 0.8rem;
   `,
   Question: styled.div`
     display: flex;

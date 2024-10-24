@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ArrowBack, BangGgoodTextIcon } from '@/assets/assets';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { HEADER_SIZE } from '@/constants/style';
-import { flexCenter, title3 } from '@/styles/common';
+import { flexCenter, title2, title3 } from '@/styles/common';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   left?: ReactNode;
@@ -56,6 +56,8 @@ const S = {
   Left: styled.div`
     display: flex;
     justify-content: flex-start;
+    align-items: center;
+    min-width: 70px;
   `,
   Center: styled.div`
     ${flexCenter}
@@ -73,7 +75,7 @@ const S = {
     box-sizing: content-box;
 
     color: ${({ theme }) => theme.palette.black};
-    ${title3}
+    ${title2}
   `,
 };
 

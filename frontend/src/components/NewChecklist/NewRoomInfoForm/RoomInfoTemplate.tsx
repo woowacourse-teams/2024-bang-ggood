@@ -50,7 +50,7 @@ const S = {
     ${flexColumn}
     justify-content: start;
     row-gap: 2rem;
-
+    margin-top: 1.5rem;
     margin-bottom: 2rem;
   `,
 };

@@ -3,11 +3,11 @@ import styled from '@emotion/styled';
 import { FunctionComponent, SVGProps } from 'react';
 
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
-import { flexCenter, title4 } from '@/styles/common';
+import { flexCenter, title3, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
 
 type ButtonSize = 'xSmall' | 'small' | 'medium' | 'full';
-type ColorOption = 'light' | 'dark' | 'disabled';
+type ColorOption = 'light' | 'dark' | 'primary' | 'disabled';
 type ButtonType = 'button' | 'submit' | 'reset';
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
@@ -100,6 +100,16 @@ const ColorStyles = {
       background-color: ${theme.palette.black};
     }
   `,
+  primary: css`
+    background-color: ${theme.palette.yellow500};
+
+    color: ${theme.palette.grey600};
+
+    &:hover,
+    &:active {
+      background-color: ${theme.palette.yellow600};
+    }
+  `,
   disabled: css`
     background-color: ${theme.palette.grey200};
 
@@ -115,7 +125,7 @@ const sizeStyles = {
   `,
   small: css`
     padding: 1rem 2rem;
-    ${title4}
+    ${title3}
   `,
   medium: css`
     padding: 1rem 4rem;

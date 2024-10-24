@@ -48,6 +48,6 @@ const S = {
     outline: none;
     cursor: pointer;
 
-    background-color: ${({ theme }) => theme.palette.yellow500};
+    background-color: ${({ theme }) => theme.palette.grey200};
   `,
 };

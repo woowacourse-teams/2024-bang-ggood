@@ -76,6 +76,7 @@ export default Tabs;
 const S = {
   VisibleContainer: styled.nav`
     max-width: 60rem;
+    height: 7rem;
   `,
   EmptyBox: styled.div`
     height: 5.4rem;
@@ -100,5 +101,7 @@ const S = {
   `,
   FlexContainer: styled.div`
     display: inline-flex;
+    gap: 1rem;
+    margin: 1rem 1.6rem;
   `,
 };

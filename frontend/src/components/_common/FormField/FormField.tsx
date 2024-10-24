@@ -16,6 +16,7 @@ interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
 
 const FormFieldWrapper = styled.div<{ rowGap?: string }>`
   ${flexColumn}
+  background-color: white;
 
   flex: auto;
   row-gap: ${({ rowGap }) => (rowGap ? rowGap : '1rem')};

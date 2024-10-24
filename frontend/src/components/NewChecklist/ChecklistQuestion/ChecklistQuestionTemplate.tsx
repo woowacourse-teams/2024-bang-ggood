@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import Divider from '@/components/_common/Divider/Divider';
 import Layout from '@/components/_common/layout/Layout';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import ChecklistQuestionItem from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
@@ -19,13 +20,21 @@ const ChecklistQuestionTemplate = () => {
   return (
     <Layout bgColor={theme.palette.background} withHeader withTab>
       <S.ContentBox>
-        {questions?.questions.map((question: ChecklistQuestion) => {
+        {questions?.questions.map((question: ChecklistQuestion, index) => {
           const answer = checklistActions.getQuestionAnswer({
             categoryId: currentTabId,
             questionId: question.questionId,
           });
+          const isLastQuestion = questions?.questions.length - 1 === index;
           return (
-            <ChecklistQuestionItem key={`${currentTabId}-${question.questionId}`} question={question} answer={answer} />
+            <>
+              <ChecklistQuestionItem
+                key={`${currentTabId}-${question.questionId}`}
+                question={question}
+                answer={answer}
+              />
+              {!isLastQuestion && <Divider />}
+            </>
           );
         })}
       </S.ContentBox>
@@ -39,12 +48,12 @@ const S = {
   ContentBox: styled.div`
     ${flexColumn}
     margin-bottom: 2rem;
+    border-radius: 0.8rem;
 
-    background-color: ${({ theme }) => theme.palette.background};
-    gap: 1rem;
+    background-color: ${({ theme }) => theme.palette.white};
+    gap: 0.2rem;
   `,
   QuestionBox: styled.div`
     background-color: ${({ theme }) => theme.palette.white};
-    border-radius: 0.8rem;
   `,
 };

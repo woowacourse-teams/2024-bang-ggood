@@ -100,5 +100,7 @@ const S = {
   `,
   FlexContainer: styled.div`
     display: inline-flex;
+    gap: 1rem;
+    margin: 1rem 1.6rem;
   `,
 };

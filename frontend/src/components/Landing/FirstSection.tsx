@@ -93,8 +93,9 @@ const S = {
     }
   `,
   Button: styled(Button)`
-    height: 5rem;
-    border-radius: 1rem;
+    border-radius: 0.8rem;
+
+    height: 4.5rem;
   `,
   LogoBox: styled.div`
     width: 100%;

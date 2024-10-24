@@ -53,6 +53,8 @@ const S = {
   Wrapper: styled.div`
     flex: 0 0 auto;
     position: relative;
+
+    background-color: ${({ theme }) => theme.palette.white};
   `,
   DropDownHeader: styled.div`
     width: 12.5rem;

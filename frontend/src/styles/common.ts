@@ -53,6 +53,10 @@ export const boxShadowSpread = css`
   box-shadow: 0 0 1.2rem 0.5rem rgb(0 0 0 / 5%);
 `;
 
+export const boxSpread = css`
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+`;
+
 /* skeleton */
 export const Skeleton = `
   background: linear-gradient(-90deg, #E2E2E2, #f0f0f0,  #E2E2E2, #f0f0f0);

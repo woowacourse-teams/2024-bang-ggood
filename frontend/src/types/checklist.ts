@@ -82,7 +82,7 @@ export interface ChecklistPostForm {
   room: RoomInfo;
   options: number[];
   questions: AnswerPostForm[];
-  geolocation?: Position; //TODO: 나중에 지우기
+  geolocation?: Position;
 }
 
 export type MutateType = 'add' | 'edit';

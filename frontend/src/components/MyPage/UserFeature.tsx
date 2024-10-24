@@ -105,6 +105,7 @@ const S = {
   `,
   TextButton: styled.button`
     width: fit-content;
+    margin-top: 1rem;
 
     color: ${({ theme }) => theme.palette.grey500};
     font-size: ${({ theme }) => theme.text.size.xxSmall};

@@ -13,11 +13,13 @@ const useDefaultRoomName = () => {
     if (!checklistList) return;
     if (roomName.rawValue !== initialRoomInfo.roomName.rawValue) return;
     const count = checklistList.filter(
-      checklist => new Date(checklist.createdAt).getUTCDay() === new Date().getUTCDay(),
+      checklist =>
+        new Date(checklist.createdAt).getUTCDay() === new Date().getUTCDay() &&
+        checklist.roomName !== '예시용 체크리스트',
     ).length;
 
     const date = new Date();
-    roomName.set(`${date.getMonth() + 1}월 ${date.getDate()}일 ${count}번째 방`);
+    roomName.set(`${date.getMonth() + 1}월 ${date.getDate()}일 ${count + 1}번째 방`);
   }, [checklistList]);
 };
 

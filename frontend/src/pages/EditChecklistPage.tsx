@@ -78,7 +78,7 @@ const EditChecklistPage = () => {
       <Header
         left={<Header.Backward onClick={resetAndGoDetailPage} />}
         center={<Header.Text>체크리스트 편집</Header.Text>}
-        right={<Button label="저장" size="small" color="dark" onClick={summaryModalOpen} />}
+        right={<Button label="저장" size="small" color="dark" onClick={summaryModalOpen} isSquare />}
       />
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
         <ErrorBoundary fallback={<ChecklistTabFallback />}>

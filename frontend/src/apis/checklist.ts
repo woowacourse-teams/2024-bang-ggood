@@ -24,7 +24,7 @@ export const getChecklistDetail = async (id: number) => {
 
 export const getChecklists = async (isLikeFiltered: boolean = false) => {
   const response = await fetcher.get({
-    url: BASE_URL + (isLikeFiltered ? ENDPOINT.CHECKLISTS_LIKE : ENDPOINT.CHECKLISTS),
+    url: BASE_URL + (isLikeFiltered ? ENDPOINT.CHECKLISTS_LIKE : ENDPOINT.CHECKLISTS_V1),
   });
   const data = await response.json();
   return data.checklists.map(mapObjNullToUndefined).slice(0, 10);

@@ -9,7 +9,7 @@ public class SelectedQuestionResponse extends QuestionResponse {
     private final String answer;
 
     public SelectedQuestionResponse(ChecklistQuestion checklistQuestion, List<Highlight> highlights) {
-        super(checklistQuestion.getQuestionEntity(), highlights);
+        super(checklistQuestion.getQuestion(), highlights);
         this.answer = checklistQuestion.getAnswer().name();
     }
 

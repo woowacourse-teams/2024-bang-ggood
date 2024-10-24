@@ -38,9 +38,22 @@ public class AuthController {
     }
 
     @DeleteMapping("/v1/withdraw")
-    public ResponseEntity<Void> withdraw(@AuthRequiredPrincipal User user) {
+    public ResponseEntity<Void> withdraw(@AuthRequiredPrincipal User user,
+                                         HttpServletRequest httpServletRequest) {
+        String accessToken = cookieResolver.extractAccessToken(httpServletRequest);
+        String refreshToken = cookieResolver.extractRefreshToken(httpServletRequest);
+
+        authService.logout(accessToken, refreshToken);
+
+        ResponseCookie deletedAccessTokenCookie = cookieProvider.deleteAccessTokenCookie();
+        ResponseCookie deletedRefreshTokenCookie = cookieProvider.deleteRefreshTokenCookie();
+
         authService.withdraw(user);
-        return ResponseEntity.noContent().build();
+
+        return ResponseEntity.noContent()
+                .header(HttpHeaders.SET_COOKIE, deletedAccessTokenCookie.toString())
+                .header(HttpHeaders.SET_COOKIE, deletedRefreshTokenCookie.toString())
+                .build();
     }
 
     @PostMapping("/oauth/login")
@@ -75,7 +88,7 @@ public class AuthController {
         String accessToken = cookieResolver.extractAccessToken(httpServletRequest);
         String refreshToken = cookieResolver.extractRefreshToken(httpServletRequest);
 
-        authService.logout(accessToken, refreshToken, user);
+        authService.logout(accessToken, refreshToken);
 
         ResponseCookie deletedAccessTokenCookie = cookieProvider.deleteAccessTokenCookie();
         ResponseCookie deletedRefreshTokenCookie = cookieProvider.deleteRefreshTokenCookie();

@@ -18,6 +18,29 @@ class PasswordTest {
                 .doesNotThrowAnyException();
     }
 
+    @DisplayName("영어, 숫자, 특수문자를 모두 포함하고 6자 이상인 비밀번호 생성 성공")
+    @Test
+    void createPassword_containSpecialCharacter() {
+        assertThatCode(() -> new Password("password1234!@"))
+                .doesNotThrowAnyException();
+    }
+
+    @DisplayName("비밀번호 생성 실패 : 허용되지 않은 특수문자일 경우")
+    @Test
+    void createPassword_InvalidSpecialCharacter_exception() {
+        assertThatThrownBy(() -> new Password("password1234]"))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.PASSWORD_INVALID_FORMAT.getMessage());
+    }
+
+    @DisplayName("비밀번호 생성 실패 : 공백이 포함되는 경우")
+    @Test
+    void createPassword_containEmpty_exception() {
+        assertThatThrownBy(() -> new Password("password 1234"))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.PASSWORD_INVALID_FORMAT.getMessage());
+    }
+
     @DisplayName("비밀번호 생성 실패 : null일 경우")
     @Test
     void createPassword_null_exception() {

@@ -2,9 +2,8 @@ package com.bang_ggood.question.repository;
 
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.question.QuestionFixture;
-import com.bang_ggood.question.domain.CategoryEntity;
+import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
-import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.user.UserFixture;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -26,20 +25,17 @@ class CategoryRepositoryTest extends IntegrationTestSupport {
         int expectedCategory = 2;
         CustomChecklistQuestion customChecklistQuestion1 = new CustomChecklistQuestion(
                 UserFixture.USER1,
-                Question.ROOM_CONDITION_1,
                 QuestionFixture.QUESTION1_CATEGORY1);
         CustomChecklistQuestion customChecklistQuestion2 = new CustomChecklistQuestion(
                 UserFixture.USER1,
-                Question.ROOM_CONDITION_2,
                 QuestionFixture.QUESTION2_CATEGORY1);
         CustomChecklistQuestion customChecklistQuestion3 = new CustomChecklistQuestion(
                 UserFixture.USER1,
-                Question.ROOM_CONDITION_1,
                 QuestionFixture.QUESTION3_CATEGORY2);
         customChecklistQuestionRepository.saveAll(List.of(customChecklistQuestion1, customChecklistQuestion2, customChecklistQuestion3));
 
         // when
-        List<CategoryEntity> categories = categoryRepository.findAllCustomQuestionCategoriesByUserId(UserFixture.USER1.getId());
+        List<Category> categories = categoryRepository.findAllCustomQuestionCategoriesByUserId(UserFixture.USER1.getId());
 
         // then
         Assertions.assertThat(categories)

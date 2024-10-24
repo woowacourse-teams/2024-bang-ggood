@@ -24,12 +24,12 @@ public class Highlight {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private QuestionEntity question;
+    private Question question;
 
     @Column(nullable = false)
     private String name;
 
-    public Highlight(QuestionEntity question, String name) {
+    public Highlight(Question question, String name) {
         this.question = question;
         this.name = name;
     }

@@ -36,7 +36,7 @@ const S = {
     box-sizing: border-box;
     overflow: hidden auto;
     ${({ withHeader, withFooter, withTab }) => getHeightStyle(withHeader, withFooter, withTab)}
-    padding: 1.6rem;
+    padding: 1rem 1.6rem;
 
     background-color: ${({ bgColor }) => bgColor};
   `,

@@ -61,10 +61,7 @@ export interface ChecklistInfo {
   room: Partial<RoomInfo>;
   options: Option[];
   categories: ChecklistCategoryWithAnswer[];
-  //TODO: 나중에 백엔드 api 수정되면 수정
-  stations: {
-    stations: SubwayStation[];
-  };
+  stations: SubwayStation[];
 }
 
 export interface ChecklistSelectedQuestions {

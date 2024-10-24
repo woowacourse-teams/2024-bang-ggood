@@ -69,7 +69,5 @@ export const checklistDetail: ChecklistInfo = {
       ],
     },
   ],
-  stations: {
-    stations: nearSubway,
-  },
+  stations: nearSubway,
 };

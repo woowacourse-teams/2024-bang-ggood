@@ -20,12 +20,11 @@ const ChecklistDetailSection = () => {
   return (
     <>
       <RoomInfoSection
-        checklist={checklist}
         room={checklist?.room}
         options={checklist?.options}
         isLiked={checklist?.isLiked}
         checklistId={Number(checklistId)}
-        nearSubways={checklist.stations.stations}
+        nearSubways={checklist?.room.address === '' ? [] : checklist?.stations}
       />
       <ChecklistAnswerSection categories={checklist?.categories} />
       <MemoSection memo={checklist?.room?.memo} />

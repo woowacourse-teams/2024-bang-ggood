@@ -1,4 +1,5 @@
 export const QUERY_KEYS = {
+  AUTH: 'auth-common',
   USER: 'user',
   IS_USER_VALID: 'user-valid',
   ARTICLE: 'article',

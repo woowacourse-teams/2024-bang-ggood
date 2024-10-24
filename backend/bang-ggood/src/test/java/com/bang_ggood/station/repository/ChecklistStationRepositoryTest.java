@@ -19,7 +19,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ChecklistRepositoryTest extends IntegrationTestSupport {
+public class ChecklistStationRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     RoomRepository roomRepository;
@@ -30,11 +30,12 @@ public class ChecklistRepositoryTest extends IntegrationTestSupport {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    ChecklistStationRepository checklistStationRepository;
+
     Room room;
     User user;
     Checklist checklist;
-    @Autowired
-    ChecklistStationRepository checklistStationRepository;
 
     @BeforeEach
     void setUp() {
@@ -62,5 +63,20 @@ public class ChecklistRepositoryTest extends IntegrationTestSupport {
         // given & when & then
         assertThat(checklistStationRepository.findByChecklist(checklist))
                 .isEmpty();
+    }
+
+    @DisplayName("체크리스트 아이디를 통한 삭제 성공")
+    @Test
+    void deleteAllByChecklistId_noData_exception() {
+        // given
+        ChecklistStation checklistStation1 = new ChecklistStation(checklist, "잠실", "2호선", 5);
+        ChecklistStation checklistStation2 = new ChecklistStation(checklist, "잠실", "8호선", 6);
+        checklistStationRepository.saveAll(List.of(checklistStation1, checklistStation2));
+
+        // when
+        checklistStationRepository.deleteAllByChecklistId(checklist.getId());
+
+        // then
+        assertThat(checklistStationRepository.findByChecklist(checklist)).isEmpty();
     }
 }

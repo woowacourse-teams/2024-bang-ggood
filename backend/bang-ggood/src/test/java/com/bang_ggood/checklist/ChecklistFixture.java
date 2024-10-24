@@ -157,6 +157,16 @@ public class ChecklistFixture {
         );
     }
 
+    public static ChecklistRequestV1 CHECKLIST_UPDATE_REQUEST_V1() {
+        return new ChecklistRequestV1(
+                RoomFixture.ROOM_UPDATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.INDUCTION.getId(),
+                Option.BED.getId(), Option.WASHING_MACHINE.getId()),
+                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
+                        QUESTION_3_CREATE_REQUEST(), QUESTION_5_UPDATE_REQUEST()),
+                ChecklistStationRequest.of(37.5, 127.1)
+        );
+    }
+
     public static ChecklistRequest CHECKLIST_UPDATE_REQUEST_NO_ROOM_NAME() {
         return new ChecklistRequest(
                 RoomFixture.ROOM_CREATE_REQUEST_NO_ROOM_NAME(),

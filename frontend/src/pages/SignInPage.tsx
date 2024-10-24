@@ -8,6 +8,8 @@ import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
 import { ROUTE_PATH } from '@/constants/routePath';
+import usePostSignInQuery from '@/hooks/query/usePostSigninQuery';
+import useUserQuery from '@/hooks/query/useUserQuery';
 import useToast from '@/hooks/useToast';
 import useValidateInput from '@/hooks/useValidateInput';
 import { flexCenter, title3, title4 } from '@/styles/common';
@@ -38,6 +40,17 @@ const SignInPage = () => {
   });
 
   const disabled = !isEmailValidated || !isPasswordValidated;
+
+  const { mutate: signIn, isPending, error, isSuccess } = usePostSignInQuery();
+  const {} = useUserQuery();
+  const handleSubmit2 = async () =>
+    signIn({ email, password }, { onSuccess: () => {}, onError: error => setPostErrorMessage(error.message) });
+
+  if (error) {
+    setPostErrorMessage(error.message);
+  }
+  if (isSuccess) {
+  }
 
   const handleSubmit = async () => {
     const response = await postSignIn({ email, password });

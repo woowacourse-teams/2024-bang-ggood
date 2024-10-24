@@ -53,7 +53,6 @@ const ChecklistDetailPage = () => {
           <FlexBox.Horizontal gap="1.5rem">
             <Button label={'편집'} isSquare={true} onClick={handleEditButton} id="checklistEditButton" />
             <Button label={'삭제'} isSquare={true} onClick={openModal} id="checklistEditButton" />
-            {/* <Header.TextButton onClick={openModal}>삭제</Header.TextButton> */}
           </FlexBox.Horizontal>
         }
       />

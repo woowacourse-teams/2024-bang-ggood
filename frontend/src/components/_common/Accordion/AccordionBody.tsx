@@ -16,14 +16,11 @@ const AccordionBody = ({ children, id }: Props) => {
 
   useEffect(() => {
     if (bodyRef.current) {
-      const adjustMaxHeight = () => {
-        if (isCurrentAccordionOpen) {
-          setMaxHeight(bodyRef.current!.scrollHeight);
-        } else {
-          setMaxHeight(0);
-        }
-      };
-      setTimeout(adjustMaxHeight, 50);
+      if (isCurrentAccordionOpen) {
+        setMaxHeight(bodyRef.current.scrollHeight);
+      } else {
+        setMaxHeight(0);
+      }
     }
   }, [isCurrentAccordionOpen]);
 

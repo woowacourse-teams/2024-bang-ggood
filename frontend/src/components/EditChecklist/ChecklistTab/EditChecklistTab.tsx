@@ -16,7 +16,7 @@ const EditChecklistTab = ({ checklistId }: Props) => {
   const { getTabsForChecklist } = useTabs();
 
   const categoryTabs = useMemo(() => {
-    if (isFetched && checklist && checklistStore.length) {
+    if (isFetched && checklist) {
       return getTabsForChecklist(checklist.categories);
     }
     return [];

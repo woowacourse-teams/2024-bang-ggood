@@ -71,7 +71,7 @@ const EditChecklistPage = () => {
     };
 
     setChecklistDataToStore();
-  }, [checklistId]);
+  }, [checklistId, checklist, isSuccess]);
 
   return (
     <>

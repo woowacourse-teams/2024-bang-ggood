@@ -24,7 +24,7 @@ const KakaoLoginButton = () => {
 export default KakaoLoginButton;
 
 const S = {
-  KakaoLoginButton: styled.div`
+  KakaoLoginButton: styled.button`
     width: 100%;
     height: 4.5rem;
     ${flexRow}

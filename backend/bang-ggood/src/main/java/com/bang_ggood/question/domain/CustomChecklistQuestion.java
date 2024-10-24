@@ -3,8 +3,6 @@ package com.bang_ggood.question.domain;
 import com.bang_ggood.BaseEntity;
 import com.bang_ggood.user.domain.User;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,24 +26,20 @@ public class CustomChecklistQuestion extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @Enumerated(EnumType.STRING)
-    private Question question;
-
     @JoinColumn(name = "question_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private QuestionEntity questionEntity;
+    private Question question;
 
-    public CustomChecklistQuestion(User user, Question question, QuestionEntity questionEntity) {
+    public CustomChecklistQuestion(User user, Question question) {
         this.user = user;
         this.question = question;
-        this.questionEntity = questionEntity;
     }
 
     public Integer getQuestionId() {
-        return questionEntity.getId();
+        return question.getId();
     }
 
-    public boolean isSameCategory(CategoryEntity category) {
-        return this.questionEntity.getCategory().equals(category);
+    public boolean isSameCategory(Category category) {
+        return this.question.getCategory().equals(category);
     }
 }

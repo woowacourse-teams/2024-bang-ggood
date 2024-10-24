@@ -11,14 +11,13 @@ import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
-import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
 import com.bang_ggood.question.service.QuestionManageService;
+import com.bang_ggood.question.service.QuestionService;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +25,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.expression.spel.support.ReflectivePropertyAccessor.OptimalPropertyAccessor;
 
 import java.util.Optional;
 
@@ -47,6 +45,8 @@ class AuthServiceTest extends IntegrationTestSupport {
     private OauthClient oauthClient;
     @Autowired
     private AuthService authService;
+    @Autowired
+    private QuestionService questionService;
     @Autowired
     private ChecklistManageService checklistManageService;
     @Autowired
@@ -137,7 +137,7 @@ class AuthServiceTest extends IntegrationTestSupport {
             sum += response.questions().size();
         }
 
-        assertThat(sum).isEqualTo(Question.findDefaultQuestions().size());
+        assertThat(sum).isEqualTo(questionService.findDefaultQuestions().size());
     }
 
     @DisplayName("회원 가입 성공 : 회원 가입시 디폴트 체크리스트를 추가")
@@ -281,7 +281,7 @@ class AuthServiceTest extends IntegrationTestSupport {
             sum += response.questions().size();
         }
 
-        assertThat(sum).isEqualTo(Question.findDefaultQuestions().size());
+        assertThat(sum).isEqualTo(questionService.findDefaultQuestions().size());
     }
 
     @DisplayName("카카오 로그인 성공 : 회원 가입시 디폴트 체크리스트를 추가")
@@ -298,6 +298,34 @@ class AuthServiceTest extends IntegrationTestSupport {
         User user = authService.getAuthUser(token.accessToken());
         ChecklistsPreviewResponse response = checklistManageService.readAllChecklistsPreview(user);
         assertThat(response.checklists()).hasSize(1);
+    }
+
+    @DisplayName("로그아웃 성공")
+    @Test
+    void logout() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        String accessToken = jwtTokenProvider.createAccessToken(user);
+        String refreshToken = jwtTokenProvider.createRefreshToken(user);
+
+        // when & then
+        assertThatCode(() -> authService.logout(accessToken, refreshToken))
+                .doesNotThrowAnyException();
+    }
+
+    @DisplayName("로그아웃 실패 : accessToken 유저와 refreshToken 유저가 다른 경우")
+    @Test
+    void logout_userMismatch_exception() {
+        // given
+        User user1 = userRepository.save(UserFixture.USER1());
+        User user2 = userRepository.save(UserFixture.USER2());
+        String accessToken = jwtTokenProvider.createAccessToken(user1);
+        String refreshToken = jwtTokenProvider.createRefreshToken(user2);
+
+        // when & then
+        assertThatThrownBy(() -> authService.logout(accessToken, refreshToken))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.AUTHENTICATION_TOKEN_USER_MISMATCH.getMessage());
     }
 
     @DisplayName("게스트 유저 할당 실패 : 게스트 유저의 수가 2명이면 예외를 발생")
@@ -333,22 +361,6 @@ class AuthServiceTest extends IntegrationTestSupport {
 
         // then
         assertThat(assignedGuestUser).isEqualTo(guestUser);
-    }
-
-    @DisplayName("로그아웃 실패 : 다른 유저의 토큰인 경우")
-    @Test
-    void logout_invalid_ownership_exception() {
-        // given
-        String accessToken = jwtTokenProvider.createAccessToken(UserFixture.USER1_WITH_ID());
-        String refreshToken = jwtTokenProvider.createRefreshToken(UserFixture.USER1_WITH_ID());
-
-        //when & then
-        assertThatThrownBy(() -> authService.logout(
-                accessToken,
-                refreshToken,
-                UserFixture.USER2_WITH_ID()))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER.getMessage());
     }
 
     @DisplayName("액세스 토큰 재발행 성공")

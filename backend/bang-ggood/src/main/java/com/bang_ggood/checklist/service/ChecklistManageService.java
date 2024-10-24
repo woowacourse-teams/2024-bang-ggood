@@ -17,9 +17,8 @@ import com.bang_ggood.option.domain.ChecklistOption;
 import com.bang_ggood.option.dto.response.SelectedOptionResponse;
 import com.bang_ggood.option.service.ChecklistOptionService;
 import com.bang_ggood.question.domain.Answer;
-import com.bang_ggood.question.domain.CategoryEntity;
+import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestion;
-import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.response.SelectedCategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.SelectedQuestionResponse;
 import com.bang_ggood.question.service.ChecklistQuestionService;
@@ -86,7 +85,6 @@ public class ChecklistManageService {
         List<ChecklistQuestion> checklistQuestions = checklistRequest.questions().stream()
                 .map(question -> new ChecklistQuestion(
                         checklist,
-                        Question.fromId(question.questionId()),
                         questionService.readQuestion(question.questionId()),
                         Answer.from(question.answer())))
                 .toList();
@@ -157,7 +155,7 @@ public class ChecklistManageService {
                 .toList();
     }
 
-    private SelectedCategoryQuestionsResponse categorizeChecklistQuestions(CategoryEntity category,
+    private SelectedCategoryQuestionsResponse categorizeChecklistQuestions(Category category,
                                                                            List<ChecklistQuestion> checklistQuestions) {
         List<SelectedQuestionResponse> selectedQuestionResponse = checklistQuestionService.categorizeChecklistQuestions(category, checklistQuestions)
                 .stream()
@@ -252,6 +250,20 @@ public class ChecklistManageService {
         updateChecklistMaintenances(checklistRequest, checklist);
     }
 
+    @Transactional
+    public void updateChecklistByIdV1(User user, Long checklistId, ChecklistRequestV1 checklistRequestV1) {
+        Checklist checklist = checklistService.readChecklist(user, checklistId);
+
+        ChecklistRequest checklistRequest = checklistRequestV1.toChecklistRequest();
+        roomService.updateRoom(checklist.getRoom(), checklistRequest.toRoomEntity());
+        checklistService.updateChecklist(checklist, checklistRequest.toChecklistEntity(checklist.getRoom(), user));
+
+        updateChecklistOptions(checklistRequest, checklist);
+        updateChecklistQuestions(checklistRequest, checklist);
+        updateChecklistMaintenances(checklistRequest, checklist);
+        updateChecklistStations(checklistRequestV1, checklist);
+    }
+
     private void updateChecklistOptions(ChecklistRequest checklistRequest, Checklist checklist) {
         List<ChecklistOption> checklistOptions = checklistRequest.options().stream()
                 .map(option -> new ChecklistOption(checklist, option))
@@ -264,7 +276,6 @@ public class ChecklistManageService {
         List<ChecklistQuestion> updateQuestions = checklistRequest.questions().stream()
                 .map(question -> new ChecklistQuestion(
                         checklist,
-                        Question.fromId(question.questionId()),
                         questionService.readQuestion(question.questionId()),
                         Answer.from(question.answer())))
                 .toList();
@@ -279,5 +290,11 @@ public class ChecklistManageService {
                                 MaintenanceItem.fromId(maintenanceId)))
                         .toList();
         checklistMaintenanceService.updateMaintenances(checklist.getId(), checklistMaintenances);
+    }
+
+    private void updateChecklistStations(ChecklistRequestV1 checklistRequestV1, Checklist checklist) {
+        double latitude = checklistRequestV1.geolocation().latitude();
+        double longitude = checklistRequestV1.geolocation().longitude();
+        checklistStationService.updateChecklistStation(checklist, latitude, longitude);
     }
 }

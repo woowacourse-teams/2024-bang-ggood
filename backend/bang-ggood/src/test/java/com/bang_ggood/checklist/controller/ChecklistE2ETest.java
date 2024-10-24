@@ -154,6 +154,21 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .statusCode(204);
     }
 
+    @DisplayName("체크리스트 수정 v1 성공")
+    @Test
+    void updateChecklistV1() {
+        long checklistId = checklistManageService.createChecklistV1(this.getAuthenticatedUser(),
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST_V1());
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .headers(this.headers)
+                .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST_V1())
+                .when().put("/v1/checklists/" + checklistId)
+                .then().log().all()
+                .statusCode(204);
+    }
+
     @DisplayName("체크리스트 수정 실패: 방 이름을 넣지 않은 경우")
     @Test
     void updateChecklist_noRoomName_exception() {

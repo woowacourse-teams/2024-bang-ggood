@@ -120,19 +120,17 @@ public class AuthService {
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.GUEST_USER_NOT_FOUND));
     }
 
-    public void logout(String accessToken, String refreshToken, User user) {
-        log.info("logout accessToken: {}", accessToken);
-        log.info("logout refreshToken: {}", refreshToken);
+    public void logout(String accessToken, String refreshToken) {
         AuthUser accessAuthUser = jwtTokenResolver.resolveAccessToken(accessToken);
         AuthUser refreshAuthUser = jwtTokenResolver.resolveRefreshToken(refreshToken);
-        validateTokenOwnership(user, accessAuthUser, refreshAuthUser);
+        if (!accessAuthUser.id().equals(refreshAuthUser.id())) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_USER_MISMATCH);
+        }
     }
 
     @Transactional(readOnly = true)
     public User getAuthUser(String token) {
         AuthUser authUser = jwtTokenResolver.resolveAccessToken(token);
-        log.info("extractUser token: {}", token);
-        log.info("extractUser authUserId: {}", authUser.id());
         return userRepository.getUserById(authUser.id());
     }
 
@@ -141,14 +139,5 @@ public class AuthService {
         AuthUser authUser = jwtTokenResolver.resolveRefreshToken(refreshToken);
         User user = userRepository.getUserById(authUser.id());
         return jwtTokenProvider.createAccessToken(user);
-    }
-
-    private static void validateTokenOwnership(User user, AuthUser accessAuthUser, AuthUser refreshAuthUser) {
-        if (!accessAuthUser.id().equals(refreshAuthUser.id())) {
-            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_USER_MISMATCH);
-        }
-        if (!user.getId().equals(accessAuthUser.id())) {
-            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER);
-        }
     }
 }

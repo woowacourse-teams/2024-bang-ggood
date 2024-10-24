@@ -29,21 +29,17 @@ public class ChecklistQuestion extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Checklist checklist;
 
-    @Enumerated(EnumType.STRING)
-    private Question question;
-
     @JoinColumn(name = "question_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private QuestionEntity questionEntity;
+    private Question question;
 
     @Enumerated(EnumType.STRING)
     private Answer answer;
 
-    public ChecklistQuestion(Checklist checklist, Question question, QuestionEntity questionEntity, Answer answer) {
+    public ChecklistQuestion(Checklist checklist, Question question, Answer answer) {
         this.checklist = checklist;
-        this.question = question;
         this.answer = answer;
-        this.questionEntity = questionEntity;
+        this.question = question;
     }
 
     public void change(ChecklistQuestion checklistQuestion) {
@@ -59,11 +55,11 @@ public class ChecklistQuestion extends BaseEntity {
     }
 
     public Integer getQuestionId() {
-        return questionEntity.getId();
+        return question.getId();
     }
 
-    public boolean isCategory(CategoryEntity category) {
-        return questionEntity.getCategory().equals(category);
+    public boolean isCategory(Category category) {
+        return question.getCategory().equals(category);
     }
 
     @Override
@@ -88,7 +84,7 @@ public class ChecklistQuestion extends BaseEntity {
         return "ChecklistQuestion{" +
                 "id=" + id +
                 ", checklist=" + checklist +
-                ", questionEntity=" + questionEntity +
+                ", question=" + question +
                 ", answer=" + answer +
                 '}';
     }

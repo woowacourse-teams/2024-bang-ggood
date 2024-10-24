@@ -191,8 +191,8 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
     void readCustomChecklistQuestions() {
         // given
         User user = userRepository.save(UserFixture.USER1());
-        CustomChecklistQuestion question1 = new CustomChecklistQuestion(user, Question.ROOM_CONDITION_5, QuestionFixture.QUESTION1_CATEGORY1);
-        CustomChecklistQuestion question2 = new CustomChecklistQuestion(user, Question.BATHROOM_1, QuestionFixture.QUESTION2_CATEGORY1);
+        CustomChecklistQuestion question1 = new CustomChecklistQuestion(user, QuestionFixture.QUESTION1_CATEGORY1);
+        CustomChecklistQuestion question2 = new CustomChecklistQuestion(user, QuestionFixture.QUESTION2_CATEGORY1);
         List<CustomChecklistQuestion> questions = List.of(question1, question2);
         customChecklistQuestionRepository.saveAll(questions);
 
@@ -209,7 +209,7 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
     void updateCustomChecklist() {
         // given
         User user = userRepository.save(UserFixture.USER1());
-        List<Question> questions = List.of(Question.OUTSIDE_1, Question.BATHROOM_2, Question.SECURITY_1);
+        List<Question> questions = List.of(QuestionFixture.QUESTION1_CATEGORY1, QuestionFixture.QUESTION3_CATEGORY2);
 
         // when
         checklistQuestionService.updateCustomChecklist(user, questions);
@@ -235,10 +235,10 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
     @Test
     void updateCustomChecklist_duplicatedQuestion_exception() {
         // given
-        List<Question> questions = List.of(Question.OUTSIDE_1, Question.OUTSIDE_1);
+        List<Question> questions = List.of(QuestionFixture.QUESTION1_CATEGORY1, QuestionFixture.QUESTION1_CATEGORY1);
 
         // when & then
-        assertThatThrownBy(() -> checklistQuestionService.updateCustomChecklist(UserFixture.USER1(), questions))
+        assertThatThrownBy(() -> checklistQuestionService.updateCustomChecklist(UserFixture.USER1, questions))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
     }

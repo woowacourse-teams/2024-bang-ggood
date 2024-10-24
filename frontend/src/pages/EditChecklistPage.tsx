@@ -71,7 +71,7 @@ const EditChecklistPage = () => {
     };
 
     setChecklistDataToStore();
-  }, [checklistId]);
+  }, [checklistId, checklist, isSuccess]);
 
   return (
     <>
@@ -84,7 +84,7 @@ const EditChecklistPage = () => {
         <ErrorBoundary fallback={<ChecklistTabFallback />}>
           <EditChecklistTab checklistId={checklistId} />
         </ErrorBoundary>
-        <ChecklistContent />
+        {checklist && <ChecklistContent />}
       </TabProvider>
 
       {/* 메모 모달 */}

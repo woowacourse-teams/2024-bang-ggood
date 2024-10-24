@@ -1,9 +1,8 @@
 package com.bang_ggood.question.service;
 
-import com.bang_ggood.question.domain.CategoryEntity;
+import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
-import com.bang_ggood.question.domain.QuestionEntity;
 import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionResponse;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
@@ -27,9 +26,9 @@ public class QuestionManageService {
 
     @Transactional
     public void createDefaultCustomChecklistQuestions(User user) {
-        List<CustomChecklistQuestion> customChecklistQuestions = Question.findDefaultQuestions()
+        List<CustomChecklistQuestion> customChecklistQuestions = questionService.findDefaultQuestions()
                 .stream()
-                .map(question -> new CustomChecklistQuestion(user, question, questionService.readQuestion(question.getId()))) // TODO : 변경필요
+                .map(question -> new CustomChecklistQuestion(user, question))
                 .toList();
 
         checklistQuestionService.createDefaultCustomQuestions(customChecklistQuestions);
@@ -46,15 +45,13 @@ public class QuestionManageService {
         return new CustomChecklistQuestionsResponse(categoryQuestionsResponses);
     }
 
-    private List<CategoryQuestionsResponse> categorizeCustomChecklistQuestions(
-            User user,
-            List<CustomChecklistQuestion> customChecklistQuestions) {
+    private List<CategoryQuestionsResponse> categorizeCustomChecklistQuestions(User user, List<CustomChecklistQuestion> customChecklistQuestions) {
         List<CategoryQuestionsResponse> categoryQuestionsResponses = new ArrayList<>();
 
-        for (CategoryEntity category : questionService.findAllCustomQuestionCategories(user)) {
+        for (Category category : questionService.findAllCustomQuestionCategories(user)) {
             List<QuestionResponse> questionResponses = customChecklistQuestions.stream()
-                    .filter(customChecklistQuestion -> customChecklistQuestion.isSameCategory(category)) // TODO 리팩토링
-                    .map(customChecklistQuestion -> new QuestionResponse(customChecklistQuestion.getQuestionEntity(), questionService.readHighlights(customChecklistQuestion.getQuestionId())))
+                    .filter(customChecklistQuestion -> customChecklistQuestion.isSameCategory(category))
+                    .map(customChecklistQuestion -> new QuestionResponse(customChecklistQuestion.getQuestion(), questionService.readHighlights(customChecklistQuestion.getQuestionId())))
                     .toList();
 
             categoryQuestionsResponses.add(CategoryQuestionsResponse.of(category, questionResponses));
@@ -74,8 +71,8 @@ public class QuestionManageService {
             List<CustomChecklistQuestion> customChecklistQuestions) {
         List<CategoryCustomChecklistQuestionResponse> response = new ArrayList<>();
 
-        for (CategoryEntity category : questionService.findAllCategories()) {
-            List<QuestionEntity> categoryQuestions = questionService.readQuestionsByCategory(category);
+        for (Category category : questionService.findAllCategories()) {
+            List<Question> categoryQuestions = questionService.readQuestionsByCategory(category);
             List<CustomChecklistQuestionResponse> questions = categoryQuestions.stream()
                     .map(question -> new CustomChecklistQuestionResponse(
                             question,
@@ -90,10 +87,7 @@ public class QuestionManageService {
 
     @Transactional
     public void updateCustomChecklist(User user, CustomChecklistUpdateRequest request) {
-        List<Question> questions = request.questionIds().stream()
-                .map(Question::fromId)
-                .toList();
-
+        List<Question> questions = questionService.readAllQuestionByIds(request.questionIds());
         checklistQuestionService.updateCustomChecklist(user, questions);
     }
 }

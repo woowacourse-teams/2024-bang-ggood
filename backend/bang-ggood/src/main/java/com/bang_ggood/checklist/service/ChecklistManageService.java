@@ -15,9 +15,8 @@ import com.bang_ggood.option.domain.ChecklistOption;
 import com.bang_ggood.option.dto.response.SelectedOptionResponse;
 import com.bang_ggood.option.service.ChecklistOptionService;
 import com.bang_ggood.question.domain.Answer;
-import com.bang_ggood.question.domain.CategoryEntity;
+import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestion;
-import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.response.SelectedCategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.SelectedQuestionResponse;
 import com.bang_ggood.question.service.ChecklistQuestionService;
@@ -83,7 +82,6 @@ public class ChecklistManageService {
         List<ChecklistQuestion> checklistQuestions = checklistRequest.questions().stream()
                 .map(question -> new ChecklistQuestion(
                         checklist,
-                        Question.fromId(question.questionId()),
                         questionService.readQuestion(question.questionId()),
                         Answer.from(question.answer())))
                 .toList();
@@ -154,7 +152,7 @@ public class ChecklistManageService {
                 .toList();
     }
 
-    private SelectedCategoryQuestionsResponse categorizeChecklistQuestions(CategoryEntity category,
+    private SelectedCategoryQuestionsResponse categorizeChecklistQuestions(Category category,
                                                                            List<ChecklistQuestion> checklistQuestions) {
         List<SelectedQuestionResponse> selectedQuestionResponse = checklistQuestionService.categorizeChecklistQuestions(category, checklistQuestions)
                 .stream()
@@ -236,7 +234,6 @@ public class ChecklistManageService {
         List<ChecklistQuestion> updateQuestions = checklistRequest.questions().stream()
                 .map(question -> new ChecklistQuestion(
                         checklist,
-                        Question.fromId(question.questionId()),
                         questionService.readQuestion(question.questionId()),
                         Answer.from(question.answer())))
                 .toList();

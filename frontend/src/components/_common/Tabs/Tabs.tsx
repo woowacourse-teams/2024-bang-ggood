@@ -78,7 +78,7 @@ const S = {
     max-width: 60rem;
   `,
   EmptyBox: styled.div`
-    height: 5.4rem;
+    height: 5.6rem;
   `,
   Container: styled.div`
     position: fixed;
@@ -101,6 +101,6 @@ const S = {
   FlexContainer: styled.div`
     display: inline-flex;
     gap: 1rem;
-    margin: 1rem 1.6rem;
+    margin: 0.8rem 1.6rem;
   `,
 };

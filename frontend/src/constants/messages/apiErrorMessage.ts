@@ -19,6 +19,7 @@ export const API_ERROR_MESSAGE = {
 
   // 서버 에러
   CHECKLIST_SERVER_ERROR: '질문 생성 중 오류가 발생했어요. \n잠시 후 다시 시도해 주세요.',
+  CHECKLIST_NOT_FOUND: '체크리스트를 찾을 수 없어요! \n잠시 후 다시 시도해 주세요.',
   INTERNAL_SERVER_ERROR: '서버에 문제가 발생했어요. \n잠시 후 다시 시도해 주세요.',
   OAUTH_SERVER_ERROR: '카카오 서버와의 연결에 문제가 발생했어요. \n잠시 후 다시 시도해 주세요.',
   PASSWORD_HASHING_ERROR: '비밀번호 처리 중 오류가 발생했어요. \n잠시 후 다시 시도해 주세요.',

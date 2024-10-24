@@ -3,7 +3,11 @@ import styled from '@emotion/styled';
 import { flexCenter, title4 } from '@/styles/common';
 import SUBWAY_LINE_PALLETE, { SubwayLineName } from '@/styles/subway';
 
-const SubwayLineIcon = ({ lineName }: { lineName: SubwayLineName }) => {
+interface Props {
+  lineName: SubwayLineName;
+}
+
+const SubwayLineIcon = ({ lineName }: Props) => {
   const lineColor = SUBWAY_LINE_PALLETE[lineName];
 
   const isNumberTypeSubwayName = lineName.slice(-2) === '호선' && lineName.length === 3;

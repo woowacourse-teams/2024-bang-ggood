@@ -1,11 +1,9 @@
 import { expect, test } from '@playwright/test';
 
-import { ROUTE_PATH } from '@/constants/routePath';
-
 import { DefaultChecklistTabsNames, FirstCategoryQuestion } from '../constants/constants';
 
 test('체크리스트가 인풋을 채우고 제출할 수 있다.', async ({ page }) => {
-  await page.goto(ROUTE_PATH.checklistNew);
+  await page.goto('/checklist/new');
   const tabs = page.locator('.tab');
   const roomInfoTab = tabs.nth(0);
 

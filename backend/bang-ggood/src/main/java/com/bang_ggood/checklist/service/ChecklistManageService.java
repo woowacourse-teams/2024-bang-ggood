@@ -231,11 +231,15 @@ public class ChecklistManageService {
 
     private SubwayStationResponse readNearstStation(Checklist checklist) {
         List<ChecklistStation> checklistStations = checklistStationService.readChecklistStationsByChecklist(checklist);
+        if (checklistStations.isEmpty()) {
+            return null;
+        }
+
         List<SubwayStationResponse> stationResponses = checklistStations.stream()
                 .map(SubwayStationResponse::from)
                 .toList();
-        SubwayStationResponses from = SubwayStationResponses.from(stationResponses);
-        return from.getStations().get(0);
+        SubwayStationResponses subwayStationResponses = SubwayStationResponses.from(stationResponses);
+        return subwayStationResponses.getStations().get(0);
     }
 
     @Transactional

@@ -25,7 +25,7 @@ const ChecklistCard = ({ checklist }: Props) => {
       <S.Row>
         <S.LocationWrapper>
           <LocationLineIcon aria-hidden="true" />
-          {formattedUndefined(address, 'string', '주소')}
+          {formattedUndefined(address, 'string')}
         </S.LocationWrapper>
         <LikeButton isLiked={isLiked} checklistId={checklistId} />
       </S.Row>
@@ -37,7 +37,7 @@ const ChecklistCard = ({ checklist }: Props) => {
       </S.Column>
       <S.Row>
         <S.SummaryWrapper>
-          <S.SummaryBox>{`"${formattedUndefined(summary, 'string', '한줄평')}"`}</S.SummaryBox>
+          <S.SummaryBox>{`"${formattedUndefined(summary, 'string')}"`}</S.SummaryBox>
         </S.SummaryWrapper>
         <S.Date>{formattedDate(createdAt ?? '')}</S.Date>
       </S.Row>

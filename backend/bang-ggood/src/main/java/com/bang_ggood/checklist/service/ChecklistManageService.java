@@ -224,6 +224,20 @@ public class ChecklistManageService {
         updateChecklistMaintenances(checklistRequest, checklist);
     }
 
+    @Transactional
+    public void updateChecklistByIdV1(User user, Long checklistId, ChecklistRequestV1 checklistRequestV1) {
+        Checklist checklist = checklistService.readChecklist(user, checklistId);
+
+        ChecklistRequest checklistRequest = checklistRequestV1.toChecklistRequest();
+        roomService.updateRoom(checklist.getRoom(), checklistRequest.toRoomEntity());
+        checklistService.updateChecklist(checklist, checklistRequest.toChecklistEntity(checklist.getRoom(), user));
+
+        updateChecklistOptions(checklistRequest, checklist);
+        updateChecklistQuestions(checklistRequest, checklist);
+        updateChecklistMaintenances(checklistRequest, checklist);
+        updateChecklistStations(checklistRequestV1, checklist);
+    }
+
     private void updateChecklistOptions(ChecklistRequest checklistRequest, Checklist checklist) {
         List<ChecklistOption> checklistOptions = checklistRequest.options().stream()
                 .map(option -> new ChecklistOption(checklist, option))
@@ -251,5 +265,11 @@ public class ChecklistManageService {
                                 MaintenanceItem.fromId(maintenanceId)))
                         .toList();
         checklistMaintenanceService.updateMaintenances(checklist.getId(), checklistMaintenances);
+    }
+
+    private void updateChecklistStations(ChecklistRequestV1 checklistRequestV1, Checklist checklist) {
+        double latitude = checklistRequestV1.geolocation().latitude();
+        double longitude = checklistRequestV1.geolocation().longitude();
+        checklistStationService.updateChecklistStation(checklist, latitude, longitude);
     }
 }

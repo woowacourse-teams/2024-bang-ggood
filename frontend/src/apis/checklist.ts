@@ -18,8 +18,9 @@ export const getChecklistAllQuestions = async () => {
 
 export const getChecklistDetail = async (id: number) => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_ID_V1(id) });
-  const data = await response.json();
-  return data as ChecklistInfo;
+  const data = (await response.json()) as ChecklistInfo;
+  data.room = Object.fromEntries(Object.entries(data.room).filter(([, value]) => value !== null));
+  return data;
 };
 
 export const getChecklists = async (isLikeFiltered: boolean = false) => {

@@ -2,8 +2,8 @@ import fetcher from '@/apis/fetcher';
 import { BASE_URL, ENDPOINT } from '@/apis/url';
 import { User, UserTokenValid } from '@/types/user';
 
-export const postLogin = async (code: string, redirectUri: string) => {
-  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.LOGIN, body: { code, redirectUri } });
+export const postOAuthLogin = async (code: string, redirectUri: string) => {
+  const response = await fetcher.post({ url: BASE_URL + ENDPOINT.OAUTH_LOGIN, body: { code, redirectUri } });
   return response;
 };
 
@@ -52,9 +52,9 @@ export const postSignUp = async ({ name, email, password }: { name: string; emai
 };
 
 export const postSignIn = async ({ email, password }: { email: string; password: string }) => {
-  return await fetch(`${BASE_URL}${ENDPOINT.SIGN_IN}`, {
-    method: 'POST',
-    body: JSON.stringify({ email, password }),
+  return await fetcher.post({
+    url: `${BASE_URL}${ENDPOINT.SIGN_IN}`,
+    body: { email, password },
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
   });

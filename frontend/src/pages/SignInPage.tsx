@@ -2,12 +2,13 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getUserInfo, postSignIn } from '@/apis/user';
+import { getUserInfo } from '@/apis/user';
 import { BangBangIcon, BangGgoodTextIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
 import { ROUTE_PATH } from '@/constants/routePath';
+import usePostSignInQuery from '@/hooks/query/usePostSignInQuery';
 import useToast from '@/hooks/useToast';
 import useValidateInput from '@/hooks/useValidateInput';
 import { flexCenter, title3, title4 } from '@/styles/common';
@@ -39,32 +40,29 @@ const SignInPage = () => {
 
   const disabled = !isEmailValidated || !isPasswordValidated;
 
-  const handleSubmit = async () => {
-    const response = await postSignIn({ email, password });
-    if (response.status === 200) {
-      const result = await getUserInfo();
-      showToast({ message: `${result?.userName}님, 환영합니다.`, type: 'confirm' });
-      return navigate(ROUTE_PATH.home);
-    } else {
-      const errorData = await response.json();
-      const errorMessage = errorData.message;
-      setPostErrorMessage(errorMessage);
-    }
-  };
+  const { mutate: signIn } = usePostSignInQuery();
+  const handleSubmit = async () =>
+    await signIn(
+      { email, password },
+      {
+        onSuccess: async () => {
+          const result = await getUserInfo();
+          showToast({ message: `${result?.userName}님, 환영합니다.`, type: 'confirm' });
+          return navigate(ROUTE_PATH.home);
+        },
+        onError: error => setPostErrorMessage(error.message),
+      },
+    );
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.keyCode === 13 && !disabled) {
+    if (event.key === 'Enter' && !disabled) {
       handleSubmit();
     }
   };
 
-  const handleMoveSignUp = () => {
-    navigate(ROUTE_PATH.signUp);
-  };
+  const handleMoveSignUp = () => navigate(ROUTE_PATH.signUp);
 
-  const handleClickBackward = () => {
-    navigate(ROUTE_PATH.root);
-  };
+  const handleClickBackward = () => navigate(ROUTE_PATH.root);
 
   return (
     <>

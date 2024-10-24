@@ -1,17 +1,14 @@
 // Arrow
 import ArrowBack from '@/assets/icons/arrow/arrow-back.svg';
 import ArrowDownSmall from '@/assets/icons/arrow/arrow-down-small.svg';
-import ArrowLeftYellowFill from '@/assets/icons/arrow/arrow-left-yellow-fill.svg';
 import ArrowRightCircle from '@/assets/icons/arrow/arrow-right-circle.svg';
 import ArrowRightGreen from '@/assets/icons/arrow/arrow-right-green.svg';
-import ArrowRightYellowFill from '@/assets/icons/arrow/arrow-right-yellow-fill.svg';
 import ArrowRightYellow from '@/assets/icons/arrow/arrow-right-yellow.svg';
 import ArrowUpSmall from '@/assets/icons/arrow/arrow-up-small.svg';
 
 // common-icons
 import CheckIcon from '@/assets/icons/common/check.svg';
 import CloseIcon from '@/assets/icons/common/close.svg';
-import Delete from '@/assets/icons/common/delete.svg';
 import InputRequiredDot from '@/assets/icons/common/input-required-dot.svg';
 import LocationLineIcon from '@/assets/icons/common/location-lined.svg';
 import Memo from '@/assets/icons/common/memo.svg';
@@ -65,11 +62,9 @@ import Error500 from '@/assets/icons/error/500.svg';
 export {
   ArrowBack,
   ArrowDownSmall,
-  ArrowLeftYellowFill,
   ArrowRightCircle,
   ArrowRightGreen,
   ArrowRightYellow,
-  ArrowRightYellowFill,
   ArrowUpSmall,
   BangBangCryIcon,
   BangBangIcon,
@@ -79,7 +74,6 @@ export {
   Calendar,
   CheckIcon,
   CloseIcon,
-  Delete,
   DropdownMark,
   Error404,
   Error500,

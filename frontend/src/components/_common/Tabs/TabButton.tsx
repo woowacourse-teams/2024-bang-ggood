@@ -48,7 +48,7 @@ const S = {
 
     ${flexCenter};
     padding: 1rem 1.6rem;
-    border: ${({ active, theme }) => `.3rem solid ${active ? theme.palette.yellow400 : theme.palette.background}`};
+    border: ${({ active, theme }) => `.2rem solid ${active ? theme.palette.yellow300 : theme.palette.background}`};
 
     background-color: ${({ theme, active }) => (active ? theme.palette.yellow100 : theme.palette.background)};
 

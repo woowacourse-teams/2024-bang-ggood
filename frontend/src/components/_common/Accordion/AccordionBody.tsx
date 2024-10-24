@@ -16,11 +16,14 @@ const AccordionBody = ({ children, id }: Props) => {
 
   useEffect(() => {
     if (bodyRef.current) {
-      if (isCurrentAccordionOpen) {
-        setMaxHeight(bodyRef.current.scrollHeight);
-      } else {
-        setMaxHeight(0);
-      }
+      const adjustMaxHeight = () => {
+        if (isCurrentAccordionOpen) {
+          setMaxHeight(bodyRef.current!.scrollHeight);
+        } else {
+          setMaxHeight(0);
+        }
+      };
+      setTimeout(adjustMaxHeight, 50);
     }
   }, [isCurrentAccordionOpen]);
 
@@ -34,10 +37,10 @@ const AccordionBody = ({ children, id }: Props) => {
 const S = {
   Container: styled.div<{ isOpen: boolean; maxHeight: number }>`
     overflow: hidden;
-    margin-top: 1rem;
+    margin: 1rem 0 0.5rem;
     max-height: ${({ maxHeight }) => maxHeight}px;
     transition: max-height 0.4s cubic-bezier(0.15, 0.1, 0.25, 1);
-    border-radius: 1.2rem;
+    border-radius: 0.8rem;
 
     background-color: ${({ theme }) => theme.palette.white};
   `,

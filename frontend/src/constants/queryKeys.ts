@@ -1,5 +1,6 @@
 export const QUERY_KEYS = {
   USER: 'user',
+  IS_USER_VALID: 'user-valid',
   ARTICLE: 'article',
   ARTICLE_LIST: 'article-list',
   CHECKLIST: 'checklist',

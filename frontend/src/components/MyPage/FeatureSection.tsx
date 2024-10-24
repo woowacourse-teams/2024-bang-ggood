@@ -6,7 +6,7 @@ import UserFeature from '@/components/MyPage/UserFeature';
 const FeatureSection = () => {
   return (
     <ErrorBoundary FallbackComponent={GuestFeature}>
-      <UserFeature />;
+      <UserFeature />
     </ErrorBoundary>
   );
 };

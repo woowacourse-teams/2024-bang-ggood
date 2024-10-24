@@ -1,5 +1,7 @@
 import test, { expect } from '@playwright/test';
 
+import { ROUTE_PATH } from '@/constants/routePath';
+
 import {
   DefaultChecklistTabsNames,
   DefaultQuestionSelectTabsNames,
@@ -8,7 +10,7 @@ import {
 } from '../constants/constants';
 
 test('체크리스트 생성 페이지에 들어가면 탭과 질문들이 잘 렌더링된다.', async ({ page }) => {
-  await page.goto('/checklist/new');
+  await page.goto(ROUTE_PATH.checklistNew);
   const tabs = page.locator('.tab');
   await expect(tabs).toHaveCount(6, { timeout: 3000 });
 
@@ -37,7 +39,7 @@ test('체크리스트 질문 선택 페이지에 들어가면 탭과 질문들�
 });
 
 test('체크리스트 편집 페이지에 들어가면 탭과 질문들이 잘 렌더링된다.', async ({ page }) => {
-  await page.goto('/checklist');
+  await page.goto(ROUTE_PATH.checklistList);
   await page.getByTestId('checklist-card').nth(0).click();
   const checklistEditButton = page.locator('button[id="checklistEditButton"]');
   await checklistEditButton.click();

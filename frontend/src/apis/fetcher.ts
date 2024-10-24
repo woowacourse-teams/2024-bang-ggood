@@ -1,3 +1,5 @@
+import { captureException } from '@sentry/react';
+
 import APIError from '@/apis/error/APIError';
 import { deleteToken, postReissueAccessToken } from '@/apis/user';
 import { API_ERROR_MESSAGE } from '@/constants/messages/apiErrorMessage';
@@ -38,7 +40,9 @@ const handleError = async (response: Response, requestProps: RequestProps) => {
     return handleUnauthorizedError(response, requestProps, errorCode);
   }
 
-  throw new APIError(response.status, errorCode);
+  const apiError = new APIError(response.status, errorCode);
+  captureException(apiError);
+  throw apiError;
 };
 
 const handleUnauthorizedError = async (response: Response, requestProps: RequestProps, errorCode: string) => {

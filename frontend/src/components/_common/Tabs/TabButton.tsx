@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import React, { forwardRef } from 'react';
 
 import { trackTabButton } from '@/service/amplitude/trackEvent';
-import { flexCenter, title3 } from '@/styles/common';
+import { flexCenter } from '@/styles/common';
 import { Tab } from '@/types/tab';
 
 interface Props extends Tab {
@@ -45,19 +45,24 @@ const S = {
   Container: styled.div<{ active: boolean }>`
     position: relative;
     z-index: ${({ theme }) => theme.zIndex.TABS};
+
     ${flexCenter};
-    margin-top: 1rem;
-    padding: 1rem 1.6rem;
+    padding: 0.6rem 1.2rem;
+    border: ${({ active, theme }) => `.2rem solid ${active ? theme.palette.yellow300 : theme.palette.background}`};
+
+    background-color: ${({ theme, active }) => (active ? theme.palette.yellow100 : theme.palette.background)};
+
+    border-radius: 10px;
 
     color: ${({ theme, active }) => (active ? theme.palette.yellow600 : theme.palette.black)};
-    font-weight: ${({ theme }) => theme.text.weight.bold};
     cursor: pointer;
-    border-bottom: ${({ active, theme }) =>
-      active ? `.3rem solid ${theme.palette.yellow400}` : `.3rem solid ${theme.palette.yellow100}`};
+
+    font-weight: 600;
   `,
   TextBox: styled.div`
-    ${title3}
     display: flex;
+
+    font-size: 1.8rem;
     align-items: center;
     gap: 0.5rem;
   `,
@@ -69,7 +74,7 @@ const S = {
     height: 0.5rem;
     margin-left: 0.8rem;
 
-    background-color: ${({ theme }) => theme.palette.grey400};
+    background-color: ${({ theme }) => theme.palette.grey300};
     border-radius: 50%;
   `,
 };

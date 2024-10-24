@@ -18,7 +18,7 @@ const Address = () => {
       ) : (
         <FormField.TextBox text={'주소를 추가해 주세요.'} id="address" />
       )}
-      <FlexBox.Horizontal style={{ marginTop: '2rem' }}>
+      <FlexBox.Horizontal style={{ marginTop: '2rem', alignContent: 'center', justifyContent: 'center' }}>
         {/*실시간 위치 모달*/}
         <RealTimeAddressModal />
         {/*주소 찾기 모달*/}

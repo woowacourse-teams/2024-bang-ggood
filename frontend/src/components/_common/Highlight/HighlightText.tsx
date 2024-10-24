@@ -44,7 +44,7 @@ const S = {
   `,
   Highlight: styled.span`
     display: inline;
-    background: linear-gradient(to top, ${theme.palette.yellow500} 50%, transparent 50%);
+    background: linear-gradient(to top, ${theme.palette.yellow400} 50%, transparent 50%);
     ${title3};
     margin: 0 0.2rem;
 

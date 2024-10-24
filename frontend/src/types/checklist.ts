@@ -48,11 +48,10 @@ export interface ChecklistPreview {
   address: string;
   deposit: number;
   rent: number;
+  station: SubwayStation;
   createdAt: string;
   summary: string;
   isLiked: boolean;
-  station: string;
-  walkingTime: number;
 }
 
 // 체크리스트 디테일
@@ -62,10 +61,7 @@ export interface ChecklistInfo {
   room: Partial<RoomInfo>;
   options: Option[];
   categories: ChecklistCategoryWithAnswer[];
-  //TODO: 나중에 백엔드 api 수정되면 수정
-  stations: {
-    stations: SubwayStation[];
-  };
+  stations: SubwayStation[];
 }
 
 export interface ChecklistSelectedQuestions {
@@ -82,7 +78,7 @@ export interface ChecklistPostForm {
   room: RoomInfo;
   options: number[];
   questions: AnswerPostForm[];
-  geolocation?: Position; //TODO: 나중에 지우기
+  geolocation?: Position;
 }
 
 export type MutateType = 'add' | 'edit';

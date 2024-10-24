@@ -113,7 +113,9 @@ export const roomInfoApiMapper = (values: Partial<RoomInfoStoreState>) => {
     occupancyMonth: values.occupancyMonth === 0 ? undefined : values.occupancyMonth,
   };
 
-  return mapObjUndefinedToNull(result) as Nullable<Partial<RoomInfoStoreState>>;
+  const { station: _, ...resultToSubmit } = result;
+
+  return mapObjUndefinedToNull(resultToSubmit) as Nullable<Partial<RoomInfoStoreState>>;
 };
 
 export default roomInfoStore;

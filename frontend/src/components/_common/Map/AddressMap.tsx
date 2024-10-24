@@ -42,7 +42,9 @@ const AddressMap = ({ location }: { location: string }) => {
       });
     };
 
-    loadExternalScriptWithCallback('kakaoMap', initializeMap);
+    if (location) {
+      loadExternalScriptWithCallback('kakaoMap', initializeMap);
+    }
   }, [location]);
 
   const handleOpenKakaoMap = () => {
@@ -54,14 +56,18 @@ const AddressMap = ({ location }: { location: string }) => {
   };
 
   return (
-    <S.Box>
-      <S.Map ref={mapContainerRef}>
-        <S.LinkButtonBox>
-          <S.LinkButton onClick={handleOpenKakaoMap} src={kakaoMapImg} />
-          <S.LinkButton onClick={handleOpenNaverMap} src={naverMapImg} />
-        </S.LinkButtonBox>
-      </S.Map>
-    </S.Box>
+    <>
+      {location && (
+        <S.Box>
+          <S.Map ref={mapContainerRef}>
+            <S.LinkButtonBox>
+              <S.LinkButton onClick={handleOpenKakaoMap} src={kakaoMapImg} />
+              <S.LinkButton onClick={handleOpenNaverMap} src={naverMapImg} />
+            </S.LinkButtonBox>
+          </S.Map>
+        </S.Box>
+      )}
+    </>
   );
 };
 

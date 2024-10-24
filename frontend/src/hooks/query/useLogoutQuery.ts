@@ -6,12 +6,14 @@ import { QUERY_KEYS } from '@/constants/queryKeys';
 import { ROUTE_PATH } from '@/constants/routePath';
 
 const useLogoutQuery = () => {
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
   return useMutation({
     mutationFn: postLogout,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.AUTH] });
+      queryClient.clear();
       navigate(ROUTE_PATH.root);
     },
   });

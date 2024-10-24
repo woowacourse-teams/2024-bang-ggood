@@ -27,6 +27,6 @@ export default SubwayStations;
 const S = {
   Box: styled.div`
     ${flexColumn};
-    gap: .5rem;
+    gap: 0.5rem;
   `,
 };

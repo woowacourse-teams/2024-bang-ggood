@@ -40,7 +40,7 @@ export const postChecklist = async (checklist: ChecklistPostForm) => {
 export const putChecklist = async (id: number, checklist: ChecklistPostForm) => {
   const mappedRoomInfo = roomInfoApiMapper(checklist.room);
   const mappedChecklist = { ...checklist, room: mappedRoomInfo };
-  const response = await fetcher.put({ url: BASE_URL + ENDPOINT.CHECKLIST_ID(id), body: mappedChecklist });
+  const response = await fetcher.put({ url: BASE_URL + ENDPOINT.CHECKLIST_ID_V1(id), body: mappedChecklist });
   return response;
 };
 

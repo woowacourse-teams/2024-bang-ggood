@@ -21,5 +21,5 @@ public interface ChecklistStationRepository extends JpaRepository<ChecklistStati
     @Query("UPDATE ChecklistStation cs " +
             "SET cs.deleted = true " +
             "WHERE cs.checklist.id = :checklistId")
-    void deleteAllByChecklistId(Long checklistId);
+    void deleteAllByChecklistId(@Param("checklistId") Long checklistId);
 }

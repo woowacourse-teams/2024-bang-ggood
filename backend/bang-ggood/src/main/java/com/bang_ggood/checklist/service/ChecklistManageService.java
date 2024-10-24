@@ -224,11 +224,11 @@ public class ChecklistManageService {
 
     private ChecklistPreviewResponseV1 mapToChecklistPreviewV1(Checklist checklist) {
         boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
-        SubwayStationResponse stationResponse = readNearstStation(checklist);
+        SubwayStationResponse stationResponse = readNearestStation(checklist);
         return ChecklistPreviewResponseV1.of(checklist, stationResponse, isLiked);
     }
 
-    private SubwayStationResponse readNearstStation(Checklist checklist) {
+    private SubwayStationResponse readNearestStation(Checklist checklist) {
         List<ChecklistStation> checklistStations = checklistStationService.readChecklistStationsByChecklist(checklist);
         List<SubwayStationResponse> stationResponses = checklistStations.stream()
                 .map(SubwayStationResponse::from)

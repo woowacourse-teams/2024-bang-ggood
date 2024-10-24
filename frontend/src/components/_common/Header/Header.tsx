@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ArrowBack, BangGgoodTextIcon } from '@/assets/assets';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { HEADER_SIZE } from '@/constants/style';
-import { flexCenter, title2, title3 } from '@/styles/common';
+import { flexCenter, title3, title4 } from '@/styles/common';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   left?: ReactNode;
@@ -41,7 +41,7 @@ const S = {
     height: ${HEADER_SIZE}rem;
     padding: 1rem 0.8rem;
 
-    background-color: ${({ theme, isTransparent }) => (isTransparent ? 'rgba(255,255,255, 0.3)' : theme.palette.white)};
+    background-color: ${({ theme, isTransparent }) => (isTransparent ? 'rgba(255,255,255, 0.5)' : theme.palette.white)};
 
     max-width: 60rem;
     align-items: center;
@@ -70,13 +70,13 @@ const S = {
   `,
   TextButton: styled.button`
     color: ${({ theme }) => theme.palette.black};
-    ${title3}
+    ${title4}
   `,
   Text: styled.div`
     box-sizing: content-box;
 
     color: ${({ theme }) => theme.palette.black};
-    ${title2}
+    ${title3}
   `,
 };
 

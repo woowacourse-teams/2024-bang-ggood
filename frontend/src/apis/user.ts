@@ -52,9 +52,9 @@ export const postSignUp = async ({ name, email, password }: { name: string; emai
 };
 
 export const postSignIn = async ({ email, password }: { email: string; password: string }) => {
-  return await fetch(`${BASE_URL}${ENDPOINT.SIGN_IN}`, {
-    method: 'POST',
-    body: JSON.stringify({ email, password }),
+  return await fetcher.post({
+    url: `${BASE_URL}${ENDPOINT.SIGN_IN}`,
+    body: { email, password },
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
   });

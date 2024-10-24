@@ -80,12 +80,13 @@ const fetcher = {
     return request({ url, method: 'GET', headers });
   },
 
-  post({ url, body, headers }: FetchProps) {
+  post({ url, body, headers, ...rest }: FetchProps) {
     return request({
       url,
       method: 'POST',
       body,
       headers: { ...headers, 'Content-Type': 'application/json' },
+      ...rest,
     });
   },
 

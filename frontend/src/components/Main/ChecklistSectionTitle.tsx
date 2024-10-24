@@ -7,7 +7,7 @@ const ChecklistSectionTitle = () => {
   const { data: checklistList } = useGetChecklistListQuery();
   return (
     <S.ContainerTitle>
-      나의 체크리스트 <S.Count>{checklistList?.length}</S.Count>
+      내가 둘러본 방 <S.Count>{checklistList?.length}</S.Count>
     </S.ContainerTitle>
   );
 };

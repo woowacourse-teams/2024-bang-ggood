@@ -3,11 +3,11 @@ import styled from '@emotion/styled';
 import { FunctionComponent, SVGProps } from 'react';
 
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
-import { flexCenter, title4 } from '@/styles/common';
+import { flexCenter, title3, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
 
 type ButtonSize = 'xSmall' | 'small' | 'medium' | 'full';
-type ColorOption = 'light' | 'dark' | 'disabled';
+type ColorOption = 'light' | 'dark' | 'primary' | 'disabled';
 type ButtonType = 'button' | 'submit' | 'reset';
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
@@ -75,7 +75,7 @@ const S = {
   `,
   Text: styled.span<{ size: ButtonSize }>`
     ${flexCenter}
-    min-width: ${({ size }) => size === 'full' && 8}rem;
+    min-width: ${({ size }) => (size === 'full' ? '10rem' : '3rem')};
   `,
 };
 
@@ -100,6 +100,16 @@ const ColorStyles = {
       background-color: ${theme.palette.black};
     }
   `,
+  primary: css`
+    background-color: ${theme.palette.yellow500};
+
+    color: ${theme.palette.grey600};
+
+    &:hover,
+    &:active {
+      background-color: ${theme.palette.yellow600};
+    }
+  `,
   disabled: css`
     background-color: ${theme.palette.grey200};
 
@@ -109,16 +119,16 @@ const ColorStyles = {
 
 const sizeStyles = {
   xSmall: css`
-    padding: 0.8rem 1.5rem;
+    padding: 0.8rem 1.2rem;
     ${title4}
     min-width: 7rem;
   `,
   small: css`
-    padding: 1rem 2rem;
-    ${title4}
+    padding: 1rem 1.6rem;
+    ${title3}
   `,
   medium: css`
-    padding: 1rem 4rem;
+    padding: 1rem 1.8rem;
     ${title4}
   `,
   full: css`

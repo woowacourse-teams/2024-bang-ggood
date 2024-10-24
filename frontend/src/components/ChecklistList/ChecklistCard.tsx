@@ -58,6 +58,10 @@ const S = {
     background-color: ${({ theme }) => theme.palette.white};
     ${boxShadow};
     cursor: pointer;
+
+    :hover {
+      background-color: ${({ theme }) => theme.palette.grey200};
+    }
   `,
   Row: styled.div`
     ${flexSpaceBetween}

@@ -16,7 +16,6 @@ import Retry from '@/assets/icons/common/retry.svg';
 import SmallCheck from '@/assets/icons/common/small-check.svg';
 import PlusBlack from '@/assets/icons/plusMinus/plus-black.svg';
 import PlusWhite from '@/assets/icons/plusMinus/plus-white.svg';
-
 // room
 import Building from '@/assets/icons/room/building.svg';
 import Calendar from '@/assets/icons/room/calendar.svg';

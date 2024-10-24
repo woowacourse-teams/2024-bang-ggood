@@ -23,6 +23,7 @@ const QuestionSelectCard = ({ question }: { question: ChecklistQuestionWithIsSel
         onClick={handleCheckQuestion}
         aria-label={`${title} ${subtitle ?? ''} 해당 질문을 선택하려면 두번 탭하세요.`}
         tabIndex={0}
+        className="question"
       >
         <S.FlexColumn aria-hidden="true" tabIndex={-1}>
           <FlexBox.Vertical>

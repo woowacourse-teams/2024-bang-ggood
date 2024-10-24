@@ -82,7 +82,7 @@ const EditChecklistPage = () => {
       />
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
         <ErrorBoundary fallback={<ChecklistTabFallback />}>
-          <EditChecklistTab checklistId={checklistId} />
+          <EditChecklistTab />
         </ErrorBoundary>
         <ChecklistContent />
       </TabProvider>

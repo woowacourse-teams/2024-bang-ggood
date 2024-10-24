@@ -13,9 +13,9 @@ const useToggleLikeQuery = () => {
       isLiked ? await postLike(checklistId) : await deleteLike(checklistId);
     },
     retry: 3,
-    onSuccess: () => {
-      invalidateChecklistListQuery();
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CHECKLIST] });
+    onSettled: async () => {
+      await invalidateChecklistListQuery();
+      await queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CHECKLIST] });
     },
   });
 };

@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react';
-
 import Like from '@/assets/icons/like/Like';
 import useToggleLikeQuery from '@/hooks/query/useToggleLikeQuery';
-import useDebounce from '@/hooks/useDebounce';
 import theme from '@/styles/theme';
 
 interface Props {
@@ -11,30 +8,23 @@ interface Props {
 }
 
 const LikeButton = ({ isLiked = false, checklistId }: Props) => {
-  const [localIsLiked, setLocalIsLiked] = useState(isLiked);
+  // const [localIsLiked, setLocalIsLiked] = useState(isLiked);
 
   const { mutate: toggleLike, variables, isPending } = useToggleLikeQuery();
-  const debouncedIsLiked = useDebounce({ value: localIsLiked, delay: 200 });
+  // const debouncedIsLiked = useDebounce({ value: localIsLiked, delay: 200 });
 
-  useEffect(() => {
-    if (debouncedIsLiked !== isLiked) {
-      toggleLike(
-        { checklistId, isLiked: debouncedIsLiked },
-        {
-          onError: () => {
-            setLocalIsLiked(prev => !prev);
-          },
-        },
-      );
-    }
-  }, [debouncedIsLiked]);
+  const handleClick = () => toggleLike({ checklistId, isLiked: !isLiked });
+  // useEffect(() => {
+  //   // if (debouncedIsLiked !== isLiked) {
+  //   // }
+  // }, [debouncedIsLiked]);
 
   const handleClickLike = (e: React.MouseEvent<SVGSVGElement>) => {
-    setLocalIsLiked(prev => !prev);
+    handleClick();
     e.stopPropagation();
   };
 
-  const fill = isPending ? variables.isLiked : localIsLiked;
+  const fill = isPending ? variables.isLiked : isLiked;
 
   return (
     <Like

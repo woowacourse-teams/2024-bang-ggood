@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
 
-import { getIsUserValid } from '@/apis/user';
 import { PlusBlack } from '@/assets/assets';
 import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallback';
 import TitleErrorFallback from '@/components/_common/errorBoundary/TitleErrorFallback';
@@ -25,8 +24,6 @@ const ChecklistListPage = () => {
   const navigate = useNavigate();
   const handleClickMoveCustomPage = () => navigate(ROUTE_PATH.checklistQuestionSelect);
   const handleClickFloatingButton = () => navigate(ROUTE_PATH.checklistNew);
-
-  getIsUserValid();
 
   return (
     <>

@@ -6,7 +6,7 @@ import { User } from '@/types/user';
 
 const useUserQuery = () => {
   return useQuery<User>({
-    queryKey: [QUERY_KEYS.USER],
+    queryKey: [QUERY_KEYS.AUTH, QUERY_KEYS.USER],
     queryFn: getUserInfo,
     retry: false,
   });

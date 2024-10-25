@@ -23,7 +23,7 @@ export const ENDPOINT = {
   ARTICLES: '/articles',
   ARTICLE_ID: (id: number) => `/articles/${id}`,
   // kakao login
-  LOGIN: '/oauth/login',
+  OAUTH_LOGIN: '/oauth/login',
   // basic login
   REGISTER: '/v1/local-auth/register',
   SIGN_IN: '/v1/local-auth/login',

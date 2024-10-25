@@ -26,7 +26,7 @@ const ChecklistPreviewCard = ({ index, checklist }: Props) => {
 
   const stationLabel = address
     ? `${formattedUndefined(station?.stationName)}역 · ${formattedUndefined(station?.walkingTime)}분`
-    : '-역 · -분'; // TODO: address없을시 역이름에 선릉역을 넣었다가 버그생김. 임시해결을위해 address를검사하고있지만, 제대로된방법을 쓰도록고쳐야함.
+    : '-역 · -분'; // TODO: address없을시 역이름에 선릉역을 넣었다가 버그생김. 임시해결을위해 address를 검사하고있지만, 제대로된방법을 쓰도록고쳐야함.
 
   return (
     <S.Container onClick={handleClick} tabIndex={1}>

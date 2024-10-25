@@ -13,7 +13,7 @@ const SubwayStationItem = ({ station }: Props) => {
   const { stationName, stationLine, walkingTime } = station;
 
   return (
-    <FlexBox.Horizontal gap={'0.6rem'}>
+    <FlexBox.Horizontal gap={'0.6rem'} flexWrap="wrap">
       <FlexBox.Horizontal gap={'0.4rem'}>
         {stationLine?.map(oneLine => <SubwayLineIcon lineName={oneLine} key={oneLine} />)}
       </FlexBox.Horizontal>

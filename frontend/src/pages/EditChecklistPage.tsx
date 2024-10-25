@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useStore } from 'zustand';
@@ -21,7 +20,6 @@ import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
 import roomInfoStore from '@/store/roomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
-import loadExternalScriptWithCallback from '@/utils/loadScript';
 
 type RouteParams = {
   checklistId: string;
@@ -55,23 +53,23 @@ const EditChecklistPage = () => {
     navigate(ROUTE_PATH.checklistOne(Number(checklistId)));
   };
 
-  useEffect(() => {
-    const setChecklistDataToStore = async () => {
-      if (!isSuccess) return;
+  // useEffect(() => {
+  //   const setChecklistDataToStore = async () => {
+  //     if (!isSuccess) return;
 
-      roomInfoActions.setRawValues(checklist.room);
-      set('address', checklist.room.address!);
-      set('buildingName', checklist.room.buildingName!);
-      //TODO: 가까운 지하철은 나중에 api 수정되면 저장
+  //     roomInfoActions.setRawValues(checklist.room);
+  //     set('address', checklist.room.address!);
+  //     set('buildingName', checklist.room.buildingName!);
+  //     //TODO: 가까운 지하철은 나중에 api 수정되면 저장
 
-      loadExternalScriptWithCallback('kakaoMap', () => searchSubwayStationsByAddress(checklist.room.address!));
+  //     loadExternalScriptWithCallback('kakaoMap', () => searchSubwayStationsByAddress(checklist.room.address!));
 
-      selectedOptionActions.set(checklist.options.map(option => option.optionId));
-      checklistQuestionActions.set(checklist.categories);
-    };
+  //     selectedOptionActions.set(checklist.options.map(option => option.optionId));
+  //     checklistQuestionActions.set(checklist.categories);
+  //   };
 
-    setChecklistDataToStore();
-  }, [checklistId, checklist, isSuccess]);
+  //   setChecklistDataToStore();
+  // }, [checklistId, checklist, isSuccess]);
 
   return (
     <>

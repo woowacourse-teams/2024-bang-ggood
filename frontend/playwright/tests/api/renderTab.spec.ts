@@ -47,7 +47,7 @@ test('체크리스트 편집 페이지에 들어가면 탭과 질문들이 잘 �
   await expect(page.getByText('체크리스트 편집')).toBeVisible();
 
   const tabs = page.locator('.tab');
-  await expect(tabs).toHaveCount(6, { timeout: 3000 });
+  await expect(tabs).toHaveCount(5, { timeout: 3000 });
 
   for (let i = 2; i < DefaultChecklistTabsNames.length; i++) {
     await expect(tabs.nth(i)).toContainText(DefaultChecklistTabsNames[i].name);

@@ -1,7 +1,7 @@
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
-import { useStore } from 'zustand';
 
+import { useStore } from 'zustand';
 import Button from '@/components/_common/Button/Button';
 import ChecklistTabFallback from '@/components/_common/errorBoundary/ChecklistTabFallback';
 import Header from '@/components/_common/Header/Header';

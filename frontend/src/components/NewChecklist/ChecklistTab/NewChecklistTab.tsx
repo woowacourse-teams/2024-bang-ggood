@@ -1,24 +1,25 @@
 import { useMemo } from 'react';
 
-import ChecklistTabFallback from '@/components/_common/errorBoundary/ChecklistTabFallback';
+import ChecklistTabSuspense from '@/components/_common/errorBoundary/ChecklistTabSuspense';
 import Tabs from '@/components/_common/Tabs/Tabs';
 import useInitialChecklist from '@/hooks/useInitialChecklist';
 import useTabs from '@/hooks/useTabs';
 import useChecklistStore from '@/store/useChecklistStore';
+import isSameCategory from '@/utils/isSameCategory';
 
 const NewChecklistTab = () => {
-  const { data: checklist, isFetched, isLoading } = useInitialChecklist();
+  const { data: checklist, isSuccess, isLoading } = useInitialChecklist();
   const checklistStore = useChecklistStore(state => state.checklistCategoryQnA);
   const { getTabsForChecklist } = useTabs();
 
   const categoryTabs = useMemo(() => {
-    if (isFetched && checklist) {
+    if (isSuccess && isSameCategory(checklist, checklistStore)) {
       return getTabsForChecklist(checklist);
     }
     return [];
-  }, [isFetched, getTabsForChecklist, checklistStore]);
+  }, [isSuccess, checklistStore]);
 
-  if (isLoading) return <ChecklistTabFallback />;
+  if (isLoading) return <ChecklistTabSuspense />;
 
   return <Tabs tabList={categoryTabs} />;
 };

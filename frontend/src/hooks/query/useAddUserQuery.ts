@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { postLogin } from '@/apis/user';
+import { postOAuthLogin } from '@/apis/user';
 import { QUERY_KEYS } from '@/constants/queryKeys';
 
 interface MutationVariables {
@@ -11,7 +11,7 @@ interface MutationVariables {
 const useAddUserQuery = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ code, redirectUri }: MutationVariables) => postLogin(code, redirectUri),
+    mutationFn: ({ code, redirectUri }: MutationVariables) => postOAuthLogin(code, redirectUri),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.AUTH] });
     },

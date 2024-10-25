@@ -10,14 +10,13 @@ interface Props {
 const LikeButton = ({ isLiked = false, checklistId }: Props) => {
   const { mutate: toggleLike, variables, isPending } = useToggleLikeQuery();
 
-  const handleClick = () => toggleLike({ checklistId, isLiked: !isLiked });
+  const fill = isPending ? variables.isLiked : isLiked;
+  const handleClick = () => toggleLike({ checklistId, isLiked: !fill });
 
   const handleClickLike = (e: React.MouseEvent<SVGSVGElement>) => {
     handleClick();
     e.stopPropagation();
   };
-
-  const fill = isPending ? variables.isLiked : isLiked;
 
   return (
     <Like

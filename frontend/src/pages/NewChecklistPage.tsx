@@ -13,7 +13,6 @@ import NewChecklistTab from '@/components/NewChecklist/ChecklistTab/NewChecklist
 import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
 import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
-import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useHandleTip from '@/hooks/useHandleTip';
 import useModal from '@/hooks/useModal';
@@ -43,12 +42,7 @@ const NewChecklistPage = () => {
   const { isModalOpen: isLoginModalOpen, openModal: openLoginModal, closeModal: closeLoginModal } = useModal();
 
   const resetChecklist = () => {
-    roomInfoActions.reset();
-    roomInfoNonValidatedActions.resetAll();
-    checklistActions.reset();
-    selectedOptionActions.reset();
     resetShowTip();
-    navigate(ROUTE_PATH.checklistList);
   };
 
   const handleSaveChecklistButton = () => {

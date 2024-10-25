@@ -10,6 +10,8 @@ import theme from '@/styles/theme';
 import { ChecklistQuestion } from '@/types/checklist';
 
 const EditChecklistQuestionTemplate = () => {
+  useChecklistStore(store => store.checklistCategoryQnA);
+
   const { currentTabId } = useTabContext();
   const checklistActions = useChecklistStore(store => store.actions);
   const questions = checklistActions.getCategory(currentTabId);

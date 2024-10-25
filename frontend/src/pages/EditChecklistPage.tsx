@@ -7,8 +7,8 @@ import Button from '@/components/_common/Button/Button';
 import ChecklistTabFallback from '@/components/_common/errorBoundary/ChecklistTabFallback';
 import Header from '@/components/_common/Header/Header';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
+import EditChecklistContent from '@/components/EditChecklist/ChecklistContent/EditChecklistContent';
 import EditChecklistTab from '@/components/EditChecklist/ChecklistTab/EditChecklistTab';
-import ChecklistContent from '@/components/NewChecklist/ChecklistContent';
 import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
 import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
@@ -84,7 +84,7 @@ const EditChecklistPage = () => {
         <ErrorBoundary fallback={<ChecklistTabFallback />}>
           <EditChecklistTab checklistId={checklistId} />
         </ErrorBoundary>
-        {checklist && <ChecklistContent />}
+        {checklist && <EditChecklistContent />}
       </TabProvider>
 
       {/* 메모 모달 */}

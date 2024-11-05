@@ -49,7 +49,7 @@ const RealTimeAddressModal = () => {
     <>
       <S.AddressButton
         onClick={openModal}
-        label="실시간 주소"
+        label="현위치 찾기"
         size="full"
         isSquare={true}
         color="light"
@@ -57,7 +57,7 @@ const RealTimeAddressModal = () => {
       />
       {isModalOpen && (
         <Modal size="large" position="bottom" isOpen={isModalOpen} onClose={closeModal}>
-          <Modal.header>실시간 주소</Modal.header>
+          <Modal.header>현위치 찾기</Modal.header>
           <Modal.body>
             <div>
               지도를 클릭하면 현재 위치를 움직일 수 있어요. <br />

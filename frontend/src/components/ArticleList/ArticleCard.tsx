@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import { ROUTE_PATH } from '@/constants/routePath';
+import { trackArticleDetail } from '@/service/amplitude/trackEvent';
 import { boxShadow, flexColumn, title3 } from '@/styles/common';
 import { Article } from '@/types/article';
 import formattedDate from '@/utils/formattedDate';
@@ -18,6 +19,7 @@ const ArticleCard = ({ article }: Props) => {
   const { color500 } = getSeqColor(articleId);
 
   const handleClick = () => {
+    trackArticleDetail(article.title);
     navigate(ROUTE_PATH.articleOne(articleId));
   };
 

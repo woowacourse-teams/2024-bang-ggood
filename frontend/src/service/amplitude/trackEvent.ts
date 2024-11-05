@@ -54,6 +54,11 @@ export const trackCustomChecklist = () => {
   amplitudeService.customTrack(`[Click] 체크리스트 질문 편집 제출 버튼`);
 };
 
+// specific article click button
+export const trackArticleDetail = (title: string) => {
+  amplitudeService.customTrack(`[Click] 아티클 [${title.slice(0, 10)}] 버튼`);
+};
+
 // etc
 export const trackNotCompleteChecklist = () => {
   amplitudeService.customTrack(`[Click] 체크리스트 작성 중 뒤로가기 버튼`);

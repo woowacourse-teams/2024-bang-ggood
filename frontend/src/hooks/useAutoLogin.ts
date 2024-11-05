@@ -15,13 +15,11 @@ const useAutoLogin = () => {
       if (!isAccessTokenExist) {
         try {
           await postReissueAccessToken();
-          await autoLogin();
         } catch (err) {
           return await deleteToken();
         }
-      } else {
-        await autoLogin();
       }
+      await autoLogin();
     }
   };
 

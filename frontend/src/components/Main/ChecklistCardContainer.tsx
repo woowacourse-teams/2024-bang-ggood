@@ -43,7 +43,8 @@ const S = {
 
     color: ${({ theme }) => theme.palette.white};
 
-    :hover {
+    &:hover,
+    &:active {
       background-color: ${({ theme }) => theme.palette.green600};
     }
   `,

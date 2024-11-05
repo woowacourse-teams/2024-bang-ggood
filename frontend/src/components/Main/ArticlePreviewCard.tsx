@@ -53,7 +53,7 @@ const S = {
 
     background-color: ${({ bgColor }) => bgColor};
 
-    color: ${theme.palette.black};
+    color: ${({ theme }) => theme.palette.black};
     box-sizing: border-box;
     border-radius: 2.4rem;
     ${boxShadowSpread}

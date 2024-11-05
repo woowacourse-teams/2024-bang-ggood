@@ -15,14 +15,20 @@ const useAutoLogin = () => {
       if (!isAccessTokenExist) {
         try {
           await postReissueAccessToken();
-          const result = await getUserInfo();
-          showToast({ message: `${result?.userName}님, 환영합니다.`, type: 'confirm' });
-          return navigate(ROUTE_PATH.home);
+          await autoLogin();
         } catch (err) {
           return await deleteToken();
         }
+      } else {
+        await autoLogin();
       }
     }
+  };
+
+  const autoLogin = async () => {
+    const result = await getUserInfo();
+    showToast({ message: `${result?.userName}님, 환영합니다.`, type: 'confirm' });
+    return navigate(ROUTE_PATH.home);
   };
 
   useEffect(() => {

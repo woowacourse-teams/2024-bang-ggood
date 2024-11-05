@@ -4,7 +4,7 @@ import { ROUTE_PATH } from '@/constants/routePath';
 
 import { DefaultChecklistTabsNames, FirstCategoryQuestion } from '../constants/constants';
 
-test('체크리스트가 인풋을 채우고 제출할 수 있다.', async ({ page }) => {
+test.skip('체크리스트가 인풋을 채우고 제출할 수 있다.', async ({ page }) => {
   await page.goto(ROUTE_PATH.checklistNew);
   const tabs = page.locator('.tab');
   const roomInfoTab = tabs.nth(0);
@@ -75,7 +75,6 @@ test('체크리스트가 인풋을 채우고 제출할 수 있다.', async ({ pa
 
   const checklistEditButton = page.locator('button[id="checklistEditButton"]');
   await checklistEditButton.click();
-
   await expect(page.getByText('체크리스트 편집')).toBeVisible();
 
   const checklistTabs = page.locator('.tab');

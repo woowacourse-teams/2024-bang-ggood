@@ -33,6 +33,7 @@ export default MoveNextButton;
 const S = {
   Text: styled.span<{ color: string }>`
     color: ${({ color }) => color};
+    font-weight: ${({ theme }) => theme.text.weight.bold};
   `,
   Button: styled.button`
     margin: 10px 0;

@@ -1,7 +1,6 @@
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
 
-import { useStore } from 'zustand';
 import Button from '@/components/_common/Button/Button';
 import ChecklistTabFallback from '@/components/_common/errorBoundary/ChecklistTabFallback';
 import Header from '@/components/_common/Header/Header';
@@ -15,21 +14,13 @@ import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
 import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
-import useHandleTip from '@/hooks/useHandleTip';
 import useModal from '@/hooks/useModal';
+import useResetChecklist from '@/hooks/useResetChecklist';
 import { trackNotCompleteChecklist, trackSaveChecklist } from '@/service/amplitude/trackEvent';
-import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
-import roomInfoStore from '@/store/roomInfoStore';
 
 const NewChecklistPage = () => {
   const navigate = useNavigate();
-
-  const roomInfoActions = useStore(roomInfoStore, state => state.actions);
-  const roomInfoNonValidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
-  // // TODO: useStore 포맷 맞추기
-  // const checklistActions = useChecklistStore(state => state.actions);
-  // const selectedOptionActions = useSelectedOptionStore(state => state.actions);
-  const { resetShowTip } = useHandleTip('OPTION');
+  const { resetChecklist } = useResetChecklist();
 
   // 메모 모달
   const { isModalOpen: isMemoModalOpen, openModal: openMemoModal, closeModal: closeMemoModal } = useModal();
@@ -40,23 +31,12 @@ const NewChecklistPage = () => {
   // 로그인 요청 모달
   const { isModalOpen: isLoginModalOpen, openModal: openLoginModal, closeModal: closeLoginModal } = useModal();
 
-  const resetChecklist = () => {
-    // roomInfoActions.reset();
-    // roomInfoNonValidatedActions.resetAll();
-    // checklistActions.reset();
-    // selectedOptionActions.reset();
-    resetShowTip();
-    // navigate(ROUTE_PATH.checklistList);
-  };
-
   const handleSaveChecklistButton = () => {
     openSummaryModal();
     trackSaveChecklist();
   };
 
   const handleNotCompleteChecklist = () => {
-    roomInfoActions.reset();
-    roomInfoNonValidatedActions.resetAll();
     trackNotCompleteChecklist();
     resetChecklist();
     navigate(ROUTE_PATH.checklistList);

@@ -35,6 +35,7 @@ interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const S = {
   Input: styled.input<StyledProps>`
+    ${flexCenter}
     width: ${({ width }) => width};
     height: 5rem;
     padding: 0.6rem 1.1rem;
@@ -44,7 +45,6 @@ const S = {
     color: ${({ $color, theme }) => ($color ? $color : theme.palette.grey600)};
     font-size: ${({ theme }) => theme.text.size.medium};
     outline-color: ${({ theme }) => theme.palette.grey400};
-    ${flexCenter}
     box-sizing: border-box;
   `,
 };

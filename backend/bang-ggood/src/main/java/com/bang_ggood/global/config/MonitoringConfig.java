@@ -5,6 +5,8 @@ import com.bang_ggood.global.repository.MonitoringUserRepository;
 import io.micrometer.core.instrument.MeterRegistry;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.actuate.web.exchanges.InMemoryHttpExchangeRepository;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @RequiredArgsConstructor
@@ -20,5 +22,10 @@ public class MonitoringConfig {
         meterRegistry.gauge("total.user.count", this, value -> monitoringUserRepository.countActiveUsers());
         meterRegistry.gauge("total.checklist.count", this,
                 value -> monitoringChecklistRepository.countActiveChecklists());
+    }
+
+    @Bean
+    public InMemoryHttpExchangeRepository createTraceRepository() {
+        return new InMemoryHttpExchangeRepository();
     }
 }

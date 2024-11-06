@@ -8,7 +8,7 @@ interface MutationVariables {
   redirectUri: string;
 }
 
-const useAddUserQuery = () => {
+const useAddOAuthUserQuery = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ code, redirectUri }: MutationVariables) => postOAuthLogin(code, redirectUri),
@@ -18,4 +18,4 @@ const useAddUserQuery = () => {
   });
 };
 
-export default useAddUserQuery;
+export default useAddOAuthUserQuery;

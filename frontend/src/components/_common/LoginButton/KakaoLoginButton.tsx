@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 
 import { KakaoLogo } from '@/assets/assets';
-import useLogin from '@/hooks/useLogin';
+import useOAuthLogin from '@/hooks/useOAuthLogin';
 import { trackKakaoLoginButton } from '@/service/amplitude/trackEvent';
 import { flexRow } from '@/styles/common';
 
 const KakaoLoginButton = () => {
-  const { moveToKakao } = useLogin();
+  const { moveToKakao } = useOAuthLogin();
 
   const handleClickKakao = () => {
     trackKakaoLoginButton();

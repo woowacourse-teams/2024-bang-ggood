@@ -1,15 +1,20 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { getUserInfo } from '@/apis/user';
 import { KAKAO_AUTH_URL } from '@/constants/oAuth';
 import { ROUTE_PATH } from '@/constants/routePath';
-import useAddUserQuery from '@/hooks/query/useAddUserQuery';
+import useAddOAuthUserQuery from '@/hooks/query/useAddOAuthUserQuery';
 import useMutateChecklist from '@/hooks/useMutateChecklist';
+import useToast from '@/hooks/useToast';
+import amplitudeInitializer from '@/service/amplitude/amplitudeInitializer';
 
-const useLogin = () => {
+const useOAuthLogin = () => {
   const navigate = useNavigate();
-  const { mutate: addUser, isSuccess } = useAddUserQuery();
+  const { mutate: addOAuthUser, isSuccess } = useAddOAuthUserQuery();
   const { handleSubmitChecklist } = useMutateChecklist('add');
+  const { init } = amplitudeInitializer();
+  const { showToast } = useToast();
 
   const currentUrl = new URL(window.location.href);
   currentUrl.searchParams.delete('code');
@@ -18,13 +23,20 @@ const useLogin = () => {
   useEffect(() => {
     const code = new URL(window.location.href).searchParams.get('code');
     if (code) {
-      addUser({ code, redirectUri });
+      addOAuthUser({ code, redirectUri });
     }
-  }, [addUser]);
+  }, [addOAuthUser]);
 
   useEffect(() => {
+    const initAmplitudeUser = async () => {
+      const result = await getUserInfo();
+      init(result.userEmail);
+      showToast({ message: `${result?.userName}님, 환영합니다.`, type: 'confirm' });
+    };
+
     if (isSuccess) {
-      if (redirectUri.includes('/checklist/new')) return handleSubmitChecklist();
+      initAmplitudeUser();
+      if (redirectUri.includes(ROUTE_PATH.checklistNew)) return handleSubmitChecklist();
       else return navigate(ROUTE_PATH.home);
     }
   }, [isSuccess, navigate]);
@@ -36,4 +48,4 @@ const useLogin = () => {
   return { moveToKakao };
 };
 
-export default useLogin;
+export default useOAuthLogin;

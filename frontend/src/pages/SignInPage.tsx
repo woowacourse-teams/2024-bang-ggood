@@ -11,6 +11,7 @@ import { ROUTE_PATH } from '@/constants/routePath';
 import usePostSignInQuery from '@/hooks/query/usePostSignInQuery';
 import useToast from '@/hooks/useToast';
 import useValidateInput from '@/hooks/useValidateInput';
+import amplitudeInitializer from '@/service/amplitude/amplitudeInitializer';
 import { flexCenter, title3, title4 } from '@/styles/common';
 import { validateEmail } from '@/utils/authValidation';
 
@@ -41,12 +42,16 @@ const SignInPage = () => {
   const disabled = !isEmailValidated || !isPasswordValidated;
 
   const { mutate: signIn } = usePostSignInQuery();
+  const { init } = amplitudeInitializer();
+
   const handleSubmit = async () =>
     await signIn(
       { email, password },
       {
         onSuccess: async () => {
           const result = await getUserInfo();
+          init(result.userEmail);
+
           showToast({ message: `${result?.userName}님, 환영합니다.`, type: 'confirm' });
           return navigate(ROUTE_PATH.home);
         },

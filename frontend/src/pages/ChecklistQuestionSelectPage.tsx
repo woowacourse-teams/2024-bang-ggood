@@ -15,11 +15,14 @@ import { ROUTE_PATH } from '@/constants/routePath';
 import usePutCustomChecklist from '@/hooks/query/usePutCustomChecklist';
 import useHandleTip from '@/hooks/useHandleTip';
 import useToast from '@/hooks/useToast';
+import { trackCustomChecklist } from '@/service/amplitude/trackEvent';
+import { useTrackPageView } from '@/service/amplitude/useTrackPageView';
 import useChecklistQuestionSelectStore from '@/store/useChecklistQuestionSelectStore';
 import theme from '@/styles/theme';
 
 const ChecklistQuestionSelectPage = () => {
   const navigate = useNavigate();
+  useTrackPageView({ eventName: '[View] 체크리스트 질문 편집 페이지' });
   const { showToast } = useToast();
 
   const { mutate: putCustomChecklist } = usePutCustomChecklist();
@@ -36,6 +39,7 @@ const ChecklistQuestionSelectPage = () => {
       onSuccess: () => {
         showToast({ message: TOAST_MESSAGE.CUSTOM });
         navigate(ROUTE_PATH.checklistList);
+        trackCustomChecklist();
       },
     });
   };

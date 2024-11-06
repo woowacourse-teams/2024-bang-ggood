@@ -17,6 +17,7 @@ export default ChecklistSectionTitle;
 const S = {
   ContainerTitle: styled.div`
     ${title3}
+    background-color: ${({ theme }) => theme.palette.white};
   `,
   Count: styled.span`
     color: ${({ theme }) => theme.palette.green500};

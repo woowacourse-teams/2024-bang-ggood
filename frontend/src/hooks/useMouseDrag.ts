@@ -10,21 +10,21 @@ const useMouseDrag = (handler: Handler) => {
   const [startPosition, setStartPosition] = useState<MousePosition | null>(null);
 
   useEffect(() => {
-    const mousedownListener = (e: MouseEvent) => setStartPosition({ x: e.clientX, y: e.clientY });
+    const pointerdownListener = (e: PointerEvent) => setStartPosition({ x: e.clientX, y: e.clientY });
 
-    const mouseupListener = (e: MouseEvent) => {
+    const pointerupListener = (e: PointerEvent) => {
       const endPosition = { x: e.clientX, y: e.clientY };
       if (!startPosition) return;
       handler(startPosition, endPosition);
       setStartPosition(null);
     };
 
-    window.addEventListener('mousedown', mousedownListener);
-    window.addEventListener('mouseup', mouseupListener);
+    window.addEventListener('pointerdown', pointerdownListener);
+    window.addEventListener('pointerup', pointerupListener);
 
     return () => {
-      window.removeEventListener('mousedown', mousedownListener);
-      window.removeEventListener('mouseup', mouseupListener);
+      window.removeEventListener('pointerdown', pointerdownListener);
+      window.removeEventListener('pointerup', pointerupListener);
     };
   }, [startPosition, handler]);
 };

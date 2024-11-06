@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import { DefaultChecklistTabsNames } from '@/constants/tabs';
-import { flexCenter, flexColumn } from '@/styles/common';
+import { flexRow } from '@/styles/common';
 
 const TAB_COUNT = DefaultChecklistTabsNames.length;
 interface Props {
@@ -12,10 +12,18 @@ interface Props {
 const MoveNextButton = ({ marginTop = '0', marginBottom = '0' }: Props) => {
   const { setCurrentTabId } = useTabContext();
 
-  const handleClick = () => setCurrentTabId(tabId => ((tabId + 2) % TAB_COUNT) - 1);
+  const handleClickPrev = () => setCurrentTabId(tabId => (tabId % TAB_COUNT) - 1);
+  const handleClickNext = () => setCurrentTabId(tabId => ((tabId + 2) % TAB_COUNT) - 1);
   return (
     <S.ContentBox marginTop={marginTop} marginBottom={marginBottom}>
-      <S.Button onClick={handleClick}>다음 탭으로</S.Button>
+      <S.Button onClick={handleClickPrev}>
+        <S.Text color="red">{'< '}</S.Text>
+        {'이전으로 이동'}
+      </S.Button>
+      <S.Button onClick={handleClickNext}>
+        {'다음으로 이동'}
+        <S.Text color="red">{' >'}</S.Text>
+      </S.Button>
     </S.ContentBox>
   );
 };
@@ -23,24 +31,27 @@ const MoveNextButton = ({ marginTop = '0', marginBottom = '0' }: Props) => {
 export default MoveNextButton;
 
 const S = {
+  Text: styled.span<{ color: string }>`
+    color: ${({ color }) => color};
+  `,
   Button: styled.button`
-    width: 200px;
     margin: 10px 0;
-    padding: 10px;
+    padding: 0 15px;
 
     background-color: ${({ theme }) => theme.palette.grey200};
-    border-radius: 10px;
 
     font-weight: ${({ theme }) => theme.text.weight.semiBold};
+    font-size: ${({ theme }) => theme.text.size.small};
+    line-height: 2.5;
+    border-radius: 10px;
   `,
   ContentBox: styled.div<{ marginTop: string; marginBottom: string }>`
-    ${flexColumn}
-    ${flexCenter}
+    ${flexRow}
+    justify-content: space-around;
     margin-top: ${({ marginTop }) => marginTop};
     margin-bottom: ${({ marginBottom }) => marginBottom};
     border-radius: 0.8rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
-    gap: 0.2rem;
+    /* background-color: ${({ theme }) => theme.palette.white}; */
   `,
 };

@@ -40,7 +40,7 @@ const S = {
 
     background-color: ${({ theme }) => theme.palette.grey200};
 
-    font-weight: ${({ theme }) => theme.text.weight.semiBold};
+    font-weight: ${({ theme }) => theme.text.weight.medium};
     font-size: ${({ theme }) => theme.text.size.small};
     line-height: 2.5;
     border-radius: 10px;
@@ -51,7 +51,5 @@ const S = {
     margin-top: ${({ marginTop }) => marginTop};
     margin-bottom: ${({ marginBottom }) => marginBottom};
     border-radius: 0.8rem;
-
-    /* background-color: ${({ theme }) => theme.palette.white}; */
   `,
 };

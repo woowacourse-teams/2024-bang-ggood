@@ -1,4 +1,6 @@
-export const articleList = {
+import { Article } from '@/types/article';
+
+export const articleList: { articles: Article[] } = {
   articles: [
     {
       articleId: 1,

@@ -8,18 +8,18 @@ import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
 import { ROUTE_PATH } from '@/constants/routePath';
-import useToast from '@/hooks/useToast';
 import useValidateInput from '@/hooks/useValidateInput';
 import amplitudeInitializer from '@/service/amplitude/amplitudeInitializer';
 import { flexCenter, title3 } from '@/styles/common';
+import { ResetPasswordArgs } from '@/types/user';
 import { validateEmail } from '@/utils/authValidation';
 
 interface Props {
-  onNext: () => void;
+  args: Partial<ResetPasswordArgs>;
+  onNext: (value: Pick<ResetPasswordArgs, 'email' | 'code'>) => void;
 }
 
-const SendVerificationCodeStep = ({ onNext }: Props) => {
-  const { showToast } = useToast();
+const EnterVerificationCodeStep = ({ onNext }: Props) => {
   const [postErrorMessage, setPostErrorMessage] = useState('');
   const navigate = useNavigate();
 
@@ -85,7 +85,7 @@ const SendVerificationCodeStep = ({ onNext }: Props) => {
   );
 };
 
-export default SendVerificationCodeStep;
+export default EnterVerificationCodeStep;
 
 const S = {
   Wrapper: styled.div`

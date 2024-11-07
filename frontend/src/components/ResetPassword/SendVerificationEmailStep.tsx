@@ -8,16 +8,19 @@ import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
 import { ROUTE_PATH } from '@/constants/routePath';
+import useToast from '@/hooks/useToast';
 import useValidateInput from '@/hooks/useValidateInput';
 import amplitudeInitializer from '@/service/amplitude/amplitudeInitializer';
 import { flexCenter, title3 } from '@/styles/common';
+import { ResetPasswordArgs } from '@/types/user';
 import { validateEmail } from '@/utils/authValidation';
 
 interface Props {
-  onNext: () => void;
+  onNext: (value: ResetPasswordArgs['email']) => void;
 }
 
-const EnterVerificationCodeStep = ({ onNext }: Props) => {
+const SendVerificationEmailStep = ({ onNext }: Props) => {
+  const { showToast } = useToast();
   const [postErrorMessage, setPostErrorMessage] = useState('');
   const navigate = useNavigate();
 
@@ -25,7 +28,7 @@ const EnterVerificationCodeStep = ({ onNext }: Props) => {
     value: email,
     getErrorMessage: getEmailErrors,
     onChange: onChangeEmail,
-    isValidated: isEmailValidated,
+    isValidated: isEmailValid,
   } = useValidateInput({
     initialValue: '',
     validates: [validateEmail],
@@ -33,10 +36,9 @@ const EnterVerificationCodeStep = ({ onNext }: Props) => {
 
   const { init } = amplitudeInitializer();
 
-  const handleSubmit = () => {};
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' && isEmailValidated) {
-      handleSubmit();
+    if (event.key === 'Enter' && isEmailValid) {
+      onNext(email);
     }
   };
 
@@ -74,8 +76,8 @@ const EnterVerificationCodeStep = ({ onNext }: Props) => {
             size="full"
             isSquare={true}
             color={'dark'}
-            onClick={handleSubmit}
-            disabled={!isEmailValidated}
+            onClick={() => onNext(email)}
+            disabled={!isEmailValid}
           />
         </S.Box>
       </S.Wrapper>
@@ -83,7 +85,7 @@ const EnterVerificationCodeStep = ({ onNext }: Props) => {
   );
 };
 
-export default EnterVerificationCodeStep;
+export default SendVerificationEmailStep;
 
 const S = {
   Wrapper: styled.div`

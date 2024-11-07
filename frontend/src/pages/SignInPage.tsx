@@ -66,7 +66,7 @@ const SignInPage = () => {
   };
 
   const handleMoveToSignUp = () => navigate(ROUTE_PATH.signUp);
-  const handleMoveToFindPassword = () => navigate(ROUTE_PATH.findPassword);
+  const handleMoveToResetPassword = () => navigate(ROUTE_PATH.resetPassword);
 
   const handleClickBackward = () => navigate(ROUTE_PATH.root);
 
@@ -106,7 +106,7 @@ const SignInPage = () => {
           />
         </S.Box>
         <S.NavigateButton onClick={handleMoveToSignUp}>아직 방끗 회원이 아니신가요?</S.NavigateButton>
-        <S.NavigateButton onClick={handleMoveToFindPassword}>비밀번호를 잊으셨나요?</S.NavigateButton>
+        <S.NavigateButton onClick={handleMoveToResetPassword}>비밀번호를 잊으셨나요?</S.NavigateButton>
       </S.Wrapper>
     </>
   );

@@ -11,10 +11,12 @@ import { ROUTE_PATH } from '@/constants/routePath';
 import useValidateInput from '@/hooks/useValidateInput';
 import amplitudeInitializer from '@/service/amplitude/amplitudeInitializer';
 import { flexCenter, title3 } from '@/styles/common';
+import { ResetPasswordArgs } from '@/types/user';
 import { validateEmail } from '@/utils/authValidation';
 
 interface Props {
-  onNext: () => void;
+  args: Partial<ResetPasswordArgs>;
+  onNext: (value: ResetPasswordArgs) => void;
 }
 
 const ResetPasswordStep = ({ onNext }: Props) => {

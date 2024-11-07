@@ -10,9 +10,8 @@ export interface UserTokenValid {
   isRefreshTokenExist: boolean;
 }
 
-export type Email = `${string}@${string}.${string}`;
 export interface ResetPasswordArgs {
-  email: Email;
+  email: string;
   code: string;
   newPassword: string;
 }

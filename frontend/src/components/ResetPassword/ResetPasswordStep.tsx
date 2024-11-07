@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { BangBangIcon, BangGgoodTextIcon } from '@/assets/assets';
@@ -9,39 +8,46 @@ import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useValidateInput from '@/hooks/useValidateInput';
-import amplitudeInitializer from '@/service/amplitude/amplitudeInitializer';
 import { flexCenter, title3 } from '@/styles/common';
 import { ResetPasswordArgs } from '@/types/user';
-import { validateEmail } from '@/utils/authValidation';
+import { validatePassword, validatePasswordConfirm } from '@/utils/authValidation';
 
 interface Props {
-  args: Partial<ResetPasswordArgs>;
+  args: Pick<ResetPasswordArgs, 'email' | 'code'>;
   onNext: (value: ResetPasswordArgs) => void;
 }
 
-const ResetPasswordStep = ({ onNext }: Props) => {
-  const [postErrorMessage, setPostErrorMessage] = useState('');
-  const navigate = useNavigate();
-
+const SendVerificationEmailStep = ({ args: { email, code }, onNext }: Props) => {
   const {
-    value: email,
-    getErrorMessage: getEmailErrors,
-    onChange: onChangeEmail,
-    isValidated: isEmailValidated,
+    value: password,
+    getErrorMessage: getPasswordErrors,
+    onChange: onChangePassword,
+    isValidated: isPasswordValid,
   } = useValidateInput({
     initialValue: '',
-    validates: [validateEmail],
+    validates: [validatePassword],
   });
 
-  const { init } = amplitudeInitializer();
+  const {
+    value: passwordConfirm,
+    getErrorMessage: getPasswordConfirmError,
+    onChange: onChangePasswordConfirm,
+    isValidated: isPasswordConfirmValidad,
+  } = useValidateInput({
+    initialValue: '',
+    validates: [(value: string) => validatePasswordConfirm(value, password)],
+  });
 
-  const handleSubmit = () => {};
+  const canMove = isPasswordValid && isPasswordConfirmValidad;
+
+  const handleClickNext = () => onNext({ email, code, newPassword: password });
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' && isEmailValidated) {
-      handleSubmit();
+    if (event.key === 'Enter' && canMove) {
+      handleClickNext();
     }
   };
 
+  const navigate = useNavigate();
   const handleClickBackward = () => navigate(ROUTE_PATH.root);
 
   return (
@@ -55,29 +61,38 @@ const ResetPasswordStep = ({ onNext }: Props) => {
         <S.Box>
           <S.Label>비밀번호 찾기</S.Label>
           <FormField onKeyDown={handleKeyDown}>
-            <FormField.Label label="이메일" />
+            <FormField.Label label="새 비밀번호" />
             <FlexBox.Horizontal justify="flex-start" align="center">
               <FormField.Input
                 maxLength={254}
-                value={email}
-                name="email"
-                onChange={onChangeEmail}
+                value={password}
+                name="password"
+                onChange={onChangePassword}
                 style={{ width: '25rem' }}
               />
-              <div>
-                <S.SendButton>전송</S.SendButton>
-              </div>
             </FlexBox.Horizontal>
-            {getEmailErrors() && <FormField.ErrorMessage value={getEmailErrors()} />}
+            {getPasswordErrors() && <FormField.ErrorMessage value={getPasswordErrors()} />}
           </FormField>
-          {postErrorMessage && <FormField.ErrorMessage value={postErrorMessage} />}
+          <FormField onKeyDown={handleKeyDown}>
+            <FormField.Label label="새 비밀번호 확인" />
+            <FlexBox.Horizontal justify="flex-start" align="center">
+              <FormField.Input
+                maxLength={254}
+                value={passwordConfirm}
+                name="password"
+                onChange={onChangePasswordConfirm}
+                style={{ width: '25rem' }}
+              />
+            </FlexBox.Horizontal>
+            {getPasswordConfirmError() && <FormField.ErrorMessage value={getPasswordConfirmError()} />}
+          </FormField>
           <Button
             label="다음"
             size="full"
             isSquare={true}
             color={'dark'}
-            onClick={handleSubmit}
-            disabled={!isEmailValidated}
+            onClick={handleClickNext}
+            disabled={!canMove}
           />
         </S.Box>
       </S.Wrapper>
@@ -85,7 +100,7 @@ const ResetPasswordStep = ({ onNext }: Props) => {
   );
 };
 
-export default ResetPasswordStep;
+export default SendVerificationEmailStep;
 
 const S = {
   Wrapper: styled.div`
@@ -112,17 +127,17 @@ const S = {
   `,
   SendButton: styled.div`
     padding: 0 1.2rem;
+    cursor: pointer;
 
     ${flexCenter}
     background-color: ${({ theme }) => theme.palette.green500};
 
     color: ${({ theme }) => theme.palette.white};
-    white-space: nowrap;
-    line-height: 2;
-    border-radius: 1rem;
-
     font-weight: ${({ theme }) => theme.text.weight.medium};
     font-size: ${({ theme }) => theme.text.size.small};
+    line-height: 2;
+    white-space: nowrap;
+    border-radius: 1rem;
   `,
   Box: styled.div`
     display: flex;

@@ -8,40 +8,48 @@ import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
 import { ROUTE_PATH } from '@/constants/routePath';
+import usePostResetPasswordMail from '@/hooks/query/usePostResetPasswordMail';
 import useValidateInput from '@/hooks/useValidateInput';
-import amplitudeInitializer from '@/service/amplitude/amplitudeInitializer';
 import { flexCenter, title3 } from '@/styles/common';
 import { ResetPasswordArgs } from '@/types/user';
-import { validateEmail } from '@/utils/authValidation';
 
 interface Props {
-  args: Partial<ResetPasswordArgs>;
+  args: Pick<ResetPasswordArgs, 'email'>;
   onNext: (value: Pick<ResetPasswordArgs, 'email' | 'code'>) => void;
 }
 
-const EnterVerificationCodeStep = ({ onNext }: Props) => {
+const SendVerificationEmailStep = ({ args: { email }, onNext }: Props) => {
+  const [isComplete, setIsComplete] = useState(false);
   const [postErrorMessage, setPostErrorMessage] = useState('');
-  const navigate = useNavigate();
-
+  const { mutate: postResetMail } = usePostResetPasswordMail();
   const {
-    value: email,
+    value: code,
     getErrorMessage: getEmailErrors,
     onChange: onChangeEmail,
-    isValidated: isEmailValidated,
+    isValidated: isEmailValid,
   } = useValidateInput({
     initialValue: '',
-    validates: [validateEmail],
+    validates: [],
   });
 
-  const { init } = amplitudeInitializer();
+  const handleClickSubmit = () =>
+    postResetMail(code, {
+      onSuccess: () => setIsComplete(true),
+      onError: error => setPostErrorMessage(error.message),
+    });
+  const handleClickNext = () => {
+    onNext({ code, email });
+  };
 
-  const handleSubmit = () => {};
+  const canMove = isEmailValid && isComplete;
+
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' && isEmailValidated) {
-      handleSubmit();
+    if (event.key === 'Enter' && canMove) {
+      onNext({ code, email });
     }
   };
 
+  const navigate = useNavigate();
   const handleClickBackward = () => navigate(ROUTE_PATH.root);
 
   return (
@@ -55,17 +63,17 @@ const EnterVerificationCodeStep = ({ onNext }: Props) => {
         <S.Box>
           <S.Label>비밀번호 찾기</S.Label>
           <FormField onKeyDown={handleKeyDown}>
-            <FormField.Label label="이메일" />
+            <FormField.Label label="검증 코드" />
             <FlexBox.Horizontal justify="flex-start" align="center">
               <FormField.Input
                 maxLength={254}
-                value={email}
+                value={code}
                 name="email"
                 onChange={onChangeEmail}
                 style={{ width: '25rem' }}
               />
               <div>
-                <S.SendButton>전송</S.SendButton>
+                <S.SendButton onClick={handleClickSubmit}>전송</S.SendButton>
               </div>
             </FlexBox.Horizontal>
             {getEmailErrors() && <FormField.ErrorMessage value={getEmailErrors()} />}
@@ -76,8 +84,8 @@ const EnterVerificationCodeStep = ({ onNext }: Props) => {
             size="full"
             isSquare={true}
             color={'dark'}
-            onClick={handleSubmit}
-            disabled={!isEmailValidated}
+            onClick={handleClickNext}
+            disabled={!canMove}
           />
         </S.Box>
       </S.Wrapper>
@@ -85,7 +93,7 @@ const EnterVerificationCodeStep = ({ onNext }: Props) => {
   );
 };
 
-export default EnterVerificationCodeStep;
+export default SendVerificationEmailStep;
 
 const S = {
   Wrapper: styled.div`
@@ -112,17 +120,17 @@ const S = {
   `,
   SendButton: styled.div`
     padding: 0 1.2rem;
+    cursor: pointer;
 
     ${flexCenter}
     background-color: ${({ theme }) => theme.palette.green500};
 
     color: ${({ theme }) => theme.palette.white};
-    white-space: nowrap;
-    line-height: 2;
-    border-radius: 1rem;
-
     font-weight: ${({ theme }) => theme.text.weight.medium};
     font-size: ${({ theme }) => theme.text.size.small};
+    line-height: 2;
+    white-space: nowrap;
+    border-radius: 1rem;
   `,
   Box: styled.div`
     display: flex;

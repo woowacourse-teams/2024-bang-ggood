@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import Layout from '@/components/_common/layout/Layout';
-import FocusTrap from '@/components/_common/Modal/FocusTrap/FocusTrap';
+import MoveNextButton from '@/components/NewChecklist/MoveNextButton';
 import Address from '@/components/NewChecklist/NewRoomInfoForm/Address';
 import DepositAndRent from '@/components/NewChecklist/NewRoomInfoForm/DepositAndRent';
 import IncludedMaintenances from '@/components/NewChecklist/NewRoomInfoForm/IncludedMaintenances';
@@ -25,25 +25,24 @@ const RoomInfoTemplate = () => {
   };
 
   return (
-    <Layout withHeader withTab>
-      <FocusTrap>
-        <S.Container onBlur={handleTrackInput}>
-          <ErrorBoundary FallbackComponent={RoomNameNoDefault}>
-            <RoomName />
-          </ErrorBoundary>
-          <Address />
-          <NearSubwayStations />
-          <DepositAndRent />
-          <MaintenanceFee />
-          <IncludedMaintenances />
-          <RoomFloor />
-          <RoomStructure />
-          <RoomSize />
-          <RoomContractTerm />
-          <OccupancyMonth />
-          <RealEstate />
-        </S.Container>
-      </FocusTrap>
+    <Layout withHeader withTab withFooter>
+      <S.Container onBlur={handleTrackInput}>
+        <ErrorBoundary FallbackComponent={RoomNameNoDefault}>
+          <RoomName />
+        </ErrorBoundary>
+        <Address />
+        <NearSubwayStations />
+        <DepositAndRent />
+        <MaintenanceFee />
+        <IncludedMaintenances />
+        <RoomFloor />
+        <RoomStructure />
+        <RoomSize />
+        <RoomContractTerm />
+        <OccupancyMonth />
+        <RealEstate />
+        <MoveNextButton marginBottom="1rem" />
+      </S.Container>
     </Layout>
   );
 };

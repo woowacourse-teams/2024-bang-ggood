@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 import Layout from '@/components/_common/layout/Layout';
 import TipBox from '@/components/_common/TipBox/TipBox';
+import MoveNextButton from '@/components/NewChecklist/MoveNextButton';
 import OptionAllSelectBox from '@/components/NewChecklist/Option/OptionAllSelectBox';
 import { OptionList } from '@/components/NewChecklist/Option/OptionList';
 import { flexCenter, flexColumn, flexRow, flexSpaceBetween, title4 } from '@/styles/common';
@@ -17,6 +18,7 @@ const OptionTemplate = () => {
           <OptionList />
         </S.OptionBox>
       </S.InnerBox>
+      <MoveNextButton marginTop="2rem" marginBottom="4rem" />
     </Layout>
   );
 };

@@ -1,6 +1,6 @@
 import fetcher from '@/apis/fetcher';
 import { BASE_URL, ENDPOINT } from '@/apis/url';
-import { User, UserTokenValid } from '@/types/user';
+import { ResetPasswordArgs, User, UserTokenValid } from '@/types/user';
 
 export const postOAuthLogin = async (code: string, redirectUri: string) => {
   const response = await fetcher.post({ url: BASE_URL + ENDPOINT.OAUTH_LOGIN, body: { code, redirectUri } });
@@ -57,13 +57,6 @@ export const postSignIn = async ({ email, password }: { email: string; password:
     credentials: 'include',
   });
 };
-
-type Email = `${string}@${string}.${string}`;
-interface ResetPasswordArgs {
-  email: Email;
-  code: string;
-  newPassword: string;
-}
 
 export const postResetPasswordMail = async (email: ResetPasswordArgs['email']) => {
   return await fetcher.post({ url: `${BASE_URL}${ENDPOINT.RESET_PASSWORD_SEND_MAIL}`, body: { email } });

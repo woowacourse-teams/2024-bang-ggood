@@ -3,7 +3,7 @@ import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 import FooterLayout from '@/components/_common/layout/FooterLayout';
 import { ROUTE_PATH } from '@/constants/routePath';
-import FindPasswordPage from '@/pages/FindPasswordPage copy';
+import ResetPasswordPage from '@/pages/FindPasswordPage copy';
 import SignInPage from '@/pages/SignInPage';
 import SignUpPage from '@/pages/SignUpPage';
 
@@ -84,7 +84,7 @@ const router = createBrowserRouter([
       },
 
       {
-        element: <FindPasswordPage />,
+        element: <ResetPasswordPage />,
         path: ROUTE_PATH.findPassword,
       },
       {

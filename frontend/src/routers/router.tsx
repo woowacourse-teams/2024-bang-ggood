@@ -3,6 +3,7 @@ import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 import FooterLayout from '@/components/_common/layout/FooterLayout';
 import { ROUTE_PATH } from '@/constants/routePath';
+import FindPasswordPage from '@/pages/FindPasswordPage copy';
 import SignInPage from '@/pages/SignInPage';
 import SignUpPage from '@/pages/SignUpPage';
 
@@ -80,6 +81,11 @@ const router = createBrowserRouter([
       {
         element: <SignInPage />,
         path: ROUTE_PATH.signIn,
+      },
+
+      {
+        element: <FindPasswordPage />,
+        path: ROUTE_PATH.findPassword,
       },
       {
         element: <NotFound />,

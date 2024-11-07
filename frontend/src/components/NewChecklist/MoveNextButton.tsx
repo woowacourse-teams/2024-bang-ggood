@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import { DefaultChecklistTabsNames } from '@/constants/tabs';
 import { flexRow } from '@/styles/common';
+import theme from '@/styles/theme';
 
 const TAB_COUNT = DefaultChecklistTabsNames.length;
 interface Props {
@@ -17,12 +18,12 @@ const MoveNextButton = ({ marginTop = '0', marginBottom = '0' }: Props) => {
   return (
     <S.ContentBox marginTop={marginTop} marginBottom={marginBottom}>
       <S.Button onClick={handleClickPrev}>
-        <S.Text color="red">{'< '}</S.Text>
+        <S.Text color={theme.palette.grey400}>{'< '}</S.Text>
         {'이전으로 이동'}
       </S.Button>
       <S.Button onClick={handleClickNext}>
         {'다음으로 이동'}
-        <S.Text color="red">{' >'}</S.Text>
+        <S.Text color={theme.palette.grey400}>{' >'}</S.Text>
       </S.Button>
     </S.ContentBox>
   );

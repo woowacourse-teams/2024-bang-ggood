@@ -14,6 +14,7 @@ import ChecklistListTitle from '@/components/ChecklistList/ChecklistListTitle';
 import CustomBanner from '@/components/ChecklistList/CustomBanner';
 import LikeFilterButton from '@/components/ChecklistList/LikeFilterButton';
 import { ROUTE_PATH } from '@/constants/routePath';
+import { trackAddChecklistButton } from '@/service/amplitude/trackEvent';
 import { useTrackPageView } from '@/service/amplitude/useTrackPageView';
 import { boxShadow, flexRow } from '@/styles/common';
 import theme from '@/styles/theme';
@@ -23,7 +24,10 @@ const ChecklistListPage = () => {
 
   const navigate = useNavigate();
   const handleClickMoveCustomPage = () => navigate(ROUTE_PATH.checklistQuestionSelect);
-  const handleClickFloatingButton = () => navigate(ROUTE_PATH.checklistNew);
+  const handleClickFloatingButton = () => {
+    trackAddChecklistButton();
+    navigate(ROUTE_PATH.checklistNew);
+  };
 
   return (
     <>

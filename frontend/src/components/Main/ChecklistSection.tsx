@@ -48,6 +48,8 @@ const S = {
     margin: 1.6rem;
     padding: 2.4rem 1.6rem;
 
+    background-color: ${({ theme }) => theme.palette.white};
+
     border-radius: 1.6rem;
     ${boxShadow};
     ${flexColumn};

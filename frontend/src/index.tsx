@@ -10,6 +10,7 @@ async function enableMocking() {
   if (process.env.API_ENV !== 'msw') {
     return;
   }
+
   const { worker } = await import('./mocks/browser');
   await worker.start({
     serviceWorker: {

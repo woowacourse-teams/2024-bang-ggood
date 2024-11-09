@@ -1,28 +1,29 @@
 import { useMemo } from 'react';
 
-import ChecklistTabFallback from '@/components/_common/errorBoundary/ChecklistTabFallback';
+import ChecklistTabSuspense from '@/components/_common/errorBoundary/ChecklistTabSuspense';
 import Tabs from '@/components/_common/Tabs/Tabs';
 import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery';
 import useTabs from '@/hooks/useTabs';
 import useChecklistStore from '@/store/useChecklistStore';
+import isSameCategory from '@/utils/isSameCategory';
 
 interface Props {
   checklistId: string;
 }
 
 const EditChecklistTab = ({ checklistId }: Props) => {
-  const { data: checklist, isFetched, isLoading } = useGetChecklistDetailQuery(checklistId);
+  const { data: checklist, isSuccess, isLoading } = useGetChecklistDetailQuery(checklistId);
   const checklistStore = useChecklistStore(state => state.checklistCategoryQnA);
   const { getTabsForChecklist } = useTabs();
 
   const categoryTabs = useMemo(() => {
-    if (isFetched && checklist && checklistStore.length) {
+    if (isSuccess && isSameCategory(checklist.categories, checklistStore)) {
       return getTabsForChecklist(checklist.categories);
     }
     return [];
-  }, [isFetched, getTabsForChecklist, checklistStore]);
+  }, [isSuccess, checklistStore]);
 
-  if (isLoading) return <ChecklistTabFallback />;
+  if (isLoading) return <ChecklistTabSuspense />;
 
   return <Tabs tabList={categoryTabs} />;
 };

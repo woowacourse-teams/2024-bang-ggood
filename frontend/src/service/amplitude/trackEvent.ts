@@ -16,6 +16,10 @@ export const trackGuestLoginButton = () => {
 };
 
 // Checklist Tabs
+export const trackAddChecklistButton = () => {
+  amplitudeService.customTrack(`[Click] 체크리스트 추가 버튼`);
+};
+
 export const trackTabButton = (buttonName: string) => {
   amplitudeService.customTrack(`[Click] ${buttonName} 탭 버튼`);
 };
@@ -43,6 +47,16 @@ export const trackSaveChecklist = () => {
 // Submit Checklist Button
 export const trackSubmitChecklist = () => {
   amplitudeService.customTrack(`[Click] 체크리스트 제출 버튼`);
+};
+
+// checklist question custom submit button
+export const trackCustomChecklist = () => {
+  amplitudeService.customTrack(`[Click] 체크리스트 질문 편집 제출 버튼`);
+};
+
+// specific article click button
+export const trackArticleDetail = (title: string) => {
+  amplitudeService.customTrack(`[Click] 아티클 [${title.slice(0, 10)}] 버튼`);
 };
 
 // etc

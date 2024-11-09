@@ -4,11 +4,12 @@ import { useEffect } from 'react';
 import CounterBox from '@/components/_common/CounterBox/CounterBox';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import QuestionCardList from '@/components/ChecklistQuestionSelect/QuestionCardList/QuestionCardList';
+import SKQuestionSelectList from '@/components/skeleton/QuestionSelect/SKQuestionSelectList';
 import useGetAllChecklistQuestionQuery from '@/hooks/query/useGetAllChecklistQuestionsQuery';
 import useChecklistQuestionSelectStore from '@/store/useChecklistQuestionSelectStore';
 
 const QuestionListTemplate = () => {
-  const { data: checklistQuestions } = useGetAllChecklistQuestionQuery();
+  const { data: checklistQuestions, isLoading } = useGetAllChecklistQuestionQuery();
   const { checklistAllQuestionList, selectedQuestions, setChecklistAllQuestionList, getCategoryQuestions } =
     useChecklistQuestionSelectStore();
   const { currentTabId } = useTabContext();
@@ -19,6 +20,8 @@ const QuestionListTemplate = () => {
   useEffect(() => {
     setChecklistAllQuestionList(checklistQuestions || []);
   }, [checklistQuestions]);
+
+  if (isLoading) return <SKQuestionSelectList />;
 
   return (
     <S.Container>

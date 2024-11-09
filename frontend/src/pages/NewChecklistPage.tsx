@@ -20,17 +20,15 @@ import useModal from '@/hooks/useModal';
 import { trackNotCompleteChecklist, trackSaveChecklist } from '@/service/amplitude/trackEvent';
 import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
 import roomInfoStore from '@/store/roomInfoStore';
-import useChecklistStore from '@/store/useChecklistStore';
-import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 
 const NewChecklistPage = () => {
   const navigate = useNavigate();
 
   const roomInfoActions = useStore(roomInfoStore, state => state.actions);
   const roomInfoNonValidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
-  // TODO: useStore 포맷 맞추기
-  const checklistActions = useChecklistStore(state => state.actions);
-  const selectedOptionActions = useSelectedOptionStore(state => state.actions);
+  // // TODO: useStore 포맷 맞추기
+  // const checklistActions = useChecklistStore(state => state.actions);
+  // const selectedOptionActions = useSelectedOptionStore(state => state.actions);
   const { resetShowTip } = useHandleTip('OPTION');
 
   // 메모 모달
@@ -43,12 +41,12 @@ const NewChecklistPage = () => {
   const { isModalOpen: isLoginModalOpen, openModal: openLoginModal, closeModal: closeLoginModal } = useModal();
 
   const resetChecklist = () => {
-    roomInfoActions.reset();
-    roomInfoNonValidatedActions.resetAll();
-    checklistActions.reset();
-    selectedOptionActions.reset();
+    // roomInfoActions.reset();
+    // roomInfoNonValidatedActions.resetAll();
+    // checklistActions.reset();
+    // selectedOptionActions.reset();
     resetShowTip();
-    navigate(ROUTE_PATH.checklistList);
+    // navigate(ROUTE_PATH.checklistList);
   };
 
   const handleSaveChecklistButton = () => {
@@ -57,8 +55,11 @@ const NewChecklistPage = () => {
   };
 
   const handleNotCompleteChecklist = () => {
+    roomInfoActions.reset();
+    roomInfoNonValidatedActions.resetAll();
     trackNotCompleteChecklist();
     resetChecklist();
+    navigate(ROUTE_PATH.checklistList);
   };
 
   return (

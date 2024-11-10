@@ -2,22 +2,23 @@ import styled from '@emotion/styled';
 
 import FaceIcon from '@/components/_common/FaceIcon/FaceIcon';
 import SubwayStations from '@/components/_common/Subway/SubwayStations';
-import CompareItem from '@/components/ChecklistCompare/CompareCardItem';
+import CompareCardItem from '@/components/ChecklistCompare/CompareCardItem';
 import { boxShadow, flexColumn, title1, title2, title3 } from '@/styles/common';
 import { ChecklistCompare } from '@/types/checklistCompare';
 // import calcEmotions from '@/utils/calcEmotions';
 
 interface Props {
   room: ChecklistCompare;
+  index: number;
 }
 
-const CompareCard = ({ room }: Props) => {
+const CompareCard = ({ room, index }: Props) => {
   return (
     <S.Container>
-      <S.Title>{room.roomName}</S.Title>
-      <CompareItem height={7} label={'주소'} item={<S.Item>{room.address}</S.Item>} />
-      <CompareItem label={'층수'} item={<S.Item>{room.floor}층</S.Item>} />
-      <CompareItem
+      <S.Title index={index}>{room.roomName}</S.Title>
+      <CompareCardItem height={7} label={'주소'} item={<S.Item>{room.address}</S.Item>} />
+      <CompareCardItem label={'층수'} item={<S.Item>{room.floor}층</S.Item>} />
+      <CompareCardItem
         label={'보증금 / 월세'}
         item={
           <S.Item>
@@ -25,8 +26,8 @@ const CompareCard = ({ room }: Props) => {
           </S.Item>
         }
       />
-      <CompareItem label={'계약기간'} item={<S.Item>{room.contractTerm}개월</S.Item>} />
-      <CompareItem
+      <CompareCardItem label={'계약기간'} item={<S.Item>{room.contractTerm}개월</S.Item>} />
+      <CompareCardItem
         label={'교통편'}
         item={
           <S.Item>
@@ -37,10 +38,10 @@ const CompareCard = ({ room }: Props) => {
         }
       />
       <SubwayStations stations={room.nearSubwayStations} />
-      {/* <CompareItem label={'옵션'} item={<S.OptionButton>{room.options.length}개</S.OptionButton>} /> */}
+      {/* <CompareCardItem label={'옵션'} item={<S.OptionButton>{room.options.length}개</S.OptionButton>} /> */}
       {/* TODO: 모든 카테고리를 다 보여주고 없으면 - 표시로 변경 */}
       {room.categories.map(category => (
-        <CompareItem
+        <CompareCardItem
           key={category.categoryId}
           label={category.categoryName}
           item={
@@ -67,8 +68,9 @@ const S = {
     align-items: center;
     gap: 30px;
   `,
-  Title: styled.div`
+  Title: styled.div<{ index: number }>`
     ${title2}
+    color:${({ index, theme }) => (index === 0 ? theme.palette.yellow600 : theme.palette.green600)}
   `,
   RankWrapper: styled.div`
     ${flexColumn}

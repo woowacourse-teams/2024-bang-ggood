@@ -9,7 +9,7 @@ interface Props {
   height?: number;
 }
 
-const CompareItem = ({ label, isLabeled = false, item, height }: Props) => {
+const CompareCardItem = ({ label, isLabeled = false, item, height }: Props) => {
   return (
     <S.ItemContainer height={height}>
       <S.Label isLabeled={isLabeled}>{label}</S.Label>
@@ -18,7 +18,7 @@ const CompareItem = ({ label, isLabeled = false, item, height }: Props) => {
   );
 };
 
-export default CompareItem;
+export default CompareCardItem;
 
 const S = {
   ItemContainer: styled.div<{ height?: number }>`

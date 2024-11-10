@@ -34,7 +34,7 @@ const AddressMap = ({ location }: { location: string }) => {
         geocoder.addressSearch(location, (result: any, status: any) => {
           if (status === kakao.maps.services.Status.OK) {
             const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-            const marker = createMarker(kakao, map, coords);
+            const marker = createMarker(kakao, map, coords, 'primary');
             markerRef.current = marker;
             map.setCenter(coords);
           }

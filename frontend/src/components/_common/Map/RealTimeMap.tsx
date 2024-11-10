@@ -44,7 +44,7 @@ const RealTimeMap = ({
       mapRef.current = map;
 
       /*마커 생성*/
-      const marker = createMarker(kakao, map, new kakao.maps.LatLng(position.latitude, position.longitude));
+      const marker = createMarker(kakao, map, new kakao.maps.LatLng(position.latitude, position.longitude), 'primary');
       markerRef.current = marker;
 
       /*인포윈도우 생성*/

@@ -17,7 +17,7 @@ interface Props {
   onNext: (value: Pick<ResetPasswordArgs, 'email' | 'code'>) => void;
 }
 
-const SendVerificationEmailStep = ({ args: { email }, onNext }: Props) => {
+const EmailVerificationCodeStep = ({ args: { email }, onNext }: Props) => {
   const [isComplete, setIsComplete] = useState(false);
   const [postErrorMessage, setPostErrorMessage] = useState('');
   const { mutate: postResetMail } = usePostResetPasswordMail();
@@ -26,7 +26,7 @@ const SendVerificationEmailStep = ({ args: { email }, onNext }: Props) => {
     value: code,
     getErrorMessage: getCodeErrors,
     onChange: onChangeCode,
-    isValidated: isEmailValid,
+    isValidated: isCodeValid,
   } = useValidateInput({
     initialValue: '',
     validates: [],
@@ -42,7 +42,7 @@ const SendVerificationEmailStep = ({ args: { email }, onNext }: Props) => {
     onNext({ code, email });
   };
 
-  const canMove = isEmailValid && isComplete;
+  const canMove = isCodeValid && isComplete;
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' && canMove) {
@@ -64,12 +64,13 @@ const SendVerificationEmailStep = ({ args: { email }, onNext }: Props) => {
         <CS.Box>
           <CS.Label>비밀번호 찾기</CS.Label>
           <FormField onKeyDown={handleKeyDown}>
-            <FormField.Label label="검증 코드" />
+            <FormField.Label label="검증 코드" htmlFor="code" />
             <FlexBox.Horizontal justify="flex-start" align="center">
               <FormField.Input
                 maxLength={254}
                 value={code}
-                name="email"
+                id="code"
+                name="code"
                 onChange={onChangeCode}
                 style={{ width: '25rem' }}
               />
@@ -96,4 +97,4 @@ const SendVerificationEmailStep = ({ args: { email }, onNext }: Props) => {
   );
 };
 
-export default SendVerificationEmailStep;
+export default EmailVerificationCodeStep;

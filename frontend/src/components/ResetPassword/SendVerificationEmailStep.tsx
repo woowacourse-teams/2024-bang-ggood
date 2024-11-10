@@ -63,11 +63,12 @@ const SendVerificationEmailStep = ({ onNext }: Props) => {
         <CS.Box>
           <CS.Label>비밀번호 찾기</CS.Label>
           <FormField onKeyDown={handleKeyDown}>
-            <FormField.Label label="이메일" />
+            <FormField.Label label="이메일" htmlFor="email" />
             <FlexBox.Horizontal justify="flex-start" align="center">
               <FormField.Input
                 maxLength={254}
                 value={email}
+                id="email"
                 name="email"
                 onChange={onChangeEmail}
                 style={{ width: '25rem' }}

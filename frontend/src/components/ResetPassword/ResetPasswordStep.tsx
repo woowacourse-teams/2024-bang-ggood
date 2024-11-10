@@ -60,11 +60,12 @@ const SendVerificationEmailStep = ({ args: { email, code }, onNext }: Props) => 
         <CS.Box>
           <CS.Label>비밀번호 찾기</CS.Label>
           <FormField onKeyDown={handleKeyDown}>
-            <FormField.Label label="새 비밀번호" />
+            <FormField.Label label="새 비밀번호" htmlFor="password" />
             <FlexBox.Horizontal justify="flex-start" align="center">
               <FormField.Input
                 maxLength={254}
                 value={password}
+                id="password"
                 name="password"
                 onChange={onChangePassword}
                 style={{ width: '25rem' }}
@@ -73,12 +74,13 @@ const SendVerificationEmailStep = ({ args: { email, code }, onNext }: Props) => 
             {getPasswordErrors() && <FormField.ErrorMessage value={getPasswordErrors()} />}
           </FormField>
           <FormField onKeyDown={handleKeyDown}>
-            <FormField.Label label="새 비밀번호 확인" />
+            <FormField.Label label="새 비밀번호 확인" htmlFor="passwordConfirm" />
             <FlexBox.Horizontal justify="flex-start" align="center">
               <FormField.Input
+                id="passwordConfirm"
                 maxLength={254}
                 value={passwordConfirm}
-                name="password"
+                name="passwordConfirm"
                 onChange={onChangePasswordConfirm}
                 style={{ width: '25rem' }}
               />

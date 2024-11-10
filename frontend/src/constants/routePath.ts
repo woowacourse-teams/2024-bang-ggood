@@ -11,6 +11,8 @@ export const ROUTE_PATH = {
   checklistQuestionSelect: `/checklist/question-select`,
   checklistId: '/checklist/:checklistId',
   checklistOne: (id: number) => `/checklist/${id}`,
+  /*compare*/
+  roomCompare: '/room/compare',
   /* article */
   articleList: '/article',
   articleId: '/article/:articleId',

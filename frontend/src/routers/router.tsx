@@ -3,6 +3,7 @@ import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 import FooterLayout from '@/components/_common/layout/FooterLayout';
 import { ROUTE_PATH } from '@/constants/routePath';
+import RoomComparePage from '@/pages/RoomComparePage';
 import SignInPage from '@/pages/SignInPage';
 import SignUpPage from '@/pages/SignUpPage';
 
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
       {
         element: <SignInPage />,
         path: ROUTE_PATH.signIn,
+      },
+      {
+        element: <RoomComparePage />,
+        path: ROUTE_PATH.roomCompare,
       },
       {
         element: <NotFound />,

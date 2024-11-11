@@ -72,7 +72,6 @@ public enum ExceptionCode {
     AUTHENTICATION_TOKEN_EMPTY(HttpStatus.UNAUTHORIZED, ClientExceptionCode.AUTH_TOKEN_EMPTY, "로그인이 필요한 사용자입니다."),
     AUTHENTICATION_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, ClientExceptionCode.AUTH_TOKEN_INVALID, "토큰이 만료되었습니다."),
     AUTHENTICATION_TOKEN_INVALID(HttpStatus.UNAUTHORIZED, ClientExceptionCode.AUTH_TOKEN_INVALID, "토큰 정보가 올바르지 않습니다."),
-    AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER(HttpStatus.UNAUTHORIZED, ClientExceptionCode.AUTH_TOKEN_NOT_OWNED_BY_USER, "해당 유저의 토큰이 아닙니다."),
     AUTHENTICATION_TOKEN_USER_MISMATCH(HttpStatus.UNAUTHORIZED, ClientExceptionCode.AUTH_TOKEN_USER_MISMATCH, "엑세스 토큰과 리프레시 토큰의 소유자가 다릅니다."),
     AUTHENTICATION_TOKEN_TYPE_MISMATCH(HttpStatus.BAD_REQUEST, ClientExceptionCode.AUTH_TOKEN_INVALID, "토큰 타입이 올바르지 않습니다."),
     AUTHENTICATION_PASSWORD_CODE_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.AUTH_PASSWORD_CODE_NOT_FOUND, "비밀번호 재설정 인증 코드가 일치하지 않습니다."),

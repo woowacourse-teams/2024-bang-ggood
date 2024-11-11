@@ -374,22 +374,6 @@ class AuthServiceTest extends IntegrationTestSupport {
         assertThat(assignedGuestUser).isEqualTo(guestUser);
     }
 
-    @DisplayName("로그아웃 실패 : 다른 유저의 토큰인 경우")
-    @Test
-    void logout_invalid_ownership_exception() {
-        // given
-        String accessToken = jwtTokenProvider.createAccessToken(UserFixture.USER1_WITH_ID());
-        String refreshToken = jwtTokenProvider.createRefreshToken(UserFixture.USER1_WITH_ID());
-
-        //when & then
-        assertThatThrownBy(() -> authService.logout(
-                accessToken,
-                refreshToken,
-                UserFixture.USER2_WITH_ID()))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER.getMessage());
-    }
-
     @DisplayName("비밀번호 초기화 코드 인증 성공")
     @Test
     void confirmPasswordResetCode() {

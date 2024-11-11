@@ -399,7 +399,7 @@ class AuthServiceTest extends IntegrationTestSupport {
     @Test
     void confirmPasswordResetCode_timeOver_exception() {
         //given
-        int EXPIRED_TIME_MINUTES = 4;
+        int EXPIRED_TIME_MINUTES = 6;
         String email = "bang-ggood@gmail.com";
         String code = "abc123";
         ConfirmPasswordResetCodeRequest request = new ConfirmPasswordResetCodeRequest(email, code);

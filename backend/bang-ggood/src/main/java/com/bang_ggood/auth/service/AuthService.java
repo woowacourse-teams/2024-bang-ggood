@@ -37,7 +37,7 @@ public class AuthService {
 
     private static final Logger log = LoggerFactory.getLogger(AuthService.class);
     private static final int GUEST_USER_LIMIT = 1;
-    private static final int PASSWORD_RESET_CODE_EXPIRED_MINUTES = 3;
+    private static final int PASSWORD_RESET_CODE_EXPIRED_MINUTES = 5;
 
     private final OauthClient oauthClient;
     private final JwtTokenProvider jwtTokenProvider;

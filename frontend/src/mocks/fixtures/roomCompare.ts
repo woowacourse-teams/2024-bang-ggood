@@ -4,7 +4,7 @@ import { ChecklistCompare } from '@/types/checklistCompare';
 export const threeRoomsForCompare: ChecklistCompare[] = [
   {
     checklistId: 1,
-    roomName: '아름다운 방',
+    roomName: '건대입구역 10분거리 방',
     address: '서울 송파구 올림픽로35다길 42',
     buildingName: '한국루터회관',
     deposit: undefined,

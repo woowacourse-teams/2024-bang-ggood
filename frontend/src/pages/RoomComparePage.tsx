@@ -4,15 +4,12 @@ import { useNavigate } from 'react-router-dom';
 
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
-import CompareMap from '@/components/_common/Map/CompareMap';
-import CompareCard from '@/components/ChecklistCompare/CompareCard';
+import CompareMap from '@/components/_common/Map/RoomCompareMap';
+import CompareCard from '@/components/RoomCompare/CompareCard';
+import RoomMarker from '@/components/RoomCompare/RoomMarker';
 import { ROUTE_PATH } from '@/constants/routePath';
-// import { getCompareRooms } from '@/apis/checklist';
-// import Header from '@/components/common/Header/Header';
-// import Layout from '@/components/common/layout/Layout';
-// import CompareCard from '@/components/RoomCompare/CompareCard';
 import { threeRoomsForCompare } from '@/mocks/fixtures/roomCompare';
-import { flexRow } from '@/styles/common';
+import { flexCenter, flexRow } from '@/styles/common';
 import theme from '@/styles/theme';
 import { Position } from '@/types/address';
 import { ChecklistCompare } from '@/types/checklistCompare';
@@ -33,8 +30,23 @@ const RoomComparePage = () => {
 
   return (
     <>
-      <Header left={<Header.Backward onClick={handleClickBackward} />} />
+      <Header
+        left={<Header.Backward onClick={handleClickBackward} />}
+        center={<Header.Text>방 비교하기</Header.Text>}
+      />
       <Layout bgColor={theme.palette.white} withHeader>
+        <S.RoomGrid>
+          <S.TitleFlex>
+            <S.RoomTitle>
+              <S.Title key={roomList[0].checklistId}>{roomList[0].roomName}</S.Title>
+              <RoomMarker type={'A'} />
+            </S.RoomTitle>
+            <S.RoomTitle>
+              <S.Title key={roomList[1].checklistId}>{roomList[1].roomName}</S.Title>
+              <RoomMarker type={'B'} />
+            </S.RoomTitle>
+          </S.TitleFlex>
+        </S.RoomGrid>
         <CompareMap positions={positions} />
         <S.RoomGrid>
           {roomList?.map((room, index) => <CompareCard key={room.checklistId} room={room} index={index} />)}
@@ -49,5 +61,24 @@ export default RoomComparePage;
 const S = {
   RoomGrid: styled.div`
     ${flexRow}
+  `,
+  TitleFlex: styled.div`
+    display: flex;
+    width: 100vw;
+  `,
+  RoomTitle: styled.div`
+    width: 50%;
+    margin-bottom: 0.5rem;
+    ${flexCenter}
+    gap:0.8rem;
+  `,
+  Title: styled.span`
+    display: inline;
+    padding: 0.8rem 0;
+
+    font-weight: ${({ theme }) => theme.text.weight.bold};
+    font-size: 2rem;
+    text-align: center;
+    border-radius: 0.8rem;
   `,
 };

@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { useEffect, useRef } from 'react';
 
+import RoomMarker from '@/components/RoomCompare/RoomMarker';
 import { Position } from '@/types/address';
 import createKakaoMapElements from '@/utils/createKakaoMapElements';
 
@@ -10,6 +11,7 @@ import loadExternalScriptWithCallback from '../../../utils/loadScript';
 
 const CompareMap = ({ positions }: { positions: Position[] }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<any>(null);
 
   useEffect(() => {
     const initializeMap = () => {
@@ -62,6 +64,7 @@ const CompareMap = ({ positions }: { positions: Position[] }) => {
           level: mapLevel,
         };
         const map = new kakao.maps.Map(mapContainerRef.current, mapOption);
+        mapRef.current = map;
 
         const { createMarker } = createKakaoMapElements();
 
@@ -91,11 +94,30 @@ const CompareMap = ({ positions }: { positions: Position[] }) => {
     }
   }, [location]);
 
+  const handleRoomMarkerClick = (positionIndex: number) => {
+    const move = () => {
+      const { kakao } = window as any;
+
+      const moveLatLon = new kakao.maps.LatLng(positions[positionIndex].latitude, positions[positionIndex].longitude);
+      mapRef.current.setLevel(4);
+      mapRef.current.panTo(moveLatLon);
+    };
+
+    if (mapRef.current) {
+      loadExternalScriptWithCallback('kakaoMap', move);
+    }
+  };
+
   return (
     <>
       {location && (
         <S.Box>
-          <S.Map ref={mapContainerRef}></S.Map>
+          <S.Map ref={mapContainerRef}>
+            <S.RoomMarkBox>
+              <RoomMarker type="A" onClick={() => handleRoomMarkerClick(0)} />
+              <RoomMarker type="B" onClick={() => handleRoomMarkerClick(1)} />
+            </S.RoomMarkBox>
+          </S.Map>
         </S.Box>
       )}
     </>
@@ -105,7 +127,7 @@ const CompareMap = ({ positions }: { positions: Position[] }) => {
 const S = {
   Box: styled.div`
     width: 100%;
-    height: 30rem;
+    height: 20rem;
 
     background-color: ${({ theme }) => theme.palette.background};
   `,
@@ -114,7 +136,7 @@ const S = {
     width: 100%;
     height: 100%;
   `,
-  LinkButtonBox: styled.div`
+  RoomMarkBox: styled.div`
     display: flex;
     position: absolute;
     right: 0;
@@ -126,13 +148,6 @@ const S = {
     color: ${({ theme }) => theme.palette.white};
     gap: 1rem;
     border-radius: 0.3rem;
-  `,
-  LinkButton: styled.img`
-    z-index: 10;
-    box-shadow: 0 0.4rem 1.5rem rgb(0 0 0 / 30%);
-    width: 3.5rem;
-    border-radius: 50%;
-    height: 3.5rem;
   `,
 };
 

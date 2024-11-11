@@ -25,7 +25,6 @@ import com.bang_ggood.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.Clock;
@@ -51,29 +50,51 @@ public class AuthService {
 
     @Transactional
     public Long register(RegisterRequestV1 request) {
-        try {
-            return userRepository.save(request.toUserEntity()).getId();
-        } catch (DataIntegrityViolationException e) {
-            throw new BangggoodException(ExceptionCode.USER_EMAIL_ALREADY_USED);
-        }
-    }
-
-    @Transactional
-    public void withdraw(User user) {
-        userRepository.deleteById(user.getId());
+        User user = processUser(LoginType.LOCAL, request.toUserEntity(), true);
+        return user.getId();
     }
 
     @Transactional
     public AuthTokenResponse oauthLogin(OauthLoginRequest request) {
-        OauthInfoApiResponse oauthInfoApiResponse = oauthClient.requestOauthInfo(request);
+        OauthInfoApiResponse oauthInfo = oauthClient.requestOauthInfo(request);
+        User user = processUser(LoginType.KAKAO, oauthInfo.toUserEntity(), false);
+        return createAuthTokenResponse(user);
+    }
 
-        User user = userRepository.findByEmailAndLoginType(new Email(oauthInfoApiResponse.kakao_account().email()),
-                        LoginType.KAKAO)
-                .orElseGet(() -> signUp(oauthInfoApiResponse));
+    private User processUser(LoginType loginType, User user, boolean isRegistration) {
+        return userRepository.findByEmailAndLoginTypeWithDeleted(user.getEmail(), loginType)
+                .map(savedUser -> handleExistingUser(savedUser, loginType, isRegistration))
+                .orElseGet(() -> signUp(user));
+    }
 
+    private User handleExistingUser(User user, LoginType loginType, boolean isRegistrationRequest) {
+        validateRegister(user, isRegistrationRequest);
+        restoreUser(user, loginType);
+        return user;
+    }
+
+    private void validateRegister(User user, boolean isRegistrationRequest) {
+        if (!user.isDeleted() && isRegistrationRequest) {
+            throw new BangggoodException(ExceptionCode.USER_EMAIL_ALREADY_USED);
+        }
+    }
+
+    private void restoreUser(User user, LoginType loginType) {
+        if (user.isDeleted()) {
+            userRepository.resaveByEmailAndLoginType(user.getEmail(), loginType);
+        }
+    }
+
+    private AuthTokenResponse createAuthTokenResponse(User user) {
         String accessToken = jwtTokenProvider.createAccessToken(user);
         String refreshToken = jwtTokenProvider.createRefreshToken(user);
         return AuthTokenResponse.of(accessToken, refreshToken);
+    }
+
+
+    @Transactional
+    public void withdraw(User user) {
+        userRepository.deleteById(user.getId());
     }
 
     @Transactional(readOnly = true)
@@ -82,9 +103,7 @@ public class AuthService {
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.USER_NOT_FOUND));
         checkPassword(request, user);
 
-        String accessToken = jwtTokenProvider.createAccessToken(user);
-        String refreshToken = jwtTokenProvider.createRefreshToken(user);
-        return AuthTokenResponse.of(accessToken, refreshToken);
+        return createAuthTokenResponse(user);
     }
 
 
@@ -94,10 +113,10 @@ public class AuthService {
         }
     }
 
-    private User signUp(OauthInfoApiResponse oauthInfoApiResponse) {
-        User user = userRepository.save(oauthInfoApiResponse.toUserEntity());
-        defaultChecklistService.createDefaultChecklistAndQuestions(user);
-        return user;
+    private User signUp(User user) {
+        User savedUser = userRepository.save(user);
+        defaultChecklistService.createDefaultChecklistAndQuestions(savedUser);
+        return savedUser;
     }
 
     @Transactional(readOnly = true)
@@ -113,12 +132,12 @@ public class AuthService {
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.GUEST_USER_NOT_FOUND));
     }
 
-    public void logout(String accessToken, String refreshToken, User user) {
-        log.info("logout accessToken: {}", accessToken);
-        log.info("logout refreshToken: {}", refreshToken);
+    public void logout(String accessToken, String refreshToken) {
         AuthUser accessAuthUser = jwtTokenResolver.resolveAccessToken(accessToken);
         AuthUser refreshAuthUser = jwtTokenResolver.resolveRefreshToken(refreshToken);
-        validateTokenOwnership(user, accessAuthUser, refreshAuthUser);
+        if (!accessAuthUser.id().equals(refreshAuthUser.id())) {
+            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_USER_MISMATCH);
+        }
     }
 
     public void sendPasswordResetEmail(ForgotPasswordRequest request) {
@@ -149,8 +168,6 @@ public class AuthService {
     @Transactional(readOnly = true)
     public User getAuthUser(String token) {
         AuthUser authUser = jwtTokenResolver.resolveAccessToken(token);
-        log.info("extractUser token: {}", token);
-        log.info("extractUser authUserId: {}", authUser.id());
         return userRepository.getUserById(authUser.id());
     }
 
@@ -159,14 +176,5 @@ public class AuthService {
         AuthUser authUser = jwtTokenResolver.resolveRefreshToken(refreshToken);
         User user = userRepository.getUserById(authUser.id());
         return jwtTokenProvider.createAccessToken(user);
-    }
-
-    private static void validateTokenOwnership(User user, AuthUser accessAuthUser, AuthUser refreshAuthUser) {
-        if (!accessAuthUser.id().equals(refreshAuthUser.id())) {
-            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_USER_MISMATCH);
-        }
-        if (!user.getId().equals(accessAuthUser.id())) {
-            throw new BangggoodException(ExceptionCode.AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER);
-        }
     }
 }

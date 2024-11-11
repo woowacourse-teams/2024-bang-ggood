@@ -19,6 +19,21 @@ public class ChecklistStationService {
 
     @Transactional
     public void createChecklistStations(Checklist checklist, double latitude, double longitude) {
+        saveChecklistStations(checklist, latitude, longitude);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ChecklistStation> readChecklistStationsByChecklist(Checklist checklist) {
+        return checklistStationRepository.findByChecklist(checklist);
+    }
+
+    @Transactional
+    public void updateChecklistStation(Checklist checklist, double latitude, double longitude) {
+        checklistStationRepository.deleteAllByChecklistId(checklist.getId());
+        saveChecklistStations(checklist, latitude, longitude);
+    }
+
+    private void saveChecklistStations(Checklist checklist, double latitude, double longitude) {
         List<SubwayStationResponse> responses = subwayStationService.readNearestStation(latitude, longitude)
                 .getStations();
         List<ChecklistStation> checklistStations = new ArrayList<>();
@@ -31,10 +46,5 @@ public class ChecklistStationService {
         }
 
         checklistStationRepository.saveAll(checklistStations);
-    }
-
-    @Transactional(readOnly = true)
-    public List<ChecklistStation> readChecklistStationsByChecklist(Checklist checklist) {
-        return checklistStationRepository.findByChecklist(checklist);
     }
 }

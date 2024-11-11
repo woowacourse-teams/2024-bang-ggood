@@ -3,6 +3,7 @@ package com.bang_ggood.question.service;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
+import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
@@ -57,7 +58,7 @@ public class ChecklistQuestionService {
         customChecklistQuestionRepository.deleteAllByUser(user);
 
         List<CustomChecklistQuestion> customChecklistQuestions = questions.stream()
-                .map(question -> new CustomChecklistQuestion(user, question, questionService.readQuestion(question.getId())))
+                .map(question -> new CustomChecklistQuestion(user, questionService.readQuestion(question.getId())))
                 .toList();
         customChecklistQuestionRepository.saveAll(customChecklistQuestions);
     }
@@ -77,6 +78,13 @@ public class ChecklistQuestionService {
     @Transactional(readOnly = true)
     public List<ChecklistQuestion> readChecklistQuestions(Checklist checklist) {
         return checklistQuestionRepository.findAllByChecklistId(checklist.getId());
+    }
+
+    @Transactional(readOnly = true)
+    public List<ChecklistQuestion> categorizeChecklistQuestions(Category category, List<ChecklistQuestion> questions) {
+        return questions.stream()
+                .filter(question -> question.isCategory(category) && question.getAnswer() != null)
+                .toList();
     }
 
     @Transactional

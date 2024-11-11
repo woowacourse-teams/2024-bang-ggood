@@ -9,7 +9,7 @@ import com.bang_ggood.like.domain.ChecklistLike;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.domain.MaintenanceItem;
 import com.bang_ggood.option.domain.Option;
-import com.bang_ggood.question.domain.Question;
+import com.bang_ggood.question.QuestionFixture;
 import com.bang_ggood.question.dto.request.QuestionRequest;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
@@ -81,27 +81,27 @@ public class ChecklistFixture {
     }
 
     public static QuestionRequest QUESTION_1_CREATE_REQUEST() {
-        return new QuestionRequest(Question.BATHROOM_1.getId(), "GOOD");
+        return new QuestionRequest(QuestionFixture.QUESTION1_CATEGORY1.getId(), "GOOD");
     }
 
     public static QuestionRequest QUESTION_2_CREATE_REQUEST() {
-        return new QuestionRequest(Question.BATHROOM_2.getId(), "GOOD");
+        return new QuestionRequest(QuestionFixture.QUESTION2_CATEGORY1.getId(), "GOOD");
     }
 
     public static QuestionRequest QUESTION_3_CREATE_REQUEST() {
-        return new QuestionRequest(Question.BATHROOM_3.getId(), "BAD");
+        return new QuestionRequest(QuestionFixture.QUESTION3_CATEGORY2.getId(), "BAD");
     }
 
     public static QuestionRequest QUESTION_4_CREATE_REQUEST() {
-        return new QuestionRequest(Question.BATHROOM_4.getId(), "BAD");
+        return new QuestionRequest(QuestionFixture.QUESTION4_CATEGORY2.getId(), "BAD");
     }
 
     public static QuestionRequest QUESTION_5_CREATE_REQUEST() {
-        return new QuestionRequest(Question.BATHROOM_5.getId(), "GOOD");
+        return new QuestionRequest(QuestionFixture.QUESTION5_CATEGORY2.getId(), "GOOD");
     }
 
     public static QuestionRequest QUESTION_5_UPDATE_REQUEST() {
-        return new QuestionRequest(Question.BATHROOM_5.getId(), "GOOD");
+        return new QuestionRequest(QuestionFixture.QUESTION5_CATEGORY2.getId(), "GOOD");
     }
 
     public static QuestionRequest QUESTION_CREATE_REQUEST_NO_ID() {
@@ -154,6 +154,16 @@ public class ChecklistFixture {
                 RoomFixture.ROOM_UPDATE_REQUEST(), List.of(1, 2, 3, 4),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
                         QUESTION_3_CREATE_REQUEST(), QUESTION_5_UPDATE_REQUEST())
+        );
+    }
+
+    public static ChecklistRequestV1 CHECKLIST_UPDATE_REQUEST_V1() {
+        return new ChecklistRequestV1(
+                RoomFixture.ROOM_UPDATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.INDUCTION.getId(),
+                Option.BED.getId(), Option.WASHING_MACHINE.getId()),
+                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
+                        QUESTION_3_CREATE_REQUEST(), QUESTION_5_UPDATE_REQUEST()),
+                ChecklistStationRequest.of(37.5, 127.1)
         );
     }
 

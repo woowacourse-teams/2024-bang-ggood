@@ -15,7 +15,7 @@ class PasswordResetCodeRepositoryTest extends IntegrationTestSupport {
     @Autowired
     private PasswordResetCodeRepository passwordResetCodeRepository;
 
-    @DisplayName("특정 시간보다 나중에 생성된 비밀번호 초기화 코드 존재 시 참 반환")
+    @DisplayName("특정 시간보다 나중에 생성된 비밀번호 초기화 코드 존재 확인 성공 : True 반환")
     @Test
     void existsByEmailAndCodeAndCreatedAtAfter_true() {
         //given
@@ -30,7 +30,7 @@ class PasswordResetCodeRepositoryTest extends IntegrationTestSupport {
         assertThat(isExist).isTrue();
     }
 
-    @DisplayName("특정 시간보다 나중에 생성된 비밀번호 초기화 코드 없을 시 거짓 반환")
+    @DisplayName("특정 시간보다 나중에 생성된 비밀번호 초기화 코드 존재 확인 성공 : False 반환")
     @Test
     void existsByEmailAndCodeAndCreatedAtAfter_false() {
         //given

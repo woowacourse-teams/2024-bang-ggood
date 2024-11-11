@@ -12,7 +12,7 @@ import static org.mockito.Mockito.when;
 
 class MailSenderTest {
 
-    @DisplayName("이메일 전송 시 send 메소드 호출")
+    @DisplayName("이메일 전송 시 send 메소드 호출 성공")
     @Test
     void name() {
         //given

@@ -18,8 +18,8 @@ DROP TABLE IF EXISTS password_reset_code CASCADE;
 
 CREATE TABLE category
 (
-    id    INTEGER AUTO_INCREMENT PRIMARY KEY,
-    name  VARCHAR(255)
+    id   INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255)
 );
 
 CREATE TABLE question

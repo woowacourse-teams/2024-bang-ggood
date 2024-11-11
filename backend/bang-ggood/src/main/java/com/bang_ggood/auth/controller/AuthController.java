@@ -12,6 +12,7 @@ import com.bang_ggood.auth.dto.request.ResetPasswordRequest;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
 import com.bang_ggood.auth.dto.response.TokenExistResponse;
 import com.bang_ggood.auth.service.AuthService;
+import com.bang_ggood.auth.service.PasswordResetService;
 import com.bang_ggood.user.domain.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -31,6 +32,7 @@ import java.net.URI;
 public class AuthController {
 
     private final AuthService authService;
+    private final PasswordResetService passwordResetService;
     private final CookieProvider cookieProvider;
     private final CookieResolver cookieResolver;
 
@@ -104,19 +106,19 @@ public class AuthController {
 
     @PostMapping("/v1/password-reset/send-code")
     public ResponseEntity<Void> sendPasswordResetEmail(@Valid @RequestBody ForgotPasswordRequest request) {
-        authService.sendPasswordResetEmail(request);
+        passwordResetService.sendPasswordResetEmail(request);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/v1/password-reset/confirm")
     public ResponseEntity<Void> confirmPasswordResetCode(@Valid @RequestBody ConfirmPasswordResetCodeRequest request) {
-        authService.confirmPasswordResetCode(request);
+        passwordResetService.confirmPasswordResetCode(request);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/v1/password-reset")
     public ResponseEntity<Void> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
-        authService.resetPassword(request);
+        passwordResetService.resetPassword(request);
         return ResponseEntity.noContent().build();
     }
 

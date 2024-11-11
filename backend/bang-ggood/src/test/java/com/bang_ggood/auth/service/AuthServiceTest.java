@@ -1,14 +1,10 @@
 package com.bang_ggood.auth.service;
 
 import com.bang_ggood.IntegrationTestSupport;
-import com.bang_ggood.auth.domain.PasswordResetCode;
-import com.bang_ggood.auth.dto.request.ConfirmPasswordResetCodeRequest;
 import com.bang_ggood.auth.dto.request.LocalLoginRequestV1;
 import com.bang_ggood.auth.dto.request.OauthLoginRequest;
 import com.bang_ggood.auth.dto.request.RegisterRequestV1;
-import com.bang_ggood.auth.dto.request.ResetPasswordRequest;
 import com.bang_ggood.auth.dto.response.AuthTokenResponse;
-import com.bang_ggood.auth.repository.PasswordResetCodeRepository;
 import com.bang_ggood.auth.service.jwt.JwtTokenProvider;
 import com.bang_ggood.auth.service.oauth.OauthClient;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
@@ -20,7 +16,6 @@ import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
 import com.bang_ggood.question.service.QuestionManageService;
 import com.bang_ggood.question.service.QuestionService;
 import com.bang_ggood.user.UserFixture;
-import com.bang_ggood.user.domain.Password;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -29,12 +24,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
-
-import java.time.Clock;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Optional;
 
 import static com.bang_ggood.auth.AuthFixture.LOCAL_LOGIN_REQUEST;
@@ -46,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class AuthServiceTest extends IntegrationTestSupport {
@@ -65,10 +54,6 @@ class AuthServiceTest extends IntegrationTestSupport {
     private UserRepository userRepository;
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
-    @Autowired
-    private PasswordResetCodeRepository passwordResetCodeRepository;
-    @SpyBean
-    private Clock clock;
 
     @DisplayName("로컬 로그인 성공")
     @Test
@@ -230,7 +215,7 @@ class AuthServiceTest extends IntegrationTestSupport {
 
         // then
         assertAll(
-                () ->  assertThat(token.accessToken()).isNotBlank(),
+                () -> assertThat(token.accessToken()).isNotBlank(),
                 () -> assertThat(token.refreshToken()).isNotBlank()
         );
     }
@@ -248,7 +233,7 @@ class AuthServiceTest extends IntegrationTestSupport {
 
         // then
         assertAll(
-                () ->  assertThat(token.accessToken()).isNotBlank(),
+                () -> assertThat(token.accessToken()).isNotBlank(),
                 () -> assertThat(token.refreshToken()).isNotBlank()
         );
     }
@@ -267,7 +252,7 @@ class AuthServiceTest extends IntegrationTestSupport {
 
         // then
         assertAll(
-                () ->  assertThat(token.accessToken()).isNotBlank(),
+                () -> assertThat(token.accessToken()).isNotBlank(),
                 () -> assertThat(token.refreshToken()).isNotBlank()
         );
     }
@@ -372,89 +357,6 @@ class AuthServiceTest extends IntegrationTestSupport {
 
         // then
         assertThat(assignedGuestUser).isEqualTo(guestUser);
-    }
-
-    @DisplayName("비밀번호 초기화 코드 인증 성공")
-    @Test
-    void confirmPasswordResetCode() {
-        //given
-        int VALID_TIME_MINUTES = 2;
-        String email = "bang-ggood@gmail.com";
-        String code = "abc123";
-        ConfirmPasswordResetCodeRequest request = new ConfirmPasswordResetCodeRequest(email, code);
-
-        //when
-        PasswordResetCode resetCode = passwordResetCodeRepository.save(new PasswordResetCode(email, code));
-        LocalDateTime createdAt = resetCode.getCreatedAt();
-        Instant instant = createdAt.plusMinutes(VALID_TIME_MINUTES).toInstant(ZoneOffset.UTC);
-        when(clock.instant()).thenReturn(instant);
-        when(clock.getZone()).thenReturn(ZoneOffset.UTC);
-
-        //then
-        assertThatCode(() -> authService.confirmPasswordResetCode(request))
-                .doesNotThrowAnyException();
-    }
-
-    @DisplayName("비밀번호 초기화 코드 인증 실패 : 유효기간이 지난 경우")
-    @Test
-    void confirmPasswordResetCode_timeOver_exception() {
-        //given
-        int EXPIRED_TIME_MINUTES = 6;
-        String email = "bang-ggood@gmail.com";
-        String code = "abc123";
-        ConfirmPasswordResetCodeRequest request = new ConfirmPasswordResetCodeRequest(email, code);
-
-        //when
-        PasswordResetCode resetCode = passwordResetCodeRepository.save(new PasswordResetCode(email, code));
-        LocalDateTime createdAt = resetCode.getCreatedAt();
-        Instant instant = createdAt.plusMinutes(EXPIRED_TIME_MINUTES).toInstant(ZoneOffset.UTC);
-        when(clock.instant()).thenReturn(instant);
-        when(clock.getZone()).thenReturn(ZoneOffset.UTC);
-
-        //then
-        assertThatThrownBy(() -> authService.confirmPasswordResetCode(request))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.AUTHENTICATION_PASSWORD_CODE_NOT_FOUND.getMessage());
-    }
-
-    @DisplayName("비밀번호 재설정 성공")
-    @Test
-    void resetPassword() {
-        //given
-        User user = UserFixture.USER1();
-        userRepository.save(user);
-        Password oldPassword = user.getPassword();
-        String code = "abc123";
-        String newPassword = "newPassword1234";
-        ResetPasswordRequest request = new ResetPasswordRequest(
-                user.getEmail().getValue(), code, newPassword);
-        passwordResetCodeRepository.save(new PasswordResetCode(user.getEmail().getValue(), code));
-
-        //when
-        authService.resetPassword(request);
-
-        //then
-        Password changedPassword = userRepository.findById(user.getId()).get().getPassword();
-        assertThat(changedPassword).isNotEqualTo(oldPassword);
-    }
-
-    @DisplayName("비밀번호 재설정 시 비밀번호 초기화 코드 삭제 성공")
-    @Test
-    void resetPassword_deleteCode() {
-        //given
-        User user = UserFixture.USER1();
-        userRepository.save(user);
-        String code = "abc123";
-        String newPassword = "newPassword1234";
-        ResetPasswordRequest request = new ResetPasswordRequest(
-                user.getEmail().getValue(), code, newPassword);
-        passwordResetCodeRepository.save(new PasswordResetCode(user.getEmail().getValue(), code));
-
-        //when
-        authService.resetPassword(request);
-
-        //then
-        assertThat(passwordResetCodeRepository.existsByEmailAndCode(user.getEmail(), code)).isFalse();
     }
 
     @DisplayName("액세스 토큰 재발행 성공")

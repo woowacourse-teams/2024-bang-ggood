@@ -39,7 +39,6 @@ public class MailConfig {
     @Value("${spring.mail.properties.mail.smtp.debug}")
     private boolean debug;
 
-
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();

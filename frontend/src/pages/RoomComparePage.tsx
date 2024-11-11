@@ -6,8 +6,10 @@ import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import CompareMap from '@/components/_common/Map/RoomCompareMap';
 import CompareCard from '@/components/RoomCompare/CompareCard';
+import RoomOptionModal from '@/components/RoomCompare/OptionModal';
 import RoomMarker from '@/components/RoomCompare/RoomMarker';
 import { ROUTE_PATH } from '@/constants/routePath';
+import useModal from '@/hooks/useModal';
 import { threeRoomsForCompare } from '@/mocks/fixtures/roomCompare';
 import { flexCenter, flexRow } from '@/styles/common';
 import theme from '@/styles/theme';
@@ -17,6 +19,7 @@ import { ChecklistCompare } from '@/types/checklistCompare';
 const RoomComparePage = () => {
   const navigate = useNavigate();
   // const roomsId = { ...location.state };
+  const { isModalOpen, openModal: openOptionModal, closeModal } = useModal();
 
   const [roomList, setRoomList] = useState<ChecklistCompare[]>(threeRoomsForCompare);
 
@@ -49,8 +52,18 @@ const RoomComparePage = () => {
         </S.RoomGrid>
         <CompareMap positions={positions} />
         <S.RoomGrid>
-          {roomList?.map((room, index) => <CompareCard key={room.checklistId} room={room} index={index} />)}
+          {roomList?.map((room, index) => (
+            <CompareCard key={room.checklistId} room={room} index={index} openOptionModal={openOptionModal} />
+          ))}
         </S.RoomGrid>
+        {isModalOpen && (
+          <RoomOptionModal
+            roomTitle1={roomList[0].roomName ?? ''}
+            roomTitle2={roomList[1].roomName ?? ''}
+            isOpen={isModalOpen}
+            closeModal={closeModal}
+          />
+        )}
       </Layout>
     </>
   );

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import React from 'react';
 
 import { flexCenter, flexColumn } from '@/styles/common';
 
@@ -18,7 +19,8 @@ const CompareCardItem = ({ label, isLabeled = false, item, height }: Props) => {
   );
 };
 
-export default CompareCardItem;
+const CompareCardItemMemo = React.memo(CompareCardItem);
+export default CompareCardItemMemo;
 
 const S = {
   ItemContainer: styled.div<{ height?: number }>`

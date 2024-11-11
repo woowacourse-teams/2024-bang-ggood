@@ -8,7 +8,7 @@ import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
 import CS from '@/components/ResetPassword/style';
 import { ROUTE_PATH } from '@/constants/routePath';
-import usePostResetPasswordMail from '@/hooks/query/usePostResetPasswordMail';
+import usePostResetPasswordCode from '@/hooks/query/usePostResetPasswordCode';
 import useValidateInput from '@/hooks/useValidateInput';
 import { ResetPasswordArgs } from '@/types/user';
 
@@ -20,7 +20,7 @@ interface Props {
 const EmailVerificationCodeStep = ({ args: { email }, onNext }: Props) => {
   const [isComplete, setIsComplete] = useState(false);
   const [postErrorMessage, setPostErrorMessage] = useState('');
-  const { mutate: postResetMail } = usePostResetPasswordMail();
+  const { mutate: postResetCode } = usePostResetPasswordCode();
 
   const {
     value: code,
@@ -33,14 +33,15 @@ const EmailVerificationCodeStep = ({ args: { email }, onNext }: Props) => {
   });
 
   const handleClickSubmit = () =>
-    postResetMail(code, {
-      onSuccess: () => setIsComplete(true),
-      onError: error => setPostErrorMessage(error.message),
-    });
+    postResetCode(
+      { email, code },
+      {
+        onSuccess: () => setIsComplete(true),
+        onError: error => setPostErrorMessage(error.message),
+      },
+    );
 
-  const handleClickNext = () => {
-    onNext({ code, email });
-  };
+  const handleClickNext = () => onNext({ code, email });
 
   const canMove = isCodeValid && isComplete;
 
@@ -76,21 +77,14 @@ const EmailVerificationCodeStep = ({ args: { email }, onNext }: Props) => {
               />
               <div>
                 <CS.SendButton onClick={handleClickSubmit} disabled={canMove}>
-                  전송
+                  확인
                 </CS.SendButton>
               </div>
             </FlexBox.Horizontal>
             {getCodeErrors() && <FormField.ErrorMessage value={getCodeErrors()} />}
           </FormField>
           {postErrorMessage && <FormField.ErrorMessage value={postErrorMessage} />}
-          <Button
-            label="다음"
-            size="full"
-            isSquare={true}
-            color={'dark'}
-            onClick={handleClickNext}
-            disabled={!canMove}
-          />
+          <Button label="다음" size="full" isSquare={true} color="dark" onClick={handleClickNext} disabled={!canMove} />
         </CS.Box>
       </CS.Wrapper>
     </>

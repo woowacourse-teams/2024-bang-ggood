@@ -7,14 +7,12 @@ import SendVerificationEmailStep from '@/components/ResetPassword/SendVerificati
 import { TOAST_MESSAGE } from '@/constants/messages/message';
 import { ROUTE_PATH } from '@/constants/routePath';
 import usePostResetPassword from '@/hooks/query/usePostResetPassword';
-import usePostResetPasswordCode from '@/hooks/query/usePostResetPasswordCode';
 import useToast from '@/hooks/useToast';
 import { ResetPasswordArgs } from '@/types/user';
 
 const ResetPasswordPage = () => {
   const [resetPasswordArgs, setResetPasswordArgs] = useState<Partial<ResetPasswordArgs>>({});
   const { mutate: postToResetPassword } = usePostResetPassword();
-  const { mutate: postVerificationCode } = usePostResetPasswordCode();
 
   const { showToast } = useToast();
 
@@ -35,12 +33,8 @@ const ResetPasswordPage = () => {
         <EnterVerificationCodeStep
           args={resetPasswordArgs as Pick<ResetPasswordArgs, 'email'>}
           onNext={async (value: Pick<ResetPasswordArgs, 'email' | 'code'>) => {
-            await postVerificationCode(value, {
-              onSuccess: () => {
-                setResetPasswordArgs(args => ({ ...args, ...value }));
-                setStep(2);
-              },
-            });
+            setResetPasswordArgs(args => ({ ...args, ...value }));
+            setStep(2);
           }}
         />
       )}

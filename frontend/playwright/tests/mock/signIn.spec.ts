@@ -1,7 +1,9 @@
 import { test } from '@playwright/test';
 
+import { ROUTE_PATH } from '@/constants/routePath';
+
 test('test', async ({ page }) => {
-  await page.goto('http://localhost:3000/sign-in');
+  await page.goto(ROUTE_PATH.signIn);
   await page.getByText('비밀번호를 잊으셨나요?').click();
   await page.getByLabel('이메일').click();
   await page.getByLabel('이메일').fill('test@test.com');

@@ -38,7 +38,7 @@ export const ENDPOINT = {
   TOKEN: '/token',
   RESET_PASSWORD_SEND_MAIL: '/v1/password-reset/send-code',
   RESET_PASSWORD_CONFIRM_CODE: '/v1/password-reset/confirm',
-  RESET_PASSWORD: '/v1/password-reset/new-password',
+  RESET_PASSWORD: '/v1/password-reset',
   //subway
   SUBWAY: (position: Position) => `/stations/nearest?latitude=${position.latitude}&longitude=${position.longitude}`,
 };

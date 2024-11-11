@@ -68,7 +68,6 @@ const SendVerificationEmailStep = ({ args: { email, code }, onNext }: Props) => 
                 id="password"
                 name="password"
                 onChange={onChangePassword}
-                style={{ width: '25rem' }}
               />
             </FlexBox.Horizontal>
             {getPasswordErrors() && <FormField.ErrorMessage value={getPasswordErrors()} />}
@@ -82,13 +81,12 @@ const SendVerificationEmailStep = ({ args: { email, code }, onNext }: Props) => 
                 value={passwordConfirm}
                 name="passwordConfirm"
                 onChange={onChangePasswordConfirm}
-                style={{ width: '25rem' }}
               />
             </FlexBox.Horizontal>
             {getPasswordConfirmError() && <FormField.ErrorMessage value={getPasswordConfirmError()} />}
           </FormField>
           <Button
-            label="다음"
+            label="확인"
             size="full"
             isSquare={true}
             color={'dark'}

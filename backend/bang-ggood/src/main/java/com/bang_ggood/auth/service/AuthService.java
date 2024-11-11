@@ -164,7 +164,7 @@ public class AuthService {
         }
 
         userRepository.updatePasswordByEmail(
-                new Email(request.email()), new Password(request.newPassword()));
+                new Email(request.email()), new Password(request.newPassword()), LoginType.LOCAL);
         passwordResetCodeRepository.deleteByEmailAndCode(email, code);
     }
 

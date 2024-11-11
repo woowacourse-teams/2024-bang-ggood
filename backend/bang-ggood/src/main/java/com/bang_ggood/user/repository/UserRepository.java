@@ -32,8 +32,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)
-    @Query("UPDATE User u SET u.password = :newPassword WHERE u.email = :email AND u.deleted = false")
-    void updatePasswordByEmail(@Param("email") Email email, @Param("newPassword") Password newPassword);
+    @Query("UPDATE User u SET u.password = :newPassword WHERE u.email = :email and u.loginType = :loginType AND u.deleted = false")
+    void updatePasswordByEmail(@Param("email") Email email,
+                               @Param("newPassword") Password newPassword,
+                               @Param("loginType") LoginType loginType);
 
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)

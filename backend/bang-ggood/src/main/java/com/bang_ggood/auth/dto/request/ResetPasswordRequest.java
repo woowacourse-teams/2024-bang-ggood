@@ -1,4 +1,7 @@
 package com.bang_ggood.auth.dto.request;
 
-public record ResetPasswordRequest(String email, String code, String newPassword) {
+import jakarta.validation.constraints.Email;
+
+public record ResetPasswordRequest(@Email(message = "유효하지 않은 이메일 형식입니다.") String email,
+                                   String code, String newPassword) {
 }

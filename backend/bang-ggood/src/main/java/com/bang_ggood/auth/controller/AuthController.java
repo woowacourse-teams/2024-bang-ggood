@@ -109,13 +109,13 @@ public class AuthController {
     }
 
     @PostMapping("/v1/password-reset/confirm")
-    public ResponseEntity<Void> confirmPasswordResetCode(@RequestBody ConfirmPasswordResetCodeRequest request) {
+    public ResponseEntity<Void> confirmPasswordResetCode(@Valid @RequestBody ConfirmPasswordResetCodeRequest request) {
         authService.confirmPasswordResetCode(request);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/v1/password-reset")
-    public ResponseEntity<Void> resetPassword(@RequestBody ResetPasswordRequest request) {
+    public ResponseEntity<Void> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
         authService.resetPassword(request);
         return ResponseEntity.noContent().build();
     }

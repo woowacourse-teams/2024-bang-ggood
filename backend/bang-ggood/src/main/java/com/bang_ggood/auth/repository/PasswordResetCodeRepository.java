@@ -19,4 +19,6 @@ public interface PasswordResetCodeRepository extends JpaRepository<PasswordReset
     boolean existsByEmailAndCodeAndCreatedAtAfter(@Param("email") Email email,
                                                   @Param("code") String code,
                                                   @Param("timeLimit") LocalDateTime timeLimit);
+
+    void deleteByEmailAndCode(Email email, String code);
 }

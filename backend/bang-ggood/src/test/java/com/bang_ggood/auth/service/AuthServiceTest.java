@@ -417,7 +417,7 @@ class AuthServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.AUTHENTICATION_PASSWORD_CODE_NOT_FOUND.getMessage());
     }
 
-    @DisplayName("비밀번호 재설정 선공")
+    @DisplayName("비밀번호 재설정 성공")
     @Test
     void resetPassword() {
         //given
@@ -436,6 +436,25 @@ class AuthServiceTest extends IntegrationTestSupport {
         //then
         Password changedPassword = userRepository.findById(user.getId()).get().getPassword();
         assertThat(changedPassword).isNotEqualTo(oldPassword);
+    }
+
+    @DisplayName("비밀번호 재설정 시 비밀번호 초기화 코드 삭제 성공")
+    @Test
+    void resetPassword_deleteCode() {
+        //given
+        User user = UserFixture.USER1();
+        userRepository.save(user);
+        String code = "abc123";
+        String newPassword = "newPassword1234";
+        ResetPasswordRequest request = new ResetPasswordRequest(
+                user.getEmail().getValue(), code, newPassword);
+        passwordResetCodeRepository.save(new PasswordResetCode(user.getEmail().getValue(), code));
+
+        //when
+        authService.resetPassword(request);
+
+        //then
+        assertThat(passwordResetCodeRepository.existsByEmailAndCode(user.getEmail(), code)).isFalse();
     }
 
     @DisplayName("액세스 토큰 재발행 성공")

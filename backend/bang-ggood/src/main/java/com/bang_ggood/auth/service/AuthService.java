@@ -157,12 +157,15 @@ public class AuthService {
 
     @Transactional
     public void resetPassword(ResetPasswordRequest request) {
-        if (!passwordResetCodeRepository.existsByEmailAndCode(new Email(request.email()), request.code())) {
+        Email email = new Email(request.email());
+        String code = request.code();
+        if (!passwordResetCodeRepository.existsByEmailAndCode(email, code)) {
             throw new BangggoodException(ExceptionCode.AUTHENTICATION_PASSWORD_CODE_NOT_FOUND);
         }
 
         userRepository.updatePasswordByEmail(
                 new Email(request.email()), new Password(request.newPassword()));
+        passwordResetCodeRepository.deleteByEmailAndCode(email, code);
     }
 
     @Transactional(readOnly = true)

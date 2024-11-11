@@ -114,7 +114,7 @@ public class AuthController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/v1/password-reset/new-password")
+    @PostMapping("/v1/password-reset")
     public ResponseEntity<Void> resetPassword(@RequestBody ResetPasswordRequest request) {
         authService.resetPassword(request);
         return ResponseEntity.noContent().build();

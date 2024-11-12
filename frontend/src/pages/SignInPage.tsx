@@ -65,7 +65,8 @@ const SignInPage = () => {
     }
   };
 
-  const handleMoveSignUp = () => navigate(ROUTE_PATH.signUp);
+  const handleMoveToSignUp = () => navigate(ROUTE_PATH.signUp);
+  const handleMoveToResetPassword = () => navigate(ROUTE_PATH.resetPassword);
 
   const handleClickBackward = () => navigate(ROUTE_PATH.root);
 
@@ -82,7 +83,7 @@ const SignInPage = () => {
           <FormField onKeyDown={handleKeyDown}>
             <FormField.Label label="이메일" />
             <FormField.Input maxLength={254} value={email} name="email" onChange={onChangeEmail} />
-            <FormField.ErrorMessage value={getEmailErrors()} />
+            {getEmailErrors() && <FormField.ErrorMessage value={getEmailErrors()} />}
           </FormField>
           <FormField>
             <FormField.Label label="비밀번호" />
@@ -94,7 +95,7 @@ const SignInPage = () => {
               type="password"
             />
           </FormField>
-          <FormField.ErrorMessage value={postErrorMessage} />
+          {postErrorMessage && <FormField.ErrorMessage value={postErrorMessage} />}
           <Button
             label="로그인 하기"
             size="full"
@@ -104,7 +105,8 @@ const SignInPage = () => {
             disabled={disabled}
           />
         </S.Box>
-        <S.NavigateButton onClick={handleMoveSignUp}>아직 방끗 회원이 아니신가요?</S.NavigateButton>
+        <S.NavigateButton onClick={handleMoveToSignUp}>아직 방끗 회원이 아니신가요?</S.NavigateButton>
+        <S.NavigateButton onClick={handleMoveToResetPassword}>비밀번호를 잊으셨나요?</S.NavigateButton>
       </S.Wrapper>
     </>
   );
@@ -139,15 +141,16 @@ const S = {
     display: flex;
     position: relative;
     width: 30rem;
-    flex-direction: column;
+    margin-bottom: 0.5rem;
     padding: 1.6rem;
-    border-radius: 1rem;
 
     background-color: ${({ theme }) => theme.palette.background};
+    flex-direction: column;
+    border-radius: 1rem;
     gap: 2rem;
   `,
   NavigateButton: styled.div`
-    margin-top: 2rem;
+    margin-top: 0.5rem;
 
     ${title4};
     color: ${({ theme }) => theme.palette.grey400};

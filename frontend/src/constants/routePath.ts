@@ -3,6 +3,7 @@ export const ROUTE_PATH = {
   home: '/home',
   signIn: '/sign-in',
   signUp: '/sign-up',
+  resetPassword: '/reset-password',
   /*checklist */
   checklistList: '/checklist',
   checklistNew: '/checklist/new',

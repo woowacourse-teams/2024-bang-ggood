@@ -14,6 +14,7 @@ export const ENDPOINT = {
   CHECKLIST_CUSTOM: '/custom-checklist',
   CHECKLIST_ID: (id: number) => `/checklists/${id}`,
   CHECKLIST_ID_V1: (id: number) => `/v1/checklists/${id}`,
+
   // like
   LIKE: (id: number | ':id') => `/checklists/${id}/like`,
   // category
@@ -35,6 +36,9 @@ export const ENDPOINT = {
   USER_VALID: '/token-exist',
   USER_ACCESS_TOKEN_REISSUE: '/accessToken/reissue',
   TOKEN: '/token',
+  RESET_PASSWORD_SEND_MAIL: '/v1/password-reset/send-code',
+  RESET_PASSWORD_CONFIRM_CODE: '/v1/password-reset/confirm',
+  RESET_PASSWORD: '/v1/password-reset',
   //subway
   SUBWAY: (position: Position) => `/stations/nearest?latitude=${position.latitude}&longitude=${position.longitude}`,
 };

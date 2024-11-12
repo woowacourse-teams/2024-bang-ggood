@@ -49,7 +49,7 @@ const Button = ({
       onClick={color !== 'disabled' ? onClick : () => {}}
       onKeyDown={handleKeyDown}
       {...rest}
-      disabled={disabled}
+      disabled={disabled ?? false}
       aria-label={label}
       tabIndex={1}
       type={type}
@@ -65,10 +65,10 @@ const Button = ({
 export default Button;
 
 const S = {
-  Button: styled.button<{ size: ButtonSize; color: ColorOption; isSquare: boolean }>`
+  Button: styled.button<{ size: ButtonSize; color: ColorOption; isSquare: boolean; disabled: boolean }>`
     ${({ isSquare }) => (isSquare ? 'border-radius: 0.4rem' : 'border-radius: 10rem')};
     ${({ size }) => sizeStyles[size]};
-    ${({ color }) => ColorStyles[color]};
+    ${({ color, disabled }) => ColorStyles[disabled ? 'disabled' : color]};
     cursor: pointer;
     box-sizing: border-box;
     ${flexCenter}

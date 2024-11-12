@@ -9,3 +9,9 @@ export interface UserTokenValid {
   isAccessTokenExist: boolean;
   isRefreshTokenExist: boolean;
 }
+
+export interface ResetPasswordArgs {
+  email: string;
+  code: string;
+  newPassword: string;
+}

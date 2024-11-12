@@ -181,6 +181,7 @@ CREATE TABLE password_reset_code
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     email       VARCHAR(255) NOT NULL,
     code        VARCHAR(255) NOT NULL,
+    verified    BOOLEAN      NOT NULL,
     created_at  TIMESTAMP(6),
     modified_at TIMESTAMP(6),
     deleted     BOOLEAN

@@ -33,21 +33,19 @@ public class PasswordResetService {
         passwordResetCodeRepository.save(new PasswordResetCode(request.email(), code));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void confirmPasswordResetCode(ConfirmPasswordResetCodeRequest request) {
         LocalDateTime timeLimit = LocalDateTime.now(clock).minusMinutes(PASSWORD_RESET_CODE_EXPIRED_MINUTES);
-        boolean isValid = passwordResetCodeRepository.existsByEmailAndCodeAndCreatedAtAfter(
+        PasswordResetCode passwordResetCode = passwordResetCodeRepository.getByEmailAndCodeAndCreatedAtAfter(
                 new Email(request.email()), request.code(), timeLimit);
-        if (!isValid) {
-            throw new BangggoodException(ExceptionCode.AUTHENTICATION_PASSWORD_CODE_NOT_FOUND);
-        }
+        passwordResetCode.verify();
     }
 
     @Transactional
     public void resetPassword(ResetPasswordRequest request) {
         Email email = new Email(request.email());
         String code = request.code();
-        if (!passwordResetCodeRepository.existsByEmailAndCode(email, code)) {
+        if (!passwordResetCodeRepository.existsByEmailAndCodeAndVerifiedTrue(email, code)) {
             throw new BangggoodException(ExceptionCode.AUTHENTICATION_PASSWORD_CODE_NOT_FOUND);
         }
 

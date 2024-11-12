@@ -91,7 +91,9 @@ class PasswordResetServiceTest extends IntegrationTestSupport {
         String newPassword = "newPassword1234";
         ResetPasswordRequest request = new ResetPasswordRequest(
                 user.getEmail().getValue(), code, newPassword);
-        passwordResetCodeRepository.save(new PasswordResetCode(user.getEmail().getValue(), code));
+        PasswordResetCode passwordResetCode = new PasswordResetCode(user.getEmail().getValue(), code);
+        passwordResetCode.verify();
+        passwordResetCodeRepository.save(passwordResetCode);
 
         //when
         passwordResetService.resetPassword(request);
@@ -111,12 +113,15 @@ class PasswordResetServiceTest extends IntegrationTestSupport {
         String newPassword = "newPassword1234";
         ResetPasswordRequest request = new ResetPasswordRequest(
                 user.getEmail().getValue(), code, newPassword);
-        passwordResetCodeRepository.save(new PasswordResetCode(user.getEmail().getValue(), code));
+        PasswordResetCode passwordResetCode = new PasswordResetCode(user.getEmail().getValue(), code);
+        passwordResetCode.verify();
+        passwordResetCodeRepository.save(passwordResetCode);
 
         //when
         passwordResetService.resetPassword(request);
 
         //then
-        assertThat(passwordResetCodeRepository.existsByEmailAndCode(user.getEmail(), code)).isFalse();
+        assertThat(passwordResetCodeRepository.existsByEmailAndCodeAndVerifiedTrue(user.getEmail(), code))
+                .isFalse();
     }
 }

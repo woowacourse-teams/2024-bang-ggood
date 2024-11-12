@@ -25,9 +25,16 @@ public class PasswordResetCode extends BaseEntity {
 
     private String code;
 
+    private boolean verified;
+
     public PasswordResetCode(String email, String code) {
         this.email = new Email(email);
         this.code = code;
+        this.verified = false;
+    }
+
+    public void verify() {
+        verified = true;
     }
 
     @Override

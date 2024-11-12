@@ -54,13 +54,13 @@ const EditChecklistPage = () => {
       if (!isSuccess) return;
 
       roomInfoActions.setRawValues(checklist.room);
+      selectedOptionActions.set(checklist.options.map(option => option.optionId));
+      checklistQuestionActions.set(checklist.categories);
+
       set('address', checklist.room.address!);
       set('buildingName', checklist.room.buildingName!);
 
       loadExternalScriptWithCallback('kakaoMap', () => searchSubwayStationsByAddress(checklist.room.address!));
-
-      selectedOptionActions.set(checklist.options.map(option => option.optionId));
-      checklistQuestionActions.set(checklist.categories);
     };
 
     setChecklistDataToStore();

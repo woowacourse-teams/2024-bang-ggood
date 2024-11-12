@@ -15,6 +15,7 @@ const RoomFloor = () => {
       floor.set('');
     }
   };
+
   return (
     <FormField>
       <FormField.Label label="층수" htmlFor="floor" />

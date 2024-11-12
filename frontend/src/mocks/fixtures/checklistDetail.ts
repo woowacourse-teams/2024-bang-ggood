@@ -12,7 +12,7 @@ export const checklistDetail: ChecklistInfo = {
     rent: 50,
     maintenanceFee: 5,
     contractTerm: 12,
-    floorLevel: '지하',
+    floorLevel: '반지하/지하',
     floor: undefined,
     realEstate: undefined,
     structure: '오픈형 원룸',

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { CSSProperties, useState } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 
 import { DropdownMark } from '@/assets/assets';
 import { flexColumn, flexRow, flexSpaceBetween } from '@/styles/common';
@@ -19,6 +19,10 @@ interface Props extends CSSProperties {
 const Dropdown = ({ initialValue, options, onSelectSetter, id }: Props) => {
   const [selectedValue, setSelectedValue] = useState(initialValue ?? options[0].value ?? '');
   const [isVisibleOptions, setIsVisibleOptions] = useState(false);
+
+  useEffect(() => {
+    if (initialValue) setSelectedValue(initialValue);
+  }, [initialValue]);
 
   const handleOptionClick = (option: Option) => {
     setSelectedValue(option.value);

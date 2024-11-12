@@ -16,7 +16,7 @@ import LikeButton from '@/components/_common/Like/LikeButton';
 import AddressMap from '@/components/_common/Map/AddressMap';
 import SubwayStations from '@/components/_common/Subway/SubwayStations';
 import { IncludedMaintenancesData } from '@/constants/roomInfo';
-import { flexColumn, flexRow, flexSpaceBetween, title2, title3, title4 } from '@/styles/common';
+import { flexColumn, flexRow, flexSpaceBetween, title2, title3 } from '@/styles/common';
 import { Option } from '@/types/option';
 import { RoomInfo } from '@/types/room';
 import { SubwayStation } from '@/types/subway';
@@ -88,10 +88,11 @@ const RoomInfoSection = ({ nearSubways, room, options, checklistId, isLiked }: P
       <S.Row>
         <S.Label>
           <Room aria-label="방 구조 / 방 평수" />
-          방 구조 <br />/ 방 평수
+          방 구조 <br />방 평수
         </S.Label>
         <S.Text>
-          {formattedUndefined(structure, 'string')} <br />/ {formattedUndefined(size)} 평
+          {formattedUndefined(structure, 'string')} <br />
+          {formattedUndefined(size)} 평
         </S.Text>
       </S.Row>
 
@@ -121,10 +122,12 @@ const RoomInfoSection = ({ nearSubways, room, options, checklistId, isLiked }: P
       <S.Row>
         <S.Label>
           <Calendar aria-label="계약 기간 / 입주 가능일" />
-          계약 기간 <br />/ 입주 가능일
+          계약 기간 <br />
+          입주 가능일
         </S.Label>
         <S.Text>
-          {formattedUndefined(contractTerm)}개월 계약 <br />/{formattedUndefined(occupancyMonth)}월 {occupancyPeriod}
+          {formattedUndefined(contractTerm)}개월 계약 <br />
+          {formattedUndefined(occupancyMonth)}월 {occupancyPeriod}
         </S.Text>
       </S.Row>
 
@@ -237,7 +240,6 @@ const S = {
   MoneyText: styled.div`
     width: 100%;
 
-    /* ${title4} */
     ${title3}
     ${flexRow}
     ${flexSpaceBetween}

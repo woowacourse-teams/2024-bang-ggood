@@ -3,16 +3,19 @@ package com.bang_ggood.auth.service;
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.auth.domain.PasswordResetCode;
 import com.bang_ggood.auth.dto.request.ConfirmPasswordResetCodeRequest;
+import com.bang_ggood.auth.dto.request.ForgotPasswordRequest;
 import com.bang_ggood.auth.dto.request.ResetPasswordRequest;
 import com.bang_ggood.auth.repository.PasswordResetCodeRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.user.UserFixture;
+import com.bang_ggood.user.domain.Email;
 import com.bang_ggood.user.domain.Password;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import java.time.Clock;
@@ -36,6 +39,22 @@ class PasswordResetServiceTest extends IntegrationTestSupport {
     @SpyBean
     private Clock clock;
 
+    @DisplayName("비밀번호 초기화 코드 생성 시 해당 이메일 기존 코드 모두 삭제 성공")
+    @Test
+    void sendPasswordResetEmail() {
+        // given
+        String email = "test@example.com";
+        String code = "123456";
+        ForgotPasswordRequest request = new ForgotPasswordRequest(email);
+        MailSender mailSender = Mockito.mock(MailSender.class);
+        when(mailSender.sendPasswordResetEmail(email)).thenReturn(code);
+
+        // when
+        passwordResetService.sendPasswordResetEmail(request);
+
+        //then
+        assertThat(passwordResetCodeRepository.countByEmail(new Email(email))).isEqualTo(1);
+    }
 
     @DisplayName("비밀번호 초기화 코드 인증 성공")
     @Test

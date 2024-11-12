@@ -29,5 +29,9 @@ public interface PasswordResetCodeRepository extends JpaRepository<PasswordReset
                 .orElseThrow(() -> new BangggoodException(ExceptionCode.AUTHENTICATION_PASSWORD_CODE_NOT_FOUND));
     }
 
+    long countByEmail(Email email);
+
     void deleteByEmailAndCode(Email email, String code);
+
+    void deleteByEmail(Email email);
 }

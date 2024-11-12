@@ -30,6 +30,7 @@ public class PasswordResetService {
 
     public void sendPasswordResetEmail(ForgotPasswordRequest request) {
         String code = mailSender.sendPasswordResetEmail(request.email());
+        passwordResetCodeRepository.deleteByEmail(new Email(request.email()));
         passwordResetCodeRepository.save(new PasswordResetCode(request.email(), code));
     }
 

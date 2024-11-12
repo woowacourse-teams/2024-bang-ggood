@@ -114,8 +114,8 @@ const CompareMap = ({ positions }: { positions: Position[] }) => {
         <S.Box>
           <S.Map ref={mapContainerRef}>
             <S.RoomMarkBox>
-              <RoomMarker type="A" onClick={() => handleRoomMarkerClick(0)} />
-              <RoomMarker type="B" onClick={() => handleRoomMarkerClick(1)} />
+              <RoomMarker size="small" type="A" onClick={() => handleRoomMarkerClick(0)} />
+              <RoomMarker size="small" type="B" onClick={() => handleRoomMarkerClick(1)} />
             </S.RoomMarkBox>
           </S.Map>
         </S.Box>

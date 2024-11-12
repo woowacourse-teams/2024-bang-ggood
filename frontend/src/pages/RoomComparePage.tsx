@@ -5,12 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import CompareMap from '@/components/_common/Map/RoomCompareMap';
+import CategoryDetailModal from '@/components/RoomCompare/CategoryDetailModal';
 import CompareCard from '@/components/RoomCompare/CompareCard';
 import RoomOptionModal from '@/components/RoomCompare/OptionModal';
 import RoomMarker from '@/components/RoomCompare/RoomMarker';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useModal from '@/hooks/useModal';
-import { threeRoomsForCompare } from '@/mocks/fixtures/roomCompare';
+import { roomsForCompare } from '@/mocks/fixtures/roomCompare';
 import { flexCenter, flexRow } from '@/styles/common';
 import theme from '@/styles/theme';
 import { Position } from '@/types/address';
@@ -19,9 +20,20 @@ import { ChecklistCompare } from '@/types/checklistCompare';
 const RoomComparePage = () => {
   const navigate = useNavigate();
   // const roomsId = { ...location.state };
-  const { isModalOpen, openModal: openOptionModal, closeModal } = useModal();
+  const { isModalOpen: isOptionModalOpen, openModal: openOptionModal, closeModal: closeOptionModal } = useModal();
+  const { isModalOpen: isCategoryModalOpen, openModal: openCategoryModal, closeModal: closeCategoryModal } = useModal();
 
-  const [roomList, setRoomList] = useState<ChecklistCompare[]>(threeRoomsForCompare);
+  const [roomList, setRoomList] = useState<ChecklistCompare[]>(roomsForCompare);
+
+  const handleOpenCategoryDetailModal = (roomId: number, categoryId: number) => {
+    openCategoryModal();
+    navigate(ROUTE_PATH.roomCompare + `?roomId=${roomId}&categoryId=${categoryId}`);
+  };
+
+  const handleCloseategoryDetailModal = () => {
+    closeCategoryModal();
+    navigate(ROUTE_PATH.roomCompare);
+  };
 
   const handleClickBackward = () => {
     navigate(ROUTE_PATH.checklistList);
@@ -62,17 +74,28 @@ const RoomComparePage = () => {
         <CompareMap positions={positions} />
         <S.RoomGrid>
           {roomList?.map((room, index) => (
-            <CompareCard key={room.checklistId} room={room} index={index} openOptionModal={openOptionModal} />
+            <CompareCard
+              key={room.checklistId}
+              room={room}
+              index={index}
+              openOptionModal={openOptionModal}
+              openCategoryModal={handleOpenCategoryDetailModal}
+            />
           ))}
         </S.RoomGrid>
-        {isModalOpen && (
+        {/*방 옵션 비교 모달*/}
+        {isOptionModalOpen && (
           <RoomOptionModal
             hasOptions={optionMock}
             roomTitle1={roomList[0].roomName ?? ''}
             roomTitle2={roomList[1].roomName ?? ''}
-            isOpen={isModalOpen}
-            closeModal={closeModal}
+            isOpen={isOptionModalOpen}
+            closeModal={closeOptionModal}
           />
+        )}
+        {/*방 카테고리 디테일 모달*/}
+        {isCategoryModalOpen && (
+          <CategoryDetailModal isOpen={isCategoryModalOpen} closeModal={handleCloseategoryDetailModal} />
         )}
       </Layout>
     </>
@@ -100,7 +123,7 @@ const S = {
     padding: 0.8rem 0;
 
     font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: 2rem;
+    font-size: 1.8rem;
     text-align: center;
     border-radius: 0.8rem;
   `,

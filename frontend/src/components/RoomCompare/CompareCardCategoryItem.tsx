@@ -8,13 +8,15 @@ interface Props {
   isLabeled?: boolean;
   item: React.ReactNode;
   height?: number;
+  score: number;
 }
 
-const CompareCardItem = ({ label, isLabeled = false, item, height }: Props) => {
+const CompareCardItem = ({ label, isLabeled = false, item, height, score }: Props) => {
   return (
     <S.ItemContainer height={height}>
       <S.Label isLabeled={isLabeled}>{label}</S.Label>
       <S.ItemText>{item}</S.ItemText>
+      <S.Score>{score}%</S.Score>
     </S.ItemContainer>
   );
 };

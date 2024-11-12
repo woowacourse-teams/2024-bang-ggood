@@ -27,9 +27,9 @@ const RoomOptionModal = ({ roomTitle1, roomTitle2, isOpen, closeModal, hasOption
       <Modal.header>옵션 비교</Modal.header>
       <Modal.body>
         <S.Container>
-          <S.ItemText>옵션</S.ItemText>
-          <S.ItemText>{roomTitle1}</S.ItemText>
-          <S.ItemText>{roomTitle2}</S.ItemText>
+          <S.ItemText isBold={true}>옵션</S.ItemText>
+          <S.ItemText isBold={true}>{roomTitle1}</S.ItemText>
+          <S.ItemText isBold={true}>{roomTitle2}</S.ItemText>
           {hasOptions.map(option => {
             const { optionName, hasRoom1, hasRoom2 } = option;
             return (
@@ -68,17 +68,18 @@ const S = {
     display: grid;
     grid-template-columns: 0.8fr 1fr 1fr;
   `,
-  ItemText: styled.div`
+  ItemText: styled.div<{ isBold?: boolean }>`
     padding: 0.6rem 1rem;
 
+    font-weight: ${({ theme, isBold }) => isBold && theme.text.weight.bold};
     ${omitText};
     text-align: center;
-    border-bottom: 0.05rem solid ${({ theme }) => theme.palette.grey300};
+    border-bottom: 0.1rem solid ${({ theme }) => theme.palette.grey200};
   `,
   Item: styled.div`
     ${flexCenter};
     height: 2rem;
     padding: 0.6rem 1rem;
-    border-bottom: 0.05rem solid ${({ theme }) => theme.palette.grey300};
+    border-bottom: 0.1rem solid ${({ theme }) => theme.palette.grey200};
   `,
 };

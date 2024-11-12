@@ -5,7 +5,7 @@ import { SubwayStation } from '@/types/subway';
 export interface CategoryScore {
   categoryId: number;
   categoryName: string;
-  score: number;
+  score: number | null;
 }
 
 export interface ChecklistCompare extends RoomInfo {

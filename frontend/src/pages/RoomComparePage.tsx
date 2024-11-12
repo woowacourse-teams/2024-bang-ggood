@@ -31,6 +31,15 @@ const RoomComparePage = () => {
     { latitude: 37.5061912, longitude: 127.1266228 },
   ];
 
+  const optionMock = [
+    { optionName: '세탁기', hasRoom1: true, hasRoom2: false },
+    { optionName: '세탁기', hasRoom1: true, hasRoom2: false },
+    { optionName: '세탁기', hasRoom1: true, hasRoom2: false },
+    { optionName: '세탁기', hasRoom1: true, hasRoom2: false },
+    { optionName: '세탁기', hasRoom1: true, hasRoom2: false },
+    { optionName: '세탁기', hasRoom1: true, hasRoom2: false },
+  ];
+
   return (
     <>
       <Header
@@ -58,6 +67,7 @@ const RoomComparePage = () => {
         </S.RoomGrid>
         {isModalOpen && (
           <RoomOptionModal
+            hasOptions={optionMock}
             roomTitle1={roomList[0].roomName ?? ''}
             roomTitle2={roomList[1].roomName ?? ''}
             isOpen={isModalOpen}

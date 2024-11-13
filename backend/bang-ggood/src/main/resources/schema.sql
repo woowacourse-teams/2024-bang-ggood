@@ -52,6 +52,8 @@ CREATE TABLE room
     floor         INTEGER,
     structure     VARCHAR(255),
     size DOUBLE,
+    latitude DOUBLE,
+    longitude DOUBLE,
     created_at    TIMESTAMP(6),
     modified_at   TIMESTAMP(6),
     deleted       BOOLEAN

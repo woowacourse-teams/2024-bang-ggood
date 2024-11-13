@@ -47,6 +47,7 @@ export const postSignUp = async ({ name, email, password }: { name: string; emai
     method: 'POST',
     body: JSON.stringify({ name, email, password }),
     credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
   });
 };
 

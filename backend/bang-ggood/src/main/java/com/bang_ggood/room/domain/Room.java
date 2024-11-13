@@ -74,6 +74,8 @@ public class Room extends BaseEntity {
         this.floor = room.floor;
         this.structure = room.structure;
         this.size = room.size;
+        this.latitude = room.latitude;
+        this.longitude = room.longitude;
         validateFloorAndLevel();
     }
 

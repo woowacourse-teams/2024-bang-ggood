@@ -109,7 +109,6 @@ CREATE TABLE checklist_maintenance
 CREATE TABLE checklist_question
 (
     id           BIGINT AUTO_INCREMENT PRIMARY KEY,
-    question     VARCHAR(255),
     question_id  INTEGER NOT NULL,
     checklist_id BIGINT  NOT NULL,
     answer       VARCHAR(255),

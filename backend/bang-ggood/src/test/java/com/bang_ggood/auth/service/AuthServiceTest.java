@@ -21,11 +21,9 @@ import com.bang_ggood.user.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
 import java.util.Optional;
 
 import static com.bang_ggood.auth.AuthFixture.LOCAL_LOGIN_REQUEST;
@@ -37,6 +35,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class AuthServiceTest extends IntegrationTestSupport {
@@ -169,9 +168,6 @@ class AuthServiceTest extends IntegrationTestSupport {
         User findUser = userRepository.findById(userId).orElseThrow();
         String findPassword = findUser.getPassword().getValue();
 
-        String[] passwordParts = findPassword.split(":");
-        String salt = passwordParts[1];
-
         String expectedPassword = PasswordEncoder.encodeWithSpecificSalt(password, findPassword);
 
         // then
@@ -211,7 +207,7 @@ class AuthServiceTest extends IntegrationTestSupport {
     @Test
     void oauthLogin_signup() {
         // given
-        Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
+        when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
@@ -219,7 +215,7 @@ class AuthServiceTest extends IntegrationTestSupport {
 
         // then
         assertAll(
-                () ->  assertThat(token.accessToken()).isNotBlank(),
+                () -> assertThat(token.accessToken()).isNotBlank(),
                 () -> assertThat(token.refreshToken()).isNotBlank()
         );
     }
@@ -229,7 +225,7 @@ class AuthServiceTest extends IntegrationTestSupport {
     void oauthLogin() {
         // given
         userRepository.save(UserFixture.USER1());
-        Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
+        when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER1());
 
         // when
@@ -237,7 +233,7 @@ class AuthServiceTest extends IntegrationTestSupport {
 
         // then
         assertAll(
-                () ->  assertThat(token.accessToken()).isNotBlank(),
+                () -> assertThat(token.accessToken()).isNotBlank(),
                 () -> assertThat(token.refreshToken()).isNotBlank()
         );
     }
@@ -248,7 +244,7 @@ class AuthServiceTest extends IntegrationTestSupport {
         // given
         User user = userRepository.save(UserFixture.USER1());
         userRepository.deleteById(user.getId());
-        Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
+        when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER1());
 
         // when
@@ -256,7 +252,7 @@ class AuthServiceTest extends IntegrationTestSupport {
 
         // then
         assertAll(
-                () ->  assertThat(token.accessToken()).isNotBlank(),
+                () -> assertThat(token.accessToken()).isNotBlank(),
                 () -> assertThat(token.refreshToken()).isNotBlank()
         );
     }
@@ -265,7 +261,7 @@ class AuthServiceTest extends IntegrationTestSupport {
     @Test
     void oauthLogin_default_checklist_question() {
         // given
-        Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
+        when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
@@ -288,7 +284,7 @@ class AuthServiceTest extends IntegrationTestSupport {
     @Test
     void oauthLogin_default_checklist() {
         // given
-        Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
+        when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER2());
 
         // when
@@ -368,7 +364,7 @@ class AuthServiceTest extends IntegrationTestSupport {
     void reissueAccessToken() {
         // given
         userRepository.save(UserFixture.USER1());
-        Mockito.when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
+        when(oauthClient.requestOauthInfo(any(OauthLoginRequest.class)))
                 .thenReturn(UserFixture.OAUTH_INFO_RESPONSE_USER1());
         AuthTokenResponse tokenResponse = authService.oauthLogin(OAUTH_LOGIN_REQUEST);
 

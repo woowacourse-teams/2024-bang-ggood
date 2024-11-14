@@ -23,14 +23,14 @@ export const TabProvider = ({ children, defaultTab = 0 }: Props) => {
   const [currentTabId, setCurrentTabId] = useState<number>(defaultTab);
 
   // 드래그로 탭이동을 위한 훅을 리턴에 제공
-  const useDragForTab = () => {
+  const useDragForTab = (dragThreshold: number = DRAG_THRESHOLD_PIXEL) => {
     const ref = useRef<HTMLElement>(null);
     useMouseDrag(ref, (S, E) => {
       const TAB_COUNT = DefaultChecklistTabsNames.length;
 
       setCurrentTabId(tabId => {
-        const isLeftDrag = E.x - S.x > DRAG_THRESHOLD_PIXEL;
-        const isRightDrag = S.x - E.x > DRAG_THRESHOLD_PIXEL;
+        const isLeftDrag = E.x - S.x > dragThreshold;
+        const isRightDrag = S.x - E.x > dragThreshold;
         if (isLeftDrag) return remainOp(tabId - 1, TAB_COUNT);
         if (isRightDrag) return remainOp(tabId + 1, TAB_COUNT);
         return tabId;

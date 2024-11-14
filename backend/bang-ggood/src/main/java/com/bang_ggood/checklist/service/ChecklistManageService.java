@@ -205,6 +205,7 @@ public class ChecklistManageService {
         checklistService.deleteById(id);
         roomService.deleteById(checklist.getRoomId());
         checklistStationService.deleteChecklistStation(checklist.getId());
+        checklistLikeService.deleteLike(user, checklist);
     }
 
     @Transactional(readOnly = true)

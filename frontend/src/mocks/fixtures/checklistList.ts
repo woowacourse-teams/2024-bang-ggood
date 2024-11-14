@@ -1,4 +1,6 @@
-export const checklistList = {
+import { ChecklistPreview } from '@/types/checklist';
+
+export const checklistList: { checklists: ChecklistPreview[] } = {
   checklists: [
     {
       checklistId: 1,
@@ -36,7 +38,7 @@ export const checklistList = {
       address: '서울 동작구 사당동',
       deposit: 500,
       rent: 45,
-      station: null,
+      station: undefined,
       createdAt: '2024-03-01T10:00:00Z',
       summary: '방은 좁으나 싼 가격이 장점!',
       isLiked: false,

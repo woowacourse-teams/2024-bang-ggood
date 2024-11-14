@@ -17,7 +17,7 @@ const ArticlePreviewCard = ({ index, article }: Props) => {
   const navigate = useNavigate();
   const { articleId, keyword, title } = article;
 
-  const { color600, color200 } = getSeqColor(index);
+  const { color500, color200 } = getSeqColor(index);
 
   const handleClickArticle = () => {
     navigate(ROUTE_PATH.articleOne(articleId));
@@ -31,12 +31,12 @@ const ArticlePreviewCard = ({ index, article }: Props) => {
       tabIndex={1}
       aria-label="클릭하면 해당 아티클 페이지로 이동합니다"
     >
-      <S.Keyword bgColor={theme.palette.background} color={color600}>
+      <S.Keyword bgColor={theme.palette.background} color={color500}>
         {keyword}
       </S.Keyword>
       <S.Title>{title}</S.Title>
       <S.ArrowButton>
-        <ArrowRight stroke={color600} aria-hidden="true" />
+        <ArrowRight stroke={color500} aria-hidden="true" />
       </S.ArrowButton>
     </S.Container>
   );

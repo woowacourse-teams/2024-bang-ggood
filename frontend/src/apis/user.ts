@@ -1,6 +1,6 @@
 import fetcher from '@/apis/fetcher';
 import { BASE_URL, ENDPOINT } from '@/apis/url';
-import { User, UserTokenValid } from '@/types/user';
+import { ResetPasswordArgs, User, UserTokenValid } from '@/types/user';
 
 export const postOAuthLogin = async (code: string, redirectUri: string) => {
   const response = await fetcher.post({ url: BASE_URL + ENDPOINT.OAUTH_LOGIN, body: { code, redirectUri } });
@@ -47,7 +47,6 @@ export const postSignUp = async ({ name, email, password }: { name: string; emai
     method: 'POST',
     body: JSON.stringify({ name, email, password }),
     credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
   });
 };
 
@@ -56,6 +55,17 @@ export const postSignIn = async ({ email, password }: { email: string; password:
     url: `${BASE_URL}${ENDPOINT.SIGN_IN}`,
     body: { email, password },
     credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
   });
+};
+
+export const postResetPasswordMail = async (email: ResetPasswordArgs['email']) => {
+  return await fetcher.post({ url: `${BASE_URL}${ENDPOINT.RESET_PASSWORD_SEND_MAIL}`, body: { email } });
+};
+
+export const postResetPasswordCode = async ({ email, code }: Pick<ResetPasswordArgs, 'email' | 'code'>) => {
+  return await fetcher.post({ url: `${BASE_URL}${ENDPOINT.RESET_PASSWORD_CONFIRM_CODE}`, body: { email, code } });
+};
+
+export const postResetPassword = async ({ email, code, newPassword }: ResetPasswordArgs) => {
+  return await fetcher.post({ url: `${BASE_URL}${ENDPOINT.RESET_PASSWORD}`, body: { email, code, newPassword } });
 };

@@ -23,4 +23,13 @@ export const userHandlers = [
   http.post(BASE_URL + ENDPOINT.SIGN_IN, () => {
     return HttpResponse.json(null, { status: 201 });
   }),
+  http.post(BASE_URL + ENDPOINT.RESET_PASSWORD_SEND_MAIL, () => {
+    return new HttpResponse(null, { status: 204 }); // 204
+  }),
+  http.post(BASE_URL + ENDPOINT.RESET_PASSWORD_CONFIRM_CODE, () => {
+    return new HttpResponse(null, { status: 204 });
+  }),
+  http.post(BASE_URL + ENDPOINT.RESET_PASSWORD, () => {
+    return new HttpResponse(null, { status: 204 });
+  }),
 ];

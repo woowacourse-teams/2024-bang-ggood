@@ -1,7 +1,7 @@
 import { createContext, ReactNode, RefObject, useContext, useRef, useState } from 'react';
 
 import { ERROR_MESSAGE } from '@/constants/messages/errorMessage';
-import { DefaultChecklistTabsNames, DRAG_THRESHOLD_PIXEL, remainOp } from '@/constants/tabs';
+import { DefaultChecklistTabsNames, DRAG_THRESHOLD_PIXEL } from '@/constants/tabs';
 import useMouseDrag from '@/hooks/useMouseDrag';
 
 interface ContextProps {
@@ -16,6 +16,8 @@ interface Props {
   children: ReactNode;
   defaultTab: number;
 }
+
+const remainOp = (a: number, b: number) => (((a % b) + b + 1) % b) - 1; // 나머지연산자. -1부터 시작하므로 +1 -1
 
 export const TabProvider = ({ children, defaultTab = 0 }: Props) => {
   const [currentTabId, setCurrentTabId] = useState<number>(defaultTab);

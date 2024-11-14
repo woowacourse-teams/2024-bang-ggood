@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
-import CompareMap from '@/components/_common/Map/RoomCompareMap';
+import RoomCompareMap from '@/components/_common/Map/RoomCompareMap';
 import CategoryDetailModal from '@/components/RoomCompare/CategoryDetailModal';
 import CompareCard from '@/components/RoomCompare/CompareCard';
 import OptionDetailModal from '@/components/RoomCompare/OptionDetailModal';
@@ -23,7 +23,12 @@ const RoomComparePage = () => {
   const { isModalOpen: isOptionModalOpen, openModal: openOptionModal, closeModal: closeOptionModal } = useModal();
   const { isModalOpen: isCategoryModalOpen, openModal: openCategoryModal, closeModal: closeCategoryModal } = useModal();
 
-  const [roomList, setRoomList] = useState<ChecklistCompare[]>(roomsForCompare);
+  const [roomList, setRoomList] = useState<ChecklistCompare[]>([]);
+
+  //TODO: 나중에 비교 데이터 요청해서 받아오는 로직으로 수정
+  useEffect(() => {
+    setRoomList(roomsForCompare);
+  });
 
   const handleOpenCategoryDetailModal = (roomId: number, categoryId: number) => {
     openCategoryModal();
@@ -52,6 +57,8 @@ const RoomComparePage = () => {
     { optionName: '세탁기', hasRoom1: true, hasRoom2: false },
   ];
 
+  if (!roomList.length) return <div>loading</div>;
+
   return (
     <>
       <Header
@@ -71,7 +78,7 @@ const RoomComparePage = () => {
             </S.RoomTitle>
           </S.TitleFlex>
         </S.RoomGrid>
-        <CompareMap positions={positions} />
+        <RoomCompareMap positions={positions} />
         <S.RoomGrid>
           {roomList?.map((room, index) => (
             <CompareCard

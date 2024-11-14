@@ -4,13 +4,13 @@ import { useEffect, useRef } from 'react';
 import RoomMarker from '@/components/RoomCompare/RoomMarker';
 import { Position } from '@/types/address';
 import createKakaoMapElements from '@/utils/createKakaoMapElements';
+import { getDistanceFromLatLonInKm, getMapLevel } from '@/utils/mapHelper';
 
 import loadExternalScriptWithCallback from '../../../utils/loadScript';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-const CompareMap = ({ positions }: { positions: Position[] }) => {
-  const mapContainerRef = useRef<HTMLDivElement>(null);
+const RoomCompareMap = ({ positions }: { positions: Position[] }) => {
+  const mapElement = useRef<HTMLDivElement>(null);
   const mapRef = useRef<any>(null);
 
   useEffect(() => {
@@ -22,21 +22,6 @@ const CompareMap = ({ positions }: { positions: Position[] }) => {
         longitude: (positions[0].longitude + positions[1].longitude) / 2,
       };
 
-      function getDistanceFromLatLonInKm(lat1: number, lng1: number, lat2: number, lng2: number) {
-        function deg2rad(deg: any) {
-          return deg * (Math.PI / 180);
-        }
-        const R = 6371;
-        const dLat = deg2rad(lat2 - lat1);
-        const dLon = deg2rad(lng2 - lng1);
-        const a =
-          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-          Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        const d = R * c;
-        return d;
-      }
-
       const diff = getDistanceFromLatLonInKm(
         positions[0].latitude,
         positions[0].longitude,
@@ -44,26 +29,17 @@ const CompareMap = ({ positions }: { positions: Position[] }) => {
         positions[1].longitude,
       );
 
-      // 거리에 따른 적절한 지도 level 설정
-      const getMapLevel = (distance: number) => {
-        if (distance < 0.5) return 3;
-        if (distance < 0.7) return 4;
-        if (distance < 1) return 5;
-        if (distance < 3) return 6;
-        if (distance < 5) return 7;
-        if (distance < 12) return 9;
-        return 10;
-      };
-
+      /* 두 지점의 거리를 재서 적당한 Map level 설정 */
       const mapLevel = getMapLevel(diff);
 
       kakao.maps.load(() => {
-        if (!mapContainerRef.current) return;
+        if (!mapElement.current) return;
         const mapOption = {
           center: new kakao.maps.LatLng(centerOfPosition.latitude, centerOfPosition.longitude),
           level: mapLevel,
         };
-        const map = new kakao.maps.Map(mapContainerRef.current, mapOption);
+
+        const map = new kakao.maps.Map(mapElement.current, mapOption);
         mapRef.current = map;
 
         const { createMarker } = createKakaoMapElements();
@@ -112,7 +88,7 @@ const CompareMap = ({ positions }: { positions: Position[] }) => {
     <>
       {location && (
         <S.Box>
-          <S.Map ref={mapContainerRef}>
+          <S.Map ref={mapElement}>
             <S.RoomMarkBox>
               <RoomMarker size="small" type="A" onClick={() => handleRoomMarkerClick(0)} />
               <RoomMarker size="small" type="B" onClick={() => handleRoomMarkerClick(1)} />
@@ -151,4 +127,4 @@ const S = {
   `,
 };
 
-export default CompareMap;
+export default RoomCompareMap;

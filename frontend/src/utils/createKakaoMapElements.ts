@@ -1,22 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { DEFAULT_POSITION } from '@/constants/map';
-
 const createKakaoMapElements = () => {
-  const createMap = (kakao: any) => {
-    const container = document.getElementById('map');
-    if (!container) return;
-
-    const center = new kakao.maps.LatLng(DEFAULT_POSITION.latitude, DEFAULT_POSITION.longitude);
-
-    const options = {
-      center,
-      level: 3,
-    };
-
-    return new kakao.maps.Map(container, options);
-  };
-
   const createMarker = (kakao: any, map: any, position: any, color: 'primary' | 'secondary', title?: string) => {
     const imageSrc = {
       primary: 'https://github.com/user-attachments/assets/cd52185e-f22f-4d8c-9528-cf9f0593bfaf',
@@ -44,7 +28,7 @@ const createKakaoMapElements = () => {
     return infoWindow;
   };
 
-  return { createMap, createMarker, createInfoWindow };
+  return { createMarker, createInfoWindow };
 };
 
 export default createKakaoMapElements;

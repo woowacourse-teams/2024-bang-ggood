@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import React from 'react';
 
 import SubwayStations from '@/components/_common/Subway/SubwayStations';
 import CategoryScore from '@/components/RoomCompare/CategoryScore';
@@ -42,7 +41,7 @@ const CompareCard = ({ room, openOptionModal, openCategoryModal }: Props) => {
         label={'옵션'}
         item={<S.OptionButton onClick={openOptionModal}>{room.options.length}개</S.OptionButton>}
       />
-      {/* TODO: 모든 카테고리를 다 보여주고 없으면 - 표시로 변경 */}
+      {/*카테고리별 질문 평점 섹션*/}
       {room.categories.map(category => (
         <CompareCardItem
           key={category.categoryId}
@@ -61,8 +60,7 @@ const CompareCard = ({ room, openOptionModal, openCategoryModal }: Props) => {
   );
 };
 
-const CompareCardMemo = React.memo(CompareCard);
-export default CompareCardMemo;
+export default CompareCard;
 
 const S = {
   Container: styled.div`

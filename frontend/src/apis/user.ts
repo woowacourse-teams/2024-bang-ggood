@@ -35,19 +35,18 @@ export const deleteToken = async () => {
 };
 
 export const postReissueAccessToken = async () => {
-  return await fetch(`${BASE_URL}${ENDPOINT.USER_ACCESS_TOKEN_REISSUE}`, {
-    method: 'POST',
+  return await fetcher.post({
+    url: `${BASE_URL}${ENDPOINT.USER_ACCESS_TOKEN_REISSUE}`,
     credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
+    // 쿠키전달이기때문에 body가 비어있는 post
   });
 };
 
 export const postSignUp = async ({ name, email, password }: { name: string; email: string; password: string }) => {
-  return await fetch(`${BASE_URL}${ENDPOINT.REGISTER}`, {
-    method: 'POST',
-    body: JSON.stringify({ name, email, password }),
+  return await fetcher.post({
+    url: `${BASE_URL}${ENDPOINT.REGISTER}`,
+    body: { name, email, password },
     credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
   });
 };
 

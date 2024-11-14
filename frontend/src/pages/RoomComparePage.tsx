@@ -7,7 +7,7 @@ import Layout from '@/components/_common/layout/Layout';
 import CompareMap from '@/components/_common/Map/RoomCompareMap';
 import CategoryDetailModal from '@/components/RoomCompare/CategoryDetailModal';
 import CompareCard from '@/components/RoomCompare/CompareCard';
-import RoomOptionModal from '@/components/RoomCompare/OptionModal';
+import OptionDetailModal from '@/components/RoomCompare/OptionDetailModal';
 import RoomMarker from '@/components/RoomCompare/RoomMarker';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useModal from '@/hooks/useModal';
@@ -85,7 +85,7 @@ const RoomComparePage = () => {
         </S.RoomGrid>
         {/*방 옵션 비교 모달*/}
         {isOptionModalOpen && (
-          <RoomOptionModal
+          <OptionDetailModal
             hasOptions={optionMock}
             roomTitle1={roomList[0].roomName ?? ''}
             roomTitle2={roomList[1].roomName ?? ''}

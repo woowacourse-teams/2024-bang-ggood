@@ -10,7 +10,7 @@ const CategoryDetailModal = ({ isOpen, closeModal }: Props) => {
     <Modal isOpen={isOpen} onClose={closeModal}>
       <Modal.header>카테고리 비교</Modal.header>
       <Modal.body>
-        <div>aa</div>
+        <div>카테고리 비교 내용이 들어갑니다.</div>
       </Modal.body>
     </Modal>
   );

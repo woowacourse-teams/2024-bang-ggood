@@ -20,8 +20,7 @@ interface hasOption {
   hasRoom2: boolean;
 }
 
-//TODO: grid 로 수정
-const RoomOptionModal = ({ roomTitle1, roomTitle2, isOpen, closeModal, hasOptions }: Props) => {
+const OptionDetailModal = ({ roomTitle1, roomTitle2, isOpen, closeModal, hasOptions }: Props) => {
   return (
     <Modal isOpen={isOpen} onClose={closeModal}>
       <Modal.header>옵션 비교</Modal.header>
@@ -53,28 +52,28 @@ const RoomOptionModal = ({ roomTitle1, roomTitle2, isOpen, closeModal, hasOption
             );
           })}
           <S.ItemText>총 개수</S.ItemText>
-          <S.ItemText>3개</S.ItemText>
-          <S.ItemText>5개</S.ItemText>
+          <S.ItemText hasBorder={false}>3개</S.ItemText>
+          <S.ItemText hasBorder={false}>5개</S.ItemText>
         </S.Container>
       </Modal.body>
     </Modal>
   );
 };
 
-export default RoomOptionModal;
+export default OptionDetailModal;
 
 const S = {
   Container: styled.div`
     display: grid;
     grid-template-columns: 0.8fr 1fr 1fr;
   `,
-  ItemText: styled.div<{ isBold?: boolean }>`
+  ItemText: styled.div<{ isBold?: boolean; hasBorder?: boolean }>`
     padding: 0.6rem 1rem;
 
     font-weight: ${({ theme, isBold }) => isBold && theme.text.weight.bold};
     ${omitText};
     text-align: center;
-    border-bottom: 0.1rem solid ${({ theme }) => theme.palette.grey200};
+    border-bottom: ${({ hasBorder, theme }) => hasBorder && `0.1rem solid  ${theme.palette.grey200}};`};
   `,
   Item: styled.div`
     ${flexCenter};

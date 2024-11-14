@@ -18,12 +18,11 @@
 나만의 체크리스트로 최적의 방을 찾아 나가는 과정, 방끗이 함께할게요.  
 자취방에서 방긋 웃을 수 있게, 방끗을 사용해 보세요! ☺️
 
-
 <table style="border-collapse: collapse; width: 100%;">
   <tr>
   <tr>
     <td style="width: 200px;">
-      <img src="https://github.com/user-attachments/assets/002037ac-4d89-4ea1-b49a-a3dc26969b6a"/>
+      <img src="https://github.com/user-attachments/assets/31d2f0b9-85f0-4f13-9484-38fdf44aa90d"/>
     </td>
     <td style=" padding-left: 15px;">
       <b>방을 간편하게 기록하고 기억하세요!</b>

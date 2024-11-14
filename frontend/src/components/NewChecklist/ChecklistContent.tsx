@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Suspense, useRef } from 'react';
+import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallback';
@@ -7,27 +7,10 @@ import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import ChecklistQuestionTemplate from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestionTemplate';
 import RoomInfoTemplate from '@/components/NewChecklist/NewRoomInfoForm/RoomInfoTemplate';
 import OptionTemplate from '@/components/NewChecklist/Option/OptionTemplate';
-import { DefaultChecklistTabsNames } from '@/constants/tabs';
-import useMouseDrag from '@/hooks/useMouseDrag';
 
 const ChecklistContent = () => {
-  const { currentTabId } = useTabContext();
-
-  const { setCurrentTabId } = useTabContext();
-  const ref = useRef<HTMLElement>(null);
-
-  useMouseDrag(ref, (S, E) => {
-    const DRAG_THRESHOLD = 100;
-    const TAB_COUNT = DefaultChecklistTabsNames.length;
-    const remainOp = (a: number, b: number) => (((a % b) + b + 1) % b) - 1; // 나머지연산자. -1부터 시작하므로 +1 -1
-    setCurrentTabId(tabId => {
-      const isLeftDrag = E.x - S.x > DRAG_THRESHOLD;
-      const isRightDrag = S.x - E.x > DRAG_THRESHOLD;
-      if (isLeftDrag) return remainOp(tabId - 1, TAB_COUNT);
-      if (isRightDrag) return remainOp(tabId + 1, TAB_COUNT);
-      return tabId;
-    });
-  });
+  const { currentTabId, useDragForTab } = useTabContext();
+  useDragForTab();
 
   return (
     <S.Container>

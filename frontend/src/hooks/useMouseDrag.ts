@@ -10,12 +10,10 @@ const useMouseDrag = (ref: MutableRefObject<HTMLElement | null>, handler: Handle
   const [startPosition, setStartPosition] = useState<MousePosition | null>(null);
 
   useEffect(() => {
-    const pointerdownListener = (e: MouseEvent) => {
-      setStartPosition({ x: e.clientX, y: e.clientY });
-    };
-    const touchStartListener = (e: TouchEvent) => {
+    const pointerdownListener = (e: MouseEvent) => setStartPosition({ x: e.clientX, y: e.clientY });
+
+    const touchStartListener = (e: TouchEvent) =>
       setStartPosition({ x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientX });
-    };
 
     const pointerupListener = (e: MouseEvent) => {
       const endPosition = { x: e.clientX, y: e.clientY };
@@ -30,18 +28,20 @@ const useMouseDrag = (ref: MutableRefObject<HTMLElement | null>, handler: Handle
       setStartPosition(null);
     };
 
-    ref.current?.addEventListener('mousedown', pointerdownListener);
-    ref.current?.addEventListener('touchstart', touchStartListener);
-    ref.current?.addEventListener('mouseup', pointerupListener);
-    ref.current?.addEventListener('touchend', touchEndListener);
+    const el = ref.current;
+
+    el?.addEventListener('mousedown', pointerdownListener);
+    el?.addEventListener('touchstart', touchStartListener);
+    el?.addEventListener('mouseup', pointerupListener);
+    el?.addEventListener('touchend', touchEndListener);
 
     return () => {
-      ref.current?.removeEventListener('mousedown', pointerdownListener);
-      ref.current?.removeEventListener('mouseup', pointerupListener);
-      ref.current?.removeEventListener('touchstart', touchStartListener);
-      ref.current?.removeEventListener('touchend', touchEndListener);
+      el?.removeEventListener('mousedown', pointerdownListener);
+      el?.removeEventListener('mouseup', pointerupListener);
+      el?.removeEventListener('touchstart', touchStartListener);
+      el?.removeEventListener('touchend', touchEndListener);
     };
-  }, [startPosition, handler]);
+  }, [startPosition, ref, handler]);
 };
 
 export default useMouseDrag;

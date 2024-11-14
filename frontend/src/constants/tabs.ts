@@ -23,3 +23,6 @@ export const DefaultChecklistTabsNames: Tab[] = [
     name: '보안',
   },
 ];
+
+export const DRAG_THRESHOLD_PIXEL = 100;
+export const remainOp = (a: number, b: number) => (((a % b) + b + 1) % b) - 1; // 나머지연산자. -1부터 시작하므로 +1 -1

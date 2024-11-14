@@ -13,6 +13,7 @@ const DepositAndRent = () => {
       <FormField.Label label="보증금 / 월세 (만원)" />
       <FormStyled.FieldBox>
         <FormField.Input
+          inputMode="decimal"
           width="medium"
           onChange={deposit.onChange}
           name="deposit"
@@ -21,6 +22,7 @@ const DepositAndRent = () => {
         />
         <FormStyled.FlexLabel label=" / " />
         <FormField.Input
+          inputMode="decimal"
           width="medium"
           placeholder=""
           onChange={rent.onChange}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { MutableRefObject, useEffect, useState } from 'react';
 
 interface MousePosition {
   x: number;
@@ -6,7 +6,7 @@ interface MousePosition {
 }
 type Handler = (start: MousePosition, end: MousePosition) => void;
 
-const useMouseDrag = (handler: Handler) => {
+const useMouseDrag = (ref: MutableRefObject<HTMLElement | null>, handler: Handler) => {
   const [startPosition, setStartPosition] = useState<MousePosition | null>(null);
 
   useEffect(() => {
@@ -30,16 +30,16 @@ const useMouseDrag = (handler: Handler) => {
       setStartPosition(null);
     };
 
-    window.addEventListener('mousedown', pointerdownListener);
-    window.addEventListener('touchstart', touchStartListener);
-    window.addEventListener('mouseup', pointerupListener);
-    window.addEventListener('touchend', touchEndListener);
+    ref.current?.addEventListener('mousedown', pointerdownListener);
+    ref.current?.addEventListener('touchstart', touchStartListener);
+    ref.current?.addEventListener('mouseup', pointerupListener);
+    ref.current?.addEventListener('touchend', touchEndListener);
 
     return () => {
-      window.removeEventListener('mousedown', pointerdownListener);
-      window.removeEventListener('mouseup', pointerupListener);
-      window.removeEventListener('touchstart', touchStartListener);
-      window.removeEventListener('touchend', touchEndListener);
+      ref.current?.removeEventListener('mousedown', pointerdownListener);
+      ref.current?.removeEventListener('mouseup', pointerupListener);
+      ref.current?.removeEventListener('touchstart', touchStartListener);
+      ref.current?.removeEventListener('touchend', touchEndListener);
     };
   }, [startPosition, handler]);
 };

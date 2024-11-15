@@ -26,6 +26,7 @@ const RoomFloor = () => {
           onSelectSetter={handleClickDropdown}
         />
         <Input
+          inputMode="decimal"
           width="medium"
           disabled={floorLevel.rawValue === '반지하/지하'}
           placeholder=""

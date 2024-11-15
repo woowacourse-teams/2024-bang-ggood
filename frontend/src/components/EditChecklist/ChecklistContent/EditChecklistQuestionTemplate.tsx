@@ -4,6 +4,7 @@ import Divider from '@/components/_common/Divider/Divider';
 import Layout from '@/components/_common/layout/Layout';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import ChecklistQuestionItem from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
+import MoveNextButton from '@/components/NewChecklist/MoveNextButton';
 import useChecklistStore from '@/store/useChecklistStore';
 import { flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
@@ -37,6 +38,8 @@ const EditChecklistQuestionTemplate = () => {
           );
         })}
       </S.ContentBox>
+
+      <MoveNextButton marginTop="2rem" marginBottom="4rem" />
     </Layout>
   );
 };

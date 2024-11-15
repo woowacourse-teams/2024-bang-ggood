@@ -37,9 +37,7 @@ const SendVerificationEmailStep = ({ onNext }: Props) => {
       onSuccess: () => setIsComplete(true),
       onError: error => setPostErrorMessage(error.message),
     });
-  const handleClickNext = () => {
-    onNext(email);
-  };
+  const handleClickNext = () => onNext(email);
 
   const canMove = isEmailValid && isComplete;
 
@@ -74,7 +72,7 @@ const SendVerificationEmailStep = ({ onNext }: Props) => {
                 style={{ width: '25rem' }}
               />
               <div>
-                <CS.SendButton onClick={handleClickSubmit} disabled={canMove}>
+                <CS.SendButton onClick={handleClickSubmit} disabled={canMove || !isEmailValid}>
                   전송
                 </CS.SendButton>
               </div>

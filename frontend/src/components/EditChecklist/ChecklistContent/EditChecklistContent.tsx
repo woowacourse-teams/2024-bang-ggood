@@ -9,10 +9,12 @@ import RoomInfoTemplate from '@/components/NewChecklist/NewRoomInfoForm/RoomInfo
 import OptionTemplate from '@/components/NewChecklist/Option/OptionTemplate';
 
 const EditChecklistContent = () => {
-  const { currentTabId } = useTabContext();
+  const { currentTabId, useDragForTab } = useTabContext();
+
+  const ref = useDragForTab();
 
   return (
-    <S.Container>
+    <S.Container ref={ref}>
       {/*방 기본정보 템플릿 */}
       {currentTabId === -1 && <RoomInfoTemplate />}
       {/* 옵션 선택 템플릿 */}

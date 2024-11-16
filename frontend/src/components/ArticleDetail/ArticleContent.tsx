@@ -31,7 +31,7 @@ const ArticleContent = () => {
         <S.Title>{article?.title}</S.Title>
         <MarkdownPreview
           source={article?.content}
-          style={{ fontSize: '1.8rem', fontFamily: 'SUITE Variable' }}
+          style={{ fontSize: '1.6rem', lineHeight: '2.6rem', fontFamily: 'SUITE Variable' }}
           wrapperElement={{
             'data-color-mode': 'light',
           }}

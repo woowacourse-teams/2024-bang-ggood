@@ -33,6 +33,11 @@ public class ChecklistStationService {
         saveChecklistStations(checklist, latitude, longitude);
     }
 
+    @Transactional
+    public void deleteChecklistStation(Long checklistId) {
+        checklistStationRepository.deleteAllByChecklistId(checklistId);
+    }
+
     private void saveChecklistStations(Checklist checklist, double latitude, double longitude) {
         List<SubwayStationResponse> responses = subwayStationService.readNearestStation(latitude, longitude)
                 .getStations();

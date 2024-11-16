@@ -1,5 +1,7 @@
 package com.bang_ggood.question.repository;
 
+import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.question.domain.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +16,8 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
             + "WHERE ccq.user_id = :userId AND ccq.deleted = false ",
             nativeQuery = true)
     List<Category> findAllCustomQuestionCategoriesByUserId(@Param("userId") Long userId);
+
+    default Category getById(Integer categoryId){
+        return findById(categoryId).orElseThrow(() -> new BangggoodException(ExceptionCode.CATEGORY_NOT_FOUND));
+    }
 }

@@ -9,6 +9,8 @@ interface Props {
   size?: Size;
 }
 
+const sizeMap = { small: '1.4rem', medium: '2rem' };
+
 const SubwayLineIcon = ({ lineName, size = 'medium' }: Props) => {
   const lineColor = SUBWAY_LINE_PALLETE[lineName];
 
@@ -24,10 +26,8 @@ const SubwayLineIcon = ({ lineName, size = 'medium' }: Props) => {
 const S = {
   Box: styled.span<{ color: string; isCircle: boolean; size: Size }>`
     display: inline-block;
-
-    width: ${({ isCircle, size }) =>
-      isCircle && size === 'medium' ? '2rem' : isCircle && size === 'small' ? '1.4rem' : null};
-    height: ${({ size }) => (size === 'medium' ? '2rem' : size === 'small' ? '1.4rem' : null)};
+    width: ${({ isCircle, size }) => isCircle && sizeMap[size]};
+    height: ${({ isCircle, size }) => isCircle && sizeMap[size]};
     padding: ${({ isCircle }) => (isCircle ? '0.3rem' : '0.3rem 0.6rem')};
     border-radius: 2rem;
 

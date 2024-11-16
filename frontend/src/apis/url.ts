@@ -14,6 +14,8 @@ export const ENDPOINT = {
   CHECKLIST_CUSTOM: '/custom-checklist',
   CHECKLIST_ID: (id: number) => `/checklists/${id}`,
   CHECKLIST_ID_V1: (id: number) => `/v1/checklists/${id}`,
+  //compare
+  CHECKLIST_COMPARE: (roomId1: number, roomId2: number) => `/v1/checklists/compare?id=${roomId1}&id=${roomId2}`,
 
   // like
   LIKE: (id: number | ':id') => `/checklists/${id}/like`,

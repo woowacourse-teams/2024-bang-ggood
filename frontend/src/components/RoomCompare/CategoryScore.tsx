@@ -2,10 +2,8 @@ import styled from '@emotion/styled';
 
 import FaceIcon from '@/components/_common/FaceIcon/FaceIcon';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
+import { MIN_GOOD_SCORE, MIN_SOSO_SCORE } from '@/constants/system';
 import { boxShadow, flexCenter } from '@/styles/common';
-
-const MIN_GOOD_SCORE = 70;
-const MIN_SOSO_SCORE = 30;
 
 interface Props {
   roomId: number;

@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import SubwayStations from '@/components/_common/Subway/SubwayStations';
 import CategoryScore from '@/components/RoomCompare/CategoryScore';
 import CompareCardItem from '@/components/RoomCompare/CompareCardItem';
+import { EMPTY_INDICATOR } from '@/constants/system';
 import { boxShadow, flexColumn, title1, title4 } from '@/styles/common';
 import { ChecklistCompare } from '@/types/checklistCompare';
 
@@ -13,24 +14,24 @@ interface Props {
   openCategoryModal: (roomId: number, categoryId: number) => void;
 }
 
-const EmptyIndicator = ' - ';
-
 const CompareCard = ({ room, openOptionModal, openCategoryModal }: Props) => {
   return (
     <S.Container>
       <CompareCardItem height={7} label={'주소'} item={<S.Item>{room.address}</S.Item>} />
-      <CompareCardItem label={'층수'} item={<S.Item>{room.floor ? `${room.floor}층` : EmptyIndicator}</S.Item>} />
+      <CompareCardItem label={'층수'} item={<S.Item>{room.floor ? `${room.floor}층` : EMPTY_INDICATOR}</S.Item>} />
       <CompareCardItem
         label={'보증금 / 월세'}
         item={
           <S.Item>
-            {room.deposit ?? EmptyIndicator}/{room.rent ?? EmptyIndicator}
+            {room.deposit ?? EMPTY_INDICATOR}/{room.rent ?? EMPTY_INDICATOR}
           </S.Item>
         }
       />
       <CompareCardItem
         label={'방 구조 / 방 평수'}
-        item={<S.Item>{`${room.structure ?? EmptyIndicator}/${room.size ? `${room.size}평` : EmptyIndicator}`}</S.Item>}
+        item={
+          <S.Item>{`${room.structure ?? EMPTY_INDICATOR}/${room.size ? `${room.size}평` : EMPTY_INDICATOR}`}</S.Item>
+        }
       />
       <CompareCardItem label={'계약기간'} item={<S.Item>{room.contractTerm}개월</S.Item>} />
       <CompareCardItem

@@ -39,6 +39,11 @@ public class QuestionService {
     }
 
     @Transactional(readOnly = true)
+    public Category readCategory(Integer categoryId) {
+        return categoryRepository.getById(categoryId);
+    }
+
+    @Transactional(readOnly = true)
     public Question readQuestion(Integer questionId) {
         return questionRepository.getById(questionId);
     }

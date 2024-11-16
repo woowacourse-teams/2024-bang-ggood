@@ -1,12 +1,17 @@
 package com.bang_ggood.question.service;
 
+import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.service.ChecklistService;
+import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.question.domain.Category;
+import com.bang_ggood.question.domain.ChecklistQuestions;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionResponse;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
+import com.bang_ggood.question.dto.response.ComparisonCategoryChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.CustomChecklistQuestionResponse;
 import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.QuestionResponse;
@@ -21,6 +26,7 @@ import java.util.List;
 @Service
 public class QuestionManageService {
 
+    private final ChecklistService checklistService;
     private final ChecklistQuestionService checklistQuestionService;
     private final QuestionService questionService;
 
@@ -83,6 +89,26 @@ public class QuestionManageService {
         }
 
         return CategoryCustomChecklistQuestionsResponse.from(response);
+    }
+
+    @Transactional(readOnly = true)
+    public ComparisonCategoryChecklistQuestionsResponse readComparisonChecklistQuestionsByCategory(User user, Long checklistId, Integer categoryId) {
+        Checklist checklist = checklistService.readChecklist(user, checklistId);
+        Category category = questionService.readCategory(categoryId);
+        ChecklistQuestions checklistQuestions = new ChecklistQuestions(checklistQuestionService.readChecklistQuestionsByCategory(checklist, category));
+
+        List<QuestionResponse> good = categorizeQuestionsByAnswer(checklistQuestions, Answer.GOOD);
+        List<QuestionResponse> bad = categorizeQuestionsByAnswer(checklistQuestions, Answer.BAD);
+        List<QuestionResponse> none = categorizeQuestionsByAnswer(checklistQuestions, Answer.NONE);
+
+        return ComparisonCategoryChecklistQuestionsResponse.of(good, bad, none);
+    }
+
+    private List<QuestionResponse> categorizeQuestionsByAnswer(ChecklistQuestions checklistQuestions, Answer answer) {
+        return checklistQuestions.filterByAnswer(answer)
+                .stream()
+                .map(checklistQuestion -> new QuestionResponse(checklistQuestion.getQuestion(), questionService.readHighlights(checklistQuestion.getQuestionId())))
+                .toList();
     }
 
     @Transactional

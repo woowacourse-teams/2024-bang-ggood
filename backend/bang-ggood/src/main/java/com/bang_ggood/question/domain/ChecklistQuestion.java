@@ -62,6 +62,10 @@ public class ChecklistQuestion extends BaseEntity {
         return question.getCategory().equals(category);
     }
 
+    public boolean hasAnswer(Answer answer) {
+        return this.answer.equals(answer);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

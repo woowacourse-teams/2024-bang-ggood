@@ -50,6 +50,11 @@ public class ChecklistQuestionService {
         return customChecklistQuestionRepository.findAllByUser(user);
     }
 
+    @Transactional(readOnly = true)
+    public List<ChecklistQuestion> readChecklistQuestionsByCategory(Checklist checklist, Category category) {
+        return checklistQuestionRepository.findAllByChecklistIdAndCategoryId(checklist.getId(), category.getId());
+    }
+
     @Transactional
     public void updateCustomChecklist(User user, List<Question> questions) {
         validateCustomChecklistQuestionsIsNotEmpty(questions);

@@ -1,19 +1,32 @@
 package com.bang_ggood.question.service;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
+import com.bang_ggood.question.ChecklistQuestionFixture;
 import com.bang_ggood.question.CustomChecklistFixture;
+import com.bang_ggood.question.QuestionFixture;
+import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
+import com.bang_ggood.question.dto.response.ComparisonCategoryChecklistQuestionResponse;
+import com.bang_ggood.question.dto.response.ComparisonCategoryChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.QuestionResponse;
+import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
+import com.bang_ggood.room.RoomFixture;
+import com.bang_ggood.room.domain.Room;
+import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +47,15 @@ class QuestionManageServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
+
+    @Autowired
+    private ChecklistRepository checklistRepository;
+
+    @Autowired
+    private ChecklistQuestionRepository checklistQuestionRepository;
 
     @DisplayName("커스텀 체크리스트 질문 조회 성공")
     @Test
@@ -96,6 +118,41 @@ class QuestionManageServiceTest extends IntegrationTestSupport {
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
     }
+
+    @DisplayName("체크리스트 비교를 위한 카테고리별 질문 조회 성공")
+    @Test
+    void readComparisonChecklistQuestionsByCategory() {
+        // given
+        User user = UserFixture.USER1;
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+
+        Question question1Category1 = QuestionFixture.QUESTION1_CATEGORY1;
+        Question question2Category2 = QuestionFixture.QUESTION2_CATEGORY1;
+
+        ChecklistQuestion checklist1Question1Bad = ChecklistQuestionFixture.CHECKLIST1_QUESTION1_BAD(checklist,
+                question1Category1);
+        ChecklistQuestion checklist1Question2Good = ChecklistQuestionFixture.CHECKLIST1_QUESTION2_GOOD(checklist,
+                question1Category1);
+        checklistQuestionRepository.saveAll(List.of(checklist1Question1Bad, checklist1Question2Good));
+
+        // when
+        ComparisonCategoryChecklistQuestionsResponse response = questionManageService.readComparisonChecklistQuestionsByCategory(
+                user, checklist.getId(), question1Category1.getCategory().getId());
+
+        // then
+        ComparisonCategoryChecklistQuestionResponse questions = response.questions();
+        List<QuestionResponse> good = questions.good();
+        List<QuestionResponse> bad = questions.bad();
+        List<QuestionResponse> none = questions.none();
+
+        Assertions.assertThat(good).hasSize(1);
+        Assertions.assertThat(good.get(0).getQuestionId()).isEqualTo(checklist1Question2Good.getQuestionId());
+        Assertions.assertThat(bad).hasSize(1);
+        Assertions.assertThat(bad.get(0).getQuestionId()).isEqualTo(checklist1Question1Bad.getQuestionId());
+        Assertions.assertThat(none).isEmpty();
+    }
+
 
     @DisplayName("커스텀 체크리스트 업데이트 실패 : 질문 id가 유효하지 않을 때")
     @Test

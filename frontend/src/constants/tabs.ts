@@ -23,3 +23,5 @@ export const DefaultChecklistTabsNames: Tab[] = [
     name: '보안',
   },
 ];
+
+export const DRAG_THRESHOLD_PIXEL = 100;

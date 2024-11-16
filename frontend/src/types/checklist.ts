@@ -48,7 +48,7 @@ export interface ChecklistPreview {
   address: string;
   deposit: number;
   rent: number;
-  station: SubwayStation;
+  station?: SubwayStation;
   createdAt: string;
   summary: string;
   isLiked: boolean;

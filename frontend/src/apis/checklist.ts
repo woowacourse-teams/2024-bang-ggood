@@ -28,7 +28,7 @@ export const getChecklists = async (isLikeFiltered: boolean = false) => {
     url: BASE_URL + (isLikeFiltered ? ENDPOINT.CHECKLISTS_LIKE_V1 : ENDPOINT.CHECKLISTS_V1),
   });
   const data = await response.json();
-  return data.checklists.map(mapObjNullToUndefined).slice(0, 10);
+  return data.checklists.map(mapObjNullToUndefined);
 };
 
 export const postChecklist = async (checklist: ChecklistPostForm) => {

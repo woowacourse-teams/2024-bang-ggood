@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { MutableRefObject, useEffect, useState } from 'react';
 
 interface MousePosition {
   x: number;
@@ -6,16 +6,14 @@ interface MousePosition {
 }
 type Handler = (start: MousePosition, end: MousePosition) => void;
 
-const useMouseDrag = (handler: Handler) => {
+const useMouseDrag = (ref: MutableRefObject<HTMLElement | null>, handler: Handler) => {
   const [startPosition, setStartPosition] = useState<MousePosition | null>(null);
 
   useEffect(() => {
-    const pointerdownListener = (e: MouseEvent) => {
-      setStartPosition({ x: e.clientX, y: e.clientY });
-    };
-    const touchStartListener = (e: TouchEvent) => {
+    const pointerdownListener = (e: MouseEvent) => setStartPosition({ x: e.clientX, y: e.clientY });
+
+    const touchStartListener = (e: TouchEvent) =>
       setStartPosition({ x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientX });
-    };
 
     const pointerupListener = (e: MouseEvent) => {
       const endPosition = { x: e.clientX, y: e.clientY };
@@ -30,18 +28,20 @@ const useMouseDrag = (handler: Handler) => {
       setStartPosition(null);
     };
 
-    window.addEventListener('mousedown', pointerdownListener);
-    window.addEventListener('touchstart', touchStartListener);
-    window.addEventListener('mouseup', pointerupListener);
-    window.addEventListener('touchend', touchEndListener);
+    const el = ref.current;
+
+    el?.addEventListener('mousedown', pointerdownListener);
+    el?.addEventListener('touchstart', touchStartListener);
+    el?.addEventListener('mouseup', pointerupListener);
+    el?.addEventListener('touchend', touchEndListener);
 
     return () => {
-      window.removeEventListener('mousedown', pointerdownListener);
-      window.removeEventListener('mouseup', pointerupListener);
-      window.removeEventListener('touchstart', touchStartListener);
-      window.removeEventListener('touchend', touchEndListener);
+      el?.removeEventListener('mousedown', pointerdownListener);
+      el?.removeEventListener('mouseup', pointerupListener);
+      el?.removeEventListener('touchstart', touchStartListener);
+      el?.removeEventListener('touchend', touchEndListener);
     };
-  }, [startPosition, handler]);
+  }, [startPosition, ref, handler]);
 };
 
 export default useMouseDrag;

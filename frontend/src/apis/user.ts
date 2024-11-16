@@ -36,36 +36,33 @@ export const deleteToken = async () => {
 
 export const postReissueAccessToken = async () => {
   return await fetcher.post({
-    url: `${BASE_URL}${ENDPOINT.USER_ACCESS_TOKEN_REISSUE}`,
-    credentials: 'include',
+    url: BASE_URL + ENDPOINT.USER_ACCESS_TOKEN_REISSUE,
     // 쿠키전달이기때문에 body가 비어있는 post
   });
 };
 
 export const postSignUp = async ({ name, email, password }: { name: string; email: string; password: string }) => {
   return await fetcher.post({
-    url: `${BASE_URL}${ENDPOINT.REGISTER}`,
+    url: BASE_URL + ENDPOINT.REGISTER,
     body: { name, email, password },
-    credentials: 'include',
   });
 };
 
 export const postSignIn = async ({ email, password }: { email: string; password: string }) => {
   return await fetcher.post({
-    url: `${BASE_URL}${ENDPOINT.SIGN_IN}`,
+    url: BASE_URL + ENDPOINT.SIGN_IN,
     body: { email, password },
-    credentials: 'include',
   });
 };
 
 export const postResetPasswordMail = async (email: ResetPasswordArgs['email']) => {
-  return await fetcher.post({ url: `${BASE_URL}${ENDPOINT.RESET_PASSWORD_SEND_MAIL}`, body: { email } });
+  return await fetcher.post({ url: BASE_URL + ENDPOINT.RESET_PASSWORD_SEND_MAIL, body: { email } });
 };
 
 export const postResetPasswordCode = async ({ email, code }: Pick<ResetPasswordArgs, 'email' | 'code'>) => {
-  return await fetcher.post({ url: `${BASE_URL}${ENDPOINT.RESET_PASSWORD_CONFIRM_CODE}`, body: { email, code } });
+  return await fetcher.post({ url: BASE_URL + ENDPOINT.RESET_PASSWORD_CONFIRM_CODE, body: { email, code } });
 };
 
 export const postResetPassword = async ({ email, code, newPassword }: ResetPasswordArgs) => {
-  return await fetcher.post({ url: `${BASE_URL}${ENDPOINT.RESET_PASSWORD}`, body: { email, code, newPassword } });
+  return await fetcher.post({ url: BASE_URL + ENDPOINT.RESET_PASSWORD, body: { email, code, newPassword } });
 };

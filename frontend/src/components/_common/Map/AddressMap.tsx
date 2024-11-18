@@ -11,7 +11,7 @@ import loadExternalScriptWithCallback from '../../../utils/loadScript';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 const AddressMap = ({ location }: { location: string }) => {
-  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapElement = useRef<HTMLDivElement>(null);
   const markerRef = useRef<any | null>(null);
 
   const { createMarker } = createKakaoMapElements();
@@ -21,20 +21,21 @@ const AddressMap = ({ location }: { location: string }) => {
       const { kakao } = window as any;
 
       kakao.maps.load(() => {
-        if (!mapContainerRef.current) return;
+        if (!mapElement.current) return;
         const mapOption = {
           center: new kakao.maps.LatLng(DEFAULT_POSITION.latitude, DEFAULT_POSITION.longitude),
           level: 3,
         };
-        // 지도 생성
-        const map = new kakao.maps.Map(mapContainerRef.current, mapOption);
+
+        const map = new kakao.maps.Map(mapElement.current, mapOption);
+
         // 주소-좌표 변환 객체 생성
         const geocoder = new kakao.maps.services.Geocoder();
-        // 주소로 좌표 검색
+        // 주소로 좌표 검색하여 해당 좌표로 중심 이동
         geocoder.addressSearch(location, (result: any, status: any) => {
           if (status === kakao.maps.services.Status.OK) {
             const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-            const marker = createMarker(kakao, map, coords);
+            const marker = createMarker(kakao, map, coords, 'primary');
             markerRef.current = marker;
             map.setCenter(coords);
           }
@@ -59,7 +60,7 @@ const AddressMap = ({ location }: { location: string }) => {
     <>
       {location && (
         <S.Box>
-          <S.Map ref={mapContainerRef}>
+          <S.Map ref={mapElement}>
             <S.LinkButtonBox>
               <S.LinkButton onClick={handleOpenKakaoMap} src={kakaoMapImg} />
               <S.LinkButton onClick={handleOpenNaverMap} src={naverMapImg} />

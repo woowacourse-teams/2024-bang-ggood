@@ -19,9 +19,9 @@ const HeaderWrapper = ({ left, right, center, isTransparent = false, ...rest }: 
     <>
       <S.Wrapper {...rest} isTransparent={isTransparent}>
         <S.FlexBox>
-          {left && <S.Left>{left}</S.Left>}
+          <S.Left>{left}</S.Left>
           <S.Center>{center && <div>{center}</div>}</S.Center>
-          {right && <S.Right>{right}</S.Right>}
+          <S.Right>{right}</S.Right>
         </S.FlexBox>
       </S.Wrapper>
       {!isTransparent && <S.EmptyBox />}
@@ -58,7 +58,7 @@ const S = {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    min-width: 70px;
+    min-width: 5rem;
   `,
   Center: styled.div`
     ${flexCenter}
@@ -67,6 +67,7 @@ const S = {
   Right: styled.div`
     display: flex;
     justify-content: flex-end;
+    min-width: 5rem;
   `,
   TextButton: styled.button`
     color: ${({ theme }) => theme.palette.black};

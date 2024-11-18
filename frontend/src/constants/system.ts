@@ -16,3 +16,9 @@ export const DEFAULT_CHECKLIST_TAB_PAGE = -1;
 export const STALE_TIME = 5 * 60 * 1000;
 
 export const INTERSECTION_CONFIG = { threshold: 0.5, rootMargin: '5px' };
+
+export const EMPTY_INDICATOR = ' - ';
+
+export const MIN_GOOD_SCORE = 70;
+
+export const MIN_SOSO_SCORE = 30;

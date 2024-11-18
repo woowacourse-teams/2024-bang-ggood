@@ -16,6 +16,13 @@ import Retry from '@/assets/icons/common/retry.svg';
 import SmallCheck from '@/assets/icons/common/small-check.svg';
 import PlusBlack from '@/assets/icons/plusMinus/plus-black.svg';
 import PlusWhite from '@/assets/icons/plusMinus/plus-white.svg';
+
+//face-icon
+import FaceBadIcon from '@/assets/icons/faceIcon/face-icon-bad.svg';
+import FaceGoodIcon from '@/assets/icons/faceIcon/face-icon.good.svg';
+import FaceNoneIcon from '@/assets/icons/faceIcon/face-icon.none.svg';
+import FaceSosoIcon from '@/assets/icons/faceIcon/face-icon.soso.svg';
+
 // room
 import Building from '@/assets/icons/room/building.svg';
 import Calendar from '@/assets/icons/room/calendar.svg';
@@ -77,6 +84,10 @@ export {
   DropdownMark,
   Error404,
   Error500,
+  FaceBadIcon,
+  FaceGoodIcon,
+  FaceNoneIcon,
+  FaceSosoIcon,
   InputRequiredDot,
   KakaoLogo,
   LampIcon,

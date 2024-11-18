@@ -50,7 +50,7 @@ public class CookieProvider {
                 .domain(domain)
                 .httpOnly(true)
                 .secure(true)
-                .sameSite(SameSite.LAX.attributeValue())
+                .sameSite(SameSite.NONE.attributeValue())
                 .maxAge(Duration.ofMillis(expiredMillis))
                 .path(path)
                 .build();
@@ -70,7 +70,7 @@ public class CookieProvider {
                 .domain(domain)
                 .httpOnly(true)
                 .secure(true)
-                .sameSite(SameSite.LAX.attributeValue())
+                .sameSite(SameSite.NONE.attributeValue())
                 .maxAge(0)
                 .path(path)
                 .build();

@@ -12,7 +12,7 @@ public class ChecklistQuestions {
     
     public List<ChecklistQuestion> filterByAnswer(Answer answer) {
         return questions.stream()
-                .filter(question -> question.hasAnswer(answer))
+                .filter(question -> question.matchAnswer(answer))
                 .toList();
     }
 }

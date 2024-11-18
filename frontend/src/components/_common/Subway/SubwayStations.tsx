@@ -8,13 +8,16 @@ import { SubwayStation } from '@/types/subway';
 interface Props {
   checklist?: ChecklistInfo;
   stations: SubwayStation[];
+  size?: 'small' | 'medium';
 }
 
-const SubwayStations = ({ stations }: Props) => {
+const SubwayStations = ({ stations, size }: Props) => {
   return (
     <>
       {stations?.length ? (
-        <S.Box>{stations?.map(station => <SubwayStationItem station={station} key={station.stationName} />)}</S.Box>
+        <S.Box>
+          {stations?.map(station => <SubwayStationItem size={size} station={station} key={station.stationName} />)}
+        </S.Box>
       ) : (
         <span>{'보신 방과 가까운 지하철역을 찾아드릴게요.'}</span>
       )}

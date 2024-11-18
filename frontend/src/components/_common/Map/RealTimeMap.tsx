@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { BangBangCryIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import { LoadingSpinner } from '@/components/_common/LoadingSpinner/LoadingSpinner';
+import { DEFAULT_POSITION } from '@/constants/map';
 import { flexCenter } from '@/styles/common';
 import { Position } from '@/types/address';
 import createKakaoMapElements from '@/utils/createKakaoMapElements';
@@ -32,7 +33,7 @@ const RealTimeMap = ({
   const infoWindowRef = useRef<any | null>(null);
   const mapElement = useRef(null);
 
-  const { createMap, createMarker, createInfoWindow } = createKakaoMapElements();
+  const { createMarker, createInfoWindow } = createKakaoMapElements();
   const [realTimeLocationState, setRealTimeLocationState] = useState<RealTimeLocationState>('loading');
 
   const initializeMap = () => {
@@ -40,11 +41,16 @@ const RealTimeMap = ({
 
     kakao.maps.load(() => {
       /*카카오 맵 생성 */
-      const map = createMap(kakao);
+      const mapOption = {
+        center: new kakao.maps.LatLng(DEFAULT_POSITION.latitude, DEFAULT_POSITION.longitude),
+        level: 3,
+      };
+
+      const map = new kakao.maps.Map(mapElement.current, mapOption);
       mapRef.current = map;
 
       /*마커 생성*/
-      const marker = createMarker(kakao, map, new kakao.maps.LatLng(position.latitude, position.longitude));
+      const marker = createMarker(kakao, map, new kakao.maps.LatLng(position.latitude, position.longitude), 'primary');
       markerRef.current = marker;
 
       /*인포윈도우 생성*/

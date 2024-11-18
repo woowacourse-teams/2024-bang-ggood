@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
@@ -18,8 +18,9 @@ import { Position } from '@/types/address';
 import { ChecklistCompare } from '@/types/checklistCompare';
 
 const RoomComparePage = () => {
+  const location = useLocation();
   const navigate = useNavigate();
-  // const roomsId = { ...location.state };
+  const roomsId = { ...location.state };
   const { isModalOpen: isOptionModalOpen, openModal: openOptionModal, closeModal: closeOptionModal } = useModal();
   const { isModalOpen: isCategoryModalOpen, openModal: openCategoryModal, closeModal: closeCategoryModal } = useModal();
 
@@ -27,6 +28,7 @@ const RoomComparePage = () => {
 
   //TODO: 나중에 비교 데이터 요청해서 받아오는 로직으로 수정
   useEffect(() => {
+    // getRoomCompare(roomsId);
     setRoomList(roomsForCompare);
   });
 

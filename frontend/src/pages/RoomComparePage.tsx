@@ -11,7 +11,6 @@ import OptionDetailModal from '@/components/RoomCompare/OptionDetailModal';
 import RoomMarker from '@/components/RoomCompare/RoomMarker';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useModal from '@/hooks/useModal';
-import { roomsForCompare } from '@/mocks/fixtures/roomCompare';
 import { flexCenter, flexRow } from '@/styles/common';
 import theme from '@/styles/theme';
 import { Position } from '@/types/address';
@@ -20,7 +19,7 @@ import { ChecklistCompare } from '@/types/checklistCompare';
 const RoomComparePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const roomsId = { ...location.state };
+  const roomsIds = { ...location.state };
   const { isModalOpen: isOptionModalOpen, openModal: openOptionModal, closeModal: closeOptionModal } = useModal();
   const { isModalOpen: isCategoryModalOpen, openModal: openCategoryModal, closeModal: closeCategoryModal } = useModal();
 
@@ -28,8 +27,8 @@ const RoomComparePage = () => {
 
   //TODO: 나중에 비교 데이터 요청해서 받아오는 로직으로 수정
   useEffect(() => {
-    // getRoomCompare(roomsId);
-    setRoomList(roomsForCompare);
+    // getRoomCompare(roomsIds.roomID);
+    // setRoomList(roomsForCompare);
   });
 
   const handleOpenCategoryDetailModal = (roomId: number, categoryId: number) => {

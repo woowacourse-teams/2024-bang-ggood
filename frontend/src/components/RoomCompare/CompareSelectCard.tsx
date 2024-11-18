@@ -8,15 +8,15 @@ import formattedUndefined from '@/utils/formattedUndefined';
 
 interface Props {
   isSelected: boolean;
-  onClick?: () => void;
+  toggleSelectChecklist: (roomId: number) => void;
   room: ChecklistPreview;
 }
 
-const CompareSelectCard = ({ isSelected, onClick, room }: Props) => {
-  const { roomName, address, deposit, rent } = room;
+const CompareSelectCard = ({ isSelected, toggleSelectChecklist, room }: Props) => {
+  const { roomName, address, deposit, rent, checklistId } = room;
 
   return (
-    <S.Card onClick={onClick}>
+    <S.Card onClick={() => toggleSelectChecklist(checklistId)} isSelected={isSelected}>
       <S.FlexRow>
         <S.CheckboxContainer>
           <Checkbox isChecked={isSelected} />
@@ -40,13 +40,13 @@ const CompareSelectCard = ({ isSelected, onClick, room }: Props) => {
 };
 
 const S = {
-  Card: styled.div`
+  Card: styled.div<{ isSelected: boolean }>`
     ${flexColumn}
     padding: 14px 18px;
-    border: 2px solid ${({ theme }) => theme.palette.grey200};
+    border: 2px solid ${({ isSelected, theme }) => (isSelected ? theme.palette.green300 : theme.palette.grey200)};
     border-radius: 10px;
 
-    background-color: white;
+    background-color: ${({ isSelected, theme }) => (isSelected ? theme.palette.green50 : theme.palette.white)};
     row-gap: 5px;
     cursor: pointer;
   `,

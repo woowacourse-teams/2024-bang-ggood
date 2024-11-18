@@ -47,11 +47,12 @@ public class CookieProvider {
     private ResponseCookie createCookie(String tokenName, String token, long expiredMillis, String path) {
         return ResponseCookie
                 .from(tokenName, token)
+                .domain(domain)
                 .httpOnly(true)
                 .secure(true)
-                .sameSite(SameSite.NONE.attributeValue())
+                .sameSite(SameSite.LAX.attributeValue())
                 .maxAge(Duration.ofMillis(expiredMillis))
-                .path(path)
+                .path("/")
                 .build();
     }
 
@@ -68,7 +69,7 @@ public class CookieProvider {
                 .from(tokenName, "")
                 .httpOnly(true)
                 .secure(true)
-                .sameSite(SameSite.NONE.attributeValue())
+                .sameSite(SameSite.LAX.attributeValue())
                 .maxAge(0)
                 .path(path)
                 .build();

@@ -72,9 +72,9 @@ public enum ExceptionCode {
     AUTHENTICATION_TOKEN_EMPTY(HttpStatus.UNAUTHORIZED, ClientExceptionCode.AUTH_TOKEN_EMPTY, "로그인이 필요한 사용자입니다."),
     AUTHENTICATION_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, ClientExceptionCode.AUTH_TOKEN_INVALID, "토큰이 만료되었습니다."),
     AUTHENTICATION_TOKEN_INVALID(HttpStatus.UNAUTHORIZED, ClientExceptionCode.AUTH_TOKEN_INVALID, "토큰 정보가 올바르지 않습니다."),
-    AUTHENTICATION_TOKEN_NOT_OWNED_BY_USER(HttpStatus.UNAUTHORIZED, ClientExceptionCode.AUTH_TOKEN_NOT_OWNED_BY_USER, "해당 유저의 토큰이 아닙니다."),
     AUTHENTICATION_TOKEN_USER_MISMATCH(HttpStatus.UNAUTHORIZED, ClientExceptionCode.AUTH_TOKEN_USER_MISMATCH, "엑세스 토큰과 리프레시 토큰의 소유자가 다릅니다."),
     AUTHENTICATION_TOKEN_TYPE_MISMATCH(HttpStatus.BAD_REQUEST, ClientExceptionCode.AUTH_TOKEN_INVALID, "토큰 타입이 올바르지 않습니다."),
+    AUTHENTICATION_PASSWORD_CODE_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.AUTH_PASSWORD_CODE_NOT_FOUND, "비밀번호 재설정 인증 코드가 일치하지 않습니다."),
     OAUTH_TOKEN_INTERNAL_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.OAUTH_SERVER_ERROR, "카카오 서버와 통신하는 과정 중 예상치 못한 예외가 발생했습니다."),
     OAUTH_REDIRECT_URI_MISMATCH(HttpStatus.BAD_REQUEST, ClientExceptionCode.OAUTH_SERVER_ERROR, "일치하는 Redirect URI가 존재하지 않습니다."),
 
@@ -84,7 +84,10 @@ public enum ExceptionCode {
 
     // Station
     STATION_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.STATION_SERVER_ERROR, "지하철 역을 찾을 수 없습니다."),
-    STATION_NAME_NOT_SAME(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.STATION_SERVER_ERROR, "지하철 역을 찾을 수 없습니다.");
+    STATION_NAME_NOT_SAME(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.STATION_SERVER_ERROR, "지하철 역을 찾을 수 없습니다."),
+
+    //Mail
+    MAIL_SEND_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.MAIL_SEND_ERROR, "메일 전송 중 오류가 발생했습니다.");
 
     private final HttpStatus httpStatus;
     private final ClientExceptionCode clientExceptionCode;

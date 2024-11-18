@@ -6,6 +6,7 @@ public enum ClientExceptionCode {
     AUTH_ACCESS_TOKEN_EMPTY,
     AUTH_TOKEN_EMPTY,
     AUTH_TOKEN_INVALID,
+    AUTH_PASSWORD_CODE_NOT_FOUND,
     CHECKLIST_ERROR,
     CHECKLIST_NOT_FOUND,
     CHECKLIST_SERVER_ERROR,
@@ -21,6 +22,7 @@ public enum ClientExceptionCode {
     USER_NOT_FOUND,
     LOGIN_ERROR,
     INVALID_PARAMETER,
+    MAIL_SEND_ERROR,
 
     // TODO: 임의 사용 지워질 코드
     AUTH_TOKEN_NOT_OWNED_BY_USER,

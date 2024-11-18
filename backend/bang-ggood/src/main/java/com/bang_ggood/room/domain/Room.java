@@ -44,8 +44,12 @@ public class Room extends BaseEntity {
 
     private Double size;
 
+    private Double latitude;
+
+    private Double longitude;
+
     public Room(String name, String address, String buildingName, String station, Integer walkingTime,
-                FloorLevel floorLevel, Integer floor, Structure structure, Double size) {
+                FloorLevel floorLevel, Integer floor, Structure structure, Double size, Double latitude, Double longitude) {
         this.name = name;
         this.address = address;
         this.buildingName = buildingName;
@@ -55,6 +59,8 @@ public class Room extends BaseEntity {
         this.floor = floor;
         this.structure = structure;
         this.size = size;
+        this.latitude = latitude;
+        this.longitude = longitude;
         validateFloorAndLevel();
     }
 
@@ -68,6 +74,8 @@ public class Room extends BaseEntity {
         this.floor = room.floor;
         this.structure = room.structure;
         this.size = room.size;
+        this.latitude = room.latitude;
+        this.longitude = room.longitude;
         validateFloorAndLevel();
     }
 
@@ -107,6 +115,8 @@ public class Room extends BaseEntity {
                 ", floor=" + floor +
                 ", structure=" + structure +
                 ", size=" + size +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
                 '}';
     }
 }

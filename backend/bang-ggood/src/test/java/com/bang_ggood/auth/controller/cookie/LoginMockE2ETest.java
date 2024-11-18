@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +15,7 @@ import org.springframework.http.MediaType;
 
 import static com.bang_ggood.auth.AuthFixture.OAUTH_LOGIN_REQUEST;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -39,7 +39,7 @@ class LoginMockE2ETest extends AcceptanceMockTestSupport {
         String oauthLoginRequestJson = objectMapper.writeValueAsString(OAUTH_LOGIN_REQUEST);
 
         // when & then
-        Mockito.when(authService.oauthLogin(any(OauthLoginRequest.class))).thenReturn(authTokenResponse);
+        when(authService.oauthLogin(any(OauthLoginRequest.class))).thenReturn(authTokenResponse);
 
         mockMvc.perform(post("/oauth/login")
                         .contentType(MediaType.APPLICATION_JSON)

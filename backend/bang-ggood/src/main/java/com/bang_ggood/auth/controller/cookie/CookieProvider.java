@@ -2,6 +2,7 @@ package com.bang_ggood.auth.controller.cookie;
 
 import com.bang_ggood.auth.service.jwt.JwtTokenProperties;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.server.Cookie.SameSite;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 import java.time.Duration;
@@ -49,7 +50,7 @@ public class CookieProvider {
                 .domain(domain)
                 .httpOnly(true)
                 .secure(true)
-                .sameSite("Lax")
+                .sameSite(SameSite.LAX.attributeValue())
                 .maxAge(Duration.ofMillis(expiredMillis))
                 .path(path)
                 .build();
@@ -69,7 +70,7 @@ public class CookieProvider {
                 .domain(domain)
                 .httpOnly(true)
                 .secure(true)
-                .sameSite("Lax")
+                .sameSite(SameSite.LAX.attributeValue())
                 .maxAge(0)
                 .path(path)
                 .build();

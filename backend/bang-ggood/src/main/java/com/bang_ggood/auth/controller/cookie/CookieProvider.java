@@ -69,6 +69,7 @@ public class CookieProvider {
     private ResponseCookie deleteCookie(String tokenName, String path) {
         return ResponseCookie
                 .from(tokenName, "")
+                .domain(domain)
                 .httpOnly(true)
                 .secure(true)
                 .sameSite(sameSite)

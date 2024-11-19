@@ -17,8 +17,6 @@ export interface RoomCompare extends RoomInfo {
   geolocation: Position;
 }
 
-export interface RoomCategoryDetail {
-  good: ChecklistQuestion[];
-  bad: ChecklistQuestion[];
-  none: ChecklistQuestion[];
-}
+export type SmallAnswerType = 'good' | 'bad' | 'none';
+
+export type RoomCategoryDetail = Record<SmallAnswerType, ChecklistQuestion[]>;

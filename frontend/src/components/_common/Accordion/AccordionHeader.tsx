@@ -12,6 +12,7 @@ interface Props {
   text?: string;
   isMarked?: boolean;
   markColor?: string;
+  isShowMarkerIfOpen?: boolean;
 }
 const AccordionHeader = ({
   id,
@@ -20,18 +21,16 @@ const AccordionHeader = ({
   text,
   isMarked = true,
   markColor = theme.palette.yellow500,
+  isShowMarkerIfOpen = true,
 }: Props) => {
   const { isAccordionOpen, handleAccordionOpenChange } = useAccordionContext();
 
   return (
     <S.HeaderContainer onClick={() => handleAccordionOpenChange(id)}>
       <S.FlexBetween>
-        {isAccordionOpen(id) ? (
-          <S.HeaderMark isMarked={isMarked} markColor={markColor} />
-        ) : (
-          <S.HeaderMark isMarked={false} />
-        )}
-
+        {!isShowMarkerIfOpen && <S.HeaderMark isMarked={isMarked} markColor={markColor} />}
+        {isAccordionOpen(id) && isShowMarkerIfOpen && <S.HeaderMark isMarked={isMarked} markColor={markColor} />}
+        {!isAccordionOpen(id) && isShowMarkerIfOpen && <S.HeaderMark isMarked={false} />}
         <S.HeaderTitle>{text}</S.HeaderTitle>
         <S.OpenBox onClick={() => handleAccordionOpenChange}>
           {isAccordionOpen(id) ? openButton : closeButton}

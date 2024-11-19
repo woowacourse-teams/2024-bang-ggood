@@ -1,75 +1,42 @@
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { flexCenter } from '@/styles/common';
-import theme from '@/styles/theme';
 
-type BadgeSize = 'short' | 'long' | 'button';
+type Size = 'medium' | 'small';
 
-interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  size?: BadgeSize;
-  label: string;
-  isSelected?: boolean;
-  name?: string;
+interface Props {
+  text: string;
+  backgroundColor: string;
+  size: Size;
+  onClick: () => void;
+  isSquare: boolean;
 }
 
-const Badge = ({ size = 'short', label, isSelected = false, onClick, name, ...rest }: Props) => {
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    if (onClick) {
-      onClick(event);
-    }
-  };
-
+const Badge = ({ text, backgroundColor, size = 'medium', onClick, isSquare }: Props) => {
   return (
-    <S.Button size={size} onClick={handleClick} isSelected={isSelected} name={name} aria-pressed={isSelected} {...rest}>
-      {label}
-    </S.Button>
+    <S.RoomMarker size={size} backgroundColor={backgroundColor} onClick={onClick} isSquare={isSquare}>
+      {text}
+    </S.RoomMarker>
   );
 };
 
-export default Badge;
-
 const S = {
-  Button: styled.button<{ size: BadgeSize; isSelected: boolean }>`
-    ${flexCenter}
-    border-radius: 2rem;
-    box-sizing: border-box;
+  RoomMarker: styled.span<{ backgroundColor: string; size: Size; isSquare: boolean }>`
+    display: inline;
+    width: ${({ size }) => (size === 'medium' ? '2.6rem' : '2rem')};
+    height: ${({ size }) => (size === 'medium' ? '2.6rem' : '2rem')};
 
-    color: ${({ theme }) => theme.palette.grey600};
-    ${({ size }) => typeStyles[size]}
-    cursor: pointer;
+    ${flexCenter};
+    flex-shrink: 0;
 
-    ${({ isSelected }) =>
-      isSelected
-        ? css`
-            border: 0.2rem solid ${theme.palette.yellow500};
+    background-color: ${({ backgroundColor }) => backgroundColor};
 
-            background-color: ${theme.palette.yellow200};
-          `
-        : css`
-            border: 0.2rem solid ${theme.palette.grey200};
+    color: white;
+    border-radius: ${({ isSquare }) => (isSquare ? '0.8rem' : '50%')};
 
-            background-color: ${theme.palette.white};
-          `}
+    font-weight: ${({ theme }) => theme.text.weight.bold};
+    font-size: ${({ theme, size }) => (size === 'medium' ? theme.text.size.medium : theme.text.size.xSmall)};
   `,
 };
 
-const typeStyles = {
-  short: css`
-    height: 2.6rem;
-    padding: 0.4rem 1rem;
-
-    font-size: ${theme.text.size.xSmall};
-  `,
-  long: css`
-    height: 3.2rem;
-    padding: 0.4rem 1.6rem;
-
-    font-size: ${theme.text.size.small};
-  `,
-  button: css`
-    padding: 0.8rem 1.5rem;
-
-    font-size: ${theme.text.size.medium};
-  `,
-};
+export default Badge;

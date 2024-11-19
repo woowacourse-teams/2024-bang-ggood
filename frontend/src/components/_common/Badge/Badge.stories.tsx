@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import Badge from '@/components/_common/Badge/Badge';
+import theme from '@/styles/theme';
 
 const meta = {
   title: 'components/Badge',
@@ -21,15 +22,20 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    label: '✨ 청결해요',
-    size: 'long',
+    text: 'A방 위치',
+    backgroundColor: theme.palette.green500,
+    size: 'small',
+    onClick: () => alert('click'),
+    isSquare: true,
   },
 };
 
-export const ClickableBadge: Story = {
+export const medium: Story = {
   args: {
-    label: '🏠 방 컨디션이 좋아요',
-    size: 'button',
+    text: 'B',
+    backgroundColor: theme.palette.yellow500,
+    size: 'medium',
     onClick: () => alert('click'),
+    isSquare: false,
   },
 };

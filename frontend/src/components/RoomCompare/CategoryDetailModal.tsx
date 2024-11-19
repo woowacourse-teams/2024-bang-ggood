@@ -44,14 +44,14 @@ const CategoryDetailModal = ({ isOpen, closeModal }: Props) => {
         <Accordion totalCount={3}>
           {CateogorySection.map((section, index) => {
             return (
-              <>
+              <S.FlexBox key={section.id}>
                 <Accordion.header
                   markColor={section.color}
                   id={index + 1}
                   text={section.text}
                   isShowMarkerIfOpen={false}
                 />
-                <Accordion.body id={1}>
+                <Accordion.body id={index + 1}>
                   {category?.[section.id].map((question, index, questions) => {
                     const isLastQuestion = questions.length - 1 === index;
                     return (
@@ -66,7 +66,7 @@ const CategoryDetailModal = ({ isOpen, closeModal }: Props) => {
                     );
                   })}
                 </Accordion.body>
-              </>
+              </S.FlexBox>
             );
           })}
         </Accordion>
@@ -79,8 +79,7 @@ const S = {
   QuestionBox: styled.div`
     ${flexSpaceBetween}
     width: 100%;
-    padding: 0.8rem;
-    gap: 1rem;
+    padding: 1rem;
 
     background-color: ${({ theme }) => theme.palette.white};
     flex-direction: row;
@@ -93,6 +92,9 @@ const S = {
 
     font-size: 14px;
     align-items: baseline;
+  `,
+  FlexBox: styled.div`
+    gap: 0.4rem;
   `,
 };
 

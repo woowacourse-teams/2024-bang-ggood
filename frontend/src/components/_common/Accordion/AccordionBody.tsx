@@ -34,7 +34,7 @@ const AccordionBody = ({ children, id }: Props) => {
 const S = {
   Container: styled.div<{ isOpen: boolean; maxHeight: number }>`
     overflow: hidden;
-    margin: 1rem 0 0.5rem;
+    margin: 0.8rem 0;
     max-height: ${({ maxHeight }) => maxHeight}px;
     transition: max-height 0.4s cubic-bezier(0.15, 0.1, 0.25, 1);
     border-radius: 0.8rem;

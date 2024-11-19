@@ -1,37 +1,36 @@
 import styled from '@emotion/styled';
 
 import { flexCenter } from '@/styles/common';
-import SUBWAY_LINE_PALLETE, { SubwayLineName } from '@/styles/subway';
 
-type Size = 'small' | 'medium';
+type Size = 'medium' | 'small' | 'large';
+
 interface Props {
-  lineName: SubwayLineName;
+  text: string;
+  backgroundColor: string;
   size?: Size;
+  isCircle: boolean;
+  onClick?: () => void;
 }
 
-const sizeMap = { small: '1.4rem', medium: '2rem' };
-
-const SubwayLineIcon = ({ lineName, size = 'medium' }: Props) => {
-  const lineColor = SUBWAY_LINE_PALLETE[lineName];
-
-  const isNumberTypeSubwayName = lineName.slice(-2) === '호선' && lineName.length === 3;
-
+const Marker = ({ isCircle, text, backgroundColor, size = 'medium', onClick }: Props) => {
   return (
-    <S.Box size={size} color={lineColor} isCircle={isNumberTypeSubwayName}>
-      <S.Text size={size}>{isNumberTypeSubwayName ? lineName.slice(0, lineName.length - 2) : lineName}</S.Text>
+    <S.Box isCircle={isCircle} size={size} backgroundColor={backgroundColor} onClick={onClick}>
+      <S.Text size={size}>{text}</S.Text>
     </S.Box>
   );
 };
 
+const sizeMap = { small: '1.4rem', medium: '2rem', large: '2.6rem' };
+
 const S = {
-  Box: styled.span<{ color: string; isCircle: boolean; size: Size }>`
+  Box: styled.span<{ isCircle: boolean; size: Size; backgroundColor: string }>`
     display: inline-block;
     width: ${({ isCircle, size }) => isCircle && sizeMap[size]};
     height: ${({ isCircle, size }) => isCircle && sizeMap[size]};
     padding: ${({ isCircle }) => (isCircle ? '0.3rem' : '0.3rem 0.6rem')};
     border-radius: 2rem;
 
-    background-color: ${({ color, theme }) => (color ? color : theme.palette.grey400)};
+    background-color: ${({ backgroundColor }) => backgroundColor};
 
     text-align: center;
   `,
@@ -46,4 +45,4 @@ const S = {
   `,
 };
 
-export default SubwayLineIcon;
+export default Marker;

@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import RoomCompareMap from '@/components/_common/Map/RoomCompareMap';
-import { default as Badge } from '@/components/RoomCompare/Badge';
+import { default as Marker } from '@/components/_common/Marker/Marker';
 import CategoryDetailModal from '@/components/RoomCompare/CategoryDetailModal';
 import CompareCard from '@/components/RoomCompare/CompareCard';
 import OptionDetailModal from '@/components/RoomCompare/OptionDetailModal';
@@ -81,11 +81,11 @@ const RoomComparePage = () => {
           <S.TitleFlex>
             <S.RoomTitle>
               <S.Title key={rooms[0].checklistId}>{rooms[0].roomName}</S.Title>
-              <Badge isSquare={false} backgroundColor={theme.palette.yellow500} text={'A'} />
+              <Marker isCircle={true} size={'medium'} backgroundColor={theme.palette.yellow500} text={'A'} />
             </S.RoomTitle>
             <S.RoomTitle>
               <S.Title key={rooms[1].checklistId}>{rooms[1].roomName}</S.Title>
-              <Badge isSquare={false} backgroundColor={theme.palette.green500} text={'B'} />
+              <Marker isCircle={true} size={'medium'} backgroundColor={theme.palette.green500} text={'B'} />
             </S.RoomTitle>
           </S.TitleFlex>
         </S.RoomGrid>

@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 import { useEffect, useRef } from 'react';
 
-import Badge from '@/components/_common/Badge/Badge';
-import Button from '@/components/_common/Button/Button';
+import Marker from '@/components/_common/Marker/Marker';
 import theme from '@/styles/theme';
 import { Position } from '@/types/address';
 import createKakaoMapElements from '@/utils/createKakaoMapElements';
@@ -92,8 +91,20 @@ const RoomCompareMap = ({ positions }: { positions: Position[] }) => {
         <S.Box>
           <S.Map ref={mapElement}>
             <S.RoomMarkBox>
-              <Button label={'A'} isSquare={true} size={'xSmall'} />
-              <Badge isSquare={false} backgroundColor={theme.palette.green500} text={'B'} />
+              <Marker
+                isCircle={true}
+                backgroundColor={theme.palette.yellow500}
+                text={'A방 위치'}
+                size={'small'}
+                onClick={() => handleRoomMarkerClick(0)}
+              />
+              <Marker
+                isCircle={true}
+                backgroundColor={theme.palette.green500}
+                text={'B방 위치'}
+                size={'small'}
+                onClick={() => handleRoomMarkerClick(1)}
+              />
             </S.RoomMarkBox>
           </S.Map>
         </S.Box>

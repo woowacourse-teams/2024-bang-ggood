@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import Bad from '@/assets/icons/answer/bad';
 import Good from '@/assets/icons/answer/good';
 import Modal from '@/components/_common/Modal/Modal';
+import { OptionDetail } from '@/pages/RoomComparePage';
 import { flexCenter, omitText } from '@/styles/common';
 import theme from '@/styles/theme';
 
@@ -11,16 +12,11 @@ interface Props {
   roomTitle2: string;
   isOpen: boolean;
   closeModal: () => void;
-  hasOptions: hasOption[];
+  hasOptions: OptionDetail[];
+  optionCounts: [number, number];
 }
 
-interface hasOption {
-  optionName: string;
-  hasRoom1: boolean;
-  hasRoom2: boolean;
-}
-
-const OptionDetailModal = ({ roomTitle1, roomTitle2, isOpen, closeModal, hasOptions }: Props) => {
+const OptionDetailModal = ({ roomTitle1, roomTitle2, isOpen, closeModal, hasOptions, optionCounts }: Props) => {
   return (
     <Modal isOpen={isOpen} onClose={closeModal}>
       <Modal.header>옵션 비교</Modal.header>
@@ -30,19 +26,19 @@ const OptionDetailModal = ({ roomTitle1, roomTitle2, isOpen, closeModal, hasOpti
           <S.ItemText isBold={true}>{roomTitle1}</S.ItemText>
           <S.ItemText isBold={true}>{roomTitle2}</S.ItemText>
           {hasOptions.map(option => {
-            const { optionName, hasRoom1, hasRoom2 } = option;
+            const { optionName, hasOption } = option;
             return (
               <>
                 <S.Item>{optionName}</S.Item>
                 <S.Item>
-                  {hasRoom1 ? (
+                  {hasOption[0] ? (
                     <Good width={'1.6rem'} color={theme.palette.green600} />
                   ) : (
                     <Bad width={'1.6rem'} color={theme.palette.red600} />
                   )}
                 </S.Item>
                 <S.Item>
-                  {hasRoom2 ? (
+                  {hasOption[1] ? (
                     <Good width={'1.6rem'} color={theme.palette.green600} />
                   ) : (
                     <Bad width={'1.6rem'} color={theme.palette.red600} />
@@ -52,8 +48,8 @@ const OptionDetailModal = ({ roomTitle1, roomTitle2, isOpen, closeModal, hasOpti
             );
           })}
           <S.ItemText>총 개수</S.ItemText>
-          <S.ItemText hasBorder={false}>3개</S.ItemText>
-          <S.ItemText hasBorder={false}>5개</S.ItemText>
+          <S.ItemText hasBorder={false}>{optionCounts[0]}개</S.ItemText>
+          <S.ItemText hasBorder={false}>{optionCounts[1]}개</S.ItemText>
         </S.Container>
       </Modal.body>
     </Modal>
@@ -65,7 +61,7 @@ export default OptionDetailModal;
 const S = {
   Container: styled.div`
     display: grid;
-    grid-template-columns: 0.8fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
   `,
   ItemText: styled.div<{ isBold?: boolean; hasBorder?: boolean }>`
     padding: 0.6rem 1rem;

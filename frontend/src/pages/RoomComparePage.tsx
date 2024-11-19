@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import Header from '@/components/_common/Header/Header';
@@ -9,12 +8,19 @@ import CategoryDetailModal from '@/components/RoomCompare/CategoryDetailModal';
 import CompareCard from '@/components/RoomCompare/CompareCard';
 import OptionDetailModal from '@/components/RoomCompare/OptionDetailModal';
 import RoomMarker from '@/components/RoomCompare/RoomMarker';
+import { OPTIONS } from '@/constants/options';
 import { ROUTE_PATH } from '@/constants/routePath';
+import useGetCompareRoomsQuery from '@/hooks/query/useGetCompareRoomsQuery';
 import useModal from '@/hooks/useModal';
 import { flexCenter, flexRow } from '@/styles/common';
 import theme from '@/styles/theme';
 import { Position } from '@/types/address';
-import { ChecklistCompare } from '@/types/checklistCompare';
+
+export interface OptionDetail {
+  optionId: number;
+  optionName: string;
+  hasOption: [boolean, boolean];
+}
 
 const RoomComparePage = () => {
   const location = useLocation();
@@ -23,13 +29,26 @@ const RoomComparePage = () => {
   const { isModalOpen: isOptionModalOpen, openModal: openOptionModal, closeModal: closeOptionModal } = useModal();
   const { isModalOpen: isCategoryModalOpen, openModal: openCategoryModal, closeModal: closeCategoryModal } = useModal();
 
-  const [roomList, setRoomList] = useState<ChecklistCompare[]>([]);
+  const { data: rooms } = useGetCompareRoomsQuery(roomsIds.roomId1, roomsIds.roomId2);
 
-  //TODO: 나중에 비교 데이터 요청해서 받아오는 로직으로 수정
-  useEffect(() => {
-    // getRoomCompare(roomsIds.roomID);
-    // setRoomList(roomsForCompare);
-  });
+  //TODO:  isLoaading 떄 스켈레톤 처리
+  if (!rooms) return;
+
+  const formattedOptionDetail = () => {
+    const optionsState: OptionDetail[] = OPTIONS.map(option => ({
+      optionId: option.id,
+      optionName: option.displayName,
+      hasOption: [false, false],
+    }));
+
+    rooms.forEach((room, index) => {
+      room.options.forEach(optionId => {
+        const targetOption = optionsState.find(option => option.optionId === optionId)!;
+        targetOption.hasOption[index] = true;
+      });
+    });
+    return optionsState;
+  };
 
   const handleOpenCategoryDetailModal = (roomId: number, categoryId: number) => {
     openCategoryModal();
@@ -49,16 +68,7 @@ const RoomComparePage = () => {
     { latitude: 37.5061912, longitude: 127.1266228 },
   ];
 
-  const optionMock = [
-    { optionName: '세탁기', hasRoom1: true, hasRoom2: false },
-    { optionName: '세탁기', hasRoom1: true, hasRoom2: false },
-    { optionName: '세탁기', hasRoom1: true, hasRoom2: false },
-    { optionName: '세탁기', hasRoom1: true, hasRoom2: false },
-    { optionName: '세탁기', hasRoom1: true, hasRoom2: false },
-    { optionName: '세탁기', hasRoom1: true, hasRoom2: false },
-  ];
-
-  if (!roomList.length) return <div>loading</div>;
+  if (!rooms.length) return <div>loading</div>;
 
   return (
     <>
@@ -70,18 +80,18 @@ const RoomComparePage = () => {
         <S.RoomGrid>
           <S.TitleFlex>
             <S.RoomTitle>
-              <S.Title key={roomList[0].checklistId}>{roomList[0].roomName}</S.Title>
+              <S.Title key={rooms[0].checklistId}>{rooms[0].roomName}</S.Title>
               <RoomMarker type={'A'} />
             </S.RoomTitle>
             <S.RoomTitle>
-              <S.Title key={roomList[1].checklistId}>{roomList[1].roomName}</S.Title>
+              <S.Title key={rooms[1].checklistId}>{rooms[1].roomName}</S.Title>
               <RoomMarker type={'B'} />
             </S.RoomTitle>
           </S.TitleFlex>
         </S.RoomGrid>
         <RoomCompareMap positions={positions} />
         <S.RoomGrid>
-          {roomList?.map((room, index) => (
+          {rooms?.map((room, index) => (
             <CompareCard
               key={room.checklistId}
               room={room}
@@ -94,9 +104,10 @@ const RoomComparePage = () => {
         {/*방 옵션 비교 모달*/}
         {isOptionModalOpen && (
           <OptionDetailModal
-            hasOptions={optionMock}
-            roomTitle1={roomList[0].roomName ?? ''}
-            roomTitle2={roomList[1].roomName ?? ''}
+            optionCounts={[rooms[0].options.length, rooms[1].options.length]}
+            hasOptions={formattedOptionDetail()}
+            roomTitle1={rooms[0].roomName ?? ''}
+            roomTitle2={rooms[1].roomName ?? ''}
             isOpen={isOptionModalOpen}
             closeModal={closeOptionModal}
           />

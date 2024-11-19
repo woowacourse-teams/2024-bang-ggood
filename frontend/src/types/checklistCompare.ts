@@ -12,6 +12,6 @@ export interface ChecklistCompare extends RoomInfo {
   checklistId: number;
   options: number[];
   categories: CategoryScore[];
-  nearSubwayStations: SubwayStation[];
+  stations: SubwayStation[];
   geolocation: Position;
 }

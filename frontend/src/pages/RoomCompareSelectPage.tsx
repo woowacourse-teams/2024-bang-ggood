@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/_common/Button/Button';
@@ -13,11 +13,22 @@ import useToast from '@/hooks/useToast';
 import { flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
 
+const MIN_ROOM_COMPARE_COUNT = 2;
+
 const RoomCompareSelectPage = () => {
   const navigate = useNavigate();
   const [selectedRoomIds, setSelectedRoomIds] = useState<Set<number>>(new Set());
   const { data: checklistList } = useGetChecklistList();
   const { showToast } = useToast();
+
+  const userChecklists = checklistList?.filter(checklist => checklist.checklistId !== 1) || [];
+
+  useEffect(() => {
+    if (userChecklists.length < MIN_ROOM_COMPARE_COUNT) {
+      showToast({ message: '비교 기능은 작성한 체크리스트가 2개 이상일 때만 가능합니다.' });
+      navigate(ROUTE_PATH.checklistList);
+    }
+  }, []);
 
   const isSelectedRoom = (roomId: number) => !!selectedRoomIds.has(roomId);
 
@@ -71,7 +82,7 @@ const RoomCompareSelectPage = () => {
           <CounterBox currentCount={selectedRoomIds.size} totalCount={2} />
         </S.CounterContainer>
         <S.CardContainer>
-          {checklistList?.map(checklist => (
+          {userChecklists?.map(checklist => (
             <CompareSelectCard
               key={checklist.checklistId}
               isSelected={isSelectedRoom(checklist.checklistId)}

@@ -2,7 +2,6 @@ package com.bang_ggood.auth.controller.cookie;
 
 import com.bang_ggood.auth.service.jwt.JwtTokenProperties;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.server.Cookie.SameSite;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 import java.time.Duration;
@@ -15,14 +14,17 @@ public class CookieProvider {
 
     private final JwtTokenProperties jwtTokenProperties;
     private final String domain;
+    private final String sameSite;
     private final String accessTokenPath;
     private final String refreshTokenPath;
 
     public CookieProvider(@Value("${domain}") String domain,
+                          @Value("${sameSite}") String sameSite,
                           @Value("${access-token-path}") String accessTokenPath,
                           @Value("${refresh-token-path}") String refreshTokenPath,
                           JwtTokenProperties jwtTokenProperties) {
         this.domain = domain;
+        this.sameSite = sameSite;
         this.accessTokenPath = accessTokenPath;
         this.refreshTokenPath = refreshTokenPath;
         this.jwtTokenProperties = jwtTokenProperties;
@@ -50,9 +52,9 @@ public class CookieProvider {
                 .domain(domain)
                 .httpOnly(true)
                 .secure(true)
-                .sameSite(SameSite.LAX.attributeValue())
+                .sameSite(sameSite)
                 .maxAge(Duration.ofMillis(expiredMillis))
-                .path("/")
+                .path(path)
                 .build();
     }
 
@@ -69,7 +71,7 @@ public class CookieProvider {
                 .from(tokenName, "")
                 .httpOnly(true)
                 .secure(true)
-                .sameSite(SameSite.LAX.attributeValue())
+                .sameSite(sameSite)
                 .maxAge(0)
                 .path(path)
                 .build();

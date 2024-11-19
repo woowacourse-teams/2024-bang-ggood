@@ -139,6 +139,7 @@ const S = {
   `,
   Title: styled.span`
     display: inline;
+    width: calc(100% - 3rem);
     padding: 0.8rem 0;
 
     font-weight: ${({ theme }) => theme.text.weight.bold};

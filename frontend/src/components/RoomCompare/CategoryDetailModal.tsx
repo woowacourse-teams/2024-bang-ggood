@@ -58,7 +58,7 @@ const CategoryDetailModal = ({ isOpen, closeModal }: Props) => {
                       <>
                         <S.QuestionBox>
                           <S.Title>
-                            <ChecklistQuestionItem question={question} key={question.questionId} />
+                            <ChecklistQuestionItem fontSize={'small'} question={question} key={question.questionId} />
                           </S.Title>
                         </S.QuestionBox>
                         {!isLastQuestion && <Divider />}
@@ -91,16 +91,8 @@ const S = {
     display: flex;
     margin: 0.5rem 0;
 
-    font-size: ${({ theme }) => theme.text.size.medium};
+    font-size: 14px;
     align-items: baseline;
-  `,
-  Subtitle: styled.div`
-    margin-bottom: 1rem;
-
-    color: ${({ theme }) => theme.palette.grey500};
-    font-size: ${({ theme }) => theme.text.size.small};
-
-    word-break: keep-all;
   `,
 };
 

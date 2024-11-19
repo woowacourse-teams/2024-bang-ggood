@@ -92,17 +92,17 @@ const RoomCompareMap = ({ positions }: { positions: Position[] }) => {
           <S.Map ref={mapElement}>
             <S.RoomMarkBox>
               <Marker
-                isCircle={true}
+                isCircle={false}
                 backgroundColor={theme.palette.yellow500}
-                text={'A방 위치'}
-                size={'small'}
+                text={'A방'}
+                size={'medium'}
                 onClick={() => handleRoomMarkerClick(0)}
               />
               <Marker
-                isCircle={true}
+                isCircle={false}
                 backgroundColor={theme.palette.green500}
-                text={'B방 위치'}
-                size={'small'}
+                text={'B방'}
+                size={'medium'}
                 onClick={() => handleRoomMarkerClick(1)}
               />
             </S.RoomMarkBox>

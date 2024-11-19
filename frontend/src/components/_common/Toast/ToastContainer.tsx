@@ -4,9 +4,7 @@ import useToast from '@/hooks/useToast';
 const ToastContainer = () => {
   const { type, toast } = useToast();
 
-  if (!toast) return;
-
-  return <Toast type={type} message={toast} />;
+  return toast && <Toast type={type} message={toast} />;
 };
 
 export default ToastContainer;

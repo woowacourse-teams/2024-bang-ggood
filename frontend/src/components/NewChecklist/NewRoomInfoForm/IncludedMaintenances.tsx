@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import { useStore } from 'zustand';
 
+import Badge from '@/components/_common/Badge/Badge';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
-import Badge from '@/components/Badge/Badge';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import { IncludedMaintenancesData } from '@/constants/roomInfo';
 import roomInfoStore from '@/store/roomInfoStore';

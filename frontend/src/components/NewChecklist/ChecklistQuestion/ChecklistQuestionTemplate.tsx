@@ -4,10 +4,11 @@ import Divider from '@/components/_common/Divider/Divider';
 import Layout from '@/components/_common/layout/Layout';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import ChecklistQuestionItem from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestion';
+import ChecklistQuestionAnswers from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestionAnswers';
 import MoveNextButton from '@/components/NewChecklist/MoveNextButton';
 import useInitialChecklist from '@/hooks/useInitialChecklist';
 import useChecklistStore from '@/store/useChecklistStore';
-import { flexCenter, flexColumn } from '@/styles/common';
+import { flexCenter, flexColumn, flexRow, flexSpaceBetween } from '@/styles/common';
 import theme from '@/styles/theme';
 import { ChecklistQuestion } from '@/types/checklist';
 
@@ -29,17 +30,20 @@ const ChecklistQuestionTemplate = () => {
           const isLastQuestion = questions?.questions.length - 1 === index;
           return (
             <>
-              <ChecklistQuestionItem
-                key={`${currentTabId}-${question.questionId}`}
-                question={question}
-                answer={answer}
-              />
+              <S.QuestionBox key={question.questionId}>
+                <ChecklistQuestionItem
+                  key={`${currentTabId}-${question.questionId}`}
+                  question={question}
+                  width={'80%'}
+                />
+                <ChecklistQuestionAnswers title={question.title} answer={answer} questionId={question.questionId} />
+              </S.QuestionBox>
+
               {!isLastQuestion && <Divider />}
             </>
           );
         })}
       </S.ContentBox>
-
       <MoveNextButton marginTop="2rem" marginBottom="4rem" />
     </Layout>
   );
@@ -57,6 +61,15 @@ const S = {
     gap: 0.2rem;
   `,
   QuestionBox: styled.div`
+    position: relative;
+    width: 100%;
+    ${flexRow}
+    ${flexSpaceBetween}
+    padding: 1.6rem;
+    border-radius: 0.8rem;
+
+    box-sizing: border-box;
+
     background-color: ${({ theme }) => theme.palette.white};
   `,
 };

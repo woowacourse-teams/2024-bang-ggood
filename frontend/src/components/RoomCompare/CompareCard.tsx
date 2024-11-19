@@ -5,10 +5,10 @@ import CategoryScore from '@/components/RoomCompare/CategoryScore';
 import CompareCardItem from '@/components/RoomCompare/CompareCardItem';
 import { EMPTY_INDICATOR } from '@/constants/system';
 import { boxShadow, flexColumn, title1, title4 } from '@/styles/common';
-import { ChecklistCompare } from '@/types/checklistCompare';
+import { RoomCompare } from '@/types/RoomCompare';
 
 interface Props {
-  room: ChecklistCompare;
+  room: RoomCompare;
   index: number;
   openOptionModal: () => void;
   openCategoryModal: (roomId: number, categoryId: number) => void;

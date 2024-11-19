@@ -2,49 +2,30 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 import HighlightText from '@/components/_common/Highlight/HighlightText';
-import ChecklistQuestionAnswers from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestionAnswers';
 import { flexCenter, flexRow, flexSpaceBetween } from '@/styles/common';
-import { AnswerType } from '@/types/answer';
 import { ChecklistQuestion } from '@/types/checklist';
 
 interface Props {
   question: ChecklistQuestion;
-  answer: AnswerType;
+  width?: string;
 }
 
-const ChecklistQuestionItem = ({ question, answer }: Props) => {
-  const { questionId, title, highlights } = question;
+const ChecklistQuestionItem = ({ question, width = '100%' }: Props) => {
+  const { title, highlights } = question;
 
   return (
-    <S.Container>
-      <S.Question className="question">
-        <HighlightText title={title} highlights={highlights} />
-      </S.Question>
-      <S.Options>
-        <ChecklistQuestionAnswers title={title} answer={answer} questionId={questionId} />
-      </S.Options>
-    </S.Container>
+    <S.Question className="question" width={width}>
+      <HighlightText title={title} highlights={highlights} />
+    </S.Question>
   );
 };
 
 export default React.memo(ChecklistQuestionItem);
 
 const S = {
-  Container: styled.div`
-    position: relative;
-    width: 100%;
-    ${flexRow}
-    ${flexSpaceBetween}
-    padding: 1.6rem;
-    border-radius: 0.8rem;
-
-    box-sizing: border-box;
-
-    background-color: ${({ theme }) => theme.palette.white};
-  `,
-  Question: styled.div`
+  Question: styled.div<{ width: string }>`
     display: flex;
-    width: 80%;
+    width: ${({ width }) => width};
     flex-flow: column wrap;
   `,
   Subtitle: styled.div`

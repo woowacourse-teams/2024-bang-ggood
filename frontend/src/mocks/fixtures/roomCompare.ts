@@ -1,7 +1,7 @@
 import { nearSubway } from '@/mocks/fixtures/subway';
-import { ChecklistCompare } from '@/types/checklistCompare';
+import { RoomCompare } from '@/types/RoomCompare';
 
-export const roomsForCompare: { checklists: ChecklistCompare[] } = {
+export const roomsForCompare: { checklists: RoomCompare[] } = {
   checklists: [
     {
       checklistId: 1,

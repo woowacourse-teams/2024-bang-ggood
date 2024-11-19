@@ -15,8 +15,8 @@ export const ENDPOINT = {
   CHECKLIST_ID: (id: number) => `/checklists/${id}`,
   CHECKLIST_ID_V1: (id: number) => `/v1/checklists/${id}`,
   //compare
-  CHECKLIST_COMPARE: (roomId1: number, roomId2: number) => `/v1/checklists/compare?id=${roomId1}&id=${roomId2}`,
-  CHECKLIST_CATEGORY_DETAIL: (roomId: number, categoryId: number) =>
+  ROOM_COMPARE: (roomId1: number, roomId2: number) => `/v1/checklists/compare?id=${roomId1}&id=${roomId2}`,
+  ROOM_CATEGORY_DETAIL: (roomId: number, categoryId: number) =>
     `/v1/comparison/checklists/${roomId}/categories/${categoryId}/questions`,
 
   // like

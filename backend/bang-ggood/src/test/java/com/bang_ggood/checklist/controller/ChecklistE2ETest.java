@@ -139,6 +139,23 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .statusCode(200);
     }
 
+    @DisplayName("체크리스트 비교 성공")
+    @Test
+    void compareChecklists() {
+        Room room1 = roomRepository.save(RoomFixture.ROOM_1());
+        Room room2 = roomRepository.save(RoomFixture.ROOM_2());
+        Checklist checklist1 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room1, this.getAuthenticatedUser()));
+        Checklist checklist2 = checklistRepository.save(ChecklistFixture.CHECKLIST2_USER1(room2, this.getAuthenticatedUser()));
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .headers(this.headers)
+                .queryParam("id", checklist1.getId(), checklist2.getId())  // 두 체크리스트 ID를 전달
+                .when().get("/v1/checklists/compare")
+                .then().log().all()
+                .statusCode(200);
+    }
+
     @DisplayName("체크리스트 수정 성공")
     @Test
     void updateChecklist() {

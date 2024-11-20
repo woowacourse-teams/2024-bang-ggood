@@ -42,6 +42,7 @@ public enum ExceptionCode {
     CHECKLIST_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_NOT_FOUND, "체크리스트가 존재하지 않습니다."),
     CHECKLIST_MEMO_INVALID_LENGTH(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR, "체크리스트 메모는 1000자 이하여야 합니다."),
     CHECKLIST_NOT_OWNED_BY_USER(HttpStatus.UNAUTHORIZED, ClientExceptionCode.UNAUTH_ERROR, "유저의 체크리스트가 아닙니다."),
+    CHECKLIST_COMPARE_INVALID_COUNT(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_COMPARE_ERROR, "체크리스트 비교는 2개만 가능합니다."),
 
     // CustomChecklist
     CUSTOM_CHECKLIST_QUESTION_EMPTY(HttpStatus.BAD_REQUEST, ClientExceptionCode.CUSTOM_ERROR, "커스텀 질문 개수가 유효하지 않습니다."),

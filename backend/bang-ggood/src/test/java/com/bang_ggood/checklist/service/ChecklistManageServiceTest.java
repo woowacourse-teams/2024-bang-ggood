@@ -5,6 +5,7 @@ import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
+import com.bang_ggood.checklist.dto.response.ChecklistCompareResponsesV1;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
@@ -134,6 +135,46 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
     }
+
+    @DisplayName("체크리스트 비교 성공")
+    @Test
+    void compareChecklists_success() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        Room room1 = roomRepository.save(RoomFixture.ROOM_1());
+        Room room2 = roomRepository.save(RoomFixture.ROOM_2());
+        Checklist checklist1 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room1, user));
+        Checklist checklist2 = checklistRepository.save(ChecklistFixture.CHECKLIST2_USER1(room2, user));
+
+        List<Long> checklistIds = List.of(checklist1.getId(), checklist2.getId());
+
+        // when
+        ChecklistCompareResponsesV1 response = checklistManageService.compareChecklists(user, checklistIds);
+
+        // then
+        assertAll(
+                () -> assertThat(response.checklists()).hasSize(checklistIds.size()),
+                () -> assertThat(response.checklists().get(0).checklistId()).isEqualTo(checklist1.getId()),
+                () -> assertThat(response.checklists().get(1).checklistId()).isEqualTo(checklist2.getId())
+        );
+    }
+
+    @DisplayName("체크리스트 비교 실패 : 체크리스트 개수가 2개가 아닌 경우")
+    @Test
+    void compareChecklists_invalidCount_exception() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        Checklist checklist1 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+
+        List<Long> checklistIds = List.of(checklist1.getId());
+
+        // when & then
+        assertThatThrownBy(() -> checklistManageService.compareChecklists(user, checklistIds))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.CHECKLIST_COMPARE_INVALID_COUNT.getMessage());
+    }
+
 
     @DisplayName("체크리스트 삭제 성공")
     @Test

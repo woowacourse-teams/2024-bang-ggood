@@ -4,6 +4,7 @@ import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.auth.config.UserPrincipal;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
+import com.bang_ggood.checklist.dto.response.ChecklistCompareResponsesV1;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponseV1;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.net.URI;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -72,6 +75,11 @@ public class ChecklistController {
     @GetMapping("/v1/checklists/like")
     public ResponseEntity<ChecklistsPreviewResponseV1> readLikedChecklistsPreviewV1(@AuthRequiredPrincipal User user) {
         return ResponseEntity.ok(checklistManageService.readLikedChecklistsPreviewV1(user));
+    }
+
+    @GetMapping("/v1/checklists/compare")
+    public ResponseEntity<ChecklistCompareResponsesV1> readChecklistsCompare(@AuthRequiredPrincipal User user, @RequestParam("id") List<Long> checklistIds) {
+        return ResponseEntity.ok(checklistManageService.compareChecklists(user, checklistIds));
     }
 
     @PutMapping("/checklists/{id}")

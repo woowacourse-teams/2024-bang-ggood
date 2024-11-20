@@ -14,7 +14,6 @@ import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
-import com.bang_ggood.question.dto.response.ComparisonCategoryChecklistQuestionResponse;
 import com.bang_ggood.question.dto.response.ComparisonCategoryChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.QuestionResponse;
@@ -138,11 +137,10 @@ class QuestionManageServiceTest extends IntegrationTestSupport {
         checklistQuestionRepository.saveAll(List.of(checklist1Question1Bad, checklist1Question2Good));
 
         // when
-        ComparisonCategoryChecklistQuestionsResponse response = questionManageService.readComparisonChecklistQuestionsByCategory(
+        ComparisonCategoryChecklistQuestionsResponse questions = questionManageService.readComparisonChecklistQuestionsByCategory(
                 user, checklist.getId(), question1Category1.getCategory().getId());
 
         // then
-        ComparisonCategoryChecklistQuestionResponse questions = response.questions();
         List<QuestionResponse> good = questions.good();
         List<QuestionResponse> bad = questions.bad();
         List<QuestionResponse> none = questions.none();

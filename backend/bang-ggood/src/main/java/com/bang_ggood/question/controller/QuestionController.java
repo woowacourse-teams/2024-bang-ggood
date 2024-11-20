@@ -4,7 +4,7 @@ import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.auth.config.UserPrincipal;
 import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
-import com.bang_ggood.question.dto.response.ComparisonCategoryChecklistQuestionsResponse;
+import com.bang_ggood.question.dto.response.ComparisonCategorizedQuestionsResponse;
 import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
 import com.bang_ggood.question.service.QuestionManageService;
 import com.bang_ggood.user.domain.User;
@@ -37,7 +37,7 @@ public class QuestionController {
     }
 
     @GetMapping("/v1/comparison/checklists/{checklistId}/categories/{categoryId}/questions")
-    public ResponseEntity<ComparisonCategoryChecklistQuestionsResponse> readComparisonChecklistQuestionsByCategory(
+    public ResponseEntity<ComparisonCategorizedQuestionsResponse> readComparisonChecklistQuestionsByCategory(
             @AuthRequiredPrincipal User user,
             @PathVariable("checklistId") long checklistId, @PathVariable("categoryId") int categoryId) {
         return ResponseEntity.ok(questionManageService.readComparisonChecklistQuestionsByCategory(user, checklistId, categoryId));

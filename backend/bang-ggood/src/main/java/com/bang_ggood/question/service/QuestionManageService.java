@@ -11,7 +11,7 @@ import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionResponse;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
-import com.bang_ggood.question.dto.response.ComparisonCategoryChecklistQuestionsResponse;
+import com.bang_ggood.question.dto.response.ComparisonCategorizedQuestionsResponse;
 import com.bang_ggood.question.dto.response.CustomChecklistQuestionResponse;
 import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.QuestionResponse;
@@ -92,7 +92,7 @@ public class QuestionManageService {
     }
 
     @Transactional(readOnly = true)
-    public ComparisonCategoryChecklistQuestionsResponse readComparisonChecklistQuestionsByCategory(User user, Long checklistId, Integer categoryId) {
+    public ComparisonCategorizedQuestionsResponse readComparisonChecklistQuestionsByCategory(User user, Long checklistId, Integer categoryId) {
         Checklist checklist = checklistService.readChecklist(user, checklistId);
         Category category = questionService.readCategory(categoryId);
         ChecklistQuestions checklistQuestions = new ChecklistQuestions(checklistQuestionService.readChecklistQuestionsByCategory(checklist, category));
@@ -101,7 +101,7 @@ public class QuestionManageService {
         List<QuestionResponse> bad = categorizeQuestionsByAnswer(checklistQuestions, Answer.BAD);
         List<QuestionResponse> none = categorizeQuestionsByAnswer(checklistQuestions, Answer.NONE);
 
-        return ComparisonCategoryChecklistQuestionsResponse.of(good, bad, none);
+        return ComparisonCategorizedQuestionsResponse.of(good, bad, none);
     }
 
     private List<QuestionResponse> categorizeQuestionsByAnswer(ChecklistQuestions checklistQuestions, Answer answer) {

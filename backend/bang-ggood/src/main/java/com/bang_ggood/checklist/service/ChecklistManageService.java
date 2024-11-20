@@ -4,9 +4,9 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponseV1;
+import com.bang_ggood.checklist.dto.response.ChecklistCompareResponsesV1;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponseV1;
-import com.bang_ggood.checklist.dto.response.ChecklistCompareResponsesV1;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponseV1;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
@@ -43,7 +43,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -166,9 +165,11 @@ public class ChecklistManageService {
 
     private SelectedCategoryQuestionsResponse categorizeChecklistQuestions(Category category,
                                                                            List<ChecklistQuestion> checklistQuestions) {
-        List<SelectedQuestionResponse> selectedQuestionResponse = checklistQuestionService.categorizeChecklistQuestions(category, checklistQuestions)
+        List<SelectedQuestionResponse> selectedQuestionResponse = checklistQuestionService.categorizeChecklistQuestions(
+                        category, checklistQuestions)
                 .stream()
-                .map(checklistQuestion -> new SelectedQuestionResponse(checklistQuestion, questionService.readHighlights(checklistQuestion.getQuestionId())))
+                .map(checklistQuestion -> new SelectedQuestionResponse(checklistQuestion,
+                        questionService.readHighlights(checklistQuestion.getQuestionId())))
                 .toList();
 
         return SelectedCategoryQuestionsResponse.of(category, selectedQuestionResponse);
@@ -227,7 +228,8 @@ public class ChecklistManageService {
         List<ChecklistStation> checklistStations = checklistStationService.readChecklistStationsByChecklist(checklist);
         List<ChecklistMaintenance> maintenances = checklistMaintenanceService.readChecklistMaintenances(checklist);
         CategoryScoreResponsesV1 categoryScoreResponses = compareCategories(user, checklistId);
-        return ChecklistCompareResponseV1.of(checklist, options, checklistStations, maintenances, categoryScoreResponses);
+        return ChecklistCompareResponseV1.of(checklist, options, checklistStations, maintenances,
+                categoryScoreResponses);
     }
 
     private CategoryScoreResponsesV1 compareCategories(User user, Long checklistId) {

@@ -95,8 +95,10 @@ public class ChecklistQuestionService {
 
     @Transactional(readOnly = true)
     public Integer calculateCategoryScore(Long checklistId, Integer categoryId) {
-        int allAnsweredQuestionCount = checklistQuestionRepository.countAnsweredQuestionsByChecklistIdAndCategoryId(checklistId, categoryId);
-        int goodAnsweredQuestionCount = checklistQuestionRepository.countAnsweredQuestionsByChecklistIdAndCategoryIdAndAnswer(checklistId, categoryId, Answer.GOOD);
+        int allAnsweredQuestionCount = checklistQuestionRepository.countAnsweredQuestionsByChecklistIdAndCategoryId(
+                checklistId, categoryId);
+        int goodAnsweredQuestionCount = checklistQuestionRepository.countAnsweredQuestionsByChecklistIdAndCategoryIdAndAnswer(
+                checklistId, categoryId, Answer.GOOD);
 
         if (allAnsweredQuestionCount == 0) {
             return 0;

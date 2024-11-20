@@ -53,8 +53,10 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
     @Test
     void findAllByChecklistId() {
         //given
-        checklistQuestionRepository.save(ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1_CATEGORY1));
-        checklistQuestionRepository.save(ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, QuestionFixture.QUESTION2_CATEGORY1));
+        checklistQuestionRepository.save(
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1_CATEGORY1));
+        checklistQuestionRepository.save(
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, QuestionFixture.QUESTION2_CATEGORY1));
 
         // when
         List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findAllByChecklistId(
@@ -70,11 +72,14 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
     @Test
     void findAllQuestionCategoriesByUserIdAndChecklistId() {
         // given
-        checklistQuestionRepository.save(ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1_CATEGORY1));
-        checklistQuestionRepository.save(ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, QuestionFixture.QUESTION3_CATEGORY2));
+        checklistQuestionRepository.save(
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1_CATEGORY1));
+        checklistQuestionRepository.save(
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, QuestionFixture.QUESTION3_CATEGORY2));
 
         // when
-        List<Category> categories = checklistQuestionRepository.findAllQuestionCategoriesByUserIdAndChecklistId(user.getId(), checklist.getId());
+        List<Category> categories = checklistQuestionRepository.findAllQuestionCategoriesByUserIdAndChecklistId(
+                user.getId(), checklist.getId());
 
         // then
         assertThat(categories).hasSize(2);
@@ -84,14 +89,17 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
     @Test
     void countAnsweredQuestionsByChecklistIdAndCategoryId() {
         // given
-        ChecklistQuestion cq1 = checklistQuestionRepository.save(ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1_CATEGORY1));
-        ChecklistQuestion cq2 = checklistQuestionRepository.save(ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, QuestionFixture.QUESTION1_CATEGORY1));
+        ChecklistQuestion cq1 = checklistQuestionRepository.save(
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1_CATEGORY1));
+        ChecklistQuestion cq2 = checklistQuestionRepository.save(
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, QuestionFixture.QUESTION1_CATEGORY1));
         checklistQuestionRepository.save(cq1);
         checklistQuestionRepository.save(cq2);
 
         // when
         Integer categoryId = cq1.getQuestion().getCategory().getId();
-        Integer count = checklistQuestionRepository.countAnsweredQuestionsByChecklistIdAndCategoryId(checklist.getId(), categoryId);
+        Integer count = checklistQuestionRepository.countAnsweredQuestionsByChecklistIdAndCategoryId(checklist.getId(),
+                categoryId);
 
         // then
         assertThat(count).isEqualTo(2);
@@ -101,15 +109,19 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
     @Test
     void countAnsweredQuestionsByChecklistIdAndCategoryIdAndAnswer() {
         // given
-        ChecklistQuestion cq1 = checklistQuestionRepository.save(ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1_CATEGORY1));
-        ChecklistQuestion cq2 = checklistQuestionRepository.save(ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, QuestionFixture.QUESTION1_CATEGORY1));
+        ChecklistQuestion cq1 = checklistQuestionRepository.save(
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1_CATEGORY1));
+        ChecklistQuestion cq2 = checklistQuestionRepository.save(
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, QuestionFixture.QUESTION1_CATEGORY1));
         checklistQuestionRepository.save(cq1);
         checklistQuestionRepository.save(cq2);
 
         // when
         Integer categoryId = cq1.getQuestion().getCategory().getId();
-        Integer countYes = checklistQuestionRepository.countAnsweredQuestionsByChecklistIdAndCategoryIdAndAnswer(checklist.getId(), categoryId, Answer.GOOD);
-        Integer countNo = checklistQuestionRepository.countAnsweredQuestionsByChecklistIdAndCategoryIdAndAnswer(checklist.getId(), categoryId, Answer.BAD);
+        Integer countYes = checklistQuestionRepository.countAnsweredQuestionsByChecklistIdAndCategoryIdAndAnswer(
+                checklist.getId(), categoryId, Answer.GOOD);
+        Integer countNo = checklistQuestionRepository.countAnsweredQuestionsByChecklistIdAndCategoryIdAndAnswer(
+                checklist.getId(), categoryId, Answer.BAD);
 
         // then
         assertAll(
@@ -117,7 +129,6 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
                 () -> assertThat(countNo).isEqualTo(1)
         );
     }
-
 
 
     @DisplayName("질문 답변을 체크리스트 ID로 논리적 삭제 성공")
@@ -131,7 +142,8 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
 
         //when
         checklistQuestionRepository.deleteAllByChecklistId(
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1_CATEGORY1).getChecklistId());
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1_CATEGORY1)
+                        .getChecklistId());
 
         //then
         assertAll(

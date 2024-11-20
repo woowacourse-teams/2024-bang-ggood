@@ -3,7 +3,6 @@ package com.bang_ggood.auth.controller;
 import com.bang_ggood.AcceptanceTest;
 import com.bang_ggood.auth.dto.response.TokenExistResponse;
 import com.bang_ggood.auth.service.AuthService;
-import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.global.exception.ExceptionCode;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;

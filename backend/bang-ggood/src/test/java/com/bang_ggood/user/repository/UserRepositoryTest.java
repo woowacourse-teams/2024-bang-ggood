@@ -4,11 +4,9 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.domain.UserType;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -87,7 +85,8 @@ class UserRepositoryTest extends IntegrationTestSupport {
         userRepository.deleteById(user.getId());
 
         // when
-        Optional<User> deletedUser = userRepository.findByEmailAndLoginTypeWithDeleted(user.getEmail(), user.getLoginType());
+        Optional<User> deletedUser = userRepository.findByEmailAndLoginTypeWithDeleted(user.getEmail(),
+                user.getLoginType());
 
         // then
         assertAll(

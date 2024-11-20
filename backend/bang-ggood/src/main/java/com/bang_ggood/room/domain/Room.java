@@ -49,7 +49,8 @@ public class Room extends BaseEntity {
     private Double longitude;
 
     public Room(String name, String address, String buildingName, String station, Integer walkingTime,
-                FloorLevel floorLevel, Integer floor, Structure structure, Double size, Double latitude, Double longitude) {
+                FloorLevel floorLevel, Integer floor, Structure structure, Double size, Double latitude,
+                Double longitude) {
         this.name = name;
         this.address = address;
         this.buildingName = buildingName;

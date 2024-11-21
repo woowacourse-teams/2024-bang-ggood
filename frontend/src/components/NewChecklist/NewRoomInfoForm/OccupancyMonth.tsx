@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Dropdown from '@/components/_common/Dropdown/Dropdown';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
@@ -35,4 +37,4 @@ const OccupancyMonth = () => {
   );
 };
 
-export default OccupancyMonth;
+export default React.memo(OccupancyMonth);

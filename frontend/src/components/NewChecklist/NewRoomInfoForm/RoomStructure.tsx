@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 
 import Badge from '@/components/_common/Badge/Badge';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
@@ -35,4 +35,4 @@ const RoomStructure = () => {
   );
 };
 
-export default RoomStructure;
+export default React.memo(RoomStructure);

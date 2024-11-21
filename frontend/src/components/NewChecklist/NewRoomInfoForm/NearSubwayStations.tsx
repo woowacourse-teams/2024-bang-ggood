@@ -1,3 +1,4 @@
+import React from 'react';
 import { useStore } from 'zustand';
 
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
@@ -19,4 +20,4 @@ const NearSubwayStations = () => {
   );
 };
 
-export default NearSubwayStations;
+export default React.memo(NearSubwayStations);

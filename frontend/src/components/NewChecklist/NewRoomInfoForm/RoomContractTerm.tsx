@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import React from 'react';
 
 import FormField from '@/components/_common/FormField/FormField';
 import Input from '@/components/_common/Input/Input';
@@ -37,4 +38,4 @@ const S = {
   `,
 };
 
-export default RoomContractTerm;
+export default React.memo(RoomContractTerm);

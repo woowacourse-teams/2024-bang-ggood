@@ -1,3 +1,4 @@
+import React from 'react';
 import { useStore } from 'zustand';
 
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
@@ -29,4 +30,4 @@ const Address = () => {
   );
 };
 
-export default Address;
+export default React.memo(Address);

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import FormField from '@/components/_common/FormField/FormField';
 import Input from '@/components/_common/Input/Input';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
@@ -26,4 +28,4 @@ const RoomSize = () => {
   );
 };
 
-export default RoomSize;
+export default React.memo(RoomSize);

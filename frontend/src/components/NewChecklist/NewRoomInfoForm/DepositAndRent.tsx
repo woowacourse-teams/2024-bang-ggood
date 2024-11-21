@@ -1,3 +1,5 @@
+import React from 'react';
+
 import FormField from '@/components/_common/FormField/FormField';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import useRoomInfoValidated from '@/hooks/useRoomInfoValidated';
@@ -36,4 +38,4 @@ const DepositAndRent = () => {
   );
 };
 
-export default DepositAndRent;
+export default React.memo(DepositAndRent);

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Dropdown from '@/components/_common/Dropdown/Dropdown';
 import FormField from '@/components/_common/FormField/FormField';
 import Input from '@/components/_common/Input/Input';
@@ -42,4 +44,4 @@ const RoomFloor = () => {
   );
 };
 
-export default RoomFloor;
+export default React.memo(RoomFloor);

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import FormField from '@/components/_common/FormField/FormField';
 import useRoomInfoValidated from '@/hooks/useRoomInfoValidated';
 
@@ -21,4 +23,4 @@ const RealEstate = () => {
   );
 };
 
-export default RealEstate;
+export default React.memo(RealEstate);

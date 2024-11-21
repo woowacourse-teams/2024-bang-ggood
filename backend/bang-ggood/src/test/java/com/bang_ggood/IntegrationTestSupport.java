@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
@@ -27,10 +29,25 @@ public abstract class IntegrationTestSupport {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    private CacheManager cacheManager;
+
     @BeforeEach
     void init() {
         UserFixture.init(userRepository);
         QuestionFixture.init(categoryRepository, questionRepository);
         CustomChecklistFixture.init();
+        clearCaches();
+    }
+
+    void clearCaches() {
+        if (cacheManager != null) {
+            cacheManager.getCacheNames().forEach(name -> {
+                Cache cache = cacheManager.getCache(name);
+                if (cache != null) {
+                    cache.clear();
+                }
+            });
+        }
     }
 }

@@ -10,6 +10,7 @@ import com.bang_ggood.question.repository.HighlightRepository;
 import com.bang_ggood.question.repository.QuestionRepository;
 import com.bang_ggood.user.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -23,6 +24,7 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final HighlightRepository highlightRepository;
 
+    @Cacheable(cacheNames = "category", key = "'allCategories'")
     @Transactional(readOnly = true)
     public List<Category> findAllCategories() {
         return categoryRepository.findAll();
@@ -33,16 +35,19 @@ public class QuestionService {
         return categoryRepository.findAllCustomQuestionCategoriesByUserId(user.getId());
     }
 
+    @Cacheable(cacheNames = "question", key = "'defaultQuestions'")
     @Transactional(readOnly = true)
     public List<Question> findDefaultQuestions() {
         return questionRepository.findAllByIsDefaultTrue();
     }
 
+    @Cacheable(cacheNames = "category", key = "#categoryId")
     @Transactional(readOnly = true)
     public Category readCategory(Integer categoryId) {
         return categoryRepository.getById(categoryId);
     }
 
+    @Cacheable(cacheNames = "question", key = "#questionId")
     @Transactional(readOnly = true)
     public Question readQuestion(Integer questionId) {
         return questionRepository.getById(questionId);
@@ -76,11 +81,13 @@ public class QuestionService {
         }
     }
 
+    @Cacheable(cacheNames = "highlight", key = "#questionId")
     @Transactional(readOnly = true)
     public List<Highlight> readHighlights(Integer questionId) {
         return highlightRepository.findAllByQuestionId(questionId);
     }
 
+    @Cacheable(cacheNames = "question", key = "#category")
     @Transactional(readOnly = true)
     public List<Question> readQuestionsByCategory(Category category) {
         return questionRepository.findAllByCategoryId(category.getId());

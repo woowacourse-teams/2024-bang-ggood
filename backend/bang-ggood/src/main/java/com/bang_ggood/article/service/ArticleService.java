@@ -7,6 +7,7 @@ import com.bang_ggood.article.dto.response.ArticlesResponse;
 import com.bang_ggood.article.dto.response.ArticlesResponses;
 import com.bang_ggood.article.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -24,12 +25,14 @@ public class ArticleService {
         return article.getId();
     }
 
+    @Cacheable(cacheNames = "article", key = "#id")
     @Transactional(readOnly = true)
     public ArticleResponse readArticle(Long id) {
         Article article = articleRepository.getById(id);
         return ArticleResponse.from(article);
     }
 
+    @Cacheable(cacheNames = "article", key = "'articles'")
     @Transactional(readOnly = true)
     public ArticlesResponses readArticles() {
         List<ArticlesResponse> articles = articleRepository.findLatestArticles().stream()

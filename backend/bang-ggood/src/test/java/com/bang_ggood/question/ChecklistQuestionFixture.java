@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ChecklistQuestionFixture {
 
-    public static ChecklistQuestion CHECKLIST1_QUESTION1(Checklist checklist, Question question) {
+    public static ChecklistQuestion CHECKLIST1_QUESTION1_BAD(Checklist checklist, Question question) {
         return new ChecklistQuestion(
                 checklist,
                 question,
@@ -16,7 +16,7 @@ public class ChecklistQuestionFixture {
         );
     }
 
-    public static ChecklistQuestion CHECKLIST1_QUESTION2(Checklist checklist, Question question) {
+    public static ChecklistQuestion CHECKLIST1_QUESTION2_GOOD(Checklist checklist, Question question) {
         return new ChecklistQuestion(
                 checklist,
                 question,
@@ -41,15 +41,16 @@ public class ChecklistQuestionFixture {
     }
 
     public static List<ChecklistQuestion> CHECKLIST1_QUESTIONS(Checklist checklist, Question question1, Question question2) {
-        return List.of(CHECKLIST1_QUESTION1(checklist, question1), CHECKLIST1_QUESTION2(checklist, question2));
+        return List.of(CHECKLIST1_QUESTION1_BAD(checklist, question1), CHECKLIST1_QUESTION2_GOOD(checklist, question2));
     }
 
     public static List<ChecklistQuestion> CHECKLIST1_DUPLICATE(Checklist checklist, Question question) {
-        return List.of(CHECKLIST1_QUESTION1(checklist, question), CHECKLIST1_QUESTION1(checklist, question));
+        return List.of(CHECKLIST1_QUESTION1_BAD(checklist, question), CHECKLIST1_QUESTION1_BAD(checklist, question));
     }
 
     public static List<ChecklistQuestion> CHECKLIST1_QUESTIONS_UPDATE(Checklist checklist, Question question1, Question question2) {
-        return List.of(CHECKLIST1_QUESTION1(checklist, question1), CHECKLIST1_QUESTION2_UPDATE_ANSWER(checklist, question2));
+        return List.of(
+                CHECKLIST1_QUESTION1_BAD(checklist, question1), CHECKLIST1_QUESTION2_UPDATE_ANSWER(checklist, question2));
     }
 
     public static List<ChecklistQuestion> CHECKLIST1_QUESTIONS_DIFFERENT_LENGTH(Checklist checklist, Question question) {

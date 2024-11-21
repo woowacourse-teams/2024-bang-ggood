@@ -31,7 +31,6 @@ const RoomComparePage = () => {
 
   const { data: rooms } = useGetCompareRoomsQuery(roomsIds.roomId1, roomsIds.roomId2);
 
-  //TODO:  isLoaading 떄 스켈레톤 처리
   if (!rooms) return;
 
   const formattedOptionDetail = () => {

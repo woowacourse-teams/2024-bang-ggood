@@ -10,7 +10,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Marker 작은 텍스트 뱃지입니다.',
+        component: 'Marker는 작은 텍스트가 들어간 버튼 아이템입니다.',
       },
     },
   },
@@ -22,9 +22,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    isCircle: true,
-    text: 'A방 위치',
-    backgroundColor: theme.palette.green500,
+    isCircle: false,
+    text: '수인분당선',
+    backgroundColor: theme.palette.yellow500,
     size: 'small',
     onClick: () => alert('click'),
   },
@@ -33,8 +33,8 @@ export const Default: Story = {
 export const medium: Story = {
   args: {
     isCircle: false,
-    text: 'B',
-    backgroundColor: theme.palette.yellow500,
+    text: '2',
+    backgroundColor: theme.palette.green500,
     size: 'medium',
     onClick: () => alert('click'),
   },

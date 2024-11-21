@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { flexCenter } from '@/styles/common';
 
-type Size = 'medium' | 'small' | 'large';
+type Size = 'medium' | 'small';
 
 interface Props {
   text: string;
@@ -20,10 +20,11 @@ const Marker = ({ isCircle, text, backgroundColor, size = 'medium', onClick }: P
   );
 };
 
-const sizeMap = { small: '1.4rem', medium: '2rem', large: '2.6rem' };
+const sizeMap = { small: '1.4rem', medium: '2rem' };
 
 const S = {
   Box: styled.span<{ isCircle: boolean; size: Size; backgroundColor: string }>`
+    ${flexCenter}
     display: inline-block;
     width: ${({ isCircle, size }) => isCircle && sizeMap[size]};
     height: ${({ isCircle, size }) => isCircle && sizeMap[size]};

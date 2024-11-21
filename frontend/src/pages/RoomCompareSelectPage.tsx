@@ -6,11 +6,10 @@ import Button from '@/components/_common/Button/Button';
 import CounterBox from '@/components/_common/CounterBox/CounterBox';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
-import CompareSelectCard from '@/components/RoomCompare/CompareSelectCard';
+import CompareSelectCardList from '@/components/RoomCompare/CompareSelectCardList';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useGetChecklistList from '@/hooks/useGetChecklistList';
 import useToast from '@/hooks/useToast';
-import { flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
 
 const MIN_ROOM_COMPARE_COUNT = 2;
@@ -18,7 +17,7 @@ const MIN_ROOM_COMPARE_COUNT = 2;
 const RoomCompareSelectPage = () => {
   const navigate = useNavigate();
   const [selectedRoomIds, setSelectedRoomIds] = useState<Set<number>>(new Set());
-  const { data: checklistList } = useGetChecklistList();
+  const { data: checklistList, isLoading } = useGetChecklistList();
   const { showToast } = useToast();
 
   const userChecklists = checklistList?.filter(checklist => checklist.checklistId !== 1) || [];
@@ -29,8 +28,6 @@ const RoomCompareSelectPage = () => {
       navigate(ROUTE_PATH.checklistList);
     }
   }, []);
-
-  const isSelectedRoom = (roomId: number) => !!selectedRoomIds.has(roomId);
 
   const toggleSelectChecklist = (roomId: number) => {
     setSelectedRoomIds(prev => {
@@ -81,16 +78,12 @@ const RoomCompareSelectPage = () => {
         <S.CounterContainer>
           <CounterBox currentCount={selectedRoomIds.size} totalCount={2} />
         </S.CounterContainer>
-        <S.CardContainer>
-          {userChecklists?.map(checklist => (
-            <CompareSelectCard
-              key={checklist.checklistId}
-              isSelected={isSelectedRoom(checklist.checklistId)}
-              room={checklist}
-              toggleSelectChecklist={toggleSelectChecklist}
-            />
-          ))}
-        </S.CardContainer>
+        <CompareSelectCardList
+          userChecklists={userChecklists}
+          selectedRoomIds={selectedRoomIds}
+          toggleSelectChecklist={toggleSelectChecklist}
+          isLoading={isLoading}
+        />
       </Layout>
     </>
   );
@@ -103,10 +96,6 @@ const S = {
     height: 3rem;
     margin-top: 1rem;
     justify-content: flex-end;
-  `,
-  CardContainer: styled.div`
-    ${flexColumn}
-    gap: 1rem;
   `,
 };
 

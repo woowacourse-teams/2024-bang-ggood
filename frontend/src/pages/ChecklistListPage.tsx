@@ -27,8 +27,6 @@ const ChecklistListPage = () => {
   const handleClickMoveCustomPage = () => navigate(ROUTE_PATH.checklistQuestionSelect);
 
   const handleClickMoveQuestionSelectPage = () => {
-    //TODO: 로그인 안했을 시 거르는 로직 필요
-    //TODO: 비교할 방이 없을 경우 거르는 로직 필요
     navigate(ROUTE_PATH.roomCompareSelect);
   };
 

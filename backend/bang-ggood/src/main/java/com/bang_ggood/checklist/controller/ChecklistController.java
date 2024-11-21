@@ -77,7 +77,7 @@ public class ChecklistController {
         return ResponseEntity.ok(checklistManageService.readLikedChecklistsPreviewV1(user));
     }
 
-    @GetMapping("/v1/checklists/compare")
+    @GetMapping("/v1/checklists/comparison")
     public ResponseEntity<ChecklistCompareResponsesV1> readChecklistsCompare(@AuthRequiredPrincipal User user,
                                                                              @RequestParam("id") List<Long> checklistIds) {
         return ResponseEntity.ok(checklistManageService.compareChecklists(user, checklistIds));

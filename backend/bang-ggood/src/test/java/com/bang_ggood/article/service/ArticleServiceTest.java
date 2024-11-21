@@ -84,13 +84,13 @@ public class ArticleServiceTest extends IntegrationTestSupport {
     @Test
     void deleteArticle() {
         // given
-        articleRepository.save(ArticleFixture.ARTICLE());
+        Article article = articleRepository.save(ArticleFixture.ARTICLE());
 
         // when
-        articleService.deleteArticle(ArticleFixture.ARTICLE().getId());
+        articleService.deleteArticle(article.getId());
 
         //then
-        assertThatThrownBy(() -> articleService.readArticle(ArticleFixture.ARTICLE().getId()))
+        assertThatThrownBy(() -> articleService.readArticle(article.getId()))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.ARTICLE_NOT_FOUND.getMessage());
     }

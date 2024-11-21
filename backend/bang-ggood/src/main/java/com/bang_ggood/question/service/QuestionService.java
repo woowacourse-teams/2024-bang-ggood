@@ -1,5 +1,6 @@
 package com.bang_ggood.question.service;
 
+import com.bang_ggood.global.config.cache.CacheName;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.question.domain.Category;
@@ -16,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Set;
 
+import static com.bang_ggood.global.config.cache.CacheName.*;
+
 @RequiredArgsConstructor
 @Service
 public class QuestionService {
@@ -24,7 +27,7 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final HighlightRepository highlightRepository;
 
-    @Cacheable(cacheNames = "category", key = "'allCategories'")
+    @Cacheable(cacheNames = CATEGORY, key = "'allCategories'")
     @Transactional(readOnly = true)
     public List<Category> findAllCategories() {
         return categoryRepository.findAll();
@@ -35,19 +38,19 @@ public class QuestionService {
         return categoryRepository.findAllCustomQuestionCategoriesByUserId(user.getId());
     }
 
-    @Cacheable(cacheNames = "question", key = "'defaultQuestions'")
+    @Cacheable(cacheNames = QUESTION, key = "'defaultQuestions'")
     @Transactional(readOnly = true)
     public List<Question> findDefaultQuestions() {
         return questionRepository.findAllByIsDefaultTrue();
     }
 
-    @Cacheable(cacheNames = "category", key = "#categoryId")
+    @Cacheable(cacheNames = CATEGORY, key = "#categoryId")
     @Transactional(readOnly = true)
     public Category readCategory(Integer categoryId) {
         return categoryRepository.getById(categoryId);
     }
 
-    @Cacheable(cacheNames = "question", key = "#questionId")
+    @Cacheable(cacheNames = QUESTION, key = "#questionId")
     @Transactional(readOnly = true)
     public Question readQuestion(Integer questionId) {
         return questionRepository.getById(questionId);
@@ -81,13 +84,13 @@ public class QuestionService {
         }
     }
 
-    @Cacheable(cacheNames = "highlight", key = "#questionId")
+    @Cacheable(cacheNames = HIGHLIGHT, key = "#questionId")
     @Transactional(readOnly = true)
     public List<Highlight> readHighlights(Integer questionId) {
         return highlightRepository.findAllByQuestionId(questionId);
     }
 
-    @Cacheable(cacheNames = "question", key = "#category")
+    @Cacheable(cacheNames = QUESTION, key = "#category")
     @Transactional(readOnly = true)
     public List<Question> readQuestionsByCategory(Category category) {
         return questionRepository.findAllByCategoryId(category.getId());

@@ -150,7 +150,7 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .contentType(ContentType.JSON)
                 .headers(this.headers)
                 .queryParam("id", checklist1.getId(), checklist2.getId())  // 두 체크리스트 ID를 전달
-                .when().get("/v1/checklists/compare")
+                .when().get("/v1/checklists/comparison")
                 .then().log().all()
                 .statusCode(200);
     }

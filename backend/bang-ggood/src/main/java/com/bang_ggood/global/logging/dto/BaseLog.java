@@ -29,7 +29,7 @@ public abstract class BaseLog {
     @Override
     public String toString() {
         return "requestTime=" + requestTime +
-                ", requestUrl='" + requestUrl +
+                ", requestUrl='" + requestUrl + '\'' +
                 ", uuid='" + uuid;
     }
 }

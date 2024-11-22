@@ -28,6 +28,10 @@ public class InfoLog extends BaseLog {
 
     @Override
     public String toString() {
+        if (userId == null) {
+            return super.toString() + '\'';
+        }
+
         return super.toString() + '\'' +
                 ", userId='" + userId + '\'';
     }

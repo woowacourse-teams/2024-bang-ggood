@@ -10,7 +10,7 @@ import { mapObjUndefinedToNull, objectMap } from '../utils/typeFunctions';
 
 type NumberToString<T> = T extends number | string ? string : T;
 
-type RoomInfoStoreState = Required<Omit<RoomInfo, 'createdAt'>>;
+type RoomInfoStoreState = Required<Omit<RoomInfo, 'createdAt' | 'geolocation'>>;
 
 /** roomInfo 자료를 모두 담는 스토어입니다.
  * rawValues: roomInfo 백엔드 스키마에 해당하는 자료를 모두 담을 수 있습니다. (다만 number 타입자료형만은 string으로 저장하고있습니다.)
@@ -40,7 +40,6 @@ export const initialRoomInfo = {
   walkingTime: { rawValue: '', errorMessage: '' },
   address: { rawValue: '', errorMessage: '' },
   includedMaintenances: { rawValue: [], errorMessage: '' },
-  geolocation: { rawValue: { latitude: 0, longitude: 0 }, errorMessage: '' },
 };
 
 export type oneItem = { rawValue: string; errorMessage: string };
@@ -64,10 +63,12 @@ interface RoomInfoActions {
  *
  * 새로운 변수를 RoomInfo 추가하고 싶을 시 (비검증)
  * 1. RoomInfo 타입 바꾸기
- * 2. useRoomInfoValidated에서 ValidatedRoomInfo 부분의 Omit 내에 추가
+ * 2. roomInfoNonValidatedStore에도 추가
+ * 3. useRoomInfoValidated에서 ValidatedRoomInfo 부분의 Omit 내에 추가
  *
- * 새로운 변수를 RoomInfo 추가하고 싶을 시 (검증)
- * 1. RoomInfo 타입 바꾸기만 하면 됨
+ * 새로운 변수를 RoomInfo 추가하고 싶을 시 (검증입력)
+ * 1. RoomInfo 타입 바꾸기
+ * 2. roomInfoValidatedStore에 반영
  */
 export const roomInfoStore = createStore<RoomInfoState & { actions: RoomInfoActions }>()(
   persist(

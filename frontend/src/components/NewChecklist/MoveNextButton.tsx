@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import React from 'react';
 
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import { DefaultChecklistTabsNames } from '@/constants/tabs';
@@ -18,18 +19,16 @@ const MoveNextButton = ({ marginTop = '0', marginBottom = '0' }: Props) => {
   return (
     <S.ContentBox marginTop={marginTop} marginBottom={marginBottom}>
       <S.Button onClick={handleClickPrev}>
-        <S.Text color={theme.palette.grey400}>{'< '}</S.Text>
-        {'이전으로 이동'}
+        <S.Text color={theme.palette.yellow600}>{'< 이전으로 이동'}</S.Text>
       </S.Button>
       <S.Button onClick={handleClickNext}>
-        {'다음으로 이동'}
-        <S.Text color={theme.palette.grey400}>{' >'}</S.Text>
+        <S.Text color={theme.palette.yellow600}>{'다음으로 이동 >'}</S.Text>
       </S.Button>
     </S.ContentBox>
   );
 };
 
-export default MoveNextButton;
+export default React.memo(MoveNextButton);
 
 const S = {
   Text: styled.span<{ color: string }>`
@@ -39,13 +38,14 @@ const S = {
   Button: styled.button`
     margin: 10px 0;
     padding: 0 15px;
+    border: 0.25rem solid ${({ theme }) => theme.palette.yellow400};
 
-    background-color: ${({ theme }) => theme.palette.grey200};
+    background-color: ${({ theme }) => theme.palette.white};
 
     font-weight: ${({ theme }) => theme.text.weight.medium};
     font-size: ${({ theme }) => theme.text.size.small};
     line-height: 2.5;
-    border-radius: 10px;
+    border-radius: 3rem;
   `,
   ContentBox: styled.div<{ marginTop: string; marginBottom: string }>`
     ${flexRow}

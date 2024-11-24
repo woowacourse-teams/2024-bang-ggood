@@ -1,4 +1,5 @@
 import { roomOccupancyPeriods } from '@/constants/roomInfo';
+import { Position } from '@/types/address';
 
 export type OccupancyPeriod = (typeof roomOccupancyPeriods)[number];
 
@@ -24,6 +25,7 @@ export type RoomInfo = Partial<{
   address: string;
   buildingName: string;
   includedMaintenances: number[]; // 관리비 포함항목
+  geolocation: Position;
 }>;
 
 export type RoomInfoName = keyof RoomInfo;

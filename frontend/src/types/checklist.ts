@@ -1,4 +1,3 @@
-import { Position } from '@/types/address';
 import { AnswerType } from '@/types/answer';
 import { Category } from '@/types/category';
 import { Option } from '@/types/option';
@@ -78,7 +77,6 @@ export interface ChecklistPostForm {
   room: RoomInfo;
   options: number[];
   questions: AnswerPostForm[];
-  geolocation?: Position;
 }
 
 export type MutateType = 'add' | 'edit';

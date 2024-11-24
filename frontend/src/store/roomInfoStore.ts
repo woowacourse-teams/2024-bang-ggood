@@ -40,6 +40,7 @@ export const initialRoomInfo = {
   walkingTime: { rawValue: '', errorMessage: '' },
   address: { rawValue: '', errorMessage: '' },
   includedMaintenances: { rawValue: [], errorMessage: '' },
+  geolocation: { rawValue: { latitude: 0, longitude: 0 }, errorMessage: '' },
 };
 
 export type oneItem = { rawValue: string; errorMessage: string };
@@ -60,6 +61,13 @@ interface RoomInfoActions {
 /**
  * getParsedValues: store에 저장된 걸 백엔드에 POST하는 등 데이터가 필요할때 사용합니다.
  * getRawValues: errorMessages말고 rawValues들만을 담은 객체를 반환합니다.
+ *
+ * 새로운 변수를 RoomInfo 추가하고 싶을 시 (비검증)
+ * 1. RoomInfo 타입 바꾸기
+ * 2. useRoomInfoValidated에서 ValidatedRoomInfo 부분의 Omit 내에 추가
+ *
+ * 새로운 변수를 RoomInfo 추가하고 싶을 시 (검증)
+ * 1. RoomInfo 타입 바꾸기만 하면 됨
  */
 export const roomInfoStore = createStore<RoomInfoState & { actions: RoomInfoActions }>()(
   persist(

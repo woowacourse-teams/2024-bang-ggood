@@ -16,10 +16,9 @@ public enum ExceptionCode {
     OPTION_DUPLICATED(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR, "중복된 옵션이 존재합니다."),
 
     // Question
-    QUESTION_ID_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.QUESTION_ERROR,
-            "중복된 질문 ID가 존재해 질문을 생성할 수 없습니다."),
-    QUESTION_HIGHLIGHT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.CHECKLIST_SERVER_ERROR,
-            "잘못된 하이라이트 키워드가 존재해 질문을 생성할 수 없습니다."),
+    CATEGORY_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.QUESTION_ERROR, "카테고리 ID가 존재하지 않습니다"),
+    QUESTION_ID_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.QUESTION_ERROR, "중복된 질문 ID가 존재해 질문을 생성할 수 없습니다."),
+    QUESTION_HIGHLIGHT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.CHECKLIST_SERVER_ERROR, "잘못된 하이라이트 키워드가 존재해 질문을 생성할 수 없습니다."),
     QUESTION_INVALID(HttpStatus.BAD_REQUEST, ClientExceptionCode.QUESTION_ERROR, "잘못된 질문 ID입니다."),
     QUESTION_DUPLICATED(HttpStatus.BAD_REQUEST, ClientExceptionCode.QUESTION_ERROR, "중복된 질문이 존재합니다."),
     QUESTION_DIFFERENT(HttpStatus.BAD_REQUEST, ClientExceptionCode.QUESTION_ERROR, "수정할 질문 목록이 기존의 질문 목록과 동일하지 않습니다."),

@@ -2,11 +2,8 @@ import React, { Suspense } from 'react';
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 import FooterLayout from '@/components/_common/layout/FooterLayout';
+import MobileLayout from '@/components/_common/layout/MobileLayout';
 import { ROUTE_PATH } from '@/constants/routePath';
-import ResetPasswordPage from '@/pages/ResetPasswordPage';
-import RoomComparePage from '@/pages/RoomComparePage';
-import SignInPage from '@/pages/SignInPage';
-import SignUpPage from '@/pages/SignUpPage';
 
 const MainPage = React.lazy(() => import('@/pages/MainPage'));
 const ChecklistListPage = React.lazy(() => import('@/pages/ChecklistListPage'));
@@ -20,6 +17,12 @@ const ArticleDetailPage = React.lazy(() => import('@/pages/ArticleDetailPage'));
 const LandingPage = React.lazy(() => import('@/pages/LandingPage'));
 const NotFound = React.lazy(() => import('@/pages/NotFound'));
 const ErrorPage = React.lazy(() => import('@/pages/ErrorPage'));
+const ResetPasswordPage = React.lazy(() => import('@/pages/ResetPasswordPage'));
+const RoomComparePage = React.lazy(() => import('@/pages/RoomComparePage'));
+const SignInPage = React.lazy(() => import('@/pages/SignInPage'));
+const SignUpPage = React.lazy(() => import('@/pages/SignUpPage'));
+const AdminPage = React.lazy(() => import('@/pages/AdminPage'));
+const ArticleEditorPage = React.lazy(() => import('@/pages/ArticleEditorPage'));
 
 const router = createBrowserRouter([
   {

@@ -215,7 +215,7 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
     void calculateCategoryScore() {
         // given
         List<ChecklistQuestion> checklistQuestions = List.of(
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, QuestionFixture.QUESTION1_CATEGORY1)
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION2_GOOD(checklist, QuestionFixture.QUESTION1_CATEGORY1)
         );
         checklistQuestionService.createQuestions(checklistQuestions);
 
@@ -243,8 +243,8 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
     void calculateCategoryScore_partialGoodAnswers() {
         // given
         List<ChecklistQuestion> checklistQuestions = List.of(
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1_CATEGORY1),
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, QuestionFixture.QUESTION2_CATEGORY1)
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1_BAD(checklist, QuestionFixture.QUESTION1_CATEGORY1),
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION2_GOOD(checklist, QuestionFixture.QUESTION2_CATEGORY1)
         );
         checklistQuestionService.createQuestions(checklistQuestions);
 

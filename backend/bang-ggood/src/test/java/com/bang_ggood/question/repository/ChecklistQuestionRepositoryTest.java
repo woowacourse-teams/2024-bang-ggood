@@ -73,9 +73,9 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
     void findAllQuestionCategoriesByUserIdAndChecklistId() {
         // given
         checklistQuestionRepository.save(
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1_CATEGORY1));
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1_BAD(checklist, QuestionFixture.QUESTION1_CATEGORY1));
         checklistQuestionRepository.save(
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, QuestionFixture.QUESTION3_CATEGORY2));
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION2_GOOD(checklist, QuestionFixture.QUESTION3_CATEGORY2));
 
         // when
         List<Category> categories = checklistQuestionRepository.findAllQuestionCategoriesByUserIdAndChecklistId(
@@ -90,9 +90,9 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
     void countAnsweredQuestionsByChecklistIdAndCategoryId() {
         // given
         ChecklistQuestion cq1 = checklistQuestionRepository.save(
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1_CATEGORY1));
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1_BAD(checklist, QuestionFixture.QUESTION1_CATEGORY1));
         ChecklistQuestion cq2 = checklistQuestionRepository.save(
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, QuestionFixture.QUESTION1_CATEGORY1));
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION2_GOOD(checklist, QuestionFixture.QUESTION1_CATEGORY1));
         checklistQuestionRepository.save(cq1);
         checklistQuestionRepository.save(cq2);
 
@@ -110,9 +110,9 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
     void countAnsweredQuestionsByChecklistIdAndCategoryIdAndAnswer() {
         // given
         ChecklistQuestion cq1 = checklistQuestionRepository.save(
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION1(checklist, QuestionFixture.QUESTION1_CATEGORY1));
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1_BAD(checklist, QuestionFixture.QUESTION1_CATEGORY1));
         ChecklistQuestion cq2 = checklistQuestionRepository.save(
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION2(checklist, QuestionFixture.QUESTION1_CATEGORY1));
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION2_GOOD(checklist, QuestionFixture.QUESTION1_CATEGORY1));
         checklistQuestionRepository.save(cq1);
         checklistQuestionRepository.save(cq2);
 
@@ -136,10 +136,7 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
         // given
         Question questionCategory1 = QuestionFixture.QUESTION1_CATEGORY1;
         Question questionCategory2 = QuestionFixture.QUESTION3_CATEGORY2;
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
-        User user = userRepository.save(UserFixture.USER1());
-
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        
         ChecklistQuestion checklistQuestion1 = checklistQuestionRepository.save(
                 ChecklistQuestionFixture.CHECKLIST1_QUESTION1_BAD(checklist, questionCategory1));
         ChecklistQuestion checklistQuestion2 = checklistQuestionRepository.save(

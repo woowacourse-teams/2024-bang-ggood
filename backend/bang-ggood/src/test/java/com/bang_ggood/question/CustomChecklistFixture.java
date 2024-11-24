@@ -38,7 +38,8 @@ public class CustomChecklistFixture {
     }
 
     public static void init() {
-        CUSTOM_CHECKLIST_QUESTION_DEFAULT = List.of(new CustomChecklistQuestion(UserFixture.USER1, QuestionFixture.QUESTION1_CATEGORY1),
+        CUSTOM_CHECKLIST_QUESTION_DEFAULT = List.of(
+                new CustomChecklistQuestion(UserFixture.USER1, QuestionFixture.QUESTION1_CATEGORY1),
                 new CustomChecklistQuestion(UserFixture.USER1, QuestionFixture.QUESTION2_CATEGORY1));
     }
 }

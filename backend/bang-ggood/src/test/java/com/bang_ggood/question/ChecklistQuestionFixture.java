@@ -53,11 +53,15 @@ public class ChecklistQuestionFixture {
                 CHECKLIST1_QUESTION1_BAD(checklist, question1), CHECKLIST1_QUESTION2_UPDATE_ANSWER(checklist, question2));
     }
 
-    public static List<ChecklistQuestion> CHECKLIST1_QUESTIONS_DIFFERENT_LENGTH(Checklist checklist, Question question) {
+    public static List<ChecklistQuestion> CHECKLIST1_QUESTIONS_DIFFERENT_LENGTH(Checklist checklist,
+                                                                                Question question) {
         return List.of(CHECKLIST1_QUESTION2_UPDATE_ANSWER(checklist, question));
     }
 
-    public static List<ChecklistQuestion> CHECKLIST1_QUESTIONS_DIFFERENT_QUESTION(Checklist checklist, Question question2, Question question1) {
-        return List.of(CHECKLIST1_QUESTION2_UPDATE_ANSWER(checklist, question2), CHECKLIST1_QUESTION11(checklist, question1));
+    public static List<ChecklistQuestion> CHECKLIST1_QUESTIONS_DIFFERENT_QUESTION(Checklist checklist,
+                                                                                  Question question2,
+                                                                                  Question question1) {
+        return List.of(CHECKLIST1_QUESTION2_UPDATE_ANSWER(checklist, question2),
+                CHECKLIST1_QUESTION11(checklist, question1));
     }
 }

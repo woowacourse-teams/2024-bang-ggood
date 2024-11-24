@@ -3,12 +3,16 @@ package com.bang_ggood.checklist.service;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
+import com.bang_ggood.checklist.dto.response.ChecklistCompareResponseV1;
+import com.bang_ggood.checklist.dto.response.ChecklistCompareResponsesV1;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponseV1;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponseV1;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponseV1;
+import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.like.service.ChecklistLikeService;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.domain.MaintenanceItem;
@@ -19,6 +23,8 @@ import com.bang_ggood.option.service.ChecklistOptionService;
 import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestion;
+import com.bang_ggood.question.dto.response.CategoryScoreResponseV1;
+import com.bang_ggood.question.dto.response.CategoryScoreResponsesV1;
 import com.bang_ggood.question.dto.response.SelectedCategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.SelectedQuestionResponse;
 import com.bang_ggood.question.service.ChecklistQuestionService;
@@ -35,11 +41,14 @@ import com.bang_ggood.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class ChecklistManageService {
+
+    private static final int CHECKLIST_COMPARE_COUNT = 2;
 
     private final RoomService roomService;
     private final ChecklistService checklistService;
@@ -156,9 +165,11 @@ public class ChecklistManageService {
 
     private SelectedCategoryQuestionsResponse categorizeChecklistQuestions(Category category,
                                                                            List<ChecklistQuestion> checklistQuestions) {
-        List<SelectedQuestionResponse> selectedQuestionResponse = checklistQuestionService.categorizeChecklistQuestions(category, checklistQuestions)
+        List<SelectedQuestionResponse> selectedQuestionResponse = checklistQuestionService.categorizeChecklistQuestions(
+                        category, checklistQuestions)
                 .stream()
-                .map(checklistQuestion -> new SelectedQuestionResponse(checklistQuestion, questionService.readHighlights(checklistQuestion.getQuestionId())))
+                .map(checklistQuestion -> new SelectedQuestionResponse(checklistQuestion,
+                        questionService.readHighlights(checklistQuestion.getQuestionId())))
                 .toList();
 
         return SelectedCategoryQuestionsResponse.of(category, selectedQuestionResponse);
@@ -194,6 +205,41 @@ public class ChecklistManageService {
                 .map(this::mapToChecklistPreviewV1)
                 .toList();
         return ChecklistsPreviewResponseV1.from(responses);
+    }
+
+    @Transactional(readOnly = true)
+    public ChecklistCompareResponsesV1 compareChecklists(User user, List<Long> checklistIds) {
+        validateChecklistCompareCount(checklistIds);
+        List<ChecklistCompareResponseV1> checklistCompareResponses = checklistIds.stream()
+                .map(checklistId -> compareChecklist(user, checklistId))
+                .toList();
+        return new ChecklistCompareResponsesV1(checklistCompareResponses);
+    }
+
+    private void validateChecklistCompareCount(List<Long> checklistIds) {
+        if (checklistIds.size() != CHECKLIST_COMPARE_COUNT) {
+            throw new BangggoodException(ExceptionCode.CHECKLIST_COMPARE_INVALID_COUNT);
+        }
+    }
+
+    private ChecklistCompareResponseV1 compareChecklist(User user, Long checklistId) {
+        Checklist checklist = checklistService.readChecklist(user, checklistId);
+        List<ChecklistOption> options = checklistOptionService.readChecklistOptions(checklist);
+        List<ChecklistStation> checklistStations = checklistStationService.readChecklistStationsByChecklist(checklist);
+        List<ChecklistMaintenance> maintenances = checklistMaintenanceService.readChecklistMaintenances(checklist);
+        CategoryScoreResponsesV1 categoryScoreResponses = compareCategories(user, checklistId);
+        return ChecklistCompareResponseV1.of(checklist, options, checklistStations, maintenances,
+                categoryScoreResponses);
+    }
+
+    private CategoryScoreResponsesV1 compareCategories(User user, Long checklistId) {
+        List<CategoryScoreResponseV1> categoryScoreResponses = new ArrayList<>();
+        List<Category> categories = checklistQuestionService.findCategories(user, checklistId);
+        for (Category category : categories) {
+            Integer score = checklistQuestionService.calculateCategoryScore(checklistId, category.getId());
+            categoryScoreResponses.add(new CategoryScoreResponseV1(category.getId(), category.getName(), score));
+        }
+        return new CategoryScoreResponsesV1(categoryScoreResponses);
     }
 
     @Transactional

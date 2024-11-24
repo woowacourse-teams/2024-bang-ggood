@@ -22,4 +22,5 @@ export const ROUTE_PATH = {
   location: '/location',
   myPage: '/my-page',
   admin: '/admin',
+  articleEditor: '/isHaileyGod',
 };

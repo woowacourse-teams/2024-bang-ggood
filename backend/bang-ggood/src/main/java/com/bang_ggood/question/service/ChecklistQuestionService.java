@@ -3,6 +3,7 @@ package com.bang_ggood.question.service;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
+import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
@@ -90,6 +91,26 @@ public class ChecklistQuestionService {
         return questions.stream()
                 .filter(question -> question.isCategory(category) && question.getAnswer() != null)
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Category> findCategories(User user, Long checklistId) {
+        return checklistQuestionRepository.findAllQuestionCategoriesByUserIdAndChecklistId(user.getId(), checklistId);
+    }
+
+    @Transactional(readOnly = true)
+    public Integer calculateCategoryScore(Long checklistId, Integer categoryId) {
+        int allAnsweredQuestionCount = checklistQuestionRepository.countAnsweredQuestionsByChecklistIdAndCategoryId(
+                checklistId, categoryId);
+        int goodAnsweredQuestionCount = checklistQuestionRepository.countAnsweredQuestionsByChecklistIdAndCategoryIdAndAnswer(
+                checklistId, categoryId, Answer.GOOD);
+
+        if (allAnsweredQuestionCount == 0) {
+            return 0;
+        }
+
+        double score = ((double) goodAnsweredQuestionCount / allAnsweredQuestionCount) * 100;
+        return (int) Math.round(score);
     }
 
     @Transactional

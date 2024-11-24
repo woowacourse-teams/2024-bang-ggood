@@ -44,20 +44,23 @@ public class QuestionManageService {
     public CustomChecklistQuestionsResponse readCustomChecklistQuestions(User user) {
         List<CustomChecklistQuestion> customChecklistQuestions = checklistQuestionService.readCustomChecklistQuestions(
                 user);
-        List<CategoryQuestionsResponse> categoryQuestionsResponses = categorizeCustomChecklistQuestions(user, customChecklistQuestions).stream()
+        List<CategoryQuestionsResponse> categoryQuestionsResponses = categorizeCustomChecklistQuestions(user,
+                customChecklistQuestions).stream()
                 .filter(categoryQuestionsResponse -> !categoryQuestionsResponse.questions().isEmpty())
                 .toList();
 
         return new CustomChecklistQuestionsResponse(categoryQuestionsResponses);
     }
 
-    private List<CategoryQuestionsResponse> categorizeCustomChecklistQuestions(User user, List<CustomChecklistQuestion> customChecklistQuestions) {
+    private List<CategoryQuestionsResponse> categorizeCustomChecklistQuestions(User user,
+                                                                               List<CustomChecklistQuestion> customChecklistQuestions) {
         List<CategoryQuestionsResponse> categoryQuestionsResponses = new ArrayList<>();
 
         for (Category category : questionService.findAllCustomQuestionCategories(user)) {
             List<QuestionResponse> questionResponses = customChecklistQuestions.stream()
                     .filter(customChecklistQuestion -> customChecklistQuestion.isSameCategory(category))
-                    .map(customChecklistQuestion -> new QuestionResponse(customChecklistQuestion.getQuestion(), questionService.readHighlights(customChecklistQuestion.getQuestionId())))
+                    .map(customChecklistQuestion -> new QuestionResponse(customChecklistQuestion.getQuestion(),
+                            questionService.readHighlights(customChecklistQuestion.getQuestionId())))
                     .toList();
 
             categoryQuestionsResponses.add(CategoryQuestionsResponse.of(category, questionResponses));

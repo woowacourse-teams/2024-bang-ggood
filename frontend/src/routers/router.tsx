@@ -25,11 +25,14 @@ const AdminPage = React.lazy(() => import('@/pages/AdminPage'));
 const ArticleEditorPage = React.lazy(() => import('@/pages/ArticleEditorPage'));
 
 const router = createBrowserRouter([
+  // 모바일 페이지 레이아웃
   {
     element: (
-      <Suspense>
-        <Outlet />
-      </Suspense>
+      <MobileLayout>
+        <Suspense>
+          <Outlet />
+        </Suspense>
+      </MobileLayout>
     ),
     errorElement: <ErrorPage />,
     children: [
@@ -86,7 +89,6 @@ const router = createBrowserRouter([
         element: <SignInPage />,
         path: ROUTE_PATH.signIn,
       },
-
       {
         element: <ResetPasswordPage />,
         path: ROUTE_PATH.resetPassword,
@@ -98,6 +100,26 @@ const router = createBrowserRouter([
       {
         element: <NotFound />,
         path: '*',
+      },
+    ],
+  },
+
+  // 어드민 페이지 레이아웃
+  {
+    element: (
+      <Suspense>
+        <Outlet />
+      </Suspense>
+    ),
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        element: <AdminPage />,
+        path: ROUTE_PATH.admin,
+      },
+      {
+        element: <ArticleEditorPage />,
+        path: ROUTE_PATH.articleEditor,
       },
     ],
   },

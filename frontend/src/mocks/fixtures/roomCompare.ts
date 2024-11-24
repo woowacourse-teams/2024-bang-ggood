@@ -22,34 +22,36 @@ export const roomsForCompare: { checklists: RoomCompare[] } = {
       includedMaintenances: [2],
       createdAt: '2024-02-01T10:00:00Z',
       options: [1, 2, 3],
-      stations: nearSubway,
-      categories: [
-        {
-          categoryId: 1,
-          categoryName: '청결',
-          score: 70,
-        },
-        {
-          categoryId: 2,
-          categoryName: '편의시설',
-          score: 60,
-        },
-        {
-          categoryId: 3,
-          categoryName: '화장실',
-          score: 40,
-        },
-        {
-          categoryId: 4,
-          categoryName: '보안',
-          score: 20,
-        },
-        {
-          categoryId: 4,
-          categoryName: '보안',
-          score: null,
-        },
-      ],
+      stations: { stations: nearSubway },
+      categories: {
+        categories: [
+          {
+            categoryId: 1,
+            categoryName: '청결',
+            score: 70,
+          },
+          {
+            categoryId: 2,
+            categoryName: '편의시설',
+            score: 60,
+          },
+          {
+            categoryId: 3,
+            categoryName: '화장실',
+            score: 40,
+          },
+          {
+            categoryId: 4,
+            categoryName: '보안',
+            score: 20,
+          },
+          {
+            categoryId: 4,
+            categoryName: '보안',
+            score: null,
+          },
+        ],
+      },
       geolocation: {
         latitude: 37.5061912,
         longitude: 127.0508228,
@@ -74,34 +76,36 @@ export const roomsForCompare: { checklists: RoomCompare[] } = {
       includedMaintenances: [2],
       createdAt: '2024-02-01T10:00:00Z',
       options: [4, 5],
-      stations: nearSubway,
-      categories: [
-        {
-          categoryId: 1,
-          categoryName: '청결',
-          score: 20,
-        },
-        {
-          categoryId: 4,
-          categoryName: '보안',
-          score: null,
-        },
-        {
-          categoryId: 2,
-          categoryName: '편의시설',
-          score: 50,
-        },
-        {
-          categoryId: 3,
-          categoryName: '화장실',
-          score: 90,
-        },
-        {
-          categoryId: 4,
-          categoryName: '보안',
-          score: 95,
-        },
-      ],
+      stations: { stations: nearSubway },
+      categories: {
+        categories: [
+          {
+            categoryId: 1,
+            categoryName: '청결',
+            score: 70,
+          },
+          {
+            categoryId: 2,
+            categoryName: '편의시설',
+            score: 60,
+          },
+          {
+            categoryId: 3,
+            categoryName: '화장실',
+            score: 40,
+          },
+          {
+            categoryId: 4,
+            categoryName: '보안',
+            score: 20,
+          },
+          {
+            categoryId: 4,
+            categoryName: '보안',
+            score: null,
+          },
+        ],
+      },
       geolocation: {
         latitude: 37.5061912,
         longitude: 127.2508228,

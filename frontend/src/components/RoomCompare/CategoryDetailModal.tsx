@@ -15,7 +15,6 @@ interface Props {
   closeModal: () => void;
 }
 
-//TODO: 임시 타입
 interface CategorySectionType {
   id: SmallAnswerType;
   text: string;
@@ -30,12 +29,22 @@ const CateogorySection: CategorySectionType[] = [
 
 const CategoryDetailModal = ({ isOpen, closeModal }: Props) => {
   const [searchParams] = useSearchParams();
-  const roomId = Number(searchParams.get('roomId')) || 1;
-  const categoryId = Number(searchParams.get('categoryId')) || 1;
-  const { data: category } = useGetRoomCategoryDetailQuery({ roomId, categoryId });
+  const roomId = Number(searchParams.get('targetRoomId'));
+  const categoryId = Number(searchParams.get('categoryId'));
 
-  //TODO: 스켈레톤
-  if (!category) return;
+  if (!roomId || !categoryId) throw new Error('잘못된 접근입니다.');
+
+  const { data: category, isLoading } = useGetRoomCategoryDetailQuery({ roomId, categoryId });
+
+  if (isLoading)
+    return (
+      <Modal isOpen={isOpen} onClose={closeModal} backgroundColor={theme.palette.background}>
+        <Modal.header>카테고리 질문 상세보기</Modal.header>
+        <Modal.body>
+          <div>loading</div>
+        </Modal.body>
+      </Modal>
+    );
 
   return (
     <Modal isOpen={isOpen} onClose={closeModal} backgroundColor={theme.palette.background}>
@@ -90,7 +99,7 @@ const S = {
     display: flex;
     margin: 0.5rem 0;
 
-    font-size: 14px;
+    font-size: 1.4rem;
     align-items: baseline;
   `,
   FlexBox: styled.div`

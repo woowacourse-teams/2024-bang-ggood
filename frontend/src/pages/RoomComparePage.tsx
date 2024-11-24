@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
@@ -23,13 +23,16 @@ export interface OptionDetail {
 }
 
 const RoomComparePage = () => {
-  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const roomsIds = { ...location.state };
+  const roomId1 = Number(searchParams.get('roomId1'));
+  const roomId2 = Number(searchParams.get('roomId2'));
+
   const { isModalOpen: isOptionModalOpen, openModal: openOptionModal, closeModal: closeOptionModal } = useModal();
   const { isModalOpen: isCategoryModalOpen, openModal: openCategoryModal, closeModal: closeCategoryModal } = useModal();
 
-  const { data: rooms } = useGetCompareRoomsQuery(roomsIds.roomId1, roomsIds.roomId2);
+  if (!roomId1 || !roomId2) throw new Error('잘못된 비교입니다.');
+  const { data: rooms } = useGetCompareRoomsQuery(roomId1, roomId2);
 
   if (!rooms) return;
 
@@ -51,12 +54,16 @@ const RoomComparePage = () => {
 
   const handleOpenCategoryDetailModal = (roomId: number, categoryId: number) => {
     openCategoryModal();
-    navigate(ROUTE_PATH.roomCompare + `?roomId=${roomId}&categoryId=${categoryId}`);
+    searchParams.append('targetRoomId', String(roomId));
+    searchParams.append('categoryId', String(categoryId));
+    setSearchParams(searchParams);
   };
 
   const handleCloseategoryDetailModal = () => {
     closeCategoryModal();
-    navigate(ROUTE_PATH.roomCompare);
+    searchParams.delete('targetRoomId');
+    searchParams.delete('categoryId');
+    setSearchParams(searchParams);
   };
 
   const handleClickBackward = () => {

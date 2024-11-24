@@ -9,9 +9,10 @@ import { SubwayStation } from '@/types/subway';
 interface Props {
   station: SubwayStation;
   size?: 'medium' | 'small';
+  textType?: 'omit' | 'full';
 }
 
-const SubwayStationItem = ({ station, size }: Props) => {
+const SubwayStationItem = ({ station, size, textType = 'full' }: Props) => {
   const { stationName, stationLine, walkingTime } = station;
 
   return (
@@ -33,7 +34,9 @@ const SubwayStationItem = ({ station, size }: Props) => {
           );
         })}
       </FlexBox.Horizontal>
-      <S.TextBox>{`${stationName}까지 도보 ${walkingTime}분`}</S.TextBox>
+      <S.TextBox>
+        {textType === 'full' ? `${stationName}까지 도보 ${walkingTime}분` : `${stationName} ${walkingTime}분`}
+      </S.TextBox>
     </FlexBox.Horizontal>
   );
 };

@@ -51,12 +51,12 @@ const RoomCompareSelectPage = () => {
     }
     const rooms = [...selectedRoomIds];
 
-    navigate(ROUTE_PATH.roomCompare, {
-      state: {
-        roomId1: rooms[0],
-        roomId2: rooms[1],
-      },
+    const searchParams = new URLSearchParams({
+      roomId1: String(rooms[0]),
+      roomId2: String(rooms[1]),
     });
+
+    navigate(`${ROUTE_PATH.roomCompare}?${searchParams}`);
   };
 
   return (

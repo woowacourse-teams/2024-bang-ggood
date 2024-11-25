@@ -43,9 +43,10 @@ const AccordionHeader = ({
 export default AccordionHeader;
 
 const S = {
-  HeaderContainer: styled.div`
+  HeaderContainer: styled.button`
     display: flex;
     position: relative;
+    width: 100%;
     height: 4.5rem;
 
     background-color: ${({ theme }) => theme.palette.white};

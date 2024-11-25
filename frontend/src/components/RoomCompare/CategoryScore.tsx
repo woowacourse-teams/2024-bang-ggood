@@ -41,8 +41,8 @@ const S = {
     ${flexCenter}
     text-align: center;
   `,
-  Score: styled.span`
-    width: 4rem;
+  Score: styled.button`
+    width: 6.5rem;
     padding: 6px 8px;
     border: 1px solid ${({ theme }) => theme.palette.grey300};
 

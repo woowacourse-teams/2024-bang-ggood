@@ -13,4 +13,5 @@ export interface ArticlePostForm {
   title: string;
   summary: string;
   content: string;
+  thumbnail?: string;
 }

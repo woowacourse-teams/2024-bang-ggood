@@ -12,6 +12,7 @@ const ArticleEditorPage = () => {
   const [title, setTitle] = useState('');
   const [keyword, setKeyword] = useState('');
   const [summary, setSummary] = useState('');
+  const [thumbnail] = useState('');
   const [content, setContent] = useState('# 여기에 아티클을 작성해주세요');
 
   const { mutate: addArticle } = usePostArticleQuery();
@@ -21,6 +22,7 @@ const ArticleEditorPage = () => {
       title,
       content,
       keyword,
+      thumbnail,
       summary,
     });
   };

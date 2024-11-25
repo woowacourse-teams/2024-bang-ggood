@@ -10,7 +10,7 @@ import { mapObjUndefinedToNull, objectMap } from '../utils/typeFunctions';
 
 type NumberToString<T> = T extends number | string ? string : T;
 
-type RoomInfoStoreState = Required<Omit<RoomInfo, 'createdAt' | 'geolocation'>>;
+type RoomInfoStoreState = Required<Omit<RoomInfo, 'createdAt' | 'longitude' | 'latitude'>>;
 
 /** roomInfo 자료를 모두 담는 스토어입니다.
  * rawValues: roomInfo 백엔드 스키마에 해당하는 자료를 모두 담을 수 있습니다. (다만 number 타입자료형만은 string으로 저장하고있습니다.)
@@ -34,7 +34,6 @@ export const initialRoomInfo = {
   occupancyPeriod: { rawValue: roomOccupancyPeriods[0], errorMessage: '' },
   summary: { rawValue: '', errorMessage: '' },
   memo: { rawValue: '', errorMessage: '' },
-
   buildingName: { rawValue: '', errorMessage: '' },
   station: { rawValue: '', errorMessage: '' },
   walkingTime: { rawValue: '', errorMessage: '' },
@@ -70,6 +69,50 @@ interface RoomInfoActions {
  * 1. RoomInfo 타입 바꾸기
  * 2. roomInfoValidatedStore에 반영
  */
+const a = {
+  room: {
+    roomName: '11월 25일 8번째 방',
+    deposit: null,
+    rent: null,
+    maintenanceFee: null,
+    contractTerm: null,
+    type: '',
+    size: null,
+    floor: null,
+    floorLevel: '지상',
+    latitude: 37.47655410887376,
+    longitude: 126.93375019449813,
+    structure: null,
+    realEstate: '',
+    occupancyMonth: 11,
+    occupancyPeriod: null,
+    summary: '',
+    memo: '',
+    buildingName: '효성빌라트',
+    walkingTime: 0,
+    address: '서울특별시 관악구 서원5길 19',
+    includedMaintenances: [],
+    createdAt: '2024-11-25T10:35:31.28054',
+  },
+  options: [],
+  questions: [
+    { questionId: 1, answer: 'NONE' },
+    { questionId: 2, answer: 'NONE' },
+    { questionId: 3, answer: 'NONE' },
+    { questionId: 4, answer: 'NONE' },
+    { questionId: 5, answer: 'NONE' },
+    { questionId: 10, answer: 'NONE' },
+    { questionId: 11, answer: 'NONE' },
+    { questionId: 12, answer: 'NONE' },
+    { questionId: 13, answer: 'NONE' },
+    { questionId: 16, answer: 'NONE' },
+    { questionId: 17, answer: 'NONE' },
+    { questionId: 18, answer: 'NONE' },
+    { questionId: 21, answer: 'NONE' },
+    { questionId: 22, answer: 'NONE' },
+    { questionId: 23, answer: 'NONE' },
+  ],
+};
 export const roomInfoStore = createStore<RoomInfoState & { actions: RoomInfoActions }>()(
   persist(
     (set, get) => ({

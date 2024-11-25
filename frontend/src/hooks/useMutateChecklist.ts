@@ -38,7 +38,7 @@ const useMutateChecklist = (
   const postData = {
     room: {
       ...roomInfo,
-      geolocation: roomInfoUnvalidated.position,
+      ...roomInfoUnvalidated.position,
     },
     options: selectedOptions,
     questions: transformQuestions(checklistCategoryQnA),

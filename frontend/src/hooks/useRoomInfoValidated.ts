@@ -52,7 +52,7 @@ const numerics = [
 
 const isNumeric = new Set<keyof RoomInfo>(numerics);
 
-type ValidatedRoomInfo = Omit<RoomInfo, 'includedMaintenances' | 'createdAt' | 'geolocation'>;
+type ValidatedRoomInfo = Omit<RoomInfo, 'includedMaintenances' | 'createdAt' | 'longitude' | 'latitude'>;
 type Includes<T extends readonly string[], U extends string> = U extends T[number] ? true : false;
 
 export const parseRoomInfo = (name: keyof RoomInfo, rawValue: string) =>

@@ -27,27 +27,22 @@ const CategoryChoosePage = () => {
       const categories = await getCategory();
       setCategories(categories);
     };
+
     fetchCategory();
   }, []);
 
   const handleClick = (id: number) => {
-    setSelectedCategory(prev => {
-      if (prev.includes(id)) {
-        return prev.filter(category => category !== id);
-      } else if (prev.length < MAX_SELECT_CATEGORY_COUNT) {
-        return [...prev, id];
-      }
+    if (selectedCategory.length >= MAX_SELECT_CATEGORY_COUNT) {
       showToast({ message: TOAST_MESSAGE.MAX_SELECT });
-      return prev;
-    });
+      return;
+    }
+
+    setSelectedCategory(prev => (prev.includes(id) ? prev.filter(category => category !== id) : [...prev, id]));
   };
 
-  const handleSubmit = () => {
-    const addCategory = async () => {
-      await postCategory(selectedCategory);
-      navigate(ROUTE_PATH.checklistList);
-    };
-    addCategory();
+  const handleSubmit = async () => {
+    await postCategory(selectedCategory);
+    navigate(ROUTE_PATH.checklistList);
   };
 
   return (

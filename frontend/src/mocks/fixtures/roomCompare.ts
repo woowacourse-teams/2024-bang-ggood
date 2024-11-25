@@ -49,10 +49,8 @@ export const roomsForCompare: ChecklistCompare[] = [
         score: null,
       },
     ],
-    geolocation: {
-      latitude: 37.5061912,
-      longitude: 127.0508228,
-    },
+    latitude: 37.5061912,
+    longitude: 127.0508228,
   },
   {
     checklistId: 1,
@@ -74,6 +72,9 @@ export const roomsForCompare: ChecklistCompare[] = [
     createdAt: '2024-02-01T10:00:00Z',
     options: [1, 2, 3],
     nearSubwayStations: nearSubway,
+    latitude: 37.5061912,
+    longitude: 127.2508228,
+
     categories: [
       {
         categoryId: 1,
@@ -101,9 +102,5 @@ export const roomsForCompare: ChecklistCompare[] = [
         score: 95,
       },
     ],
-    geolocation: {
-      latitude: 37.5061912,
-      longitude: 127.2508228,
-    },
   },
 ];

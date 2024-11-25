@@ -3,6 +3,7 @@ package com.bang_ggood.global.logging;
 import com.bang_ggood.global.logging.dto.ErrorLog;
 import com.bang_ggood.global.logging.dto.InfoLog;
 import com.bang_ggood.global.logging.dto.WarnLog;
+import com.bang_ggood.user.domain.User;
 import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -22,14 +23,22 @@ public class LoggingAspect {
 
     private static final Logger log = LoggerFactory.getLogger(LoggingAspect.class);
 
-    @AfterReturning("execution(public * com.bang_ggood..*Service.*(..)))")
+    @AfterReturning("execution(public * com.bang_ggood..*Controller.*(..))")
     public void loggingInfo(JoinPoint joinPoint) {
         if (RequestContextHolder.getRequestAttributes() instanceof ServletRequestAttributes) {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            String methodName = joinPoint.getSignature().getName();
-
-            log.info(InfoLog.of(request, methodName).toString());
+            Long userId = extractUserId(joinPoint);
+            log.info(InfoLog.of(request, userId).toString());
         }
+    }
+
+    private Long extractUserId(JoinPoint joinPoint) {
+        for (Object arg : joinPoint.getArgs()) {
+            if (arg instanceof User) {
+                return ((User) arg).getId();
+            }
+        }
+        return null;
     }
 
     @Before("execution(* com.bang_ggood.global.handler.GlobalExceptionHandler.*(..)) &&"

@@ -106,7 +106,7 @@ public class ChecklistQuestionService {
                 checklistId, categoryId, Answer.GOOD);
 
         if (allAnsweredQuestionCount == 0) {
-            return 0;
+            return null;
         }
 
         double score = ((double) goodAnsweredQuestionCount / allAnsweredQuestionCount) * 100;

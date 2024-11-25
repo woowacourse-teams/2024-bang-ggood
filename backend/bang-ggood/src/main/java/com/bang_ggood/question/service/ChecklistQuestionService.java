@@ -8,6 +8,7 @@ import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
+import com.bang_ggood.question.domain.QuestionsScoreCalculator;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.user.domain.User;
@@ -102,22 +103,8 @@ public class ChecklistQuestionService {
     public Integer calculateCategoryScore(Long checklistId, Integer categoryId) {
         List<ChecklistQuestion> allAnsweredQuestion = checklistQuestionRepository.findAnsweredQuestionsByChecklistIdAndCategoryId(
                 checklistId, categoryId);
-
-        int allAnsweredQuestionCount = allAnsweredQuestion.size();
-        int goodAnsweredQuestionCount = countGoodAnsweredQuestion(allAnsweredQuestion);
-
-        if (allAnsweredQuestionCount == 0) {
-            return null;
-        }
-
-        double score = ((double) goodAnsweredQuestionCount / allAnsweredQuestionCount) * 100;
-        return (int) Math.round(score);
-    }
-
-    private int countGoodAnsweredQuestion(List<ChecklistQuestion> questions) {
-        return (int) questions.stream()
-                .filter(question -> question.matchAnswer(Answer.GOOD))
-                .count();
+        QuestionsScoreCalculator calculator = new QuestionsScoreCalculator(allAnsweredQuestion);
+        return calculator.calculateScore();
     }
 
     @Transactional

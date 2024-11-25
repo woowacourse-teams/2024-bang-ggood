@@ -85,7 +85,7 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
         assertThat(categories).hasSize(2);
     }
 
-    @DisplayName("주어진 체크리스트 ID와 카테고리 ID로 답변된 질문 수 카운트 성공")
+    @DisplayName("주어진 체크리스트 ID와 카테고리 ID로 답변된 질문 조회 성공")
     @Test
     void countAnsweredQuestionsByChecklistIdAndCategoryId() {
         // given
@@ -98,12 +98,13 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
 
         // when
         Integer categoryId = cq1.getQuestion().getCategory().getId();
-        Integer count = checklistQuestionRepository.countAnsweredQuestionsByChecklistIdAndCategoryId(checklist.getId(),
-                categoryId);
+        List<ChecklistQuestion> answeredQuestions = checklistQuestionRepository.findAnsweredQuestionsByChecklistIdAndCategoryId(
+                checklist.getId(), categoryId);
 
         // then
-        assertThat(count).isEqualTo(2);
+        assertThat(answeredQuestions.size()).isEqualTo(2);
     }
+
 
     @DisplayName("주어진 체크리스트 ID, 카테고리 ID, 특정 답변으로 질문 수 카운트 성공")
     @Test

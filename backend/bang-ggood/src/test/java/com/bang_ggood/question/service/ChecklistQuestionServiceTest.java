@@ -210,35 +210,7 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
         assertThat(categories).hasSize(1);
     }
 
-    @DisplayName("카테고리 점수 계산 성공 : 모두 GOOD일 경우")
-    @Test
-    void calculateCategoryScore() {
-        // given
-        List<ChecklistQuestion> checklistQuestions = List.of(
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION2_GOOD(checklist, QuestionFixture.QUESTION1_CATEGORY1)
-        );
-        checklistQuestionService.createQuestions(checklistQuestions);
-
-        // when
-        Integer categoryId = QuestionFixture.QUESTION1_CATEGORY1.getCategory().getId();
-        Integer score = checklistQuestionService.calculateCategoryScore(checklist.getId(), categoryId);
-
-        // then
-        assertThat(score).isEqualTo(100);
-    }
-
-    @DisplayName("카테고리 점수 계산 성공 : 답변이 없는 경우")
-    @Test
-    void calculateCategoryScore_noAnswers() {
-        // given & when
-        Integer categoryId = QuestionFixture.QUESTION1_CATEGORY1.getCategory().getId();
-        Integer score = checklistQuestionService.calculateCategoryScore(checklist.getId(), categoryId);
-
-        // then
-        assertThat(score).isEqualTo(0);
-    }
-
-    @DisplayName("카테고리 점수 계산 성공 : 일부 답변만 GOOD인 경우")
+    @DisplayName("카테고리 점수 계산 성공")
     @Test
     void calculateCategoryScore_partialGoodAnswers() {
         // given

@@ -15,4 +15,8 @@ public class ChecklistQuestions {
                 .filter(question -> question.matchAnswer(answer))
                 .toList();
     }
+
+    public int size() {
+        return questions.size();
+    }
 }

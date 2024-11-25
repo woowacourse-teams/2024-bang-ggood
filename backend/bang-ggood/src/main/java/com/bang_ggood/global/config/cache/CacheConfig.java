@@ -1,6 +1,7 @@
 package com.bang_ggood.global.config.cache;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
@@ -12,11 +13,17 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class CacheConfig {
 
+    private final int duration;
+
+    public CacheConfig(@Value("${cache.duration}") int duration) {
+        this.duration = duration;
+    }
+
     @Bean
     public Caffeine<Object, Object> caffeineConfig() {
         return Caffeine.newBuilder()
                 .maximumSize(200)
-                .expireAfterWrite(1, TimeUnit.DAYS)
+                .expireAfterWrite(duration, TimeUnit.DAYS)
                 .recordStats();
     }
 

@@ -100,10 +100,11 @@ public class ChecklistQuestionService {
 
     @Transactional(readOnly = true)
     public Integer calculateCategoryScore(Long checklistId, Integer categoryId) {
-        int allAnsweredQuestionCount = checklistQuestionRepository.countAnsweredQuestionsByChecklistIdAndCategoryId(
+        List<ChecklistQuestion> allAnsweredQuestion = checklistQuestionRepository.findAnsweredQuestionsByChecklistIdAndCategoryId(
                 checklistId, categoryId);
-        int goodAnsweredQuestionCount = checklistQuestionRepository.countAnsweredQuestionsByChecklistIdAndCategoryIdAndAnswer(
-                checklistId, categoryId, Answer.GOOD);
+
+        int allAnsweredQuestionCount = allAnsweredQuestion.size();
+        int goodAnsweredQuestionCount = countGoodAnsweredQuestion(allAnsweredQuestion);
 
         if (allAnsweredQuestionCount == 0) {
             return null;
@@ -111,6 +112,12 @@ public class ChecklistQuestionService {
 
         double score = ((double) goodAnsweredQuestionCount / allAnsweredQuestionCount) * 100;
         return (int) Math.round(score);
+    }
+
+    private int countGoodAnsweredQuestion(List<ChecklistQuestion> questions) {
+        return (int) questions.stream()
+                .filter(question -> question.matchAnswer(Answer.GOOD))
+                .count();
     }
 
     @Transactional

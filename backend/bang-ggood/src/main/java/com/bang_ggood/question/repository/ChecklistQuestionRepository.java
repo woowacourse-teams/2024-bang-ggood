@@ -25,12 +25,12 @@ public interface ChecklistQuestionRepository extends JpaRepository<ChecklistQues
     List<Category> findAllQuestionCategoriesByUserIdAndChecklistId(@Param("userId") Long userId,
                                                                    @Param("checklistId") Long checklistId);
 
-    @Query("SELECT COUNT(cq) FROM ChecklistQuestion cq "
+    @Query("SELECT cq FROM ChecklistQuestion cq "
             + "WHERE cq.checklist.id = :checklistId "
             + "AND cq.deleted = false "
             + "AND cq.answer <> 'NONE' "
             + "AND cq.question.category.id = :categoryId")
-    Integer countAnsweredQuestionsByChecklistIdAndCategoryId(@Param("checklistId") Long checklistId,
+    List<ChecklistQuestion> findAnsweredQuestionsByChecklistIdAndCategoryId(@Param("checklistId") Long checklistId,
                                                              @Param("categoryId") Integer categoryId);
 
     @Query(" SELECT COUNT(cq) FROM ChecklistQuestion cq "

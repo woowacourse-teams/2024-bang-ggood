@@ -1,9 +1,13 @@
 name: backend-prod-cd
 
+# on:
+#  pull_request:
+#    branches: [ "main" ]
+#    types: [closed]
+
 on:
   pull_request:
-    branches: [ "main" ]
-    types: [closed]
+    branches: [ "non-existent-branch" ] 
     
 jobs:
   build:

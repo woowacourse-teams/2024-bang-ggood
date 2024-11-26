@@ -8,6 +8,7 @@ import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
+import com.bang_ggood.question.domain.QuestionsScoreCalculator;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.user.domain.User;
@@ -100,17 +101,10 @@ public class ChecklistQuestionService {
 
     @Transactional(readOnly = true)
     public Integer calculateCategoryScore(Long checklistId, Integer categoryId) {
-        int allAnsweredQuestionCount = checklistQuestionRepository.countAnsweredQuestionsByChecklistIdAndCategoryId(
+        List<ChecklistQuestion> allAnsweredQuestion = checklistQuestionRepository.findAnsweredQuestionsByChecklistIdAndCategoryId(
                 checklistId, categoryId);
-        int goodAnsweredQuestionCount = checklistQuestionRepository.countAnsweredQuestionsByChecklistIdAndCategoryIdAndAnswer(
-                checklistId, categoryId, Answer.GOOD);
-
-        if (allAnsweredQuestionCount == 0) {
-            return 0;
-        }
-
-        double score = ((double) goodAnsweredQuestionCount / allAnsweredQuestionCount) * 100;
-        return (int) Math.round(score);
+        QuestionsScoreCalculator calculator = new QuestionsScoreCalculator(allAnsweredQuestion);
+        return calculator.calculateScore();
     }
 
     @Transactional

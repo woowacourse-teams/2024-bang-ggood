@@ -79,7 +79,7 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
         // given
         Room room1 = roomRepository.save(RoomFixture.ROOM_1());
         Room room2 = roomRepository.save(RoomFixture.ROOM_2());
-        User user = userRepository.save(UserFixture.USER1());
+        User user = UserFixture.USER1;
         Checklist checklist1 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room1, user));
         Checklist checklist2 = checklistRepository.save(ChecklistFixture.CHECKLIST2_USER1(room2, user));
         checklistRepository.saveAll(List.of(checklist1, checklist2));

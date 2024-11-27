@@ -5,9 +5,6 @@ import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.service.ChecklistManageService;
-import com.bang_ggood.checklist.service.ChecklistService;
-import com.bang_ggood.like.repository.ChecklistLikeRepository;
-import com.bang_ggood.question.CustomChecklistFixture;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
@@ -135,6 +132,25 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .contentType(ContentType.JSON)
                 .headers(this.headers)
                 .when().get("/checklists/like")
+                .then().log().all()
+                .statusCode(200);
+    }
+
+    @DisplayName("체크리스트 비교 성공")
+    @Test
+    void compareChecklists() {
+        Room room1 = roomRepository.save(RoomFixture.ROOM_1());
+        Room room2 = roomRepository.save(RoomFixture.ROOM_2());
+        Checklist checklist1 = checklistRepository.save(
+                ChecklistFixture.CHECKLIST1_USER1(room1, this.getAuthenticatedUser()));
+        Checklist checklist2 = checklistRepository.save(
+                ChecklistFixture.CHECKLIST2_USER1(room2, this.getAuthenticatedUser()));
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .headers(this.headers)
+                .queryParam("id", checklist1.getId(), checklist2.getId())  // 두 체크리스트 ID를 전달
+                .when().get("/v1/checklists/comparison")
                 .then().log().all()
                 .statusCode(200);
     }

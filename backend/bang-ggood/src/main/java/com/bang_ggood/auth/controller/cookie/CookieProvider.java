@@ -14,10 +14,19 @@ public class CookieProvider {
 
     private final JwtTokenProperties jwtTokenProperties;
     private final String domain;
+    private final String sameSite;
+    private final String accessTokenPath;
+    private final String refreshTokenPath;
 
     public CookieProvider(@Value("${domain}") String domain,
+                          @Value("${sameSite}") String sameSite,
+                          @Value("${access-token-path}") String accessTokenPath,
+                          @Value("${refresh-token-path}") String refreshTokenPath,
                           JwtTokenProperties jwtTokenProperties) {
         this.domain = domain;
+        this.sameSite = sameSite;
+        this.accessTokenPath = accessTokenPath;
+        this.refreshTokenPath = refreshTokenPath;
         this.jwtTokenProperties = jwtTokenProperties;
     }
 
@@ -25,45 +34,47 @@ public class CookieProvider {
         return createCookie(
                 ACCESS_TOKEN_COOKIE_NAME,
                 token,
-                jwtTokenProperties.getAccessTokenExpirationMillis());
+                jwtTokenProperties.getAccessTokenExpirationMillis(),
+                accessTokenPath);
     }
 
     public ResponseCookie createRefreshTokenCookie(String token) {
         return createCookie(
                 REFRESH_TOKEN_COOKIE_NAME,
                 token,
-                jwtTokenProperties.getRefreshTokenExpirationMillis());
+                jwtTokenProperties.getRefreshTokenExpirationMillis(),
+                refreshTokenPath);
     }
 
-    private ResponseCookie createCookie(String tokenName, String token, long expiredMillis) {
+    private ResponseCookie createCookie(String tokenName, String token, long expiredMillis, String path) {
         return ResponseCookie
                 .from(tokenName, token)
                 .domain(domain)
                 .httpOnly(true)
                 .secure(true)
-                .sameSite("None")
+                .sameSite(sameSite)
                 .maxAge(Duration.ofMillis(expiredMillis))
-                .path("/")
+                .path(path)
                 .build();
     }
 
     public ResponseCookie deleteAccessTokenCookie() {
-        return deleteCookie(ACCESS_TOKEN_COOKIE_NAME);
+        return deleteCookie(ACCESS_TOKEN_COOKIE_NAME, accessTokenPath);
     }
 
     public ResponseCookie deleteRefreshTokenCookie() {
-        return deleteCookie(REFRESH_TOKEN_COOKIE_NAME);
+        return deleteCookie(REFRESH_TOKEN_COOKIE_NAME, refreshTokenPath);
     }
 
-    private ResponseCookie deleteCookie(String tokenName) {
+    private ResponseCookie deleteCookie(String tokenName, String path) {
         return ResponseCookie
                 .from(tokenName, "")
                 .domain(domain)
                 .httpOnly(true)
                 .secure(true)
-                .sameSite("None")
+                .sameSite(sameSite)
                 .maxAge(0)
-                .path("/")
+                .path(path)
                 .build();
     }
 }

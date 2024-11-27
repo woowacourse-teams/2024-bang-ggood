@@ -3,10 +3,12 @@ package com.bang_ggood.question.service;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
+import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
+import com.bang_ggood.question.domain.QuestionsScoreCalculator;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.user.domain.User;
@@ -50,6 +52,11 @@ public class ChecklistQuestionService {
         return customChecklistQuestionRepository.findAllByUser(user);
     }
 
+    @Transactional(readOnly = true)
+    public List<ChecklistQuestion> readChecklistQuestionsByCategory(Checklist checklist, Category category) {
+        return checklistQuestionRepository.findAllByChecklistIdAndCategoryId(checklist.getId(), category.getId());
+    }
+
     @Transactional
     public void updateCustomChecklist(User user, List<Question> questions) {
         validateCustomChecklistQuestionsIsNotEmpty(questions);
@@ -85,6 +92,19 @@ public class ChecklistQuestionService {
         return questions.stream()
                 .filter(question -> question.isCategory(category) && question.getAnswer() != null)
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Category> findCategories(User user, Long checklistId) {
+        return checklistQuestionRepository.findAllQuestionCategoriesByUserIdAndChecklistId(user.getId(), checklistId);
+    }
+
+    @Transactional(readOnly = true)
+    public Integer calculateCategoryScore(Long checklistId, Integer categoryId) {
+        List<ChecklistQuestion> allAnsweredQuestion = checklistQuestionRepository.findAnsweredQuestionsByChecklistIdAndCategoryId(
+                checklistId, categoryId);
+        QuestionsScoreCalculator calculator = new QuestionsScoreCalculator(allAnsweredQuestion);
+        return calculator.calculateScore();
     }
 
     @Transactional

@@ -3,7 +3,10 @@
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
 
-    <appender name="INFO" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/home/ubuntu/logs/info-%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>INFO</level>
             <onMatch>ACCEPT</onMatch>
@@ -14,7 +17,10 @@
         </encoder>
     </appender>
 
-    <appender name="WARN" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/home/ubuntu/logs/warn-%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>WARN</level>
             <onMatch>ACCEPT</onMatch>
@@ -25,7 +31,10 @@
         </encoder>
     </appender>
 
-    <appender name="ERROR" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/home/ubuntu/logs/error-%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
             <onMatch>ACCEPT</onMatch>

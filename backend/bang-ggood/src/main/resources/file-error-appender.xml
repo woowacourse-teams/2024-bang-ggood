@@ -2,6 +2,7 @@
     <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>/home/ubuntu/logs/error-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>3</maxHistory> <!-- 3일 후 삭제 -->
         </rollingPolicy>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>

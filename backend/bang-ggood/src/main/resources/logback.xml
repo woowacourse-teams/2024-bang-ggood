@@ -3,51 +3,38 @@
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
 
-    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/home/ubuntu/logs/info-%d{yyyy-MM-dd}.log</fileNamePattern>
-        </rollingPolicy>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>INFO</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %highlight(%-5level){BLUE} [%thread] %logger{36} - %msg%n</pattern>
-        </encoder>
-    </appender>
+    <springProfile name="prod">
+        <include resource="file-info-appender.xml"/>
+        <include resource="file-warn-appender.xml"/>
+        <include resource="file-error-appender.xml"/>
 
-    <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/home/ubuntu/logs/warn-%d{yyyy-MM-dd}.log</fileNamePattern>
-        </rollingPolicy>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>WARN</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %highlight(%-5level){YELLOW} [%thread] %logger{36} - %msg%n</pattern>
-        </encoder>
-    </appender>
+        <root level="INFO">
+            <appender-ref ref="FILE_INFO"/>
+            <appender-ref ref="FILE_WARN"/>
+            <appender-ref ref="FILE_ERROR"/>
+        </root>
+    </springProfile>
 
-    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/home/ubuntu/logs/error-%d{yyyy-MM-dd}.log</fileNamePattern>
-        </rollingPolicy>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>ERROR</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %highlight(%-5level){RED} [%thread] %logger{36} - %msg%n</pattern>
-        </encoder>
-    </appender>
+    <springProfile name="dev">
+        <include resource="file-info-appender.xml"/>
+        <include resource="file-warn-appender.xml"/>
+        <include resource="file-error-appender.xml"/>
+
+        <root level="INFO">
+            <appender-ref ref="FILE_INFO"/>
+            <appender-ref ref="FILE_WARN"/>
+            <appender-ref ref="FILE_ERROR"/>
+        </root>
+    </springProfile>
+
+    <!--LOCAL & DEV-->
+    <include resource="console-info-appender.xml"/>
+    <include resource="console-warn-appender.xml"/>
+    <include resource="console-error-appender.xml"/>
 
     <root level="INFO">
-        <appender-ref ref="INFO"/>
-        <appender-ref ref="WARN"/>
-        <appender-ref ref="ERROR"/>
+        <appender-ref ref="CONSOLE_INFO"/>
+        <appender-ref ref="CONSOLE_WARN"/>
+        <appender-ref ref="CONSOLE_ERROR"/>
     </root>
 </configuration>

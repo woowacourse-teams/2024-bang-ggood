@@ -42,6 +42,7 @@ const useMutateChecklist = (
     },
     options: selectedOptions,
     questions: transformQuestions(checklistCategoryQnA),
+    geolocation: roomInfoUnvalidated.position,
   };
 
   const putData = {

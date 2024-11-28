@@ -11,7 +11,6 @@ import com.bang_ggood.user.repository.UserRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Header;
-import io.restassured.http.Headers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,21 +122,10 @@ class ArgumentResolverTest extends AcceptanceTest {
     @DisplayName("@AdminPrincipal 어노테이션 동작 성공 : Admin 유저인 경우")
     @Test
     void resolveAdminPrincipalArgument_returnUser() {
-        //given
-        User adminUser = userRepository.save(UserFixture.ADMIN_USER1());
-        String accessToken = jwtTokenProvider.createAccessToken(adminUser);
-        String refreshToken = jwtTokenProvider.createRefreshToken(adminUser);
-
-        ResponseCookie accessTokenResponseCookie = cookieProvider.createAccessTokenCookie(accessToken);
-        ResponseCookie refreshTokenCookie = cookieProvider.createRefreshTokenCookie(refreshToken);
-
-        Headers headers = new Headers(new Header(HttpHeaders.COOKIE, accessTokenResponseCookie.toString()),
-                new Header(HttpHeaders.COOKIE, refreshTokenCookie.toString()));
-
-        // when
+        // given & when
         User user = RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .headers(headers)
+                .headers(this.adminHeaders)
                 .when().get(TestController.ADMIN_PRINCIPAL_URL)
                 .then().log().all()
                 .statusCode(200)
@@ -150,21 +138,10 @@ class ArgumentResolverTest extends AcceptanceTest {
     @DisplayName("@AdminPrincipal 어노테이션 동작 성공 : Admin 유저가 아닌 경우")
     @Test
     void resolveAdminPrincipalArgument_notAdmin_exception() {
-        //given
-        User user = userRepository.save(UserFixture.USER1());
-        String accessToken = jwtTokenProvider.createAccessToken(user);
-        String refreshToken = jwtTokenProvider.createRefreshToken(user);
-
-        ResponseCookie accessTokenResponseCookie = cookieProvider.createAccessTokenCookie(accessToken);
-        ResponseCookie refreshTokenCookie = cookieProvider.createRefreshTokenCookie(refreshToken);
-
-        Headers headers = new Headers(new Header(HttpHeaders.COOKIE, accessTokenResponseCookie.toString()),
-                new Header(HttpHeaders.COOKIE, refreshTokenCookie.toString()));
-
-        // when & then
+        // given & when & then
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .headers(headers)
+                .headers(this.headers)
                 .when().get(TestController.ADMIN_PRINCIPAL_URL)
                 .then().log().all()
                 .statusCode(401)

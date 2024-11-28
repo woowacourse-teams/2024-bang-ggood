@@ -28,6 +28,10 @@ public class UserFixture {
         return new User("빵빵이", "bbang-bbang2@gmail.com", UserType.GUEST, LoginType.LOCAL);
     }
 
+    public static User ADMIN_USER1() {
+        return new User("어드민방방이", "admin-bang-bang1@gmail.com", UserType.ADMIN, LoginType.LOCAL);
+    }
+
     public static User USER1_WITH_ID() {
         return new User(1L, "방방이", "bang-bang@gmail.com");
     }

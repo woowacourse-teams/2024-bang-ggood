@@ -96,7 +96,8 @@ public enum ExceptionCode {
             "카카오 서버와 통신하는 과정 중 예상치 못한 예외가 발생했습니다."),
     OAUTH_REDIRECT_URI_MISMATCH(HttpStatus.BAD_REQUEST, ClientExceptionCode.OAUTH_SERVER_ERROR,
             "일치하는 Redirect URI가 존재하지 않습니다."),
-
+    UNAUTHORIZED_ACCESS(HttpStatus.UNAUTHORIZED, ClientExceptionCode.UNAUTH_ERROR,
+            "권한이 없는 사용자입니다. 접근이 제한되었습니다."),
 
     // Article
     ARTICLE_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.ARTICLE_NOT_FOUND, "해당 아티클이 존재하지 않습니다."),

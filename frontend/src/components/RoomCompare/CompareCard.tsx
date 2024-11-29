@@ -35,6 +35,7 @@ const CompareCard = ({ room, openOptionModal, openCategoryModal }: Props) => {
       />
       <CompareCardItem label={'계약기간'} item={<S.Item>{room.contractTerm}개월</S.Item>} />
       <CompareCardItem
+        height={10}
         label={'가까운 지하철'}
         item={<SubwayStations size={'small'} stations={room.stations.stations} textType="omit" />}
       />

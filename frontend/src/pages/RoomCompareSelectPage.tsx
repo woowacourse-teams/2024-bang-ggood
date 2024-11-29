@@ -16,9 +16,9 @@ const MIN_ROOM_COMPARE_COUNT = 2;
 
 const RoomCompareSelectPage = () => {
   const navigate = useNavigate();
+  const { showToast } = useToast();
   const [selectedRoomIds, setSelectedRoomIds] = useState<Set<number>>(new Set());
   const { data: checklistList, isLoading } = useGetChecklistList();
-  const { showToast } = useToast();
 
   const userChecklists = checklistList?.filter(checklist => checklist.checklistId !== 1) || [];
 
@@ -27,33 +27,37 @@ const RoomCompareSelectPage = () => {
       showToast({ message: '비교 기능은 작성한 체크리스트가 2개 이상일 때만 가능합니다.' });
       navigate(ROUTE_PATH.checklistList);
     }
-  }, []);
+  }, [userChecklists.length, navigate, showToast]);
 
-  const toggleSelectChecklist = (roomId: number) => {
+  const handleToggleSelectChecklist = (roomId: number) => {
     setSelectedRoomIds(prev => {
       const updatedSet = new Set(prev);
+
       if (prev.has(roomId)) {
         updatedSet.delete(roomId);
-      } else if (prev.size < 2) {
-        updatedSet.add(roomId);
-      } else {
-        showToast({ message: '방은 2개까지만 선택할 수 있습니다.', type: 'info' });
+        return updatedSet;
       }
+
+      if (prev.size >= 2) {
+        showToast({ message: '방은 2개까지만 선택할 수 있습니다.', type: 'info' });
+        return prev;
+      }
+
+      updatedSet.add(roomId);
       return updatedSet;
     });
   };
 
-  const handleClickBackward = () => navigate(ROUTE_PATH.checklistList);
-
-  const handleSelectRooms = () => {
+  const handleNavigateToCompare = () => {
     if (selectedRoomIds.size !== 2) {
-      return showToast({ message: '비교할 2개의 방을 선택해주세요.', type: 'info' });
+      showToast({ message: '비교할 2개의 방을 선택해주세요.', type: 'info' });
+      return;
     }
-    const rooms = [...selectedRoomIds];
 
+    const [roomId1, roomId2] = [...selectedRoomIds];
     const searchParams = new URLSearchParams({
-      roomId1: String(rooms[0]),
-      roomId2: String(rooms[1]),
+      roomId1: String(roomId1),
+      roomId2: String(roomId2),
     });
 
     navigate(`${ROUTE_PATH.roomCompare}?${searchParams}`);
@@ -62,16 +66,10 @@ const RoomCompareSelectPage = () => {
   return (
     <>
       <Header
-        left={<Header.Backward onClick={handleClickBackward} />}
+        left={<Header.Backward onClick={() => navigate(ROUTE_PATH.checklistList)} />}
         center={<Header.Text>비교할 방 선택하기</Header.Text>}
         right={
-          <Button
-            color={'primary'}
-            label={'선택'}
-            isSquare={true}
-            onClick={handleSelectRooms}
-            id="checklistEditButton"
-          />
+          <Button color="primary" label="선택" isSquare onClick={handleNavigateToCompare} id="checklistEditButton" />
         }
       />
       <Layout bgColor={theme.palette.background} withHeader>
@@ -81,7 +79,7 @@ const RoomCompareSelectPage = () => {
         <CompareSelectCardList
           userChecklists={userChecklists}
           selectedRoomIds={selectedRoomIds}
-          toggleSelectChecklist={toggleSelectChecklist}
+          toggleSelectChecklist={handleToggleSelectChecklist}
           isLoading={isLoading}
         />
       </Layout>

@@ -15,7 +15,7 @@ interface Props {
 
 const ChecklistPreviewCard = ({ index, checklist }: Props) => {
   const navigate = useNavigate();
-  const colorList = ['green', 'blue', 'red'];
+  const colorList = ['green', 'blue', 'yellow'];
   const { color200, color500 } = getSeqColor(index, colorList);
 
   const { checklistId, station, roomName, deposit, rent, address } = checklist;

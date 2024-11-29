@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Memo } from '@/assets/assets';
 import { boxShadow, title3 } from '@/styles/common';
 
-interface Props extends React.HTMLAttributes<HTMLButtonElement> {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   onClick?: () => void;
 }
 

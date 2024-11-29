@@ -8,7 +8,7 @@ import theme from '@/styles/theme';
 type Size = 'small' | 'medium' | 'extends';
 type Color = 'yellow' | 'green' | 'subGreen';
 
-interface Props extends React.HTMLAttributes<HTMLButtonElement> {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   onClick: () => void;
   size?: Size;

@@ -31,9 +31,17 @@ const ArticleContent = () => {
         <S.Title>{article?.title}</S.Title>
         <MarkdownPreview
           source={article?.content}
-          style={{ fontSize: '1.6rem', lineHeight: '2.6rem', fontFamily: 'SUITE Variable' }}
-          wrapperElement={{
-            'data-color-mode': 'light',
+          style={{ padding: 10 }}
+          rehypeRewrite={(node, index, parent) => {
+            if (
+              node.type === 'element' &&
+              node.tagName === 'a' &&
+              parent &&
+              parent.type === 'element' &&
+              /^h(1|2|3|4|5|6)/.test(parent.tagName)
+            ) {
+              parent.children = parent.children.slice(1);
+            }
           }}
         />
       </S.Wrapper>

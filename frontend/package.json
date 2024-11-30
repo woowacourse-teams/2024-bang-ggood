@@ -36,6 +36,7 @@
     "@emotion/styled": "^11.11.5",
     "@sentry/react": "^8.22.0",
     "@tanstack/react-query": "^5.51.15",
+    "@uiw/react-markdown-editor": "^6.1.2",
     "@uiw/react-markdown-preview": "^5.1.2",
     "babel-loader": "^9.2.1",
     "init": "^0.1.2",

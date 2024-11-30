@@ -124,7 +124,7 @@ const sizeStyles = {
     min-width: 7rem;
   `,
   small: css`
-    padding: 1rem 1.6rem;
+    padding: 0.8rem 1.2rem;
     ${title3}
   `,
   medium: css`

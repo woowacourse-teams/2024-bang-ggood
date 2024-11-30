@@ -5,6 +5,7 @@ import FooterLayout from '@/components/_common/layout/FooterLayout';
 import { ROUTE_PATH } from '@/constants/routePath';
 import ResetPasswordPage from '@/pages/ResetPasswordPage';
 import RoomComparePage from '@/pages/RoomComparePage';
+import RoomCompareSelectPage from '@/pages/RoomCompareSelectPage';
 import SignInPage from '@/pages/SignInPage';
 import SignUpPage from '@/pages/SignUpPage';
 
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
       {
         element: <RoomComparePage />,
         path: ROUTE_PATH.roomCompare,
+      },
+      {
+        element: <RoomCompareSelectPage />,
+        path: ROUTE_PATH.roomCompareSelect,
       },
       {
         element: <NotFound />,

@@ -46,7 +46,7 @@ const AddressMap = ({ location }: { location: string }) => {
     if (location) {
       loadExternalScriptWithCallback('kakaoMap', initializeMap);
     }
-  }, [location]);
+  }, [createMarker, location]);
 
   const handleOpenKakaoMap = () => {
     window.location.href = `https://map.kakao.com/?q=${location}`;

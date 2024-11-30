@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { FunctionComponent, SVGProps } from 'react';
+import { ComponentProps, FunctionComponent, SVGProps } from 'react';
 
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import { flexCenter, title3, title4 } from '@/styles/common';
@@ -10,7 +10,7 @@ type ButtonSize = 'xSmall' | 'small' | 'medium' | 'full';
 type ColorOption = 'light' | 'dark' | 'primary' | 'disabled';
 type ButtonType = 'button' | 'submit' | 'reset';
 
-interface Props extends React.HTMLAttributes<HTMLButtonElement> {
+interface Props extends ComponentProps<'button'> {
   size?: ButtonSize;
   color?: ColorOption;
   label: string;

@@ -14,6 +14,7 @@ export const ROUTE_PATH = {
   checklistOne: (id: number) => `/checklist/${id}`,
   /*compare*/
   roomCompare: '/room/compare',
+  roomCompareSelect: '/room/compare/select',
   /* article */
   articleList: '/article',
   articleId: '/article/:articleId',

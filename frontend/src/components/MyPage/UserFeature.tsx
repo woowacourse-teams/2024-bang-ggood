@@ -14,6 +14,7 @@ const UserFeature = () => {
   useUserQuery();
 
   const queryClient = useQueryClient();
+
   const checklist = queryClient.getQueryData([QUERY_KEYS.CHECKLIST_LIST]);
 
   const { isModalOpen: isLogoutModalOpen, openModal: openLogoutModal, closeModal: closeLogoutModal } = useModal();

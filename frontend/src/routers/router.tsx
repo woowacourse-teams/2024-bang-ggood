@@ -19,6 +19,7 @@ const NotFound = React.lazy(() => import('@/pages/NotFound'));
 const ErrorPage = React.lazy(() => import('@/pages/ErrorPage'));
 const ResetPasswordPage = React.lazy(() => import('@/pages/ResetPasswordPage'));
 const RoomComparePage = React.lazy(() => import('@/pages/RoomComparePage'));
+const RoomCompareSelectPage = React.lazy(() => import('@/pages/RoomCompareSelectPage'));
 const SignInPage = React.lazy(() => import('@/pages/SignInPage'));
 const SignUpPage = React.lazy(() => import('@/pages/SignUpPage'));
 const AdminPage = React.lazy(() => import('@/pages/AdminPage'));
@@ -96,6 +97,10 @@ const router = createBrowserRouter([
       {
         element: <RoomComparePage />,
         path: ROUTE_PATH.roomCompare,
+      },
+      {
+        element: <RoomCompareSelectPage />,
+        path: ROUTE_PATH.roomCompareSelect,
       },
       {
         element: <NotFound />,

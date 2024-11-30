@@ -1,21 +1,25 @@
 import styled from '@emotion/styled';
 
-import { PencilIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import { boxShadow, flexCenter, flexRow } from '@/styles/common';
 
 interface Props {
   onClick?: () => void;
+  title: string;
+  buttonColor: string;
+  buttonText: string;
+  Icon: React.ReactElement;
+  buttonDetailText: string;
 }
 
-const CustomBanner = ({ onClick }: Props) => {
+const CustomBanner = ({ onClick, Icon, title, buttonColor, buttonText, buttonDetailText }: Props) => {
   return (
     <S.Banner onClick={onClick}>
       <S.Wrapper>
-        <PencilIcon width={30} height={30} aria-hidden="true" />
-        <S.Title>체크리스트 질문 템플릿</S.Title>
+        {Icon}
+        <S.Title>{title}</S.Title>
       </S.Wrapper>
-      <S.Button aria-label="체크리스트 질문 템플릿을 편집하려면 이 버튼을 누르세요." label={'수정하기'} />
+      <S.Button aria-label={buttonDetailText} label={buttonText} buttonColor={buttonColor} />
     </S.Banner>
   );
 };
@@ -47,10 +51,10 @@ const S = {
   Title: styled.span`
     ${flexCenter}
   `,
-  Button: styled(Button)`
+  Button: styled(Button)<{ buttonColor: string }>`
     padding: 0.6rem 1rem;
 
-    background-color: ${({ theme }) => theme.palette.green500};
+    background-color: ${({ buttonColor }) => buttonColor};
 
     color: ${({ theme }) => theme.palette.white};
     border-radius: 0.8rem;

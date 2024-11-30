@@ -69,7 +69,6 @@ const RealTimeMap = ({
 
         updateAddressFromCoords(latlng);
       });
-
       /* 실시간 위치 찾기 */
       const successGeolocation = (position: GeolocationPosition) => {
         const latitude = position.coords.latitude;

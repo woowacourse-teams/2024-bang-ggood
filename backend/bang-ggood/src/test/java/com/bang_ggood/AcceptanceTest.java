@@ -24,6 +24,7 @@ import org.springframework.test.context.jdbc.Sql;
 public abstract class AcceptanceTest extends IntegrationTestSupport {
 
     protected Headers headers;
+    protected Headers adminHeaders;
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
     @Autowired
@@ -46,12 +47,19 @@ public abstract class AcceptanceTest extends IntegrationTestSupport {
 
     private void setResponseCookie() {
         authenticatedUser = userRepository.save(UserFixture.USER1);
-        String accessToken = jwtTokenProvider.createAccessToken(authenticatedUser);
-        String refreshToken = jwtTokenProvider.createRefreshToken(authenticatedUser);
+        headers = createHeaders(authenticatedUser);
+        adminHeaders = createHeaders(UserFixture.ADMIN_USER1());
+    }
+
+    private Headers createHeaders(User user) {
+        User createdUser = userRepository.save(user);
+        String accessToken = jwtTokenProvider.createAccessToken(createdUser);
+        String refreshToken = jwtTokenProvider.createRefreshToken(createdUser);
+
         ResponseCookie accessTokenResponseCookie = cookieProvider.createAccessTokenCookie(accessToken);
         ResponseCookie refreshTokenCookie = cookieProvider.createRefreshTokenCookie(refreshToken);
 
-        headers = new Headers(new Header(HttpHeaders.COOKIE, accessTokenResponseCookie.toString()),
+        return new Headers(new Header(HttpHeaders.COOKIE, accessTokenResponseCookie.toString()),
                 new Header(HttpHeaders.COOKIE, refreshTokenCookie.toString()));
     }
 

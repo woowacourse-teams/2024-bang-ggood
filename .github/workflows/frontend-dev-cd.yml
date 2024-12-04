@@ -1,9 +1,10 @@
-name: Deploy Development to S3 and invalidate CloudFront Cache
-
+name: frontend-dev-cd
 on:
   push:
     branches:
       - dev-fe
+    paths:
+      - "frontend/**"
 
 jobs:
   build:

@@ -99,6 +99,7 @@ export const roomInfoStore = createStore<RoomInfoState & { actions: RoomInfoActi
     }),
     {
       name: 'roomInfo',
+      getStorage: () => sessionStorage,
       partialize: state => {
         const { actions: _, ...roomInfo } = state;
         return { ...roomInfo };

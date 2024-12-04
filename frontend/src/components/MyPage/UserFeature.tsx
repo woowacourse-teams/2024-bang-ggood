@@ -8,12 +8,12 @@ import LogoutModal from '@/components/MyPage/LogoutModal';
 import { QUERY_KEYS } from '@/constants/queryKeys';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { VOC_URL } from '@/constants/VoC';
+import useUserQuery from '@/hooks/query/useUserQuery';
 import useModal from '@/hooks/useModal';
-import useUserStore from '@/store/useUserStore';
 import { boxShadowSpread, flexColumn, flexRow, flexSpaceBetween, title4 } from '@/styles/common';
 
 const UserFeature = () => {
-  const { user } = useUserStore();
+  const { data: user } = useUserQuery();
 
   const navigate = useNavigate();
 
@@ -42,7 +42,7 @@ const UserFeature = () => {
           </>
         </S.LabelContainer>
 
-        {user.userType !== 'ADMIN' && (
+        {user?.userType !== 'ADMIN' && (
           <S.Section>
             <S.LabelContainer>방끗이 도움되었나요? 한마디 남겨주세요!</S.LabelContainer>
             <S.Button tabIndex={1} onClick={handleMoveVoc}>
@@ -52,7 +52,7 @@ const UserFeature = () => {
           </S.Section>
         )}
 
-        {user.userType === 'ADMIN' && (
+        {user?.userType === 'ADMIN' && (
           <S.Section>
             <S.Button tabIndex={1} onClick={() => navigate(ROUTE_PATH.admin)}>
               어드민 페이지 바로가기

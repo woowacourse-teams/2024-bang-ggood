@@ -6,21 +6,28 @@ import { User } from '@/types/user';
 interface UserState {
   user: User;
   setUser: (user: User) => void;
+  reset: () => void;
 }
+
+const initialUser: User = {
+  userId: 0,
+  userName: '',
+  userEmail: '',
+  createdAt: '',
+  userType: 'GUEST',
+};
 
 const useUserStore = create<UserState>()(
   persist(
     set => ({
-      user: {
-        userId: 0,
-        userName: '',
-        userEmail: '',
-        createdAt: '',
-        userType: 'GUEST',
-      },
+      user: { ...initialUser },
 
       setUser: (newUser: User) => {
         set(() => ({ user: { ...newUser } }));
+      },
+
+      reset: () => {
+        set(() => ({ user: { ...initialUser } }));
       },
     }),
     {

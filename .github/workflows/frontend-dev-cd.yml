@@ -10,24 +10,39 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.x]
-
     steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
       - name: Checkout Source Code
         uses: actions/checkout@v3
 
-      - name: Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
+      - name: Generate .env File
+        working-directory: ./frontend
+        run: |
+          echo "API_ENV=${{ secrets.API_ENV }}" 
+          echo "API_URL=${{ secrets.API_URL }}" 
+          echo "REDIRECT_URI=${{ secrets.REDIRECT_URI }}" 
+          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" 
+          echo "GA_ID=${{ secrets.GA_ID }}" 
+          echo "KAKAO_MAP_KEY=${{ secrets.KAKAO_MAP_KEY }}" 
+          echo "SENTRY_DSN_TOKEN=${{ secrets.SENTRY_DSN_TOKEN }}" 
+          echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" 
+          echo "SENTRY_ORG=${{ secrets.SENTRY_ORG }}" 
+          echo "SENTRY_PROJECT=${{ secrets.SENTRY_PROJECT }}" 
+          echo "ANALYZE_BUNDLE=${{ secrets.ANALYZE_BUNDLE }}" 
+          echo "CI=${{ secrets.CI }}"
+          echo "AMPLITUDE_API_KEY=${{ secrets.AMPLITUDE_API_KEY }}"
 
-      - run: npm ci
+      - name: Install Dependencies
+        working-directory: ./frontend
+        run: npm install
 
-      - name: Build Production
-        run: CI=false npm run build --if-present
+      - name: Build for Dev
+        working-directory: ./frontend
+        run: npm run build:dev-fe
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -37,8 +52,9 @@ jobs:
           aws-region: ap-northeast-2
 
       - name: Deploy to S3
+        working-directory: ./frontend/dist
         run: |
-          aws s3 sync dist/ s3://dev-fe.bang-ggood.com --delete
+          aws s3 sync . s3://${{secrets.DEV_S3_BUCKET}} --delete
 
       - name: Invalidate CloudFront Cache
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DEV_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"

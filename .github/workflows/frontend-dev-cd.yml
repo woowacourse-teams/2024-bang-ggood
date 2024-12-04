@@ -3,7 +3,7 @@ name: Deploy Development to S3 and invalidate CloudFront Cache
 on:
   push:
     branches:
-      - dev-fe #dev-fe가 trigger 브랜치
+      - dev-fe
 
 jobs:
   build:
@@ -14,36 +14,30 @@ jobs:
         node-version: [16.x]
 
     steps:
-      # 1. 소스코드 체크아웃
       - name: Checkout Source Code
         uses: actions/checkout@v3
 
-      # 2. Node.js 설치 (필요시)
       - name: Node.js
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
 
-      # 3. 빌드
-      - run: npm --force ci
+      - run: npm ci
 
       - name: Build Production
         run: CI=false npm run build --if-present
 
-      # 4. AWS Credentials 설정
        - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2 # 서울 리전
+          aws-region: ap-northeast-2 
 
-      # 5. S3에 파일 업로드
       - name: Deploy to S3
         run: |
-          aws s3 sync build/ s3://dev-fe.bang-ggood.com --delete
+          aws s3 sync dist/ s3://dev-fe.bang-ggood.com --delete
 
-      # 6. CloudFront 캐시 무효화
       - name: Invalidate CloudFront Cache
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DEV_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"

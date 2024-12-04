@@ -20,7 +20,7 @@ const usePostSignInQuery = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.AUTH] });
 
-      const initAmplitudeUser = async () => {
+      const initUser = async () => {
         const result = await getUserInfo();
         setUser(result);
 
@@ -28,8 +28,7 @@ const usePostSignInQuery = () => {
         showToast({ message: `${user?.userName}님, 환영합니다.`, type: 'confirm' });
       };
 
-      initAmplitudeUser();
-
+      initUser();
       navigate(ROUTE_PATH.home);
     },
   });

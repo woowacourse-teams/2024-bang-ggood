@@ -17,16 +17,6 @@ export const baseStyle = css`
 
     font-size: ${theme.text.size.small};
 
-    max-width: 60rem;
-    min-height: 100dvh;
-
-    margin: 0 auto;
-    box-sizing: border-box;
-
-    border-left: 0.1rem solid ${theme.palette.grey200};
-    border-right: 0.1rem solid ${theme.palette.grey200};
-    box-shadow: 0 0 2rem ${theme.palette.grey100};
-
     @supports (-webkit-touch-callout: none) {
       min-height: -webkit-fill-available;
     }

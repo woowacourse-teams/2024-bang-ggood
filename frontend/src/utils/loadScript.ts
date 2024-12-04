@@ -1,8 +1,11 @@
 type ScriptType = 'kakaoMap' | 'daumAddress';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
+interface ScriptInfo {
+  url: string;
+  loaded: boolean;
+}
 
-const scripts = {
+const scripts: Record<ScriptType, ScriptInfo> = {
   kakaoMap: {
     url: `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.KAKAO_MAP_KEY}&autoload=false&libraries=services`,
     loaded: false,

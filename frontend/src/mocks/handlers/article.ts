@@ -13,7 +13,11 @@ export const ArticleHandlers = [
     return HttpResponse.json(article, { status: 200 });
   }),
 
-  http.get(BASE_URL + ENDPOINT.ARTICLE_ID(2), () => {
+  http.get(BASE_URL + ENDPOINT.ARTICLE_ID(3), () => {
     return HttpResponse.json(article, { status: 404 });
+  }),
+
+  http.post(BASE_URL + ENDPOINT.ARTICLES, () => {
+    return HttpResponse.json({}, { status: 200 });
   }),
 ];

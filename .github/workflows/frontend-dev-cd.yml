@@ -2,7 +2,7 @@ name: frontend-dev-cd
 on:
   pull_request:
     branches:
-      - feat/**
+      - dev-fe
     paths:
       - "frontend/**"
   push:
@@ -15,6 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    environment: frontend-development
     steps:
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -27,19 +28,19 @@ jobs:
       - name: Generate .env File
         working-directory: ./frontend
         run: |
-          echo "API_ENV=${{ secrets.API_ENV }}" 
-          echo "API_URL=${{ secrets.API_URL }}" 
-          echo "REDIRECT_URI=${{ secrets.REDIRECT_URI }}" 
-          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" 
-          echo "GA_ID=${{ secrets.GA_ID }}" 
-          echo "KAKAO_MAP_KEY=${{ secrets.KAKAO_MAP_KEY }}" 
-          echo "SENTRY_DSN_TOKEN=${{ secrets.SENTRY_DSN_TOKEN }}" 
-          echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" 
-          echo "SENTRY_ORG=${{ secrets.SENTRY_ORG }}" 
-          echo "SENTRY_PROJECT=${{ secrets.SENTRY_PROJECT }}" 
-          echo "ANALYZE_BUNDLE=${{ secrets.ANALYZE_BUNDLE }}" 
-          echo "CI=${{ secrets.CI }}"
-          echo "AMPLITUDE_API_KEY=${{ secrets.AMPLITUDE_API_KEY }}"
+          echo "API_ENV=${{ secrets.API_ENV }}" >> .env
+          echo "API_URL=${{ secrets.API_URL }}" >> .env
+          echo "REDIRECT_URI=${{ secrets.REDIRECT_URI }}" >> .env 
+          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> .env 
+          echo "GA_ID=${{ secrets.GA_ID }}" >> .env 
+          echo "KAKAO_MAP_KEY=${{ secrets.KAKAO_MAP_KEY }}" >> .env 
+          echo "SENTRY_DSN_TOKEN=${{ secrets.SENTRY_DSN_TOKEN }}" >> .env 
+          echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> .env 
+          echo "SENTRY_ORG=${{ secrets.SENTRY_ORG }}" >> .env 
+          echo "SENTRY_PROJECT=${{ secrets.SENTRY_PROJECT }}" >> .env 
+          echo "ANALYZE_BUNDLE=${{ secrets.ANALYZE_BUNDLE }}" >> .env 
+          echo "CI=${{ secrets.CI }}" >> .env
+          echo "AMPLITUDE_API_KEY=${{ secrets.AMPLITUDE_API_KEY }}" >> .env
 
       - name: Install Dependencies
         working-directory: ./frontend

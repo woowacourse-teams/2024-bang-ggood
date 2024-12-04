@@ -1,10 +1,5 @@
 name: frontend-dev-cd
 on:
-  pull_request:
-    branches:
-      - dev-fe
-    paths:
-      - "frontend/**"
   push:
     branches:
       - dev-fe
@@ -32,7 +27,6 @@ jobs:
           echo "API_URL=${{ secrets.API_URL }}" >> .env
           echo "REDIRECT_URI=${{ secrets.REDIRECT_URI }}" >> .env 
           echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> .env 
-          echo "GA_ID=${{ secrets.GA_ID }}" >> .env 
           echo "KAKAO_MAP_KEY=${{ secrets.KAKAO_MAP_KEY }}" >> .env 
           echo "SENTRY_DSN_TOKEN=${{ secrets.SENTRY_DSN_TOKEN }}" >> .env 
           echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> .env 
@@ -60,7 +54,7 @@ jobs:
       - name: Deploy to S3
         working-directory: ./frontend/dist
         run: |
-          aws s3 sync . s3://${{secrets.DEV_S3_BUCKET}} --delete
+          aws s3 sync . s3://${{secrets.S3_BUCKET}} --delete
 
       - name: Invalidate CloudFront Cache
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DEV_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"

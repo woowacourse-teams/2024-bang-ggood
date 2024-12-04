@@ -1,5 +1,10 @@
 name: frontend-dev-cd
 on:
+  pull_request:
+    branches:
+      - feat/**
+    paths:
+      - "frontend/**"
   push:
     branches:
       - dev-fe

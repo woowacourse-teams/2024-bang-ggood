@@ -15,7 +15,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18.x
 
       - name: Checkout Source Code
         uses: actions/checkout@v3
@@ -38,11 +38,11 @@ jobs:
 
       - name: Install Dependencies
         working-directory: ./frontend
-        run: npm install
+        run: yarn install
 
       - name: Build for Prod
         working-directory: ./frontend
-        run: npm run build
+        run: yarn run build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2

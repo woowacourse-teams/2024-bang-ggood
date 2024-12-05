@@ -27,7 +27,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* 전체 화면 높이에 맞춰 정렬 */
+    height: 100vh;
 
     background-color: ${({ theme }) => theme.palette.white};
   `,

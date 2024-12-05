@@ -30,10 +30,10 @@ import com.bang_ggood.question.dto.response.SelectedQuestionResponse;
 import com.bang_ggood.question.service.ChecklistQuestionService;
 import com.bang_ggood.question.service.QuestionService;
 import com.bang_ggood.room.domain.Room;
+import com.bang_ggood.room.dto.request.RoomRequest;
 import com.bang_ggood.room.dto.response.SelectedRoomResponse;
 import com.bang_ggood.room.service.RoomService;
 import com.bang_ggood.station.domain.ChecklistStation;
-import com.bang_ggood.station.dto.request.ChecklistStationRequest;
 import com.bang_ggood.station.dto.response.SubwayStationResponse;
 import com.bang_ggood.station.dto.response.SubwayStationResponses;
 import com.bang_ggood.station.service.ChecklistStationService;
@@ -78,7 +78,7 @@ public class ChecklistManageService {
         createChecklistOptions(checklistRequest, checklist);
         createChecklistQuestions(checklistRequest, checklist);
         createChecklistMaintenances(checklistRequest, checklist);
-        createChecklistStation(checklistRequestV1, checklist);
+        createChecklistStation(checklistRequestV1.room(), checklist);
         return checklist.getId();
     }
 
@@ -108,9 +108,8 @@ public class ChecklistManageService {
         checklistMaintenanceService.createMaintenances(checklistMaintenances);
     }
 
-    private void createChecklistStation(ChecklistRequestV1 checklistRequestV1, Checklist checklist) {
-        ChecklistStationRequest geolocation = checklistRequestV1.geolocation();
-        checklistStationService.createChecklistStations(checklist, geolocation.latitude(), geolocation.longitude());
+    private void createChecklistStation(RoomRequest roomRequest, Checklist checklist) {
+        checklistStationService.createChecklistStations(checklist, roomRequest.latitude(), roomRequest.longitude());
     }
 
     @Transactional(readOnly = true)
@@ -318,7 +317,7 @@ public class ChecklistManageService {
         updateChecklistOptions(checklistRequest, checklist);
         updateChecklistQuestions(checklistRequest, checklist);
         updateChecklistMaintenances(checklistRequest, checklist);
-        updateChecklistStations(checklistRequestV1, checklist);
+        updateChecklistStations(checklistRequestV1.room(), checklist);
     }
 
     private void updateChecklistOptions(ChecklistRequest checklistRequest, Checklist checklist) {
@@ -349,9 +348,9 @@ public class ChecklistManageService {
         checklistMaintenanceService.updateMaintenances(checklist.getId(), checklistMaintenances);
     }
 
-    private void updateChecklistStations(ChecklistRequestV1 checklistRequestV1, Checklist checklist) {
-        double latitude = checklistRequestV1.geolocation().latitude();
-        double longitude = checklistRequestV1.geolocation().longitude();
+    private void updateChecklistStations(RoomRequest roomRequest, Checklist checklist) {
+        double latitude = roomRequest.latitude();
+        double longitude = roomRequest.longitude();
         checklistStationService.updateChecklistStation(checklist, latitude, longitude);
     }
 }

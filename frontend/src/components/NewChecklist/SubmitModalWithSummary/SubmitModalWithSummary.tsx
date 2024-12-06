@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { ChangeEvent } from 'react';
 
 import Button from '@/components/_common/Button/Button';
 import CounterBox from '@/components/_common/CounterBox/CounterBox';
@@ -53,6 +54,10 @@ const SubmitModalWithSummary = ({
     onError();
   };
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length <= 15) summary.onChange(e);
+  };
+
   return (
     <Modal isOpen={isModalOpen} onClose={modalClose}>
       <Modal.header>
@@ -63,7 +68,7 @@ const SubmitModalWithSummary = ({
           <FormField.Input
             placeholder="바쁘시면 스킵도 괜찮아요!"
             autoFocus
-            onChange={summary.onChange}
+            onChange={handleChange}
             name="summary"
             value={summary.rawValue}
             maxLength={15}

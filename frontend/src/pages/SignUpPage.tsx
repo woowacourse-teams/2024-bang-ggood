@@ -2,12 +2,12 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { postSignUp } from '@/apis/user';
 import { BangBangIcon, BangGgoodTextIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
 import { ROUTE_PATH } from '@/constants/routePath';
+import usePostSignUpQuery from '@/hooks/query/usePostSignUpQuery';
 import useToast from '@/hooks/useToast';
 import useValidateInput from '@/hooks/useValidateInput';
 import { flexCenter, title3, title4 } from '@/styles/common';
@@ -60,16 +60,11 @@ const SignUpPage = () => {
 
   const disabled = !isEmailValidated || !isNameValidated || !isPasswordValidated || !isPasswordConfirmValidated;
 
+  const mutation = usePostSignUpQuery();
+  if (mutation.isSuccess) navigate(ROUTE_PATH.signIn);
   const handleSubmit = async () => {
-    const response = await postSignUp({ name, email, password });
-    if (response.status === 201) {
-      showToast({ message: '회원가입이 완료되었습니다.', type: 'confirm' });
-      navigate(ROUTE_PATH.signIn);
-    } else {
-      const errorData = await response.json();
-      const errorMessage = errorData.message;
-      setPostErrorMessage(errorMessage);
-    }
+    await mutation.mutate({ name, email, password });
+    showToast({ message: '회원가입이 완료되었습니다.', type: 'confirm' });
   };
 
   const handleMoveSignIn = () => {

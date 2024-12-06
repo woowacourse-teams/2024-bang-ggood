@@ -70,4 +70,4 @@ jobs:
         run: sudo fuser -k -n tcp 8080 || true
         
       - name: Start server
-        run: sudo nohup java -jar -Dspring.profiles.active=prod -Duser.timezone=Asia/Seoul ./backend/bang-ggood/build/libs/*SNAPSHOT.jar > /home/ubuntu/actions-runner/server.log 2>&1 &
+        run: sudo nohup java -jar -Dspring.profiles.active=prod -Duser.timezone=Asia/Seoul ./backend/bang-ggood/build/libs/*SNAPSHOT.jar &

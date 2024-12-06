@@ -6,14 +6,14 @@ import com.bang_ggood.article.dto.response.ArticleResponse;
 import com.bang_ggood.article.dto.response.ArticlesResponse;
 import com.bang_ggood.article.dto.response.ArticlesResponses;
 import com.bang_ggood.article.repository.ArticleRepository;
-import com.bang_ggood.global.config.cache.CacheName;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
-import static com.bang_ggood.global.config.cache.CacheName.*;
+import static com.bang_ggood.global.config.cache.CacheName.ARTICLE;
 
 @RequiredArgsConstructor
 @Service
@@ -35,7 +35,6 @@ public class ArticleService {
         return ArticleResponse.from(article);
     }
 
-    @Cacheable(cacheNames = ARTICLE, key = "'articles'")
     @Transactional(readOnly = true)
     public ArticlesResponses readArticles() {
         List<ArticlesResponse> articles = articleRepository.findLatestArticles().stream()
@@ -44,6 +43,7 @@ public class ArticleService {
         return new ArticlesResponses(articles);
     }
 
+    @CacheEvict(cacheNames = ARTICLE, key = "#id")
     @Transactional
     public void deleteArticle(Long id) {
         articleRepository.deleteById(id);

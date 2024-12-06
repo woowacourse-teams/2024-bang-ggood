@@ -16,6 +16,7 @@ const EditChecklistQuestionTemplate = () => {
 
   const { currentTabId } = useTabContext();
   const checklistActions = useChecklistStore(store => store.actions);
+
   const questions = checklistActions.getCategory(currentTabId);
 
   return (

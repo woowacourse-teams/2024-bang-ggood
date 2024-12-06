@@ -16,7 +16,6 @@ const EditChecklistQuestionTemplate = () => {
 
   const { currentTabId } = useTabContext();
   const checklistActions = useChecklistStore(store => store.actions);
-  const categories = useChecklistStore(store => store.categories);
 
   const questions = checklistActions.getCategory(currentTabId);
 
@@ -46,7 +45,7 @@ const EditChecklistQuestionTemplate = () => {
         })}
       </S.ContentBox>
 
-      <MoveNextButton marginTop="2rem" marginBottom="4rem" tabCount={categories.length} />
+      <MoveNextButton marginTop="2rem" marginBottom="4rem" />
     </Layout>
   );
 };

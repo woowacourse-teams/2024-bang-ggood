@@ -19,11 +19,7 @@ import RoomStructure from '@/components/NewChecklist/NewRoomInfoForm/RoomStructu
 import { trackRoomInfoInput } from '@/service/amplitude/trackEvent';
 import { flexColumn } from '@/styles/common';
 
-interface Props {
-  tabCount: number;
-}
-
-const RoomInfoTemplate = ({ tabCount }: Props) => {
+const RoomInfoTemplate = () => {
   const handleTrackInput = (e: React.FocusEvent<HTMLInputElement>) => {
     trackRoomInfoInput(e.target.name);
   };
@@ -45,7 +41,7 @@ const RoomInfoTemplate = ({ tabCount }: Props) => {
         <RoomContractTerm />
         <OccupancyMonth />
         <RealEstate />
-        <MoveNextButton marginBottom="1rem" tabCount={tabCount} />
+        <MoveNextButton marginBottom="1rem" />
       </S.Container>
     </Layout>
   );

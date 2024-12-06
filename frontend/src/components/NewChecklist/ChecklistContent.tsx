@@ -7,20 +7,18 @@ import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import ChecklistQuestionTemplate from '@/components/NewChecklist/ChecklistQuestion/ChecklistQuestionTemplate';
 import RoomInfoTemplate from '@/components/NewChecklist/NewRoomInfoForm/RoomInfoTemplate';
 import OptionTemplate from '@/components/NewChecklist/Option/OptionTemplate';
-import useChecklistStore from '@/store/useChecklistStore';
 
 const ChecklistContent = () => {
   const { currentTabId, useDragForTab } = useTabContext();
-  const categories = useChecklistStore().categories;
-  const categoriesLength = categories.length + 2;
+
   useDragForTab();
 
   return (
     <S.Container>
       {/*방 기본정보 템플릿 */}
-      {currentTabId === -1 && <RoomInfoTemplate tabCount={categoriesLength} />}
+      {currentTabId === -1 && <RoomInfoTemplate />}
       {/* 옵션 선택 템플릿 */}
-      {currentTabId === 0 && <OptionTemplate tabCount={categoriesLength} />}
+      {currentTabId === 0 && <OptionTemplate />}
       {/* 체크리스트 템플릿 */}
       {currentTabId > 0 && (
         <ErrorBoundary FallbackComponent={ListErrorFallback}>

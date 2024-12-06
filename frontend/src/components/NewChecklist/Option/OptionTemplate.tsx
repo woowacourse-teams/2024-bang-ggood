@@ -8,7 +8,11 @@ import { OptionList } from '@/components/NewChecklist/Option/OptionList';
 import { flexCenter, flexColumn, flexRow, flexSpaceBetween, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
 
-const OptionTemplate = () => {
+interface Props {
+  tabCount: number;
+}
+
+const OptionTemplate = ({ tabCount }: Props) => {
   return (
     <Layout bgColor={theme.palette.background} withHeader withTab>
       <TipBox tipType={'OPTION'} />
@@ -18,7 +22,7 @@ const OptionTemplate = () => {
           <OptionList />
         </S.OptionBox>
       </S.InnerBox>
-      <MoveNextButton marginTop="2rem" marginBottom="4rem" />
+      <MoveNextButton marginTop="2rem" marginBottom="4rem" tabCount={tabCount} />
     </Layout>
   );
 };

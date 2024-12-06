@@ -2,20 +2,24 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
-import { DefaultChecklistTabsNames } from '@/constants/tabs';
 import { flexRow } from '@/styles/common';
 import theme from '@/styles/theme';
 
-const TAB_COUNT = DefaultChecklistTabsNames.length;
 interface Props {
   marginTop?: string;
   marginBottom?: string;
+  tabCount: number;
 }
-const MoveNextButton = ({ marginTop = '0', marginBottom = '0' }: Props) => {
-  const { setCurrentTabId } = useTabContext();
 
-  const handleClickPrev = () => setCurrentTabId(tabId => (tabId % TAB_COUNT) - 1);
-  const handleClickNext = () => setCurrentTabId(tabId => ((tabId + 2) % TAB_COUNT) - 1);
+//TODO: 탭은 무조건 id 가 아니라 인덱스를 써야 한다
+const MoveNextButton = ({ marginTop = '0', marginBottom = '0', tabCount }: Props) => {
+  //getTabsForChecklist
+  //{id: 0 , id: 1, id: 3, id: 5}
+
+  const { setCurrentTabId, currentTabId } = useTabContext();
+
+  const handleClickPrev = () => setCurrentTabId(tabId => (tabId % tabCount) - 1);
+  const handleClickNext = () => setCurrentTabId(tabId => ((tabId + 2) % tabCount) - 1);
   return (
     <S.ContentBox marginTop={marginTop} marginBottom={marginBottom}>
       <S.Button onClick={handleClickPrev}>

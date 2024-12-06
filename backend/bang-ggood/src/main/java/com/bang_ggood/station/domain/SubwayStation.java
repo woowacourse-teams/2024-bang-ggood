@@ -7,7 +7,7 @@ public class SubwayStation {
 
     private static final int METER_PER_DEGREE = 111_320;
     // meter per second * minute unit * decreasing speed on open street
-    private static final double AVERAGE_WALKING_SPEED = 1.3 * 60 * 0.4;
+    private static final double AVERAGE_WALKING_SPEED = 1.3 * 60 * 0.7;
 
     private final Integer id;
     private final String name;

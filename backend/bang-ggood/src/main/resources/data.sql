@@ -2,7 +2,7 @@
 INSERT INTO users(name, email, password, user_type, login_type, created_at, modified_at, deleted)
 VALUES ('방방이', 'bang-ggood@gmail.com',
         'xDNYKEJqE/36U0Dt3nXRMFPNEMEgjCYM7R/A4B29baOsv4KYQ9MGgcO3HUa11sNKCFb9ZXyYBqJqxNglvBzFvg==:7yejAszEpxBb7AyZNKvAqpmMEJiKFXIa8JKwAx3n4loB2DRcAC2pfwkgo/dzKzRvBX4RbrATWaIlPYrgAhbHZQ==',
-        'USER', 'LOCAL', '2024-07-22 07:56:42', '2024-07-22 07:56:42', false);
+        'ADMIN', 'LOCAL', '2024-07-22 07:56:42', '2024-07-22 07:56:42', false);
 
 INSERT INTO category (name)
 VALUES

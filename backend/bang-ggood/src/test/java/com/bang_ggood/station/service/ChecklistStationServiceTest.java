@@ -52,7 +52,7 @@ public class ChecklistStationServiceTest extends IntegrationTestSupport {
     @Test
     void createChecklistStations() {
         // given & when
-        checklistStationService.createChecklistStations(checklist, 38, 127);
+        checklistStationService.createChecklistStations(checklist, 37.517406150696104, 127.10333134512422);
 
         // then
         assertThat(checklistStationRepository.findByChecklist(checklist)).isNotEmpty();

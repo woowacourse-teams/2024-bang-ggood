@@ -25,7 +25,7 @@ public class ArticleE2ETest extends AcceptanceTest {
     void createArticle() {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .headers(this.headers)
+                .headers(this.adminHeaders)
                 .body(ArticleFixture.ARTICLE_CREATE_REQUEST())
                 .when().post("/articles")
                 .then().log().all()
@@ -54,7 +54,7 @@ public class ArticleE2ETest extends AcceptanceTest {
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .headers(this.headers)
+                .headers(this.adminHeaders)
                 .body(request)
                 .when().post("/articles")
                 .then().log().all()
@@ -104,7 +104,7 @@ public class ArticleE2ETest extends AcceptanceTest {
         Article article = articleRepository.save(ArticleFixture.ARTICLE());
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
-                .headers(this.headers)
+                .headers(this.adminHeaders)
                 .when().delete("/articles/" + article.getId())
                 .then().log().all()
                 .statusCode(204);

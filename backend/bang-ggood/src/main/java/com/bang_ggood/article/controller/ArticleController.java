@@ -4,6 +4,7 @@ import com.bang_ggood.article.dto.request.ArticleCreateRequest;
 import com.bang_ggood.article.dto.response.ArticleResponse;
 import com.bang_ggood.article.dto.response.ArticlesResponses;
 import com.bang_ggood.article.service.ArticleService;
+import com.bang_ggood.auth.config.AdminPrincipal;
 import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.user.domain.User;
 import jakarta.validation.Valid;
@@ -26,7 +27,7 @@ public class ArticleController {
     }
 
     @PostMapping("/articles")
-    public ResponseEntity<Void> createArticle(@AuthRequiredPrincipal User user,
+    public ResponseEntity<Void> createArticle(@AdminPrincipal User user,
                                               @Valid @RequestBody ArticleCreateRequest request) {
         Long id = articleService.createArticle(request);
         return ResponseEntity.created(URI.create("/article/" + id)).build();
@@ -43,7 +44,7 @@ public class ArticleController {
     }
 
     @DeleteMapping("/articles/{id}")
-    public ResponseEntity<ArticleResponse> deleteArticle(@AuthRequiredPrincipal User user,
+    public ResponseEntity<ArticleResponse> deleteArticle(@AdminPrincipal User user,
                                                          @PathVariable("id") Long id) {
         articleService.deleteArticle(id);
         return ResponseEntity.noContent().build();

@@ -68,6 +68,10 @@ public class User extends BaseEntity {
         return password.isDifferent(targetPassword);
     }
 
+    public boolean matchesUserType(UserType userType) {
+        return this.userType == userType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -83,5 +87,17 @@ public class User extends BaseEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email=" + email +
+                ", password=" + password +
+                ", userType=" + userType +
+                ", loginType=" + loginType +
+                '}';
     }
 }

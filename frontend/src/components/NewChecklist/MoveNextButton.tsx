@@ -12,7 +12,6 @@ interface Props {
   marginBottom?: string;
 }
 
-//TODO: 탭은 무조건 id 가 아니라 인덱스를 써야 한다
 const MoveNextButton = ({ marginTop = '0', marginBottom = '0' }: Props) => {
   const { setCurrentTabId, currentTabId } = useTabContext();
   const categories = useChecklistStore().categories ?? [];

@@ -6,12 +6,10 @@ import { QUERY_KEYS } from '@/constants/queryKeys';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useToast from '@/hooks/useToast';
 import amplitudeInitializer from '@/service/amplitude/amplitudeInitializer';
-import useUserStore from '@/store/useUserStore';
 
 const usePostSignInQuery = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { user, setUser } = useUserStore();
   const { init } = amplitudeInitializer();
   const { showToast } = useToast();
 
@@ -21,8 +19,12 @@ const usePostSignInQuery = () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.AUTH] });
 
       const initUser = async () => {
-        const result = await getUserInfo();
-        setUser(result);
+        // 유저 정보 가져오기
+        const user = await queryClient.fetchQuery({
+          queryKey: [QUERY_KEYS.USER],
+          queryFn: getUserInfo,
+        });
+        queryClient.setQueryData([QUERY_KEYS.USER], user);
 
         init(user.userEmail);
         showToast({ message: `${user?.userName}님, 환영합니다.`, type: 'confirm' });

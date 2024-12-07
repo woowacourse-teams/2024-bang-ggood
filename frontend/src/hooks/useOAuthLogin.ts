@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { KAKAO_AUTH_URL } from '@/constants/oAuth';
 import { ROUTE_PATH } from '@/constants/routePath';
-import useAddOAuthUserQuery from '@/hooks/query/useAddOAuthUserQuery';
+import useAddOAuthUserQuery from '@/hooks/query/usePostOAuthUserQuery';
 import useMutateChecklist from '@/hooks/useMutateChecklist';
 
 const useOAuthLogin = () => {

@@ -8,14 +8,11 @@ import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
 import { ROUTE_PATH } from '@/constants/routePath';
 import usePostSignUpQuery from '@/hooks/query/usePostSignUpQuery';
-import useToast from '@/hooks/useToast';
 import useValidateInput from '@/hooks/useValidateInput';
 import { flexCenter, title3, title4 } from '@/styles/common';
 import { validateEmail, validateLength, validatePassword, validatePasswordConfirm } from '@/utils/authValidation';
-import { QueryClient } from '@tanstack/react-query';
 
 const SignUpPage = () => {
-  const { showToast } = useToast();
   const [postErrorMessage, setPostErrorMessage] = useState('');
   const navigate = useNavigate();
 
@@ -61,11 +58,11 @@ const SignUpPage = () => {
 
   const disabled = !isEmailValidated || !isNameValidated || !isPasswordValidated || !isPasswordConfirmValidated;
 
-  const mutation = usePostSignUpQuery();
-  if (mutation.isSuccess) navigate(ROUTE_PATH.signIn);
-  const handleSubmit = async () => {
-    await mutation.mutate({ name, email, password });
-    showToast({ message: '회원가입이 완료되었습니다.', type: 'confirm' });
+  const { mutate, isSuccess } = usePostSignUpQuery();
+  if (isSuccess) navigate(ROUTE_PATH.signIn);
+
+  const handleSubmit = () => {
+    mutate({ name, email, password });
   };
 
   const handleMoveSignIn = () => {

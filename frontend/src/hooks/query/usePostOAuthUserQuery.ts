@@ -1,39 +1,41 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
 
-import { getUserInfo, postSignIn } from '@/apis/user';
+import { getUserInfo, postOAuthLogin } from '@/apis/user';
 import { QUERY_KEYS } from '@/constants/queryKeys';
-import { ROUTE_PATH } from '@/constants/routePath';
 import useToast from '@/hooks/useToast';
 import amplitudeInitializer from '@/service/amplitude/amplitudeInitializer';
 
-const usePostSignInQuery = () => {
-  const navigate = useNavigate();
+interface MutationVariables {
+  code: string;
+  redirectUri: string;
+}
+
+const useAddOAuthUserQuery = () => {
   const queryClient = useQueryClient();
   const { init } = amplitudeInitializer();
   const { showToast } = useToast();
 
   return useMutation({
-    mutationFn: postSignIn,
+    mutationFn: ({ code, redirectUri }: MutationVariables) => postOAuthLogin(code, redirectUri),
     onSuccess: () => {
+      // 로그인 성공 후 유저 정보 쿼리 무효화
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.AUTH] });
 
       const initUser = async () => {
         // 유저 정보 가져오기
-        const user = await queryClient.fetchQuery({
+        const result = await queryClient.fetchQuery({
           queryKey: [QUERY_KEYS.USER],
           queryFn: getUserInfo,
         });
-        queryClient.setQueryData([QUERY_KEYS.USER], user);
 
-        init(user.userEmail);
-        showToast({ message: `${user?.userName}님, 환영합니다.`, type: 'confirm' });
+        // Amplitude 초기화 및 환영 메시지 표시
+        init(result.userEmail);
+        showToast({ message: `${result?.userName}님, 환영합니다.`, type: 'confirm' });
       };
 
       initUser();
-      navigate(ROUTE_PATH.home);
     },
   });
 };
 
-export default usePostSignInQuery;
+export default useAddOAuthUserQuery;

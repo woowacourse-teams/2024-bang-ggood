@@ -9,7 +9,9 @@ import RoomInfoTemplate from '@/components/NewChecklist/NewRoomInfoForm/RoomInfo
 import OptionTemplate from '@/components/NewChecklist/Option/OptionTemplate';
 
 const ChecklistContent = () => {
-  const { currentTabId } = useTabContext();
+  const { currentTabId, useDragForTab } = useTabContext();
+
+  useDragForTab();
 
   return (
     <S.Container>

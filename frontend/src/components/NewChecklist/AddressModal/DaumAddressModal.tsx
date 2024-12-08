@@ -24,9 +24,9 @@ const DaumAddressModal = () => {
 
   const { searchSubwayStationsByAddress } = useRoomInfoNonValidated();
 
-  const handleAddress = () => {
-    openModal();
+  const handleClickAddress = () => {
     loadExternalScriptWithCallback('daumAddress', openPostcodeEmbed);
+    openModal();
   };
 
   const openPostcodeEmbed = () => {
@@ -50,7 +50,7 @@ const DaumAddressModal = () => {
   return (
     <>
       <S.AddressButton
-        onClick={handleAddress}
+        onClick={handleClickAddress}
         label="주소 검색"
         size="full"
         isSquare={true}

@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import { ROUTE_PATH } from '@/constants/routePath';
+import { trackArticleDetail } from '@/service/amplitude/trackEvent';
 import { boxShadow, flexColumn, title3 } from '@/styles/common';
 import { Article } from '@/types/article';
 import formattedDate from '@/utils/formattedDate';
@@ -15,15 +16,19 @@ const ArticleCard = ({ article }: Props) => {
   const navigate = useNavigate();
   const { articleId, keyword, title, summary, createdAt } = article;
 
-  const { color500 } = getSeqColor(articleId);
+  const ARTICLE_KEYWORDS = ['방끗 활용법', '동네 추천', '우테코 생활', '자취 꿀팁'];
+  const currentColorIndex = ARTICLE_KEYWORDS.findIndex(keyword => keyword === article.keyword);
+  const { color500 } = getSeqColor(currentColorIndex);
+  const { color500: defaultColor500 } = getSeqColor(articleId);
 
   const handleClick = () => {
+    trackArticleDetail(article.title);
     navigate(ROUTE_PATH.articleOne(articleId));
   };
 
   return (
     <S.Container onClick={handleClick} tabIndex={1}>
-      <S.Keyword bgColor={color500}> {keyword}</S.Keyword>
+      <S.Keyword bgColor={color500 ?? defaultColor500}> {keyword}</S.Keyword>
       <S.Title>{title}</S.Title>
       <S.Label>{summary}</S.Label>
       <S.Label>{formattedDate(createdAt)}</S.Label>

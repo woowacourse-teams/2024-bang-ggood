@@ -15,6 +15,7 @@ const RoomFloor = () => {
       floor.set('');
     }
   };
+
   return (
     <FormField>
       <FormField.Label label="층수" htmlFor="floor" />
@@ -25,8 +26,9 @@ const RoomFloor = () => {
           onSelectSetter={handleClickDropdown}
         />
         <Input
+          inputMode="decimal"
           width="medium"
-          disabled={floorLevel.rawValue === '반지하/지하'}
+          disabled={floorLevel.rawValue === '반지하/지하' || floorLevel.rawValue === '옥탑'}
           placeholder=""
           name="floor"
           value={floor.rawValue}

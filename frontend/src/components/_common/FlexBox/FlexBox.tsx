@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { CSSProperties } from 'react';
 
 import { flexColumn, flexRow } from '@/styles/common';
 
@@ -13,7 +14,7 @@ const FlexBox = {
     gap?: number | string;
     flexWrap?: string;
     width?: string;
-    justify?: 'space-between' | 'around';
+    justify?: CSSProperties['justifyContent'];
     align?: 'center';
   }>`
     ${flexRow}

@@ -3,6 +3,7 @@ package com.bang_ggood.station.service;
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.station.dto.response.SubwayStationResponse;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -52,6 +53,15 @@ public class SubwayStationServiceTest extends IntegrationTestSupport {
                     assertThat(nextNearest.getStationLine()).containsAll(nextNearestStation.lines);
                 }
         );
+    }
+
+    @DisplayName("도보 30분이 넘는 지하철 역은 보여주지 않는다.")
+    @Test
+    void readNearestStation_over30Minutes() {
+        // given & when
+        List<SubwayStationResponse> responses = subwayStationService.readNearestStation(0, 0)
+                .getStations();
+        assertThat(responses).hasSize(0);
     }
 
     private static class Station {

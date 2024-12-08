@@ -15,6 +15,7 @@ const OccupancyMonth = () => {
       <FormField.Label label="입주 가능일" htmlFor="occupancyMonth" />
       <FormStyled.FieldBox>
         <FormField.Input
+          inputMode="decimal"
           width="medium"
           onChange={occupancyMonth.onChange}
           name="occupancyMonth"

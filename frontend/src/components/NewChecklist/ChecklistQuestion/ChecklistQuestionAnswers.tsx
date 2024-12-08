@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import React, { useCallback } from 'react';
 
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
@@ -5,6 +6,7 @@ import AnswerIcon from '@/components/Answer/AnswerIcon';
 import { ANSWER_OPTIONS } from '@/constants/answer';
 import useChecklistQuestionAnswer from '@/hooks/useChecklistQuestionAnswer';
 import { trackChecklistQuestion } from '@/service/amplitude/trackEvent';
+import { flexRow, flexSpaceBetween } from '@/styles/common';
 import { Answer, AnswerType } from '@/types/answer';
 
 interface Props {
@@ -26,7 +28,7 @@ const ChecklistQuestionAnswers = ({ questionId, answer, title }: Props) => {
   );
 
   return (
-    <>
+    <S.Options>
       {ANSWER_OPTIONS.map((option: Answer) => {
         const isSelected = answer === option.name;
 
@@ -46,8 +48,21 @@ const ChecklistQuestionAnswers = ({ questionId, answer, title }: Props) => {
           {title + statusMessage}
         </div>
       )}
-    </>
+    </S.Options>
   );
+};
+
+const S = {
+  Options: styled.div`
+    width: 8rem;
+
+    ${flexRow}
+    gap: 1.5rem;
+
+    ${flexSpaceBetween}
+    align-items: center;
+    cursor: pointer;
+  `,
 };
 
 export default React.memo(ChecklistQuestionAnswers);

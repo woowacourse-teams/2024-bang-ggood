@@ -3,6 +3,7 @@ export const ROUTE_PATH = {
   home: '/home',
   signIn: '/sign-in',
   signUp: '/sign-up',
+  resetPassword: '/reset-password',
   /*checklist */
   checklistList: '/checklist',
   checklistNew: '/checklist/new',
@@ -11,6 +12,9 @@ export const ROUTE_PATH = {
   checklistQuestionSelect: `/checklist/question-select`,
   checklistId: '/checklist/:checklistId',
   checklistOne: (id: number) => `/checklist/${id}`,
+  /*compare*/
+  roomCompare: '/room/compare',
+  roomCompareSelect: '/room/compare/select',
   /* article */
   articleList: '/article',
   articleId: '/article/:articleId',
@@ -18,4 +22,6 @@ export const ROUTE_PATH = {
   /* etc */
   location: '/location',
   myPage: '/my-page',
+  admin: '/admin',
+  articleEditor: '/isHaileyGod',
 };

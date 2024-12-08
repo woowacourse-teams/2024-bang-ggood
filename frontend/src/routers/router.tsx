@@ -2,9 +2,8 @@ import React, { Suspense } from 'react';
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 import FooterLayout from '@/components/_common/layout/FooterLayout';
+import MobileLayout from '@/components/_common/layout/MobileLayout';
 import { ROUTE_PATH } from '@/constants/routePath';
-import SignInPage from '@/pages/SignInPage';
-import SignUpPage from '@/pages/SignUpPage';
 
 const MainPage = React.lazy(() => import('@/pages/MainPage'));
 const ChecklistListPage = React.lazy(() => import('@/pages/ChecklistListPage'));
@@ -18,13 +17,23 @@ const ArticleDetailPage = React.lazy(() => import('@/pages/ArticleDetailPage'));
 const LandingPage = React.lazy(() => import('@/pages/LandingPage'));
 const NotFound = React.lazy(() => import('@/pages/NotFound'));
 const ErrorPage = React.lazy(() => import('@/pages/ErrorPage'));
+const ResetPasswordPage = React.lazy(() => import('@/pages/ResetPasswordPage'));
+const RoomComparePage = React.lazy(() => import('@/pages/RoomComparePage'));
+const RoomCompareSelectPage = React.lazy(() => import('@/pages/RoomCompareSelectPage'));
+const SignInPage = React.lazy(() => import('@/pages/SignInPage'));
+const SignUpPage = React.lazy(() => import('@/pages/SignUpPage'));
+const AdminPage = React.lazy(() => import('@/pages/AdminPage'));
+const ArticleEditorPage = React.lazy(() => import('@/pages/ArticleEditorPage'));
 
 const router = createBrowserRouter([
+  // 모바일 페이지 레이아웃
   {
     element: (
-      <Suspense>
-        <Outlet />
-      </Suspense>
+      <MobileLayout>
+        <Suspense>
+          <Outlet />
+        </Suspense>
+      </MobileLayout>
     ),
     errorElement: <ErrorPage />,
     children: [
@@ -82,8 +91,40 @@ const router = createBrowserRouter([
         path: ROUTE_PATH.signIn,
       },
       {
+        element: <ResetPasswordPage />,
+        path: ROUTE_PATH.resetPassword,
+      },
+      {
+        element: <RoomComparePage />,
+        path: ROUTE_PATH.roomCompare,
+      },
+      {
+        element: <RoomCompareSelectPage />,
+        path: ROUTE_PATH.roomCompareSelect,
+      },
+      {
         element: <NotFound />,
         path: '*',
+      },
+    ],
+  },
+
+  // 어드민 페이지 레이아웃
+  {
+    element: (
+      <Suspense>
+        <Outlet />
+      </Suspense>
+    ),
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        element: <AdminPage />,
+        path: ROUTE_PATH.admin,
+      },
+      {
+        element: <ArticleEditorPage />,
+        path: ROUTE_PATH.articleEditor,
       },
     ],
   },

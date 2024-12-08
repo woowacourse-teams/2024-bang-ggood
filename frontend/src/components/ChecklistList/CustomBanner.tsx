@@ -10,16 +10,22 @@ interface Props {
   buttonText: string;
   Icon: React.ReactElement;
   buttonDetailText: string;
+  hoverButtonColor: string;
 }
 
-const CustomBanner = ({ onClick, Icon, title, buttonColor, buttonText, buttonDetailText }: Props) => {
+const CustomBanner = ({ hoverButtonColor, onClick, Icon, title, buttonColor, buttonText, buttonDetailText }: Props) => {
   return (
     <S.Banner onClick={onClick}>
       <S.Wrapper>
         {Icon}
         <S.Title>{title}</S.Title>
       </S.Wrapper>
-      <S.Button aria-label={buttonDetailText} label={buttonText} buttonColor={buttonColor} />
+      <S.Button
+        aria-label={buttonDetailText}
+        label={buttonText}
+        buttonColor={buttonColor}
+        hoverButtonColor={hoverButtonColor}
+      />
     </S.Banner>
   );
 };
@@ -51,7 +57,7 @@ const S = {
   Title: styled.span`
     ${flexCenter}
   `,
-  Button: styled(Button)<{ buttonColor: string }>`
+  Button: styled(Button)<{ buttonColor: string; hoverButtonColor: string }>`
     padding: 0.6rem 1rem;
 
     background-color: ${({ buttonColor }) => buttonColor};
@@ -62,5 +68,9 @@ const S = {
     font-size: ${({ theme }) => theme.text.size.small};
 
     cursor: pointer;
+
+    &:hover {
+      background-color: ${({ hoverButtonColor }) => hoverButtonColor};
+    }
   `,
 };

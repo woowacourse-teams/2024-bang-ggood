@@ -12,6 +12,7 @@ import useToast from '@/hooks/useToast';
 import useValidateInput from '@/hooks/useValidateInput';
 import { flexCenter, title3, title4 } from '@/styles/common';
 import { validateEmail, validateLength, validatePassword, validatePasswordConfirm } from '@/utils/authValidation';
+import { QueryClient } from '@tanstack/react-query';
 
 const SignUpPage = () => {
   const { showToast } = useToast();
@@ -76,7 +77,7 @@ const SignUpPage = () => {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.keyCode === 13 && !disabled) {
+    if (event.key === 'Enter' && !disabled) {
       handleSubmit();
     }
   };

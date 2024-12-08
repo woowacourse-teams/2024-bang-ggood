@@ -24,7 +24,7 @@ const RoomCompareSelectPage = () => {
 
   useEffect(() => {
     if (userChecklists.length < MIN_ROOM_COMPARE_COUNT) {
-      showToast({ message: '비교 기능은 작성한 체크리스트가 2개 이상일 때만 가능합니다.' });
+      showToast({ message: '비교 기능은 작성한 체크리스트가 2개 이상일 때만 가능합니다.', type: 'info' });
       navigate(ROUTE_PATH.checklistList);
     }
   }, [userChecklists.length, navigate, showToast]);

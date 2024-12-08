@@ -51,7 +51,7 @@ const ChecklistListPage = () => {
           <CustomBanner
             onClick={handleClickMoveQuestionSelectPage}
             Icon={<LampIcon width={30} height={30} aria-hidden="true" />}
-            title={'체크리스트를 비교해서 보기'}
+            title={'체크리스트를 비교'}
             buttonColor={theme.palette.yellow600}
             buttonText="비교하기"
             buttonDetailText={'체크리스트 질문을 편집하려면 이 버튼을 누르세요.'}

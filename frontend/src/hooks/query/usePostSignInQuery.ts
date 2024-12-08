@@ -13,7 +13,9 @@ const usePostSignInQuery = () => {
   const { init } = amplitudeInitializer();
   const { showToast } = useToast();
 
+  queryClient.setMutationDefaults(['auth', 'sign-in'], { onError: undefined });
   return useMutation({
+    mutationKey: ['auth', 'sign-in'],
     mutationFn: postSignIn,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.AUTH] });

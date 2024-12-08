@@ -1,10 +1,24 @@
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { ROUTE_PATH } from '@/constants/routePath';
+import useUserQuery from '@/hooks/query/useUserQuery';
+import useToast from '@/hooks/useToast';
 import { boxShadowSpread, flexRow, title2, title3 } from '@/styles/common';
 
 const AdminPage = () => {
+  const { data: user } = useUserQuery();
+  const { showToast } = useToast();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user?.userType !== 'ADMIN') {
+      showToast({ message: '해당 페이지 접근 권한이 없습니다.', type: 'error' });
+      navigate(ROUTE_PATH.root);
+    }
+  }, []);
+
   return (
     <S.PageWrapper>
       <S.QuestionBox>

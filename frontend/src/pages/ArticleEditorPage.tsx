@@ -12,7 +12,7 @@ const ArticleEditorPage = () => {
   const [title, setTitle] = useState('');
   const [keyword, setKeyword] = useState('');
   const [summary, setSummary] = useState('');
-  const [thumbnail] = useState('');
+  const [thumbnail, setThumbnail] = useState('');
   const [content, setContent] = useState('# 여기에 아티클을 작성해주세요');
 
   const { mutate: addArticle } = usePostArticleQuery();
@@ -77,6 +77,18 @@ const ArticleEditorPage = () => {
               name="summary"
               id="summary"
               value={summary}
+            />
+          </FormField>
+
+          {/* 썸네일 폼 필드 */}
+          <FormField>
+            <FormField.Label label="썸네일" htmlFor="thumbnail" required />
+            <FormField.Input
+              placeholder="썸네일 사진 url를 입력하세요"
+              onChange={e => setThumbnail(e.target.value)}
+              name="thumbnail"
+              id="thumbnail"
+              value={thumbnail}
             />
           </FormField>
 

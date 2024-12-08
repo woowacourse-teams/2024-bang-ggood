@@ -5,6 +5,7 @@ export const user: User = {
   userName: '방끗이',
   userEmail: 'bang-ggood@gmail.com',
   createdAt: '2024-08-11T10:00:00Z',
+  userType: 'ADMIN',
 };
 
 export const mockUserTokenValid: UserTokenValid = {

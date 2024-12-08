@@ -33,6 +33,7 @@ const roomInfoNonValidatedStore = createStore<States & { actions: Actions }>()(
     }),
     {
       name: 'roomInfo-nonvalidated',
+      getStorage: () => sessionStorage,
       partialize: store => {
         const { actions: _, ...state } = store;
         return { ...state };

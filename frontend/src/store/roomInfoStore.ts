@@ -1,5 +1,5 @@
 import { createStore } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 import { roomFloorLevels, roomOccupancyPeriods } from '@/constants/roomInfo';
 import { parseRoomInfo } from '@/hooks/useRoomInfoValidated';
@@ -99,7 +99,7 @@ export const roomInfoStore = createStore<RoomInfoState & { actions: RoomInfoActi
     }),
     {
       name: 'roomInfo',
-      getStorage: () => sessionStorage,
+      storage: createJSONStorage(() => sessionStorage),
       partialize: state => {
         const { actions: _, ...roomInfo } = state;
         return { ...roomInfo };

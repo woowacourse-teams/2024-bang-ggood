@@ -10,6 +10,7 @@ import OptionTemplate from '@/components/NewChecklist/Option/OptionTemplate';
 
 const ChecklistContent = () => {
   const { currentTabId, useDragForTab } = useTabContext();
+
   useDragForTab();
 
   return (

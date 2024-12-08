@@ -2,20 +2,25 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
-import { DefaultChecklistTabsNames } from '@/constants/tabs';
+import useTabs from '@/hooks/useTabs';
+import useChecklistStore from '@/store/useChecklistStore';
 import { flexRow } from '@/styles/common';
 import theme from '@/styles/theme';
 
-const TAB_COUNT = DefaultChecklistTabsNames.length;
 interface Props {
   marginTop?: string;
   marginBottom?: string;
 }
-const MoveNextButton = ({ marginTop = '0', marginBottom = '0' }: Props) => {
-  const { setCurrentTabId } = useTabContext();
 
-  const handleClickPrev = () => setCurrentTabId(tabId => (tabId % TAB_COUNT) - 1);
-  const handleClickNext = () => setCurrentTabId(tabId => ((tabId + 2) % TAB_COUNT) - 1);
+const MoveNextButton = ({ marginTop = '0', marginBottom = '0' }: Props) => {
+  const { setCurrentTabId, currentTabId } = useTabContext();
+  const categories = useChecklistStore().categories ?? [];
+
+  const { getNextTab, getPrevTab } = useTabs();
+
+  const handleClickPrev = () => setCurrentTabId(getPrevTab({ currentTabId, categories }));
+  const handleClickNext = () => setCurrentTabId(getNextTab({ currentTabId, categories }));
+
   return (
     <S.ContentBox marginTop={marginTop} marginBottom={marginBottom}>
       <S.Button onClick={handleClickPrev}>

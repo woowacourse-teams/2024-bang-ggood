@@ -32,6 +32,9 @@ const ArticleContent = () => {
         <MarkdownPreview
           source={article?.content}
           style={{ padding: 10 }}
+          wrapperElement={{
+            'data-color-mode': 'light',
+          }}
           rehypeRewrite={(node, index, parent) => {
             if (
               node.type === 'element' &&

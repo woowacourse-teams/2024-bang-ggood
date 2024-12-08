@@ -1,8 +1,8 @@
-name: frontend-dev-cd
+name: frontend-prod-cd
 on:
   push:
     branches:
-      - dev-fe
+      - main
     paths:
       - "frontend/**"
 
@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    environment: frontend-development
+    environment: frontend-production
     steps:
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -40,9 +40,9 @@ jobs:
         working-directory: ./frontend
         run: yarn install
 
-      - name: Build for Dev
+      - name: Build for Prod
         working-directory: ./frontend
-        run: yarn run build:dev-fe
+        run: yarn run build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2

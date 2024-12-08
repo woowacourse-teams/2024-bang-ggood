@@ -5,6 +5,7 @@ import APIError from '@/apis/error/APIError';
 import { TOAST_MESSAGE } from '@/constants/messages/message';
 import useAddChecklistQuery from '@/hooks/query/useAddChecklistQuery';
 import usePutChecklistQuery from '@/hooks/query/usePutChecklistQuery';
+import useResetChecklist from '@/hooks/useResetChecklist';
 import useToast from '@/hooks/useToast';
 import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
 import roomInfoStore from '@/store/roomInfoStore';
@@ -22,13 +23,12 @@ const useMutateChecklist = (
   const { showToast } = useToast();
   const { mutate: addChecklist } = useAddChecklistQuery();
   const { mutate: putChecklist } = usePutChecklistQuery();
+  const { resetChecklist } = useResetChecklist();
 
   // 방 기본 정보 - validated
   const roomInfoActions = useStore(roomInfoStore, state => state.actions);
   const roomInfo = roomInfoActions.getParsedValues();
-
   // 방 기본 정보 - nonValidated
-  const roomInfoUnvalidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
   const roomInfoUnvalidated = useStore(roomInfoNonValidatedStore, state => state);
   // 선택된 옵션
   const selectedOptions = useSelectedOptionStore(state => state.selectedOptions);
@@ -38,6 +38,7 @@ const useMutateChecklist = (
   const postData = {
     room: {
       ...roomInfo,
+      ...roomInfoUnvalidated.position,
     },
     options: selectedOptions,
     questions: transformQuestions(checklistCategoryQnA),
@@ -56,8 +57,7 @@ const useMutateChecklist = (
       addChecklist(postData, {
         onSuccess: res => {
           showToast({ message: TOAST_MESSAGE.ADD });
-          roomInfoActions.reset();
-          roomInfoUnvalidatedActions.resetAll();
+          resetChecklist();
           if (onSuccessCallback) {
             onSuccessCallback();
           }
@@ -79,8 +79,7 @@ const useMutateChecklist = (
       putChecklist(putData, {
         onSuccess: res => {
           showToast({ message: TOAST_MESSAGE.EDIT });
-          roomInfoActions.reset();
-          roomInfoUnvalidatedActions.resetAll();
+          resetChecklist();
           if (onSuccessCallback) {
             onSuccessCallback();
           }

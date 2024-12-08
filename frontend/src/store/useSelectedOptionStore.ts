@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 import { DEFAULT_OPTIONS, OPTION_COUNT, OPTIONS } from '@/constants/options';
 
@@ -66,6 +66,7 @@ const useSelectedOptionStore = create<OptionState & { actions: OptionAction }>()
     }),
     {
       name: 'checklist-answer-option',
+      storage: createJSONStorage(() => sessionStorage),
       partialize: state => ({
         selectedOptions: state.selectedOptions,
         // actions는 저장하지 않음

@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { KAKAO_AUTH_URL } from '@/constants/oAuth';
 import { ROUTE_PATH } from '@/constants/routePath';
-import useAddUserQuery from '@/hooks/query/useAddUserQuery';
+import useAddOAuthUserQuery from '@/hooks/query/usePostOAuthUserQuery';
 import useMutateChecklist from '@/hooks/useMutateChecklist';
 
-const useLogin = () => {
+const useOAuthLogin = () => {
   const navigate = useNavigate();
-  const { mutate: addUser, isSuccess } = useAddUserQuery();
+  const { mutate: addOAuthUser, isSuccess } = useAddOAuthUserQuery();
   const { handleSubmitChecklist } = useMutateChecklist('add');
 
   const currentUrl = new URL(window.location.href);
@@ -18,13 +18,13 @@ const useLogin = () => {
   useEffect(() => {
     const code = new URL(window.location.href).searchParams.get('code');
     if (code) {
-      addUser({ code, redirectUri });
+      addOAuthUser({ code, redirectUri });
     }
-  }, [addUser]);
+  }, [addOAuthUser]);
 
   useEffect(() => {
     if (isSuccess) {
-      if (redirectUri.includes('/checklist/new')) return handleSubmitChecklist();
+      if (redirectUri.includes(ROUTE_PATH.checklistNew)) return handleSubmitChecklist();
       else return navigate(ROUTE_PATH.home);
     }
   }, [isSuccess, navigate]);
@@ -36,4 +36,4 @@ const useLogin = () => {
   return { moveToKakao };
 };
 
-export default useLogin;
+export default useOAuthLogin;

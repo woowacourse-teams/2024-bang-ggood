@@ -1,4 +1,6 @@
-export const article = {
+import { Article } from '@/types/article';
+
+export const article: Article = {
   articleId: 1,
   keyword: '아파트 임대',
   title: '완벽한 아파트 찾는 팁',

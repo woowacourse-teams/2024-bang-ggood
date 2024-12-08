@@ -13,6 +13,7 @@ const RoomContractTerm = () => {
       <FormField.Label label="계약 기간" htmlFor="contractTerm" />
       <S.FieldBox>
         <Input
+          inputMode="decimal"
           width="medium"
           placeholder=""
           onChange={contractTerm.onChange}

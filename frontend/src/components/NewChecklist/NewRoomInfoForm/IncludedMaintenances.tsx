@@ -9,7 +9,7 @@ import { IncludedMaintenancesData } from '@/constants/roomInfo';
 import roomInfoStore from '@/store/roomInfoStore';
 
 const IncludedMaintenances = () => {
-  // TODO : nonValidated 에서 관리해야함. 일단은 놔뒀음.
+  // TODO: nonValidated 에서 관리해야함. 일단은 놔뒀음.
 
   const includedMaintenances = useStore(roomInfoStore, state => state.includedMaintenances).rawValue;
   const actions = useStore(roomInfoStore, state => state.actions);

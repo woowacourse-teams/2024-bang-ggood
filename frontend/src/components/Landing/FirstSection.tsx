@@ -7,11 +7,13 @@ import EmailLoginButton from '@/components/_common/LoginButton/EmailLoginButton'
 import KakaoLoginButton from '@/components/_common/LoginButton/KakaoLoginButton';
 import CS from '@/components/Landing/style';
 import { ROUTE_PATH } from '@/constants/routePath';
+import amplitudeInitializer from '@/service/amplitude/amplitudeInitializer';
 import { trackGuestLoginButton } from '@/service/amplitude/trackEvent';
 import { moveUpDown } from '@/styles/animation';
 import { flexCenter, flexColumn } from '@/styles/common';
 
 const FirstSection = () => {
+  const { init } = amplitudeInitializer();
   const navigate = useNavigate();
 
   return (
@@ -46,6 +48,7 @@ const FirstSection = () => {
           size="full"
           isSquare
           onClick={() => {
+            init();
             navigate(ROUTE_PATH.home);
             trackGuestLoginButton();
           }}

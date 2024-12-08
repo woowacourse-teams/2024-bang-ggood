@@ -11,6 +11,7 @@ const MaintenanceFee = () => {
       <FormField.Label label="관리비" htmlFor="maintenanceFee" />
       <FormStyled.FieldBox>
         <Input
+          inputMode="decimal"
           width="medium"
           placeholder=""
           onChange={maintenanceFee.onChange}

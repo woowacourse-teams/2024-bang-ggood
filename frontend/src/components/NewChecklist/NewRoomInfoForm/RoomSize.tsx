@@ -11,6 +11,7 @@ const RoomSize = () => {
       <FormField.Label label="방 크기" htmlFor="size" />
       <FormStyled.FieldBox>
         <Input
+          inputMode="decimal"
           width="medium"
           placeholder=""
           onChange={roomSize.onChange}

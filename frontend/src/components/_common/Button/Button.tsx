@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { FunctionComponent, SVGProps } from 'react';
+import { ComponentProps, FunctionComponent, SVGProps } from 'react';
 
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import { flexCenter, title3, title4 } from '@/styles/common';
@@ -10,7 +10,7 @@ type ButtonSize = 'xSmall' | 'small' | 'medium' | 'full';
 type ColorOption = 'light' | 'dark' | 'primary' | 'disabled';
 type ButtonType = 'button' | 'submit' | 'reset';
 
-interface Props extends React.HTMLAttributes<HTMLButtonElement> {
+interface Props extends ComponentProps<'button'> {
   size?: ButtonSize;
   color?: ColorOption;
   label: string;
@@ -49,7 +49,7 @@ const Button = ({
       onClick={color !== 'disabled' ? onClick : () => {}}
       onKeyDown={handleKeyDown}
       {...rest}
-      disabled={disabled}
+      disabled={disabled ?? false}
       aria-label={label}
       tabIndex={1}
       type={type}
@@ -65,10 +65,10 @@ const Button = ({
 export default Button;
 
 const S = {
-  Button: styled.button<{ size: ButtonSize; color: ColorOption; isSquare: boolean }>`
+  Button: styled.button<{ size: ButtonSize; color: ColorOption; isSquare: boolean; disabled: boolean }>`
     ${({ isSquare }) => (isSquare ? 'border-radius: 0.4rem' : 'border-radius: 10rem')};
     ${({ size }) => sizeStyles[size]};
-    ${({ color }) => ColorStyles[color]};
+    ${({ color, disabled }) => ColorStyles[disabled ? 'disabled' : color]};
     cursor: pointer;
     box-sizing: border-box;
     ${flexCenter}
@@ -124,7 +124,7 @@ const sizeStyles = {
     min-width: 7rem;
   `,
   small: css`
-    padding: 1rem 1.6rem;
+    padding: 0.8rem 1.2rem;
     ${title3}
   `,
   medium: css`

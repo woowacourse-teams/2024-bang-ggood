@@ -1,8 +1,10 @@
-export const checklistList = {
+import { ChecklistPreview } from '@/types/checklist';
+
+export const checklistList: { checklists: ChecklistPreview[] } = {
   checklists: [
     {
       checklistId: 1,
-      roomName: '건대역 오픈형',
+      roomName: '예시용 체크리스트',
       address: '서울 광진구 구의동 센트럴빌',
       deposit: 800,
       rent: 65,
@@ -36,23 +38,8 @@ export const checklistList = {
       address: '서울 동작구 사당동',
       deposit: 500,
       rent: 45,
-      station: null,
+      station: undefined,
       createdAt: '2024-03-01T10:00:00Z',
-      summary: '방은 좁으나 싼 가격이 장점!',
-      isLiked: false,
-    },
-    {
-      checklistId: 4,
-      roomName: '사당역 분리형',
-      address: '서울 동작구 사당동',
-      deposit: 500,
-      rent: 45,
-      station: {
-        stationName: '사당',
-        stationLine: ['4호선', '2호선'],
-        walkingTime: 10,
-      },
-      createdAt: '2024-08-21T10:00:00Z',
       summary: '방은 좁으나 싼 가격이 장점!',
       isLiked: false,
     },

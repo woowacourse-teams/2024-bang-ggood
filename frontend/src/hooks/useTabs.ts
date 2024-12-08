@@ -15,6 +15,7 @@ const useTabs = () => {
   };
 
   const actions = useChecklistStore(state => state.actions);
+
   const isCategoryQuestionAllCompleted = useCallback(
     (targetId: number) => {
       const targetCategory = actions.getCategory(targetId);
@@ -22,6 +23,20 @@ const useTabs = () => {
     },
     [actions],
   );
+
+  const getNextTab = ({ currentTabId, categories }: { currentTabId: number; categories: Category[] }) => {
+    const currentTabs = [-1, 0, ...categories.map(category => category.categoryId)];
+    const currentTabIndex = currentTabs.findIndex(tab => tab === currentTabId);
+    const nextTabIndex = currentTabIndex === currentTabs.length - 1 ? 0 : currentTabIndex + 1;
+    return currentTabs[nextTabIndex];
+  };
+
+  const getPrevTab = ({ currentTabId, categories }: { currentTabId: number; categories: Category[] }) => {
+    const currentTabs = [-1, 0, ...categories.map(category => category.categoryId)];
+    const currentTabIndex = currentTabs.findIndex(tab => tab === currentTabId);
+    const prevTabIndex = currentTabIndex === 0 ? currentTabs.length - 1 : currentTabIndex - 1;
+    return currentTabs[prevTabIndex];
+  };
 
   const getTabsWithIsCompleted = (categories: Category[]) => {
     return categories.map(category => ({
@@ -46,6 +61,8 @@ const useTabs = () => {
   return {
     getTabs,
     getTabsForChecklist,
+    getNextTab,
+    getPrevTab,
   };
 };
 

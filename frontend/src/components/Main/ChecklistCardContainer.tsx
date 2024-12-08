@@ -39,6 +39,13 @@ const S = {
     padding: 1.8rem 4.8rem;
     border-radius: 0.8rem;
 
-    background-color: ${({ theme }) => theme.palette.grey100};
+    background-color: ${({ theme }) => theme.palette.green500};
+
+    color: ${({ theme }) => theme.palette.white};
+
+    &:hover,
+    &:active {
+      background-color: ${({ theme }) => theme.palette.green600};
+    }
   `,
 };

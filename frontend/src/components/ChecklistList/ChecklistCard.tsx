@@ -12,6 +12,7 @@ import formattedUndefined from '@/utils/formattedUndefined';
 interface Props {
   checklist: ChecklistPreview;
 }
+
 const ChecklistCard = ({ checklist }: Props) => {
   const navigate = useNavigate();
   const { checklistId, roomName, address, createdAt, deposit, rent, summary, isLiked } = checklist;

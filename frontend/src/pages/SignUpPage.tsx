@@ -2,19 +2,17 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { postSignUp } from '@/apis/user';
 import { BangBangIcon, BangGgoodTextIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
 import { ROUTE_PATH } from '@/constants/routePath';
-import useToast from '@/hooks/useToast';
+import usePostSignUpQuery from '@/hooks/query/usePostSignUpQuery';
 import useValidateInput from '@/hooks/useValidateInput';
 import { flexCenter, title3, title4 } from '@/styles/common';
 import { validateEmail, validateLength, validatePassword, validatePasswordConfirm } from '@/utils/authValidation';
 
 const SignUpPage = () => {
-  const { showToast } = useToast();
   const [postErrorMessage, setPostErrorMessage] = useState('');
   const navigate = useNavigate();
 
@@ -60,16 +58,17 @@ const SignUpPage = () => {
 
   const disabled = !isEmailValidated || !isNameValidated || !isPasswordValidated || !isPasswordConfirmValidated;
 
-  const handleSubmit = async () => {
-    const response = await postSignUp({ name, email, password });
-    if (response.status === 201) {
-      showToast({ message: '회원가입이 완료되었습니다.', type: 'confirm' });
-      navigate(ROUTE_PATH.signIn);
-    } else {
-      const errorData = await response.json();
-      const errorMessage = errorData.message;
-      setPostErrorMessage(errorMessage);
-    }
+  const { mutate, isSuccess } = usePostSignUpQuery();
+  if (isSuccess) navigate(ROUTE_PATH.signIn);
+
+  const handleSubmit = () => {
+    mutate(
+      { name, email, password },
+      {
+        onError: error => setPostErrorMessage(error.message),
+        onSuccess: () => setPostErrorMessage(''),
+      },
+    );
   };
 
   const handleMoveSignIn = () => {
@@ -81,7 +80,7 @@ const SignUpPage = () => {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.keyCode === 13 && !disabled) {
+    if (event.key === 'Enter' && !disabled) {
       handleSubmit();
     }
   };

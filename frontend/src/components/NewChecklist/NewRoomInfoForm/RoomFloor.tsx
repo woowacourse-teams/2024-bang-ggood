@@ -28,7 +28,7 @@ const RoomFloor = () => {
         <Input
           inputMode="decimal"
           width="medium"
-          disabled={floorLevel.rawValue === '반지하/지하'}
+          disabled={floorLevel.rawValue === '반지하/지하' || floorLevel.rawValue === '옥탑'}
           placeholder=""
           name="floor"
           value={floor.rawValue}

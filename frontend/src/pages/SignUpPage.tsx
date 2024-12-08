@@ -62,7 +62,13 @@ const SignUpPage = () => {
   if (isSuccess) navigate(ROUTE_PATH.signIn);
 
   const handleSubmit = () => {
-    mutate({ name, email, password });
+    mutate(
+      { name, email, password },
+      {
+        onError: error => setPostErrorMessage(error.message),
+        onSuccess: () => setPostErrorMessage(''),
+      },
+    );
   };
 
   const handleMoveSignIn = () => {

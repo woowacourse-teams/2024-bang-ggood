@@ -22,11 +22,11 @@ const AdminPage = () => {
   return (
     <S.PageWrapper>
       <S.QuestionBox>
-        <S.QuestionText>Is Hailey God?</S.QuestionText>
+        <S.QuestionText>방끗의 마스코트는?</S.QuestionText>
         <S.ButtonWrapper>
-          <S.Button color={'red'}>No</S.Button>
+          <S.Button color={'red'}>몰라요</S.Button>
           <Link to={ROUTE_PATH.articleEditor}>
-            <S.Button>Yes</S.Button>
+            <S.Button>방방이</S.Button>
           </Link>
         </S.ButtonWrapper>
       </S.QuestionBox>

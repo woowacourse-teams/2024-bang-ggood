@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { BangBangIcon, BangGgoodTextIcon } from '@/assets/assets';
@@ -13,7 +12,6 @@ import { flexCenter, title3, title4 } from '@/styles/common';
 import { validateEmail } from '@/utils/authValidation';
 
 const SignInPage = () => {
-  const [postErrorMessage, setPostErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const {
@@ -39,13 +37,7 @@ const SignInPage = () => {
 
   const { mutate: signIn } = usePostSignInQuery();
 
-  const handleSubmit = () =>
-    signIn(
-      { email, password },
-      {
-        onError: error => setPostErrorMessage(error.message),
-      },
-    );
+  const handleSubmit = () => signIn({ email, password });
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' && !disabled) {
@@ -82,7 +74,6 @@ const SignInPage = () => {
               type="password"
             />
           </FormField>
-          {postErrorMessage && <FormField.ErrorMessage value={postErrorMessage} />}
           <Button
             label="로그인 하기"
             size="full"

@@ -3,7 +3,7 @@ import { AmplitudeService } from '@/service/amplitude/AmplitudeService';
 const amplitudeService = new AmplitudeService();
 
 // Login Buttons
-export const trackBasicLoginButton = () => {
+export const trackEmailLoginButton = () => {
   amplitudeService.customTrack('[Click] 일반 로그인 버튼');
 };
 

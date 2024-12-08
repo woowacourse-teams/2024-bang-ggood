@@ -8,13 +8,13 @@ import { default as Marker } from '@/components/_common/Marker/Marker';
 import CategoryDetailModal from '@/components/RoomCompare/CategoryDetailModal';
 import CompareCard from '@/components/RoomCompare/CompareCard';
 import OptionDetailModal from '@/components/RoomCompare/OptionDetailModal';
+import { DEFAULT_POSITION } from '@/constants/map';
 import { OPTIONS } from '@/constants/options';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useGetCompareRoomsQuery from '@/hooks/query/useGetCompareRoomsQuery';
 import useModal from '@/hooks/useModal';
 import { flexCenter, flexRow } from '@/styles/common';
 import theme from '@/styles/theme';
-import { Position } from '@/types/address';
 
 export interface OptionDetail {
   optionId: number;
@@ -69,12 +69,19 @@ const RoomComparePage = () => {
   const handleClickBackward = () => {
     navigate(ROUTE_PATH.checklistList);
   };
-  const positions: Position[] = [
-    { latitude: 37.5061912, longitude: 127.0019228 },
-    { latitude: 37.5061912, longitude: 127.1266228 },
-  ];
 
   if (!rooms.length) return <div>loading</div>;
+
+  const positions = [
+    {
+      latitude: rooms[0].latitude ?? DEFAULT_POSITION.latitude,
+      longitude: rooms[0].longitude ?? DEFAULT_POSITION.longitude,
+    },
+    {
+      latitude: rooms[1].latitude ?? DEFAULT_POSITION.latitude,
+      longitude: rooms[1].longitude ?? DEFAULT_POSITION.longitude,
+    },
+  ];
 
   return (
     <>

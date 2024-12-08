@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/_common/Button/Button';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { trackBasicLoginButton } from '@/service/amplitude/trackEvent';
+import { trackEmailLoginButton } from '@/service/amplitude/trackEvent';
 
 const EmailLoginButton = () => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const EmailLoginButton = () => {
       isSquare
       onClick={() => {
         navigate(ROUTE_PATH.signIn);
-        trackBasicLoginButton();
+        trackEmailLoginButton();
       }}
     />
   );

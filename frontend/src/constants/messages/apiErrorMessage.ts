@@ -12,7 +12,7 @@ export const API_ERROR_MESSAGE = {
   USER_EMAIL_ALREADY_USED: '해당 이메일은 이미 사용 중이에요.',
   USER_INVALID_FORMAT: '이메일 또는 비밀번호 형식이 올바르지 않아요.',
   // TODO: 백엔드 변경 요쳥 필요
-  INVALID_PARAMETER: '이메일이 정상적으로 입력되지 않았어요. \n다시 시도해 주세요.',
+  INVALID_PARAMETER: '서버 문제가 발생했어요. \n다시 시도해 주세요.',
   BAD_REQUEST: '비밀번호가 입력되지 않았어요. \n다시 시도해 주세요.',
 
   // 방 정보 요청 형식 에러

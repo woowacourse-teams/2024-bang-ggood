@@ -8,16 +8,16 @@ import useToast from '@/hooks/useToast';
 import { boxShadowSpread, flexRow, title2, title3 } from '@/styles/common';
 
 const AdminPage = () => {
-  const { data: user } = useUserQuery();
+  const { data: user, isFetched } = useUserQuery();
   const { showToast } = useToast();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user?.userType !== 'ADMIN') {
+    if (isFetched && user?.userType !== 'ADMIN') {
       showToast({ message: '해당 페이지 접근 권한이 없습니다.', type: 'error' });
       navigate(ROUTE_PATH.root);
     }
-  }, []);
+  }, [isFetched]);
 
   return (
     <S.PageWrapper>

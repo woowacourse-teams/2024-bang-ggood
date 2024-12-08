@@ -1,5 +1,5 @@
 import { createStore } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 import { DEFAULT_POSITION } from '@/constants/map';
 import { Position } from '@/types/address';
@@ -33,6 +33,7 @@ const roomInfoNonValidatedStore = createStore<States & { actions: Actions }>()(
     }),
     {
       name: 'roomInfo-nonvalidated',
+      storage: createJSONStorage(() => sessionStorage),
       partialize: store => {
         const { actions: _, ...state } = store;
         return { ...state };

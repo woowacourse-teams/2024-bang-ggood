@@ -16,7 +16,10 @@ const ArticleCard = ({ article }: Props) => {
   const navigate = useNavigate();
   const { articleId, keyword, title, summary, createdAt } = article;
 
-  const { color500 } = getSeqColor(articleId);
+  const ARTICLE_KEYWORDS = ['방끗 활용법', '동네 추천', '우테코 생활', '자취 꿀팁'];
+  const currentColorIndex = ARTICLE_KEYWORDS.findIndex(keyword => keyword === article.keyword);
+  const { color500 } = getSeqColor(currentColorIndex);
+  const { color500: defaultColor500 } = getSeqColor(articleId);
 
   const handleClick = () => {
     trackArticleDetail(article.title);
@@ -25,7 +28,7 @@ const ArticleCard = ({ article }: Props) => {
 
   return (
     <S.Container onClick={handleClick} tabIndex={1}>
-      <S.Keyword bgColor={color500}> {keyword}</S.Keyword>
+      <S.Keyword bgColor={color500 ?? defaultColor500}> {keyword}</S.Keyword>
       <S.Title>{title}</S.Title>
       <S.Label>{summary}</S.Label>
       <S.Label>{formattedDate(createdAt)}</S.Label>

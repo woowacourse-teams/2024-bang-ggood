@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 import { AnswerType } from '@/types/answer';
 import { Category } from '@/types/category';
@@ -119,6 +119,7 @@ const useChecklistStore = create<ChecklistState>()(
     }),
     {
       name: 'checklist-answer',
+      storage: createJSONStorage(() => sessionStorage),
       partialize: ({ checklistCategoryQnA, categories }) => ({
         checklistCategoryQnA,
         categories,

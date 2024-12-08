@@ -2,21 +2,17 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getUserInfo } from '@/apis/user';
 import { BangBangIcon, BangGgoodTextIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
 import { ROUTE_PATH } from '@/constants/routePath';
 import usePostSignInQuery from '@/hooks/query/usePostSignInQuery';
-import useToast from '@/hooks/useToast';
 import useValidateInput from '@/hooks/useValidateInput';
-import amplitudeInitializer from '@/service/amplitude/amplitudeInitializer';
 import { flexCenter, title3, title4 } from '@/styles/common';
 import { validateEmail } from '@/utils/authValidation';
 
 const SignInPage = () => {
-  const { showToast } = useToast();
   const [postErrorMessage, setPostErrorMessage] = useState('');
   const navigate = useNavigate();
 
@@ -42,19 +38,11 @@ const SignInPage = () => {
   const disabled = !isEmailValidated || !isPasswordValidated;
 
   const { mutate: signIn } = usePostSignInQuery();
-  const { init } = amplitudeInitializer();
 
-  const handleSubmit = async () =>
-    await signIn(
+  const handleSubmit = () =>
+    signIn(
       { email, password },
       {
-        onSuccess: async () => {
-          const result = await getUserInfo();
-          init(result.userEmail);
-
-          showToast({ message: `${result?.userName}님, 환영합니다.`, type: 'confirm' });
-          return navigate(ROUTE_PATH.home);
-        },
         onError: error => setPostErrorMessage(error.message),
       },
     );
@@ -67,7 +55,6 @@ const SignInPage = () => {
 
   const handleMoveToSignUp = () => navigate(ROUTE_PATH.signUp);
   const handleMoveToResetPassword = () => navigate(ROUTE_PATH.resetPassword);
-
   const handleClickBackward = () => navigate(ROUTE_PATH.root);
 
   return (

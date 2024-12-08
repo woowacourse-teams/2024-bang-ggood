@@ -119,6 +119,7 @@ const useChecklistStore = create<ChecklistState>()(
     }),
     {
       name: 'checklist-answer',
+      getStorage: () => sessionStorage,
       partialize: ({ checklistCategoryQnA, categories }) => ({
         checklistCategoryQnA,
         categories,

@@ -66,6 +66,7 @@ const useSelectedOptionStore = create<OptionState & { actions: OptionAction }>()
     }),
     {
       name: 'checklist-answer-option',
+      getStorage: () => sessionStorage,
       partialize: state => ({
         selectedOptions: state.selectedOptions,
         // actions는 저장하지 않음

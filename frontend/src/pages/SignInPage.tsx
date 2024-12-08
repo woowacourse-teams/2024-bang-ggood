@@ -38,7 +38,6 @@ const SignInPage = () => {
   const { mutate: signIn } = usePostSignInQuery();
 
   const handleSubmit = () => signIn({ email, password });
-
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' && !disabled) {
       handleSubmit();

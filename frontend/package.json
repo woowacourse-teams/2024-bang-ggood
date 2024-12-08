@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.tsx",
   "license": "MIT",
+  "packageManager": "yarn@1.22.21",
   "scripts": {
     "build": "cross-env NODE_ENV=production API_ENV=production webpack --mode=production --config webpack.prod.js",
     "build:dev-fe": "cross-env NODE_ENV=production API_ENV=development webpack --mode=production --config webpack.prod.js",

@@ -22,3 +22,6 @@ export const EMPTY_INDICATOR = ' - ';
 export const MIN_GOOD_SCORE = 70;
 
 export const MIN_SOSO_SCORE = 30;
+
+// 체크리스트 작성
+export const BRIEF_COMMENT_MAX_LENGTH = 15;

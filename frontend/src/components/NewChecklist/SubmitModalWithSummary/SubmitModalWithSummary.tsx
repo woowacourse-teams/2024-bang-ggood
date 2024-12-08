@@ -6,6 +6,7 @@ import CounterBox from '@/components/_common/CounterBox/CounterBox';
 import FormField from '@/components/_common/FormField/FormField';
 import Modal from '@/components/_common/Modal/Modal';
 import { MODAL_MESSAGE } from '@/constants/messages/message';
+import { BRIEF_COMMENT_MAX_LENGTH } from '@/constants/system';
 import useMutateChecklist from '@/hooks/useMutateChecklist';
 import useRoomInfoValidated from '@/hooks/useRoomInfoValidated';
 import { trackSubmitChecklist } from '@/service/amplitude/trackEvent';
@@ -55,7 +56,7 @@ const SubmitModalWithSummary = ({
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length <= 15) summary.onChange(e);
+    if (e.target.value.length <= BRIEF_COMMENT_MAX_LENGTH) summary.onChange(e);
   };
 
   return (
@@ -71,11 +72,11 @@ const SubmitModalWithSummary = ({
             onChange={handleChange}
             name="summary"
             value={summary.rawValue}
-            maxLength={15}
+            maxLength={BRIEF_COMMENT_MAX_LENGTH}
             height={'small'}
           />
           <S.CounterContainer>
-            <CounterBox currentCount={summary.rawValue?.length || 0} totalCount={15} />
+            <CounterBox currentCount={summary.rawValue?.length || 0} totalCount={BRIEF_COMMENT_MAX_LENGTH} />
           </S.CounterContainer>
           <Button size="full" color="dark" onClick={handleSaveChecklist} isSquare label="체크리스트 저장하기" />
         </S.Wrapper>

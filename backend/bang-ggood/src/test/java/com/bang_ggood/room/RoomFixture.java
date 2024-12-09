@@ -46,7 +46,7 @@ public class RoomFixture {
         );
     }
 
-    public static RoomRequest ROOM_CREATE_REQUEST_EMPTY_STATION() {
+    public static RoomRequest ROOM_CREATE_REQUEST_EMPTY_LOCATION() {
         return new RoomRequest(
                 "방이름", "부산광역시 북구", "루터회관", "잠실",
                 10, 1000, 50, 5,

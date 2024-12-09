@@ -127,9 +127,9 @@ public class ChecklistFixture {
         );
     }
 
-    public static ChecklistRequestV1 CHECKLIST_CREATE_REQUEST_V1_EMPTY_STATION() {
+    public static ChecklistRequestV1 CHECKLIST_CREATE_REQUEST_V1_EMPTY_LOCATION() {
         return new ChecklistRequestV1(
-                RoomFixture.ROOM_CREATE_REQUEST_EMPTY_STATION(),
+                RoomFixture.ROOM_CREATE_REQUEST_EMPTY_LOCATION(),
                 List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(),
                         Option.SHOE_RACK.getId()),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),

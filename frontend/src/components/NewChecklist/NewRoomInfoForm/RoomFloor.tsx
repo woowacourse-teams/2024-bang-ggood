@@ -11,7 +11,7 @@ const RoomFloor = () => {
 
   const handleClickDropdown = (level: string) => {
     floorLevel.set(level);
-    if (level === '반지하/지하') {
+    if (level === '반지하/지하' || level === '옥탑') {
       floor.set('');
     }
   };

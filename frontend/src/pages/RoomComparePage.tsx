@@ -8,7 +8,6 @@ import { default as Marker } from '@/components/_common/Marker/Marker';
 import CategoryDetailModal from '@/components/RoomCompare/CategoryDetailModal';
 import CompareCard from '@/components/RoomCompare/CompareCard';
 import OptionDetailModal from '@/components/RoomCompare/OptionDetailModal';
-import { DEFAULT_POSITION } from '@/constants/map';
 import { OPTIONS } from '@/constants/options';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useGetCompareRoomsQuery from '@/hooks/query/useGetCompareRoomsQuery';
@@ -34,8 +33,6 @@ const RoomComparePage = () => {
   if (!roomId1 || !roomId2) throw new Error('잘못된 비교입니다.');
   const { data: rooms } = useGetCompareRoomsQuery(roomId1, roomId2);
 
-  if (!rooms) return;
-
   const formattedOptionDetail = () => {
     const optionsState: OptionDetail[] = OPTIONS.map(option => ({
       optionId: option.id,
@@ -43,7 +40,7 @@ const RoomComparePage = () => {
       hasOption: [false, false],
     }));
 
-    rooms.forEach((room, index) => {
+    rooms?.forEach((room, index) => {
       room.options.forEach(optionId => {
         const targetOption = optionsState.find(option => option.optionId === optionId)!;
         targetOption.hasOption[index] = true;
@@ -70,18 +67,12 @@ const RoomComparePage = () => {
     navigate(ROUTE_PATH.checklistList);
   };
 
-  if (!rooms.length) return <div>loading</div>;
+  if (!rooms) return <div>loading</div>;
 
-  const positions = [
-    {
-      latitude: rooms[0].latitude ?? DEFAULT_POSITION.latitude,
-      longitude: rooms[0].longitude ?? DEFAULT_POSITION.longitude,
-    },
-    {
-      latitude: rooms[1].latitude ?? DEFAULT_POSITION.latitude,
-      longitude: rooms[1].longitude ?? DEFAULT_POSITION.longitude,
-    },
-  ];
+  const positions = rooms?.map(room => ({
+    latitude: room.geolocation.latitude,
+    longitude: room.geolocation.longitude,
+  }));
 
   return (
     <>

@@ -5,7 +5,7 @@ export const roomsForCompare: { checklists: RoomCompare[] } = {
   checklists: [
     {
       checklistId: 1,
-      roomName: '건대입구역 10분거리 방',
+      roomName: '사당역',
       address: '서울 송파구 올림픽로35다길 42',
       buildingName: '한국루터회관',
       deposit: 1000,
@@ -108,7 +108,7 @@ export const roomsForCompare: { checklists: RoomCompare[] } = {
       },
       geolocation: {
         latitude: 37.5061912,
-        longitude: 127.2508228,
+        longitude: 127.0518228,
       },
     },
   ],

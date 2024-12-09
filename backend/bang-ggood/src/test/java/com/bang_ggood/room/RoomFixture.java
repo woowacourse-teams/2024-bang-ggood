@@ -46,6 +46,18 @@ public class RoomFixture {
         );
     }
 
+    public static RoomRequest ROOM_CREATE_REQUEST_EMPTY_STATION() {
+        return new RoomRequest(
+                "방이름", "부산광역시 북구", "루터회관", "잠실",
+                10, 1000, 50, 5,
+                List.of(1, 3), FloorLevel.GROUND.getName(), 10,
+                Structure.TWO_ROOM.getName(), 3.3, null, null,
+                12, OccupancyMonth.APRIL.getMonth(),
+                OccupancyPeriod.EARLY.getPeriod(),
+                "방끗공인중개사", "메모", "한줄평"
+        );
+    }
+
     public static RoomRequest ROOM_UPDATE_REQUEST() {
         return new RoomRequest(
                 "방이름", "부산광역시 루터회관", "잠실역", "루터회관",

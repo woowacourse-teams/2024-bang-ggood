@@ -70,8 +70,8 @@ const RoomComparePage = () => {
   if (!rooms) return <div>loading</div>;
 
   const positions = rooms?.map(room => ({
-    latitude: room.geolocation.latitude,
-    longitude: room.geolocation.longitude,
+    latitude: room?.latitude ?? null,
+    longitude: room?.longitude ?? null,
   }));
 
   return (
@@ -93,7 +93,7 @@ const RoomComparePage = () => {
             </S.RoomTitle>
           </S.TitleFlex>
         </S.RoomGrid>
-        <RoomCompareMap positions={positions} />
+        {positions && <RoomCompareMap positions={positions} />}
         <S.RoomGrid>
           {rooms?.map((room, index) => (
             <CompareCard

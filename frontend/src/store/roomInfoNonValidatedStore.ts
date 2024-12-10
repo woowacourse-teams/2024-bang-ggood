@@ -1,7 +1,6 @@
 import { createStore } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
-import { DEFAULT_POSITION } from '@/constants/map';
 import { Position } from '@/types/address';
 import { SubwayStation } from '@/types/subway';
 
@@ -18,8 +17,7 @@ interface Actions {
 
 const defaultStates = {
   nearSubwayStation: [],
-
-  position: DEFAULT_POSITION,
+  position: { latitude: null, longitude: null },
 };
 
 const roomInfoNonValidatedStore = createStore<States & { actions: Actions }>()(

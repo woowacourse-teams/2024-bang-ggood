@@ -10,23 +10,21 @@ interface Props {
   size?: Size;
   isCircle: boolean;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
-const Marker = ({ isCircle, text, backgroundColor, size = 'medium', onClick }: Props) => {
+const Marker = ({ disabled = false, isCircle, text, backgroundColor, size = 'medium', onClick }: Props) => {
   const sharedProps = {
+    disabled,
     isCircle,
     size,
     backgroundColor,
   };
 
-  return onClick ? (
-    <S.Button {...sharedProps} onClick={onClick}>
+  return (
+    <S.Button {...sharedProps} onClick={onClick} disabled={disabled}>
       <S.Text size={size}>{text}</S.Text>
     </S.Button>
-  ) : (
-    <S.Box {...sharedProps} onClick={onClick}>
-      <S.Text size={size}>{text}</S.Text>
-    </S.Box>
   );
 };
 
@@ -45,7 +43,7 @@ const S = {
 
     text-align: center;
   `,
-  Button: styled.button<{ isCircle: boolean; size: Size; backgroundColor: string }>`
+  Button: styled.button<{ isCircle: boolean; size: Size; backgroundColor: string; disabled: boolean }>`
     ${flexCenter}
     display: inline-block;
     width: ${({ isCircle, size }) => isCircle && sizeMap[size]};
@@ -53,7 +51,7 @@ const S = {
     padding: ${({ isCircle }) => (isCircle ? '0.3rem' : '0.3rem 0.6rem')};
     border-radius: 2rem;
 
-    background-color: ${({ backgroundColor }) => backgroundColor};
+    background-color: ${({ theme, backgroundColor, disabled }) => (disabled ? theme.palette.grey300 : backgroundColor)};
 
     text-align: center;
   `,

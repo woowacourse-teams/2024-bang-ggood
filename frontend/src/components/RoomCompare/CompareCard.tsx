@@ -17,7 +17,11 @@ interface Props {
 const CompareCard = ({ room, openOptionModal, openCategoryModal }: Props) => {
   return (
     <S.Container>
-      <CompareCardItem height={7} label={'주소'} item={<S.Item>{room.address}</S.Item>} />
+      <CompareCardItem
+        height={7}
+        label={'주소'}
+        item={<S.Item>{room.address?.length ? room.address : EMPTY_INDICATOR}</S.Item>}
+      />
       <CompareCardItem label={'층수'} item={<S.Item>{room.floor ? `${room.floor}층` : EMPTY_INDICATOR}</S.Item>} />
       <CompareCardItem
         label={'보증금 / 월세'}

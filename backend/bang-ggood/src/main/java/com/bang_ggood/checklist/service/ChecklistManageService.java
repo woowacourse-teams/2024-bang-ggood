@@ -349,8 +349,8 @@ public class ChecklistManageService {
     }
 
     private void updateChecklistStations(RoomRequest roomRequest, Checklist checklist) {
-        double latitude = roomRequest.latitude();
-        double longitude = roomRequest.longitude();
+        Double latitude = roomRequest.latitude();
+        Double longitude = roomRequest.longitude();
         checklistStationService.updateChecklistStation(checklist, latitude, longitude);
     }
 }

@@ -18,7 +18,7 @@ public class ChecklistStationService {
     private final SubwayStationService subwayStationService;
 
     @Transactional
-    public void createChecklistStations(Checklist checklist, double latitude, double longitude) {
+    public void createChecklistStations(Checklist checklist, Double latitude, Double longitude) {
         saveChecklistStations(checklist, latitude, longitude);
     }
 
@@ -28,7 +28,7 @@ public class ChecklistStationService {
     }
 
     @Transactional
-    public void updateChecklistStation(Checklist checklist, double latitude, double longitude) {
+    public void updateChecklistStation(Checklist checklist, Double latitude, Double longitude) {
         checklistStationRepository.deleteAllByChecklistId(checklist.getId());
         saveChecklistStations(checklist, latitude, longitude);
     }
@@ -38,7 +38,10 @@ public class ChecklistStationService {
         checklistStationRepository.deleteAllByChecklistId(checklistId);
     }
 
-    private void saveChecklistStations(Checklist checklist, double latitude, double longitude) {
+    private void saveChecklistStations(Checklist checklist, Double latitude, Double longitude) {
+        if (latitude == null || longitude == null) {
+            return;
+        }
         List<SubwayStationResponse> responses = subwayStationService.readNearestStation(latitude, longitude)
                 .getStations();
         List<ChecklistStation> checklistStations = new ArrayList<>();

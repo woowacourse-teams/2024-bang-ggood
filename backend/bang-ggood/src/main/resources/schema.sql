@@ -159,6 +159,7 @@ CREATE TABLE article
     keyword     VARCHAR(255),
     summary     VARCHAR(255),
     thumbnail   VARCHAR(2500),
+    view_count  BIGINT default 0,
     created_at  TIMESTAMP(6),
     modified_at TIMESTAMP(6),
     deleted     BOOLEAN

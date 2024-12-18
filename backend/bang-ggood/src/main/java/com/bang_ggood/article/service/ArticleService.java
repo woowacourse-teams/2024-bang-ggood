@@ -24,9 +24,10 @@ public class ArticleService {
         return article.getId();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public ArticleResponse readArticle(Long id) {
         Article article = articleRepository.getById(id);
+        article.increaseViewCount();
         return ArticleResponse.from(article);
     }
 

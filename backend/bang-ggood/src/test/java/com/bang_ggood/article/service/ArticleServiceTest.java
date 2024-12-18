@@ -94,4 +94,19 @@ public class ArticleServiceTest extends IntegrationTestSupport {
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.ARTICLE_NOT_FOUND.getMessage());
     }
+
+    @DisplayName("아티클 조회시 조회수 증가 성공")
+    @Test
+    void increaseViewCount() {
+        // given
+        Article article = ArticleFixture.ARTICLE();
+        articleRepository.save(article);
+
+        // when
+        articleService.readArticle(article.getId());
+
+        // then
+        assertThat(articleRepository.getById(article.getId()).getViewCount())
+                .isEqualTo(1);
+    }
 }

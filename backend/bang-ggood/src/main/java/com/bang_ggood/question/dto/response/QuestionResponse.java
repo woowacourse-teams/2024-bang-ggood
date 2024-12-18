@@ -16,8 +16,8 @@ public class QuestionResponse {
         this.title = question.getTitle();
         this.subtitle = question.getSubtitle();
         this.highlights = highlights.stream()
-                            .map(Highlight::getName)
-                            .toList();
+                .map(Highlight::getName)
+                .toList();
     }
 
     public Integer getQuestionId() {

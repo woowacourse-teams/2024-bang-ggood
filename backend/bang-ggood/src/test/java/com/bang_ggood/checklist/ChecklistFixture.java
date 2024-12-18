@@ -13,7 +13,6 @@ import com.bang_ggood.question.QuestionFixture;
 import com.bang_ggood.question.dto.request.QuestionRequest;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
-import com.bang_ggood.station.dto.request.ChecklistStationRequest;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import java.util.List;
@@ -124,8 +123,7 @@ public class ChecklistFixture {
                 List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(),
                         Option.SHOE_RACK.getId()),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
-                        QUESTION_3_CREATE_REQUEST(), QUESTION_5_CREATE_REQUEST()),
-                ChecklistStationRequest.of(38, 127)
+                        QUESTION_3_CREATE_REQUEST(), QUESTION_5_CREATE_REQUEST())
         );
     }
 
@@ -162,8 +160,7 @@ public class ChecklistFixture {
                 RoomFixture.ROOM_UPDATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.INDUCTION.getId(),
                 Option.BED.getId(), Option.WASHING_MACHINE.getId()),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
-                        QUESTION_3_CREATE_REQUEST(), QUESTION_5_UPDATE_REQUEST()),
-                ChecklistStationRequest.of(37.5, 127.1)
+                        QUESTION_3_CREATE_REQUEST(), QUESTION_5_UPDATE_REQUEST())
         );
     }
 

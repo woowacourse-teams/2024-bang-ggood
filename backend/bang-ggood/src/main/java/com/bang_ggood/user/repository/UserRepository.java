@@ -48,5 +48,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     void resaveByEmailAndLoginType(@Param("email") Email email, @Param("loginType") LoginType loginType);
 
     @Query("SELECT u FROM User u WHERE u.email = :email and u.loginType = :loginType")
-    Optional<User> findByEmailAndLoginTypeWithDeleted(@Param("email") Email email, @Param("loginType")LoginType loginType);
+    Optional<User> findByEmailAndLoginTypeWithDeleted(@Param("email") Email email,
+                                                      @Param("loginType") LoginType loginType);
 }

@@ -120,6 +120,14 @@ public class Checklist extends BaseEntity {
         return room.getAddress();
     }
 
+    public Double getRoomLatitude() {
+        return room.getLatitude();
+    }
+
+    public Double getRoomLongitude() {
+        return room.getLongitude();
+    }
+
     public String getRoomBuildingName() {
         return room.getBuildingName();
     }

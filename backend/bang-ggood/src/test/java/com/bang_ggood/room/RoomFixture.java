@@ -52,7 +52,7 @@ public class RoomFixture {
                 10, 1000, 50, 5,
                 List.of(1, 3), FloorLevel.GROUND.getName(), 10,
                 Structure.OPEN_ONE_ROOM.getName(), 3.3,
-                37.5153, 127.1030 ,
+                37.5153, 127.1030,
                 12, OccupancyMonth.APRIL.getMonth(),
                 OccupancyPeriod.EARLY.getPeriod(),
                 "방끗공인중개사", "메모추가", "한줄평"

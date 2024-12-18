@@ -7,9 +7,13 @@ import com.bang_ggood.article.dto.response.ArticlesResponse;
 import com.bang_ggood.article.dto.response.ArticlesResponses;
 import com.bang_ggood.article.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+
+import static com.bang_ggood.global.config.cache.CacheName.ARTICLE;
 
 @RequiredArgsConstructor
 @Service
@@ -24,7 +28,8 @@ public class ArticleService {
         return article.getId();
     }
 
-    @Transactional
+    @Cacheable(cacheNames = ARTICLE, key = "#id")
+    @Transactional(readOnly = true)
     public ArticleResponse readArticle(Long id) {
         Article article = articleRepository.getById(id);
         article.increaseViewCount();
@@ -39,6 +44,7 @@ public class ArticleService {
         return new ArticlesResponses(articles);
     }
 
+    @CacheEvict(cacheNames = ARTICLE, key = "#id")
     @Transactional
     public void deleteArticle(Long id) {
         articleRepository.deleteById(id);

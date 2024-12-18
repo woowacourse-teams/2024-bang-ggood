@@ -22,9 +22,9 @@ class ChecklistQuestionTest extends IntegrationTestSupport {
         Room room = RoomFixture.ROOM_1();
         User user = UserFixture.USER1();
 
-        ChecklistQuestion checklistQuestion1 = ChecklistQuestionFixture.CHECKLIST1_QUESTION1(
+        ChecklistQuestion checklistQuestion1 = ChecklistQuestionFixture.CHECKLIST1_QUESTION1_BAD(
                 ChecklistFixture.CHECKLIST1_USER1(room, user), QuestionFixture.QUESTION1_CATEGORY1);
-        ChecklistQuestion checklistQuestion2 = ChecklistQuestionFixture.CHECKLIST1_QUESTION2(
+        ChecklistQuestion checklistQuestion2 = ChecklistQuestionFixture.CHECKLIST1_QUESTION2_GOOD(
                 ChecklistFixture.CHECKLIST1_USER1(room, user), QuestionFixture.QUESTION2_CATEGORY1);
 
         //when & then
@@ -37,9 +37,9 @@ class ChecklistQuestionTest extends IntegrationTestSupport {
         //given
         Room room = RoomFixture.ROOM_1();
         User user = UserFixture.USER1();
-        ChecklistQuestion checklistQuestion = ChecklistQuestionFixture.CHECKLIST1_QUESTION1(
+        ChecklistQuestion checklistQuestion = ChecklistQuestionFixture.CHECKLIST1_QUESTION1_BAD(
                 ChecklistFixture.CHECKLIST1_USER1(room, user), QuestionFixture.QUESTION1_CATEGORY1);
-        ChecklistQuestion compareChecklistQuestion = ChecklistQuestionFixture.CHECKLIST1_QUESTION1(
+        ChecklistQuestion compareChecklistQuestion = ChecklistQuestionFixture.CHECKLIST1_QUESTION1_BAD(
                 ChecklistFixture.CHECKLIST1_USER1(room, user), QuestionFixture.QUESTION1_CATEGORY1);
 
         //when & then

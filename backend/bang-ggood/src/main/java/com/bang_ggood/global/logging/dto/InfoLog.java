@@ -6,29 +6,33 @@ import java.util.UUID;
 
 public class InfoLog extends BaseLog {
 
-    private final String infoMethodName;
+    private final Long userId;
 
-    public InfoLog(LocalDateTime requestTime, String requestUrl, String uuid, String infoMethodName) {
+    public InfoLog(LocalDateTime requestTime, String requestUrl, String uuid, Long userId) {
         super(requestTime, requestUrl, uuid);
-        this.infoMethodName = infoMethodName;
+        this.userId = userId;
     }
 
-    public static InfoLog of(HttpServletRequest request, String methodName) {
+    public static InfoLog of(HttpServletRequest request, Long userId) {
         return new InfoLog(
                 LocalDateTime.now(),
                 request.getMethod() + ' ' + request.getRequestURI(),
                 UUID.randomUUID().toString(),
-                methodName
+                userId
         );
     }
 
-    public String getInfoMethodName() {
-        return infoMethodName;
+    public Long getUserId() {
+        return userId;
     }
 
     @Override
     public String toString() {
+        if (userId == null) {
+            return super.toString() + '\'';
+        }
+
         return super.toString() + '\'' +
-                ", infoMessage='" + infoMethodName + '\'';
+                ", userId='" + userId + '\'';
     }
 }

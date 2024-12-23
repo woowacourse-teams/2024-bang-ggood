@@ -8,6 +8,7 @@ import com.bang_ggood.article.dto.response.ArticlesResponses;
 import com.bang_ggood.article.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +42,13 @@ public class ArticleService {
                 .map(ArticlesResponse::from)
                 .toList();
         return new ArticlesResponses(articles);
+    }
+
+    @CachePut(cacheNames = ARTICLE, key = "#id")
+    @Transactional
+    public void updateArticle(Long id, Article updateArticle) {
+        Article article = articleRepository.getById(id);
+        article.change(updateArticle);
     }
 
     @CacheEvict(cacheNames = ARTICLE, key = "#id")

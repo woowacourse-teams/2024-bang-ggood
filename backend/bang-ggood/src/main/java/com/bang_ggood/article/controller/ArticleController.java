@@ -1,6 +1,7 @@
 package com.bang_ggood.article.controller;
 
 import com.bang_ggood.article.dto.request.ArticleCreateRequest;
+import com.bang_ggood.article.dto.request.ArticleUpdateRequest;
 import com.bang_ggood.article.dto.response.ArticleResponse;
 import com.bang_ggood.article.dto.response.ArticlesResponses;
 import com.bang_ggood.article.service.ArticleService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import java.net.URI;
@@ -41,6 +43,13 @@ public class ArticleController {
     @GetMapping("/articles")
     public ResponseEntity<ArticlesResponses> readArticles() {
         return ResponseEntity.ok(articleService.readArticles());
+    }
+
+    @PutMapping("/articles/{id}")
+    public ResponseEntity<Void> updateArticle(@AdminPrincipal User user,
+                                              @PathVariable("id") Long id, @Valid @RequestBody ArticleUpdateRequest request) {
+        articleService.updateArticle(id, request.toEntity());
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/articles/{id}")

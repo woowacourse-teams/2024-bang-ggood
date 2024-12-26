@@ -5,6 +5,7 @@ import com.bang_ggood.article.dto.response.ArticleResponse;
 import com.bang_ggood.article.repository.ArticleRepository;
 import com.bang_ggood.article.service.ArticleService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -35,6 +36,9 @@ class CacheTest {
                 .thenReturn(article);
     }
 
+    @Disabled("캐싱을 이용할 경우 증가된 조회수도 불러올 수 없는 문제가 있습니다" +
+            "[아티클 내용]과 [아티클 조회수]를 도메인 분리하면 캐싱 가능한데" +
+            "어느 정도 효과가 있을 지는 의문이 있어 우선 캐시 제거했습니다")
     @DisplayName("캐시가 정상적으로 작동한다.")
     @Test
     void cacheTest() {

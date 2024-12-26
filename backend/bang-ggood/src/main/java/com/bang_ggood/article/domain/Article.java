@@ -38,6 +38,14 @@ public class Article extends BaseEntity {
         this.thumbnail = thumbnail;
     }
 
+    public void change(Article article) {
+        this.title = article.title;
+        this.content = article.content;
+        this.keyword = article.keyword;
+        this.summary = article.summary;
+        this.thumbnail = article.thumbnail;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

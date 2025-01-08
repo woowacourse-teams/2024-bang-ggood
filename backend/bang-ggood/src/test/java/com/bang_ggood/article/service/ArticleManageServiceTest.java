@@ -22,6 +22,7 @@ public class ArticleManageServiceTest extends IntegrationTestSupport {
 
     @Autowired
     ArticleManageService articleManageService;
+
     @Autowired
     ArticleRepository articleRepository;
 

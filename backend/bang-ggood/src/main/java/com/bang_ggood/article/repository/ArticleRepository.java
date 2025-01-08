@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,4 +32,11 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
             "SET a.deleted = true " +
             "WHERE a.id = :id")
     void deleteById(@Param("id") Long id);
+
+    @Transactional
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Query("UPDATE Article a "
+            + "SET a.viewCount = :viewCount "
+            + "WHERE a.id = :id")
+    void updateViewCount(@Param("id") long id, @Param("viewCount") Long viewCount);
 }

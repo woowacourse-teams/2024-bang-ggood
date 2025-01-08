@@ -74,4 +74,19 @@ public class ArticleRepositoryTest extends IntegrationTestSupport {
         // when & then
         assertThat(articleRepository.findLatestArticles()).containsExactly(article3, article2);
     }
+
+    @DisplayName("아티클 조회수 업데이트 성공")
+    @Test
+    void updateViewCount() {
+        // given
+        Article article = articleRepository.save(ArticleFixture.ARTICLE());
+        Long newViewCount = 100L;
+
+        // when
+        articleRepository.updateViewCount(article.getId(), newViewCount);
+
+        // then
+        Article updatedArticle = articleRepository.getById(article.getId());
+        assertThat(updatedArticle.getViewCount()).isEqualTo(newViewCount);
+    }
 }

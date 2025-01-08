@@ -4,6 +4,7 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.article.ArticleFixture;
 import com.bang_ggood.article.domain.Article;
 import com.bang_ggood.article.dto.request.ArticleCreateRequest;
+import com.bang_ggood.article.dto.response.ArticleResponse;
 import com.bang_ggood.article.dto.response.ArticlesResponse;
 import com.bang_ggood.article.repository.ArticleRepository;
 import com.bang_ggood.global.exception.BangggoodException;
@@ -95,18 +96,16 @@ public class ArticleServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.ARTICLE_NOT_FOUND.getMessage());
     }
 
-    @DisplayName("아티클 조회시 조회수 증가 성공")
+    @DisplayName("아티클 조회 시 조회수 증가 성공")
     @Test
     void increaseViewCount() {
         // given
-        Article article = ArticleFixture.ARTICLE();
-        articleRepository.save(article);
+        Long articleId = articleRepository.save(ArticleFixture.ARTICLE()).getId();
 
         // when
-        articleService.readArticle(article.getId());
+        ArticleResponse article = articleService.readArticle(articleId);
 
         // then
-        assertThat(articleRepository.getById(article.getId()).getViewCount())
-                .isEqualTo(1);
+        assertThat(article.viewCount()).isEqualTo(1);
     }
 }

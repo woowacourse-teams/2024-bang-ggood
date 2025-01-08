@@ -69,9 +69,9 @@ public class ArticleRepositoryTest extends IntegrationTestSupport {
         Article article1 = articleRepository.save(ArticleFixture.ARTICLE_1());
         Article article2 = articleRepository.save(ArticleFixture.ARTICLE_2());
         Article article3 = articleRepository.save(ArticleFixture.ARTICLE_3());
-        articleRepository.deleteById(ArticleFixture.ARTICLE_1().getId());
+        articleRepository.deleteById(article1.getId());
 
         // when & then
-        assertThat(articleRepository.findLatestArticles()).containsExactly(article3, article2, article1);
+        assertThat(articleRepository.findLatestArticles()).containsExactly(article3, article2);
     }
 }

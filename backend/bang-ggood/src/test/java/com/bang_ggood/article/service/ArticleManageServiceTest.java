@@ -18,10 +18,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class ArticleServiceTest extends IntegrationTestSupport {
+public class ArticleManageServiceTest extends IntegrationTestSupport {
 
     @Autowired
-    ArticleService articleService;
+    ArticleManageService articleManageService;
     @Autowired
     ArticleRepository articleRepository;
 
@@ -32,7 +32,7 @@ public class ArticleServiceTest extends IntegrationTestSupport {
         ArticleCreateRequest request = ArticleFixture.ARTICLE_CREATE_REQUEST();
 
         // when
-        Long articleId = articleService.createArticle(request);
+        Long articleId = articleManageService.createArticle(request);
 
         // then
         assertThat(articleRepository.getById(articleId).getTitle())
@@ -46,7 +46,7 @@ public class ArticleServiceTest extends IntegrationTestSupport {
         Article article = articleRepository.save(ArticleFixture.ARTICLE());
 
         // when & then
-        assertThatCode(() -> articleService.readArticle(article.getId()))
+        assertThatCode(() -> articleManageService.readArticle(article.getId()))
                 .doesNotThrowAnyException();
     }
 
@@ -57,7 +57,7 @@ public class ArticleServiceTest extends IntegrationTestSupport {
         long articleId = Long.MAX_VALUE;
 
         // when & then
-        assertThatThrownBy(() -> articleService.readArticle(articleId))
+        assertThatThrownBy(() -> articleManageService.readArticle(articleId))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.ARTICLE_NOT_FOUND.getMessage());
     }
@@ -72,7 +72,7 @@ public class ArticleServiceTest extends IntegrationTestSupport {
         Article article4 = articleRepository.save(ArticleFixture.ARTICLE_4());
 
         // when
-        List<String> articleTitles = articleService.readArticles().articles().stream()
+        List<String> articleTitles = articleManageService.readArticles().articles().stream()
                 .map(ArticlesResponse::title)
                 .toList();
 
@@ -88,10 +88,10 @@ public class ArticleServiceTest extends IntegrationTestSupport {
         Article article = articleRepository.save(ArticleFixture.ARTICLE());
 
         // when
-        articleService.deleteArticle(article.getId());
+        articleManageService.deleteArticle(article.getId());
 
         //then
-        assertThatThrownBy(() -> articleService.readArticle(article.getId()))
+        assertThatThrownBy(() -> articleManageService.readArticle(article.getId()))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.ARTICLE_NOT_FOUND.getMessage());
     }
@@ -103,7 +103,7 @@ public class ArticleServiceTest extends IntegrationTestSupport {
         Long articleId = articleRepository.save(ArticleFixture.ARTICLE()).getId();
 
         // when
-        ArticleResponse article = articleService.readArticle(articleId);
+        ArticleResponse article = articleManageService.readArticle(articleId);
 
         // then
         assertThat(article.viewCount()).isEqualTo(1);

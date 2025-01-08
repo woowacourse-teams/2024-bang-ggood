@@ -43,6 +43,7 @@ public class ArticleViewService {
         if (cache != null) {
             syncAllArticleViewCounts(cache);
             cache.clear();
+            cacheArticleIds.clear();
         }
     }
 

@@ -4,6 +4,7 @@ import com.bang_ggood.article.domain.Article;
 import com.bang_ggood.article.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +33,13 @@ public class ArticleService {
     @Transactional(readOnly = true)
     public List<Article> readArticles() {
         return articleRepository.findLatestArticles();
+    }
+
+    @CachePut(cacheNames = ARTICLE, key = "#id")
+    @Transactional
+    public void updateArticle(Long id, Article updateArticle) {
+        Article article = articleRepository.getById(id);
+        article.change(updateArticle);
     }
 
     @CacheEvict(cacheNames = ARTICLE, key = "#id")

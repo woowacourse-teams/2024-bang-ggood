@@ -17,6 +17,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class ArticleManageServiceTest extends IntegrationTestSupport {
 
@@ -80,6 +81,28 @@ public class ArticleManageServiceTest extends IntegrationTestSupport {
         // then
         assertThat(articleTitles).containsExactly(article4.getTitle(), article3.getTitle(), article2.getTitle(),
                 article1.getTitle());
+    }
+
+    @DisplayName("아티클 업데이트 성공")
+    @Test
+    void updateArticle() {
+        // given
+        Article article = articleRepository.save(ArticleFixture.ARTICLE());
+        Article updateArticle = ArticleFixture.ARTICLE_1();
+        Long articleId = article.getId();
+
+        // when
+        articleService.updateArticle(articleId, updateArticle);
+
+        // then
+        Article updatedArticle = articleRepository.getById(articleId);
+        assertAll(
+                () -> assertThat(updatedArticle.getTitle()).isEqualTo(updateArticle.getTitle()),
+                () -> assertThat(updatedArticle.getContent()).isEqualTo(updateArticle.getContent()),
+                () -> assertThat(updatedArticle.getKeyword()).isEqualTo(updateArticle.getKeyword()),
+                () -> assertThat(updatedArticle.getSummary()).isEqualTo(updateArticle.getSummary()),
+                () -> assertThat(updatedArticle.getThumbnail()).isEqualTo(updateArticle.getThumbnail())
+        );
     }
 
     @DisplayName("아티클 삭제 성공")

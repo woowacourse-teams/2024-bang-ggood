@@ -42,6 +42,7 @@ public class ArticleViewService {
         Cache cache = cacheManager.getCache(ARTICLE);
         if (cache != null) {
             syncAllArticleViewCounts(cache);
+            cache.clear();
         }
     }
 

@@ -4,6 +4,7 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.article.ArticleFixture;
 import com.bang_ggood.article.domain.Article;
 import com.bang_ggood.article.dto.request.ArticleCreateRequest;
+import com.bang_ggood.article.dto.request.ArticleUpdateRequest;
 import com.bang_ggood.article.dto.response.ArticleResponse;
 import com.bang_ggood.article.dto.response.ArticlesResponse;
 import com.bang_ggood.article.repository.ArticleRepository;
@@ -87,21 +88,21 @@ public class ArticleManageServiceTest extends IntegrationTestSupport {
     @Test
     void updateArticle() {
         // given
-        Article article = articleRepository.save(ArticleFixture.ARTICLE());
-        Article updateArticle = ArticleFixture.ARTICLE_1();
+        Article article = articleRepository.save(ArticleFixture.ARTICLE_1());
+        ArticleUpdateRequest updateArticle = ArticleFixture.ARTICLE_UPDATE_REQUEST();
         Long articleId = article.getId();
 
         // when
-        articleService.updateArticle(articleId, updateArticle);
+        articleManageService.updateArticle(articleId, updateArticle);
 
         // then
         Article updatedArticle = articleRepository.getById(articleId);
         assertAll(
-                () -> assertThat(updatedArticle.getTitle()).isEqualTo(updateArticle.getTitle()),
-                () -> assertThat(updatedArticle.getContent()).isEqualTo(updateArticle.getContent()),
-                () -> assertThat(updatedArticle.getKeyword()).isEqualTo(updateArticle.getKeyword()),
-                () -> assertThat(updatedArticle.getSummary()).isEqualTo(updateArticle.getSummary()),
-                () -> assertThat(updatedArticle.getThumbnail()).isEqualTo(updateArticle.getThumbnail())
+                () -> assertThat(updatedArticle.getTitle()).isEqualTo(updateArticle.title()),
+                () -> assertThat(updatedArticle.getContent()).isEqualTo(updateArticle.content()),
+                () -> assertThat(updatedArticle.getKeyword()).isEqualTo(updateArticle.keyword()),
+                () -> assertThat(updatedArticle.getSummary()).isEqualTo(updateArticle.summary()),
+                () -> assertThat(updatedArticle.getThumbnail()).isEqualTo(updateArticle.thumbnail())
         );
     }
 

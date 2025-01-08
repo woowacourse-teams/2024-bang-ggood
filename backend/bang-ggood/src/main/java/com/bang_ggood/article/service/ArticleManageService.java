@@ -2,6 +2,7 @@ package com.bang_ggood.article.service;
 
 import com.bang_ggood.article.domain.Article;
 import com.bang_ggood.article.dto.request.ArticleCreateRequest;
+import com.bang_ggood.article.dto.request.ArticleUpdateRequest;
 import com.bang_ggood.article.dto.response.ArticleResponse;
 import com.bang_ggood.article.dto.response.ArticlesResponse;
 import com.bang_ggood.article.dto.response.ArticlesResponses;
@@ -39,7 +40,14 @@ public class ArticleManageService {
     }
 
     @Transactional
+    public void updateArticle(Long id, ArticleUpdateRequest request) {
+        articleViewService.syncViewCounts();
+        articleService.updateArticle(id, request.toEntity());
+    }
+
+    @Transactional
     public void deleteArticle(Long id) {
+        articleViewService.syncViewCounts();
         articleService.deleteArticle(id);
     }
 }

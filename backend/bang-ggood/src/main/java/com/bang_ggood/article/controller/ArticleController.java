@@ -45,7 +45,7 @@ public class ArticleController {
     @PutMapping("/articles/{id}")
     public ResponseEntity<Void> updateArticle(@AdminPrincipal User user,
                                               @PathVariable("id") Long id, @Valid @RequestBody ArticleUpdateRequest request) {
-        articleService.updateArticle(id, request.toEntity());
+        articleManageService.updateArticle(id, request);
         return ResponseEntity.noContent().build();
     }
 

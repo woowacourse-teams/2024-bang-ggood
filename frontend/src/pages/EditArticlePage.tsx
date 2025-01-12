@@ -1,29 +1,49 @@
 import styled from '@emotion/styled';
 import MarkdownEditor from '@uiw/react-markdown-editor';
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import Button from '@/components/_common/Button/Button';
-import FormField from '@/components/_common/FormField/FormField'; // 예시로 주신 FormField 컴포넌트 사용
+import FormField from '@/components/_common/FormField/FormField';
 import DesktopLayout from '@/components/_common/layout/DesktopLayout';
-import usePostArticleQuery from '@/hooks/query/usePostArticleQuery';
+import useGetArticleQuery from '@/hooks/query/useGetArticleQuery';
+import usePutArticleQuery from '@/hooks/query/usePutArticleQuery';
+import useArticleForm from '@/hooks/useArticleForm'; // 커스텀 훅 임포트
 import { flexColumn, flexRow, flexSpaceBetween, title2 } from '@/styles/common';
+import { ArticlePostForm } from '@/types/article';
 
-const ArticleEditorPage = () => {
-  const [title, setTitle] = useState('');
-  const [keyword, setKeyword] = useState('');
-  const [summary, setSummary] = useState('');
-  const [thumbnail, setThumbnail] = useState('');
-  const [content, setContent] = useState('# 여기에 아티클을 작성해주세요');
+type RouteParams = {
+  articleId: string;
+};
 
-  const { mutate: addArticle } = usePostArticleQuery();
+const EditArticlePage = () => {
+  const { articleId } = useParams() as RouteParams;
+  const { data: article, isSuccess } = useGetArticleQuery(articleId);
+
+  const { form, setField } = useArticleForm();
+  const { mutate: editArticle } = usePutArticleQuery();
+
+  useEffect(() => {
+    if (isSuccess) {
+      Object.keys(article).forEach(key => {
+        const value = article[key as keyof ArticlePostForm];
+        if (value !== null) {
+          setField(key as keyof ArticlePostForm, value as string);
+        }
+      });
+    }
+  }, [article, isSuccess, setField]);
 
   const handleSubmit = () => {
-    addArticle({
-      title,
-      content,
-      keyword,
-      thumbnail,
-      summary,
+    editArticle({
+      article: {
+        title: form.title,
+        content: form.content,
+        keyword: form.keyword,
+        thumbnail: form.thumbnail,
+        summary: form.summary,
+      },
+      articleId: Number(articleId),
     });
   };
 
@@ -31,9 +51,7 @@ const ArticleEditorPage = () => {
     <>
       <S.Header>
         <S.HeaderContents>
-          <S.Title>방끗 Article Editor</S.Title>
-
-          {/* 저장 버튼 */}
+          <S.Title>방끗 Article Editor - 수정하기</S.Title>
           <Button type="submit" label="저장" isSquare color="dark" onClick={handleSubmit} size="small" />
         </S.HeaderContents>
       </S.Header>
@@ -44,60 +62,55 @@ const ArticleEditorPage = () => {
             handleSubmit();
           }}
         >
-          {/* 제목 폼 필드 */}
           <FormField>
             <FormField.Label label="아티클 제목" htmlFor="title" required />
             <FormField.Input
               placeholder="제목을 입력하세요"
-              onChange={e => setTitle(e.target.value)}
+              onChange={e => setField('title', e.target.value)}
               name="title"
               id="title"
-              value={title}
+              value={form.title}
             />
           </FormField>
 
-          {/* 키워드 폼 필드 */}
           <FormField>
             <FormField.Label label="키워드" htmlFor="keyword" required />
             <FormField.Input
               placeholder="키워드를 입력하세요"
-              onChange={e => setKeyword(e.target.value)}
+              onChange={e => setField('keyword', e.target.value)}
               name="keyword"
               id="keyword"
-              value={keyword}
+              value={form.keyword}
             />
           </FormField>
 
-          {/* 요약 폼 필드 */}
           <FormField>
             <FormField.Label label="요약" htmlFor="summary" required />
             <FormField.Input
               placeholder="요약을 입력하세요"
-              onChange={e => setSummary(e.target.value)}
+              onChange={e => setField('summary', e.target.value)}
               name="summary"
               id="summary"
-              value={summary}
+              value={form.summary}
             />
           </FormField>
 
-          {/* 썸네일 폼 필드 */}
           <FormField>
             <FormField.Label label="썸네일" htmlFor="thumbnail" required />
             <FormField.Input
               placeholder="썸네일 사진 url를 입력하세요"
-              onChange={e => setThumbnail(e.target.value)}
+              onChange={e => setField('thumbnail', e.target.value)}
               name="thumbnail"
               id="thumbnail"
-              value={thumbnail}
+              value={form.thumbnail}
             />
           </FormField>
 
-          {/* MarkdownEditor로 content 작성 */}
           <div style={{ marginBottom: '20px' }}>
             <MarkdownEditor
-              value={content}
+              value={form.content}
               height="70vh"
-              onChange={value => setContent(value)}
+              onChange={value => setField('content', value)}
               visible={true}
               enablePreview={true}
             />
@@ -108,19 +121,16 @@ const ArticleEditorPage = () => {
   );
 };
 
-export default ArticleEditorPage;
+export default EditArticlePage;
 
 const S = {
   Header: styled.header`
     ${flexRow}
     justify-content: center;
-
     width: 100vw;
     height: 50px;
     border-bottom: 1px solid ${({ theme }) => theme.palette.grey200};
-
     box-sizing: border-box;
-
     margin-bottom: 20px;
   `,
   HeaderContents: styled.div`

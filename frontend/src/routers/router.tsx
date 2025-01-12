@@ -123,8 +123,13 @@ const router = createBrowserRouter([
         path: ROUTE_PATH.admin,
       },
       {
-        element: <ArticleEditorPage />,
-        path: ROUTE_PATH.articleEditor,
+      {
+        element: <NewArticlePage />,
+        path: ROUTE_PATH.articleNew,
+      },
+      {
+        element: <EditArticlePage />,
+        path: ROUTE_PATH.articleEdit,
       },
     ],
   },

@@ -1,10 +1,6 @@
 package com.bang_ggood.article.service;
 
 import com.bang_ggood.article.domain.Article;
-import com.bang_ggood.article.dto.request.ArticleCreateRequest;
-import com.bang_ggood.article.dto.response.ArticleResponse;
-import com.bang_ggood.article.dto.response.ArticlesResponse;
-import com.bang_ggood.article.dto.response.ArticlesResponses;
 import com.bang_ggood.article.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
@@ -23,25 +19,20 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
 
     @Transactional
-    public long createArticle(ArticleCreateRequest request) {
-        Article article = request.toEntity();
+    public long createArticle(Article article) {
         articleRepository.save(article);
         return article.getId();
     }
 
     @Cacheable(cacheNames = ARTICLE, key = "#id")
     @Transactional(readOnly = true)
-    public ArticleResponse readArticle(Long id) {
-        Article article = articleRepository.getById(id);
-        return ArticleResponse.from(article);
+    public Article readArticle(Long id) {
+        return articleRepository.getById(id);
     }
 
     @Transactional(readOnly = true)
-    public ArticlesResponses readArticles() {
-        List<ArticlesResponse> articles = articleRepository.findLatestArticles().stream()
-                .map(ArticlesResponse::from)
-                .toList();
-        return new ArticlesResponses(articles);
+    public List<Article> readArticles() {
+        return articleRepository.findLatestArticles();
     }
 
     @CachePut(cacheNames = ARTICLE, key = "#id")

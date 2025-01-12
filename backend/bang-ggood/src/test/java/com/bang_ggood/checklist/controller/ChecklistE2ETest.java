@@ -5,7 +5,6 @@ import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.service.ChecklistManageService;
-import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
@@ -25,20 +24,6 @@ class ChecklistE2ETest extends AcceptanceTest {
     private ChecklistRepository checklistRepository;
     @Autowired
     private RoomRepository roomRepository;
-    @Autowired
-    private CustomChecklistQuestionRepository customChecklistQuestionRepository;
-
-    @DisplayName("체크리스트 작성 성공")
-    @Test
-    void createChecklist() {
-        RestAssured.given().log().all()
-                .contentType(ContentType.JSON)
-                .headers(this.headers)
-                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST())
-                .when().post("/checklists")
-                .then().log().all()
-                .statusCode(201);
-    }
 
     @DisplayName("체크리스트 작성 v1 성공")
     @Test
@@ -46,8 +31,8 @@ class ChecklistE2ETest extends AcceptanceTest {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .headers(this.headers)
-                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_V1())
-                .when().post("v1/checklists")
+                .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST())
+                .when().post("/v1/checklists")
                 .then().log().all()
                 .statusCode(201);
     }
@@ -59,7 +44,7 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .contentType(ContentType.JSON)
                 .headers(this.headers)
                 .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_ROOM_NAME())
-                .when().post("/checklists")
+                .when().post("/v1/checklists")
                 .then().log().all()
                 .statusCode(400)
                 .body("message", containsString("방 이름이 존재하지 않습니다."));
@@ -72,7 +57,7 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .contentType(ContentType.JSON)
                 .headers(this.headers)
                 .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_QUESTION_ID())
-                .when().post("/checklists")
+                .when().post("/v1/checklists")
                 .then().log().all()
                 .statusCode(400)
                 .body("message", containsString("질문 아이디가 존재하지 않습니다."));
@@ -98,7 +83,7 @@ class ChecklistE2ETest extends AcceptanceTest {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .headers(this.headers)
-                .when().get("/checklists/" + checklistId)
+                .when().get("/v1/checklists/" + checklistId)
                 .then().log().all()
                 .statusCode(200);
                 /*.extract()
@@ -131,7 +116,7 @@ class ChecklistE2ETest extends AcceptanceTest {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .headers(this.headers)
-                .when().get("/checklists/like")
+                .when().get("/v1/checklists/like")
                 .then().log().all()
                 .statusCode(200);
     }
@@ -165,7 +150,7 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .contentType(ContentType.JSON)
                 .headers(this.headers)
                 .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST())
-                .when().put("/checklists/" + checklistId)
+                .when().put("/v1/checklists/" + checklistId)
                 .then().log().all()
                 .statusCode(204);
     }
@@ -173,13 +158,13 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 수정 v1 성공")
     @Test
     void updateChecklistV1() {
-        long checklistId = checklistManageService.createChecklistV1(this.getAuthenticatedUser(),
-                ChecklistFixture.CHECKLIST_CREATE_REQUEST_V1());
+        long checklistId = checklistManageService.createChecklist(this.getAuthenticatedUser(),
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .headers(this.headers)
-                .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST_V1())
+                .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST())
                 .when().put("/v1/checklists/" + checklistId)
                 .then().log().all()
                 .statusCode(204);
@@ -195,7 +180,7 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .contentType(ContentType.JSON)
                 .headers(this.headers)
                 .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST_NO_ROOM_NAME())
-                .when().put("/checklists/" + checklistId)
+                .when().put("/v1/checklists/" + checklistId)
                 .then().log().all()
                 .statusCode(400)
                 .body("message", containsString("방 이름이 존재하지 않습니다."));
@@ -211,7 +196,7 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .contentType(ContentType.JSON)
                 .headers(this.headers)
                 .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST_NO_QUESTION_ID())
-                .when().put("/checklists/" + checklistId)
+                .when().put("/v1/checklists/" + checklistId)
                 .then().log().all()
                 .statusCode(400)
                 .body("message", containsString("질문 아이디가 존재하지 않습니다."));

@@ -3,14 +3,14 @@ package com.bang_ggood.checklist.dto.response;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.option.domain.ChecklistOption;
-import com.bang_ggood.question.dto.response.CategoryScoreResponsesV1;
+import com.bang_ggood.question.dto.response.CategoryScoreResponses;
 import com.bang_ggood.station.domain.ChecklistStation;
 import com.bang_ggood.station.dto.response.SubwayStationResponse;
 import com.bang_ggood.station.dto.response.SubwayStationResponses;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record ChecklistCompareResponseV1(
+public record ChecklistCompareResponse(
         Long checklistId, String roomName, String address, String buildingName,
         Double latitude, Double longitude,
         List<Integer> options, String structure, Double size,
@@ -20,13 +20,13 @@ public record ChecklistCompareResponseV1(
         Integer maintenanceFee, List<Integer> includedMaintenances,
         Integer contractTerm, Integer occupancyMonth, String occupancyPeriod,
         String realEstate, LocalDateTime createdAt,
-        CategoryScoreResponsesV1 categories
+        CategoryScoreResponses categories
 ) {
-    public static ChecklistCompareResponseV1 of(Checklist checklist, List<ChecklistOption> options,
-                                                List<ChecklistStation> stations,
-                                                List<ChecklistMaintenance> maintenances,
-                                                CategoryScoreResponsesV1 categories) {
-        return new ChecklistCompareResponseV1(
+    public static ChecklistCompareResponse of(Checklist checklist, List<ChecklistOption> options,
+                                              List<ChecklistStation> stations,
+                                              List<ChecklistMaintenance> maintenances,
+                                              CategoryScoreResponses categories) {
+        return new ChecklistCompareResponse(
                 checklist.getId(), checklist.getRoomName(), checklist.getRoomAddress(), checklist.getRoomBuildingName(),
                 checklist.getRoomLatitude(), checklist.getRoomLongitude(),
                 convertToOptionIds(options), checklist.getRoomStructure().getName(), checklist.getRoomSize(),

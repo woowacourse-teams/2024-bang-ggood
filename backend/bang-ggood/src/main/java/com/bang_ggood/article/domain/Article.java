@@ -30,12 +30,27 @@ public class Article extends BaseEntity {
 
     private String thumbnail;
 
+    private Long viewCount;
+
     public Article(String title, String content, String keyword, String summary, String thumbnail) {
         this.title = title;
         this.content = content;
         this.keyword = keyword;
         this.summary = summary;
         this.thumbnail = thumbnail;
+        this.viewCount = 0L;
+    }
+
+    public void increaseViewCount() {
+        viewCount++;
+    }
+
+    public void change(Article article) {
+        this.title = article.title;
+        this.content = article.content;
+        this.keyword = article.keyword;
+        this.summary = article.summary;
+        this.thumbnail = article.thumbnail;
     }
 
     @Override

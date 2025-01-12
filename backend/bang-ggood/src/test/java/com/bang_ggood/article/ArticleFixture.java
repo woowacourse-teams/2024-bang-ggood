@@ -2,6 +2,7 @@ package com.bang_ggood.article;
 
 import com.bang_ggood.article.domain.Article;
 import com.bang_ggood.article.dto.request.ArticleCreateRequest;
+import com.bang_ggood.article.dto.request.ArticleUpdateRequest;
 
 public class ArticleFixture {
 
@@ -27,5 +28,9 @@ public class ArticleFixture {
 
     public static ArticleCreateRequest ARTICLE_CREATE_REQUEST() {
         return new ArticleCreateRequest("제목", "내용", "키워드", "요약", "썸네일");
+    }
+
+    public static ArticleUpdateRequest ARTICLE_UPDATE_REQUEST() {
+        return new ArticleUpdateRequest("제목", "내용", "키워드", "요약", "썸네일");
     }
 }

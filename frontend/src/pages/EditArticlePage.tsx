@@ -32,7 +32,7 @@ const EditArticlePage = () => {
         }
       });
     }
-  }, [article, isSuccess, setField]);
+  }, [article, isSuccess]);
 
   const handleSubmit = () => {
     editArticle({

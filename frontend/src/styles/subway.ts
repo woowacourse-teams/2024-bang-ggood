@@ -27,6 +27,7 @@ const SUBWAY_LINE_PALLETE = {
   경강선: '#1C2B55',
   서해선: '#21AC41',
   GTX: '#212177',
+  'GTX-A': '#98618F',
 };
 
 export type SubwayLineName = keyof typeof SUBWAY_LINE_PALLETE;

@@ -15,14 +15,14 @@ interface Props {
 const SubwayStations = ({ stations, size, textType = 'full' }: Props) => {
   return (
     <>
-      {stations?.length ? (
+      {stations && stations.length > 0 ? (
         <S.Box>
-          {stations?.map(station => (
+          {stations.map(station => (
             <SubwayStationItem textType={textType} size={size} station={station} key={station.stationName} />
           ))}
         </S.Box>
       ) : (
-        <span>{'보신 방과 가까운 지하철역을 찾아드릴게요.'}</span>
+        <span>{'주변에 가까운 지하철역이 없어요.'}</span>
       )}
     </>
   );

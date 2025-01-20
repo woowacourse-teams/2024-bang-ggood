@@ -37,9 +37,10 @@ public class ArticleService {
 
     @CachePut(cacheNames = ARTICLE, key = "#id")
     @Transactional
-    public void updateArticle(Long id, Article updateArticle) {
+    public Article updateArticle(Long id, Article updateArticle) {
         Article article = articleRepository.getById(id);
         article.change(updateArticle);
+        return article;
     }
 
     @CacheEvict(cacheNames = ARTICLE, key = "#id")

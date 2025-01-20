@@ -5,21 +5,15 @@ import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
 import DesktopLayout from '@/components/_common/layout/DesktopLayout';
 import usePostArticleQuery from '@/hooks/query/usePostArticleQuery';
-import useArticleForm from '@/hooks/useArticleForm'; // 커스텀 훅 임포트
+import useArticleForm from '@/hooks/useArticleForm';
 import { flexColumn, flexRow, flexSpaceBetween, title2 } from '@/styles/common';
 
 const NewArticlePage = () => {
-  const { form, setField } = useArticleForm();
+  const { form, onChange: onFormChange, setForm } = useArticleForm();
   const { mutate: addArticle } = usePostArticleQuery();
 
   const handleSubmit = () => {
-    addArticle({
-      title: form.title,
-      content: form.content,
-      keyword: form.keyword,
-      thumbnail: form.thumbnail,
-      summary: form.summary,
-    });
+    addArticle(form);
   };
 
   return (
@@ -41,7 +35,7 @@ const NewArticlePage = () => {
             <FormField.Label label="아티클 제목" htmlFor="title" required />
             <FormField.Input
               placeholder="제목을 입력하세요"
-              onChange={e => setField('title', e.target.value)}
+              onChange={onFormChange}
               name="title"
               id="title"
               value={form.title}
@@ -52,7 +46,7 @@ const NewArticlePage = () => {
             <FormField.Label label="키워드" htmlFor="keyword" required />
             <FormField.Input
               placeholder="키워드를 입력하세요"
-              onChange={e => setField('keyword', e.target.value)}
+              onChange={onFormChange}
               name="keyword"
               id="keyword"
               value={form.keyword}
@@ -63,7 +57,7 @@ const NewArticlePage = () => {
             <FormField.Label label="요약" htmlFor="summary" required />
             <FormField.Input
               placeholder="요약을 입력하세요"
-              onChange={e => setField('summary', e.target.value)}
+              onChange={onFormChange}
               name="summary"
               id="summary"
               value={form.summary}
@@ -74,7 +68,7 @@ const NewArticlePage = () => {
             <FormField.Label label="썸네일" htmlFor="thumbnail" required />
             <FormField.Input
               placeholder="썸네일 사진 url를 입력하세요"
-              onChange={e => setField('thumbnail', e.target.value)}
+              onChange={onFormChange}
               name="thumbnail"
               id="thumbnail"
               value={form.thumbnail}
@@ -85,7 +79,7 @@ const NewArticlePage = () => {
             <MarkdownEditor
               value={form.content}
               height="70vh"
-              onChange={value => setField('content', value)}
+              onChange={value => setForm('content', value)}
               visible={true}
               enablePreview={true}
             />

@@ -1,9 +1,12 @@
-import { useState } from 'react';
-
+import useInputs from '@/hooks/useInputs';
 import { ArticlePostForm } from '@/types/article';
 
 const useArticleForm = () => {
-  const [form, setForm] = useState<ArticlePostForm>({
+  const {
+    values: form,
+    onChange,
+    setValues,
+  } = useInputs<ArticlePostForm>({
     title: '',
     keyword: '',
     summary: '',
@@ -11,16 +14,17 @@ const useArticleForm = () => {
     content: '# 여기에 아티클을 작성해주세요',
   });
 
-  const setField = (field: keyof ArticlePostForm, value: string) => {
-    setForm(prevForm => ({
-      ...prevForm,
+  const setForm = (field: keyof ArticlePostForm, value: string | number) => {
+    setValues(prev => ({
+      ...prev,
       [field]: value,
     }));
   };
 
   return {
     form,
-    setField,
+    onChange,
+    setForm,
   };
 };
 

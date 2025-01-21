@@ -18,3 +18,8 @@ export const postArticle = async (article: ArticlePostForm) => {
   const response = await fetcher.post({ url: BASE_URL + ENDPOINT.ARTICLES, body: article });
   return response;
 };
+
+export const putArticle = async ({ article, articleId }: { article: ArticlePostForm; articleId: number }) => {
+  const response = await fetcher.put({ url: BASE_URL + ENDPOINT.ARTICLE_ID(articleId), body: article });
+  return response;
+};

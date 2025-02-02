@@ -52,5 +52,5 @@ jobs:
         echo "${APPLICATION_READ_WRITE_TEST_YML}" > src/test/resources/application-read-write-test.yml
       
     - name: Build with Gradle
-      run: ./gradlew clean build --no-build-cache --refresh-dependencies
+      run: ./gradlew clean build
 

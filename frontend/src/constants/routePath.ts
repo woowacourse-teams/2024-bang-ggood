@@ -23,5 +23,8 @@ export const ROUTE_PATH = {
   location: '/location',
   myPage: '/my-page',
   admin: '/admin',
-  articleEditor: '/isHaileyGod',
+  articleListAdmin: '/admin/article',
+  articleNew: '/admin/article/new',
+  articleEdit: '/admin/article/:articleId',
+  articleEditOne: (id: number) => `/admin/article/${id}`,
 };

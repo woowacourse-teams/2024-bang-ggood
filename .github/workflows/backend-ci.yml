@@ -8,6 +8,7 @@ on:
 defaults:
   run:
     working-directory: backend/bang-ggood
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,13 +33,18 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
+    - name: Remove all Gradle caches
+      run: |
+        rm -rf ~/.gradle
+        rm -rf .gradle
+
     - name: Write application.yml
       env:
         APPLICATION_YML: ${{ secrets.APPLICATION_YML }}
         APPLICATION_LOCAL_YML: ${{ secrets.APPLICATION_LOCAL_YML }}
         APPLICATION_TEST_YML: ${{ secrets.APPLICATION_TEST_YML }}
         APPLICATION_READ_WRITE_TEST_YML: ${{ secrets.APPLICATION_READ_WRITE_TEST_YML }}
-        
+      
       run: |
         echo "${APPLICATION_YML}" > src/test/resources/application.yml
         echo "${APPLICATION_LOCAL_YML}" > src/test/resources/application-local.yml
@@ -47,5 +53,3 @@ jobs:
       
     - name: Build with Gradle
       run: ./gradlew clean build --no-build-cache --refresh-dependencies
-
-    

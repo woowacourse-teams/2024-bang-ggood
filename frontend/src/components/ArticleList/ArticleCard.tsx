@@ -16,7 +16,15 @@ const ArticleCard = ({ article }: Props) => {
   const navigate = useNavigate();
   const { articleId, keyword, title, summary, createdAt } = article;
 
-  const ARTICLE_KEYWORDS = ['방끗 활용법', '동네 추천', '우테코 생활', '자취 꿀팁'];
+  const ARTICLE_KEYWORDS = [
+    '방끗 활용법',
+    '동네 추천',
+    '우테코 생활',
+    '자취 꿀팁',
+    '생활 꿀팁',
+    '자취 일기',
+    '계약 꿀팁',
+  ];
   const currentColorIndex = ARTICLE_KEYWORDS.findIndex(keyword => keyword === article.keyword);
   const { color500 } = getSeqColor(currentColorIndex);
   const { color500: defaultColor500 } = getSeqColor(articleId);

@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useState } from 'react';
 
+import { trackOption } from '@/service/amplitude/trackEvent';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 import { flexCenter, flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
@@ -10,8 +11,19 @@ const OptionButton = ({ option, isSelected }: { option: OptionWithIcon; isSelect
   const { FilledIcon, UnFilledIcon, displayName, id } = option;
 
   const selectedOptionActions = useSelectedOptionStore(state => state.actions);
+  const [statusMessage, setStatusMessage] = useState('');
 
-  const handleClick = isSelected ? () => selectedOptionActions.remove(id) : () => selectedOptionActions.add(id);
+  const handleClick = () => {
+    trackOption(option.displayName);
+
+    if (isSelected) {
+      selectedOptionActions.remove(id);
+      setStatusMessage(`${option.displayName} 선택 취소되었습니다.`);
+    } else {
+      selectedOptionActions.add(id);
+      setStatusMessage(`${option.displayName} 선택되었습니다.`);
+    }
+  };
 
   if (!option) {
     return null;
@@ -33,17 +45,34 @@ const OptionButton = ({ option, isSelected }: { option: OptionWithIcon; isSelect
   const currentColor = isSelected ? BUTTON_COLOR.selected : BUTTON_COLOR.unSelected;
 
   return (
-    <S.Box color={currentColor.fill} borderColor={currentColor.border} onClick={handleClick}>
-      <S.IconBox>{isSelected ? <FilledIcon /> : <UnFilledIcon />}</S.IconBox>
-      <S.TextBox color={currentColor.text}>{displayName}</S.TextBox>
-    </S.Box>
+    <>
+      <S.Box
+        id={option.name}
+        color={currentColor.fill}
+        borderColor={currentColor.border}
+        onClick={handleClick}
+        aria-label={
+          !isSelected
+            ? `${displayName}을 옵션에 추가하려면 두번 탭하세요.`
+            : `${displayName}을 옵션에서 해제하려면 두번 탭하세요.`
+        }
+      >
+        <S.IconBox>{isSelected ? <FilledIcon aria-hidden="true" /> : <UnFilledIcon aria-hidden="true" />}</S.IconBox>
+        <S.TextBox aria-hidden color={currentColor.text}>
+          {displayName}
+        </S.TextBox>
+      </S.Box>
+      <div className="visually-hidden" aria-live="assertive">
+        {statusMessage}
+      </div>
+    </>
   );
 };
 
 export default React.memo(OptionButton);
 
 const S = {
-  Box: styled.div<{ color: string; borderColor: string }>`
+  Box: styled.button<{ color: string; borderColor: string }>`
     position: relative;
     width: 100%;
     padding-top: 100%;

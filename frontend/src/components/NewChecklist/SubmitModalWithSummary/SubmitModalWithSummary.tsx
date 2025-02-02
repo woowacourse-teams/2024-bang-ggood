@@ -1,13 +1,15 @@
 import styled from '@emotion/styled';
-import { useStore } from 'zustand';
+import { ChangeEvent } from 'react';
 
 import Button from '@/components/_common/Button/Button';
 import CounterBox from '@/components/_common/CounterBox/CounterBox';
 import FormField from '@/components/_common/FormField/FormField';
 import Modal from '@/components/_common/Modal/Modal';
-import { MODAL_MESSAGE } from '@/constants/message';
+import { MODAL_MESSAGE } from '@/constants/messages/message';
+import { BRIEF_COMMENT_MAX_LENGTH } from '@/constants/system';
 import useMutateChecklist from '@/hooks/useMutateChecklist';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import useRoomInfoValidated from '@/hooks/useRoomInfoValidated';
+import { trackSubmitChecklist } from '@/service/amplitude/trackEvent';
 import { flexColumn, title3 } from '@/styles/common';
 import { MutateType } from '@/types/checklist';
 
@@ -28,8 +30,7 @@ const SubmitModalWithSummary = ({
   mutateType,
   checklistId,
 }: Props) => {
-  const summary = useStore(checklistRoomInfoStore, state => state.rawValue.summary);
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
+  const summary = useRoomInfoValidated('summary');
 
   // 체크리스트 작성 / 수정
   const { handleSubmitChecklist } = useMutateChecklist(
@@ -40,6 +41,7 @@ const SubmitModalWithSummary = ({
   );
 
   const handleSaveChecklist = () => {
+    trackSubmitChecklist();
     handleSubmitChecklist();
   };
 
@@ -53,6 +55,10 @@ const SubmitModalWithSummary = ({
     onError();
   };
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length <= BRIEF_COMMENT_MAX_LENGTH) summary.onChange(e);
+  };
+
   return (
     <Modal isOpen={isModalOpen} onClose={modalClose}>
       <Modal.header>
@@ -63,14 +69,14 @@ const SubmitModalWithSummary = ({
           <FormField.Input
             placeholder="바쁘시면 스킵도 괜찮아요!"
             autoFocus
-            onChange={actions.onChange}
+            onChange={handleChange}
             name="summary"
-            value={summary}
-            maxLength={15}
+            value={summary.rawValue}
+            maxLength={BRIEF_COMMENT_MAX_LENGTH}
             height={'small'}
           />
           <S.CounterContainer>
-            <CounterBox currentCount={summary?.length || 0} totalCount={15} />
+            <CounterBox currentCount={summary.rawValue?.length || 0} totalCount={BRIEF_COMMENT_MAX_LENGTH} />
           </S.CounterContainer>
           <Button size="full" color="dark" onClick={handleSaveChecklist} isSquare label="체크리스트 저장하기" />
         </S.Wrapper>

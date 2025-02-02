@@ -17,18 +17,26 @@ const ArticlePreviewCard = ({ index, article }: Props) => {
   const navigate = useNavigate();
   const { articleId, keyword, title } = article;
 
-  const { color500, color600 } = getSeqColor(index);
+  const { color500, color200 } = getSeqColor(index);
 
   const handleClickArticle = () => {
     navigate(ROUTE_PATH.articleOne(articleId));
   };
 
   return (
-    <S.Container bgColor={color500} hoverColor={color600} onClick={handleClickArticle}>
-      <S.Keyword bgColor={color600}>{keyword}</S.Keyword>
+    <S.Container
+      bgColor={theme.palette.white}
+      hoverColor={color200}
+      onClick={handleClickArticle}
+      tabIndex={1}
+      aria-label="클릭하면 해당 아티클 페이지로 이동합니다"
+    >
+      <S.Keyword bgColor={theme.palette.background} color={color500}>
+        {keyword}
+      </S.Keyword>
       <S.Title>{title}</S.Title>
       <S.ArrowButton>
-        <ArrowRight stroke={color600} />
+        <ArrowRight stroke={color500} aria-hidden="true" />
       </S.ArrowButton>
     </S.Container>
   );
@@ -45,7 +53,7 @@ const S = {
 
     background-color: ${({ bgColor }) => bgColor};
 
-    color: ${theme.palette.white};
+    color: ${({ theme }) => theme.palette.black};
     box-sizing: border-box;
     border-radius: 2.4rem;
     ${boxShadowSpread}
@@ -56,11 +64,14 @@ const S = {
       background-color: ${({ hoverColor }) => hoverColor};
     }
   `,
-  Keyword: styled.div<{ bgColor: string }>`
+  Keyword: styled.div<{ bgColor: string; color: string }>`
     display: inline-block;
     padding: 0.4rem 1rem;
 
     background-color: ${({ bgColor }) => bgColor};
+
+    color: ${({ color }) => color};
+    font-weight: ${({ theme }) => theme.text.weight.bold};
     box-sizing: content-box;
     border-radius: 0.6rem;
   `,

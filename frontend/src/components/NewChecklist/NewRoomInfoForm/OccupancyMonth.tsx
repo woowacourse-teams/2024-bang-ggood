@@ -1,33 +1,33 @@
-import { useStore } from 'zustand';
-
 import Dropdown from '@/components/_common/Dropdown/Dropdown';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import FormStyled from '@/components/NewChecklist/NewRoomInfoForm/styled';
 import { roomOccupancyPeriods } from '@/constants/roomInfo';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
+import useRoomInfoValidated from '@/hooks/useRoomInfoValidated';
 
 const OccupancyMonth = () => {
-  const actions = useStore(checklistRoomInfoStore, state => state.actions);
-  const occupancyMonth = useStore(checklistRoomInfoStore, state => state.rawValue.occupancyMonth);
-  const occupancyPeriod = useStore(checklistRoomInfoStore, state => state.rawValue.occupancyPeriod);
-
-  const errorMessageOccupancyMonth = useStore(checklistRoomInfoStore, state => state.errorMessage.occupancyMonth);
-  const errorMessageOccupancyPeriod = useStore(checklistRoomInfoStore, state => state.errorMessage.occupancyPeriod);
-  const errorMessage = errorMessageOccupancyMonth || errorMessageOccupancyPeriod;
+  const occupancyMonth = useRoomInfoValidated('occupancyMonth');
+  const occupancyPeriod = useRoomInfoValidated('occupancyPeriod');
+  const errorMessage = occupancyMonth.errorMessage || occupancyPeriod.errorMessage;
 
   return (
     <FlexBox.Vertical gap="1.5rem">
-      <FormField.Label label="입주 가능일" />
+      <FormField.Label label="입주 가능일" htmlFor="occupancyMonth" />
       <FormStyled.FieldBox>
-        <FormField.Input width="medium" onChange={actions.onChange} name="occupancyMonth" value={occupancyMonth} />
+        <FormField.Input
+          inputMode="decimal"
+          width="medium"
+          onChange={occupancyMonth.onChange}
+          name="occupancyMonth"
+          value={occupancyMonth.rawValue}
+          id="occupancyMonth"
+        />
         <FormStyled.FlexLabel label="월  " />
         <Dropdown
-          initialValue={occupancyPeriod}
+          id="occupancyPeriod"
+          initialValue={occupancyPeriod.rawValue}
           options={roomOccupancyPeriods.map(value => ({ value }))}
-          onSelectSetter={(level: string) => {
-            actions.set('occupancyPeriod', level);
-          }}
+          onSelectSetter={(level: string) => occupancyPeriod.set(level)}
         />
       </FormStyled.FieldBox>
       <FormField.ErrorMessage value={errorMessage} />

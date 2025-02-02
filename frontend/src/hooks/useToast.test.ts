@@ -15,7 +15,7 @@ describe('useToast 테스트', () => {
       const { result } = renderHook(() => useToast({ durationMinute: TOAST_DURATION_MINUTE }));
 
       act(() => {
-        result.current.showToast(TOAST_MESSAGE);
+        result.current.showToast({ message: TOAST_MESSAGE });
       });
 
       expect(result.current.toast).toBe(TOAST_MESSAGE);
@@ -25,7 +25,7 @@ describe('useToast 테스트', () => {
       const { result } = renderHook(() => useToast({ durationMinute: TOAST_DURATION_MINUTE }));
 
       act(() => {
-        result.current.showToast(TOAST_MESSAGE);
+        result.current.showToast({ message: TOAST_MESSAGE });
       });
       expect(result.current.toast).toBe(TOAST_MESSAGE);
       await waitFor(() => expect(result.current.toast).toBe(null), { timeout: 200, interval: 10 });
@@ -36,8 +36,8 @@ describe('useToast 테스트', () => {
       const CHANGED_TOAST_MESSAGE = '토스트가 바뀌었다.';
 
       act(() => {
-        result.current.showToast(TOAST_MESSAGE);
-        result.current.showToast(CHANGED_TOAST_MESSAGE);
+        result.current.showToast({ message: TOAST_MESSAGE });
+        result.current.showToast({ message: CHANGED_TOAST_MESSAGE });
       });
 
       expect(result.current.toast).toBe(CHANGED_TOAST_MESSAGE);

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
 import { CloseIcon } from '@/assets/assets';
-import { TIP_MESSAGE } from '@/constants/message';
-import useHandleTipBox, { TipType } from '@/hooks/useHandleTipBox';
+import { TIP_MESSAGE } from '@/constants/messages/message';
+import useHandleTip, { TipType } from '@/hooks/useHandleTip';
 import { flexCenter, flexSpaceBetween, title4 } from '@/styles/common';
 
 interface Props {
@@ -10,22 +10,22 @@ interface Props {
 }
 
 const TipBox = ({ tipType }: Props) => {
-  const { isTipOpen, closeTipBox } = useHandleTipBox(tipType);
+  const { isTipOpen, closeTip } = useHandleTip(tipType);
 
   if (!isTipOpen) return;
 
   return (
     <S.TipBox>
       <S.TipText>
-        💡 <S.Bold>TIP</S.Bold> : {TIP_MESSAGE[tipType]}
+        <span aria-hidden="true">💡</span> <S.Bold>TIP</S.Bold> : {TIP_MESSAGE[tipType]}
       </S.TipText>
-      <CloseIcon onClick={closeTipBox} style={{ paddingRight: 1 }} />
+      <CloseIcon onClick={closeTip} style={{ paddingRight: 1 }} aria-label="클릭하면 팁박스가 삭제됩니다" />
     </S.TipBox>
   );
 };
 
 const S = {
-  TipBox: styled.div`
+  TipBox: styled.article`
     width: 100%;
     ${flexCenter}
     ${flexSpaceBetween}

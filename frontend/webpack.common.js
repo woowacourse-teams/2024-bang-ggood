@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const dotenv = require('dotenv');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // 공통 환경 변수 로드
 const commonEnv = dotenv.config({ path: path.resolve(__dirname, '.env') }).parsed || {};
@@ -32,6 +33,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'src/assets/images/og',
+          to: 'static/images',
+        },
+      ],
+    }),
   ],
   module: {
     rules: [
@@ -43,11 +52,26 @@ module.exports = {
           },
         ],
       },
-      { test: /\.(eot|ttf|woff|woff2)$/i, type: 'asset' },
-      { test: /\.(png|jpg|gif|webp|mp4)/i, type: 'asset/resource' },
+      {
+        test: /\.(eot|ttf|woff|woff2)$/i,
+        type: 'asset',
+        generator: {
+          filename: 'static/fonts/[name][ext]',
+        },
+      },
+      {
+        test: /\.(png|jpg|gif|webp|mp4)/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'static/images/[name][ext]',
+        },
+      },
       {
         test: /\.svg$/i,
         issuer: /\.[jt]sx?$/,
+        generator: {
+          filename: 'static/images/[name][ext]',
+        },
         use: [
           {
             loader: '@svgr/webpack',
@@ -79,7 +103,7 @@ module.exports = {
   },
   devServer: {
     open: true,
-    host: 'localhost',
+    host: '0.0.0.0',
     port: 3000,
     allowedHosts: 'all',
     historyApiFallback: true,

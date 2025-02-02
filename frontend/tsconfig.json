@@ -4,7 +4,7 @@
     "noImplicitAny": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "target": "es5",
+    "target": "ES2015",
     "allowJs": true,
     "moduleResolution": "node",
     "jsx": "react-jsx",
@@ -20,5 +20,5 @@
     "strict": true,
     "sourceMap": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "*.ts", "playwright/**/*.ts"]
 }

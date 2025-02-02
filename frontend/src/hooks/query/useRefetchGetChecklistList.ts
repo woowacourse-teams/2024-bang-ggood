@@ -5,8 +5,8 @@ import { QUERY_KEYS } from '@/constants/queryKeys';
 const useRefetchGetChecklistList = () => {
   const queryClient = useQueryClient();
 
-  const invalidateChecklistListQuery = () => {
-    queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CHECKLIST_LIST] });
+  const invalidateChecklistListQuery = async () => {
+    await queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CHECKLIST_LIST] });
   };
 
   return {

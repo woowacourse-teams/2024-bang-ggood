@@ -4,8 +4,3 @@ export interface Category {
   categoryId: number;
   categoryName: CategoryName;
 }
-
-// TODO: 방비교 추후를 위해..
-// export interface CategoryScore extends Category {
-//   score?: number;
-// }

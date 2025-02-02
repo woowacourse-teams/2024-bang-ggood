@@ -1,5 +1,6 @@
 import Accordion from '@/components/_common/Accordion/Accordion';
-import CategoryAccordion from '@/components/ChecklistDetail/CategoryAccordion';
+import Divider from '@/components/_common/Divider/Divider';
+import ChecklistAnswer from '@/components/ChecklistDetail/CheckListAnswer';
 import { CATEGORY_COUNT } from '@/constants/category';
 import { ChecklistCategoryWithAnswer } from '@/types/checklist';
 
@@ -17,7 +18,12 @@ const ChecklistAnswerSection = ({ categories }: Props) => {
           <div key={`accordion-${category.categoryId}`}>
             <Accordion.header text={category.categoryName} id={category.categoryId} isMarked={true} />
             <Accordion.body id={category.categoryId}>
-              <CategoryAccordion key={category.categoryId} category={category} />
+              {category.questions.map((question, index) => (
+                <>
+                  <ChecklistAnswer key={`answer-${question.questionId}`} QuestionAndAnswer={question} />
+                  {index !== category.questions.length - 1 && <Divider />}
+                </>
+              ))}
             </Accordion.body>
           </div>
         );

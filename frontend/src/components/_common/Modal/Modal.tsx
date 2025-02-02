@@ -4,6 +4,7 @@ import { ComponentPropsWithRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import { CloseIcon } from '@/assets/assets';
+import FocusTrap from '@/components/_common/Modal/FocusTrap/FocusTrap';
 import ModalBody from '@/components/_common/Modal/ModalBody';
 import ModalFooter from '@/components/_common/Modal/ModalFooter';
 import ModalHeader from '@/components/_common/Modal/ModalHeader';
@@ -21,6 +22,7 @@ export interface ModalProps extends ComponentPropsWithRef<'dialog'> {
   hasCloseButton?: boolean;
   hasDim?: boolean;
   color?: string;
+  backgroundColor?: string;
 }
 
 const modalRoot = document.getElementById('modal');
@@ -32,26 +34,32 @@ const Modal = ({
   size = 'large',
   position = 'center',
   hasCloseButton = true,
+  backgroundColor = 'white',
   hasDim = true,
   color,
 }: ModalProps) => {
   if (!modalRoot) return null;
 
-  return createPortal(
-    <S.ModalWrapper open={isOpen}>
-      {hasDim && <S.ModalBackground onClick={hasDim ? onClose : () => {}} hasDim={hasDim} />}
-      <S.ModalOuter $position={position} $size={size} color={color} isOpen={isOpen}>
-        <S.ModalInner isOpen={isOpen}>
-          {children}
-          {hasCloseButton && (
-            <S.CloseButton>
-              <CloseIcon onClick={onClose} />
-            </S.CloseButton>
-          )}
-        </S.ModalInner>
-      </S.ModalOuter>
-    </S.ModalWrapper>,
-    modalRoot,
+  return (
+    isOpen &&
+    createPortal(
+      <FocusTrap onEscapeFocusTrap={onClose}>
+        <S.ModalWrapper open={isOpen}>
+          {hasDim && <S.ModalBackground onClick={hasDim ? onClose : () => {}} hasDim={hasDim} />}
+          <S.ModalOuter $position={position} $size={size} color={color} isOpen={isOpen}>
+            <S.ModalInner isOpen={isOpen} backgroundColor={backgroundColor}>
+              {children}
+              {hasCloseButton && (
+                <S.CloseButton role="button" onClick={onClose} aria-label="모달 끄기">
+                  <CloseIcon />
+                </S.CloseButton>
+              )}
+            </S.ModalInner>
+          </S.ModalOuter>
+        </S.ModalWrapper>
+      </FocusTrap>,
+      modalRoot,
+    )
   );
 };
 
@@ -62,7 +70,7 @@ Modal.body = ModalBody;
 export default Modal;
 
 const S = {
-  ModalWrapper: styled.div<{ open: boolean }>`
+  ModalWrapper: styled.aside<{ open: boolean }>`
     display: ${({ open }) => (open ? 'flex' : 'none')};
     position: fixed;
     z-index: ${({ theme }) => theme.zIndex.MODAL};
@@ -86,10 +94,11 @@ const S = {
     position: fixed;
     ${({ $position, $size }) => positionStyles[$position]($size)}
   `,
-  ModalInner: styled.div<{ isOpen: boolean }>`
+  ModalInner: styled.div<{ isOpen: boolean; backgroundColor: string }>`
+    overflow: scroll;
     width: 100%;
 
-    background-color: ${({ color, theme }) => color ?? theme.palette.white};
+    background-color: ${({ backgroundColor }) => backgroundColor};
 
     color: ${({ theme }) => theme.palette.black};
 
@@ -97,6 +106,7 @@ const S = {
     border-radius: 1rem;
     box-shadow: 0 0.2rem 1rem rgb(0 0 0 / 40%);
     min-height: 15rem;
+    max-height: 80vh;
   `,
   CloseButton: styled.button`
     display: flex;

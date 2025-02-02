@@ -7,8 +7,12 @@ interface Props {
   children: React.ReactNode;
 }
 
-const ModalBody = ({ children, contentPosition = 'left' }: Props) => {
-  return <S.Container contentPosition={contentPosition}>{children}</S.Container>;
+const ModalBody = ({ children, contentPosition = 'left', ...rest }: Props) => {
+  return (
+    <S.Container contentPosition={contentPosition} {...rest}>
+      {children}
+    </S.Container>
+  );
 };
 
 export default ModalBody;

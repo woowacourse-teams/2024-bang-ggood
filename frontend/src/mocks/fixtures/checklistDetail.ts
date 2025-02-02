@@ -1,3 +1,4 @@
+import { nearSubway } from '@/mocks/fixtures/subway';
 import { ChecklistInfo } from '@/types/checklist';
 
 export const checklistDetail: ChecklistInfo = {
@@ -11,13 +12,11 @@ export const checklistDetail: ChecklistInfo = {
     rent: 50,
     maintenanceFee: 5,
     contractTerm: 12,
-    floor: 5,
-    station: '강남',
-    walkingTime: 10,
+    floorLevel: '반지하/지하',
+    floor: undefined,
     realEstate: undefined,
     structure: '오픈형 원룸',
     size: 25,
-    floorLevel: '지상',
     occupancyMonth: 9,
     occupancyPeriod: '중순',
     includedMaintenances: [2],
@@ -70,4 +69,5 @@ export const checklistDetail: ChecklistInfo = {
       ],
     },
   ],
+  stations: nearSubway,
 };

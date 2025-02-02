@@ -15,22 +15,24 @@ interface Props {
 
 const ChecklistPreviewCard = ({ index, checklist }: Props) => {
   const navigate = useNavigate();
-  const colorList = ['green', 'blue', 'red'];
+  const colorList = ['green', 'blue', 'yellow'];
   const { color200, color500 } = getSeqColor(index, colorList);
 
-  const { checklistId, station, walkingTime, roomName, deposit, rent } = checklist;
+  const { checklistId, station, roomName, deposit, rent, address } = checklist;
 
   const handleClick = () => {
     navigate(ROUTE_PATH.checklistOne(checklistId));
   };
 
+  const stationLabel = address
+    ? `${formattedUndefined(station?.stationName)}역 · ${formattedUndefined(station?.walkingTime)}분`
+    : '-역 · -분'; // TODO: address없을시 역이름에 선릉역을 넣었다가 버그생김. 임시해결을위해 address를 검사하고있지만, 제대로된방법을 쓰도록고쳐야함.
+
   return (
-    <S.Container onClick={handleClick}>
-      <HomeCircle color={color500} bgColor={color200} />
+    <S.Container onClick={handleClick} tabIndex={1}>
+      <HomeCircle color={color500} bgColor={color200} aria-hidden="true" />
       <S.Column>
-        <S.Label>
-          {formattedUndefined(station)}역 · {formattedUndefined(walkingTime)}분
-        </S.Label>
+        <S.Label>{stationLabel}</S.Label>
         <S.Row>
           <S.Title>{roomName}</S.Title>
           <div>

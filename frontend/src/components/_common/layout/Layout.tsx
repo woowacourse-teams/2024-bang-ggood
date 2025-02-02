@@ -32,11 +32,11 @@ const Layout = ({
 export default Layout;
 
 const S = {
-  Wrapper: styled.div<{ bgColor: string; withHeader: boolean; withFooter: boolean; withTab: boolean }>`
+  Wrapper: styled.main<{ bgColor: string; withHeader: boolean; withFooter: boolean; withTab: boolean }>`
     box-sizing: border-box;
     overflow: hidden auto;
     ${({ withHeader, withFooter, withTab }) => getHeightStyle(withHeader, withFooter, withTab)}
-    padding: 1.6rem;
+    padding: 1rem 1.6rem;
 
     background-color: ${({ bgColor }) => bgColor};
   `,

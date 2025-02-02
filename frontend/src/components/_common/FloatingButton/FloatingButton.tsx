@@ -8,7 +8,7 @@ import theme from '@/styles/theme';
 type Size = 'small' | 'medium' | 'extends';
 type Color = 'yellow' | 'green' | 'subGreen';
 
-interface Props extends React.HTMLAttributes<HTMLButtonElement> {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   onClick: () => void;
   size?: Size;
@@ -26,7 +26,7 @@ const FloatingButton = ({
 }: Props) => {
   return (
     <S.Wrapper>
-      <S.Button size={size} color={color} aria-label={ariaLabel} onClick={onClick} {...rest}>
+      <S.Button size={size} color={color} aria-label={ariaLabel} onClick={onClick} {...rest} tabIndex={1}>
         {children}
       </S.Button>
     </S.Wrapper>
@@ -98,13 +98,13 @@ const S = {
     bottom: calc(5% + ${FOOTER_SIZE}rem);
     left: 50%;
     z-index: ${theme.zIndex.FLOATING_BUTTON};
+    width: 100%;
+    padding-right: 10%;
     transform: translateX(-50%);
     max-width: 60rem;
     justify-content: flex-end;
-    width: 100%;
-    padding-right: 10%;
 
-    @media (min-width: ${theme.viewport.MOBILE}rem) {
+    @media (min-width: ${theme.viewport.MOBILE}px) {
       padding-right: 2rem;
     }
   `,

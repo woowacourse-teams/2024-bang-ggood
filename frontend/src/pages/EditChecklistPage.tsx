@@ -1,23 +1,24 @@
 import { useEffect } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
+import ChecklistTabFallback from '@/components/_common/errorBoundary/ChecklistTabFallback';
 import Header from '@/components/_common/Header/Header';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
-import Tabs from '@/components/_common/Tabs/Tabs';
+import EditChecklistContent from '@/components/EditChecklist/ChecklistContent/EditChecklistContent';
+import EditChecklistTab from '@/components/EditChecklist/ChecklistTab/EditChecklistTab';
 import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
 import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
-import NewChecklistContent from '@/components/NewChecklist/NewChecklistContent';
 import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
 import useGetChecklistDetailQuery from '@/hooks/query/useGetChecklistDetailQuery';
 import useModal from '@/hooks/useModal';
-import useNewChecklistTabs from '@/hooks/useNewChecklistTabs';
-import useRoomInfoUnvalidatedStore from '@/hooks/useRoomInfoUnvalidatedStore';
-import checklistRoomInfoStore from '@/store/checklistRoomInfoStore';
-import roomInfoUnvalidatedStore from '@/store/roomInfoUnvalidatedStore';
+import useResetChecklist from '@/hooks/useResetChecklist';
+import useRoomInfoNonValidated from '@/hooks/useRoomInfoNonValidated';
+import roomInfoStore from '@/store/roomInfoStore';
 import useChecklistStore from '@/store/useChecklistStore';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 import loadExternalScriptWithCallback from '@/utils/loadScript';
@@ -30,27 +31,21 @@ const EditChecklistPage = () => {
   const navigate = useNavigate();
   const { checklistId } = useParams() as RouteParams;
   const { data: checklist, isSuccess } = useGetChecklistDetailQuery(checklistId);
-  const { tabs } = useNewChecklistTabs();
-  const checklistActions = useChecklistStore(state => state.actions);
 
-  const { findSubwayByAddress } = useRoomInfoUnvalidatedStore();
-  const roomInfoActions = useStore(checklistRoomInfoStore, state => state.actions);
-  const roomInfoUnvalidatedActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
+  const { resetChecklist } = useResetChecklist();
+
+  const { searchSubwayStationsByAddress, set } = useRoomInfoNonValidated();
+  const roomInfoActions = useStore(roomInfoStore, state => state.actions);
+  const checklistQuestionActions = useChecklistStore(state => state.actions);
+  const selectedOptionActions = useSelectedOptionStore(state => state.actions);
 
   // 한줄평 모달
   const { isModalOpen: isSubmitModalOpen, openModal: summaryModalOpen, closeModal: summaryModalClose } = useModal();
-
   // 메모 모달
   const { isModalOpen: isMemoModalOpen, openModal: memoModalOpen, closeModal: memoModalClose } = useModal();
 
-  // TODO: action 분리 필요
-  const selectedOptionActions = useSelectedOptionStore(state => state.actions);
-
   const resetAndGoDetailPage = () => {
-    roomInfoActions.resetAll();
-    roomInfoUnvalidatedActions.resetAll();
-    checklistActions.reset();
-    selectedOptionActions.reset();
+    resetChecklist();
     navigate(ROUTE_PATH.checklistOne(Number(checklistId)));
   };
 
@@ -58,36 +53,31 @@ const EditChecklistPage = () => {
     const setChecklistDataToStore = async () => {
       if (!isSuccess) return;
 
-      roomInfoActions.setAll({
-        rawValue: checklist.room,
-        value: checklist.room,
-      });
-
-      roomInfoUnvalidatedActions.set('address', checklist.room.address!);
-      roomInfoUnvalidatedActions.set('buildingName', checklist.room.buildingName!);
-      //TODO: 가까운 지하철은 나중에 api 수정되면 저장
-
-      loadExternalScriptWithCallback('kakaoMap', () => findSubwayByAddress(checklist.room.address!));
-
+      roomInfoActions.setRawValues(checklist.room);
       selectedOptionActions.set(checklist.options.map(option => option.optionId));
-      checklistActions.set(checklist.categories);
+      checklistQuestionActions.set(checklist.categories);
+
+      set('address', checklist.room.address!);
+      set('buildingName', checklist.room.buildingName!);
+
+      loadExternalScriptWithCallback('kakaoMap', () => searchSubwayStationsByAddress(checklist.room.address!));
     };
 
     setChecklistDataToStore();
-  }, [checklistId]);
+  }, [checklistId, checklist, isSuccess]);
 
   return (
     <>
       <Header
         left={<Header.Backward onClick={resetAndGoDetailPage} />}
         center={<Header.Text>체크리스트 편집</Header.Text>}
-        right={<Button label="저장" size="small" color="dark" onClick={summaryModalOpen} />}
+        right={<Button label="저장" size="small" color="dark" onClick={summaryModalOpen} isSquare />}
       />
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
-        {/* 체크리스트 작성의 탭 */}
-        <Tabs tabList={tabs} />
-        {/*체크리스트 콘텐츠 섹션*/}
-        <NewChecklistContent />
+        <ErrorBoundary fallback={<ChecklistTabFallback />}>
+          <EditChecklistTab checklistId={checklistId} />
+        </ErrorBoundary>
+        {checklist && <EditChecklistContent />}
       </TabProvider>
 
       {/* 메모 모달 */}
@@ -98,7 +88,6 @@ const EditChecklistPage = () => {
       )}
 
       {/* 한줄평 모달*/}
-
       <SubmitModalWithSummary
         isModalOpen={isSubmitModalOpen}
         onConfirm={resetAndGoDetailPage}

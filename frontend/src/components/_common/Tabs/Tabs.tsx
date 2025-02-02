@@ -1,25 +1,24 @@
 import styled from '@emotion/styled';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
-import Tab from '@/components/_common/Tabs/Tab';
+import TabButton from '@/components/_common/Tabs/TabButton';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
+import { Tab, TabWithCompletion } from '@/types/tab';
 
 interface Props {
   tabList: TabWithCompletion[] | Tab[];
 }
 
-export interface Tab {
-  name: string;
-  id: number;
-  className?: string;
-}
-
-export interface TabWithCompletion extends Tab {
-  hasIndicator: boolean;
-}
-
 const Tabs = ({ tabList }: Props) => {
   const { currentTabId, setCurrentTabId } = useTabContext();
+
+  const tabRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    if (tabRefs.current[currentTabId]) {
+      tabRefs.current[currentTabId]?.focus();
+    }
+  }, [currentTabId]);
 
   const onMoveTab = useCallback(
     (tabId: number) => {
@@ -28,23 +27,40 @@ const Tabs = ({ tabList }: Props) => {
     [setCurrentTabId],
   );
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const currentIndex = tabList.findIndex(tab => tab.id === currentTabId);
+
+    if (e.key === 'ArrowRight') {
+      if (currentIndex === tabList.length - 1) return;
+      const nextIndex = (currentIndex + 1) % tabList.length;
+      setCurrentTabId(tabList[nextIndex].id);
+    } else if (e.key === 'ArrowLeft') {
+      if (currentIndex === 0) return;
+      const prevIndex = (currentIndex - 1 + tabList.length) % tabList.length;
+      setCurrentTabId(tabList[prevIndex].id);
+    }
+  };
+
   return (
-    <S.VisibleContainer>
+    <S.VisibleContainer role="navigation" aria-label="탭 내비게이션">
       <S.Container>
-        <S.FlexContainer>
-          {tabList?.map(tab => {
+        <S.FlexContainer role="tablist" onKeyDown={handleKeyDown}>
+          {tabList?.map((tab, index) => {
             const { id, name, className } = tab;
-            const hasIndicator = 'hasIndicator' in tab ? tab.hasIndicator : null;
+            const isCompleted = 'isCompleted' in tab ? tab.isCompleted : undefined;
 
             return (
-              <Tab
+              <TabButton
+                ref={el => (tabRefs.current[index - 1] = el)}
                 className={className}
                 id={id}
                 name={name}
                 onMoveTab={onMoveTab}
                 key={id}
                 active={tab.id === currentTabId}
-                hasIndicator={hasIndicator}
+                tabIndex={tab.id === currentTabId ? 0 : -1}
+                aria-selected={tab.id === currentTabId}
+                isCompleted={isCompleted}
               />
             );
           })}
@@ -58,11 +74,11 @@ const Tabs = ({ tabList }: Props) => {
 export default Tabs;
 
 const S = {
-  VisibleContainer: styled.div`
+  VisibleContainer: styled.nav`
     max-width: 60rem;
   `,
   EmptyBox: styled.div`
-    height: 5.4rem;
+    height: 5.6rem;
   `,
   Container: styled.div`
     position: fixed;
@@ -84,5 +100,7 @@ const S = {
   `,
   FlexContainer: styled.div`
     display: inline-flex;
+    gap: 1rem;
+    margin: 0.8rem 1.6rem;
   `,
 };

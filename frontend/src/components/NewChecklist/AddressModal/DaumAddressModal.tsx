@@ -1,13 +1,11 @@
 import styled from '@emotion/styled';
 import { useRef } from 'react';
-import { useStore } from 'zustand';
 
 import { Search } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
 import useModal from '@/hooks/useModal';
-import useRoomInfoUnvalidatedStore from '@/hooks/useRoomInfoUnvalidatedStore';
-import roomInfoUnvalidatedStore from '@/store/roomInfoUnvalidatedStore';
+import useRoomInfoNonValidated from '@/hooks/useRoomInfoNonValidated';
 import { Address, Postcode, PostcodeOptions } from '@/types/address';
 import loadExternalScriptWithCallback from '@/utils/loadScript';
 
@@ -22,13 +20,13 @@ declare global {
 const DaumAddressModal = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const postcodeContainerRef = useRef<HTMLDivElement | null>(null);
+  const { set } = useRoomInfoNonValidated();
 
-  const { findSubwayByAddress } = useRoomInfoUnvalidatedStore();
-  const roomInfoUnvalidatedActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
+  const { searchSubwayStationsByAddress } = useRoomInfoNonValidated();
 
-  const handleAddress = () => {
-    openModal();
+  const handleClickAddress = () => {
     loadExternalScriptWithCallback('daumAddress', openPostcodeEmbed);
+    openModal();
   };
 
   const openPostcodeEmbed = () => {
@@ -37,10 +35,10 @@ const DaumAddressModal = () => {
         width: '100%',
         height: '60rem',
         oncomplete: async (data: Address) => {
-          roomInfoUnvalidatedActions.set('address', data.address);
-          roomInfoUnvalidatedActions.set('buildingName', data.buildingName);
+          set('address', data.address);
+          set('buildingName', data.buildingName);
 
-          loadExternalScriptWithCallback('kakaoMap', () => findSubwayByAddress(data.address));
+          loadExternalScriptWithCallback('kakaoMap', () => searchSubwayStationsByAddress(data.address));
           closeModal();
         },
       }).embed(postcodeContainerRef.current, { q: '' });
@@ -52,11 +50,11 @@ const DaumAddressModal = () => {
   return (
     <>
       <S.AddressButton
-        onClick={handleAddress}
+        onClick={handleClickAddress}
         label="주소 검색"
         size="full"
         isSquare={true}
-        color="dark"
+        color="light"
         Icon={Search}
       />
       <Modal position="bottom" isOpen={isModalOpen} onClose={closeModal}>
@@ -74,10 +72,10 @@ export default DaumAddressModal;
 const S = {
   AddressButton: styled(Button)`
     width: 50%;
-    height: 4.2rem;
+    height: 4.5rem;
     padding: 0.4rem;
 
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    font-size: ${({ theme }) => theme.text.size.small};
   `,
   EmptyBox: styled.div`
     width: 100%;

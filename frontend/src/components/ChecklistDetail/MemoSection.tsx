@@ -2,19 +2,24 @@ import styled from '@emotion/styled';
 
 import Accordion from '@/components/_common/Accordion/Accordion';
 import { CATEGORY_COUNT } from '@/constants/category';
-import formattedUndefined from '@/utils/formattedUndefined';
 
 interface Props {
   memo?: string;
 }
 
 const MemoSection = ({ memo }: Props) => {
+  const formattedMemo = memo?.split(/\n/g).map((line, index, arr) => (
+    <div key={index} style={{ marginBottom: arr[index + 1] === '' ? '0.6em' : undefined }}>
+      {line || <br />}
+    </div>
+  ));
+
   return (
     <Accordion totalCount={CATEGORY_COUNT}>
       <S.MemoWrapper>
         <Accordion.header text={'메모'} id={1} isMarked={true} />
         <Accordion.body id={1}>
-          <S.Memo>{formattedUndefined(memo)}</S.Memo>
+          <S.Memo>{formattedMemo || ''}</S.Memo>
         </Accordion.body>
       </S.MemoWrapper>
     </Accordion>

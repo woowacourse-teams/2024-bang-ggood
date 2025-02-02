@@ -21,11 +21,11 @@ const ChecklistCard = ({ checklist }: Props) => {
   };
 
   return (
-    <S.Container onClick={handleMoveToDetail}>
+    <S.Container data-testid="checklist-card" onClick={handleMoveToDetail} tabIndex={1}>
       <S.Row>
         <S.LocationWrapper>
-          <LocationLineIcon />
-          {formattedUndefined(address, 'string', '주소')}
+          <LocationLineIcon aria-hidden="true" />
+          {formattedUndefined(address, 'string')}
         </S.LocationWrapper>
         <LikeButton isLiked={isLiked} checklistId={checklistId} />
       </S.Row>
@@ -37,7 +37,7 @@ const ChecklistCard = ({ checklist }: Props) => {
       </S.Column>
       <S.Row>
         <S.SummaryWrapper>
-          <S.SummaryBox>{`"${formattedUndefined(summary, 'string', '한줄평')}"`}</S.SummaryBox>
+          <S.SummaryBox>{`"${formattedUndefined(summary, 'string')}"`}</S.SummaryBox>
         </S.SummaryWrapper>
         <S.Date>{formattedDate(createdAt ?? '')}</S.Date>
       </S.Row>
@@ -58,6 +58,10 @@ const S = {
     background-color: ${({ theme }) => theme.palette.white};
     ${boxShadow};
     cursor: pointer;
+
+    :hover {
+      background-color: ${({ theme }) => theme.palette.grey200};
+    }
   `,
   Row: styled.div`
     ${flexSpaceBetween}

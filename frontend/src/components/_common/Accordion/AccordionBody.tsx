@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useAccordionContext } from '@/components/_common/Accordion/AccordionContext';
 
@@ -9,29 +9,38 @@ interface Props {
 }
 
 const AccordionBody = ({ children, id }: Props) => {
-  const bodyRef = useRef(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
   const { isAccordionOpen } = useAccordionContext();
-
   const isCurrentAccordionOpen = isAccordionOpen(id);
+  const [maxHeight, setMaxHeight] = useState(0);
+
+  useEffect(() => {
+    if (bodyRef.current) {
+      if (isCurrentAccordionOpen) {
+        setMaxHeight(bodyRef.current.scrollHeight);
+      } else {
+        setMaxHeight(0);
+      }
+    }
+  }, [isCurrentAccordionOpen]);
 
   return (
-    <S.Container ref={bodyRef} isOpen={isCurrentAccordionOpen}>
+    <S.Container ref={bodyRef} isOpen={isCurrentAccordionOpen} maxHeight={maxHeight}>
       {children}
     </S.Container>
   );
 };
 
-export default AccordionBody;
-
 const S = {
-  Container: styled.div<{ isOpen: boolean }>`
-    display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
+  Container: styled.div<{ isOpen: boolean; maxHeight: number }>`
     overflow: hidden;
-    margin-top: 1rem;
+    margin: 0.8rem 0;
+    max-height: ${({ maxHeight }) => maxHeight}px;
+    transition: max-height 0.4s cubic-bezier(0.15, 0.1, 0.25, 1);
+    border-radius: 0.8rem;
 
     background-color: ${({ theme }) => theme.palette.white};
-    max-height: ${({ isOpen }) => (isOpen ? '100rem' : '0')};
-    transition: max-height 0.2s cubic-bezier(0.15, 0.1, 0.25, 1);
-    border-radius: 1.2rem;
   `,
 };
+
+export default AccordionBody;

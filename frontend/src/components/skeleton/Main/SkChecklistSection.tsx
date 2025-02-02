@@ -1,39 +1,21 @@
 import styled from '@emotion/styled';
 
-import { flexColumn, flexRow, flexSpaceBetween, Skeleton } from '@/styles/common';
-
-export const SHOW_CHECKLIST_COUNT = 3;
+import { MAX_CHECKLISTS_DISPLAY_COUNT } from '@/constants/system';
+import { flexColumn, Skeleton } from '@/styles/common';
 
 const SkChecklistSection = () => {
   return (
-    <Sk.Wrapper>
-      <Sk.Row>
-        <Sk.Title />
-      </Sk.Row>
-      <Sk.CardBox />
-    </Sk.Wrapper>
+    <>
+      {Array.from({ length: MAX_CHECKLISTS_DISPLAY_COUNT }).map((_, index) => (
+        <Sk.CardBox key={index} />
+      ))}
+    </>
   );
 };
 
 const Sk = {
-  Wrapper: styled.div`
-    padding: 1.6rem 1.6rem 0;
-  `,
-  Row: styled.div`
-    width: 100%;
-    box-sizing: border-box;
-
-    ${flexRow};
-    ${flexSpaceBetween};
-  `,
-  Title: styled.div`
-    width: 20rem;
-    height: 2.5rem;
-    ${Skeleton}
-  `,
   CardBox: styled.div`
-    height: 28rem;
-    margin-top: 2rem;
+    height: 5rem;
     ${flexColumn};
     ${Skeleton}
   `,

@@ -1,0 +1,60 @@
+name: frontend-prod-cd
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "frontend/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    environment: frontend-production
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: Checkout Source Code
+        uses: actions/checkout@v3
+
+      - name: Generate .env File
+        working-directory: ./frontend
+        run: |
+          echo "API_ENV=${{ secrets.API_ENV }}" >> .env
+          echo "API_URL=${{ secrets.API_URL }}" >> .env
+          echo "REDIRECT_URI=${{ secrets.REDIRECT_URI }}" >> .env 
+          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> .env 
+          echo "KAKAO_MAP_KEY=${{ secrets.KAKAO_MAP_KEY }}" >> .env 
+          echo "SENTRY_DSN_TOKEN=${{ secrets.SENTRY_DSN_TOKEN }}" >> .env 
+          echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> .env 
+          echo "SENTRY_ORG=${{ secrets.SENTRY_ORG }}" >> .env 
+          echo "SENTRY_PROJECT=${{ secrets.SENTRY_PROJECT }}" >> .env 
+          echo "ANALYZE_BUNDLE=${{ secrets.ANALYZE_BUNDLE }}" >> .env 
+          echo "CI=${{ secrets.CI }}" >> .env
+          echo "AMPLITUDE_API_KEY=${{ secrets.AMPLITUDE_API_KEY }}" >> .env
+
+      - name: Install Dependencies
+        working-directory: ./frontend
+        run: yarn install
+
+      - name: Build for Prod
+        working-directory: ./frontend
+        run: yarn run build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Deploy to S3
+        working-directory: ./frontend/dist
+        run: |
+          aws s3 sync . s3://${{ secrets.S3_BUCKET }} --delete
+
+      - name: Invalidate CloudFront Cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"

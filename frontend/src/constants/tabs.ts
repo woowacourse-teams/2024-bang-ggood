@@ -1,10 +1,10 @@
-import { Tab } from '@/components/_common/Tabs/Tabs';
+import { Tab } from '@/types/tab';
 
-export const newChecklistTabs: Tab[] = [
+export const DefaultChecklistTabsNames: Tab[] = [
   { id: 0, name: '기본 정보' },
   {
     id: 1,
-    name: '청결',
+    name: '옵션',
   },
   {
     id: 2,
@@ -12,22 +12,16 @@ export const newChecklistTabs: Tab[] = [
   },
   {
     id: 3,
-    name: '편의시설',
+    name: '창문',
   },
   {
     id: 4,
-    name: '옵션',
+    name: '화장실',
   },
   {
     id: 5,
-    name: '주거환경',
-  },
-  {
-    id: 6,
     name: '보안',
   },
-  {
-    id: 7,
-    name: '경제적',
-  },
 ];
+
+export const DRAG_THRESHOLD_PIXEL = 100;

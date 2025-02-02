@@ -8,15 +8,16 @@ import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import RealTimeMap from '@/components/_common/Map/RealTimeMap';
 import Modal from '@/components/_common/Modal/Modal';
 import useModal from '@/hooks/useModal';
-import useRoomInfoUnvalidatedStore from '@/hooks/useRoomInfoUnvalidatedStore';
-import roomInfoUnvalidatedStore from '@/store/roomInfoUnvalidatedStore';
+import useRoomInfoNonValidated from '@/hooks/useRoomInfoNonValidated';
+import roomInfoNonValidatedStore from '@/store/roomInfoNonValidatedStore';
 import { title4 } from '@/styles/common';
 import { Position } from '@/types/address';
 
 const RealTimeAddressModal = () => {
-  const DEFAULT_POSITION = { lat: 0, lon: 0 };
+  const DEFAULT_POSITION = { latitude: 0, longitude: 0 };
 
-  const roomInfoUnvalidatedActions = useStore(roomInfoUnvalidatedStore, state => state.actions);
+  const { set } = useRoomInfoNonValidated();
+  const roomInfoUnvalidatedActions = useStore(roomInfoNonValidatedStore, state => state.actions);
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
@@ -25,14 +26,15 @@ const RealTimeAddressModal = () => {
   const [currentAddress, setCurrentAddress] = useState('');
   const [currentBuildingName, setCurrentBuildingName] = useState('');
 
-  const { findNearSubway } = useRoomInfoUnvalidatedStore();
+  const { searchSubwayStationsByPosition } = useRoomInfoNonValidated();
 
   const handleSubmitAddress = () => {
-    if (position.lat && position.lon) {
-      roomInfoUnvalidatedActions.set('address', currentAddress);
-      roomInfoUnvalidatedActions.set('buildingName', currentBuildingName);
+    if (position.latitude && position.longitude) {
+      set('address', currentAddress);
+      set('buildingName', currentBuildingName);
+      roomInfoUnvalidatedActions.set('position', position);
 
-      findNearSubway(position);
+      searchSubwayStationsByPosition(position);
       closeModal();
     }
   };
@@ -47,7 +49,7 @@ const RealTimeAddressModal = () => {
     <>
       <S.AddressButton
         onClick={openModal}
-        label="실시간 주소"
+        label="현위치 찾기"
         size="full"
         isSquare={true}
         color="light"
@@ -55,7 +57,7 @@ const RealTimeAddressModal = () => {
       />
       {isModalOpen && (
         <Modal size="large" position="bottom" isOpen={isModalOpen} onClose={closeModal}>
-          <Modal.header>실시간 주소</Modal.header>
+          <Modal.header>현위치 찾기</Modal.header>
           <Modal.body>
             <div>
               지도를 클릭하면 현재 위치를 움직일 수 있어요. <br />
@@ -89,10 +91,10 @@ export default RealTimeAddressModal;
 const S = {
   AddressButton: styled(Button)`
     width: 50%;
-    height: 4.2rem;
+    height: 4.5rem;
     padding: 0.4rem;
 
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    font-size: ${({ theme }) => theme.text.size.small};
   `,
   AddressText: styled.span`
     ${title4}

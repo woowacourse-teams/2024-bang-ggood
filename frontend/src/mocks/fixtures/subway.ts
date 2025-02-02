@@ -1,4 +1,6 @@
-export const nearSubway = [
+import { SubwayStation } from '@/types/subway';
+
+export const nearSubway: SubwayStation[] = [
   {
     stationName: '잠실',
     stationLine: ['8호선', '2호선'],

@@ -1,20 +1,31 @@
 import styled from '@emotion/styled';
 
-import { PencilIcon } from '@/assets/assets';
+import Button from '@/components/_common/Button/Button';
 import { boxShadow, flexCenter, flexRow } from '@/styles/common';
 
 interface Props {
   onClick?: () => void;
+  title: string;
+  buttonColor: string;
+  buttonText: string;
+  Icon: React.ReactElement;
+  buttonDetailText: string;
+  hoverButtonColor: string;
 }
 
-const CustomBanner = ({ onClick }: Props) => {
+const CustomBanner = ({ hoverButtonColor, onClick, Icon, title, buttonColor, buttonText, buttonDetailText }: Props) => {
   return (
     <S.Banner onClick={onClick}>
       <S.Wrapper>
-        <PencilIcon width={30} height={30} />
-        <S.Title>체크리스트 질문</S.Title>
+        {Icon}
+        <S.Title>{title}</S.Title>
       </S.Wrapper>
-      <S.Button>편집하기</S.Button>
+      <S.Button
+        aria-label={buttonDetailText}
+        label={buttonText}
+        buttonColor={buttonColor}
+        hoverButtonColor={hoverButtonColor}
+      />
     </S.Banner>
   );
 };
@@ -46,16 +57,20 @@ const S = {
   Title: styled.span`
     ${flexCenter}
   `,
-  Button: styled.div`
-    padding: 0.4rem 0.8rem;
+  Button: styled(Button)<{ buttonColor: string; hoverButtonColor: string }>`
+    padding: 0.6rem 1rem;
 
-    background-color: ${({ theme }) => theme.palette.green500};
+    background-color: ${({ buttonColor }) => buttonColor};
 
     color: ${({ theme }) => theme.palette.white};
     border-radius: 0.8rem;
 
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    font-size: ${({ theme }) => theme.text.size.small};
 
     cursor: pointer;
+
+    &:hover {
+      background-color: ${({ hoverButtonColor }) => hoverButtonColor};
+    }
   `,
 };

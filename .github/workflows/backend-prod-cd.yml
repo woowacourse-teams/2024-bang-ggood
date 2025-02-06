@@ -54,9 +54,9 @@ jobs:
         name: bang-ggood-be-develop-jar
         path: ./**/*.jar
 
-  deploy1:
+  deploy:
     needs: build
-    runs-on: bang-ggood-prod1
+    runs-on: bang-ggood-prod
     steps:
       - name: change permission
         run: sudo chown -R ubuntu:ubuntu /home/ubuntu/actions-runner/_work/2024-bang-ggood
@@ -66,65 +66,8 @@ jobs:
         with:
           name: bang-ggood-be-develop-jar
 
-      - name: Create unhealth_flag file
-        run: echo "unhealth" | sudo tee /etc/nginx/sites-available/unhealth_flag.txt > /dev/null
-
-      - name: Sleep for 30 seconds to be unhealthy
-        run: sleep 30
-
       - name: Turn off the server 8080 if runs
         run: sudo fuser -k -n tcp 8080 || true
         
       - name: Start server
-        run: sudo nohup java -jar -Dspring.profiles.active=prod -Duser.timezone=Asia/Seoul ./backend/bang-ggood/build/libs/*SNAPSHOT.jar > /home/ubuntu/actions-runner/server.log 2>&1 &
-
-      - name: Delete unhealth_flag file
-        run: sudo rm /etc/nginx/sites-available/unhealth_flag.txt
-
-      - name: Sleep for 30 seconds to be healthy
-        run: sleep 30
-
-      - name: Health check
-        run: |
-          for i in {1..2}; do
-            RESPONSE=$(curl -s -w "%{http_code}" -o /dev/null http://localhost:8080/health-check)
-            echo "Response: $RESPONSE"
-            if [ "$RESPONSE" -eq 200 ]; then
-              echo "Health check passed"
-              exit 0
-            fi
-            echo "Waiting for server to be healthy..."
-            sleep 10
-          done
-          echo "Health check failed"
-          exit 1
-
-  deploy2:
-    needs: deploy1
-    runs-on: bang-ggood-prod2
-    steps:
-      - name: change permission
-        run: sudo chown -R ubuntu:ubuntu /home/ubuntu/actions-runner/_work/2024-bang-ggood
-
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: bang-ggood-be-develop-jar
-
-      - name: Create unhealth_flag file
-        run: echo "unhealth" | sudo tee /etc/nginx/sites-available/unhealth_flag.txt > /dev/null
-
-      - name: Sleep for 30 seconds to be unhealthy
-        run: sleep 30
-
-      - name: Turn off the server 8080 if runs
-        run: sudo fuser -k -n tcp 8080 || true
-        
-      - name: Start server
-        run: sudo nohup java -jar -Dspring.profiles.active=prod -Duser.timezone=Asia/Seoul ./backend/bang-ggood/build/libs/*SNAPSHOT.jar > /home/ubuntu/actions-runner/server.log 2>&1 &
-
-      - name: Delete unhealth_flag file
-        run: sudo rm /etc/nginx/sites-available/unhealth_flag.txt
-
-      - name: Sleep for 30 seconds to be healthy
-        run: sleep 30
+        run: sudo nohup java -jar -Dspring.profiles.active=prod -Duser.timezone=Asia/Seoul ./backend/bang-ggood/build/libs/*SNAPSHOT.jar &

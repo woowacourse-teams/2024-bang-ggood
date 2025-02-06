@@ -48,7 +48,7 @@ jobs:
       working-directory: backend/bang-ggood
 
     - name: Upload build artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         working-directory: backend/bang-ggood
         name: bang-ggood-be-develop-jar
@@ -62,7 +62,7 @@ jobs:
         run: sudo chown -R ubuntu:ubuntu /home/ubuntu/actions-runner/_work/2024-bang-ggood
 
       - name: Download build artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: bang-ggood-be-develop-jar
 
@@ -107,7 +107,7 @@ jobs:
         run: sudo chown -R ubuntu:ubuntu /home/ubuntu/actions-runner/_work/2024-bang-ggood
 
       - name: Download build artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: bang-ggood-be-develop-jar
 

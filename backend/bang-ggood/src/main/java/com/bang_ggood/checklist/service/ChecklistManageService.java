@@ -2,6 +2,7 @@ package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
+import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
@@ -63,6 +64,19 @@ public class ChecklistManageService {
         createChecklistQuestions(checklistRequest, checklist);
         createChecklistMaintenances(checklistRequest, checklist);
         createChecklistStation(checklistRequest.room(), checklist);
+        return checklist.getId();
+    }
+
+    @Transactional
+    public Long createChecklistV1(User user, ChecklistRequestV1 checklistRequestV1) {
+        ChecklistRequest checklistRequest = checklistRequestV1.toChecklistRequest();
+
+        Room room = roomService.createRoom(checklistRequest.toRoomEntity());
+        Checklist checklist = checklistService.createChecklist(checklistRequest.toChecklistEntity(room, user));
+        createChecklistOptions(checklistRequest, checklist);
+        createChecklistQuestions(checklistRequest, checklist);
+        createChecklistMaintenances(checklistRequest, checklist);
+        createChecklistStation(checklistRequestV1.room(), checklist);
         return checklist.getId();
     }
 

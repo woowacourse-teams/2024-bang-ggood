@@ -22,8 +22,11 @@ const RoomComparePage = React.lazy(() => import('@/pages/RoomComparePage'));
 const RoomCompareSelectPage = React.lazy(() => import('@/pages/RoomCompareSelectPage'));
 const SignInPage = React.lazy(() => import('@/pages/SignInPage'));
 const SignUpPage = React.lazy(() => import('@/pages/SignUpPage'));
+// 어드민
 const AdminPage = React.lazy(() => import('@/pages/AdminPage'));
-const ArticleEditorPage = React.lazy(() => import('@/pages/ArticleEditorPage'));
+const NewArticlePage = React.lazy(() => import('@/pages/NewArticlePage'));
+const EditArticlePage = React.lazy(() => import('@/pages/EditArticlePage'));
+const AdminArticleListPage = React.lazy(() => import('@/pages/AdminArticleListPage'));
 
 const router = createBrowserRouter([
   // 모바일 페이지 레이아웃
@@ -123,8 +126,16 @@ const router = createBrowserRouter([
         path: ROUTE_PATH.admin,
       },
       {
-        element: <ArticleEditorPage />,
-        path: ROUTE_PATH.articleEditor,
+        element: <AdminArticleListPage />,
+        path: ROUTE_PATH.articleListAdmin,
+      },
+      {
+        element: <NewArticlePage />,
+        path: ROUTE_PATH.articleNew,
+      },
+      {
+        element: <EditArticlePage />,
+        path: ROUTE_PATH.articleEdit,
       },
     ],
   },

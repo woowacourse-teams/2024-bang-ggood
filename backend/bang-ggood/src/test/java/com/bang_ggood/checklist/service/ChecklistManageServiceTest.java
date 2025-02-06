@@ -4,8 +4,7 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
-import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
-import com.bang_ggood.checklist.dto.response.ChecklistCompareResponsesV1;
+import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
@@ -59,15 +58,15 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         assertThat(checklistId).isGreaterThan(0);
     }
 
-    @DisplayName("체크리스트 작성 v1 성공")
+    @DisplayName("체크리스트 작성 성공 : 위도, 경도가 null 인 경우")
     @Test
-    void createChecklistV1() {
+    void createChecklist_emptyLocation() {
         //given
         User user = userRepository.save(UserFixture.USER1());
-        ChecklistRequestV1 checklistRequestV1 = ChecklistFixture.CHECKLIST_CREATE_REQUEST_V1();
+        ChecklistRequest checklistRequest = ChecklistFixture.CHECKLIST_CREATE_REQUEST_EMPTY_LOCATION();
 
         // when
-        long checklistId = checklistManageService.createChecklistV1(user, checklistRequestV1);
+        long checklistId = checklistManageService.createChecklist(user, checklistRequest);
 
         //then
         assertThat(checklistId).isGreaterThan(0);
@@ -163,7 +162,7 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         List<Long> checklistIds = List.of(checklist1.getId(), checklist2.getId());
 
         // when
-        ChecklistCompareResponsesV1 response = checklistManageService.compareChecklists(user, checklistIds);
+        ChecklistCompareResponses response = checklistManageService.compareChecklists(user, checklistIds);
 
         // then
         assertAll(

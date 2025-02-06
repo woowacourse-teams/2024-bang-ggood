@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import { ROUTE_PATH } from '@/constants/routePath';
-import { trackArticleDetail } from '@/service/amplitude/trackEvent';
 import { boxShadow, flexColumn, title3 } from '@/styles/common';
 import { Article } from '@/types/article';
 import formattedDate from '@/utils/formattedDate';
@@ -12,26 +11,17 @@ interface Props {
   article: Article;
 }
 
-const ArticleCard = ({ article }: Props) => {
+const AdminArticleCard = ({ article }: Props) => {
   const navigate = useNavigate();
   const { articleId, keyword, title, summary, createdAt } = article;
 
-  const ARTICLE_KEYWORDS = [
-    '방끗 활용법',
-    '동네 추천',
-    '우테코 생활',
-    '자취 꿀팁',
-    '생활 꿀팁',
-    '자취 일기',
-    '계약 꿀팁',
-  ];
+  const ARTICLE_KEYWORDS = ['방끗 활용법', '동네 추천', '우테코 생활', '자취 꿀팁'];
   const currentColorIndex = ARTICLE_KEYWORDS.findIndex(keyword => keyword === article.keyword);
   const { color500 } = getSeqColor(currentColorIndex);
   const { color500: defaultColor500 } = getSeqColor(articleId);
 
   const handleClick = () => {
-    trackArticleDetail(article.title);
-    navigate(ROUTE_PATH.articleOne(articleId));
+    navigate(ROUTE_PATH.articleEditOne(articleId));
   };
 
   return (
@@ -44,7 +34,7 @@ const ArticleCard = ({ article }: Props) => {
   );
 };
 
-export default ArticleCard;
+export default AdminArticleCard;
 
 const S = {
   Container: styled.div`

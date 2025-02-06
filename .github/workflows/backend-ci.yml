@@ -8,6 +8,7 @@ on:
 defaults:
   run:
     working-directory: backend/bang-ggood
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,6 +18,8 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
       
     - name: Set up JDK 17
       uses: actions/setup-java@v4
@@ -38,7 +41,7 @@ jobs:
         APPLICATION_LOCAL_YML: ${{ secrets.APPLICATION_LOCAL_YML }}
         APPLICATION_TEST_YML: ${{ secrets.APPLICATION_TEST_YML }}
         APPLICATION_READ_WRITE_TEST_YML: ${{ secrets.APPLICATION_READ_WRITE_TEST_YML }}
-        
+      
       run: |
         echo "${APPLICATION_YML}" > src/test/resources/application.yml
         echo "${APPLICATION_LOCAL_YML}" > src/test/resources/application-local.yml
@@ -46,6 +49,5 @@ jobs:
         echo "${APPLICATION_READ_WRITE_TEST_YML}" > src/test/resources/application-read-write-test.yml
       
     - name: Build with Gradle
-      run: ./gradlew clean build
+      run: ./gradlew clean build --stacktrace
 
-    

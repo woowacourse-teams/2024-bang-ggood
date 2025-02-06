@@ -90,6 +90,9 @@
 
 <img width="80%" src="https://github.com/user-attachments/assets/266b7182-da62-4c1d-9b43-e2efc9ab1d93"/>
 
+### 백엔드 스택
+<img width="80%" src="https://github.com/user-attachments/assets/446b6bd9-a197-4082-b861-0754162e0974"/>
+
 ![image](https://github.com/user-attachments/assets/6a7d4a66-b091-4c4c-9959-3ffa3e63e639)
 
 

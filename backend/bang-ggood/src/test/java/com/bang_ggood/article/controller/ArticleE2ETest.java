@@ -98,6 +98,20 @@ public class ArticleE2ETest extends AcceptanceTest {
                 .statusCode(200);
     }
 
+    @DisplayName("아티클 수정 성공")
+    @Test
+    void updateArticle() {
+        Article article = articleRepository.save(ArticleFixture.ARTICLE());
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .headers(this.adminHeaders)
+                .body(ArticleFixture.ARTICLE_UPDATE_REQUEST())
+                .when().put("/articles/" + article.getId())
+                .then().log().all()
+                .statusCode(204);
+    }
+
     @DisplayName("아티클 삭제 성공")
     @Test
     void deleteArticle() {

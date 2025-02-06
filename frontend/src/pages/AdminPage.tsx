@@ -22,11 +22,13 @@ const AdminPage = () => {
   return (
     <S.PageWrapper>
       <S.QuestionBox>
-        <S.QuestionText>방끗의 마스코트는?</S.QuestionText>
+        <S.QuestionText>아티클을 작성하러 오셨나요?</S.QuestionText>
         <S.ButtonWrapper>
-          <S.Button color={'red'}>몰라요</S.Button>
-          <Link to={ROUTE_PATH.articleEditor}>
-            <S.Button>방방이</S.Button>
+          <Link to={ROUTE_PATH.articleListAdmin}>
+            <S.Button color={'red'}>수정하려고 왔습니다</S.Button>
+          </Link>
+          <Link to={ROUTE_PATH.articleNew}>
+            <S.Button>추가하려고 왔습니다</S.Button>
           </Link>
         </S.ButtonWrapper>
       </S.QuestionBox>
@@ -45,7 +47,6 @@ const S = {
 
     background-color: ${({ theme }) => theme.palette.white};
   `,
-
   QuestionBox: styled.div`
     padding: 2rem;
 
@@ -55,7 +56,6 @@ const S = {
     border-radius: 10px;
     ${boxShadowSpread}
   `,
-
   QuestionText: styled.h2`
     margin-bottom: 2rem;
 

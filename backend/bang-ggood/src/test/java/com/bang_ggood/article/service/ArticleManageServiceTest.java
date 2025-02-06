@@ -4,6 +4,8 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.article.ArticleFixture;
 import com.bang_ggood.article.domain.Article;
 import com.bang_ggood.article.dto.request.ArticleCreateRequest;
+import com.bang_ggood.article.dto.request.ArticleUpdateRequest;
+import com.bang_ggood.article.dto.response.ArticleResponse;
 import com.bang_ggood.article.dto.response.ArticlesResponse;
 import com.bang_ggood.article.repository.ArticleRepository;
 import com.bang_ggood.global.exception.BangggoodException;
@@ -16,11 +18,13 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class ArticleServiceTest extends IntegrationTestSupport {
+public class ArticleManageServiceTest extends IntegrationTestSupport {
 
     @Autowired
-    ArticleService articleService;
+    ArticleManageService articleManageService;
+
     @Autowired
     ArticleRepository articleRepository;
 
@@ -31,7 +35,7 @@ public class ArticleServiceTest extends IntegrationTestSupport {
         ArticleCreateRequest request = ArticleFixture.ARTICLE_CREATE_REQUEST();
 
         // when
-        Long articleId = articleService.createArticle(request);
+        Long articleId = articleManageService.createArticle(request);
 
         // then
         assertThat(articleRepository.getById(articleId).getTitle())
@@ -45,7 +49,7 @@ public class ArticleServiceTest extends IntegrationTestSupport {
         Article article = articleRepository.save(ArticleFixture.ARTICLE());
 
         // when & then
-        assertThatCode(() -> articleService.readArticle(article.getId()))
+        assertThatCode(() -> articleManageService.readArticle(article.getId()))
                 .doesNotThrowAnyException();
     }
 
@@ -56,7 +60,7 @@ public class ArticleServiceTest extends IntegrationTestSupport {
         long articleId = Long.MAX_VALUE;
 
         // when & then
-        assertThatThrownBy(() -> articleService.readArticle(articleId))
+        assertThatThrownBy(() -> articleManageService.readArticle(articleId))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.ARTICLE_NOT_FOUND.getMessage());
     }
@@ -71,13 +75,35 @@ public class ArticleServiceTest extends IntegrationTestSupport {
         Article article4 = articleRepository.save(ArticleFixture.ARTICLE_4());
 
         // when
-        List<String> articleTitles = articleService.readArticles().articles().stream()
+        List<String> articleTitles = articleManageService.readArticles().articles().stream()
                 .map(ArticlesResponse::title)
                 .toList();
 
         // then
         assertThat(articleTitles).containsExactly(article4.getTitle(), article3.getTitle(), article2.getTitle(),
                 article1.getTitle());
+    }
+
+    @DisplayName("아티클 업데이트 성공")
+    @Test
+    void updateArticle() {
+        // given
+        Article article = articleRepository.save(ArticleFixture.ARTICLE_1());
+        ArticleUpdateRequest updateArticle = ArticleFixture.ARTICLE_UPDATE_REQUEST();
+        Long articleId = article.getId();
+
+        // when
+        articleManageService.updateArticle(articleId, updateArticle);
+
+        // then
+        Article updatedArticle = articleRepository.getById(articleId);
+        assertAll(
+                () -> assertThat(updatedArticle.getTitle()).isEqualTo(updateArticle.title()),
+                () -> assertThat(updatedArticle.getContent()).isEqualTo(updateArticle.content()),
+                () -> assertThat(updatedArticle.getKeyword()).isEqualTo(updateArticle.keyword()),
+                () -> assertThat(updatedArticle.getSummary()).isEqualTo(updateArticle.summary()),
+                () -> assertThat(updatedArticle.getThumbnail()).isEqualTo(updateArticle.thumbnail())
+        );
     }
 
     @DisplayName("아티클 삭제 성공")
@@ -87,11 +113,24 @@ public class ArticleServiceTest extends IntegrationTestSupport {
         Article article = articleRepository.save(ArticleFixture.ARTICLE());
 
         // when
-        articleService.deleteArticle(article.getId());
+        articleManageService.deleteArticle(article.getId());
 
         //then
-        assertThatThrownBy(() -> articleService.readArticle(article.getId()))
+        assertThatThrownBy(() -> articleManageService.readArticle(article.getId()))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.ARTICLE_NOT_FOUND.getMessage());
+    }
+
+    @DisplayName("아티클 조회 시 조회수 증가 성공")
+    @Test
+    void increaseViewCount() {
+        // given
+        Long articleId = articleRepository.save(ArticleFixture.ARTICLE()).getId();
+
+        // when
+        ArticleResponse article = articleManageService.readArticle(articleId);
+
+        // then
+        assertThat(article.viewCount()).isEqualTo(1);
     }
 }

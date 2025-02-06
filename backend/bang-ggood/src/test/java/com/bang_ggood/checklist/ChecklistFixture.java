@@ -117,9 +117,9 @@ public class ChecklistFixture {
         );
     }
 
-    public static ChecklistRequestV1 CHECKLIST_CREATE_REQUEST_V1() {
-        return new ChecklistRequestV1(
-                RoomFixture.ROOM_CREATE_REQUEST(),
+    public static ChecklistRequest CHECKLIST_CREATE_REQUEST_EMPTY_LOCATION() {
+        return new ChecklistRequest(
+                RoomFixture.ROOM_CREATE_REQUEST_EMPTY_LOCATION(),
                 List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(),
                         Option.SHOE_RACK.getId()),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
@@ -159,14 +159,6 @@ public class ChecklistFixture {
 
     public static ChecklistRequest CHECKLIST_UPDATE_REQUEST() {
         return new ChecklistRequest(
-                RoomFixture.ROOM_UPDATE_REQUEST(), List.of(1, 2, 3, 4),
-                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
-                        QUESTION_3_CREATE_REQUEST(), QUESTION_5_UPDATE_REQUEST())
-        );
-    }
-
-    public static ChecklistRequestV1 CHECKLIST_UPDATE_REQUEST_V1() {
-        return new ChecklistRequestV1(
                 RoomFixture.ROOM_UPDATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.INDUCTION.getId(),
                 Option.BED.getId(), Option.WASHING_MACHINE.getId()),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),

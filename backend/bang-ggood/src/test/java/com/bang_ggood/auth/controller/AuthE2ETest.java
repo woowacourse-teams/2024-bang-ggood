@@ -87,7 +87,7 @@ class AuthE2ETest extends AcceptanceTest {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, null))
-                .when().post("/checklists")
+                .when().post("/v1/checklists")
                 .then().log().all()
                 .statusCode(401)
                 .body("message", containsString(ExceptionCode.AUTHENTICATION_TOKEN_EMPTY.getMessage()));
@@ -102,7 +102,7 @@ class AuthE2ETest extends AcceptanceTest {
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .header(new Header(HttpHeaders.COOKIE, expectedCookie))
-                .when().post("/checklists")
+                .when().post("/v1/checklists")
                 .then().log().all()
                 .statusCode(401)
                 .body("message", containsString(ExceptionCode.AUTHENTICATION_TOKEN_EMPTY.getMessage()));

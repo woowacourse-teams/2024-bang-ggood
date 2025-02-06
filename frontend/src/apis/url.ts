@@ -18,7 +18,6 @@ export const ENDPOINT = {
   ROOM_COMPARE: (roomId1: number, roomId2: number) => `/v1/checklists/comparison?id=${roomId1}&id=${roomId2}`,
   ROOM_CATEGORY_DETAIL: (roomId: number, categoryId: number) =>
     `/v1/comparison/checklists/${roomId}/categories/${categoryId}/questions`,
-
   // like
   LIKE: (id: number | ':id') => `/checklists/${id}/like`,
   // category

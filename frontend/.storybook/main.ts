@@ -2,8 +2,13 @@ import type { StorybookConfig } from '@storybook/react-webpack5';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
+const _dirname = (() => {
+  if (typeof __dirname === 'undefined') {
+    return dirname(fileURLToPath(import.meta.url));
+  } else {
+    return __dirname;
+  }
+})();
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
@@ -45,7 +50,7 @@ const config: StorybookConfig = {
     }
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@': path.resolve(__dirname, '../src'),
+      '@': path.resolve(_dirname, '../src'),
     };
 
     if (!config.module || !config.module.rules) {

@@ -2,6 +2,7 @@ import type { StorybookConfig } from '@storybook/react-webpack5';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
+// _dirname: 로컬(ESM)과 CI서버(CJS)에서 에러안뜨고 정상 동작하기 위함
 const _dirname = (() => {
   if (typeof __dirname === 'undefined') {
     return dirname(fileURLToPath(import.meta.url));
@@ -9,6 +10,7 @@ const _dirname = (() => {
     return __dirname;
   }
 })();
+
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [

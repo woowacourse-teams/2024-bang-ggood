@@ -8,12 +8,12 @@ import LogoutModal from '@/components/MyPage/LogoutModal';
 import { QUERY_KEYS } from '@/constants/queryKeys';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { VOC_URL } from '@/constants/VoC';
-import useUserQuery from '@/hooks/query/useUserQuery';
+import useGetUserQuery from '@/hooks/query/useGetUserQuery';
 import useModal from '@/hooks/useModal';
 import { boxShadowSpread, flexColumn, flexRow, flexSpaceBetween, title4 } from '@/styles/common';
 
 const UserFeature = () => {
-  const { data: user } = useUserQuery();
+  const { data: user } = useGetUserQuery();
 
   const navigate = useNavigate();
 

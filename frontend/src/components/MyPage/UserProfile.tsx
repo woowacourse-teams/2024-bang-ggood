@@ -1,7 +1,7 @@
-import useUserQuery from '@/hooks/query/useUserQuery';
+import useGetUserQuery from '@/hooks/query/useGetUserQuery';
 
 const UserProfile = () => {
-  const { data: user } = useUserQuery();
+  const { data: user } = useGetUserQuery();
 
   return (
     <>

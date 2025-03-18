@@ -3,12 +3,12 @@ import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { ROUTE_PATH } from '@/constants/routePath';
-import useUserQuery from '@/hooks/query/useUserQuery';
+import useGetUserQuery from '@/hooks/query/useGetUserQuery';
 import useToast from '@/hooks/useToast';
 import { boxShadowSpread, flexRow, title2, title3 } from '@/styles/common';
 
 const AdminPage = () => {
-  const { data: user, isFetched } = useUserQuery();
+  const { data: user, isFetched } = useGetUserQuery();
   const { showToast } = useToast();
   const navigate = useNavigate();
 

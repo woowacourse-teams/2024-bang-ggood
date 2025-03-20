@@ -21,14 +21,14 @@ const Checkbox = ({
   onClick,
   ariaLabel,
 }: StyledProps) => {
-  const checkedColor = isChecked ? color || theme.palette.green500 : theme.palette.grey400;
+  const checkedColor = isChecked ? color : theme.palette.grey400;
 
   return (
     <S.Checkbox $color={checkedColor} $hoverColor={hoverColor} onClick={onClick} aria-label={ariaLabel}>
       <S.FlexBox>
         {iconType === 'check' ? <CheckIcon aria-hidden="true" /> : <PlusWhite aria-hidden="true" />}
       </S.FlexBox>
-      <S.CheckboxInput type="checkbox" checked={isChecked} />
+      <S.CheckboxInput type="checkbox" checked={isChecked} readOnly />
     </S.Checkbox>
   );
 };

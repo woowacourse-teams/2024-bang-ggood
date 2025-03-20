@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Fragment } from 'react';
 
 import Divider from '@/components/_common/Divider/Divider';
 import Layout from '@/components/_common/layout/Layout';
@@ -29,8 +30,8 @@ const ChecklistQuestionTemplate = () => {
           });
           const isLastQuestion = questions?.questions.length - 1 === index;
           return (
-            <>
-              <S.QuestionBox key={question.questionId}>
+            <Fragment key={question.questionId}>
+              <S.QuestionBox>
                 <ChecklistQuestionItem
                   key={`${currentTabId}-${question.questionId}`}
                   question={question}
@@ -40,7 +41,7 @@ const ChecklistQuestionTemplate = () => {
               </S.QuestionBox>
 
               {!isLastQuestion && <Divider />}
-            </>
+            </Fragment>
           );
         })}
       </S.ContentBox>

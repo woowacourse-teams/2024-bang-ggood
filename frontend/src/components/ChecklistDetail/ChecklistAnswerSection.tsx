@@ -22,7 +22,7 @@ const ChecklistAnswerSection = ({ categories }: Props) => {
             <Accordion.body id={category.categoryId}>
               {category.questions.map((question, index) => (
                 <Fragment key={question.questionId}>
-                  <ChecklistAnswer key={`answer-${question.questionId}`} QuestionAndAnswer={question} />
+                  <ChecklistAnswer QuestionAndAnswer={question} />
                   {index !== category.questions.length - 1 && <Divider />}
                 </Fragment>
               ))}

@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { BangBangCryIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
-import { LoadingSpinner } from '@/components/_common/LoadingSpinner/LoadingSpinner';
+import { LoadingIndicator } from '@/components/_common/LoadingIndicator/LoadingIndicator';
 import { DEFAULT_POSITION } from '@/constants/map';
 import { flexCenter } from '@/styles/common';
 import { Position } from '@/types/address';
@@ -154,7 +154,7 @@ const RealTimeMap = ({
         {realTimeLocationState === 'loading' && (
           <S.MapEmptyBox>
             <S.InfoTextBox>
-              <LoadingSpinner />
+              <LoadingIndicator />
               <S.LoadingMessage tabIndex={0}>
                 <div>현재 위치를 찾고 있어요.</div>
                 <div>위치 권한을 허용해 주세요.</div>

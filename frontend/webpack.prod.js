@@ -3,6 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { sentryWebpackPlugin } = require('@sentry/webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const common = require('./webpack.common.js');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = merge(common, {
   mode: 'production',
@@ -19,7 +20,9 @@ module.exports = merge(common, {
           filesToDeleteAfterUpload: ['**/*.js.map', '**/*.css.map', '**/*.LICENSE.txt'],
         },
       }),
-
+    new HtmlWebpackPlugin({
+      template: './public/index.html', // 안넣어주면 index.html의 src 버그. 이상하게도 prod에도 common에도 둘다넣어줘야 정상동작함.
+    }),
     process.env.BUNDLE_ANALYZE && new BundleAnalyzerPlugin(),
   ],
   module: {

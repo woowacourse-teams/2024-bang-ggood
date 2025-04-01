@@ -46,11 +46,7 @@ module.exports = {
     rules: [
       {
         test: /\.html$/i,
-        use: [
-          {
-            loader: 'html-loader',
-          },
-        ],
+        loader: 'html-loader',
       },
       {
         test: /\.(eot|ttf|woff|woff2)$/i,

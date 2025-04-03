@@ -1,3 +1,6 @@
+import color from '@/styles/color';
+import font from '@/styles/font';
+
 const palette = {
   /* yellow */
   yellow700: '#D09808',
@@ -82,8 +85,10 @@ const zIndex = {
 };
 
 const theme = {
-  palette,
-  text,
+  palette, //TODO: 마이그레이션이 끝나면 삭제
+  text, //TODO: 마이그레이션이 끝나면 삭제
+  font,
+  color,
   zIndex,
   viewport,
 };

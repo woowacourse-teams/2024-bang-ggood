@@ -38,13 +38,12 @@ import Utils from '@/assets/icons/room/utils.svg';
 import DropdownMark from '@/assets/icons/dropdown/dropdown-mark.svg';
 
 // mascot
-import BangBangIcon3D from '@/assets/icons/mascot/3D-bang-bang-icon.svg';
+import BangBangIcon3DUrl from '@/assets/icons/mascot/3D-bang-bang-icon.png';
 import BangBangCryIcon from '@/assets/icons/mascot/bang-bang-cry-icon.svg';
 import BangBangIcon from '@/assets/icons/mascot/bang-bang-icon.svg';
 import LampIcon from '@/assets/icons/mascot/lamp-icon.svg';
 import BangGgoodTextIcon from '@/assets/icons/mascot/logo.svg';
 import PencilIcon from '@/assets/icons/mascot/pencil-icon.svg';
-
 // kakao
 import KakaoLogo from '@/assets/icons/kakao/kakao-logo.svg';
 
@@ -65,7 +64,9 @@ import ToastInfo from '@/assets/icons/toast/toast-info.svg';
 // error
 import Error404 from '@/assets/icons/error/404.svg';
 import Error500 from '@/assets/icons/error/500.svg';
+import ImageWrapper from '@/assets/utils/ImageWrapper';
 
+const BangBangIcon3D = ImageWrapper(BangBangIcon3DUrl);
 export {
   ArrowBack,
   ArrowDownSmall,

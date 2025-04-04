@@ -9,9 +9,11 @@ import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.question.ChecklistQuestionFixture;
 import com.bang_ggood.question.CustomChecklistFixture;
 import com.bang_ggood.question.QuestionFixture;
+import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
+import com.bang_ggood.question.dto.request.QuestionCreateRequest;
 import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.ComparisonCategorizedQuestionsResponse;
@@ -56,6 +58,21 @@ class QuestionManageServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private ChecklistQuestionRepository checklistQuestionRepository;
+
+    @DisplayName("사용자 질문 생성 성공")
+    @Test
+    void createQuestion() {
+        // given
+        Category category = QuestionFixture.CATEGORY1;
+        User user = UserFixture.USER1;
+        QuestionCreateRequest questionCreateRequest = new QuestionCreateRequest(category.getId(), "title", "subtitle");
+
+        // when
+        Integer questionId = questionManageService.createQuestion(questionCreateRequest, user);
+
+        // then
+        Assertions.assertThat(questionId).isNotNull();
+    }
 
     @DisplayName("커스텀 체크리스트 질문 조회 성공")
     @Test

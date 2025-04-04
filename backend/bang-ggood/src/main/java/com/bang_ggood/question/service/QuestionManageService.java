@@ -8,6 +8,7 @@ import com.bang_ggood.question.domain.ChecklistQuestions;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
+import com.bang_ggood.question.dto.request.QuestionCreateRequest;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionResponse;
 import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
@@ -29,6 +30,19 @@ public class QuestionManageService {
     private final ChecklistService checklistService;
     private final ChecklistQuestionService checklistQuestionService;
     private final QuestionService questionService;
+    private final CustomChecklistQuestionService customChecklistQuestionService;
+
+    @Transactional
+    public Integer createQuestion(QuestionCreateRequest questionCreateRequest, User user) {
+        Category category = questionService.readCategory(questionCreateRequest.categoryId());
+        Question question = questionCreateRequest.toQuestionEntity(category);
+        Question savedQuestion = questionService.createQuestion(question);
+
+        CustomChecklistQuestion customChecklistQuestion = questionCreateRequest.toCustomChecklistEntity(user, savedQuestion);
+        CustomChecklistQuestion savedCustomChecklistQuestion = customChecklistQuestionService.createCustomChecklistQuestion(
+                customChecklistQuestion);
+        return savedCustomChecklistQuestion.getQuestionId();
+    }
 
     @Transactional
     public void createDefaultCustomChecklistQuestions(User user) {

@@ -70,7 +70,7 @@ public class QuestionManageService {
                                                                                List<CustomChecklistQuestion> customChecklistQuestions) {
         List<CategoryQuestionsResponse> categoryQuestionsResponses = new ArrayList<>();
 
-        for (Category category : questionService.findAllCustomQuestionCategories(user)) {
+        for (Category category : questionService.readAllCustomQuestionCategories(user)) {
             List<QuestionResponse> questionResponses = customChecklistQuestions.stream()
                     .filter(customChecklistQuestion -> customChecklistQuestion.isSameCategory(category))
                     .map(customChecklistQuestion -> new QuestionResponse(customChecklistQuestion.getQuestion(),
@@ -94,7 +94,7 @@ public class QuestionManageService {
             List<CustomChecklistQuestion> customChecklistQuestions) {
         List<CategoryCustomChecklistQuestionResponse> response = new ArrayList<>();
 
-        for (Category category : questionService.findAllCategories()) {
+        for (Category category : questionService.readAllCategories()) {
             List<Question> categoryQuestions = questionService.readQuestionsByCategory(category);
             List<CustomChecklistQuestionResponse> questions = categoryQuestions.stream()
                     .map(question -> new CustomChecklistQuestionResponse(

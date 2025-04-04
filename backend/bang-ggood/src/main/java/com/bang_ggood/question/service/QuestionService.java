@@ -35,12 +35,12 @@ public class QuestionService {
 
     @Cacheable(cacheNames = CATEGORY, key = "'allCategories'")
     @Transactional(readOnly = true)
-    public List<Category> findAllCategories() {
+    public List<Category> readAllCategories() {
         return categoryRepository.findAll();
     }
 
     @Transactional(readOnly = true)
-    public List<Category> findAllCustomQuestionCategories(User user) {
+    public List<Category> readAllCustomQuestionCategories(User user) {
         return categoryRepository.findAllCustomQuestionCategoriesByUserId(user.getId());
     }
 

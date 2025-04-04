@@ -141,7 +141,7 @@ public class ChecklistManageService {
     private List<SelectedCategoryQuestionsResponse> readChecklistQuestions(Checklist checklist) {
         List<ChecklistQuestion> checklistQuestions = checklistQuestionService.readChecklistQuestions(checklist);
 
-        return questionService.findAllCategories().stream()
+        return questionService.readAllCategories().stream()
                 .map(category -> categorizeChecklistQuestions(category, checklistQuestions))
                 .filter(selectedCategoryQuestionsResponse -> !selectedCategoryQuestionsResponse.questions().isEmpty())
                 .toList();

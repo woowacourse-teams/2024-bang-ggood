@@ -35,7 +35,7 @@ public class QuestionManageService {
     @Transactional
     public Integer createQuestion(QuestionCreateRequest questionCreateRequest, User user) {
         Category category = questionService.readCategory(questionCreateRequest.categoryId());
-        Question question = questionCreateRequest.toQuestionEntity(category);
+        Question question = questionCreateRequest.toQuestionEntity(category, user);
         Question savedQuestion = questionService.createQuestion(question);
 
         CustomChecklistQuestion customChecklistQuestion = questionCreateRequest.toCustomChecklistEntity(user, savedQuestion);

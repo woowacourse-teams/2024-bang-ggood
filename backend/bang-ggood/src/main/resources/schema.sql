@@ -16,6 +16,20 @@ DROP TABLE IF EXISTS password_reset_code CASCADE;
 
 -- Create tables
 
+CREATE TABLE users
+(
+    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name        VARCHAR(255),
+    email       VARCHAR(255) NOT NULL,
+    password    VARCHAR(255),
+    user_type   VARCHAR(255) NOT NULL,
+    login_type  VARCHAR(255) NOT NULL,
+    created_at  TIMESTAMP(6),
+    modified_at TIMESTAMP(6),
+    deleted     BOOLEAN,
+    CONSTRAINT unique_email_login_type UNIQUE (email, login_type)
+);
+
 CREATE TABLE category
 (
     id   INTEGER AUTO_INCREMENT PRIMARY KEY,
@@ -26,10 +40,12 @@ CREATE TABLE question
 (
     id          INTEGER AUTO_INCREMENT PRIMARY KEY,
     category_id INTEGER,
+    user_id BIGINT,
     title       VARCHAR(255),
     subtitle    VARCHAR(255),
     is_default  BOOLEAN,
-    FOREIGN KEY (category_id) REFERENCES category (id)
+    FOREIGN KEY (category_id) REFERENCES category (id),
+    FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
 CREATE TABLE highlight
@@ -57,20 +73,6 @@ CREATE TABLE room
     created_at    TIMESTAMP(6),
     modified_at   TIMESTAMP(6),
     deleted       BOOLEAN
-);
-
-CREATE TABLE users
-(
-    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name        VARCHAR(255),
-    email       VARCHAR(255) NOT NULL,
-    password    VARCHAR(255),
-    user_type   VARCHAR(255) NOT NULL,
-    login_type  VARCHAR(255) NOT NULL,
-    created_at  TIMESTAMP(6),
-    modified_at TIMESTAMP(6),
-    deleted     BOOLEAN,
-    CONSTRAINT unique_email_login_type UNIQUE (email, login_type)
 );
 
 CREATE TABLE checklist

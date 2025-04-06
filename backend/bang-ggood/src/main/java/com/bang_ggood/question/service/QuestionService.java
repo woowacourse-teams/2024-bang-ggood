@@ -98,7 +98,7 @@ public class QuestionService {
 
     @Cacheable(cacheNames = QUESTION, key = "#category")
     @Transactional(readOnly = true)
-    public List<Question> readQuestionsByCategory(Category category) {
-        return questionRepository.findAllByCategoryId(category.getId());
+    public List<Question> readQuestionsByCategoryAndUserAndAdmin(Category category, User user, User admin) {
+        return questionRepository.findAllByCategoryIdAndUserIdAndAdminId(category.getId(), user.getId(), admin.getId());
     }
 }

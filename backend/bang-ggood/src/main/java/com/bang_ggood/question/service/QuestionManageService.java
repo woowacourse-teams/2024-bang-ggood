@@ -17,6 +17,8 @@ import com.bang_ggood.question.dto.response.CustomChecklistQuestionResponse;
 import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.QuestionResponse;
 import com.bang_ggood.user.domain.User;
+import com.bang_ggood.user.domain.UserType;
+import com.bang_ggood.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +33,7 @@ public class QuestionManageService {
     private final ChecklistQuestionService checklistQuestionService;
     private final QuestionService questionService;
     private final CustomChecklistQuestionService customChecklistQuestionService;
+    private final UserRepository userRepository;
 
     @Transactional
     public Integer createQuestion(QuestionCreateRequest questionCreateRequest, User user) {
@@ -87,15 +90,16 @@ public class QuestionManageService {
     public CategoryCustomChecklistQuestionsResponse readAllCustomChecklistQuestions(User user) {
         List<CustomChecklistQuestion> customChecklistQuestions = checklistQuestionService.readCustomChecklistQuestions(
                 user);
-        return categorizeAllQuestionsWithSelected(customChecklistQuestions);
+        return categorizeAllQuestionsWithSelected(customChecklistQuestions, user);
     }
 
     private CategoryCustomChecklistQuestionsResponse categorizeAllQuestionsWithSelected(
-            List<CustomChecklistQuestion> customChecklistQuestions) {
+            List<CustomChecklistQuestion> customChecklistQuestions, User user) {
+        User admin = userRepository.findUserByUserType(UserType.ADMIN).get(0);
         List<CategoryCustomChecklistQuestionResponse> response = new ArrayList<>();
 
         for (Category category : questionService.readAllCategories()) {
-            List<Question> categoryQuestions = questionService.readQuestionsByCategory(category);
+            List<Question> categoryQuestions = questionService.readQuestionsByCategoryAndUserAndAdmin(category, user, admin);
             List<CustomChecklistQuestionResponse> questions = categoryQuestions.stream()
                     .map(question -> new CustomChecklistQuestionResponse(
                             question,

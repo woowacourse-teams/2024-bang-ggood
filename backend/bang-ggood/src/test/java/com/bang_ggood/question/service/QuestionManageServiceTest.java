@@ -13,14 +13,18 @@ import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
-import com.bang_ggood.question.dto.request.QuestionCreateRequest;
 import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
+import com.bang_ggood.question.dto.request.QuestionCreateRequest;
+import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionResponse;
+import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.ComparisonCategorizedQuestionsResponse;
+import com.bang_ggood.question.dto.response.CustomChecklistQuestionResponse;
 import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.QuestionResponse;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
+import com.bang_ggood.question.repository.QuestionRepository;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
@@ -59,6 +63,9 @@ class QuestionManageServiceTest extends IntegrationTestSupport {
     @Autowired
     private ChecklistQuestionRepository checklistQuestionRepository;
 
+    @Autowired
+    private QuestionRepository questionRepository;
+
     @DisplayName("사용자 질문 생성 성공")
     @Test
     void createQuestion() {
@@ -72,6 +79,40 @@ class QuestionManageServiceTest extends IntegrationTestSupport {
 
         // then
         Assertions.assertThat(questionId).isNotNull();
+    }
+
+    @DisplayName("커스텀 체크리스트 전체 질문 조회 성공")
+    @Test
+    void readAllCustomChecklistQuestions() {
+        // given
+        Category category = QuestionFixture.CATEGORY1;
+        User user1 = userRepository.save(UserFixture.USER1());
+        User user2 = userRepository.save(UserFixture.USER2());
+        User admin = userRepository.save(UserFixture.ADMIN_USER1());
+        Question user1Question = new Question(category, user1, "title", "subtitle", false);
+        Question user2Question = new Question(category, user2, "title", "subtitle", false);
+        Question adminQuestion = new Question(category, admin, "title", "subtitle", false);
+        CustomChecklistQuestion customChecklistQuestion1 = new CustomChecklistQuestion(user1, user1Question);
+        CustomChecklistQuestion customChecklistQuestion2 = new CustomChecklistQuestion(user1, adminQuestion);
+
+        questionRepository.saveAll(List.of(user1Question, user2Question, adminQuestion));
+        customChecklistQuestionRepository.saveAll(List.of(customChecklistQuestion1, customChecklistQuestion2));
+
+        // when
+        CategoryCustomChecklistQuestionsResponse result = questionManageService.readAllCustomChecklistQuestions(user1);
+
+        // then
+        int size = 0;
+        int selectedSize = 0;
+        for (CategoryCustomChecklistQuestionResponse categoryCustomChecklistQuestionResponse : result.categories()) {
+            size += categoryCustomChecklistQuestionResponse.questions().size();
+            for (CustomChecklistQuestionResponse question : categoryCustomChecklistQuestionResponse.questions()) {
+                if (question.getIsSelected()) selectedSize++;
+            }
+        }
+
+        Assertions.assertThat(size).isEqualTo(2);
+        Assertions.assertThat(selectedSize).isEqualTo(2);
     }
 
     @DisplayName("커스텀 체크리스트 질문 조회 성공")

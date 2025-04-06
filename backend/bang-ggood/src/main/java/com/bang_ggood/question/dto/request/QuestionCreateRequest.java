@@ -10,8 +10,8 @@ public record QuestionCreateRequest(@NotNull(message = "카테고리 아이디�
                                     @NotNull(message = "질문 내용이 존재하지 않습니다.") String title,
                                     String subtitle) {
 
-    public Question toQuestionEntity(Category category) {
-        return new Question(category, title, subtitle, true);
+    public Question toQuestionEntity(Category category, User user) {
+        return new Question(category, user, title, subtitle, true);
     }
 
     public CustomChecklistQuestion toCustomChecklistEntity(User user, Question question) {

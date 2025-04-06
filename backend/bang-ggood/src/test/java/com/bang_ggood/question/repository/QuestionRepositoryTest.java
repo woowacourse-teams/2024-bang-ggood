@@ -18,8 +18,8 @@ class QuestionRepositoryTest extends IntegrationTestSupport {
     @Test
     void findByIsDefaultTrue() {
         // given
-        Question question1 = questionRepository.save(new Question(QuestionFixture.CATEGORY1, "test", "test", true));
-        Question question2 = questionRepository.save(new Question(QuestionFixture.CATEGORY2, "test", "test", false));
+        Question question1 = questionRepository.save(new Question(QuestionFixture.CATEGORY1, null, "test", "test", true));
+        Question question2 = questionRepository.save(new Question(QuestionFixture.CATEGORY2, null, "test", "test", false));
 
         // when
         List<Question> questions = questionRepository.findAllByIsDefaultTrue();

@@ -24,7 +24,7 @@ public class CustomChecklistQuestion extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private User user; // todo 리팩토링
 
     @JoinColumn(name = "question_id")
     @ManyToOne(fetch = FetchType.LAZY)

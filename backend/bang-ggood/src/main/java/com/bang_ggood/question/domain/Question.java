@@ -1,5 +1,6 @@
 package com.bang_ggood.question.domain;
 
+import com.bang_ggood.user.domain.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -26,6 +27,9 @@ public class Question {
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
     @Column(nullable = false)
     private String title;
 
@@ -33,8 +37,9 @@ public class Question {
 
     private boolean isDefault;
 
-    public Question(Category category, String title, String subtitle, boolean isDefault) {
+    public Question(Category category, User user, String title, String subtitle, boolean isDefault) {
         this.category = category;
+        this.user = user;
         this.title = title;
         this.subtitle = subtitle;
         this.isDefault = isDefault;

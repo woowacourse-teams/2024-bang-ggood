@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { Memo } from '@/assets/assets';
+import { MemoIcon } from '@/assets/assets';
 import { boxShadow, title3 } from '@/styles/common';
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -11,7 +11,7 @@ const MemoButton = ({ onClick }: Props) => {
   return (
     <S.Wrapper>
       <S.Button onClick={onClick}>
-        <Memo />
+        <MemoIcon />
         <span>메모</span>
       </S.Button>
     </S.Wrapper>

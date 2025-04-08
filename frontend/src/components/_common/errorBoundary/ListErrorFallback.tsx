@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useQueryClient } from '@tanstack/react-query';
 import { FallbackProps } from 'react-error-boundary';
 
-import { Retry } from '@/assets/assets';
+import { RetryIcon } from '@/assets/assets';
 import { flexCenter, flexColumn, title4 } from '@/styles/common';
 
 const ListErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
@@ -19,7 +19,7 @@ const ListErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
       <S.Error>{error.message}</S.Error>
       <S.RefreshButton onClick={handleRefresh}>
         다시 시도하기
-        <Retry width={20} />
+        <RetryIcon width={20} />
       </S.RefreshButton>
     </S.Container>
   );

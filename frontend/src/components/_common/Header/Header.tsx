@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { ArrowBack, BangGgoodTextIcon } from '@/assets/assets';
+import { ArrowBackIcon, BangGgoodTextIcon } from '@/assets/assets';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { HEADER_SIZE } from '@/constants/style';
 import { flexCenter, title3, title4 } from '@/styles/common';
@@ -100,7 +100,7 @@ const Header = Object.assign(HeaderWrapper, {
     };
 
     return (
-      <ArrowBack
+      <ArrowBackIcon
         style={{
           cursor: 'pointer',
         }}

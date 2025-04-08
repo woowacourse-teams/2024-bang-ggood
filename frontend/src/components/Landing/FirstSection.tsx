@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { ArrowDownSmall, BangBangIcon, BangGgoodTextIcon, SmallCheck } from '@/assets/assets';
+import { ArrowDownIcon, BangBangIcon, BangGgoodTextIcon, SmallCheckIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import EmailLoginButton from '@/components/_common/LoginButton/EmailLoginButton';
 import KakaoLoginButton from '@/components/_common/LoginButton/KakaoLoginButton';
@@ -31,7 +31,7 @@ const FirstSection = () => {
                 {' '}
                 끝!
                 <S.CheckIconBox>
-                  <SmallCheck />
+                  <SmallCheckIcon />
                 </S.CheckIconBox>
               </S.CheckRelativeText>
             </S.SubtitleText>
@@ -58,7 +58,7 @@ const FirstSection = () => {
       <S.MoreBox>
         <S.SubText>방끗을 소개할게요. 아래를 클릭해보세요!</S.SubText>
         <CS.MoveUpDownAnimationBox>
-          <ArrowDownSmall aria-label="스크롤로 하단의 정보를 확인할 수 있어요" />
+          <ArrowDownIcon aria-label="스크롤로 하단의 정보를 확인할 수 있어요" />
         </CS.MoveUpDownAnimationBox>
       </S.MoreBox>
     </S.CenterBox>

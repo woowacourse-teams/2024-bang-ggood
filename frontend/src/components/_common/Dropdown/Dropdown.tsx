@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { CSSProperties, useEffect, useState } from 'react';
 
-import { DropdownMark } from '@/assets/assets';
+import { ArrowDropdownIcon } from '@/assets/assets';
 import { flexColumn, flexRow, flexSpaceBetween } from '@/styles/common';
 import theme from '@/styles/theme';
 
@@ -35,7 +35,7 @@ const Dropdown = ({ initialValue, options, onSelectSetter, id }: Props) => {
       <S.DropDownHeader onClick={() => setIsVisibleOptions(prev => !prev)}>
         <S.SelectedOption>
           <div>{selectedValue}</div>
-          <DropdownMark />
+          <ArrowDropdownIcon />
         </S.SelectedOption>
       </S.DropDownHeader>
       {isVisibleOptions && (

@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-import { ArrowDownSmall, mainPageScreen } from '@/assets/assets';
+import { ArrowDownIcon, mainPageScreen } from '@/assets/assets';
 import CS from '@/components/Landing/style';
 import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';
@@ -35,7 +35,7 @@ const SecondSection = () => {
         <CS.ScreenShot src={mainPageScreen} />
       </CS.AnimationBox>
       <CS.MoveUpDownAnimationBox>
-        <ArrowDownSmall aria-label="스크롤로 하단의 정보를 확인할 수 있어요" />
+        <ArrowDownIcon aria-label="스크롤로 하단의 정보를 확인할 수 있어요" />
       </CS.MoveUpDownAnimationBox>
     </>
   );

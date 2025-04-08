@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { ElementType, HTMLAttributes, LabelHTMLAttributes } from 'react';
 
-import { InputRequiredDot } from '@/assets/assets';
+import { InputRequiredDotIcon } from '@/assets/assets';
 import Input from '@/components/_common/Input/Input';
 import { flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
@@ -43,7 +43,7 @@ const FormField = Object.assign(FormFieldWrapper, {
 });
 
 const S = {
-  MovedRequiredDot: styled(InputRequiredDot)`
+  MovedRequiredDot: styled(InputRequiredDotIcon)`
     position: relative;
     top: -1.5rem;
     left: 0.5rem;

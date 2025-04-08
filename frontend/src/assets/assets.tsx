@@ -14,7 +14,7 @@ import LocationLineIcon from '@/assets/icons/common/location-lined.svg';
 import Memo from '@/assets/icons/common/memo.svg';
 import Retry from '@/assets/icons/common/retry.svg';
 import SmallCheck from '@/assets/icons/common/small-check.svg';
-import PlusBlack from '@/assets/icons/plusMinus/plus-black.svg';
+import PlusIcon from '@/assets/icons/plusMinus/plus-black.svg';
 import PlusWhite from '@/assets/icons/plusMinus/plus-white.svg';
 
 //face-icon
@@ -81,7 +81,9 @@ export {
   Building,
   Calendar,
   CheckIcon,
+  checkingPageScreen,
   CloseIcon,
+  customPageScreen,
   DropdownMark,
   Error404,
   Error500,
@@ -94,11 +96,12 @@ export {
   LampIcon,
   Location,
   LocationLineIcon,
+  mainPageScreen,
   Memo,
   Options,
   Pencil,
   PencilIcon,
-  PlusBlack,
+  PlusIcon,
   PlusWhite,
   Retry,
   Room,
@@ -111,7 +114,4 @@ export {
   ToastError,
   ToastInfo,
   Utils,
-  checkingPageScreen,
-  customPageScreen,
-  mainPageScreen,
 };

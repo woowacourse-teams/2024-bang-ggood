@@ -35,6 +35,13 @@ public class ChecklistController {
         return ResponseEntity.created(URI.create("/checklist/" + checklistId)).build();
     }
 
+    @PostMapping("/v1/checklists/{id}/share")
+    public ResponseEntity<Void> createChecklistShareLink(@UserPrincipal User user,
+                                                         @PathVariable("id") Long checklistId) {
+        long checklistShareId = checklistManageService.createChecklistShare(user, checklistId);
+        return ResponseEntity.created(URI.create("/checklist/share/" + checklistShareId)).build();
+    }
+
     @GetMapping("v1/checklists/{id}")
     public ResponseEntity<SelectedChecklistResponse> readChecklistByIdV1(@UserPrincipal User user,
                                                                          @PathVariable("id") Long checklistId) {

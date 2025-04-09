@@ -1,6 +1,7 @@
 package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.ChecklistShare;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponse;
@@ -55,6 +56,7 @@ public class ChecklistManageService {
     private final ChecklistLikeService checklistLikeService;
     private final ChecklistStationService checklistStationService;
     private final QuestionService questionService;
+    private final ChecklistShareService checklistShareService;
 
     @Transactional
     public Long createChecklist(User user, ChecklistRequest checklistRequest) {
@@ -108,6 +110,14 @@ public class ChecklistManageService {
 
     private void createChecklistStation(RoomRequest roomRequest, Checklist checklist) {
         checklistStationService.createChecklistStations(checklist, roomRequest.latitude(), roomRequest.longitude());
+    }
+
+    @Transactional
+    public Long createChecklistShare(User user, Long checklistId) {
+        Checklist checklist = checklistService.readChecklist(user, checklistId);
+        ChecklistShare checklistShare = checklistShareService.createChecklistShare(checklist);
+
+        return checklistShare.getId();
     }
 
     @Transactional(readOnly = true)

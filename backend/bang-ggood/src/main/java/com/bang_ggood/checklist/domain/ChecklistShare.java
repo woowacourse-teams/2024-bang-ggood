@@ -24,7 +24,12 @@ public class ChecklistShare extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     private Checklist checklist;
 
-    private String sharedToken;
+    private String token;
+
+    public ChecklistShare(Checklist checklist, String token) {
+        this.checklist = checklist;
+        this.token = token;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -48,7 +53,7 @@ public class ChecklistShare extends BaseEntity {
         return "ChecklistShare{" +
                 "id=" + id +
                 ", checklist=" + checklist +
-                ", sharedToken='" + sharedToken + '\'' +
+                ", sharedToken='" + token + '\'' +
                 '}';
     }
 }

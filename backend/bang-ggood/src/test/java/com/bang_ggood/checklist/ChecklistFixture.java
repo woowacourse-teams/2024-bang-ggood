@@ -1,8 +1,8 @@
 package com.bang_ggood.checklist;
 
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.ChecklistShare;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
-import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
 import com.bang_ggood.contract.domain.OccupancyMonth;
 import com.bang_ggood.contract.domain.OccupancyPeriod;
 import com.bang_ggood.like.domain.ChecklistLike;
@@ -204,5 +204,9 @@ public class ChecklistFixture {
         return new ChecklistMaintenance(
                 checklist, MaintenanceItem.GAS
         );
+    }
+
+    public static ChecklistShare CHECKLIST_SHARE(Checklist checklist) {
+        return new ChecklistShare(checklist, "token");
     }
 }

@@ -14,6 +14,7 @@ DROP TABLE IF EXISTS highlight CASCADE;
 DROP TABLE IF EXISTS question CASCADE;
 DROP TABLE IF EXISTS category CASCADE;
 DROP TABLE IF EXISTS password_reset_code CASCADE;
+DROP TABLE IF EXISTS checklist_share CASCADE;
 
 -- Create tables
 
@@ -195,6 +196,16 @@ CREATE TABLE password_reset_code
     email       VARCHAR(255) NOT NULL,
     code        VARCHAR(255) NOT NULL,
     verified    BOOLEAN      NOT NULL,
+    created_at  TIMESTAMP(6),
+    modified_at TIMESTAMP(6),
+    deleted     BOOLEAN
+);
+
+CREATE TABLE checklist_share
+(
+    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
+    checklist_id BIGINT,
+    token       VARCHAR(255) NOT NULL,
     created_at  TIMESTAMP(6),
     modified_at TIMESTAMP(6),
     deleted     BOOLEAN

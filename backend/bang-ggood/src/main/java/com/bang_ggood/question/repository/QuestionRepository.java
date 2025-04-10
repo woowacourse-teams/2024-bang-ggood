@@ -4,8 +4,10 @@ import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.question.domain.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
@@ -14,10 +16,9 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
         return findById(id).orElseThrow(() -> new BangggoodException(ExceptionCode.QUESTION_INVALID));
     }
 
-    List<Question> findAllByCategoryId(Integer id);
-
     List<Question> findAllByIsDefaultTrue();
 
+    @Query("SELECT q FROM Question q WHERE q.id IN :questionIds AND q.deleted = false ")
     List<Question> findAllByIdIn(List<Integer> questionIds);
 
     @Query("""
@@ -27,4 +28,11 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     List<Question> findAllByCategoryIdAndUserIdAndAdminId(@Param("categoryId") Integer categoryId,
                                                           @Param("userId") Long userId,
                                                           @Param("adminId") Long adminId);
+
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Transactional
+    @Query("UPDATE Question q "
+            + "SET q.deleted = true "
+            + "WHERE q.id = :id")
+    void deleteById(@Param("id") Integer id);
 }

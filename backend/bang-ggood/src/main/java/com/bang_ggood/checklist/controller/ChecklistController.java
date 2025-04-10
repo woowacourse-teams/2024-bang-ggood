@@ -4,6 +4,7 @@ import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.auth.config.UserPrincipal;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
+import com.bang_ggood.checklist.dto.response.ChecklistShareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.service.ChecklistManageService;
@@ -62,6 +63,12 @@ public class ChecklistController {
     public ResponseEntity<ChecklistCompareResponses> readChecklistsCompare(@AuthRequiredPrincipal User user,
                                                                            @RequestParam("id") List<Long> checklistIds) {
         return ResponseEntity.ok(checklistManageService.compareChecklists(user, checklistIds));
+    }
+
+    @GetMapping("/v1/checklists/{id}/share")
+    public ResponseEntity<ChecklistShareResponse> readChecklistShare(@AuthRequiredPrincipal User user,
+                                                                     @PathVariable("id") Long checklistId) {
+        return ResponseEntity.ok(checklistManageService.readChecklistShare(user, checklistId));
     }
 
     @PutMapping("/v1/checklists/{id}")

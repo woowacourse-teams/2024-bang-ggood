@@ -1,6 +1,8 @@
 package com.bang_ggood.checklist.repository;
 
 import com.bang_ggood.checklist.domain.ChecklistShare;
+import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,4 +14,9 @@ public interface ChecklistShareRepository extends JpaRepository<ChecklistShare, 
             + "WHERE cs.checklist.id = :checklistId "
             + "AND cs.deleted = false")
     Optional<ChecklistShare> findByChecklistId(@Param("checklistId") Long checklistId);
+
+    default ChecklistShare getByChecklistId(@Param("checklistId") Long checklistId) {
+        return findByChecklistId(checklistId).
+                orElseThrow(() -> new BangggoodException(ExceptionCode.CHECKLIST_SHARE_NOT_FOUND));
+    }
 }

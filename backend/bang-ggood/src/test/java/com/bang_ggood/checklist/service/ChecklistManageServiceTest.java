@@ -3,13 +3,15 @@ package com.bang_ggood.checklist.service;
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.ChecklistShare;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
-import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistShareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
+import com.bang_ggood.checklist.repository.ChecklistShareRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
@@ -44,6 +46,8 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
     private UserRepository userRepository;
     @Autowired
     private ChecklistLikeRepository checklistLikeRepository;
+    @Autowired
+    private ChecklistShareRepository checklistShareRepository;
 
     @DisplayName("체크리스트 작성 성공")
     @Test
@@ -175,6 +179,22 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.CHECKLIST_COMPARE_INVALID_COUNT.getMessage());
     }
 
+    @DisplayName("저장된 체크리스트 공유 정보 조회 성공")
+    @Test
+    void readChecklistShare() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        ChecklistShare checklistShare = checklistShareRepository.save(ChecklistFixture.CHECKLIST_SHARE(checklist));
+
+        // when
+        ChecklistShareResponse response = checklistManageService.readChecklistShare(user, checklist.getId());
+
+        // then
+        assertThat(response.shareUrl())
+                .isEqualTo("https://bang-ggood.com/checklists/share/" + checklistShare.getToken());
+    }
 
     @DisplayName("체크리스트 삭제 성공")
     @Test

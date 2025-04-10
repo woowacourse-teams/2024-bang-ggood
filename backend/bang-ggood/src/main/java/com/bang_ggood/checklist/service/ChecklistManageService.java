@@ -7,6 +7,7 @@ import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistShareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.global.exception.BangggoodException;
@@ -220,6 +221,12 @@ public class ChecklistManageService {
             categoryScoreResponses.add(new CategoryScoreResponse(category.getId(), category.getName(), score));
         }
         return new CategoryScoreResponses(categoryScoreResponses);
+    }
+
+    @Transactional(readOnly = true)
+    public ChecklistShareResponse readChecklistShare(User user, Long checklistId) {
+        ChecklistShare checklistShare = checklistShareService.readChecklistShare(user, checklistId);
+        return ChecklistShareResponse.from(checklistShare);
     }
 
     @Transactional

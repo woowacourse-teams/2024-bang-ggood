@@ -44,6 +44,9 @@ CREATE TABLE question
     title       VARCHAR(255),
     subtitle    VARCHAR(255),
     is_default  BOOLEAN,
+    created_at  TIMESTAMP(6),
+    modified_at TIMESTAMP(6),
+    deleted     BOOLEAN,
     FOREIGN KEY (category_id) REFERENCES category (id),
     FOREIGN KEY (user_id) REFERENCES users (id)
 );

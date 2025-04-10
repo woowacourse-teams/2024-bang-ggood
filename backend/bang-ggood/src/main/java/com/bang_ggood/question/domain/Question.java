@@ -1,5 +1,6 @@
 package com.bang_ggood.question.domain;
 
+import com.bang_ggood.BaseEntity;
 import com.bang_ggood.user.domain.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,7 +19,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @Entity
-public class Question {
+public class Question extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +49,10 @@ public class Question {
     public boolean isSelected(List<CustomChecklistQuestion> questions) {
         return questions.stream()
                 .anyMatch(question -> question.getQuestionId() == this.id);
+    }
+
+    public boolean isOwnedBy(User user) {
+        return this.user.equals(user);
     }
 
     @Override

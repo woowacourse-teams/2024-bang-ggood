@@ -101,4 +101,9 @@ public class QuestionService {
     public List<Question> readQuestionsByCategoryAndUserAndAdmin(Category category, User user, User admin) {
         return questionRepository.findAllByCategoryIdAndUserIdAndAdminId(category.getId(), user.getId(), admin.getId());
     }
+
+    @Transactional
+    public void deleteByQuestion(Question question) {
+        questionRepository.deleteById(question.getId());
+    }
 }

@@ -2,6 +2,8 @@ package com.bang_ggood.question.service;
 
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.service.ChecklistService;
+import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestions;
@@ -136,5 +138,21 @@ public class QuestionManageService {
     public void updateCustomChecklist(User user, CustomChecklistUpdateRequest request) {
         List<Question> questions = questionService.readAllQuestionByIds(request.questionIds());
         checklistQuestionService.updateCustomChecklist(user, questions);
+    }
+
+    @Transactional
+    public void deleteQuestion(User user, Integer questionId) {
+        Question question = questionService.readQuestion(questionId);
+        CustomChecklistQuestion customChecklistQuestion = customChecklistQuestionService.readByQuestion(question);
+        validateUserQuestion(user, question);
+
+        questionService.deleteByQuestion(question);
+        customChecklistQuestionService.deleteByCustomChecklistQuestion(customChecklistQuestion);
+    }
+
+    private void validateUserQuestion(User user, Question question) {
+        if (!question.isOwnedBy(user)) {
+            throw new BangggoodException(ExceptionCode.QUESTION_NOT_OWNED_BY_USER);
+        }
     }
 }

@@ -68,4 +68,18 @@ class QuestionRepositoryTest extends IntegrationTestSupport {
         // then
         Assertions.assertThat(questions).containsExactly(question1, question2);
     }
+
+    @DisplayName("질문 삭제 성공")
+    @Test
+    void deleteByQuestionId() {
+        // given
+        Question question1 = QuestionFixture.QUESTION1_CATEGORY1;
+
+        // when
+        questionRepository.deleteById(question1.getId());
+        List<Question> result = questionRepository.findAllByIdIn(List.of(question1.getId()));
+
+        // then
+        Assertions.assertThat(result).isEmpty();
+    }
 }

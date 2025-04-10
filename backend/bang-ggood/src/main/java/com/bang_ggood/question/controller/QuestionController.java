@@ -11,6 +11,7 @@ import com.bang_ggood.question.service.QuestionManageService;
 import com.bang_ggood.user.domain.User;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,6 +59,13 @@ public class QuestionController {
     public ResponseEntity<Void> updateCustomChecklist(@AuthRequiredPrincipal User user,
                                                       @RequestBody CustomChecklistUpdateRequest request) {
         questionManageService.updateCustomChecklist(user, request);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/questions/{questionId}")
+    public ResponseEntity<Void> deleteQuestion(@AuthRequiredPrincipal User user,
+                                               @PathVariable("questionId") int questionId) {
+        questionManageService.deleteQuestion(user, questionId);
         return ResponseEntity.noContent().build();
     }
 }

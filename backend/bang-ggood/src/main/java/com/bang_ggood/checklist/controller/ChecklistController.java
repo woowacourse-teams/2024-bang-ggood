@@ -37,7 +37,7 @@ public class ChecklistController {
     }
 
     @PostMapping("/v1/checklists/{id}/share")
-    public ResponseEntity<Void> createChecklistShareLink(@UserPrincipal User user,
+    public ResponseEntity<Void> createChecklistShareLink(@AuthRequiredPrincipal User user,
                                                          @PathVariable("id") Long checklistId) {
         long checklistShareId = checklistManageService.createChecklistShare(user, checklistId);
         return ResponseEntity.created(URI.create("/checklist/share/" + checklistShareId)).build();

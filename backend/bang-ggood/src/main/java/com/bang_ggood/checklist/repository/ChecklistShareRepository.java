@@ -4,8 +4,10 @@ import com.bang_ggood.checklist.domain.ChecklistShare;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 public interface ChecklistShareRepository extends JpaRepository<ChecklistShare, Long> {
@@ -30,4 +32,11 @@ public interface ChecklistShareRepository extends JpaRepository<ChecklistShare, 
         return findByToken(token).
                 orElseThrow(() -> new BangggoodException(ExceptionCode.CHECKLIST_SHARE_NOT_FOUND));
     }
+
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Transactional
+    @Query("UPDATE ChecklistShare cs "
+            + "SET cs.deleted = true "
+            + "WHERE cs.checklist.id = :checklistId")
+    void deleteByChecklistId(@Param("checklistId") Long checklistId);
 }

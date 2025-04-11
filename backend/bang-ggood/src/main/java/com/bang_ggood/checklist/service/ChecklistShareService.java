@@ -48,4 +48,9 @@ public class ChecklistShareService {
     public ChecklistShare readChecklistShare(String token) {
         return checklistShareRepository.getByToken(token);
     }
+
+    @Transactional
+    public void deleteChecklistShare(Checklist checklist) {
+        checklistShareRepository.deleteByChecklistId(checklist.getId());
+    }
 }

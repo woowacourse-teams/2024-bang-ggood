@@ -71,6 +71,11 @@ public class ChecklistController {
         return ResponseEntity.ok(checklistManageService.readChecklistShare(user, checklistId));
     }
 
+    @GetMapping("/checklists/share/{token}")
+    public ResponseEntity<SelectedChecklistResponse> readSharedChecklist(@PathVariable("token") String token) {
+        return ResponseEntity.ok(checklistManageService.readSharedChecklist(token));
+    }
+
     @PutMapping("/v1/checklists/{id}")
     public ResponseEntity<Void> updateChecklistByIdV1(
             @AuthRequiredPrincipal User user,

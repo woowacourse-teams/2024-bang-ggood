@@ -19,4 +19,15 @@ public interface ChecklistShareRepository extends JpaRepository<ChecklistShare, 
         return findByChecklistId(checklistId).
                 orElseThrow(() -> new BangggoodException(ExceptionCode.CHECKLIST_SHARE_NOT_FOUND));
     }
+
+    @Query("SELECT cs FROM ChecklistShare cs "
+            + "JOIN FETCH cs.checklist "
+            + "WHERE cs.token = :token "
+            + "AND cs.deleted = false")
+    Optional<ChecklistShare> findByToken(@Param("token") String token);
+
+    default ChecklistShare getByToken(@Param("token") String token) {
+        return findByToken(token).
+                orElseThrow(() -> new BangggoodException(ExceptionCode.CHECKLIST_SHARE_NOT_FOUND));
+    }
 }

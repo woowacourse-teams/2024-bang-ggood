@@ -13,7 +13,6 @@ import com.bang_ggood.user.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,17 +31,36 @@ class ChecklistShareRepositoryTest extends IntegrationTestSupport {
     @Autowired
     private UserRepository userRepository;
 
-    @DisplayName("체크리스트 아이디를 통해 공유 체크리스트 갖고 오기 성공")
+    @DisplayName("체크리스트 아이디를 통해 공유 체크리스트 조회 성공")
     @Test
     void findByChecklistId() {
         //given
         Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
         Checklist savedChecklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-        ChecklistShare savedChecklistShare = checklistShareRepository.save(ChecklistFixture.CHECKLIST_SHARE(savedChecklist));
+        ChecklistShare savedChecklistShare = checklistShareRepository.save(
+                ChecklistFixture.CHECKLIST_SHARE(savedChecklist));
 
         //when
         Optional<ChecklistShare> foundChecklist = checklistShareRepository.findByChecklistId(savedChecklist.getId());
+
+        //then
+        assertThat(foundChecklist).isPresent();
+        assertThat(foundChecklist.get().getId()).isEqualTo(savedChecklistShare.getId());
+    }
+
+    @DisplayName("토큰을 통해 공유 체크리스트 조회 성공")
+    @Test
+    void findByToken() {
+        //given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist savedChecklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        ChecklistShare savedChecklistShare = checklistShareRepository.save(
+                ChecklistFixture.CHECKLIST_SHARE(savedChecklist));
+
+        //when
+        Optional<ChecklistShare> foundChecklist = checklistShareRepository.findByToken(savedChecklistShare.getToken());
 
         //then
         assertThat(foundChecklist).isPresent();

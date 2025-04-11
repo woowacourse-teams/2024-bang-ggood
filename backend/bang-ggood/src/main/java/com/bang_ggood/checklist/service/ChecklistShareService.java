@@ -43,4 +43,9 @@ public class ChecklistShareService {
             throw new BangggoodException(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER);
         }
     }
+
+    @Transactional(readOnly = true)
+    public ChecklistShare readChecklistShare(String token) {
+        return checklistShareRepository.getByToken(token);
+    }
 }

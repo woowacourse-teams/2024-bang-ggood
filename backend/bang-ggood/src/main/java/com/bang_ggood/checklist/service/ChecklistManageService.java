@@ -125,6 +125,19 @@ public class ChecklistManageService {
     public SelectedChecklistResponse readChecklist(User user, Long checklistId) {
         Checklist checklist = checklistService.readChecklist(user, checklistId);
 
+        return assembleChecklistResponse(checklist);
+    }
+
+    @Transactional(readOnly = true)
+    public SelectedChecklistResponse readSharedChecklist(String token) {
+        ChecklistShare checklistShare = checklistShareService.readChecklistShare(token);
+        Checklist checklist = checklistShare.getChecklist();
+
+        return assembleChecklistResponse(checklist);
+
+    }
+
+    private SelectedChecklistResponse assembleChecklistResponse(Checklist checklist) {
         List<Integer> maintenances = readChecklistMaintenances(checklist);
         List<SelectedOptionResponse> options = readChecklistOptions(checklist);
         List<SelectedCategoryQuestionsResponse> questions = readChecklistQuestions(checklist);

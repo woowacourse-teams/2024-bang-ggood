@@ -140,6 +140,24 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.CHECKLIST_NOT_FOUND.getMessage());
     }
 
+    @DisplayName("공유된 체크리스트 조회 성공")
+    @Test
+    void readSharedChecklist() {
+        // given & when
+        User user = userRepository.save(UserFixture.USER1());
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        ChecklistShare checklistShare = checklistShareRepository.save(ChecklistFixture.CHECKLIST_SHARE(checklist));
+        SelectedChecklistResponse selectedChecklistResponse = checklistManageService.readSharedChecklist(
+                checklistShare.getToken());
+
+        // then
+        assertAll(
+                () -> assertThat(selectedChecklistResponse.room().roomName()).isEqualTo(room.getName()),
+                () -> assertThat(selectedChecklistResponse.room().address()).isEqualTo(room.getAddress())
+        );
+    }
+
     @DisplayName("체크리스트 비교 성공")
     @Test
     void compareChecklists_success() {

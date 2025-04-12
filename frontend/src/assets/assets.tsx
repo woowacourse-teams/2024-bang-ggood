@@ -16,6 +16,10 @@ import SmallCheckIcon from '@/assets/icons/common/small-check.svg';
 import PlusIcon from '@/assets/icons/plusMinus/plus-black.svg';
 import PlusWhiteIcon from '@/assets/icons/plusMinus/plus-white.svg';
 
+// map
+import LocationIcon from '@/assets/icons/map/location.svg';
+import SearchIcon from '@/assets/icons/map/search.svg';
+
 //face-icon
 import FaceBadIcon from '@/assets/icons/faceIcon/face-icon-bad.svg';
 import FaceGoodIcon from '@/assets/icons/faceIcon/face-icon.good.svg';
@@ -60,6 +64,7 @@ import Error500 from '@/assets/icons/error/500.svg';
 import ImageWrapper from '@/assets/utils/ImageWrapper';
 
 const BangBangIcon3D = ImageWrapper(BangBangIcon3DUrl);
+
 export {
   ArrowBackIcon,
   ArrowDownIcon,
@@ -85,6 +90,7 @@ export {
   InputRequiredDotIcon,
   KakaoLogoIcon,
   LampIcon,
+  LocationIcon,
   LocationLineIcon,
   mainPageScreen,
   MemoIcon,
@@ -95,6 +101,7 @@ export {
   PlusWhiteIcon,
   RetryIcon,
   Room,
+  SearchIcon,
   SmallCheckIcon,
   Stairs,
   Subway,

@@ -17,7 +17,7 @@ interface Props extends ComponentProps<'button'> {
   size?: ButtonSize;
   color?: ColorOption;
   label: string;
-  isSquare?: boolean; // rounded 로 props 변경 후 삭제
+  isSquare?: boolean; // TODO: rounded 로 props 변경 후 삭제
   rounded?: boolean;
   onClick?: () => void;
   disabled?: boolean;
@@ -107,11 +107,11 @@ const ColorStyles = {
   dark: css`
     background-color: ${theme.color.mono.black};
 
-    color: ${theme.palette.white};
+    color: ${theme.color.mono.white};
 
     &:hover,
     &:active {
-      background-color: ${theme.palette.black};
+      color: ${theme.color.gray[500]};
     }
   `,
   primary: css`
@@ -133,7 +133,7 @@ const ColorStyles = {
 
     &:hover,
     &:active {
-      background-color: ${theme.palette.yellow600};
+      background-color: ${theme.color.primary[100]};
     }
   `,
   disabled: css`

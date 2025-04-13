@@ -29,7 +29,7 @@ class QuestionRepositoryTest extends IntegrationTestSupport {
         Category category1 = QuestionFixture.CATEGORY1;
         Category category2 = QuestionFixture.CATEGORY2;
 
-        Question  question1 = questionRepository.save(new Question(category1, user, "title", "subtitle", false));
+        Question question1 = questionRepository.save(new Question(category1, user, "title", "subtitle", false));
         Question question2 = questionRepository.save(new Question(category1, admin, "title", "subtitle", false));
         Question question3 = questionRepository.save(new Question(category2, user, "title", "subtitle", false));
 
@@ -44,15 +44,15 @@ class QuestionRepositoryTest extends IntegrationTestSupport {
     @Test
     void findByIsDefaultTrue() {
         // given
-        Question question1 = questionRepository.save(new Question(QuestionFixture.CATEGORY1, null, "test", "test", true));
-        Question question2 = questionRepository.save(new Question(QuestionFixture.CATEGORY2, null, "test", "test", false));
+        Question defaultQuestion = questionRepository.save(new Question(QuestionFixture.CATEGORY1, null, "test", "test", true));
+        Question notDefaultQuestion = questionRepository.save(new Question(QuestionFixture.CATEGORY2, null, "test", "test", false));
 
         // when
         List<Question> questions = questionRepository.findAllByIsDefaultTrue();
 
         // then
-        Assertions.assertThat(questions).contains(question1);
-        Assertions.assertThat(questions).doesNotContain(question2);
+        Assertions.assertThat(questions).contains(defaultQuestion);
+        Assertions.assertThat(questions).doesNotContain(notDefaultQuestion);
     }
 
     @DisplayName("체크리스트 id로 조회 성공")

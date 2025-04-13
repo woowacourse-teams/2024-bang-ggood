@@ -18,7 +18,7 @@ public class CustomChecklistQuestionService {
         return customChecklistQuestionRepository.save(customChecklistQuestion);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public CustomChecklistQuestion readByQuestion(Question question) {
         return customChecklistQuestionRepository.getByQuestionId(question.getId());
     }

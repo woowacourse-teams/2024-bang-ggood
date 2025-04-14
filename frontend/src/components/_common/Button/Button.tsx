@@ -5,6 +5,7 @@ import { ComponentProps, FunctionComponent, SVGProps } from 'react';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
+import { fontStyle } from '@/utils/fontStyle';
 
 type ButtonVariant = 'contain' | 'outlined';
 type ButtonSize = 'xSmall' | 'small' | 'medium' | 'full';
@@ -87,6 +88,7 @@ const S = {
     cursor: pointer;
     box-sizing: border-box;
     ${flexCenter}
+    ${fontStyle(theme.font.body[1].B)};
   `,
   Text: styled.span<{ size: ButtonSize }>`
     ${flexCenter}
@@ -145,26 +147,18 @@ const ColorStyles = {
 
 const sizeStyles = {
   xSmall: css`
-    ${flexCenter}
-    ${theme.font.body[1].B};
     min-width: 7rem;
   `,
   small: css`
-    ${flexCenter}
-    ${theme.font.body[1].B};
     min-width: 9rem;
     height: 2.5rem;
   `,
   medium: css`
-    ${flexCenter}
-    ${theme.font.body[1].B};
     min-width: 10rem;
     height: 3rem;
   `,
   full: css`
     width: 100%;
-    ${flexCenter};
-    ${theme.font.body[1].B};
     height: 3rem;
   `,
 };

@@ -14,27 +14,27 @@ type Story = StoryObj<typeof meta>;
 /** Square Button */
 export const LightSquare: Story = {
   args: {
-    label: '버튼',
+    label: 'Button',
   },
 };
 
 export const DarkSquare: Story = {
   args: {
-    label: '버튼',
+    label: 'Button',
     color: 'dark',
   },
 };
 
 export const PrimarySquare: Story = {
   args: {
-    label: '버튼',
+    label: 'Button',
     color: 'primary',
   },
 };
 
 export const OutlinedSquare: Story = {
   args: {
-    label: '버튼',
+    label: 'Button',
     color: 'primary',
     variant: 'outlined',
   },
@@ -42,7 +42,7 @@ export const OutlinedSquare: Story = {
 
 export const DisabledSquare: Story = {
   args: {
-    label: '버튼',
+    label: 'Button',
     color: 'disabled',
   },
 };
@@ -50,14 +50,14 @@ export const DisabledSquare: Story = {
 /** Round Button */
 export const LightRound: Story = {
   args: {
-    label: '버튼',
+    label: 'Button',
     rounded: true,
   },
 };
 
 export const DarkRound: Story = {
   args: {
-    label: '버튼',
+    label: 'Button',
     color: 'dark',
     rounded: true,
   },
@@ -65,7 +65,7 @@ export const DarkRound: Story = {
 
 export const PrimaryRound: Story = {
   args: {
-    label: '버튼',
+    label: 'Button',
     color: 'primary',
     rounded: true,
   },
@@ -73,7 +73,7 @@ export const PrimaryRound: Story = {
 
 export const OutlinedRound: Story = {
   args: {
-    label: '버튼',
+    label: 'Button',
     color: 'primary',
     variant: 'outlined',
     rounded: true,
@@ -82,7 +82,7 @@ export const OutlinedRound: Story = {
 
 export const DisabledRound: Story = {
   args: {
-    label: '버튼',
+    label: 'Button',
     color: 'disabled',
     rounded: true,
   },

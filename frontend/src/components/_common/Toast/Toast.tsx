@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { ToastConfirm, ToastError, ToastInfo } from '@/assets/assets';
+import { ToastConfirmIcon, ToastErrorIcon, ToastInfoIcon } from '@/assets/assets';
 import { FOOTER_SIZE } from '@/constants/style';
 import { boxShadowSpread, flexCenter, flexColumn, flexRow, title4 } from '@/styles/common';
 import { ToastType } from '@/types/toast';
@@ -11,9 +11,9 @@ interface Props {
 }
 
 const renderIcon = (type: string) => {
-  if (type === 'error') return <ToastError />;
-  if (type === 'confirm') return <ToastConfirm />;
-  if (type === 'info') return <ToastInfo />;
+  if (type === 'error') return <ToastErrorIcon />;
+  if (type === 'confirm') return <ToastConfirmIcon />;
+  if (type === 'info') return <ToastInfoIcon />;
   return null;
 };
 

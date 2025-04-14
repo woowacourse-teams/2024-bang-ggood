@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { CheckIcon, PlusWhite } from '@/assets/assets';
+import { CheckIcon, PlusWhiteIcon } from '@/assets/assets';
 import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
 
@@ -26,7 +26,7 @@ const Checkbox = ({
   return (
     <S.Checkbox $color={checkedColor} $hoverColor={hoverColor} onClick={onClick} aria-label={ariaLabel}>
       <S.FlexBox>
-        {iconType === 'check' ? <CheckIcon aria-hidden="true" /> : <PlusWhite aria-hidden="true" />}
+        {iconType === 'check' ? <CheckIcon aria-hidden="true" /> : <PlusWhiteIcon aria-hidden="true" />}
       </S.FlexBox>
       <S.CheckboxInput type="checkbox" checked={isChecked} readOnly />
     </S.Checkbox>

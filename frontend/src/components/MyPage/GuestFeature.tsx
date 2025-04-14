@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { ArrowRightCircle } from '@/assets/assets';
+import { ArrowRightCircleIcon } from '@/assets/assets';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { VOC_URL } from '@/constants/VoC';
 import { boxShadowSpread, flexColumn, flexRow, flexSpaceBetween, title4 } from '@/styles/common';
@@ -23,7 +23,7 @@ const GuestFeature = () => {
           <S.LabelContainer>방끗이 도움되었나요? 한마디 남겨주세요!</S.LabelContainer>
           <S.Button tabIndex={1} onClick={handleMoveVoc}>
             방끗이 기다려요, 의견 남기기!
-            <ArrowRightCircle aria-hidden="true" />
+            <ArrowRightCircleIcon aria-hidden="true" />
           </S.Button>
         </S.Section>
 
@@ -31,7 +31,7 @@ const GuestFeature = () => {
           <S.LabelContainer>방끗 시작하기!</S.LabelContainer>
           <S.Button onClick={() => navigate(ROUTE_PATH.root)} tabIndex={1}>
             로그인/회원가입 바로가기
-            <ArrowRightCircle aria-hidden="true" />
+            <ArrowRightCircleIcon aria-hidden="true" />
           </S.Button>
         </S.Section>
       </S.Container>

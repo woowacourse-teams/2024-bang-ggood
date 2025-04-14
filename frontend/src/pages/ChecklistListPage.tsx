@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
 
-import { LampIcon, PencilIcon, PlusBlack } from '@/assets/assets';
+import { LampIcon, PencilIcon, PlusIcon } from '@/assets/assets';
 import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallback';
 import TitleErrorFallback from '@/components/_common/errorBoundary/TitleErrorFallback';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
@@ -72,7 +72,7 @@ const ChecklistListPage = () => {
         </ErrorBoundary>
       </Layout>
       <FloatingButton size="extends" onClick={handleClickFloatingButton} tabIndex={1}>
-        <PlusBlack />방 체크하기
+        <PlusIcon />방 체크하기
       </FloatingButton>
     </>
   );

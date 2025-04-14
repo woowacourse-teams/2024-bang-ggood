@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRef } from 'react';
 
-import { Search } from '@/assets/assets';
+import { SearchIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
 import useModal from '@/hooks/useModal';
@@ -55,7 +55,7 @@ const DaumAddressModal = () => {
         size="full"
         isSquare={true}
         color="light"
-        Icon={Search}
+        Icon={SearchIcon}
       />
       <Modal position="bottom" isOpen={isModalOpen} onClose={closeModal}>
         <Modal.header>주소 검색</Modal.header>

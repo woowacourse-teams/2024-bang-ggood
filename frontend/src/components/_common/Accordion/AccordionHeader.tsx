@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { ArrowDownSmall, ArrowUpSmall } from '@/assets/assets';
+import { ArrowDownIcon, ArrowUpIcon } from '@/assets/assets';
 import { useAccordionContext } from '@/components/_common/Accordion/AccordionContext';
 import { flexCenter, flexSpaceBetween, title3 } from '@/styles/common';
 import theme from '@/styles/theme';
@@ -16,8 +16,8 @@ interface Props {
 }
 const AccordionHeader = ({
   id,
-  openButton = <ArrowUpSmall />,
-  closeButton = <ArrowDownSmall />,
+  openButton = <ArrowUpIcon />,
+  closeButton = <ArrowDownIcon />,
   text,
   isMarked = true,
   markColor = theme.palette.yellow500,

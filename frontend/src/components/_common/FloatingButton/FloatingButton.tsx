@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { FOOTER_SIZE } from '@/constants/style';
-import { boxShadow, title3 } from '@/styles/common';
+import { boxShadow, flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
 
 type Size = 'small' | 'medium' | 'extends';
@@ -37,42 +37,40 @@ export default FloatingButton;
 
 const sizeStyle = {
   small: css`
-    width: 4rem;
-    height: 4rem;
-
-    font-size: ${theme.text.size.xSmall};
+    width: 2.5rem;
+    height: 2.5rem;
   `,
   medium: css`
-    width: 5rem;
-    height: 5rem;
-
-    font-size: ${theme.text.size.small};
+    width: 3.5rem;
+    height: 3.5rem;
+  `,
+  large: css`
+    width: 6rem;
+    height: 6rem;
   `,
   extends: css`
     display: flex;
-    height: 5rem;
-    padding: 8px 12px;
-
-    font-size: ${theme.text.size.small};
-    gap: 1rem;
+    height: 3.5rem;
+    padding: 1.5rem;
+    gap: 0.5rem;
   `,
 };
 
 const colorStyle = {
   yellow: css`
-    background-color: ${theme.palette.yellow500};
+    background-color: ${theme.color.primary[500]};
 
-    color: ${theme.palette.black};
+    color: ${theme.color.mono.black};
 
     &:hover,
     &:active {
-      background-color: ${theme.palette.yellow600};
+      background-color: ${theme.color.primary[600]};
     }
   `,
   green: css`
-    background-color: ${theme.palette.green500};
+    background-color: ${theme.color.secondary[500]};
 
-    color: ${theme.palette.white};
+    color: ${theme.color.mono.black};
 
     &:hover,
     &:active {
@@ -80,9 +78,9 @@ const colorStyle = {
     }
   `,
   subGreen: css`
-    background-color: ${theme.palette.subGreen500};
+    background-color: ${theme.color.green[400]};
 
-    color: ${theme.palette.white};
+    color: ${theme.color.mono.black};
 
     &:hover,
     &:active {
@@ -94,6 +92,7 @@ const colorStyle = {
 const S = {
   Wrapper: styled.div`
     display: flex;
+    justify-content: flex-end;
     position: fixed;
     bottom: calc(5% + ${FOOTER_SIZE}rem);
     left: 50%;
@@ -102,21 +101,18 @@ const S = {
     padding-right: 10%;
     transform: translateX(-50%);
     max-width: 60rem;
-    justify-content: flex-end;
 
     @media (min-width: ${theme.viewport.MOBILE}px) {
       padding-right: 2rem;
     }
   `,
   Button: styled.button<{ size: Size; color: Color }>`
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    ${flexCenter}
     border: none;
-    border-radius: 5rem;
+    border-radius: 3.5rem;
     ${({ size }) => sizeStyle[size]};
     ${({ color }) => colorStyle[color]};
-    ${title3};
+    ${theme.font.headline[1].B}
     ${boxShadow};
     outline: none;
     cursor: pointer;

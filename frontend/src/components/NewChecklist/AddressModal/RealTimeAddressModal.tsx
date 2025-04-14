@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useStore } from 'zustand';
 
-import { Location, LocationLineIcon } from '@/assets/assets';
+import { LocationIcon, LocationLineIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import RealTimeMap from '@/components/_common/Map/RealTimeMap';
@@ -53,7 +53,7 @@ const RealTimeAddressModal = () => {
         size="full"
         isSquare={true}
         color="light"
-        Icon={Location}
+        Icon={LocationIcon}
       />
       {isModalOpen && (
         <Modal size="large" position="bottom" isOpen={isModalOpen} onClose={closeModal}>

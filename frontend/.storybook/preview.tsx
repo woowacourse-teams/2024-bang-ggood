@@ -28,6 +28,14 @@ const decorator = Story => (
 
 const preview: Preview = {
   parameters: {
+    backgrounds: {
+      default: 'gray',
+      values: [
+        { name: 'gray', value: '#f1f1f1' },
+        { name: 'dark', value: '#333' },
+        { name: 'white', value: '#ffffff' },
+      ],
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,

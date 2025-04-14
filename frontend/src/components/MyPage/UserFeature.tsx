@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-import { ArrowRightCircle } from '@/assets/assets';
+import { ArrowRightCircleIcon } from '@/assets/assets';
 import DeleteAccountModal from '@/components/MyPage/DeleteAccountModal';
 import LogoutModal from '@/components/MyPage/LogoutModal';
 import { QUERY_KEYS } from '@/constants/queryKeys';
@@ -47,7 +47,7 @@ const UserFeature = () => {
             <S.LabelContainer>방끗이 도움되었나요? 한마디 남겨주세요!</S.LabelContainer>
             <S.Button tabIndex={1} onClick={handleMoveVoc}>
               방끗이 기다려요, 의견 남기기!
-              <ArrowRightCircle aria-hidden="true" />
+              <ArrowRightCircleIcon aria-hidden="true" />
             </S.Button>
           </S.Section>
         )}
@@ -56,7 +56,7 @@ const UserFeature = () => {
           <S.Section>
             <S.Button tabIndex={1} onClick={() => navigate(ROUTE_PATH.admin)}>
               어드민 페이지 바로가기
-              <ArrowRightCircle aria-hidden="true" />
+              <ArrowRightCircleIcon aria-hidden="true" />
             </S.Button>
           </S.Section>
         )}

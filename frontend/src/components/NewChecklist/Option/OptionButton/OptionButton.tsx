@@ -32,13 +32,13 @@ const OptionButton = ({ option, isSelected }: { option: OptionWithIcon; isSelect
   const BUTTON_COLOR = {
     unSelected: {
       border: theme.palette.grey300,
-      text: theme.palette.grey500,
-      fill: theme.palette.white,
+      text: theme.palette.grey600,
+      fill: theme.palette.grey300,
     },
     selected: {
-      border: theme.palette.yellow600,
-      fill: theme.palette.yellow100,
-      text: theme.palette.yellow700,
+      border: theme.palette.yellow500,
+      fill: theme.palette.yellow500,
+      text: theme.palette.grey600,
     },
   };
 

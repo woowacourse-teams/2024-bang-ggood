@@ -4,9 +4,6 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistShare;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.repository.ChecklistShareRepository;
-import com.bang_ggood.global.exception.BangggoodException;
-import com.bang_ggood.global.exception.ExceptionCode;
-import com.bang_ggood.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +21,7 @@ public class ChecklistShareService {
         return checklistShareRepository.findByChecklistId(checklist.getId())
                 .orElseGet(() -> {
                     String token = UUID.randomUUID().toString();
-                    ChecklistShare checklistShare = new ChecklistShare(checklist, token);
+                    ChecklistShare checklistShare = new ChecklistShare(checklist.getId(), token);
 
                     return checklistShareRepository.save(checklistShare);
                 });

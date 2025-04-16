@@ -45,7 +45,7 @@ class ChecklistShareServiceTest extends IntegrationTestSupport {
 
         //then
         assertAll(
-                () -> assertThat(checklistShare.getChecklist()).isEqualTo(savedChecklist),
+                () -> assertThat(checklistShare.getChecklistId()).isEqualTo(savedChecklist.getId()),
                 () -> assertThat(checklistShare.getToken()).isNotBlank()
         );
     }

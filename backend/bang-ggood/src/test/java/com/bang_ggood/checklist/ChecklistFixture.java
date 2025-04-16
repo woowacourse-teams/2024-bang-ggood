@@ -207,6 +207,6 @@ public class ChecklistFixture {
     }
 
     public static ChecklistShare CHECKLIST_SHARE(Checklist checklist) {
-        return new ChecklistShare(checklist, "token");
+        return new ChecklistShare(checklist.getId(), "token");
     }
 }

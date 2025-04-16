@@ -109,8 +109,8 @@ CREATE TABLE checklist_maintenance
 CREATE TABLE checklist_question
 (
     id           BIGINT AUTO_INCREMENT PRIMARY KEY,
-    question_id  INTEGER      NOT NULL,
-    checklist_id BIGINT       NOT NULL,
+    question_id  INTEGER NOT NULL,
+    checklist_id BIGINT  NOT NULL,
     answer       VARCHAR(255),
     created_at   TIMESTAMP(6),
     modified_at  TIMESTAMP(6),
@@ -192,10 +192,13 @@ CREATE TABLE password_reset_code
 
 CREATE TABLE checklist_share
 (
-    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-    checklist_id BIGINT,
-    token       VARCHAR(255) NOT NULL,
-    created_at  TIMESTAMP(6),
-    modified_at TIMESTAMP(6),
-    deleted     BOOLEAN
+    checklist_id BIGINT PRIMARY KEY,
+    token        VARCHAR(255) NOT NULL UNIQUE,
+    created_at   TIMESTAMP(6),
+    modified_at  TIMESTAMP(6),
+    deleted      BOOLEAN,
+
+    CONSTRAINT fk_checklist_share_checklist
+        FOREIGN KEY (checklist_id) REFERENCES checklist (id)
 );
+

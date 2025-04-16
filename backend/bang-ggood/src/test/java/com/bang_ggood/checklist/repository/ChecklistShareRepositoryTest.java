@@ -46,7 +46,7 @@ class ChecklistShareRepositoryTest extends IntegrationTestSupport {
 
         //then
         assertThat(foundChecklist).isPresent();
-        assertThat(foundChecklist.get().getId()).isEqualTo(savedChecklistShare.getId());
+        assertThat(foundChecklist.get()).isEqualTo(savedChecklistShare);
     }
 
     @DisplayName("토큰을 통해 공유 체크리스트 조회 성공")
@@ -64,6 +64,6 @@ class ChecklistShareRepositoryTest extends IntegrationTestSupport {
 
         //then
         assertThat(foundChecklist).isPresent();
-        assertThat(foundChecklist.get().getId()).isEqualTo(savedChecklistShare.getId());
+        assertThat(foundChecklist.get()).isEqualTo(savedChecklistShare);
     }
 }

@@ -3,9 +3,8 @@ package com.bang_ggood.checklist.domain;
 import com.bang_ggood.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -18,16 +17,16 @@ import java.util.Objects;
 public class ChecklistShare extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long checklistId;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "checklistId", referencedColumnName = "id", insertable = false, updatable = false)
     private Checklist checklist;
 
     private String token;
 
-    public ChecklistShare(Checklist checklist, String token) {
-        this.checklist = checklist;
+    public ChecklistShare(Long checklistId, String token) {
+        this.checklistId = checklistId;
         this.token = token;
     }
 
@@ -40,20 +39,20 @@ public class ChecklistShare extends BaseEntity {
             return false;
         }
         ChecklistShare that = (ChecklistShare) o;
-        return Objects.equals(id, that.id);
+        return Objects.equals(checklistId, that.checklistId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(checklistId);
     }
 
     @Override
     public String toString() {
         return "ChecklistShare{" +
-                "id=" + id +
+                "checklistId=" + checklistId +
                 ", checklist=" + checklist +
-                ", sharedToken='" + token + '\'' +
+                ", token='" + token + '\'' +
                 '}';
     }
 }

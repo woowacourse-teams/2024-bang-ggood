@@ -65,7 +65,7 @@ public class ChecklistController {
         return ResponseEntity.ok(checklistManageService.compareChecklists(user, checklistIds));
     }
 
-    @GetMapping("/checklists/share/{token}")
+    @GetMapping("/v1/checklists/share/{token}")
     public ResponseEntity<SelectedChecklistResponse> readSharedChecklist(@PathVariable("token") String token) {
         return ResponseEntity.ok(checklistManageService.readSharedChecklist(token));
     }

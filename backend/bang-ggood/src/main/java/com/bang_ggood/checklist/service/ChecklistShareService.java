@@ -31,20 +31,6 @@ public class ChecklistShareService {
     }
 
     @Transactional(readOnly = true)
-    public ChecklistShare readChecklistShare(User user, Long checklistId) {
-        Checklist checklist = checklistRepository.getById(checklistId);
-        validateChecklistOwnership(user, checklist);
-
-        return checklistShareRepository.getByChecklistId(checklistId);
-    }
-
-    private void validateChecklistOwnership(User user, Checklist checklist) {
-        if (!checklist.isOwnedBy(user)) {
-            throw new BangggoodException(ExceptionCode.CHECKLIST_NOT_OWNED_BY_USER);
-        }
-    }
-
-    @Transactional(readOnly = true)
     public ChecklistShare readChecklistShare(String token) {
         return checklistShareRepository.getByToken(token);
     }

@@ -197,23 +197,6 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
                 .hasMessage(ExceptionCode.CHECKLIST_COMPARE_INVALID_COUNT.getMessage());
     }
 
-    @DisplayName("저장된 체크리스트 공유 정보 조회 성공")
-    @Test
-    void readChecklistShare() {
-        // given
-        User user = userRepository.save(UserFixture.USER1());
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-        ChecklistShare checklistShare = checklistShareRepository.save(ChecklistFixture.CHECKLIST_SHARE(checklist));
-
-        // when
-        ChecklistShareResponse response = checklistManageService.readChecklistShare(user, checklist.getId());
-
-        // then
-        assertThat(response.shareUrl())
-                .isEqualTo("https://bang-ggood.com/checklists/share/" + checklistShare.getToken());
-    }
-
     @DisplayName("체크리스트 삭제 성공")
     @Test
     void deleteChecklistById() {

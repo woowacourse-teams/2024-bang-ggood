@@ -37,10 +37,10 @@ public class ChecklistController {
     }
 
     @PostMapping("/v1/checklists/{id}/share")
-    public ResponseEntity<Void> createChecklistShareLink(@AuthRequiredPrincipal User user,
-                                                         @PathVariable("id") Long checklistId) {
-        long checklistShareId = checklistManageService.createChecklistShare(user, checklistId);
-        return ResponseEntity.created(URI.create("/checklists/share/" + checklistShareId)).build();
+    public ResponseEntity<ChecklistShareResponse> createChecklistShareLink(@AuthRequiredPrincipal User user,
+                                                                           @PathVariable("id") Long checklistId) {
+        ChecklistShareResponse response = checklistManageService.createChecklistShare(user, checklistId);
+        return ResponseEntity.created(URI.create("/checklists/share/" + response.token())).body(response);
     }
 
     @GetMapping("v1/checklists/{id}")
@@ -63,12 +63,6 @@ public class ChecklistController {
     public ResponseEntity<ChecklistCompareResponses> readChecklistsCompare(@AuthRequiredPrincipal User user,
                                                                            @RequestParam("id") List<Long> checklistIds) {
         return ResponseEntity.ok(checklistManageService.compareChecklists(user, checklistIds));
-    }
-
-    @GetMapping("/v1/checklists/{id}/share")
-    public ResponseEntity<ChecklistShareResponse> readChecklistShare(@AuthRequiredPrincipal User user,
-                                                                     @PathVariable("id") Long checklistId) {
-        return ResponseEntity.ok(checklistManageService.readChecklistShare(user, checklistId));
     }
 
     @GetMapping("/checklists/share/{token}")

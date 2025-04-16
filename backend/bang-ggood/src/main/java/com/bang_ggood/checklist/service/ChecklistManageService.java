@@ -114,11 +114,11 @@ public class ChecklistManageService {
     }
 
     @Transactional
-    public Long createChecklistShare(User user, Long checklistId) {
+    public ChecklistShareResponse createChecklistShare(User user, Long checklistId) {
         Checklist checklist = checklistService.readChecklist(user, checklistId);
         ChecklistShare checklistShare = checklistShareService.createChecklistShare(checklist);
 
-        return checklistShare.getId();
+        return ChecklistShareResponse.from(checklistShare);
     }
 
     @Transactional(readOnly = true)
@@ -236,11 +236,6 @@ public class ChecklistManageService {
         return new CategoryScoreResponses(categoryScoreResponses);
     }
 
-    @Transactional(readOnly = true)
-    public ChecklistShareResponse readChecklistShare(User user, Long checklistId) {
-        ChecklistShare checklistShare = checklistShareService.readChecklistShare(user, checklistId);
-        return ChecklistShareResponse.from(checklistShare);
-    }
 
     @Transactional
     public void deleteChecklistById(User user, Long id) {

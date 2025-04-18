@@ -4,6 +4,7 @@ import { useCallback } from 'react';
 import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
 import { InputChangeEvent } from '@/types/event';
+import { fontStyle } from '@/utils/fontStyle';
 import { css } from '@emotion/react';
 
 const widthSize = {
@@ -81,5 +82,6 @@ const S = {
     box-sizing: border-box;
 
     ${({ $variant, disabled }) => variantStyle[disabled ? 'disabled' : $variant]};
+    ${({ theme }) => fontStyle(theme.font.body[1].R)};
   `,
 };

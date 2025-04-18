@@ -56,7 +56,7 @@ export const Error: Story = {
     return (
       <FormField>
         <FormField.Label label="입력 내용" required={true} />
-        <FormField.Input value="Input" width="full" placeholder="" variant="error" />
+        <FormField.Input value="Input" width="full" placeholder="" variant="default" isError={true} />
         <FormField.ErrorMessage value="Message" />
       </FormField>
     );

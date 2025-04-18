@@ -15,32 +15,32 @@ interface Props {
 }
 
 const FooterButton = ({ logo, isActive = false }: Props) => {
-  const stroke = isActive ? theme.palette.yellow600 : theme.palette.grey400;
-  const fill = isActive ? theme.palette.yellow600 : theme.palette.grey400;
+  const stroke = isActive ? theme.color.primary[500] : theme.color.gray[400];
+  const fill = isActive ? theme.color.primary[200] : theme.color.gray[100];
 
   return (
     <S.Wrapper>
       {logo === 'home' && (
         <>
-          <Home stroke={stroke} fill={stroke} aria-label="홈 바로가기" />
+          <Home width={24} height={24} stroke={stroke} fill={fill} aria-label="홈 바로가기" />
           <S.Text isActive={isActive}>홈</S.Text>
         </>
       )}
       {logo === 'checklist' && (
         <>
-          <Checklist stroke={stroke} fill={fill} aria-label="체크리스트 바로가기" />
+          <Checklist width={24} height={24} stroke={stroke} fill={fill} aria-label="체크리스트 바로가기" />
           <S.Text isActive={isActive}>체크리스트</S.Text>
         </>
       )}
       {logo === 'article' && (
         <>
-          <Article stroke={stroke} fill={fill} aria-label="아티클 바로가기" />
+          <Article width={24} height={24} stroke={stroke} fill={fill} aria-label="아티클 바로가기" />
           <S.Text isActive={isActive}>아티클</S.Text>
         </>
       )}
       {logo === 'profile' && (
         <>
-          <Profile stroke={stroke} fill={fill} aria-label="마이페이지 바로가기" />
+          <Profile width={24} height={24} stroke={stroke} fill={fill} aria-label="마이페이지 바로가기" />
           <S.Text isActive={isActive}>마이페이지</S.Text>
         </>
       )}
@@ -57,7 +57,6 @@ const S = {
     align-items: center;
   `,
   Text: styled.div<{ isActive: boolean }>`
-    color: ${({ isActive, theme }) => (isActive ? theme.palette.yellow600 : theme.palette.grey400)};
-    font-size: ${({ theme }) => theme.text.size.xxSmall};
+    color: ${({ isActive, theme }) => (isActive ? theme.color.primary[500] : theme.color.gray[400])};
   `,
 };

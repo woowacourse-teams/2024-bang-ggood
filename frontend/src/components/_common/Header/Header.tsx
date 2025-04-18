@@ -5,7 +5,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ArrowBackIcon, BangGgoodTextIcon } from '@/assets/assets';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { HEADER_SIZE } from '@/constants/style';
-import { flexCenter, title3, title4 } from '@/styles/common';
+import { flexCenter, title3 } from '@/styles/common';
+import theme from '@/styles/theme';
+import { fontStyle } from '@/utils/fontStyle';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   left?: ReactNode;
@@ -39,7 +41,7 @@ const S = {
     z-index: ${({ theme }) => theme.zIndex.HEADER};
     width: 100%;
     height: ${HEADER_SIZE}rem;
-    padding: 1rem 0.8rem;
+    padding: 1.1rem 1.6rem;
 
     background-color: ${({ theme, isTransparent }) => (isTransparent ? 'rgba(255,255,255, 0.5)' : theme.palette.white)};
 
@@ -59,20 +61,25 @@ const S = {
     justify-content: flex-start;
     align-items: center;
     min-width: 5rem;
+
+    color: ${({ theme }) => theme.color.gray[600]};
   `,
   Center: styled.div`
     ${flexCenter}
     flex: 1;
+
+    ${({ theme }) => fontStyle(theme.font.heading[1].B)}
+    color: ${({ theme }) => theme.color.mono.black};
   `,
   Right: styled.div`
     display: flex;
     justify-content: flex-end;
     min-width: 5rem;
+
+    ${({ theme }) => fontStyle(theme.font.body[1].B)}
+    color: ${({ theme }) => theme.color.gray[400]};
   `,
-  TextButton: styled.button`
-    color: ${({ theme }) => theme.palette.black};
-    ${title4}
-  `,
+  TextButton: styled.button(),
   Text: styled.div`
     box-sizing: content-box;
 
@@ -104,6 +111,8 @@ const Header = Object.assign(HeaderWrapper, {
         style={{
           cursor: 'pointer',
         }}
+        fill={theme.color.gray[600]}
+        stroke={theme.color.gray[600]}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
         {...props}

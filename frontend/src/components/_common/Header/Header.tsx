@@ -83,8 +83,12 @@ const S = {
   Text: styled.div`
     box-sizing: content-box;
 
-    color: ${({ theme }) => theme.palette.black};
+    color: ${({ theme }) => theme.color.mono.black};
     ${title3}
+  `,
+  Title: styled.div`
+    color: ${({ theme }) => theme.color.mono.black};
+    ${({ theme }) => fontStyle(theme.font.title[3].B)}
   `,
 };
 
@@ -123,6 +127,7 @@ const Header = Object.assign(HeaderWrapper, {
   },
   TextButton: S.TextButton,
   Text: S.Text,
+  Title: S.Title,
 });
 
 export default Header;

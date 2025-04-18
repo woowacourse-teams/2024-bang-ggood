@@ -14,7 +14,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   pointer?: boolean;
   justify?: CSSProperties['justifyContent'];
   align?: 'center' | 'flex-start' | 'flex-end' | 'stretch' | 'baseline';
-  flexWrap?: string;
+  flexWrap?: CSSProperties['flexWrap'];
 }
 
 const FlexBox = ({
@@ -30,6 +30,7 @@ const FlexBox = ({
   backgroundColor,
   pointer,
   style,
+  flexWrap,
   ...props
 }: Props) => {
   return (
@@ -39,7 +40,7 @@ const FlexBox = ({
         flexDirection: direction,
         justifyContent: justify,
         alignItems: align,
-        flexWrap: direction === 'row' ? 'wrap' : 'nowrap',
+        flexWrap: flexWrap ?? 'inherit',
         gap,
         width,
         height,

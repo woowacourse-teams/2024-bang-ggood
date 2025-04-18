@@ -27,7 +27,7 @@ export const Normal: Story = {
   args: { width: 'small', value: 'Input', variant: 'default' },
 };
 export const Error: Story = {
-  args: { width: 'small', value: 'Input', variant: 'error' },
+  args: { width: 'small', value: 'Input', variant: 'default', isError: true },
 };
 export const NoBorder: Story = {
   args: { width: 'small', value: 'Input', variant: 'no-border' },

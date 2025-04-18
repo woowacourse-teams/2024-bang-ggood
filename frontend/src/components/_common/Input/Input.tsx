@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { useCallback } from 'react';
 
+import { CloseIcon } from '@/assets/assets';
 import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
 import { InputChangeEvent } from '@/types/event';
@@ -16,10 +17,11 @@ const widthSize = {
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   width?: keyof typeof widthSize;
-  variant?: 'default' | 'error' | 'no-border' | 'fill-white';
+  variant?: 'default' | 'no-border' | 'fill-white';
+  isError?: boolean;
 }
 
-const Input = ({ width = 'full', value, onChange, variant = 'default', disabled, ...rest }: Props) => {
+const Input = ({ width = 'full', value, onChange, variant = 'default', disabled, isError = false, ...rest }: Props) => {
   const handleChange = useCallback(
     (event: InputChangeEvent) => {
       if (!onChange) return;
@@ -29,14 +31,28 @@ const Input = ({ width = 'full', value, onChange, variant = 'default', disabled,
   );
 
   return (
-    <S.Input
-      width={widthSize[width]}
-      value={value}
-      {...rest}
-      onChange={handleChange}
-      $variant={variant ?? 'default'}
-      disabled={disabled}
-    />
+    <div style={{ position: 'relative' }}>
+      <S.Input
+        value={value}
+        {...rest}
+        onChange={handleChange}
+        $variant={isError ? 'error' : (variant ?? 'default')}
+        disabled={disabled}
+      />
+      {isError && (
+        <div
+          style={{
+            position: 'absolute',
+            right: '1rem',
+            fontSize: '2rem',
+            top: 'calc(50%)',
+            transform: 'translate(0,-50%)',
+          }}
+        >
+          <CloseIcon fill={theme.color.red[300]} />
+        </div>
+      )}
+    </div>
   );
 };
 
@@ -69,7 +85,7 @@ const variantStyle = {
 const S = {
   Input: styled.input<StyledProps>`
     ${flexCenter}
-    /* width: ${({ width }) => width}; */
+    width:100%;
     height: 5rem;
     padding: 0.6rem 1.1rem;
     border: 0.1rem solid;

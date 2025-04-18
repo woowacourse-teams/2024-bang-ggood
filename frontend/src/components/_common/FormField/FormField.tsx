@@ -4,7 +4,7 @@ import { ElementType, HTMLAttributes, LabelHTMLAttributes } from 'react';
 import { InputRequiredDotIcon } from '@/assets/assets';
 import Input from '@/components/_common/Input/Input';
 import { flexColumn } from '@/styles/common';
-import theme from '@/styles/theme';
+import { fontStyle } from '@/utils/fontStyle';
 
 type GetProps<T> = T extends React.FC<infer P> ? P : never;
 
@@ -24,7 +24,7 @@ const FormFieldWrapper = styled.div<{ rowGap?: string }>`
 const FormField = Object.assign(FormFieldWrapper, {
   Label: ({ label, required = false, ...rest }: LabelProps) => {
     return (
-      <S.LabelContainer {...rest} style={{ fontSize: theme.text.size.medium, fontWeight: theme.text.weight.bold }}>
+      <S.LabelContainer {...rest}>
         {label}
         {required && <S.MovedRequiredDot />}
       </S.LabelContainer>
@@ -51,12 +51,13 @@ const S = {
   LabelContainer: styled.label`
     position: relative;
     z-index: 0;
+    ${({ theme }) => fontStyle(theme.font.label[1].R)}
   `,
   ErrorMessage: styled.p`
-    height: 1rem;
+    padding: 0 0 0 1.6rem;
 
-    color: ${({ theme }) => theme.palette.red500};
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    color: ${({ theme }) => theme.color.red[300]};
+    ${({ theme }) => fontStyle(theme.font.label[1].R)}
   `,
   EmptyBox: styled.div`
     height: 1rem;

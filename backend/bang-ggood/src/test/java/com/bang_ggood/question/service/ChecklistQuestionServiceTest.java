@@ -21,12 +21,14 @@ import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -265,5 +267,22 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
         assertThatThrownBy(() -> checklistQuestionService.updateCustomChecklist(UserFixture.USER1, questions))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_DUPLICATED.getMessage());
+    }
+
+    @DisplayName("커스텀 체크리스트 삭제 성공")
+    @Test
+    void deleteByQuestionId() {
+        // given
+        Question question = QuestionFixture.QUESTION1_CATEGORY1;
+        CustomChecklistQuestion customChecklistQuestion = new CustomChecklistQuestion(UserFixture.USER1, question);
+        CustomChecklistQuestion savedCustomChecklistQuestion = customChecklistQuestionRepository.save(customChecklistQuestion);
+
+        // when
+        customChecklistQuestionRepository.deleteById(customChecklistQuestion.getId());
+        Optional<CustomChecklistQuestion> result = customChecklistQuestionRepository.findById(
+                savedCustomChecklistQuestion.getId());
+
+        // then
+        Assertions.assertThat(result).isEmpty();
     }
 }

@@ -4,6 +4,7 @@ import { CSSProperties, useEffect, useState } from 'react';
 import { ArrowDropdownIcon } from '@/assets/assets';
 import { flexColumn, flexRow, flexSpaceBetween } from '@/styles/common';
 import theme from '@/styles/theme';
+import { fontStyle } from '@/utils/fontStyle';
 
 interface Option {
   [key: string]: string;
@@ -59,9 +60,10 @@ const S = {
     position: relative;
 
     background-color: ${({ theme }) => theme.palette.white};
+
+    ${({ theme }) => fontStyle(theme.font.body[1].R)}
   `,
   DropDownHeader: styled.div`
-    width: 12.5rem;
     height: 100%;
     cursor: pointer;
   `,
@@ -71,7 +73,7 @@ const S = {
     width: 100%;
     height: 100%;
     min-height: 2.4rem;
-    padding: 0 1rem;
+    padding: 1.6rem;
     border: 0.1rem solid ${theme.palette.grey400};
     align-items: center;
     box-sizing: border-box;
@@ -83,6 +85,7 @@ const S = {
     position: absolute;
     ${flexColumn}
     z-index: ${({ theme }) => theme.zIndex.DROPDOWN};
+
     width: 12.5rem;
     max-height: 26rem;
 

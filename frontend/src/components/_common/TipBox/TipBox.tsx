@@ -32,7 +32,7 @@ const S = {
     width: 100%;
     ${flexCenter}
     ${flexSpaceBetween}
-    padding: 1rem;
+    padding: 1.6rem;
 
     background-color: ${({ theme }) => theme.palette.white};
 

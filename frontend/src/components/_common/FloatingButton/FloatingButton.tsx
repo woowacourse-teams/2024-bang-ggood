@@ -2,8 +2,10 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { FOOTER_SIZE } from '@/constants/style';
-import { boxShadow, flexCenter } from '@/styles/common';
+import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
+import { fontStyle } from '@/utils/fontStyle';
+import { getOpacityColor } from '@/utils/getOpacityColor';
 
 type Size = 'small' | 'medium' | 'extends';
 type Color = 'yellow' | 'green' | 'subGreen';
@@ -37,22 +39,22 @@ export default FloatingButton;
 
 const sizeStyle = {
   small: css`
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 4rem;
+    height: 4rem;
   `,
   medium: css`
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 5.6rem;
+    height: 5.6rem;
   `,
   large: css`
-    width: 6rem;
-    height: 6rem;
+    width: 9.6rem;
+    height: 9.6rem;
   `,
   extends: css`
     display: flex;
-    height: 3.5rem;
-    padding: 1.5rem;
-    gap: 0.5rem;
+    height: 5.6rem;
+    padding: 1.6rem;
+    gap: 0.8rem;
   `,
 };
 
@@ -74,7 +76,7 @@ const colorStyle = {
 
     &:hover,
     &:active {
-      background-color: ${theme.palette.green600};
+      background-color: ${theme.color.secondary[600]};
     }
   `,
   subGreen: css`
@@ -84,7 +86,7 @@ const colorStyle = {
 
     &:hover,
     &:active {
-      background-color: ${theme.palette.subGreen600};
+      background-color: ${theme.color.green[400]};
     }
   `,
 };
@@ -109,11 +111,11 @@ const S = {
   Button: styled.button<{ size: Size; color: Color }>`
     ${flexCenter}
     border: none;
-    border-radius: 3.5rem;
+    border-radius: 5.6rem;
     ${({ size }) => sizeStyle[size]};
     ${({ color }) => colorStyle[color]};
-    ${theme.font.headline[1].B}
-    ${boxShadow};
+    ${({ theme }) => fontStyle(theme.font.headline[1].B)}
+    box-shadow: 0 0 12px ${getOpacityColor('#171719', 0.2)};
     outline: none;
     cursor: pointer;
   `,

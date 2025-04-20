@@ -50,7 +50,7 @@ export const TextIconButton: Story = {
   args: {
     children: (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem' }}>
-        <PlusIcon /> 추가
+        <PlusIcon /> Button
       </div>
     ),
     size: 'extends',

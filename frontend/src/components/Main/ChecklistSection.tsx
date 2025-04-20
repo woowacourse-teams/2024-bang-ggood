@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
 
+import { PlusIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import BoxErrorFallback from '@/components/_common/errorBoundary/BoxErrorFallback';
 import TitleErrorFallback from '@/components/_common/errorBoundary/TitleErrorFallback';
@@ -35,7 +36,7 @@ const ChecklistSection = () => {
         <ErrorBoundary FallbackComponent={BoxErrorFallback}>
           <ChecklistCardContainer />
         </ErrorBoundary>
-        <S.NewButton label="+ 새로운 방 체크하기" isSquare size="full" onClick={handleNewChecklist} />
+        <Button label="새로운 방 체크하기" size="full" onClick={handleNewChecklist} Icon={PlusIcon} color="primary" />
       </S.Container>
     </>
   );
@@ -76,19 +77,5 @@ const S = {
     ${flexRow};
     ${flexSpaceBetween};
     align-items: center;
-  `,
-  NewButton: styled(Button)`
-    width: 100%;
-    padding: 1.8rem 4.8rem;
-    border-radius: 0.8rem;
-
-    background-color: ${({ theme }) => theme.palette.green500};
-
-    color: ${({ theme }) => theme.palette.white};
-
-    &:hover,
-    &:active {
-      background-color: ${({ theme }) => theme.palette.green600};
-    }
   `,
 };

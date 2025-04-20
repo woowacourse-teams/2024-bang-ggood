@@ -2,7 +2,7 @@ import { Article } from '@/types/article';
 
 export const article: Article = {
   articleId: 1,
-  keyword: '아파트 임대',
+  keyword: '계약 꿀팁',
   title: '완벽한 아파트 찾는 팁',
   summary: '첫 임대자를 위한 아파트 찾기 필수 팁',
   thumbnail: 'https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/168217562696278839.jpeg',

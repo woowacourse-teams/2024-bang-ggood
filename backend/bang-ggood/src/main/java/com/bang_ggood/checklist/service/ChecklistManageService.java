@@ -1,11 +1,13 @@
 package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.ChecklistShare;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistShareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.global.exception.BangggoodException;
@@ -55,6 +57,7 @@ public class ChecklistManageService {
     private final ChecklistLikeService checklistLikeService;
     private final ChecklistStationService checklistStationService;
     private final QuestionService questionService;
+    private final ChecklistShareService checklistShareService;
 
     @Transactional
     public Long createChecklist(User user, ChecklistRequest checklistRequest) {
@@ -110,10 +113,31 @@ public class ChecklistManageService {
         checklistStationService.createChecklistStations(checklist, roomRequest.latitude(), roomRequest.longitude());
     }
 
+    @Transactional
+    public ChecklistShareResponse createChecklistShare(User user, Long checklistId) {
+        Checklist checklist = checklistService.readChecklist(user, checklistId);
+        ChecklistShare checklistShare = checklistShareService.createChecklistShare(checklist);
+
+        return ChecklistShareResponse.from(checklistShare);
+    }
+
     @Transactional(readOnly = true)
     public SelectedChecklistResponse readChecklist(User user, Long checklistId) {
         Checklist checklist = checklistService.readChecklist(user, checklistId);
 
+        return assembleChecklistResponse(checklist);
+    }
+
+    @Transactional(readOnly = true)
+    public SelectedChecklistResponse readSharedChecklist(String token) {
+        ChecklistShare checklistShare = checklistShareService.readChecklistShare(token);
+        Checklist checklist = checklistShare.getChecklist();
+
+        return assembleChecklistResponse(checklist);
+
+    }
+
+    private SelectedChecklistResponse assembleChecklistResponse(Checklist checklist) {
         List<Integer> maintenances = readChecklistMaintenances(checklist);
         List<SelectedOptionResponse> options = readChecklistOptions(checklist);
         List<SelectedCategoryQuestionsResponse> questions = readChecklistQuestions(checklist);
@@ -212,6 +236,7 @@ public class ChecklistManageService {
         return new CategoryScoreResponses(categoryScoreResponses);
     }
 
+
     @Transactional
     public void deleteChecklistById(User user, Long id) {
         Checklist checklist = checklistService.readChecklist(user, id);
@@ -222,6 +247,7 @@ public class ChecklistManageService {
         roomService.deleteById(checklist.getRoomId());
         checklistStationService.deleteChecklistStation(checklist.getId());
         checklistLikeService.deleteLike(user, checklist);
+        checklistShareService.deleteChecklistShare(checklist);
     }
 
     @Transactional(readOnly = true)

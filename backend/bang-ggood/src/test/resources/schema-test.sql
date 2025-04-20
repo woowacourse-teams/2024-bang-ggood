@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS custom_checklist_question CASCADE;
 DROP TABLE IF EXISTS checklist_option CASCADE;
 DROP TABLE IF EXISTS checklist_question CASCADE;
 DROP TABLE IF EXISTS checklist_maintenance CASCADE;
+DROP TABLE IF EXISTS checklist_share CASCADE;
 DROP TABLE IF EXISTS checklist CASCADE;
 DROP TABLE IF EXISTS article CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
@@ -203,4 +204,16 @@ CREATE TABLE password_reset_code
     created_at  TIMESTAMP(6),
     modified_at TIMESTAMP(6),
     deleted     BOOLEAN
+);
+
+CREATE TABLE checklist_share
+(
+    checklist_id BIGINT PRIMARY KEY,
+    token        VARCHAR(255) NOT NULL UNIQUE,
+    created_at   TIMESTAMP(6),
+    modified_at  TIMESTAMP(6),
+    deleted      BOOLEAN,
+
+    CONSTRAINT fk_checklist_share_checklist
+        FOREIGN KEY (checklist_id) REFERENCES checklist (id)
 );

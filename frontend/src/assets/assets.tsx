@@ -13,6 +13,7 @@ import LocationLineIcon from '@/assets/icons/common/location-lined.svg';
 import MemoIcon from '@/assets/icons/common/memo.svg';
 import RetryIcon from '@/assets/icons/common/retry.svg';
 import SmallCheckIcon from '@/assets/icons/common/small-check.svg';
+import TipIcon from '@/assets/icons/common/tip.svg';
 import PlusIcon from '@/assets/icons/plusMinus/plus-black.svg';
 import PlusWhiteIcon from '@/assets/icons/plusMinus/plus-white.svg';
 
@@ -106,6 +107,7 @@ export {
   Stairs,
   Subway,
   Summary,
+  TipIcon,
   ToastConfirmIcon,
   ToastErrorIcon,
   ToastInfoIcon,

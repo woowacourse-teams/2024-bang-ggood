@@ -41,7 +41,7 @@ const CompareCard = ({ room, openOptionModal, openCategoryModal }: Props) => {
       <CompareCardItem
         height={10}
         label={'가까운 지하철'}
-        item={<SubwayStations size={'small'} stations={room.stations.stations} textType="omit" />}
+        item={<SubwayStations size={'medium'} stations={room.stations.stations} textType="omit" />}
       />
       <CompareCardItem
         label={'옵션'}
@@ -52,6 +52,7 @@ const CompareCard = ({ room, openOptionModal, openCategoryModal }: Props) => {
         <CompareCardItem
           key={category.categoryId}
           label={category.categoryName}
+          height={12}
           item={
             <CategoryScore
               roomId={room.checklistId}
@@ -75,7 +76,9 @@ const S = {
     box-sizing: border-box;
     ${flexColumn};
     align-items: center;
-    gap: 30px;
+    gap: 32px;
+    border-radius: 8px;
+    background: ${({ theme }) => theme.palette.white};
   `,
   RankWrapper: styled.div`
     ${flexColumn}
@@ -91,15 +94,17 @@ const S = {
     font-size: ${({ theme }) => theme.text.size.small};
     line-height: 1.5;
     letter-spacing: 0.05rem;
-    text-align: center;
+    text-align: left;
     justify-content: center;
     word-break: keep-all;
   `,
   OptionButton: styled.button`
     ${title4}
+    width: 14rem;
     padding: 12px 16px;
-    border: 1px solid ${({ theme }) => theme.palette.grey300};
+    border: 1px solid ${({ theme }) => theme.palette.yellow500};
     border-radius: 8px;
+    color: ${({ theme }) => theme.palette.yellow500};
     ${boxShadow}
   `,
 };

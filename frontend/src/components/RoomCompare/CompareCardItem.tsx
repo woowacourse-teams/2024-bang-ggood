@@ -26,8 +26,10 @@ const S = {
     width: 100%;
     height: ${({ height }) => height && height}rem;
     ${flexColumn};
-    gap: 1rem;
-    align-items: center;
+    gap: 0.8rem;
+    align-items: flex-start;
+    box-sizing: border-box;
+    padding: 0 1.6rem;
   `,
   ItemText: styled.div`
     height: 100%;

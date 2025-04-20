@@ -26,4 +26,8 @@ export const baseStyle = css`
     font-family: 'WantedSansStdVariable', sans-serif;
     letter-spacing: 0.14rem;
   }
+
+  div {
+    box-sizing: border-box;
+  }
 `;

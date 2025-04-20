@@ -64,7 +64,7 @@ const Button = ({
     >
       <FlexBox.Horizontal>
         {Icon && <Icon aria-hidden="true" />}
-        <S.Text size={size}>{label}</S.Text>
+        <S.Text>{label}</S.Text>
       </FlexBox.Horizontal>
     </S.Button>
   );
@@ -90,8 +90,9 @@ const S = {
     ${flexCenter}
     ${fontStyle(theme.font.body[1].B)};
   `,
-  Text: styled.span<{ size: ButtonSize }>`
+  Text: styled.span`
     ${flexCenter}
+    min-width: fit-content;
   `,
 };
 

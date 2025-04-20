@@ -88,10 +88,10 @@ const S = {
     cursor: pointer;
     box-sizing: border-box;
     ${flexCenter}
-    ${fontStyle(theme.font.body[1].B)};
   `,
   Text: styled.span`
     ${flexCenter}
+    ${fontStyle(theme.font.body[1].B)};
     min-width: fit-content;
   `,
 };

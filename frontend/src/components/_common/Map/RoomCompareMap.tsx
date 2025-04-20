@@ -156,7 +156,7 @@ const RoomCompareMap = ({ positions }: { positions: Position[] }) => {
               <Marker
                 disabled={!hasAddressRoom1}
                 isCircle={false}
-                backgroundColor={theme.palette.yellow500}
+                color={theme.palette.yellow500}
                 text={'A방'}
                 size={'medium'}
                 onClick={() => handleRoomMarkerClick(0)}
@@ -164,7 +164,7 @@ const RoomCompareMap = ({ positions }: { positions: Position[] }) => {
               <Marker
                 disabled={!hasAddressRoom2}
                 isCircle={false}
-                backgroundColor={theme.palette.green500}
+                color={theme.palette.green500}
                 text={'B방'}
                 size={'medium'}
                 onClick={() => handleRoomMarkerClick(1)}

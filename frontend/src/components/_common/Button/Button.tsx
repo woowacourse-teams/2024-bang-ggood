@@ -82,7 +82,7 @@ const S = {
     variant: ButtonVariant;
   }>`
     ${({ isSquare }) => (isSquare ? 'border-radius: 0.5rem' : 'border-radius: 2.5rem')};
-    ${({ rounded }) => (rounded ? 'border-radius: 2.5rem' : 'border-radius: 0.5rem')};
+    ${({ rounded }) => (rounded ? 'border-radius: 4rem' : 'border-radius: 0.8rem')};
     ${({ size }) => sizeStyles[size]};
     ${({ color, disabled, variant }) => ColorStyles[disabled ? 'disabled' : variant === 'outlined' ? variant : color]};
     cursor: pointer;
@@ -146,19 +146,20 @@ const ColorStyles = {
 };
 
 const sizeStyles = {
+  // 현재 디자인에 없는 컴포넌트 하지만 쓰이는 곳이 있어서 추후 삭제 필요
   xSmall: css`
-    min-width: 7rem;
+    min-width: 14rem;
   `,
   small: css`
-    min-width: 9rem;
-    height: 2.5rem;
+    min-width: 14rem;
+    height: 4rem;
   `,
   medium: css`
-    min-width: 10rem;
-    height: 3rem;
+    min-width: 17rem;
+    height: 4.8rem;
   `,
   full: css`
     width: 100%;
-    height: 3rem;
+    height: 4.8rem;
   `,
 };

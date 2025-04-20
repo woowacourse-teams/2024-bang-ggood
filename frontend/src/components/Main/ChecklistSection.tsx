@@ -8,13 +8,18 @@ import TitleErrorFallback from '@/components/_common/errorBoundary/TitleErrorFal
 import ChecklistCardContainer from '@/components/Main/ChecklistCardContainer';
 import ChecklistSectionTitle from '@/components/Main/ChecklistSectionTitle';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { boxShadow, boxShadowSpread, flexColumn, flexRow, flexSpaceBetween, title4 } from '@/styles/common';
+import { boxShadow, boxShadowSpread, flexColumn, flexRow, flexSpaceBetween } from '@/styles/common';
+import { fontStyle } from '@/utils/fontStyle';
 
 const ChecklistSection = () => {
   const navigate = useNavigate();
 
   const handleClickList = () => {
     navigate(ROUTE_PATH.checklistList);
+  };
+
+  const handleNewChecklist = () => {
+    navigate(ROUTE_PATH.checklistNew);
   };
 
   return (
@@ -25,11 +30,12 @@ const ChecklistSection = () => {
           <ErrorBoundary fallback={<TitleErrorFallback title="내가 둘러본 방" />}>
             <ChecklistSectionTitle />
           </ErrorBoundary>
-          <Button size="xSmall" label="전체 보기" onClick={handleClickList} />
+          <S.ShowMore onClick={handleClickList}>전체 보기</S.ShowMore>
         </S.Row>
         <ErrorBoundary FallbackComponent={BoxErrorFallback}>
           <ChecklistCardContainer />
         </ErrorBoundary>
+        <S.NewButton label="+ 새로운 방 체크하기" isSquare size="full" onClick={handleNewChecklist} />
       </S.Container>
     </>
   );
@@ -39,16 +45,23 @@ export default ChecklistSection;
 
 const S = {
   Title: styled.div`
-    ${title4};
-    margin: 1rem 1.6rem 0;
+    ${({ theme }) => fontStyle(theme.font.heading[2].B)}
+    padding: 1rem 1.6rem 0;
+  `,
+  ShowMore: styled.button`
+    padding: 0 1.6rem;
+
+    color: ${({ theme }) => theme.color.gray[600]};
+    ${({ theme }) => fontStyle(theme.font.body[1].B)}
+    cursor: pointer;
   `,
   Container: styled.div`
     max-width: 100%;
     box-sizing: border-box;
     margin: 1.6rem;
-    padding: 2.4rem 1.6rem;
+    padding: 1.6rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.primary[100]};
 
     border-radius: 1.6rem;
     ${boxShadow};
@@ -63,5 +76,19 @@ const S = {
     ${flexRow};
     ${flexSpaceBetween};
     align-items: center;
+  `,
+  NewButton: styled(Button)`
+    width: 100%;
+    padding: 1.8rem 4.8rem;
+    border-radius: 0.8rem;
+
+    background-color: ${({ theme }) => theme.palette.green500};
+
+    color: ${({ theme }) => theme.palette.white};
+
+    &:hover,
+    &:active {
+      background-color: ${({ theme }) => theme.palette.green600};
+    }
   `,
 };

@@ -26,26 +26,11 @@ const ChecklistCardContainer = () => {
         .map((checklist: ChecklistPreview, index: number) => (
           <ChecklistPreviewCard key={checklist.checklistId} index={index} checklist={checklist} />
         ))}
-      <S.NewButton label="+ 새로운 방 체크하기" isSquare size="full" onClick={handleNewChecklist} />
-    </>
   );
 };
 
 export default ChecklistCardContainer;
 
 const S = {
-  NewButton: styled(Button)`
-    width: 100%;
-    padding: 1.8rem 4.8rem;
-    border-radius: 0.8rem;
-
-    background-color: ${({ theme }) => theme.palette.green500};
-
-    color: ${({ theme }) => theme.palette.white};
-
-    &:hover,
-    &:active {
-      background-color: ${({ theme }) => theme.palette.green600};
-    }
   `,
 };

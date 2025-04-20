@@ -8,6 +8,7 @@ import ArrowDropdownIcon from '@/assets/icons/arrow/arrow_dropdown.svg';
 // common-icons
 import CheckIcon from '@/assets/icons/common/check.svg';
 import CloseIcon from '@/assets/icons/common/close.svg';
+import EmptyHomeIcon from '@/assets/icons/common/EmptyHome.svg';
 import InputRequiredDotIcon from '@/assets/icons/common/input-required-dot.svg';
 import LocationLineIcon from '@/assets/icons/common/location-lined.svg';
 import MemoIcon from '@/assets/icons/common/memo.svg';
@@ -82,6 +83,7 @@ export {
   checkingPageScreen,
   CloseIcon,
   customPageScreen,
+  EmptyHomeIcon,
   Error404,
   Error500,
   FaceBadIcon,

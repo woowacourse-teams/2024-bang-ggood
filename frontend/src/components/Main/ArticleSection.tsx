@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import BoxErrorFallback from '@/components/_common/errorBoundary/BoxErrorFallback';
 import ArticleCardContainer from '@/components/Main/ArticleCardContainer';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { flexRow, flexSpaceBetween, title4 } from '@/styles/common';
+import { flexRow, flexSpaceBetween } from '@/styles/common';
+import { fontStyle } from '@/utils/fontStyle';
 
 const ArticleSection = () => {
   const navigate = useNavigate();
@@ -36,14 +37,15 @@ const S = {
 
     padding: 1rem 1.6rem 0;
     ${flexRow};
+    align-items: center;
     ${flexSpaceBetween};
   `,
   Title: styled.div`
-    ${title4}
+    ${({ theme }) => fontStyle(theme.font.heading[2].B)}
   `,
   ShowMore: styled.button`
-    color: ${({ theme }) => theme.palette.grey400};
-    font-size: ${({ theme }) => theme.text.size.small};
+    color: ${({ theme }) => theme.color.gray[600]};
+    ${({ theme }) => fontStyle(theme.font.body[1].B)}
     cursor: pointer;
   `,
 };

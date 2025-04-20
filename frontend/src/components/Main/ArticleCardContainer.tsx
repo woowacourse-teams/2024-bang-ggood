@@ -33,8 +33,9 @@ const S = {
     ${flexRow}
     overflow-x: scroll;
     scroll-snap-type: x mandatory;
+
     padding: 1.6rem;
-    gap: 1.6rem;
+    gap: 1rem;
     scrollbar-width: none;
 
     &::-webkit-scrollbar {
@@ -43,12 +44,7 @@ const S = {
   `,
   CardWrapper: styled.div`
     display: inline-block;
-    width: 19rem;
     scroll-snap-align: start;
     flex: 0 0 auto;
-
-    &:first-of-type {
-      padding-left: 1.6rem;
-    }
   `,
 };

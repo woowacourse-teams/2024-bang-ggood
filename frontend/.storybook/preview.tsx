@@ -15,8 +15,16 @@ const decorator = Story => (
     <Global
       styles={css`
         ${normalize}
+        @font-face {
+          font-family: WantedSansStdVariable;
+
+          font-weight: 300 900;
+          src: url('@/assets/fonts/WantedSansStdVariable.ttf') format('truetype');
+        }
+
         html {
           font-size: 62.5%;
+          font-family: WantedSansStdVariable, sans-serif;
         }
       `}
     />

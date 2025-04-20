@@ -164,7 +164,7 @@ const font = {
         letterSpacing: '0.0057em',
       },
       R: {
-        size: '1.8rem',
+        size: '1.6rem',
         lineHeight: '150%',
         weight: 400,
         letterSpacing: '0.0057em',

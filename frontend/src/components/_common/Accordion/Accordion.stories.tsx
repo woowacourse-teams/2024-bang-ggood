@@ -31,7 +31,7 @@ export const Default: Story = {
   render: () => {
     return (
       <Accordion totalCount={1}>
-        <Accordion.header id={1} text="제목" />
+        <Accordion.header id={1} text="Title" />
         <Accordion.body id={1}>
           <S.Content>카테고리의 내용이 있습니다.</S.Content>
         </Accordion.body>

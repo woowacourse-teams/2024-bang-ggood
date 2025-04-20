@@ -7,7 +7,6 @@ import theme from '@/styles/theme';
 interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
   isChecked: boolean;
   color?: string;
-  hoverColor?: string;
   onClick?: () => void;
   iconType?: 'check' | 'plus';
   ariaLabel?: string;
@@ -15,13 +14,13 @@ interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const Checkbox = ({
   isChecked = false,
-  color = theme.palette.green500,
-  hoverColor,
+  color = theme.color.primary[500],
   iconType = 'check',
   onClick,
   ariaLabel,
 }: StyledProps) => {
-  const checkedColor = isChecked ? color : theme.palette.grey400;
+  const checkedColor = isChecked ? color : theme.color.gray[300];
+  const hoverColor = isChecked ? theme.color.primary[600] : theme.color.gray[500];
 
   return (
     <S.Checkbox $color={checkedColor} $hoverColor={hoverColor} onClick={onClick} aria-label={ariaLabel}>

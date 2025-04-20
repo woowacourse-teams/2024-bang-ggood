@@ -61,7 +61,7 @@ const S = {
     }
   `,
   Title: styled.div`
-    ${({ theme }) => fontStyle(theme.font.heading[1].B)}
+    ${({ theme }) => fontStyle(theme.font.headline[1].B)}
     margin-top: 1.6rem;
     word-break: keep-all;
   `,

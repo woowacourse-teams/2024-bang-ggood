@@ -9,7 +9,7 @@ import TitleErrorFallback from '@/components/_common/errorBoundary/TitleErrorFal
 import ChecklistCardContainer from '@/components/Main/ChecklistCardContainer';
 import ChecklistSectionTitle from '@/components/Main/ChecklistSectionTitle';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { boxShadow, boxShadowSpread, flexColumn, flexRow, flexSpaceBetween } from '@/styles/common';
+import { flexColumn, flexRow, flexSpaceBetween } from '@/styles/common';
 import { fontStyle } from '@/utils/fontStyle';
 
 const ChecklistSection = () => {
@@ -65,11 +65,8 @@ const S = {
     background-color: ${({ theme }) => theme.color.primary[100]};
 
     border-radius: 1.6rem;
-    ${boxShadow};
     ${flexColumn};
     gap: 1.2rem;
-
-    ${boxShadowSpread}
   `,
   Row: styled.div`
     box-sizing: border-box;

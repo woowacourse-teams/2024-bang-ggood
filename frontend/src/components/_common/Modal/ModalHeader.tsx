@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
-import { flexCenter, flexSpaceBetween, title2, title3 } from '@/styles/common';
+import { flexCenter, flexSpaceBetween, title3 } from '@/styles/common';
+import { fontStyle } from '@/utils/fontStyle';
 
 type Position = 'left' | 'center';
 
@@ -10,7 +11,7 @@ interface Props extends React.PropsWithChildren {
   tabIndex?: number;
 }
 
-const ModalHeader = ({ title, children, position = 'left', ...rest }: Props) => {
+const ModalHeader = ({ title, children, position = 'center', ...rest }: Props) => {
   return (
     <S.Container position={position} {...rest}>
       {title && <S.Title>{title}</S.Title>}
@@ -23,12 +24,13 @@ export default ModalHeader;
 
 const S = {
   Container: styled.div<{ position: Position }>`
+    width: 100%;
+    box-sizing: border-box;
+
     ${flexSpaceBetween}
     flex-direction: ${({ position }) => position === 'center' && 'column'};
-    width: calc(100% - 6.4rem);
-    margin-top: 0.5rem;
     margin-bottom: 1rem;
-    padding: 0 1.6rem;
+    padding: 0.4rem 1.6rem;
 
     min-height: 4.5rem;
     align-items: center;
@@ -37,10 +39,8 @@ const S = {
   Title: styled.span`
     height: 3rem;
     ${flexCenter}
-    margin-bottom: 1.6rem;
-    padding-top: 2rem;
 
-    ${title2}
+    ${({ theme }) => fontStyle(theme.font.headline[1].B)}
     text-align: left;
   `,
 };

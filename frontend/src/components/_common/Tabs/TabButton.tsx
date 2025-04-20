@@ -6,6 +6,7 @@ import React, { forwardRef } from 'react';
 import { trackTabButton } from '@/service/amplitude/trackEvent';
 import { flexCenter } from '@/styles/common';
 import { Tab } from '@/types/tab';
+import { fontStyle } from '@/utils/fontStyle';
 
 interface Props extends Tab {
   onMoveTab: (id: number) => void;
@@ -48,13 +49,9 @@ const S = {
 
     ${flexCenter};
     padding: 0.6rem 1.2rem;
-    border: ${({ active, theme }) => `.2rem solid ${active ? theme.palette.yellow300 : theme.palette.background}`};
 
-    background-color: ${({ theme, active }) => (active ? theme.palette.yellow100 : theme.palette.background)};
-
-    border-radius: 10px;
-
-    color: ${({ theme, active }) => (active ? theme.palette.yellow600 : theme.palette.black)};
+    color: ${({ theme, active }) => (active ? theme.color.mono.black : theme.color.gray[400])};
+    border-bottom: ${({ theme, active }) => active && `.2rem solid ${theme.color.mono.black}`};
     cursor: pointer;
 
     font-weight: 600;
@@ -62,19 +59,19 @@ const S = {
   TextBox: styled.div`
     display: flex;
 
-    font-size: 1.8rem;
+    ${({ theme }) => fontStyle(theme.font.body[1].B)}
     align-items: center;
     gap: 0.5rem;
   `,
   UncompletedIndicator: styled.div`
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
+    top: 0.4rem;
+    right: 0.4rem;
     width: 0.5rem;
     height: 0.5rem;
     margin-left: 0.8rem;
 
-    background-color: ${({ theme }) => theme.palette.grey300};
+    background-color: ${({ theme }) => theme.color.red[300]};
     border-radius: 50%;
   `,
 };

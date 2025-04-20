@@ -1,8 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
-
-import Checkbox from '@/components/_common/Checkbox/Checkbox';
-import theme from '@/styles/theme';
+import Checkbox from './Checkbox';
 
 /** hover 및 체크 시 UI가 변하는 간단한 체크박스입니다. */
 const meta: Meta<typeof Checkbox> = {
@@ -11,7 +8,6 @@ const meta: Meta<typeof Checkbox> = {
   argTypes: {
     isChecked: { control: 'boolean' },
     color: { control: 'color' },
-    hoverColor: { control: 'color' },
   },
 };
 
@@ -21,16 +17,11 @@ type Story = StoryObj<typeof meta>;
 
 export const UnChecked: Story = {
   args: {
-    isChecked: true,
-  },
-
-  render: () => {
-    const [isChecked, setIsChecked] = useState(false);
-    return <Checkbox isChecked={isChecked} onClick={() => setIsChecked(isChecked => !isChecked)} />;
+    isChecked: false,
   },
 };
 
-export const Hover: Story = {
+export const UnChecked_Hover: Story = {
   args: { isChecked: false },
   parameters: { pseudo: { hover: true } },
 };
@@ -39,6 +30,18 @@ export const Checked: Story = {
   args: { isChecked: true },
 };
 
-export const GreyChecked: Story = {
-  args: { isChecked: true, color: theme.palette.grey300, hoverColor: theme.palette.grey400 },
+export const Checked_Hover: Story = {
+  args: { isChecked: true },
+  parameters: { pseudo: { hover: true } },
+};
+
+export const UnPlus: Story = {
+  args: {
+    isChecked: false,
+    iconType: 'plus',
+  },
+};
+
+export const Plus: Story = {
+  args: { isChecked: true, iconType: 'plus' },
 };

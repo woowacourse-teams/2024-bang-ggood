@@ -4,7 +4,7 @@ export const articleList: { articles: Article[] } = {
   articles: [
     {
       articleId: 1,
-      keyword: '아파트 임대',
+      keyword: '계약 꿀팁',
       title: '완벽한 아파트 찾는 팁',
       summary: '첫 임대자를 위한 아파트 찾기 필수 팁',
       content:
@@ -13,7 +13,7 @@ export const articleList: { articles: Article[] } = {
     },
     {
       articleId: 2,
-      keyword: '보증금 가이드',
+      keyword: '계약 꿀팁',
       title: '임대 보증금에 대한 이해',
       summary: '아파트 임대 시 보증금의 역할과 환불 방법에 대한 가이드',
       content:
@@ -22,7 +22,7 @@ export const articleList: { articles: Article[] } = {
     },
     {
       articleId: 3,
-      keyword: '전세와 월세 비교',
+      keyword: '계약 꿀팁',
       title: '전세로 할까, 월세로 할까?',
       summary: '전세와 월세 중 어떤 것이 더 나은지에 대한 장단점 비교',
       content:
@@ -31,7 +31,7 @@ export const articleList: { articles: Article[] } = {
     },
     {
       articleId: 4,
-      keyword: '좋은 집 꿀팁',
+      keyword: '생활 꿀팁',
       title: '내가 살 집 꼼꼼히 구하기!',
       summary: '집을 구할 때 체크해야 할 필수 팁과 주의 사항들',
       content:
@@ -40,7 +40,7 @@ export const articleList: { articles: Article[] } = {
     },
     {
       articleId: 5,
-      keyword: '이사 준비',
+      keyword: '생활 꿀팁',
       title: '이사 준비 체크리스트',
       summary: '효율적인 이사를 위한 필수 준비 사항',
       content:
@@ -49,7 +49,7 @@ export const articleList: { articles: Article[] } = {
     },
     {
       articleId: 6,
-      keyword: '임대 계약서 작성',
+      keyword: '계약 꿀팁',
       title: '임대 계약서 작성 시 주의사항',
       summary: '임대 계약서 작성할 때 놓치기 쉬운 점들을 체크해 보세요.',
       content:
@@ -58,7 +58,7 @@ export const articleList: { articles: Article[] } = {
     },
     {
       articleId: 7,
-      keyword: '새로운 동네 적응',
+      keyword: '동네 추천',
       title: '새로운 동네 적응하기',
       summary: '이사 후 새로운 동네에 빠르게 적응하는 방법',
       content:
@@ -67,7 +67,7 @@ export const articleList: { articles: Article[] } = {
     },
     {
       articleId: 8,
-      keyword: '임대료 절약',
+      keyword: '자취 꿀팁',
       title: '임대료 절약을 위한 팁',
       summary: '월세 부담을 줄이기 위한 다양한 방법',
       content:

@@ -2,8 +2,10 @@ import styled from '@emotion/styled';
 
 import { ToastConfirmIcon, ToastErrorIcon, ToastInfoIcon } from '@/assets/assets';
 import { FOOTER_SIZE } from '@/constants/style';
-import { boxShadowSpread, flexCenter, flexColumn, flexRow, title4 } from '@/styles/common';
+import { boxShadowSpread, flexCenter, flexColumn, flexRow } from '@/styles/common';
 import { ToastType } from '@/types/toast';
+import { fontStyle } from '@/utils/fontStyle';
+import { getOpacityColor } from '@/utils/getOpacityColor';
 
 interface Props {
   type: ToastType;
@@ -63,22 +65,19 @@ const S = {
     ${flexRow}
     width: 34rem;
     padding: 1rem 2rem;
-    border-radius: 1.8rem;
+    border-radius: 1rem;
     box-shadow: 0 0.2rem 0.2rem rgb(0 0 0 / 25%);
     box-sizing: border-box;
-    opacity: 0.95;
     gap: 1.4rem;
 
-    background-color: ${({ theme }) => theme.palette.grey500};
+    background-color: ${({ theme }) => getOpacityColor(theme.color.gray[600], 0.85)};
   `,
   Text: styled.div`
     ${flexColumn};
     width: 100%;
 
-    color: ${({ theme }) => theme.palette.white};
-    line-height: 1.2;
+    color: ${({ theme }) => theme.color.mono.white};
     white-space: pre-line;
-
-    ${title4};
+    ${({ theme }) => fontStyle(theme.font.body[2].B)}
   `,
 };

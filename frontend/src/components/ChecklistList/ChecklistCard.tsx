@@ -7,7 +7,7 @@ import { ROUTE_PATH } from '@/constants/routePath';
 import { boxShadow, flexCenter, flexColumn, flexSpaceBetween, omitText, title3 } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
 import formattedDate from '@/utils/formattedDate';
-import formattedUndefined from '@/utils/formattedUndefined';
+import { formattedUndefined } from '@/utils/formattedUndefined';
 
 interface Props {
   checklist: ChecklistPreview;

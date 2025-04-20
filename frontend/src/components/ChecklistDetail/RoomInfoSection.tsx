@@ -21,7 +21,7 @@ import { Option } from '@/types/option';
 import { RoomInfo } from '@/types/room';
 import { SubwayStation } from '@/types/subway';
 import formattedDate from '@/utils/formattedDate';
-import formattedUndefined from '@/utils/formattedUndefined';
+import { formattedUndefined } from '@/utils/formattedUndefined';
 
 interface Props {
   room: RoomInfo;

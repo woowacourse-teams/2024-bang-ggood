@@ -83,7 +83,6 @@ const font = {
         letterSpacing: '-0.0194em',
       },
     },
-
     2: {
       B: {
         size: '2rem',

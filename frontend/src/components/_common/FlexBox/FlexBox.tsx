@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { CSSProperties, HTMLAttributes } from 'react';
 
-import { flexColumn, flexRow } from '@/styles/common';
+import { flexRow } from '@/styles/common';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   gap?: string | number;
@@ -58,10 +58,7 @@ const FlexBox = ({
   );
 };
 
-FlexBox.Vertical = styled(FlexBox)`
-  ${flexColumn}
-  gap: ${({ gap }) => gap ?? '1rem'};
-`;
+FlexBox.Vertical = (props: Omit<Props, 'direction'>) => <FlexBox direction="column" {...props} />;
 
 FlexBox.Horizontal = styled(FlexBox)`
   ${flexRow}

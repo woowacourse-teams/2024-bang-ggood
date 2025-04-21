@@ -4,7 +4,7 @@ import { LocationLineIcon } from '@/assets/assets';
 import Checkbox from '@/components/_common/Checkbox/Checkbox';
 import { flexColumn, flexRow, flexSpaceBetween, omitText, title3 } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
-import formattedUndefined from '@/utils/formattedUndefined';
+import { formattedUndefined } from '@/utils/formattedUndefined';
 
 interface Props {
   isSelected: boolean;

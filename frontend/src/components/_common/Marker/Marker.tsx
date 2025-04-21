@@ -29,7 +29,7 @@ const Marker = ({ disabled = false, isCircle, text, color, size = 'medium', onCl
   );
 };
 
-const sizeMap = { small: '1.5rem', medium: '2rem' };
+const sizeMap = { small: '2rem', medium: '2.4rem' };
 
 const S = {
   Button: styled.button<{ isCircle: boolean; size: Size; color: string; disabled: boolean }>`

@@ -23,12 +23,7 @@ const ArticlePreviewCard = ({ index, article }: Props) => {
   };
 
   return (
-    <S.Container
-      bgColor={theme.palette.white}
-      onClick={handleClickArticle}
-      tabIndex={1}
-      aria-label="클릭하면 해당 아티클 페이지로 이동합니다"
-    >
+    <S.Container onClick={handleClickArticle} tabIndex={1} aria-label="클릭하면 해당 아티클 페이지로 이동합니다">
       <ArticleBadge label={keyword} />
       <S.Title>{title}</S.Title>
       <S.ArrowButton>
@@ -41,23 +36,22 @@ const ArticlePreviewCard = ({ index, article }: Props) => {
 export default ArticlePreviewCard;
 
 const S = {
-  Container: styled.div<{ bgColor: string }>`
+  Container: styled.div`
     position: relative;
     width: 18rem;
     height: 20rem;
     padding: 1.6rem;
     border: 1px solid ${({ theme }) => theme.color.gray[100]};
 
-    background-color: ${({ bgColor }) => bgColor};
+    background-color: ${({ theme }) => theme.color.mono.white};
 
-    color: ${({ theme }) => theme.palette.black};
-    box-sizing: border-box;
+    color: ${({ theme }) => theme.color.mono.black};
     border-radius: 1.6rem;
     cursor: pointer;
 
     &:hover,
     &:active {
-      background-color: ${({ theme }) => theme.color.primary[100]};
+      background-color: ${({ theme }) => theme.color.gray[100]};
     }
   `,
   Title: styled.div`

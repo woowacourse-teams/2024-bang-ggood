@@ -46,5 +46,9 @@ const S = {
     display: inline-block;
     scroll-snap-align: start;
     flex: 0 0 auto;
+
+    &:first-of-type {
+      padding-left: 1.6rem;
+    }
   `,
 };

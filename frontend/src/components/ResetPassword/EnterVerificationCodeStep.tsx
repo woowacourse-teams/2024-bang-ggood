@@ -66,7 +66,7 @@ const EmailVerificationCodeStep = ({ args: { email }, onNext }: Props) => {
           <CS.Label>비밀번호 찾기</CS.Label>
           <FormField onKeyDown={handleKeyDown}>
             <FormField.Label label="검증 코드" htmlFor="code" />
-            <FlexBox.Horizontal justify="flex-start" align="center">
+            <FlexBox.Vertical justify="flex-start" align="center">
               <FormField.Input
                 maxLength={254}
                 value={code}
@@ -80,7 +80,7 @@ const EmailVerificationCodeStep = ({ args: { email }, onNext }: Props) => {
                   확인
                 </CS.SendButton>
               </div>
-            </FlexBox.Horizontal>
+            </FlexBox.Vertical>
             {getCodeErrors() && <FormField.ErrorMessage value={getCodeErrors()} />}
           </FormField>
           {postErrorMessage && <FormField.ErrorMessage value={postErrorMessage} />}

@@ -68,12 +68,12 @@ const RoomCompareContent = () => {
       <S.RoomGrid>
         <S.TitleFlex>
           <S.RoomTitle>
-            <S.Title key={rooms[0].checklistId}>{rooms[0].roomName}</S.Title>
             <Marker isCircle={true} size={'medium'} color={theme.palette.yellow500} text={'A'} />
+            <S.Title key={rooms[0].checklistId}>{rooms[0].roomName}</S.Title>
           </S.RoomTitle>
           <S.RoomTitle>
-            <S.Title key={rooms[1].checklistId}>{rooms[1].roomName}</S.Title>
             <Marker isCircle={true} size={'medium'} color={theme.palette.green500} text={'B'} />
+            <S.Title key={rooms[1].checklistId}>{rooms[1].roomName}</S.Title>
           </S.RoomTitle>
         </S.TitleFlex>
       </S.RoomGrid>

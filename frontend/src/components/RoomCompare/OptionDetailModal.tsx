@@ -29,7 +29,7 @@ const OptionDetailModal = ({ roomTitle1, roomTitle2, isOpen, closeModal, hasOpti
             const { optionName, hasOption } = option;
             return (
               <>
-                <S.Item>{optionName}</S.Item>
+                <S.ItemName>{optionName}</S.ItemName>
                 <S.Item>
                   {hasOption[0] ? (
                     <Good width={'1.6rem'} color={theme.palette.green600} />
@@ -76,5 +76,12 @@ const S = {
     height: 2rem;
     padding: 0.6rem 1rem;
     border-bottom: 0.1rem solid ${({ theme }) => theme.palette.grey200};
+  `,
+  ItemName: styled.div`
+    ${flexCenter};
+    height: 2rem;
+    padding: 0.6rem 1rem;
+    border-bottom: 0.1rem solid ${({ theme }) => theme.palette.grey200};
+    font-weight: ${({ theme }) => theme.text.weight.medium};
   `,
 };

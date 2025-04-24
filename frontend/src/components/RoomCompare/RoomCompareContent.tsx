@@ -114,8 +114,8 @@ export default RoomCompareContent;
 
 const S = {
   RoomGrid: styled.div`
-    ${flexRow}
-    padding: 0rem 1.6rem;
+    ${flexRow};
+    padding: 0 1.6rem;
   `,
   TitleFlex: styled.div`
     display: flex;

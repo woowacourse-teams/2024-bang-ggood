@@ -36,6 +36,7 @@ const S = {
 
     ${flexCenter};
     font-size: ${({ theme }) => theme.text.size.small};
+    font-weight: ${({ theme }) => theme.text.weight.semiBold};
     line-height: 1.5rem;
   `,
   Score: styled.div`

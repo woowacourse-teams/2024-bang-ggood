@@ -100,11 +100,11 @@ const S = {
     bottom: 15%;
 
     width: 100%;
-    ${flexCenter}
+    ${flexCenter};
 
     color: ${({ color }) => color};
     font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: ${({ theme }) => theme.text.size.small};
+    font-size: ${({ theme }) => theme.text.size.xSmall};
 
     @media (width <= 35rem) {
       font-size: ${({ theme }) => theme.text.size.xxSmall};

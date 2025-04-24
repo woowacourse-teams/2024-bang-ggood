@@ -124,24 +124,24 @@ const S = {
   RoomTitle: styled.div`
     width: 50%;
     margin-bottom: 0.5rem;
-    ${flexCenter}
+    ${flexCenter};
     gap:0.8rem;
   `,
   Title: styled.span`
     display: inline;
     width: calc(100% - 3rem);
-    padding: 0.8rem 0;
+    padding: 0.6rem 0 0.4rem 0.7rem;
 
     font-weight: ${({ theme }) => theme.text.weight.bold};
     font-size: 1.8rem;
-    text-align: center;
+    text-align: left;
     border-radius: 0.8rem;
   `,
   MapGrid: styled.div`
       padding: 0 1.6rem;
   `,
   RoomCompareGrid: styled.div`
-    ${flexRow}
+    ${flexRow};
     padding: 1.6rem 1.6rem;
     background: ${({ theme }) => theme.palette.grey100};
     gap: 16px;

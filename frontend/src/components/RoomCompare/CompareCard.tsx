@@ -78,10 +78,10 @@ const S = {
     align-items: center;
     gap: 32px;
     border-radius: 8px;
-    background: ${({ theme }) => theme.palette.white};
+    background: ${({ theme }) => theme.color.mono.black};
   `,
   RankWrapper: styled.div`
-    ${flexColumn}
+    ${flexColumn};
     gap: 5px;
   `,
   Rank: styled.div`
@@ -99,7 +99,7 @@ const S = {
     word-break: keep-all;
   `,
   OptionButton: styled.button`
-    ${title4}
+    ${title4};
     width: 14rem;
     padding: 12px 16px;
     border: 1px solid ${({ theme }) => theme.palette.yellow500};

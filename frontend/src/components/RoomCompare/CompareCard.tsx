@@ -5,7 +5,9 @@ import CategoryScore from '@/components/RoomCompare/CategoryScore';
 import CompareCardItem from '@/components/RoomCompare/CompareCardItem';
 import { EMPTY_INDICATOR } from '@/constants/system';
 import { boxShadow, flexColumn, title1, title4 } from '@/styles/common';
+import theme from '@/styles/theme';
 import { RoomCompare } from '@/types/RoomCompare';
+import { fontStyle } from '@/utils/fontStyle';
 
 interface Props {
   room: RoomCompare;
@@ -79,7 +81,7 @@ const S = {
     align-items: center;
     gap: 32px;
     border-radius: 8px;
-    background: ${({ theme }) => theme.color.mono.black};
+    background: ${({ theme }) => theme.color.mono.white};
   `,
   RankWrapper: styled.div`
     ${flexColumn};
@@ -92,9 +94,7 @@ const S = {
     display: flex;
     width: 100%;
 
-    font-size: ${({ theme }) => theme.text.size.small};
-    line-height: 1.5;
-    letter-spacing: 0.05rem;
+    ${fontStyle(theme.font.headline[2].B)}
     text-align: left;
     justify-content: center;
     word-break: keep-all;
@@ -106,7 +106,7 @@ const S = {
     padding: 8px 16px;
     border: 1px solid ${({ theme }) => theme.palette.yellow500};
     border-radius: 8px;
-    color: ${({ theme }) => theme.palette.yellow500};
+    color: ${({ theme }) => theme.color.primary[500]};
     ${boxShadow}
   `,
 };

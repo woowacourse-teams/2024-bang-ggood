@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
 
 import FaceIcon from '@/components/_common/FaceIcon/FaceIcon';
-import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import { MIN_GOOD_SCORE, MIN_SOSO_SCORE } from '@/constants/system';
-import { boxShadow, flexCenter, flexColumn } from '@/styles/common';
+import { boxShadow, flexColumn } from '@/styles/common';
+import theme from '@/styles/theme';
+import { fontStyle } from '@/utils/fontStyle';
 
 interface Props {
   roomId: number;
@@ -48,7 +49,7 @@ const S = {
   `,
 
   CategoryItemBox2: styled.div`
-    height: 100%;
+    height: 4rem;
     display: flex;
     align-items: flex-start;
   `,
@@ -57,10 +58,9 @@ const S = {
     height: 100%;
     width: 100%;
     padding: 6px 8px;
-    border: 1px solid ${({ theme }) => theme.palette.yellow500};
-
-    font-size: ${({ theme }) => theme.text.size.small};
-    color: ${({ theme }) => theme.palette.yellow500};
+    border: 1px solid ${({ theme }) => theme.color.primary[500]};
+    ${fontStyle(theme.font.body[1].B)};
+    color: ${({ theme }) => theme.color.primary[500]};
     border-radius: 8px;
     ${boxShadow}
   `,

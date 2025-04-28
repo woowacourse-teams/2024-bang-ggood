@@ -44,6 +44,7 @@ const CompareCard = ({ room, openOptionModal, openCategoryModal }: Props) => {
         item={<SubwayStations size={'medium'} stations={room.stations.stations} textType="omit" />}
       />
       <CompareCardItem
+        height={7.2}
         label={'옵션'}
         item={<S.OptionButton onClick={openOptionModal}>{room.options.length}개</S.OptionButton>}
       />
@@ -101,7 +102,8 @@ const S = {
   OptionButton: styled.button`
     ${title4};
     width: 14rem;
-    padding: 12px 16px;
+    height: 4rem;
+    padding: 8px 16px;
     border: 1px solid ${({ theme }) => theme.palette.yellow500};
     border-radius: 8px;
     color: ${({ theme }) => theme.palette.yellow500};

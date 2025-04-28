@@ -43,8 +43,7 @@ const S = {
     font-size: ${({ theme }) => theme.text.size.xSmall};
   `,
   Label: styled.div<{ isLabeled: boolean }>`
-    height: 1.5rem;
-    margin-bottom: 0.5rem;
+    height: 2.4rem;
 
     color: ${({ theme }) => theme.palette.grey500};
     font-size: ${({ theme }) => theme.text.size.xSmall};

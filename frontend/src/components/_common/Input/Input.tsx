@@ -31,7 +31,7 @@ const Input = ({ width = 'full', value, onChange, variant = 'default', disabled,
   );
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div style={{ position: 'relative', width: widthSize[width] }}>
       <S.Input
         value={value}
         {...rest}

@@ -55,7 +55,7 @@ const EmailVerificationCodeStep = ({ args: { email }, onNext }: Props) => {
 
   return (
     <>
-      <Header left={<Header.Backward onClick={handleClickBackward} />} />
+      <Header left={<Header.Backward onClick={handleClickBackward} />} center="비밀번호 찾기" />
       <CS.Wrapper>
         <CS.LogoBox>
           <BangBangIcon />
@@ -64,20 +64,20 @@ const EmailVerificationCodeStep = ({ args: { email }, onNext }: Props) => {
         <CS.Box>
           <FormField onKeyDown={handleKeyDown}>
             <FormField.Label label="검증 코드" htmlFor="code" />
-          
+
+            <div style={{ position: 'relative', width: '100%' }}>
               <FormField.Input
                 maxLength={254}
                 value={code}
                 id="code"
                 name="code"
                 onChange={onChangeCode}
-                style={{ width: '25rem' }}
+                style={{ width: '100%' }}
               />
-              <div>
-                <CS.SendButton onClick={handleClickSubmit} disabled={canMove}>
-                  확인
-                </CS.SendButton>
-              </div>
+              <CS.SendButton onClick={handleClickSubmit} disabled={canMove}>
+                확인
+              </CS.SendButton>
+            </div>
             {getCodeErrors() && <FormField.ErrorMessage value={getCodeErrors()} />}
           </FormField>
           {postErrorMessage && <FormField.ErrorMessage value={postErrorMessage} />}

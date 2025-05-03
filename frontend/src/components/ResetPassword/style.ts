@@ -8,11 +8,14 @@ const CS = {
     height:calc(100dvh - 56px);
     flex-direction: column;
     gap: 1rem;
+    padding: 0 1.6rem;
   `,
   LogoBox: styled.div`
-    ${flexCenter}
-    margin-bottom:50px;
-    gap: 2rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+    gap: 1rem;
+    width: 100%;
   `,
   SendButton: styled.button<{ disabled?: boolean }>`
     position: absolute;
@@ -32,14 +35,15 @@ const CS = {
   `,
   Box: styled.div`
     display: flex;
+    flex-direction: column;
+    min-height: 26rem;
+    flex-grow: 0;
+
     position: relative;
 
     width: 100%;
-    max-width: 40rem;
     margin-bottom: 0.5rem;
-    padding: 1.6rem;
 
-    flex-direction: column;
     border-radius: 1rem;
     gap: 1.2rem;
   `,

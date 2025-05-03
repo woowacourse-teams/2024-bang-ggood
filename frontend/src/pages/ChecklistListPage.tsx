@@ -30,11 +30,11 @@ const ChecklistListPage = () => {
 
   return (
     <>
-      <Header center={<Header.Text>체크리스트</Header.Text>} isBorder />
-      <Layout withFooter withHeader>
-        <CustomBannerSection />
-        <S.Spacer height="1.4rem" />
+      <Header center={<Header.Text>체크리스트</Header.Text>} />
+      <CustomBannerSection />
+      <S.Spacer height="1.4rem" />
 
+      <Layout withFooter withHeader>
         <ErrorBoundary fallback={<TitleErrorFallback title="내가 둘러본 방" />}>
           <FlexBox.Horizontal justify="space-between" align="center">
             <ChecklistListTitle />

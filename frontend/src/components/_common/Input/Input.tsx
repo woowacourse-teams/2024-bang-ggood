@@ -41,6 +41,17 @@ const Input = ({ width = 'full', value, onChange, variant = 'default', disabled,
       />
       {isError && (
         <div
+          onClick={() => {
+            if (!onChange) return;
+
+            const fakeEvent = {
+              target: {
+                value: '',
+              },
+            } as unknown as InputChangeEvent;
+
+            onChange(fakeEvent);
+          }}
           style={{
             position: 'absolute',
             right: '1rem',
@@ -65,6 +76,11 @@ interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const variantStyle = {
   default: css`
     border-color: ${theme.color.gray[300]};
+
+    &:focus {
+      outline: none;
+      border-color: ${theme.color.gray[600]};
+    }
   `,
   error: css`
     border-color: ${theme.color.red[300]};
@@ -99,10 +115,5 @@ const S = {
 
     ${({ $variant, disabled }) => variantStyle[disabled ? 'disabled' : $variant]};
     ${({ theme }) => fontStyle(theme.font.body[1].R)};
-
-    &:focus {
-      outline: none;
-      border-color: ${theme.color.gray[600]};
-    }
   `,
 };

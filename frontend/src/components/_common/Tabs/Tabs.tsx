@@ -102,5 +102,6 @@ const S = {
     display: inline-flex;
     gap: 1rem;
     margin: 0.8rem 1.6rem;
+    border-bottom: ${({ theme }) => `1px solid ${theme.color.gray[200]}`};
   `,
 };

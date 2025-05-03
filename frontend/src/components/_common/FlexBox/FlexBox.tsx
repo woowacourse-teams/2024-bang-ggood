@@ -59,7 +59,6 @@ const FlexBox = ({
 };
 
 FlexBox.Vertical = (props: Omit<Props, 'direction'>) => <FlexBox direction="column" {...props} />;
-
 FlexBox.Horizontal = styled(FlexBox)`
   ${flexRow}
   gap: ${({ gap }) => gap ?? '6%'};

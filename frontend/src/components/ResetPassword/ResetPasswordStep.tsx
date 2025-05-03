@@ -58,7 +58,6 @@ const SendVerificationEmailStep = ({ args: { email, code }, onNext }: Props) => 
           <BangGgoodTextIcon aria-label="방끗 로고" />
         </CS.LogoBox>
         <CS.Box>
-          <CS.Label>비밀번호 찾기</CS.Label>
           <FormField onKeyDown={handleKeyDown}>
             <FormField.Label label="새 비밀번호" htmlFor="password" />
             <FlexBox.Horizontal justify="flex-start" align="center">

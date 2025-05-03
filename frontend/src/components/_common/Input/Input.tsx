@@ -64,7 +64,7 @@ interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const variantStyle = {
   default: css`
-    border-color: ${theme.color.gray[600]};
+    border-color: ${theme.color.gray[300]};
   `,
   error: css`
     border-color: ${theme.color.red[300]};
@@ -99,5 +99,10 @@ const S = {
 
     ${({ $variant, disabled }) => variantStyle[disabled ? 'disabled' : $variant]};
     ${({ theme }) => fontStyle(theme.font.body[1].R)};
+
+    &:focus {
+      outline: none;
+      border-color: ${theme.color.gray[600]};
+    }
   `,
 };

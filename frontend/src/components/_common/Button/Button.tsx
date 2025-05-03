@@ -84,7 +84,7 @@ const S = {
     ${({ isSquare }) => (isSquare ? 'border-radius: 0.5rem' : 'border-radius: 2.5rem')};
     ${({ rounded }) => (rounded ? 'border-radius: 4rem' : 'border-radius: 0.8rem')};
     ${({ size }) => sizeStyles[size]};
-    ${({ color, disabled, variant }) => ColorStyles[disabled ? 'disabled' : variant === 'outlined' ? variant : color]};
+    ${({ color, disabled, variant }) => getColorStyles({ color, disabled, variant })};
     cursor: pointer;
     box-sizing: border-box;
     ${flexCenter}
@@ -96,54 +96,92 @@ const S = {
   `,
 };
 
-const ColorStyles = {
-  light: css`
-    background-color: ${theme.color.mono.white};
+const getColorStyles = ({
+  color,
+  disabled,
+  variant,
+}: {
+  color: ColorOption;
+  disabled: boolean;
+  variant: ButtonVariant;
+}) => {
+  if (disabled) {
+    return css`
+      background-color: ${theme.color.gray[200]};
 
-    color: ${theme.color.mono.black};
-
-    &:hover,
-    &:active {
-      background-color: ${theme.color.gray[100]};
-    }
-  `,
-  dark: css`
-    background-color: ${theme.color.mono.black};
-
-    color: ${theme.color.mono.white};
-
-    &:hover,
-    &:active {
       color: ${theme.color.gray[500]};
-    }
-  `,
-  primary: css`
-    background-color: ${theme.color.primary[500]};
+      cursor: not-allowed;
+    `;
+  }
 
-    color: ${theme.color.mono.black};
+  if (color === 'light' && variant === 'contain') {
+    return css`
+      background-color: ${theme.color.mono.white};
 
-    &:hover,
-    &:active {
-      background-color: ${theme.color.primary[600]};
-    }
-  `,
-  outlined: css`
-    border: 1px solid ${theme.color.primary[500]};
+      color: ${theme.color.mono.black};
 
-    background-color: ${theme.color.mono.white};
+      &:hover,
+      &:active {
+        background-color: ${theme.color.gray[100]};
+      }
+    `;
+  }
 
-    color: ${theme.color.primary[500]};
+  if (color === 'dark' && variant === 'contain') {
+    return css`
+      background-color: ${theme.color.mono.black};
 
-    &:hover,
-    &:active {
-      background-color: ${theme.color.primary[100]};
-    }
-  `,
-  disabled: css`
-    background-color: ${theme.color.gray[200]};
+      color: ${theme.color.mono.white};
 
-    color: ${theme.color.gray[500]};
-  `,
+      &:hover,
+      &:active {
+        color: ${theme.color.gray[500]};
+      }
+    `;
+  }
+
+  if (color === 'primary' && variant === 'contain') {
+    return css`
+      background-color: ${theme.color.primary[500]};
+
+      color: ${theme.color.mono.black};
+
+      &:hover,
+      &:active {
+        background-color: ${theme.color.primary[600]};
+      }
+    `;
+  }
+
+  if (color === 'primary' && variant === 'outlined') {
+    return css`
+      border: 1px solid ${theme.color.primary[500]};
+
+      background-color: ${theme.color.mono.white};
+
+      color: ${theme.color.primary[500]};
+
+      &:hover,
+      &:active {
+        background-color: ${theme.color.primary[100]};
+      }
+    `;
+  }
+
+  if (variant === 'outlined') {
+    return css`
+      border: 1px solid ${theme.color.gray[200]};
+
+      background-color: ${theme.color.mono.white};
+
+      color: ${theme.color.mono.black};
+
+      &:hover,
+      &:active {
+        background-color: ${theme.color.gray[200]};
+      }
+    `;
+  }
 };
 
 const sizeStyles = {

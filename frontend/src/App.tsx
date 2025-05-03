@@ -11,11 +11,11 @@ import theme from '@/styles/theme';
 
 export const queryClient = new QueryClient({});
 const App = () => {
+  const { showToast } = useToast();
   queryClient.setDefaultOptions({
     mutations: { onError: error => showToast({ message: error.message, type: 'error' }) },
     queries: { throwOnError: true },
   });
-  const { showToast } = useToast();
 
   return (
     <QueryClientProvider client={queryClient}>

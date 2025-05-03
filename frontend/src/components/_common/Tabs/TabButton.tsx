@@ -53,8 +53,6 @@ const S = {
     color: ${({ theme, active }) => (active ? theme.color.mono.black : theme.color.gray[400])};
     border-bottom: ${({ theme, active }) => active && `1px solid ${theme.color.mono.black}`};
     cursor: pointer;
-
-    font-weight: 600;
   `,
   TextBox: styled.div`
     display: flex;

@@ -97,7 +97,6 @@ const S = {
   ModalInner: styled.div<{ isOpen: boolean; backgroundColor: string }>`
     overflow: scroll;
     position: relative;
-    width: 100%;
     padding: 1.6rem;
 
     background-color: ${({ backgroundColor }) => backgroundColor};

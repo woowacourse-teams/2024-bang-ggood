@@ -18,7 +18,7 @@ const FormFieldWrapper = styled.div<{ rowGap?: string }>`
   ${flexColumn}
 
   flex: auto;
-  row-gap: ${({ rowGap }) => (rowGap ? rowGap : '1rem')};
+  row-gap: ${({ rowGap }) => (rowGap ? rowGap : '0.8rem')};
 `;
 
 const FormField = Object.assign(FormFieldWrapper, {

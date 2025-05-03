@@ -1,3 +1,4 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useCallback } from 'react';
 
@@ -6,7 +7,6 @@ import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
 import { InputChangeEvent } from '@/types/event';
 import { fontStyle } from '@/utils/fontStyle';
-import { css } from '@emotion/react';
 
 const widthSize = {
   small: '10rem',
@@ -64,7 +64,8 @@ interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const variantStyle = {
   default: css`
-    border-color: ${theme.color.gray[600]};
+    color: ${theme.color.gray[400]};
+    border-color: ${theme.color.gray[300]};
   `,
   error: css`
     border-color: ${theme.color.red[300]};

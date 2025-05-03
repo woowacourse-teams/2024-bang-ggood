@@ -7,7 +7,7 @@ import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
 import { fontStyle } from '@/utils/fontStyle';
 
-type ButtonVariant = 'contain' | 'outlined';
+type ButtonVariant = 'none' | 'outlined' | 'outlined-gray';
 type ButtonSize = 'xSmall' | 'small' | 'medium' | 'full';
 type ColorOption = 'light' | 'dark' | 'primary' | 'disabled';
 type ButtonType = 'button' | 'submit' | 'reset';
@@ -35,7 +35,7 @@ const Button = ({
   onClick = () => {},
   disabled,
   type = 'button',
-  variant = 'contain',
+  variant = 'none',
   id,
   Icon,
   ...rest
@@ -58,7 +58,6 @@ const Button = ({
       {...rest}
       disabled={disabled ?? false}
       aria-label={label}
-      tabIndex={1}
       type={type}
       variant={variant}
     >
@@ -84,7 +83,7 @@ const S = {
     ${({ isSquare }) => (isSquare ? 'border-radius: 0.5rem' : 'border-radius: 2.5rem')};
     ${({ rounded }) => (rounded ? 'border-radius: 4rem' : 'border-radius: 0.8rem')};
     ${({ size }) => sizeStyles[size]};
-    ${({ color, disabled, variant }) => ColorStyles[disabled ? 'disabled' : variant === 'outlined' ? variant : color]};
+    ${({ color, disabled, variant }) => ColorStyles[disabled ? 'disabled' : variant !== 'none' ? variant : color]};
     cursor: pointer;
     box-sizing: border-box;
     ${flexCenter}
@@ -137,6 +136,18 @@ const ColorStyles = {
     &:hover,
     &:active {
       background-color: ${theme.color.primary[100]};
+    }
+  `,
+  'outlined-gray': css`
+    border: 1px solid ${theme.color.gray[200]};
+
+    background-color: ${theme.color.mono.white};
+
+    color: ${theme.color.mono.black};
+
+    &:hover,
+    &:active {
+      background-color: ${theme.color.gray[100]};
     }
   `,
   disabled: css`

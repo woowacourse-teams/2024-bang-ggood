@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { ArrowDownIcon, BangBangIcon, BangGgoodTextIcon, SmallCheckIcon } from '@/assets/assets';
+import { ArrowDownIcon, BangBangIcon, BangGgoodTextIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import EmailLoginButton from '@/components/_common/LoginButton/EmailLoginButton';
 import KakaoLoginButton from '@/components/_common/LoginButton/KakaoLoginButton';
@@ -11,6 +11,7 @@ import amplitudeInitializer from '@/service/amplitude/amplitudeInitializer';
 import { trackGuestLoginButton } from '@/service/amplitude/trackEvent';
 import { moveUpDown } from '@/styles/animation';
 import { flexCenter, flexColumn } from '@/styles/common';
+import { fontStyle } from '@/utils/fontStyle';
 
 const FirstSection = () => {
   const { init } = amplitudeInitializer();
@@ -27,13 +28,7 @@ const FirstSection = () => {
             <S.SubtitleText>방 구하기</S.SubtitleText>
             <S.SubtitleText>
               이거 하나로
-              <S.CheckRelativeText>
-                {' '}
-                끝!
-                <S.CheckIconBox>
-                  <SmallCheckIcon />
-                </S.CheckIconBox>
-              </S.CheckRelativeText>
+              <S.CheckRelativeText>{' 끝!'}</S.CheckRelativeText>
             </S.SubtitleText>
           </S.TextWrapper>
           <S.BangGgoodTextIcon />
@@ -43,10 +38,10 @@ const FirstSection = () => {
       <S.ButtonWrapper>
         <KakaoLoginButton />
         <EmailLoginButton />
-        <S.Button
+        <Button
           label="방끗 둘러보기"
-          size="full"
-          isSquare
+          variant="outlined-gray"
+          color="light"
           onClick={() => {
             init();
             navigate(ROUTE_PATH.home);
@@ -89,11 +84,7 @@ const S = {
     }
   `,
   SubtitleText: styled.div`
-    font-size: ${({ theme }) => theme.text.size.large};
-
-    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
-      font-size: ${({ theme }) => theme.text.size.medium};
-    }
+    ${({ theme }) => fontStyle(theme.font.heading[2].R)}
   `,
   Button: styled(Button)`
     border-radius: 0.8rem;
@@ -106,15 +97,7 @@ const S = {
     gap: 1.5rem;
     ${flexColumn}
   `,
-  CheckIconBox: styled.div`
-    position: absolute;
-    right: 1rem;
-    bottom: 3rem;
 
-    @media (width <= ${({ theme }) => theme.viewport.MOBILE}px) {
-      bottom: 2rem;
-    }
-  `,
   TextWrapper: styled.div`
     display: flex;
     width: 280px;

@@ -10,7 +10,7 @@ const DepositAndRent = () => {
 
   return (
     <FormField>
-      <FormField.Label label="보증금 / 월세 (만원)" />
+      <FormField.Label label="보증금 / 월세 (만원)" htmlFor="depositAndRent" bold />
       <FormStyled.FieldBox>
         <FormField.Input
           inputMode="decimal"

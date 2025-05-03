@@ -8,7 +8,7 @@ const MaintenanceFee = () => {
 
   return (
     <FormField>
-      <FormField.Label label="관리비" htmlFor="maintenanceFee" />
+      <FormField.Label label="관리비" htmlFor="maintenanceFee" bold />
       <FormStyled.FieldBox>
         <Input
           inputMode="decimal"

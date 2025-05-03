@@ -10,6 +10,7 @@ type GetProps<T> = T extends React.FC<infer P> ? P : never;
 
 interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
   label: string;
+  bold?: boolean;
   required?: boolean;
   as?: ElementType;
 }
@@ -22,9 +23,9 @@ const FormFieldWrapper = styled.div<{ rowGap?: string }>`
 `;
 
 const FormField = Object.assign(FormFieldWrapper, {
-  Label: ({ label, required = false, ...rest }: LabelProps) => {
+  Label: ({ label, bold = false, required = false, ...rest }: LabelProps) => {
     return (
-      <S.LabelContainer {...rest}>
+      <S.LabelContainer bold={bold} {...rest}>
         {label}
         {required && <S.MovedRequiredDot />}
       </S.LabelContainer>
@@ -48,10 +49,10 @@ const S = {
     top: -1.5rem;
     left: 0.5rem;
   `,
-  LabelContainer: styled.label`
+  LabelContainer: styled.label<{ bold: boolean }>`
     position: relative;
     z-index: 0;
-    ${({ theme }) => fontStyle(theme.font.label[1].R)}
+    ${({ theme, bold }) => (bold ? fontStyle(theme.font.headline[2].B) : fontStyle(theme.font.label[1].R))}
   `,
   ErrorMessage: styled.p`
     padding: 0 0 0 1.6rem;

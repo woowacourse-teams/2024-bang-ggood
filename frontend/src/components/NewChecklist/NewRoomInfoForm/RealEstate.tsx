@@ -6,7 +6,7 @@ const RealEstate = () => {
 
   return (
     <FormField>
-      <FormField.Label label={'부동산 이름'} required={false} htmlFor="realEstate" />
+      <FormField.Label label={'부동산 이름'} required={false} htmlFor="realEstate" bold />
       <FormField.Input
         placeholder=""
         width="full"

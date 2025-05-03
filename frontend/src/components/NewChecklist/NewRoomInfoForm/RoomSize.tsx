@@ -8,7 +8,7 @@ const RoomSize = () => {
 
   return (
     <FormField>
-      <FormField.Label label="방 크기" htmlFor="size" />
+      <FormField.Label label="방 크기" htmlFor="size" bold />
       <FormStyled.FieldBox>
         <Input
           inputMode="decimal"

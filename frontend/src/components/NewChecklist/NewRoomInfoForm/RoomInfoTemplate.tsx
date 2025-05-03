@@ -53,6 +53,7 @@ const S = {
     ${flexColumn}
     justify-content: start;
     row-gap: 1.5rem;
+    margin-top: 1rem;
     margin-bottom: 2rem;
   `,
 };

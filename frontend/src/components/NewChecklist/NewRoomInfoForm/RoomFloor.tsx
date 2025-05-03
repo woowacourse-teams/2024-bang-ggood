@@ -18,7 +18,7 @@ const RoomFloor = () => {
 
   return (
     <FormField>
-      <FormField.Label label="층수" htmlFor="floor" />
+      <FormField.Label label="층수" htmlFor="floor" bold />
       <FormStyled.FieldBox>
         <Dropdown
           initialValue={floorLevel.rawValue}

@@ -28,7 +28,7 @@ const IncludedMaintenances = () => {
 
   return (
     <FlexBox.Vertical>
-      <FormField.Label label="관리비 포함 항목" />
+      <FormField.Label label="관리비 포함 항목" htmlFor="includedMaintenances" bold />
       <FormStyled.OptionButtonContainer flexWrap="wrap">
         {IncludedMaintenancesData.map(({ id, displayName }) => (
           <Badge

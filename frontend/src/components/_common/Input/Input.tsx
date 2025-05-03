@@ -100,8 +100,8 @@ const variantStyle = {
 
 const S = {
   Input: styled.input<StyledProps>`
-    ${flexCenter}
-    width:100%;
+    ${flexCenter};
+    width: 100%;
     height: 5rem;
     padding: 0.6rem 1.1rem;
     border: 0.1rem solid;

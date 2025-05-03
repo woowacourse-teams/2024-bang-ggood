@@ -41,6 +41,7 @@ const RoomInfoTemplate = () => {
         <RoomContractTerm />
         <OccupancyMonth />
         <RealEstate />
+
         <MoveNextButton marginBottom="1rem" />
       </S.Container>
     </Layout>

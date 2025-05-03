@@ -45,6 +45,7 @@ const ChecklistQuestionTemplate = () => {
           );
         })}
       </S.ContentBox>
+
       <MoveNextButton marginTop="2rem" marginBottom="4rem" />
     </Layout>
   );

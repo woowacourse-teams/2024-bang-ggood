@@ -34,7 +34,7 @@ const ChecklistListPage = () => {
       <CustomBannerSection />
       <S.Spacer height="1.4rem" />
 
-      <Layout withFooter withHeader>
+      <Layout withFooter withHeader fitContent>
         <ErrorBoundary fallback={<TitleErrorFallback title="내가 둘러본 방" />}>
           <FlexBox.Horizontal justify="space-between" align="center">
             <ChecklistListTitle />

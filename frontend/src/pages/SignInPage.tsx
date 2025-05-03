@@ -112,8 +112,11 @@ const S = {
     gap: 1rem;
   `,
   LogoBox: styled.div`
+    display: flex;
     width: 100%;
+    margin-top: 22rem;
     margin-bottom: 8.5rem;
+    align-items: center;
     gap: 2rem;
   `,
   Label: styled.div`

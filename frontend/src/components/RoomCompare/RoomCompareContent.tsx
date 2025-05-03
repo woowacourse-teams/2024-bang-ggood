@@ -56,7 +56,7 @@ const RoomCompareContent = () => {
     setSearchParams(searchParams);
   };
 
-  const handleCloseategoryDetailModal = () => {
+  const handleCloseCategoryDetailModal = () => {
     closeCategoryModal();
     searchParams.delete('targetRoomId');
     searchParams.delete('categoryId');
@@ -104,7 +104,7 @@ const RoomCompareContent = () => {
       )}
       {/*방 카테고리 디테일 모달*/}
       {isCategoryModalOpen && (
-        <CategoryDetailModal isOpen={isCategoryModalOpen} closeModal={handleCloseategoryDetailModal} />
+        <CategoryDetailModal isOpen={isCategoryModalOpen} closeModal={handleCloseCategoryDetailModal} />
       )}
     </>
   );

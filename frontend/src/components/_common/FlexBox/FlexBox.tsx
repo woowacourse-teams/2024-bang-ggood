@@ -19,7 +19,6 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 
 const FlexBox = ({
   children,
-  direction = 'row',
   justify,
   align,
   gap,
@@ -37,7 +36,6 @@ const FlexBox = ({
     <div
       style={{
         display: 'flex',
-        flexDirection: direction,
         justifyContent: justify,
         alignItems: align,
         flexWrap: flexWrap ?? 'inherit',

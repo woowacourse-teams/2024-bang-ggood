@@ -48,7 +48,7 @@ const ChecklistListPage = () => {
         </ErrorBoundary>
       </Layout>
 
-      <FloatingButton size="extends" onClick={handleClickFloatingButton} tabIndex={1}>
+      <FloatingButton size="extends" onClick={handleClickFloatingButton}>
         <PlusIcon />방 체크하기
       </FloatingButton>
     </>

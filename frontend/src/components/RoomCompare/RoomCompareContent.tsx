@@ -13,6 +13,7 @@ import useModal from '@/hooks/useModal';
 import { OptionDetail } from '@/pages/RoomComparePage';
 import { flexCenter, flexRow } from '@/styles/common';
 import theme from '@/styles/theme';
+import { fontStyle } from '@/utils/fontStyle';
 
 const RoomCompareContent = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -132,8 +133,7 @@ const S = {
     width: calc(100% - 3rem);
     padding: 0.6rem 0 0.4rem 0.7rem;
 
-    font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: 1.8rem;
+    ${fontStyle(theme.font.headline[2].B)}
     text-align: left;
     border-radius: 0.8rem;
   `,

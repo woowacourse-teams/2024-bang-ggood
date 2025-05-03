@@ -4,8 +4,9 @@ import Bad from '@/assets/icons/answer/bad';
 import Good from '@/assets/icons/answer/good';
 import Modal from '@/components/_common/Modal/Modal';
 import { OptionDetail } from '@/pages/RoomComparePage';
-import { flexCenter, omitText } from '@/styles/common';
+import { flexCenter, flexSpaceBetween, omitText } from '@/styles/common';
 import theme from '@/styles/theme';
+import { fontStyle } from '@/utils/fontStyle';
 
 interface Props {
   roomTitle1: string;
@@ -22,9 +23,9 @@ const OptionDetailModal = ({ roomTitle1, roomTitle2, isOpen, closeModal, hasOpti
       <Modal.header>옵션 비교</Modal.header>
       <Modal.body>
         <S.Container>
-          <S.ItemText isBold={true}>옵션</S.ItemText>
-          <S.ItemText isBold={true}>{roomTitle1}</S.ItemText>
-          <S.ItemText isBold={true}>{roomTitle2}</S.ItemText>
+          <S.ItemText>옵션</S.ItemText>
+          <S.ItemText>{roomTitle1}</S.ItemText>
+          <S.ItemText>{roomTitle2}</S.ItemText>
           {hasOptions.map(option => {
             const { optionName, hasOption } = option;
             return (
@@ -48,8 +49,8 @@ const OptionDetailModal = ({ roomTitle1, roomTitle2, isOpen, closeModal, hasOpti
             );
           })}
           <S.ItemText>총 개수</S.ItemText>
-          <S.ItemText hasBorder={false}>{optionCounts[0]}개</S.ItemText>
-          <S.ItemText hasBorder={false}>{optionCounts[1]}개</S.ItemText>
+          <S.ItemText>{optionCounts[0]}개</S.ItemText>
+          <S.ItemText>{optionCounts[1]}개</S.ItemText>
         </S.Container>
       </Modal.body>
     </Modal>
@@ -63,25 +64,24 @@ const S = {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
   `,
-  ItemText: styled.div<{ isBold?: boolean; hasBorder?: boolean }>`
+  ItemText: styled.div`
     padding: 0.6rem 1rem;
+    ${fontStyle(theme.font.body[1].M)}
+    overflow-wrap: break-word;
+    word-break: break-word;
 
-    font-weight: ${({ theme, isBold }) => isBold && theme.text.weight.bold};
-    ${omitText};
     text-align: center;
-    border-bottom: ${({ hasBorder, theme }) => hasBorder && `0.1rem solid  ${theme.palette.grey200}};`};
   `,
   Item: styled.div`
     ${flexCenter};
     height: 2rem;
     padding: 0.6rem 1rem;
-    border-bottom: 0.1rem solid ${({ theme }) => theme.palette.grey200};
   `,
   ItemName: styled.div`
-    ${flexCenter};
+    ${flexSpaceBetween};
     height: 2rem;
     padding: 0.6rem 1rem;
-    border-bottom: 0.1rem solid ${({ theme }) => theme.palette.grey200};
-    font-weight: ${({ theme }) => theme.text.weight.medium};
+    ${fontStyle(theme.font.body[1].R)};
+    color: ${theme.color.gray[500]};
   `,
 };

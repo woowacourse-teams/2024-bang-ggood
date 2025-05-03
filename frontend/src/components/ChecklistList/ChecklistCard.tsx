@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { LocationLineIcon } from '@/assets/assets';
+import { EmptyHomeIcon } from '@/assets/assets';
 import LikeButton from '@/components/_common/Like/LikeButton';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { boxShadow, flexCenter, flexColumn, flexSpaceBetween, omitText, title3 } from '@/styles/common';
+import { flexCenter, flexColumn, flexSpaceBetween, omitText } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
+import { fontStyle } from '@/utils/fontStyle';
 import formattedDate from '@/utils/formattedDate';
 import { formattedUndefined } from '@/utils/formattedUndefined';
 
@@ -14,7 +15,7 @@ interface Props {
 }
 const ChecklistCard = ({ checklist }: Props) => {
   const navigate = useNavigate();
-  const { checklistId, roomName, address, createdAt, deposit, rent, summary, isLiked } = checklist;
+  const { checklistId, roomName, thumbnail, address, createdAt, deposit, rent, summary, isLiked } = checklist;
 
   const handleMoveToDetail = () => {
     navigate(ROUTE_PATH.checklistOne(checklist.checklistId));
@@ -23,27 +24,35 @@ const ChecklistCard = ({ checklist }: Props) => {
   return (
     <S.Container data-testid="checklist-card" onClick={handleMoveToDetail} tabIndex={1}>
       <S.Row>
-        <S.LocationWrapper>
-          <LocationLineIcon aria-hidden="true" />
-          {formattedUndefined(address, 'string')}
-        </S.LocationWrapper>
+        <S.Row gap="1rem">
+          <div>{thumbnail ? <S.ThumbnailImg src={thumbnail} /> : <EmptyHomeIcon aria-hidden="true" />}</div>
+
+          <S.Column>
+            <S.Location>{formattedUndefined(address, 'string')}</S.Location>
+            <S.Title>{roomName}</S.Title>
+            <S.Deposit>
+              {formattedUndefined(deposit)} / {formattedUndefined(rent)}
+            </S.Deposit>
+          </S.Column>
+        </S.Row>
+
         <LikeButton isLiked={isLiked} checklistId={checklistId} />
       </S.Row>
-      <S.Column>
-        <S.Title>{roomName}</S.Title>
-        <S.Deposit>
-          {formattedUndefined(deposit)} / {formattedUndefined(rent)}
-        </S.Deposit>
-      </S.Column>
+
       <S.Row>
-        <S.SummaryWrapper>
-          <S.SummaryBox>{`"${formattedUndefined(summary, 'string')}"`}</S.SummaryBox>
-        </S.SummaryWrapper>
-        <S.Date>{formattedDate(createdAt ?? '')}</S.Date>
+        <S.GrayBox>
+          <S.Summary>
+            {formattedUndefined(summary, 'string')?.toString().length > 23
+              ? `${formattedUndefined(summary, 'string')?.toString().slice(0, 20)}…`
+              : formattedUndefined(summary, 'string')}
+          </S.Summary>
+          <S.Date>{formattedDate(createdAt ?? '')}</S.Date>
+        </S.GrayBox>
       </S.Row>
     </S.Container>
   );
 };
+
 export default ChecklistCard;
 
 const S = {
@@ -51,56 +60,61 @@ const S = {
     ${flexColumn}
     width: 100%;
     gap: 1rem;
-    box-sizing: border-box;
     border-radius: 0.8rem;
-    padding: 1.2rem 1.6rem;
+    padding: 1.6rem;
+    border: ${({ theme }) => `1px solid ${theme.color.gray[200]}`};
 
-    background-color: ${({ theme }) => theme.palette.white};
-    ${boxShadow};
+    background-color: ${({ theme }) => theme.color.mono.white};
     cursor: pointer;
 
     :hover {
-      background-color: ${({ theme }) => theme.palette.grey200};
+      background-color: ${({ theme }) => theme.color.gray[100]};
     }
   `,
-  Row: styled.div`
+  Row: styled.div<{ gap?: string }>`
     ${flexSpaceBetween}
-    align-items: center;
+    align-items: flex-start;
+    gap: ${({ gap }) => gap};
   `,
   Column: styled.div`
     ${flexColumn}
+    gap: .5rem;
   `,
-  LocationWrapper: styled.p`
+  ThumbnailImg: styled.img`
+    width: 6.8rem;
+    height: 6.8rem;
+    border-radius: 50%;
+    object-fit: cover;
+  `,
+  Location: styled.p`
     ${flexCenter}
     gap: .5rem;
 
-    font-size: ${({ theme }) => theme.text.size.xSmall};
-  `,
-  Date: styled.p`
-    color: ${({ theme }) => theme.palette.grey500};
-    font-size: ${({ theme }) => theme.text.size.xxSmall};
+    ${({ theme }) => fontStyle(theme.font.label[1].R)}
+    color: ${({ theme }) => theme.color.gray[400]};
   `,
   Title: styled.p`
-    ${title3}
-    margin-bottom: 1rem;
+    ${({ theme }) => fontStyle(theme.font.headline[2].B)}
   `,
   Deposit: styled.p`
-    font-size: ${({ theme }) => theme.text.size.medium};
+    ${({ theme }) => fontStyle(theme.font.headline[2].R)}
   `,
-  SummaryWrapper: styled.div`
-    align-items: center;
-    padding: 0.8rem;
+  GrayBox: styled.div`
+    width: 100%;
+    ${flexSpaceBetween}
+    padding: 0.6rem 0.8rem;
 
-    background-color: ${({ theme }) => theme.palette.grey50};
-    border-radius: 0.6rem;
-    box-sizing: content-box;
-    max-width: 70%;
+    background-color: ${({ theme }) => theme.color.gray[100]};
+    border-radius: 0.4rem;
   `,
-  SummaryBox: styled.div`
-    box-sizing: content-box;
+  Summary: styled.span`
     ${omitText};
     border-radius: 0.4rem;
 
-    font-size: ${({ theme }) => theme.text.size.small};
+    ${({ theme }) => fontStyle(theme.font.headline[2].R)}
+  `,
+  Date: styled.span`
+    color: ${({ theme }) => theme.color.gray[400]};
+    ${({ theme }) => fontStyle(theme.font.headline[2].R)}
   `,
 };

@@ -94,13 +94,13 @@ const colorStyle = {
 const S = {
   Wrapper: styled.div`
     display: flex;
-    justify-content: flex-end;
     position: fixed;
-    bottom: calc(5% + ${FOOTER_SIZE}rem);
-    left: 50%;
+    bottom: calc(2% + ${FOOTER_SIZE}rem);
+    left: 55%;
     z-index: ${theme.zIndex.FLOATING_BUTTON};
     width: 100%;
     padding-right: 10%;
+    justify-content: flex-end;
     transform: translateX(-50%);
     max-width: 60rem;
 

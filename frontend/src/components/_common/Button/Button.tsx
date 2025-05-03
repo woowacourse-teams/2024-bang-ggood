@@ -147,9 +147,9 @@ const ColorStyles = {
 };
 
 const sizeStyles = {
-  // 현재 디자인에 없는 컴포넌트 하지만 쓰이는 곳이 있어서 추후 삭제 필요
   xSmall: css`
-    min-width: 14rem;
+    min-width: 10rem;
+    height: 4rem;
   `,
   small: css`
     min-width: 14rem;

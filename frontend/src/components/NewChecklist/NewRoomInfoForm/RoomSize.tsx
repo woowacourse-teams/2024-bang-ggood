@@ -18,6 +18,7 @@ const RoomSize = () => {
           name="size"
           value={roomSize.rawValue}
           id="size"
+          isError={!!roomSize.errorMessage}
         />
         <FormStyled.FlexLabel label="평"></FormStyled.FlexLabel>
       </FormStyled.FieldBox>

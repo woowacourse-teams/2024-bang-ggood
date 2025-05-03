@@ -20,6 +20,7 @@ const RoomContractTerm = () => {
           name="contractTerm"
           value={contractTerm.rawValue}
           id="contractTerm"
+          isError={!!contractTerm.errorMessage}
         />
         <FormStyled.FlexLabel label="개월"></FormStyled.FlexLabel>
       </S.FieldBox>

@@ -21,6 +21,7 @@ const OccupancyMonth = () => {
           name="occupancyMonth"
           value={occupancyMonth.rawValue}
           id="occupancyMonth"
+          isError={!!occupancyMonth.errorMessage}
         />
         <FormStyled.FlexLabel label="월  " />
         <Dropdown

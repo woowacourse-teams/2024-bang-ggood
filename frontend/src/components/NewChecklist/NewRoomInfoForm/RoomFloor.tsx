@@ -34,6 +34,7 @@ const RoomFloor = () => {
           value={floor.rawValue}
           onChange={floor.onChange}
           id="floor"
+          isError={!!floor.errorMessage}
         />
         <FormStyled.FlexLabel label="층"></FormStyled.FlexLabel>
       </FormStyled.FieldBox>

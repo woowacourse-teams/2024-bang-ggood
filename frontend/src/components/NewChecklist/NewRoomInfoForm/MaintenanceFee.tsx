@@ -18,6 +18,7 @@ const MaintenanceFee = () => {
           name="maintenanceFee"
           value={maintenanceFee.rawValue}
           id="maintenanceFee"
+          isError={!!maintenanceFee.errorMessage}
         />
         <FormStyled.FlexLabel label="만원"></FormStyled.FlexLabel>
       </FormStyled.FieldBox>

@@ -15,6 +15,7 @@ const RealEstate = () => {
         name={'realEstate'}
         value={realEstate.rawValue}
         id="realEstate"
+        isError={!!realEstate.errorMessage}
       />
       <FormField.ErrorMessage value={realEstate.errorMessage} />
     </FormField>

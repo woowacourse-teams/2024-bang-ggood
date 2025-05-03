@@ -19,6 +19,7 @@ const DepositAndRent = () => {
           name="deposit"
           value={deposit.rawValue}
           aria-label="보증금"
+          isError={!!deposit.errorMessage}
         />
         <FormStyled.FlexLabel label=" / " />
         <FormField.Input
@@ -29,6 +30,7 @@ const DepositAndRent = () => {
           name="rent"
           value={rent.rawValue}
           aria-label="월세"
+          isError={!!rent.errorMessage}
         />
       </FormStyled.FieldBox>
       <FormField.ErrorMessage value={errorMessage} />

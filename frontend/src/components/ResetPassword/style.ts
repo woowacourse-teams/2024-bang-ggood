@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
-import { flexCenter } from '@/styles/common';
+import { flexCenter, flexColumn } from '@/styles/common';
+import { fontStyle } from '@/utils/fontStyle';
 
 const CS = {
   Wrapper: styled.div`
@@ -25,17 +26,15 @@ const CS = {
     cursor: pointer;
 
     ${flexCenter}
-    color: ${({ theme, disabled }) => (disabled ? theme.palette.green300 : theme.palette.green500)};
+    color: ${({ theme, disabled }) => (disabled ? theme.color.secondary[500] : theme.color.secondary[600])};
 
-    font-weight: ${({ theme }) => theme.text.weight.medium};
-    font-size: ${({ theme }) => theme.text.size.small};
+    ${({ theme }) => fontStyle(theme.font.body[1].B)}
     line-height: 2;
     white-space: nowrap;
     border-radius: 1rem;
   `,
   Box: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
     min-height: 26rem;
     flex-grow: 0;
 

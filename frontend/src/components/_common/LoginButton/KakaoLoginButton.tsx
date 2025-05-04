@@ -10,7 +10,7 @@ const KakaoLoginButton = () => {
     moveToKakao();
   };
 
-  return <Button color="primary" label="카카오톡으로 시작하기" onClick={handleClickKakao} />;
+  return <Button color="primary" size="full" label="카카오톡으로 시작하기" onClick={handleClickKakao} />;
 };
 
 export default KakaoLoginButton;

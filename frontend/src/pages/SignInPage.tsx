@@ -9,7 +9,7 @@ import Header from '@/components/_common/Header/Header';
 import { ROUTE_PATH } from '@/constants/routePath';
 import usePostSignInQuery from '@/hooks/query/usePostSignInQuery';
 import useValidateInput from '@/hooks/useValidateInput';
-import { flexCenter, flexRow, title3 } from '@/styles/common';
+import { flexCenter, flexRow } from '@/styles/common';
 import { validateEmail } from '@/utils/authValidation';
 import { fontStyle } from '@/utils/fontStyle';
 
@@ -87,7 +87,6 @@ const SignInPage = () => {
         <Button
           label="로그인 하기"
           size="full"
-          isSquare={true}
           color={'dark'}
           onClick={handleSubmit}
           disabled={disabled}
@@ -119,17 +118,6 @@ const S = {
     align-items: center;
     gap: 2rem;
   `,
-  Label: styled.div`
-    position: absolute;
-    top: -4.2rem;
-    padding: 1rem 1.4rem;
-    border-radius: 1rem 1rem 0 0;
-    ${title3}
-
-    background-color: ${({ theme }) => theme.palette.green500};
-
-    color: ${({ theme }) => theme.palette.white};
-  `,
   Box: styled.div`
     display: flex;
     position: relative;
@@ -144,11 +132,11 @@ const S = {
     height: 4.8rem;
     ${({ theme }) => fontStyle(theme.font.body[1].B)}
 
-    color: ${({ theme }) => theme.palette.grey400};
+    color: ${({ theme }) => theme.color.gray[400]};
     cursor: pointer;
 
     :hover {
-      color: ${({ theme }) => theme.palette.green600};
+      color: ${({ theme }) => theme.color.green[400]};
     }
   `,
 };

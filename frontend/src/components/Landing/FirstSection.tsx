@@ -11,6 +11,7 @@ import amplitudeInitializer from '@/service/amplitude/amplitudeInitializer';
 import { trackGuestLoginButton } from '@/service/amplitude/trackEvent';
 import { moveUpDown } from '@/styles/animation';
 import { flexCenter, flexColumn } from '@/styles/common';
+import theme from '@/styles/theme';
 import { fontStyle } from '@/utils/fontStyle';
 
 const FirstSection = () => {
@@ -51,9 +52,9 @@ const FirstSection = () => {
       </S.ButtonWrapper>
       <CS.EmptyBox height="5rem" mobileHeight="10rem" />
       <S.MoreBox>
-        <S.SubText>방끗을 소개할게요. 아래를 클릭해보세요!</S.SubText>
+        <S.SubText>방끗을 소개할게요. 아래를 클릭하세요!</S.SubText>
         <CS.MoveUpDownAnimationBox>
-          <ArrowDownIcon aria-label="스크롤로 하단의 정보를 확인할 수 있어요" />
+          <ArrowDownIcon aria-label="스크롤로 하단의 정보를 확인할 수 있어요" fill={theme.color.gray[400]} />
         </CS.MoveUpDownAnimationBox>
       </S.MoreBox>
     </S.CenterBox>
@@ -116,21 +117,12 @@ const S = {
 
     gap: 1rem;
   `,
-  GuestLoginButton: styled.button`
-    width: 100%;
-    height: 5rem;
-    border: 3px solid ${({ theme }) => theme.palette.yellow500};
-    box-sizing: border-box;
-
-    font-size: ${({ theme }) => theme.text.size.medium};
-    border-radius: 0.8rem;
-    cursor: pointer;
-  `,
   SubText: styled.div`
     position: absolute;
     bottom: 5rem;
 
-    font-size: ${({ theme }) => theme.text.size.small};
+    ${({ theme }) => fontStyle(theme.font.body[1].B)}
+    ${({ theme }) => theme.color.gray[400]}
   `,
   MoreBox: styled.div`
     width: 100%;
@@ -146,12 +138,12 @@ const S = {
     animation: ${moveUpDown} 1s infinite;
   `,
   BangGgoodTextIcon: styled(BangGgoodTextIcon)`
-    width: 15rem;
-    height: 10rem;
+    width: 6.8rem;
+    height: 3.6rem;
 
     @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
-      width: 15rem;
-      height: 7rem;
+      width: 6.8rem;
+      height: 3rem;
     }
   `,
 };

@@ -70,7 +70,7 @@ const SendVerificationEmailStep = ({ onNext }: Props) => {
                 style={{ width: '100%' }}
               />
               <CS.SendButton onClick={handleClickSubmit} disabled={canMove || !isEmailValid}>
-                전송
+                전송하기
               </CS.SendButton>
             </div>
             {getEmailErrors() && <FormField.ErrorMessage value={getEmailErrors()} />}

@@ -26,7 +26,7 @@ const CS = {
     cursor: pointer;
 
     ${flexCenter}
-    color: ${({ theme, disabled }) => (disabled ? theme.color.secondary[500] : theme.color.secondary[600])};
+    color: ${({ theme, disabled }) => (disabled ? theme.color.secondary[500] : theme.color.gray[400])};
 
     ${({ theme }) => fontStyle(theme.font.body[1].B)}
     line-height: 2;

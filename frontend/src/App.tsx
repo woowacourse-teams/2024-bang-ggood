@@ -9,14 +9,12 @@ import router from '@/routers/router';
 import { baseStyle } from '@/styles/global';
 import theme from '@/styles/theme';
 
+export const queryClient = new QueryClient({});
 const App = () => {
   const { showToast } = useToast();
-
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      mutations: { onError: error => showToast({ message: error.message, type: 'error' }) },
-      queries: { throwOnError: true },
-    },
+  queryClient.setDefaultOptions({
+    mutations: { onError: error => showToast({ message: error.message, type: 'error' }) },
+    queries: { throwOnError: true },
   });
 
   return (

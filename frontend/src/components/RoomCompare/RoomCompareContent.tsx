@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import RoomCompareMap from '@/components/_common/Map/RoomCompareMap';
@@ -9,6 +10,7 @@ import OptionDetailModal from '@/components/RoomCompare/OptionDetailModal';
 import SkRoomCompare from '@/components/skeleton/RoomCompare/SkRoomCompare';
 import { OPTIONS } from '@/constants/options';
 import useGetCompareRoomsQuery from '@/hooks/query/useGetCompareRoomsQuery';
+import { prefetchGetRoomCategoryDetailQuery } from '@/hooks/query/useGetRoomCategoryDetail';
 import useModal from '@/hooks/useModal';
 import { OptionDetail } from '@/pages/RoomComparePage';
 import { flexCenter, flexRow } from '@/styles/common';
@@ -24,7 +26,15 @@ const RoomCompareContent = () => {
   const roomId2 = Number(searchParams.get('roomId2'));
 
   const { data: rooms, isLoading } = useGetCompareRoomsQuery(roomId1, roomId2);
-
+  /* 비교 모달데이터를 prefetch 한다 */
+  const categoryIdPairs = rooms?.flatMap(a =>
+    a.categories.categories.flatMap(c => ({ roomId: a.checklistId, categoryId: c.categoryId })),
+  );
+  useEffect(() => {
+    categoryIdPairs?.forEach(categoryIdPair => {
+      prefetchGetRoomCategoryDetailQuery(categoryIdPair);
+    });
+  }, [categoryIdPairs]);
   if (isLoading) return <SkRoomCompare />;
 
   if (!rooms) throw new Error('데이터를 불러오는데 실패했습니다.');

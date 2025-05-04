@@ -21,7 +21,7 @@ interface CategorySectionType {
   color: string;
 }
 
-const CateogorySection: CategorySectionType[] = [
+const CategorySection: CategorySectionType[] = [
   { id: 'good', text: '긍정적', color: theme.palette.green400 },
   { id: 'bad', text: '부정적', color: theme.palette.red500 },
   { id: 'none', text: '무응답', color: theme.palette.grey300 },
@@ -51,7 +51,7 @@ const CategoryDetailModal = ({ isOpen, closeModal }: Props) => {
       <Modal.header>카테고리 질문 상세보기</Modal.header>
       <Modal.body>
         <Accordion totalCount={3}>
-          {CateogorySection.map((section, index) => {
+          {CategorySection.map((section, index) => {
             return (
               <S.FlexBox key={section.id}>
                 <Accordion.header

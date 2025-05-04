@@ -13,6 +13,7 @@ import useModal from '@/hooks/useModal';
 import { OptionDetail } from '@/pages/RoomComparePage';
 import { flexCenter, flexRow } from '@/styles/common';
 import theme from '@/styles/theme';
+import { fontStyle } from '@/utils/fontStyle';
 
 const RoomCompareContent = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -56,7 +57,7 @@ const RoomCompareContent = () => {
     setSearchParams(searchParams);
   };
 
-  const handleCloseategoryDetailModal = () => {
+  const handleCloseCategoryDetailModal = () => {
     closeCategoryModal();
     searchParams.delete('targetRoomId');
     searchParams.delete('categoryId');
@@ -68,17 +69,19 @@ const RoomCompareContent = () => {
       <S.RoomGrid>
         <S.TitleFlex>
           <S.RoomTitle>
-            <S.Title key={rooms[0].checklistId}>{rooms[0].roomName}</S.Title>
             <Marker isCircle={true} size={'medium'} color={theme.palette.yellow500} text={'A'} />
+            <S.Title key={rooms[0].checklistId}>{rooms[0].roomName}</S.Title>
           </S.RoomTitle>
           <S.RoomTitle>
-            <S.Title key={rooms[1].checklistId}>{rooms[1].roomName}</S.Title>
             <Marker isCircle={true} size={'medium'} color={theme.palette.green500} text={'B'} />
+            <S.Title key={rooms[1].checklistId}>{rooms[1].roomName}</S.Title>
           </S.RoomTitle>
         </S.TitleFlex>
       </S.RoomGrid>
-      {positions && <RoomCompareMap positions={positions} />}
-      <S.RoomGrid>
+      <S.MapGrid>
+        {positions && <RoomCompareMap positions={positions} />}
+      </S.MapGrid>
+      <S.RoomCompareGrid>
         {rooms?.map((room, index) => (
           <CompareCard
             key={room.checklistId}
@@ -88,7 +91,7 @@ const RoomCompareContent = () => {
             openCategoryModal={handleOpenCategoryDetailModal}
           />
         ))}
-      </S.RoomGrid>
+      </S.RoomCompareGrid>
       {/*방 옵션 비교 모달*/}
       {isOptionModalOpen && (
         <OptionDetailModal
@@ -102,7 +105,7 @@ const RoomCompareContent = () => {
       )}
       {/*방 카테고리 디테일 모달*/}
       {isCategoryModalOpen && (
-        <CategoryDetailModal isOpen={isCategoryModalOpen} closeModal={handleCloseategoryDetailModal} />
+        <CategoryDetailModal isOpen={isCategoryModalOpen} closeModal={handleCloseCategoryDetailModal} />
       )}
     </>
   );
@@ -112,7 +115,8 @@ export default RoomCompareContent;
 
 const S = {
   RoomGrid: styled.div`
-    ${flexRow}
+    ${flexRow};
+    padding: 0 1.6rem;
   `,
   TitleFlex: styled.div`
     display: flex;
@@ -121,17 +125,25 @@ const S = {
   RoomTitle: styled.div`
     width: 50%;
     margin-bottom: 0.5rem;
-    ${flexCenter}
+    ${flexCenter};
     gap:0.8rem;
   `,
   Title: styled.span`
     display: inline;
     width: calc(100% - 3rem);
-    padding: 0.8rem 0;
+    padding: 0.6rem 0 0.4rem 0.7rem;
 
-    font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: 1.8rem;
-    text-align: center;
+    ${fontStyle(theme.font.headline[2].B)}
+    text-align: left;
     border-radius: 0.8rem;
+  `,
+  MapGrid: styled.div`
+      padding: 0 1.6rem;
+  `,
+  RoomCompareGrid: styled.div`
+    ${flexRow};
+    padding: 1.6rem 1.6rem;
+    background: ${({ theme }) => theme.palette.grey100};
+    gap: 16px;
   `,
 };

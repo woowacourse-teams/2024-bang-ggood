@@ -107,6 +107,5 @@ const S = {
     border: 1px solid ${({ theme }) => theme.palette.yellow500};
     border-radius: 8px;
     color: ${({ theme }) => theme.color.primary[500]};
-    ${boxShadow}
   `,
 };

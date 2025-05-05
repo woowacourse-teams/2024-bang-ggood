@@ -1,0 +1,134 @@
+name: backend-prod-cd
+
+# on:
+#  pull_request:
+#    branches: [ "main" ]
+#    types: [closed]
+
+on:
+  pull_request:
+    branches: [ "non-existent-branch" ] 
+    
+jobs:
+  build:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v3
+      with:
+        gradle-version: 8.8
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x backend/bang-ggood/gradlew
+
+    - name: Write application.yml
+      env:
+        APPLICATION_YML: ${{ secrets.APPLICATION_YML }}
+        APPLICATION_PROD_YML: ${{ secrets.APPLICATION_PROD_YML }}
+        APPLICATION_TEST_YML: ${{ secrets.APPLICATION_TEST_YML }}
+        APPLICATION_READ_WRITE_TEST_YML: ${{ secrets.APPLICATION_READ_WRITE_TEST_YML }}
+        
+      run: |
+        echo "${APPLICATION_YML}" > backend/bang-ggood/src/main/resources/application.yml
+        echo "${APPLICATION_PROD_YML}" > backend/bang-ggood/src/main/resources/application-prod.yml
+        echo "${APPLICATION_TEST_YML}" > backend/bang-ggood/src/test/resources/application-test.yml
+        echo "${APPLICATION_READ_WRITE_TEST_YML}" > backend/bang-ggood/src/test/resources/application-read-write-test.yml
+
+    - name: Build with Gradle
+      run: ./gradlew clean build
+      working-directory: backend/bang-ggood
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v3
+      with:
+        working-directory: backend/bang-ggood
+        name: bang-ggood-be-develop-jar
+        path: ./**/*.jar
+
+  deploy1:
+    needs: build
+    runs-on: bang-ggood-prod1
+    steps:
+      - name: change permission
+        run: sudo chown -R ubuntu:ubuntu /home/ubuntu/actions-runner/_work/2024-bang-ggood
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: bang-ggood-be-develop-jar
+
+      - name: Create unhealth_flag file
+        run: echo "unhealth" | sudo tee /etc/nginx/sites-available/unhealth_flag.txt > /dev/null
+
+      - name: Sleep for 30 seconds to be unhealthy
+        run: sleep 30
+
+      - name: Turn off the server 8080 if runs
+        run: sudo fuser -k -n tcp 8080 || true
+        
+      - name: Start server
+        run: sudo nohup java -jar -Dspring.profiles.active=prod -Duser.timezone=Asia/Seoul ./backend/bang-ggood/build/libs/*SNAPSHOT.jar > /home/ubuntu/actions-runner/server.log 2>&1 &
+
+      - name: Delete unhealth_flag file
+        run: sudo rm /etc/nginx/sites-available/unhealth_flag.txt
+
+      - name: Sleep for 30 seconds to be healthy
+        run: sleep 30
+
+      - name: Health check
+        run: |
+          for i in {1..2}; do
+            RESPONSE=$(curl -s -w "%{http_code}" -o /dev/null http://localhost:8080/health-check)
+            echo "Response: $RESPONSE"
+            if [ "$RESPONSE" -eq 200 ]; then
+              echo "Health check passed"
+              exit 0
+            fi
+            echo "Waiting for server to be healthy..."
+            sleep 10
+          done
+          echo "Health check failed"
+          exit 1
+
+  deploy2:
+    needs: deploy1
+    runs-on: bang-ggood-prod2
+    steps:
+      - name: change permission
+        run: sudo chown -R ubuntu:ubuntu /home/ubuntu/actions-runner/_work/2024-bang-ggood
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: bang-ggood-be-develop-jar
+
+      - name: Create unhealth_flag file
+        run: echo "unhealth" | sudo tee /etc/nginx/sites-available/unhealth_flag.txt > /dev/null
+
+      - name: Sleep for 30 seconds to be unhealthy
+        run: sleep 30
+
+      - name: Turn off the server 8080 if runs
+        run: sudo fuser -k -n tcp 8080 || true
+        
+      - name: Start server
+        run: sudo nohup java -jar -Dspring.profiles.active=prod -Duser.timezone=Asia/Seoul ./backend/bang-ggood/build/libs/*SNAPSHOT.jar > /home/ubuntu/actions-runner/server.log 2>&1 &
+
+      - name: Delete unhealth_flag file
+        run: sudo rm /etc/nginx/sites-available/unhealth_flag.txt
+
+      - name: Sleep for 30 seconds to be healthy
+        run: sleep 30

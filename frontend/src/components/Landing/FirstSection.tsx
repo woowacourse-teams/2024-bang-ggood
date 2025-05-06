@@ -122,7 +122,7 @@ const S = {
     bottom: 5rem;
 
     ${({ theme }) => fontStyle(theme.font.body[1].B)}
-    ${({ theme }) => theme.color.gray[400]}
+    color:${({ theme }) => theme.color.gray[400]}
   `,
   MoreBox: styled.div`
     width: 100%;

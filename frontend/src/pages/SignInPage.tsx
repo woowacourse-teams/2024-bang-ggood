@@ -136,7 +136,7 @@ const S = {
     cursor: pointer;
 
     :hover {
-      color: ${({ theme }) => theme.color.green[400]};
+      color: ${({ theme }) => theme.color.secondary[600]};
     }
   `,
 };

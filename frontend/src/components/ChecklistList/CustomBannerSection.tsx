@@ -1,10 +1,11 @@
+import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
+
 import { LampIcon, PencilIcon } from '@/assets/assets';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import CustomBanner from '@/components/ChecklistList/CustomBanner';
 import { ROUTE_PATH } from '@/constants/routePath';
 import theme from '@/styles/theme';
-import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
 
 const CustomBannerSection = () => {
   const navigate = useNavigate();

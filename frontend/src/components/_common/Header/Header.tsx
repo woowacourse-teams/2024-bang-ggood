@@ -14,12 +14,13 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   center?: ReactNode;
   right?: ReactNode;
   isTransparent?: boolean;
+  transparentRatio?: number;
 }
 
-const HeaderWrapper = ({ left, right, center, isTransparent = false, ...rest }: Props) => {
+const HeaderWrapper = ({ left, right, center, isTransparent = false, transparentRatio = 0.5, ...rest }: Props) => {
   return (
     <>
-      <S.Wrapper {...rest} isTransparent={isTransparent}>
+      <S.Wrapper {...rest} isTransparent={isTransparent} transparentRatio = {transparentRatio}>
         <S.FlexBox>
           <S.Left>{left}</S.Left>
           <S.Center>{center && <div>{center}</div>}</S.Center>
@@ -35,7 +36,7 @@ const S = {
   EmptyBox: styled.div`
     height: ${HEADER_SIZE}rem;
   `,
-  Wrapper: styled.header<{ isTransparent: boolean }>`
+  Wrapper: styled.header<{ isTransparent: boolean, transparentRatio: number }>`
     display: flex;
     position: fixed;
     z-index: ${({ theme }) => theme.zIndex.HEADER};
@@ -43,7 +44,7 @@ const S = {
     height: ${HEADER_SIZE}rem;
     padding: 1.1rem 1.6rem;
 
-    background-color: ${({ theme, isTransparent }) => (isTransparent ? 'rgba(255,255,255, 0.5)' : theme.palette.white)};
+    background-color: ${({ theme, isTransparent, transparentRatio }) => (isTransparent ? `rgba(255,255,255, ${transparentRatio})` : theme.color.mono.white)};
 
     max-width: 60rem;
     align-items: center;

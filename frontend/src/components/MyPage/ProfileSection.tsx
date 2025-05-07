@@ -5,7 +5,8 @@ import { BangBangIcon3D } from '@/assets/assets';
 import GuestProfile from '@/components/MyPage/GuestProfile';
 import UserProfile from '@/components/MyPage/UserProfile';
 import { HEADER_SIZE } from '@/constants/style';
-import { boxShadowSpread, flexCenter, flexColumn, title2 } from '@/styles/common';
+import { boxShadowSpread, flexCenter, flexColumn } from '@/styles/common';
+import { fontStyle } from '@/utils/fontStyle';
 
 const ProfileSection = () => {
   return (
@@ -35,13 +36,13 @@ const S = {
     border-radius: 0 0 1.6rem 1.6rem;
     gap: 1rem;
 
-    background-color: ${({ theme }) => theme.palette.yellow500};
+    background-color: ${({ theme }) => theme.color.primary[400]};
 
     ${boxShadowSpread}
   `,
   ProfileText: styled.h1`
-    ${title2}
-    color: ${({ theme }) => theme.palette.black};
+    ${({ theme }) => fontStyle(theme.font.title[3].B)}
+    color: ${({ theme }) => theme.color.mono.black};
   `,
   ProfileIcon: styled.div`
     width: 100%;

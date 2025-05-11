@@ -17,7 +17,7 @@ const ProfileSection = () => {
         </ErrorBoundary>
       </S.ProfileText>
       <S.ProfileIcon>
-        <BangBangIcon3D aria-hidden="true" width={200} />
+        <BangBangIcon3D aria-hidden="true"/>
       </S.ProfileIcon>
     </S.Profile>
   );
@@ -29,6 +29,7 @@ const S = {
   Profile: styled.div`
     ${flexColumn};
     width: 100%;
+    height: calc(340px + ${HEADER_SIZE}rem);
     box-sizing: border-box;
 
     padding: ${HEADER_SIZE + 1}rem 2rem 0;
@@ -47,5 +48,6 @@ const S = {
   ProfileIcon: styled.div`
     width: 100%;
     ${flexCenter}
+    flex: 1;
   `,
 };

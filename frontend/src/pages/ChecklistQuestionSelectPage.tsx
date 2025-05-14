@@ -1,3 +1,5 @@
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { Suspense, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +9,7 @@ import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallb
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
+import Text from '@/components/_common/Text/Text';
 import TipBox from '@/components/_common/TipBox/TipBox';
 import { ChecklistQuestionSelectTabs } from '@/components/ChecklistQuestionSelect/ChecklistQuestionSelectTabs';
 import QuestionListTemplate from '@/components/ChecklistQuestionSelect/QuestionListTemplate/QuestionListTemplate';
@@ -18,6 +21,7 @@ import useToast from '@/hooks/useToast';
 import { trackCustomChecklist } from '@/service/amplitude/trackEvent';
 import { useTrackPageView } from '@/service/amplitude/useTrackPageView';
 import useChecklistQuestionSelectStore from '@/store/useChecklistQuestionSelectStore';
+import { flexCenter, flexRow } from '@/styles/common';
 import theme from '@/styles/theme';
 
 const ChecklistQuestionSelectPage = () => {
@@ -85,9 +89,43 @@ const ChecklistQuestionSelectPage = () => {
             </Suspense>
           </ErrorBoundary>
         </Layout>
+        <CustomChecklistQuestionSection />
       </TabProvider>
     </>
   );
+};
+
+const CustomChecklistQuestionSection = () => {
+  return (
+    <S.CustomChecklistQuestion>
+      <Text typography={font => font.headline[2].B} customCss={css({ marginBottom: '2rem' })}>
+        내가 추가한 질문
+      </Text>
+      <S.Button>
+        <Text typography={font => font.body[1].B}>질문 추가</Text>
+      </S.Button>
+    </S.CustomChecklistQuestion>
+  );
+};
+
+const S = {
+  CustomChecklistQuestion: styled.section`
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1.6rem 1.6rem 3.4rem;
+
+    background-color: ${({ theme }) => theme.color.mono.white};
+  `,
+  Button: styled.button`
+    ${flexRow}
+    ${flexCenter} 
+    width: 100%;
+    padding: 1.2rem 0;
+    border: 0.1rem solid ${({ theme }) => theme.color.gray[200]};
+    border-radius: 0.8rem;
+  `,
 };
 
 export default ChecklistQuestionSelectPage;

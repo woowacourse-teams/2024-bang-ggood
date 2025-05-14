@@ -14,6 +14,7 @@ import MemoIcon from '@/assets/icons/common/memo.svg';
 import RetryIcon from '@/assets/icons/common/retry.svg';
 import SmallCheckIcon from '@/assets/icons/common/small-check.svg';
 import TipIcon from '@/assets/icons/common/tip.svg';
+import TrashIcon from '@/assets/icons/common/trash.svg';
 // error
 import Error404 from '@/assets/icons/error/404.svg';
 import Error500 from '@/assets/icons/error/500.svg';
@@ -104,5 +105,6 @@ export {
   ToastConfirmIcon,
   ToastErrorIcon,
   ToastInfoIcon,
+  TrashIcon,
   Utils,
 };

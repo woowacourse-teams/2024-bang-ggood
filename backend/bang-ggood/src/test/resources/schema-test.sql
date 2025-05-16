@@ -15,6 +15,7 @@ DROP TABLE IF EXISTS highlight CASCADE;
 DROP TABLE IF EXISTS question CASCADE;
 DROP TABLE IF EXISTS category CASCADE;
 DROP TABLE IF EXISTS password_reset_code CASCADE;
+DROP TABLE IF EXISTS checklist_image CASCADE;
 
 -- Create tables
 
@@ -216,4 +217,16 @@ CREATE TABLE checklist_share
 
     CONSTRAINT fk_checklist_share_checklist
         FOREIGN KEY (checklist_id) REFERENCES checklist (id)
+);
+
+CREATE TABLE checklist_image
+(
+    id           BIGINT PRIMARY KEY AUTO_INCREMENT,
+    checklist_id BIGINT        NOT NULL,
+    image_url    VARCHAR(1024) NOT NULL,
+    order_index  INT           NOT NULL,
+
+    CONSTRAINT fk_checklist_image_checklist FOREIGN KEY (checklist_id)
+        REFERENCES checklist (id)
+        ON DELETE CASCADE
 );

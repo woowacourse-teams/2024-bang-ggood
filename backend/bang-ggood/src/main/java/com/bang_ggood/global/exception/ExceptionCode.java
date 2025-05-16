@@ -113,7 +113,13 @@ public enum ExceptionCode {
             "지하철 역을 찾을 수 없습니다."),
 
     //Mail
-    MAIL_SEND_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.MAIL_SEND_ERROR, "메일 전송 중 오류가 발생했습니다.");
+    MAIL_SEND_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.MAIL_SEND_ERROR, "메일 전송 중 오류가 발생했습니다."),
+
+    // File
+    FILE_EMPTY(HttpStatus.BAD_REQUEST, ClientExceptionCode.FILE_ERROR, "파일이 비어있습니다."),
+    FILE_UPLOAD_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.FILE_ERROR, "파일 업로드 중 에러가 발생하였습니다."),
+    FILE_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.FILE_ERROR, "해당 파일이 존재하지 않습니다.");
+    ;
 
     private final HttpStatus httpStatus;
     private final ClientExceptionCode clientExceptionCode;

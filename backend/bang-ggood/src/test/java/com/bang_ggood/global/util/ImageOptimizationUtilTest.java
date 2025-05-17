@@ -1,8 +1,10 @@
 package com.bang_ggood.global.util;
 
+import com.bang_ggood.global.storage.BangggoodMultipart;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -27,8 +29,8 @@ class ImageOptimizationUtilTest {
         float quality = 0.7f;
 
         // when
-        InputStream optimized = ImageOptimizationUtil.optimize(image, targetWidth, targetHeight, quality);
-        BufferedImage resultImage = ImageIO.read(optimized);
+        MultipartFile optimized = ImageOptimizationUtil.optimize(image, targetWidth, targetHeight, quality);
+        BufferedImage resultImage = ImageIO.read(optimized.getInputStream());
 
         // then
         assertThat(resultImage.getWidth()).isLessThanOrEqualTo(targetWidth);
@@ -45,8 +47,8 @@ class ImageOptimizationUtilTest {
         BufferedImage original = ImageIO.read(image.getInputStream());
 
         // when
-        InputStream compressed = ImageOptimizationUtil.compress(image, quality);
-        BufferedImage resultImage = ImageIO.read(compressed);
+        MultipartFile compressed = ImageOptimizationUtil.compress(image, quality);
+        BufferedImage resultImage = ImageIO.read(compressed.getInputStream());
 
         // then
         assertThat(resultImage.getWidth()).isEqualTo(original.getWidth());

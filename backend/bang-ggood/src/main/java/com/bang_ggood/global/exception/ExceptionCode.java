@@ -60,6 +60,9 @@ public enum ExceptionCode {
     // ChecklistShare
     CHECKLIST_SHARE_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_SHARE_NOT_FOUND, "체크리스트 공유 정보가 존재하지 않습니다."),
 
+    // ChecklistImage
+    CHECKLIST_IMAGE_INVALID_SIZE(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR, "체크리스트 이미지는 최대 5개 가능합니다."),
+
     // FloorLevel
     FLOOR_LEVEL_INVALID(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR, "층 종류가 유효하지 않습니다."),
 
@@ -117,8 +120,12 @@ public enum ExceptionCode {
 
     // File
     FILE_EMPTY(HttpStatus.BAD_REQUEST, ClientExceptionCode.FILE_ERROR, "파일이 비어있습니다."),
-    FILE_UPLOAD_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.FILE_ERROR, "파일 업로드 중 에러가 발생하였습니다."),
-    FILE_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.FILE_ERROR, "해당 파일이 존재하지 않습니다.");
+    FILE_UPLOAD_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.FILE_ERROR, "파일 업로드 중 오류가 발생하였습니다."),
+    FILE_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.FILE_ERROR, "해당 파일이 존재하지 않습니다."),
+
+    // Image
+    IMAGE_OPTIMIZE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.IMAGE_ERROR, "이미지 최적화 중 오류가 발생하였습니다."),
+
     ;
 
     private final HttpStatus httpStatus;

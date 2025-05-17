@@ -26,6 +26,7 @@ public enum ClientExceptionCode {
     INVALID_PARAMETER,
     MAIL_SEND_ERROR,
     FILE_ERROR,
+    IMAGE_ERROR,
 
     // TODO: 임의 사용 지워질 코드
     AUTH_TOKEN_USER_MISMATCH,

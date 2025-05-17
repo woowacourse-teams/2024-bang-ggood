@@ -2,9 +2,11 @@ package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.ChecklistImageFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistShare;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
+import com.bang_ggood.checklist.dto.request.ChecklistRequestV2;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistShareResponse;
@@ -72,6 +74,34 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
 
         // when
         long checklistId = checklistManageService.createChecklist(user, checklistRequest);
+
+        //then
+        assertThat(checklistId).isGreaterThan(0);
+    }
+
+    @DisplayName("체크리스트 작성 V2 성공")
+    @Test
+    void createChecklistV2() {
+        //given
+        User user = userRepository.save(UserFixture.USER1());
+        ChecklistRequestV2 checklist = ChecklistFixture.CHECKLIST_V2_CREATE_REQUEST();
+
+        // when
+        long checklistId = checklistManageService.createChecklistV2(user, checklist);
+
+        //then
+        assertThat(checklistId).isGreaterThan(0);
+    }
+
+    @DisplayName("체크리스트 작성 V2 성공 : 위도, 경도가 null 인 경우")
+    @Test
+    void createChecklistV2_emptyLocation() {
+        //given
+        User user = userRepository.save(UserFixture.USER1());
+        ChecklistRequestV2 checklistRequest = ChecklistFixture.CHECKLIST_V2_CREATE_REQUEST_EMPTY_LOCATION();
+
+        // when
+        long checklistId = checklistManageService.createChecklistV2(user, checklistRequest);
 
         //then
         assertThat(checklistId).isGreaterThan(0);

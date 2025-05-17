@@ -9,22 +9,16 @@ import com.bang_ggood.checklist.repository.ChecklistImageRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
-import com.bang_ggood.global.storage.AwsS3Client;
-import com.bang_ggood.global.util.ImageOptimizationUtil;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,10 +27,6 @@ import java.util.stream.IntStream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
 
 class ChecklistImageServiceTest extends IntegrationTestSupport {
 
@@ -57,11 +47,6 @@ class ChecklistImageServiceTest extends IntegrationTestSupport {
     @Autowired
     private ChecklistImageRepository checklistImageRepository;
 
-    @MockBean
-    private AwsS3Client awsS3Client;
-
-    private MockedStatic<ImageOptimizationUtil> imageOptimizationUtilMock;
-
     private Checklist checklist;
 
     @BeforeEach
@@ -69,21 +54,6 @@ class ChecklistImageServiceTest extends IntegrationTestSupport {
         User user = userRepository.save(UserFixture.USER1());
         Room room = roomRepository.save(RoomFixture.ROOM_1());
         checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
-    }
-
-    @BeforeEach
-    void setUpMocks() {
-        when(awsS3Client.upload(any(), anyString(), anyString()))
-                .thenReturn("https://s3.fake-url.com/image.jpg");
-
-        imageOptimizationUtilMock = Mockito.mockStatic(ImageOptimizationUtil.class);
-        imageOptimizationUtilMock.when(() -> ImageOptimizationUtil.compress(any(), anyInt()))
-                .thenAnswer(invocation -> invocation.getArgument(0));
-    }
-
-    @AfterEach
-    void tearDownMocks() {
-        imageOptimizationUtilMock.close();
     }
 
     @DisplayName("체크리스트 이미지 저장 성공")

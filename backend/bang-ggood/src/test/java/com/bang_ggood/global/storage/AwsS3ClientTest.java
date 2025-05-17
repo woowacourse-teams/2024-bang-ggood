@@ -107,7 +107,7 @@ class AwsS3ClientTest {
         verify(s3Template, times(1)).deleteObject(bucketName, fullPath);
     }
 
-    @DisplayName("파일 삭제 실패: 파일이 존재하지 않ㅇ르 때")
+    @DisplayName("파일 삭제 실패: 파일이 존재하지 않을 때")
     @Test
     void delete_s3Exception_throwsException() {
         // given

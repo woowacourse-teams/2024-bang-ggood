@@ -225,6 +225,9 @@ CREATE TABLE checklist_image
     checklist_id BIGINT        NOT NULL,
     image_url    VARCHAR(1024) NOT NULL,
     order_index  INT           NOT NULL,
+    created_at   TIMESTAMP(6),
+    modified_at  TIMESTAMP(6),
+    deleted      BOOLEAN,
 
     CONSTRAINT fk_checklist_image_checklist FOREIGN KEY (checklist_id)
         REFERENCES checklist (id)

@@ -14,7 +14,6 @@ import java.util.UUID;
 public class ChecklistShareService {
 
     private final ChecklistShareRepository checklistShareRepository;
-    private final ChecklistRepository checklistRepository;
 
     @Transactional
     public ChecklistShare createChecklistShare(Checklist checklist) {

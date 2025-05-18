@@ -4,6 +4,7 @@ import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.auth.config.UserPrincipal;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
+import com.bang_ggood.checklist.dto.response.ChecklistShareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.service.ChecklistManageService;
@@ -35,6 +36,13 @@ public class ChecklistController {
         return ResponseEntity.created(URI.create("/checklist/" + checklistId)).build();
     }
 
+    @PostMapping("/v1/checklists/{id}/share")
+    public ResponseEntity<ChecklistShareResponse> createChecklistShareLink(@AuthRequiredPrincipal User user,
+                                                                           @PathVariable("id") Long checklistId) {
+        ChecklistShareResponse response = checklistManageService.createChecklistShare(user, checklistId);
+        return ResponseEntity.created(URI.create("/v1/checklists/share/" + response.token())).body(response);
+    }
+
     @GetMapping("v1/checklists/{id}")
     public ResponseEntity<SelectedChecklistResponse> readChecklistByIdV1(@UserPrincipal User user,
                                                                          @PathVariable("id") Long checklistId) {
@@ -55,6 +63,11 @@ public class ChecklistController {
     public ResponseEntity<ChecklistCompareResponses> readChecklistsCompare(@AuthRequiredPrincipal User user,
                                                                            @RequestParam("id") List<Long> checklistIds) {
         return ResponseEntity.ok(checklistManageService.compareChecklists(user, checklistIds));
+    }
+
+    @GetMapping("/v1/checklists/share/{token}")
+    public ResponseEntity<SelectedChecklistResponse> readSharedChecklist(@PathVariable("token") String token) {
+        return ResponseEntity.ok(checklistManageService.readSharedChecklist(token));
     }
 
     @PutMapping("/v1/checklists/{id}")

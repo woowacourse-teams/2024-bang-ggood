@@ -22,6 +22,7 @@ public enum ExceptionCode {
     QUESTION_INVALID(HttpStatus.BAD_REQUEST, ClientExceptionCode.QUESTION_ERROR, "잘못된 질문 ID입니다."),
     QUESTION_DUPLICATED(HttpStatus.BAD_REQUEST, ClientExceptionCode.QUESTION_ERROR, "중복된 질문이 존재합니다."),
     QUESTION_DIFFERENT(HttpStatus.BAD_REQUEST, ClientExceptionCode.QUESTION_ERROR, "수정할 질문 목록이 기존의 질문 목록과 동일하지 않습니다."),
+    QUESTION_NOT_OWNED_BY_USER(HttpStatus.BAD_REQUEST, ClientExceptionCode.QUESTION_ERROR, "유저의 질문이 아닙니다."),
 
     // User
     USER_NOT_FOUND(HttpStatus.UNAUTHORIZED, ClientExceptionCode.USER_NOT_FOUND, "유저가 존재하지 않습니다."),
@@ -54,6 +55,10 @@ public enum ExceptionCode {
 
     // CustomChecklist
     CUSTOM_CHECKLIST_QUESTION_EMPTY(HttpStatus.BAD_REQUEST, ClientExceptionCode.CUSTOM_ERROR, "커스텀 질문 개수가 유효하지 않습니다."),
+    CUSTOM_CHECKLIST_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.CUSTOM_ERROR, "커스텀 질문이 존재하지 않습니다."),
+
+    // ChecklistShare
+    CHECKLIST_SHARE_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_SHARE_NOT_FOUND, "체크리스트 공유 정보가 존재하지 않습니다."),
 
     // FloorLevel
     FLOOR_LEVEL_INVALID(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR, "층 종류가 유효하지 않습니다."),

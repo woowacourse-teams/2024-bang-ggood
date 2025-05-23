@@ -29,7 +29,7 @@ const GuestFeature = () => {
 
         <S.Section>
           <S.LabelContainer>방끗 시작하기!</S.LabelContainer>
-          <S.BlackButton onClick={() => navigate(ROUTE_PATH.root)} isCenter isBlack tabIndex={1}>
+          <S.BlackButton onClick={() => navigate(ROUTE_PATH.root)} isCenter tabIndex={1}>
             로그인/회원가입 바로가기
             <ArrowRightIcon aria-hidden="true" style={{ filter: 'invert(1)' }} />
           </S.BlackButton>
@@ -49,16 +49,16 @@ const S = {
     padding: 2.8rem 1.6rem 3.2rem 1.6rem;
   `,
   Section: styled.section`
-    ${flexColumn}
+    ${flexColumn};
     gap: 0.8rem;
   `,
   LabelContainer: styled.div`
-    ${flexColumn}
+    ${flexColumn};
     gap: .5rem;
     ${({ theme }) => fontStyle(theme.font.body[1].R)}
   `,
   TopLabelContainer: styled.div`
-    ${flexColumn}
+    ${flexColumn};
     gap: .5rem;
     padding: 1.2rem 1.6rem;
     ${({ theme }) => fontStyle(theme.font.body[1].B)}
@@ -66,7 +66,7 @@ const S = {
   `,
   BlackButton: styled.button<{ isCenter?: boolean, isNoBorder?:boolean }>`
       width: 100%;
-      ${flexRow}
+      ${flexRow};
       padding: 1.2rem 1.6rem;
       box-sizing: border-box;
       gap: 0.8rem;
@@ -84,7 +84,7 @@ const S = {
   `,
   WhiteButton: styled.button<{ isCenter?: boolean, isNoBorder?:boolean }>`
       width: 100%;
-      ${flexRow}
+      ${flexRow};
       padding: 1.2rem 1.6rem;
       box-sizing: border-box;
       gap: 0.8rem;

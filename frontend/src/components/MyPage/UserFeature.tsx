@@ -44,31 +44,31 @@ const UserFeature = () => {
         {user?.userType !== 'ADMIN' && (
           <S.Section>
             <S.LabelContainer>방끗이 도움되었나요? 한마디 남겨주세요!</S.LabelContainer>
-            <S.Button tabIndex={1} isCenter onClick={handleMoveVoc}>
+            <S.WhiteButton tabIndex={1} isCenter onClick={handleMoveVoc}>
               방끗이 기다려요, 의견 남기기!
               <ArrowRightIcon aria-hidden="true" />
-            </S.Button>
+            </S.WhiteButton>
           </S.Section>
         )}
 
         {user?.userType === 'ADMIN' && (
           <S.Section>
-            <S.Button tabIndex={1} onClick={() => navigate(ROUTE_PATH.admin)}>
+            <S.WhiteButton tabIndex={1} onClick={() => navigate(ROUTE_PATH.admin)} isCenter>
               어드민 페이지 바로가기
               <ArrowRightIcon aria-hidden="true" />
-            </S.Button>
+            </S.WhiteButton>
           </S.Section>
         )}
 
         <S.Section>
           <S.LabelContainer>방끗 잠시 안녕!</S.LabelContainer>
-          <S.Button onClick={openLogoutModal} isCenter tabIndex={1} isBlack>
+          <S.BlackButton onClick={openLogoutModal} isCenter tabIndex={1}>
             로그아웃하기
             <ArrowRightIcon aria-hidden="true" style={{ filter: 'invert(1)' }} />
-          </S.Button>
-          <S.TextButton onClick={openDeleteModal} tabIndex={1}>
-            방끗 탈퇴하기
-          </S.TextButton>
+          </S.BlackButton>
+          <S.WhiteButton onClick={openDeleteModal} isCenter tabIndex={1} isNoBorder>
+            회원 탈퇴하기
+          </S.WhiteButton>
         </S.Section>
       </S.Container>
 
@@ -88,16 +88,16 @@ const S = {
     padding: 2.8rem 1.6rem 3.2rem 1.6rem;
   `,
   Section: styled.section`
-    ${flexColumn}
+    ${flexColumn};
     gap: 0.8rem;
   `,
   LabelContainer: styled.div`
-    ${flexColumn}
+    ${flexColumn};
     gap: .5rem;
-    ${({ theme }) => fontStyle(theme.font.body[1].B)}
+    ${({ theme }) => fontStyle(theme.font.body[1].R)}
   `,
   TopLabelContainer: styled.div`
-    ${flexColumn}
+    ${flexColumn};
     gap: .5rem;
     padding: 1.2rem 1.6rem;
     ${({ theme }) => fontStyle(theme.font.body[1].B)}
@@ -106,23 +106,40 @@ const S = {
   Count: styled.span`
     color: ${({ theme }) => theme.color.secondary[500]};
   `,
-  Button: styled.button<{ isCenter?: boolean, isBlack?:boolean }>`
+  BlackButton: styled.button<{ isCenter?: boolean, isNoBorder?:boolean }>`
       width: 100%;
-      ${flexRow}
+      ${flexRow};
       padding: 1.2rem 1.6rem;
       box-sizing: border-box;
       gap: 0.8rem;
       align-items: center;
-      background-color: ${({ theme, isBlack }) => (isBlack ? theme.color.mono.black : theme.color.mono.white)};
+      background-color: ${({ theme }) => theme.color.mono.black};
       justify-content: ${({ isCenter }) => (isCenter ? 'center' : 'space-between')};
       border-radius: 0.8rem;
-      border: 1px solid ${({ theme }) => theme.color.gray[200]};
+      border: ${({ isNoBorder, theme }) => (isNoBorder ? '' : '1px solid ' + theme.color.gray[200])};
       ${({ theme }) => fontStyle(theme.font.body[1].B)}
-      color: ${({ theme, isBlack }) => (isBlack ? theme.color.mono.white : theme.color.mono.black)};
-      
+      color: ${({ theme }) => theme.color.mono.white};
+
+      &:hover, &:active {
+          color: ${({ theme }) => theme.color.gray[500]};
+      }
+  `,
+  WhiteButton: styled.button<{ isCenter?: boolean, isNoBorder?:boolean }>`
+      width: 100%;
+      ${flexRow};
+      padding: 1.2rem 1.6rem;
+      box-sizing: border-box;
+      gap: 0.8rem;
+      align-items: center;
+      background-color: ${({ theme }) => theme.color.mono.white};
+      justify-content: ${({ isCenter }) => (isCenter ? 'center' : 'space-between')};
+      border-radius: 0.8rem;
+      border: ${({ isNoBorder, theme }) => (isNoBorder ? '' : '1px solid ' + theme.color.gray[200])};
+      ${({ theme }) => fontStyle(theme.font.body[1].B)}
+      color: ${({ theme }) => theme.color.mono.black};
+
       &:hover, &:active {
           background-color: ${({ theme }) => theme.color.gray[100]};
-          font-weight: ${({ theme }) => theme.text.weight.bold};
       }
   `,
   TextButton: styled.button`

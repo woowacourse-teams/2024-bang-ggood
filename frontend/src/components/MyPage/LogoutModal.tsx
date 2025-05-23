@@ -3,7 +3,8 @@ import styled from '@emotion/styled';
 import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
 import useLogoutQuery from '@/hooks/query/useLogoutQuery';
-import { flexColumn, flexRow, flexSpaceBetween } from '@/styles/common';
+import { flexCenter, flexRow, flexSpaceBetween } from '@/styles/common';
+import { fontStyle } from '@/utils/fontStyle';
 
 interface Props {
   isOpen: boolean;
@@ -19,11 +20,15 @@ const LogoutModal = ({ isOpen, onClose }: Props) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <Modal.header>로그아웃하기</Modal.header>
-      <Modal.body>
+      <Modal.header>
+        로그아웃하기
         <S.Contents>
           <span>정말 로그아웃 하시겠습니까?</span>
         </S.Contents>
+      </Modal.header>
+      <Modal.body>
+        <S.Spacer>
+        </S.Spacer>
       </Modal.body>
       <Modal.footer>
         <S.ButtonContainer>
@@ -39,8 +44,13 @@ export default LogoutModal;
 
 const S = {
   Contents: styled.div`
-    ${flexColumn}
+    margin-top: 1rem;
+    ${flexCenter};
     gap: .5rem;
+    ${({ theme }) => fontStyle(theme.font.label[1].M)};
+  `,
+  Spacer: styled.div`
+    height: 4.2rem;
   `,
   ButtonContainer: styled.div`
     ${flexRow}

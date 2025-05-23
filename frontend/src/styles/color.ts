@@ -46,7 +46,7 @@ const color = {
 
   /* Black/White */
   mono: {
-    black: '#363636',
+    black: '#171719',
     white: '#FFFFFF',
   },
 

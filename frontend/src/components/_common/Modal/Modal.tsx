@@ -89,7 +89,7 @@ const S = {
     isOpen: boolean;
   }>`
     ${flexColumn}
-    align-items: flex-start;
+    align-items: center;
 
     position: fixed;
     ${({ $position, $size }) => positionStyles[$position]($size)}
@@ -98,7 +98,7 @@ const S = {
     overflow: scroll;
     position: relative;
     padding: 1.6rem;
-
+    width: 100%;
     background-color: ${({ backgroundColor }) => backgroundColor};
 
     color: ${({ theme }) => theme.palette.black};

@@ -11,6 +11,7 @@ import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.user.domain.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import java.net.URI;
 import java.util.List;
 
@@ -35,6 +38,17 @@ public class ChecklistController {
         long checklistId = checklistManageService.createChecklist(user, checklistRequest);
         return ResponseEntity.created(URI.create("/checklist/" + checklistId)).build();
     }
+
+    @PostMapping(value = "/v2/checklists", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> createChecklistV2(
+            @AuthRequiredPrincipal User user,
+            @RequestPart @Valid ChecklistRequest checklistRequest,
+            @RequestPart List<MultipartFile> images
+    ) {
+        long checklistId = checklistManageService.createChecklistV2(user, checklistRequest, images);
+        return ResponseEntity.created(URI.create("/checklist/" + checklistId)).build();
+    }
+
 
     @PostMapping("/v1/checklists/{id}/share")
     public ResponseEntity<ChecklistShareResponse> createChecklistShareLink(@AuthRequiredPrincipal User user,

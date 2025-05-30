@@ -2,21 +2,34 @@ package com.bang_ggood.checklist.controller;
 
 import com.bang_ggood.AcceptanceTest;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.ChecklistImageFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Objects;
 
 import static org.hamcrest.Matchers.containsString;
 
 class ChecklistE2ETest extends AcceptanceTest {
+
+    private static final String TEST_IMAGE_PATH = "/test-image.png";
 
     @Autowired
     private ChecklistManageService checklistManageService;
@@ -24,6 +37,8 @@ class ChecklistE2ETest extends AcceptanceTest {
     private ChecklistRepository checklistRepository;
     @Autowired
     private RoomRepository roomRepository;
+
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @DisplayName("체크리스트 작성 v1 성공")
     @Test
@@ -58,6 +73,60 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .headers(this.headers)
                 .body(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_QUESTION_ID())
                 .when().post("/v1/checklists")
+                .then().log().all()
+                .statusCode(400)
+                .body("message", containsString("질문 아이디가 존재하지 않습니다."));
+    }
+
+    @DisplayName("체크리스트 v2 작성 성공")
+    @Test
+    void createChecklistV2() throws IOException {
+        // given
+        String jsonBody = objectMapper.writeValueAsString(ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+        File file = new File(Objects.requireNonNull(getClass().getResource(TEST_IMAGE_PATH)).getFile());
+        byte[] jsonBytes = jsonBody.getBytes(StandardCharsets.UTF_8);
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.MULTIPART)
+                .headers(this.headers)
+                .multiPart("checklistRequest", "checklistRequest.json", jsonBytes, "application/json")
+                .multiPart("images", file)
+                .when().post("/v2/checklists")
+                .then().log().all()
+                .statusCode(201);
+    }
+
+    @DisplayName("체크리스트 v2 작성 실패: 방 이름을 넣지 않은 경우")
+    @Test
+    void createChecklistV2_noRoomName_exception() throws JsonProcessingException {
+        String jsonBody = objectMapper.writeValueAsString(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_ROOM_NAME());
+        File file = new File(Objects.requireNonNull(getClass().getResource(TEST_IMAGE_PATH)).getFile());
+        byte[] jsonBytes = jsonBody.getBytes(StandardCharsets.UTF_8);
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.MULTIPART)
+                .headers(this.headers)
+                .multiPart("checklistRequest", "checklistRequest.json", jsonBytes, "application/json")
+                .multiPart("images", file)
+                .when().post("/v2/checklists")
+                .then().log().all()
+                .statusCode(400)
+                .body("message", containsString("방 이름이 존재하지 않습니다."));
+    }
+
+    @DisplayName("체크리스트 v2 작성 실패: 질문 ID를 넣지 않은 경우")
+    @Test
+    void createChecklistV2_noQuestionId_exception() throws JsonProcessingException {
+        String jsonBody = objectMapper.writeValueAsString(ChecklistFixture.CHECKLIST_CREATE_REQUEST_NO_QUESTION_ID());
+        File file = new File(Objects.requireNonNull(getClass().getResource(TEST_IMAGE_PATH)).getFile());
+        byte[] jsonBytes = jsonBody.getBytes(StandardCharsets.UTF_8);
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.MULTIPART)
+                .headers(this.headers)
+                .multiPart("checklistRequest", "checklistRequest.json", jsonBytes, "application/json")
+                .multiPart("images", file)
+                .when().post("/v2/checklists")
                 .then().log().all()
                 .statusCode(400)
                 .body("message", containsString("질문 아이디가 존재하지 않습니다."));

@@ -84,10 +84,10 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
     void createChecklistV2() {
         //given
         User user = userRepository.save(UserFixture.USER1());
-        ChecklistRequestV2 checklist = ChecklistFixture.CHECKLIST_V2_CREATE_REQUEST();
+        ChecklistRequest checklist = ChecklistFixture.CHECKLIST_CREATE_REQUEST();
 
         // when
-        long checklistId = checklistManageService.createChecklistV2(user, checklist);
+        long checklistId = checklistManageService.createChecklistV2(user, checklist, ChecklistImageFixture.IMAGES());
 
         //then
         assertThat(checklistId).isGreaterThan(0);
@@ -98,10 +98,10 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
     void createChecklistV2_emptyLocation() {
         //given
         User user = userRepository.save(UserFixture.USER1());
-        ChecklistRequestV2 checklistRequest = ChecklistFixture.CHECKLIST_V2_CREATE_REQUEST_EMPTY_LOCATION();
+        ChecklistRequest checklistRequest = ChecklistFixture.CHECKLIST_CREATE_REQUEST_EMPTY_LOCATION();
 
         // when
-        long checklistId = checklistManageService.createChecklistV2(user, checklistRequest);
+        long checklistId = checklistManageService.createChecklistV2(user, checklistRequest, ChecklistImageFixture.IMAGES());
 
         //then
         assertThat(checklistId).isGreaterThan(0);

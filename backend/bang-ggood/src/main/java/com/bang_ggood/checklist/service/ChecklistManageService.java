@@ -74,14 +74,14 @@ public class ChecklistManageService {
     }
 
     @Transactional
-    public Long createChecklistV2(User user, ChecklistRequestV2 checklistRequest) {
+    public Long createChecklistV2(User user, ChecklistRequest checklistRequest, List<MultipartFile> images) {
         Room room = roomService.createRoom(checklistRequest.toRoomEntity());
         Checklist checklist = checklistService.createChecklist(checklistRequest.toChecklistEntity(room, user));
-        createChecklistOptions(checklistRequest.getOptions(), checklist);
-        createChecklistQuestions(checklistRequest.getQuestions(), checklist);
-        createChecklistMaintenances(checklistRequest.getRoom(), checklist);
-        createChecklistStation(checklistRequest.getRoom(), checklist);
-        createChecklistImage(checklistRequest.getImages(), checklist);
+        createChecklistOptions(checklistRequest.options(), checklist);
+        createChecklistQuestions(checklistRequest.questions(), checklist);
+        createChecklistMaintenances(checklistRequest.room(), checklist);
+        createChecklistStation(checklistRequest.room(), checklist);
+        createChecklistImage(images, checklist);
         return checklist.getId();
     }
 

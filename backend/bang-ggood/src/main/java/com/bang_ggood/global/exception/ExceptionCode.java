@@ -61,7 +61,7 @@ public enum ExceptionCode {
     CHECKLIST_SHARE_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_SHARE_NOT_FOUND, "체크리스트 공유 정보가 존재하지 않습니다."),
 
     // ChecklistImage
-    CHECKLIST_IMAGE_INVALID_SIZE(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR, "체크리스트 이미지는 최대 5개 가능합니다."),
+    CHECKLIST_IMAGE_INVALID_COUNT(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR, "체크리스트 이미지는 최대 5개 가능합니다."),
 
     // FloorLevel
     FLOOR_LEVEL_INVALID(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR, "층 종류가 유효하지 않습니다."),

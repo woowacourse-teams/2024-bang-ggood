@@ -86,6 +86,6 @@ class ChecklistImageServiceTest extends IntegrationTestSupport {
         // when & then
         assertThatThrownBy(() -> checklistImageService.createChecklistImages(checklist, images))
                 .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.CHECKLIST_IMAGE_INVALID_SIZE.getMessage());
+                .hasMessage(ExceptionCode.CHECKLIST_IMAGE_INVALID_COUNT.getMessage());
     }
 }

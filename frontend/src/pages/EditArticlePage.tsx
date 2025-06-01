@@ -18,21 +18,19 @@ type RouteParams = {
 
 const EditArticlePage = () => {
   const { articleId } = useParams() as RouteParams;
-  const { data: article, isSuccess } = useGetArticleQuery(articleId);
+  const { article } = useGetArticleQuery(articleId);
 
   const { form, onChange: onFormChange, setForm } = useArticleForm();
   const { mutate: editArticle } = usePutArticleQuery();
 
   useEffect(() => {
-    if (isSuccess) {
-      Object.keys(article).forEach(key => {
-        const value = article[key as keyof ArticlePostForm];
-        if (value !== null) {
-          setForm(key as keyof ArticlePostForm, value as string);
-        }
-      });
-    }
-  }, [article, isSuccess]);
+    Object.keys(article).forEach(key => {
+      const value = article[key as keyof ArticlePostForm];
+      if (value !== null) {
+        setForm(key as keyof ArticlePostForm, value as string);
+      }
+    });
+  }, [article]);
 
   const handleSubmit = () => {
     editArticle({

@@ -3,14 +3,18 @@ import styled from '@emotion/styled';
 import ArticleCard from '@/components/ArticleList/ArticleCard';
 import useGetArticleListQuery from '@/hooks/query/useGetArticleListQuery';
 import { flexColumn } from '@/styles/common';
-import { Article } from '@/types/article';
+import { Article, ArticleType } from '@/types/article';
 
-const ArticleListContainer = () => {
+const ArticleListContainer = ({ selectKeyword }: { selectKeyword: ArticleType | '전체' }) => {
   const { articles } = useGetArticleListQuery();
+  const selectedArticles = articles.filter(article => {
+    if (selectKeyword === '전체') return true;
+    return article.keyword === selectKeyword;
+  });
 
   return (
     <S.ListContainer>
-      {articles.map((article: Article) => (
+      {selectedArticles.map((article: Article) => (
         <ArticleCard key={`article-${article.articleId}`} article={article} />
       ))}
     </S.ListContainer>

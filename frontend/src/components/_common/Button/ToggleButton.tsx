@@ -1,4 +1,3 @@
-// ToggleButton.tsx
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ComponentProps } from 'react';
@@ -51,16 +50,18 @@ const S = {
 
     background-color: ${({ selected }) => (selected ? theme.color.mono.black : theme.color.mono.white)};
 
-    color: ${({ selected }) => (selected ? theme.color.mono.white : theme.color.gray[600])};
+    color: ${({ selected }) => (selected ? theme.color.mono.white : theme.color.gray[500])};
     cursor: pointer;
 
     ${({ size }) =>
       size === 'small'
         ? css`
+            min-width: 10rem;
             height: 3.6rem;
             padding: 0 1.2rem;
           `
         : css`
+            min-width: 14rem;
             height: 4.2rem;
             padding: 0 1.6rem;
           `};

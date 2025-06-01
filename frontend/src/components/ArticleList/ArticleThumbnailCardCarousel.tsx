@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { useRef, useState } from 'react';
 
 export const ArticleThumbnailCardCarousel = () => {
-  const { articles = [] } = useGetArticleListQuery();
+  const { articles } = useGetArticleListQuery();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 

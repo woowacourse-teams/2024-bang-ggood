@@ -6,8 +6,10 @@ import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
 import ArticleListContainer from '@/components/ArticleList/ArticleListContainer';
 import ArticleListTitle from '@/components/ArticleList/ArticleListTitle';
+import SkArticleList from '@/components/skeleton/Article/SkArticleList';
 import { useTrackPageView } from '@/service/amplitude/useTrackPageView';
 import theme from '@/styles/theme';
+import { Suspense } from 'react';
 
 const ArticleListPage = () => {
   useTrackPageView({ eventName: '[View] 아티클 리스트 페이지' });
@@ -15,12 +17,17 @@ const ArticleListPage = () => {
   return (
     <>
       <Header center={<Header.Text>아티클</Header.Text>} />
-      <Layout bgColor={theme.palette.background} withHeader withFooter>
+      <Layout bgColor={theme.color.gray[50]} withHeader withFooter>
         <ErrorBoundary fallback={<TitleErrorFallback title="방 구하기 전 꼭 필요한 이야기" />}>
-          <ArticleListTitle />
+          <Suspense fallback={<TitleErrorFallback title="방 구하기 전 꼭 필요한 이야기" />}>
+            <ArticleListTitle />
+          </Suspense>
         </ErrorBoundary>
+
         <ErrorBoundary FallbackComponent={ListErrorFallback}>
-          <ArticleListContainer />
+          <Suspense fallback={<SkArticleList />}>
+            <ArticleListContainer />
+          </Suspense>
         </ErrorBoundary>
       </Layout>
     </>

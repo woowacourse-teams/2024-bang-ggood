@@ -294,6 +294,20 @@ public class ChecklistManageService {
         updateChecklistStations(checklistRequest.room(), checklist);
     }
 
+    @Transactional
+    public void updateChecklistByIdV2(User user, long checklistId, ChecklistRequest checklistRequest, List<MultipartFile> updateImages) {
+        Checklist checklist = checklistService.readChecklist(user, checklistId);
+
+        roomService.updateRoom(checklist.getRoom(), checklistRequest.toRoomEntity());
+        checklistService.updateChecklist(checklist, checklistRequest.toChecklistEntity(checklist.getRoom(), user));
+
+        updateChecklistOptions(checklistRequest, checklist);
+        updateChecklistQuestions(checklistRequest, checklist);
+        updateChecklistMaintenances(checklistRequest, checklist);
+        updateChecklistStations(checklistRequest.room(), checklist);
+        updateChecklistImage(updateImages, checklist);
+    }
+
     private void updateChecklistOptions(ChecklistRequest checklistRequest, Checklist checklist) {
         List<ChecklistOption> checklistOptions = checklistRequest.options().stream()
                 .map(option -> new ChecklistOption(checklist, option))
@@ -326,5 +340,9 @@ public class ChecklistManageService {
         Double latitude = roomRequest.latitude();
         Double longitude = roomRequest.longitude();
         checklistStationService.updateChecklistStation(checklist, latitude, longitude);
+    }
+
+    private void updateChecklistImage(List<MultipartFile> images, Checklist checklist) {
+        checklistImageService.updateChecklistImage(checklist, images);
     }
 }

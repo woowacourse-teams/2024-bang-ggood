@@ -328,4 +328,23 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
                 () -> assertThat(checklist.getMemo()).isEqualTo(updateChecklistRequest.room().memo())
         );
     }
+
+    @DisplayName("체크리스트 수정 성공 V2")
+    @Test
+    void updateChecklistByIdV2() {
+        //given
+        User user = userRepository.save(UserFixture.USER1());
+        long checklistId = checklistManageService.createChecklist(user, ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+        ChecklistRequest updateChecklistRequest = ChecklistFixture.CHECKLIST_UPDATE_REQUEST();
+
+        //when
+        checklistManageService.updateChecklistByIdV2(user, checklistId, updateChecklistRequest, ChecklistImageFixture.IMAGES());
+
+        //then
+        Checklist checklist = checklistRepository.getById(checklistId);
+        assertAll(
+                () -> assertThat(checklist.getRoom().getStructure()).isEqualTo(Structure.OPEN_ONE_ROOM),
+                () -> assertThat(checklist.getMemo()).isEqualTo(updateChecklistRequest.room().memo())
+        );
+    }
 }

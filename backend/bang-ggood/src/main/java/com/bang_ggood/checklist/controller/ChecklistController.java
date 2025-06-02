@@ -49,7 +49,6 @@ public class ChecklistController {
         return ResponseEntity.created(URI.create("/checklist/" + checklistId)).build();
     }
 
-
     @PostMapping("/v1/checklists/{id}/share")
     public ResponseEntity<ChecklistShareResponse> createChecklistShareLink(@AuthRequiredPrincipal User user,
                                                                            @PathVariable("id") Long checklistId) {
@@ -90,6 +89,16 @@ public class ChecklistController {
             @PathVariable("id") long id,
             @Valid @RequestBody ChecklistRequest checklistRequest) {
         checklistManageService.updateChecklistById(user, id, checklistRequest);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(value = "/v2/checklists/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> updateChecklistByIdV2(
+            @AuthRequiredPrincipal User user,
+            @PathVariable("id") long id,
+            @RequestPart @Valid ChecklistRequest checklistRequest,
+            @RequestPart List<MultipartFile> updateImages) {
+        checklistManageService.updateChecklistByIdV2(user, id, checklistRequest, updateImages);
         return ResponseEntity.noContent().build();
     }
 

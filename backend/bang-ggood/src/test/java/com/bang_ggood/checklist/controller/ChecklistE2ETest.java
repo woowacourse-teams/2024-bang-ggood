@@ -224,21 +224,6 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .statusCode(204);
     }
 
-    @DisplayName("체크리스트 수정 v1 성공")
-    @Test
-    void updateChecklistV1() {
-        long checklistId = checklistManageService.createChecklist(this.getAuthenticatedUser(),
-                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
-
-        RestAssured.given().log().all()
-                .contentType(ContentType.JSON)
-                .headers(this.headers)
-                .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST())
-                .when().put("/v1/checklists/" + checklistId)
-                .then().log().all()
-                .statusCode(204);
-    }
-
     @DisplayName("체크리스트 수정 실패: 방 이름을 넣지 않은 경우")
     @Test
     void updateChecklist_noRoomName_exception() {
@@ -266,6 +251,65 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .headers(this.headers)
                 .body(ChecklistFixture.CHECKLIST_UPDATE_REQUEST_NO_QUESTION_ID())
                 .when().put("/v1/checklists/" + checklistId)
+                .then().log().all()
+                .statusCode(400)
+                .body("message", containsString("질문 아이디가 존재하지 않습니다."));
+    }
+
+    @DisplayName("체크리스트 수정 성공 V2")
+    @Test
+    void updateChecklistV2() throws IOException {
+        long checklistId = checklistManageService.createChecklist(this.getAuthenticatedUser(),
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+        String jsonBody = objectMapper.writeValueAsString(ChecklistFixture.CHECKLIST_UPDATE_REQUEST());
+        File file = new File(Objects.requireNonNull(getClass().getResource(TEST_IMAGE_PATH)).getFile());
+        byte[] jsonBytes = jsonBody.getBytes(StandardCharsets.UTF_8);
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.MULTIPART)
+                .headers(this.headers)
+                .multiPart("checklistRequest", "checklistRequest.json", jsonBytes, "application/json")
+                .multiPart("updateImages", file)
+                .when().put("/v2/checklists/" + checklistId)
+                .then().log().all()
+                .statusCode(204);
+    }
+
+    @DisplayName("체크리스트 수정 실패: 방 이름을 넣지 않은 경우")
+    @Test
+    void updateChecklistV2_noRoomName_exception() throws IOException {
+        long checklistId = checklistManageService.createChecklist(this.getAuthenticatedUser(),
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+        String jsonBody = objectMapper.writeValueAsString(ChecklistFixture.CHECKLIST_UPDATE_REQUEST_NO_ROOM_NAME());
+        File file = new File(Objects.requireNonNull(getClass().getResource(TEST_IMAGE_PATH)).getFile());
+        byte[] jsonBytes = jsonBody.getBytes(StandardCharsets.UTF_8);
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.MULTIPART)
+                .headers(this.headers)
+                .multiPart("checklistRequest", "checklistRequest.json", jsonBytes, "application/json")
+                .multiPart("updateImages", file)
+                .when().put("/v2/checklists/" + checklistId)
+                .then().log().all()
+                .statusCode(400)
+                .body("message", containsString("방 이름이 존재하지 않습니다."));
+    }
+
+    @DisplayName("체크리스트 수정 실패: 질문 ID를 넣지 않은 경우")
+    @Test
+    void updateChecklistV2_noQuestionId_exception() throws IOException {
+        long checklistId = checklistManageService.createChecklist(this.getAuthenticatedUser(),
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+        String jsonBody = objectMapper.writeValueAsString(ChecklistFixture.CHECKLIST_UPDATE_REQUEST_NO_QUESTION_ID());
+        File file = new File(Objects.requireNonNull(getClass().getResource(TEST_IMAGE_PATH)).getFile());
+        byte[] jsonBytes = jsonBody.getBytes(StandardCharsets.UTF_8);
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.MULTIPART)
+                .headers(this.headers)
+                .multiPart("checklistRequest", "checklistRequest.json", jsonBytes, "application/json")
+                .multiPart("updateImages", file)
+                .when().put("/v2/checklists/" + checklistId)
                 .then().log().all()
                 .statusCode(400)
                 .body("message", containsString("질문 아이디가 존재하지 않습니다."));

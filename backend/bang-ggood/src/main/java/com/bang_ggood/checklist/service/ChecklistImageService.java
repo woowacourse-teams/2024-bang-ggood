@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 public class ChecklistImageService {
 
-    private static final int MAX_CHECKLIST_IMAGE_SIZE = 5;
+    private static final int MAX_CHECKLIST_IMAGE_COUNT = 5;
     private static final float IMAGE_QUALITY = 0.8F;
 
     private final ChecklistImageRepository checklistImageRepository;
@@ -26,14 +26,28 @@ public class ChecklistImageService {
 
     @Transactional
     public void createChecklistImages(Checklist checklist, List<MultipartFile> images) {
-        if (images.size() > MAX_CHECKLIST_IMAGE_SIZE) {
-            throw new BangggoodException(ExceptionCode.CHECKLIST_IMAGE_INVALID_SIZE);
-        }
+        validateImageCount(images.size());
+        saveAllImages(checklist, images);
+    }
 
+    @Transactional
+    public void updateChecklistImage(Checklist checklist, List<MultipartFile> images) {
+        int originalImageCount = checklistImageRepository.countByChecklistId(checklist.getId());
+        validateImageCount(originalImageCount + images.size());
+        saveAllImages(checklist, images);
+    }
+
+    private void saveAllImages(Checklist checklist, List<MultipartFile> images) {
         for (int i = 0; i < images.size(); i++) {
             MultipartFile image = ImageOptimizationUtil.compress(images.get(i), IMAGE_QUALITY);
             String imageUrl = awsS3Client.upload(image, AwsS3Folder.CHECKLIST.getPath(), checklist.getId() + "_" + i);
             checklistImageRepository.save(new ChecklistImage(checklist, imageUrl, i));
+        }
+    }
+
+    private void validateImageCount(int count) {
+        if (count > MAX_CHECKLIST_IMAGE_COUNT) {
+            throw new BangggoodException(ExceptionCode.CHECKLIST_IMAGE_INVALID_COUNT);
         }
     }
 }

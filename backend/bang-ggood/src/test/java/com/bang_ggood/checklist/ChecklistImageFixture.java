@@ -29,4 +29,8 @@ public class ChecklistImageFixture {
     public static List<MultipartFile> IMAGES() {
         return List.of(IMAGE());
     }
+
+    public static List<MultipartFile> IMAGES_5() {
+        return List.of(IMAGE(), IMAGE(), IMAGE(), IMAGE(), IMAGE());
+    }
 }

@@ -88,4 +88,35 @@ class ChecklistImageServiceTest extends IntegrationTestSupport {
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_IMAGE_INVALID_COUNT.getMessage());
     }
+
+    @DisplayName("체크리스트 이미지 수정 성공")
+    @Test
+    void updateChecklistImages() {
+        // given
+        List<MultipartFile> firstChecklistImages = ChecklistImageFixture.IMAGES();
+        checklistImageService.createChecklistImages(checklist, firstChecklistImages);
+
+        // when
+        List<MultipartFile> secondChecklistImages = ChecklistImageFixture.IMAGES();
+        checklistImageService.updateChecklistImage(checklist, secondChecklistImages);
+
+        // then
+        assertThat(checklistImageRepository.countByChecklistId(checklist.getId()))
+                .isEqualTo(firstChecklistImages.size() + secondChecklistImages.size());
+
+    }
+
+    @DisplayName("체크리스트 이미지 수정 실패 : 기존 개수 + 새로운 개수가 5개 초과일 경우")
+    @Test
+    void updateChecklistImages_exceedLimit_exception() {
+        // given
+        List<MultipartFile> firstChecklistImages = ChecklistImageFixture.IMAGES_5();
+        checklistImageService.createChecklistImages(checklist, firstChecklistImages);
+
+        // when & then
+        assertThatThrownBy(() -> checklistImageService.updateChecklistImage(checklist, ChecklistImageFixture.IMAGES()))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessage(ExceptionCode.CHECKLIST_IMAGE_INVALID_COUNT.getMessage());
+
+    }
 }

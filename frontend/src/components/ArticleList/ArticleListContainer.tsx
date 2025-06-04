@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 
 import ArticleCard from '@/components/ArticleList/ArticleCard';
-import useGetArticleListQuery from '@/hooks/query/useGetArticleListQuery';
+import { useGetArticleListSuspenseQuery } from '@/hooks/query/useGetArticleListSuspenseQuery';
 import { flexColumn } from '@/styles/common';
 import { Article, ArticleType } from '@/types/article';
 
 const ArticleListContainer = ({ selectKeyword }: { selectKeyword: ArticleType | '전체' }) => {
-  const { articles } = useGetArticleListQuery();
+  const { articles } = useGetArticleListSuspenseQuery();
   const selectedArticles = articles.filter(article => {
     if (selectKeyword === '전체') return true;
     return article.keyword === selectKeyword;

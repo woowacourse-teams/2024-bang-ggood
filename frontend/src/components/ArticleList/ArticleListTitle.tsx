@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 
-import useGetArticleListQuery from '@/hooks/query/useGetArticleListQuery';
+import { useGetArticleListSuspenseQuery } from '@/hooks/query/useGetArticleListSuspenseQuery';
 import { fontStyle } from '@/utils/fontStyle';
 
 const ArticleListTitle = () => {
-  const { articles } = useGetArticleListQuery();
+  const { articles } = useGetArticleListSuspenseQuery();
 
   return (
     <S.Title>

@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
 import DesktopLayout from '@/components/_common/layout/DesktopLayout';
-import useGetArticleQuery from '@/hooks/query/useGetArticleQuery';
+import { useGetArticleSuspenseQuery } from '@/hooks/query/useGetArticleSuspenseQuery';
 import usePutArticleQuery from '@/hooks/query/usePutArticleQuery';
 import useArticleForm from '@/hooks/useArticleForm';
 import { flexColumn, flexRow, flexSpaceBetween, title2 } from '@/styles/common';
@@ -18,7 +18,7 @@ type RouteParams = {
 
 const EditArticlePage = () => {
   const { articleId } = useParams() as RouteParams;
-  const { article } = useGetArticleQuery(articleId);
+  const { article } = useGetArticleSuspenseQuery(articleId);
 
   const { form, onChange: onFormChange, setForm } = useArticleForm();
   const { mutate: editArticle } = usePutArticleQuery();

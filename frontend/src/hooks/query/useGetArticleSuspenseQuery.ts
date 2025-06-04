@@ -4,7 +4,7 @@ import { getArticle } from '@/apis/article';
 import { QUERY_KEYS } from '@/constants/queryKeys';
 import { Article } from '@/types/article';
 
-const useGetArticleQuery = (articleId: string) => {
+export const useGetArticleSuspenseQuery = (articleId: string) => {
   const { data } = useSuspenseQuery<Article>({
     queryKey: [QUERY_KEYS.ARTICLE, articleId],
     queryFn: () => getArticle(Number(articleId)),
@@ -12,5 +12,3 @@ const useGetArticleQuery = (articleId: string) => {
 
   return { article: data };
 };
-
-export default useGetArticleQuery;

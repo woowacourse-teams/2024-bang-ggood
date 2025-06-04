@@ -5,7 +5,7 @@ import { QUERY_KEYS } from '@/constants/queryKeys';
 import { STALE_TIME } from '@/constants/system';
 import { Article } from '@/types/article';
 
-const useGetArticleListQuery = () => {
+export const useGetArticleListSuspenseQuery = () => {
   const { data } = useSuspenseQuery<Article[]>({
     queryKey: [QUERY_KEYS.ARTICLE_LIST],
     queryFn: getArticleList,
@@ -14,5 +14,3 @@ const useGetArticleListQuery = () => {
 
   return { articles: data };
 };
-
-export default useGetArticleListQuery;

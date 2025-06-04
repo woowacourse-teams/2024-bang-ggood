@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import MarkdownPreview from '@uiw/react-markdown-preview/nohighlight';
 import { useParams } from 'react-router-dom';
 
-import useGetArticleQuery from '@/hooks/query/useGetArticleQuery';
+import { useGetArticleSuspenseQuery } from '@/hooks/query/useGetArticleSuspenseQuery';
 import { flexSpaceBetween } from '@/styles/common';
 import { fontStyle } from '@/utils/fontStyle';
 import formattedDate from '@/utils/formattedDate';
@@ -15,7 +15,7 @@ type RouteParams = {
 const ArticleContent = () => {
   const theme = useTheme();
   const { articleId } = useParams() as RouteParams;
-  const { article } = useGetArticleQuery(articleId);
+  const { article } = useGetArticleSuspenseQuery(articleId);
 
   return (
     <>

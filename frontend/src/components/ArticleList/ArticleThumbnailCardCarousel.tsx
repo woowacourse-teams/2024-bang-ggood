@@ -1,10 +1,10 @@
 import ArticleThumbnailCard from '@/components/ArticleList/ArticleThumbnailCard';
-import useGetArticleListQuery from '@/hooks/query/useGetArticleListQuery';
+import { useGetArticleListSuspenseQuery } from '@/hooks/query/useGetArticleListSuspenseQuery';
 import styled from '@emotion/styled';
 import { useRef, useState } from 'react';
 
 export const ArticleThumbnailCardCarousel = () => {
-  const { articles } = useGetArticleListQuery();
+  const { articles } = useGetArticleListSuspenseQuery();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 

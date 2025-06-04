@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 
 import AdminArticleCard from '@/components/Admin/Article/AdminArticleCard';
-import useGetArticleListQuery from '@/hooks/query/useGetArticleListQuery';
+import { useGetArticleListSuspenseQuery } from '@/hooks/query/useGetArticleListSuspenseQuery';
 import { flexColumn } from '@/styles/common';
 import { Article } from '@/types/article';
 
 const AdminArticleListContainer = () => {
-  const { articles } = useGetArticleListQuery();
+  const { articles } = useGetArticleListSuspenseQuery();
 
   return (
     <S.ListContainer>

@@ -10,6 +10,7 @@ export const articleList: { articles: Article[] } = {
       content:
         '아파트를 찾는 것은 쉽지 않은 과정일 수 있습니다. 예산을 설정하고, 선호하는 동네를 파악하며, 필수 조건 목록을 작성하는 것이 시작입니다. 온라인 플랫폼을 이용해 다양한 임대 목록을 비교하고, 반드시 현장을 방문해 실제로 확인하는 것이 중요합니다. 또한 계약서에 서명하기 전에 임대 조건을 이해하는 것도 매우 중요합니다.',
       createdAt: '2024-08-16T10:00:00Z',
+      thumbnail: 'https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/168217562696278839.jpeg',
     },
     {
       articleId: 2,
@@ -19,6 +20,7 @@ export const articleList: { articles: Article[] } = {
       content:
         '임대 계약을 할 때 보증금은 필수적인 요소입니다. 보증금은 집주인이 손해를 방지하기 위한 보장금으로, 주로 한 달 치 월세에 해당하는 금액이 요구됩니다. 입주 전에 집의 상태를 문서화하여 나중에 보증금을 돌려받을 때 문제를 방지하세요. 또한, 지역 법에 따라 보증금 규정을 숙지하는 것도 중요합니다.',
       createdAt: '2024-08-15T10:00:00Z',
+      thumbnail: 'https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/168217562696278839.jpeg',
     },
     {
       articleId: 3,
@@ -28,6 +30,7 @@ export const articleList: { articles: Article[] } = {
       content:
         '전세와 월세 중 어떤 것이 더 나은 선택인지는 개인의 재정 상황과 장기적인 계획에 따라 다릅니다. 전세는 초기 비용이 크지만, 월세 부담이 없다는 장점이 있습니다. 반면, 월세는 초기 비용이 적지만, 매달 지출해야 하는 부담이 있습니다. 본인의 상황에 맞는 결정을 내리는 것이 중요합니다.',
       createdAt: '2024-08-14T10:00:00Z',
+      thumbnail: 'https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/168217562696278839.jpeg',
     },
     {
       articleId: 4,
@@ -37,6 +40,7 @@ export const articleList: { articles: Article[] } = {
       content:
         '좋은 집을 찾기 위해서는 주변 환경과 가격을 꼼꼼하게 따져보는 것이 중요합니다. 또한 계약 전에 집 내부 상태를 철저히 점검하고, 관리비와 추가 비용을 고려해야 합니다. 꼼꼼한 비교를 통해 적절한 집을 선택하는 것이 필수입니다.',
       createdAt: '2024-08-13T10:00:00Z',
+      thumbnail: 'https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/168217562696278839.jpeg',
     },
     {
       articleId: 5,

@@ -44,7 +44,7 @@ const EditArticlePage = () => {
       <S.Header>
         <S.HeaderContents>
           <S.Title>방끗 Article Editor - 수정하기</S.Title>
-          <Button type="submit" label="저장" isSquare color="dark" onClick={handleSubmit} size="small" />
+          <Button type="submit" label="저장" color="dark" onClick={handleSubmit} size="small" />
         </S.HeaderContents>
       </S.Header>
       <DesktopLayout>
@@ -121,7 +121,7 @@ const S = {
     justify-content: center;
     width: 100vw;
     height: 50px;
-    border-bottom: 1px solid ${({ theme }) => theme.palette.grey200};
+    border-bottom: 1px solid ${({ theme }) => theme.color.gray[200]};
     box-sizing: border-box;
     margin-bottom: 20px;
   `,

@@ -17,7 +17,8 @@ const AdminArticleListPage = () => {
           <S.Title>아티클</S.Title>
         </S.HeaderContents>
       </S.Header>
-      <Layout bgColor={theme.palette.background} withHeader withFooter>
+
+      <Layout bgColor={theme.color.gray[50]} withHeader withFooter>
         <ErrorBoundary FallbackComponent={ListErrorFallback}>
           <Suspense fallback={<SkArticleList />}>
             <AdminArticleListContainer />

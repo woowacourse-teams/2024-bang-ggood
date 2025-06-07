@@ -1,3 +1,10 @@
+export interface FontSet {
+  size: string;
+  lineHeight: string;
+  weight: number;
+  letterSpacing: string;
+}
+
 const font = {
   title: {
     1: {

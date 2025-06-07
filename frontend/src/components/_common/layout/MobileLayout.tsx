@@ -14,6 +14,7 @@ export default MobileLayout;
 
 const S = {
   BodyWrapper: styled.div`
+    position: relative;
     max-width: 60rem;
     min-height: 100dvh;
 

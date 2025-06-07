@@ -13,7 +13,7 @@ export const ChecklistQuestionSelectTabs = () => {
       return getTabs(checklistQuestions);
     }
     return [];
-  }, [isSuccess]);
+  }, [isSuccess, checklistQuestions, getTabs]);
 
   return (
     <Suspense>

@@ -57,7 +57,7 @@ const Button = ({
       onKeyDown={handleKeyDown}
       {...rest}
       disabled={disabled ?? false}
-      aria-label={label}
+      aria-label={typeof label === 'string' ? label : undefined}
       type={type}
       variant={variant}
     >

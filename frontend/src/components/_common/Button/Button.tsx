@@ -17,7 +17,7 @@ interface Props extends ComponentProps<'button'> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   color?: ColorOption;
-  label: string;
+  label: React.ReactNode;
   isSquare?: boolean; // TODO: rounded 로 props 변경 후 삭제
   rounded?: boolean;
   onClick?: () => void;

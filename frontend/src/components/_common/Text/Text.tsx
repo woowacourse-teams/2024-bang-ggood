@@ -8,13 +8,13 @@ import { fontStyle } from '@/utils/fontStyle';
 interface Props extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'color'> {
   typography: (fontObject: typeof fontObj) => FontSet;
   color?: (colorObj: typeof color) => string;
-  customCss?: SerializedStyles;
+  css?: SerializedStyles;
   children: React.ReactNode;
 }
 
-function Text({ typography, color, children, customCss, ...rest }: Props) {
+function Text({ typography, color, children, css, ...rest }: Props) {
   return (
-    <S.Text fontSet={typography(fontObj)} color={color?.(colorObj) ?? colorObj.mono.black} css={customCss} {...rest}>
+    <S.Text fontSet={typography(fontObj)} color={color?.(colorObj) ?? colorObj.mono.black} css={css} {...rest}>
       {children}
     </S.Text>
   );

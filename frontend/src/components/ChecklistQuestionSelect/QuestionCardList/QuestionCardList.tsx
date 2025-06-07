@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 import Divider from '@/components/_common/Divider/Divider';
 import QuestionSelectCard from '@/components/ChecklistQuestionSelect/QuestionSelectCard/QuestionSelectCard';
+import { flexColumn } from '@/styles/common';
 import { ChecklistQuestionWithIsSelected } from '@/types/checklist';
 
 interface Props {
@@ -27,8 +28,7 @@ export default QuestionCardList;
 
 const S = {
   QuestionList: styled.section`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
     gap: 1rem;
     width: 100%;
     height: fit-content;

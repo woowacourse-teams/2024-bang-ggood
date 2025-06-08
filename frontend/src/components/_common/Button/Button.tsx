@@ -23,6 +23,7 @@ interface Props extends ComponentProps<'button'> {
   onClick?: () => void;
   disabled?: boolean;
   Icon?: FunctionComponent<SVGProps<SVGSVGElement>>;
+  iconPosition?: 'start' | 'end';
   id?: string;
 }
 
@@ -38,6 +39,7 @@ const Button = ({
   variant = 'none',
   id,
   Icon,
+  iconPosition = 'start',
   ...rest
 }: Props) => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
@@ -62,8 +64,9 @@ const Button = ({
       variant={variant}
     >
       <FlexBox.Horizontal>
-        {Icon && <Icon aria-hidden="true" />}
+        {iconPosition === 'start' && Icon && <Icon aria-hidden="true" />}
         <S.Text>{label}</S.Text>
+        {iconPosition === 'end' && Icon && <Icon aria-hidden="true" />}
       </FlexBox.Horizontal>
     </S.Button>
   );

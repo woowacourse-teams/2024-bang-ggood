@@ -6,6 +6,7 @@ import { createPortal } from 'react-dom';
 import { CloseIcon } from '@/assets/assets';
 import { fadeIn, fadeOut } from '@/styles/animation';
 import { flexColumn } from '@/styles/common';
+
 import FocusTrap from './FocusTrap/FocusTrap';
 import ModalBody from './ModalBody';
 import ModalFooter from './ModalFooter';
@@ -97,6 +98,7 @@ const S = {
   ModalInner: styled.div<{ isOpen: boolean; backgroundColor: string }>`
     overflow: scroll;
     position: relative;
+    width: 100%;
     padding: 1.6rem;
 
     background-color: ${({ backgroundColor }) => backgroundColor};

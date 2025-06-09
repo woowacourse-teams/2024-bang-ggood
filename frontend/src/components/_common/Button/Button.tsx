@@ -7,9 +7,9 @@ import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
 import { fontStyle } from '@/utils/fontStyle';
 
-type ButtonVariant = 'none' | 'contain' | 'outlined' | 'outlined-gray';
+type ButtonVariant = 'text' | 'contain' | 'outlined' | 'outlined-gray';
 type ButtonSize = 'xSmall' | 'small' | 'medium' | 'full';
-type ColorOption = 'light' | 'dark' | 'primary' | 'disabled';
+type ColorOption = 'light' | 'dark' | 'primary';
 type ButtonType = 'button' | 'submit' | 'reset';
 
 interface Props extends ComponentProps<'button'> {
@@ -27,17 +27,17 @@ interface Props extends ComponentProps<'button'> {
 }
 
 const Button = ({
+  type = 'button',
+  variant = 'contain',
   size = 'medium',
   color = 'light',
   label,
   isSquare = false,
   rounded = false,
   onClick = () => {},
-  disabled,
-  type = 'button',
-  variant = 'none',
-  id,
+  disabled = false,
   Icon,
+  id,
   ...rest
 }: Props) => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
@@ -53,7 +53,7 @@ const Button = ({
       color={color}
       isSquare={isSquare}
       rounded={rounded}
-      onClick={color !== 'disabled' ? onClick : () => {}}
+      onClick={disabled ? onClick : () => {}}
       onKeyDown={handleKeyDown}
       {...rest}
       disabled={disabled ?? false}

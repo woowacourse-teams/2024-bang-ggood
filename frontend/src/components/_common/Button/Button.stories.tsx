@@ -43,7 +43,7 @@ export const OutlinedSquare: Story = {
 export const DisabledSquare: Story = {
   args: {
     label: 'Button',
-    color: 'disabled',
+    disabled: true,
   },
 };
 
@@ -83,7 +83,7 @@ export const OutlinedRound: Story = {
 export const DisabledRound: Story = {
   args: {
     label: 'Button',
-    color: 'disabled',
+    disabled: true,
     rounded: true,
   },
 };

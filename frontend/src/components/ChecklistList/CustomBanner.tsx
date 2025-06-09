@@ -1,31 +1,26 @@
 import styled from '@emotion/styled';
 
 import Button from '@/components/_common/Button/Button';
-import { boxShadow, flexCenter, flexRow } from '@/styles/common';
+import { flexCenter, flexRow } from '@/styles/common';
+import { fontStyle } from '@/utils/fontStyle';
 
 interface Props {
   onClick?: () => void;
   title: string;
-  buttonColor: string;
+  backgroundColor?: string;
   buttonText: string;
-  Icon: React.ReactElement;
   buttonDetailText: string;
-  hoverButtonColor: string;
+  Icon: React.ReactElement;
 }
 
-const CustomBanner = ({ hoverButtonColor, onClick, Icon, title, buttonColor, buttonText, buttonDetailText }: Props) => {
+const CustomBanner = ({ onClick, Icon, title, buttonText, buttonDetailText, backgroundColor }: Props) => {
   return (
-    <S.Banner onClick={onClick}>
+    <S.Banner onClick={onClick} $backgroundColor={backgroundColor}>
       <S.Wrapper>
         {Icon}
         <S.Title>{title}</S.Title>
       </S.Wrapper>
-      <S.Button
-        aria-label={buttonDetailText}
-        label={buttonText}
-        buttonColor={buttonColor}
-        hoverButtonColor={hoverButtonColor}
-      />
+      <Button label={buttonText} aria-label={buttonDetailText} size="xSmall" />
     </S.Banner>
   );
 };
@@ -33,44 +28,26 @@ const CustomBanner = ({ hoverButtonColor, onClick, Icon, title, buttonColor, but
 export default CustomBanner;
 
 const S = {
-  Banner: styled.div`
+  Banner: styled.div<{ $backgroundColor?: string }>`
     ${flexCenter}
 
     width: 100%;
-    height: 5rem;
+    height: 7.8rem;
     padding: 1.6rem;
 
-    border-radius: 1.6rem;
+    border-radius: 0.8rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme, $backgroundColor }) => ($backgroundColor ? $backgroundColor : theme.color.gray[200])};
 
     box-sizing: border-box;
     justify-content: space-between;
-    align-items: center;
     gap: 0.5rem;
-    ${boxShadow};
   `,
   Wrapper: styled.div`
     ${flexRow}
-    gap: .5rem;
+    gap: .8rem;
   `,
   Title: styled.span`
-    ${flexCenter}
-  `,
-  Button: styled(Button)<{ buttonColor: string; hoverButtonColor: string }>`
-    padding: 0.6rem 1rem;
-
-    background-color: ${({ buttonColor }) => buttonColor};
-
-    color: ${({ theme }) => theme.palette.white};
-    border-radius: 0.8rem;
-
-    font-size: ${({ theme }) => theme.text.size.small};
-
-    cursor: pointer;
-
-    &:hover {
-      background-color: ${({ hoverButtonColor }) => hoverButtonColor};
-    }
+    ${({ theme }) => fontStyle(theme.font.heading[2].B)}
   `,
 };

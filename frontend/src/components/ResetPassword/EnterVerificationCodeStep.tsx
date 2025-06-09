@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { BangBangIcon, BangGgoodTextIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
-import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
 import CS from '@/components/ResetPassword/style';
@@ -56,31 +55,29 @@ const EmailVerificationCodeStep = ({ args: { email }, onNext }: Props) => {
 
   return (
     <>
-      <Header left={<Header.Backward onClick={handleClickBackward} />} />
+      <Header left={<Header.Backward onClick={handleClickBackward} />} center="비밀번호 찾기" />
       <CS.Wrapper>
         <CS.LogoBox>
           <BangBangIcon />
           <BangGgoodTextIcon aria-label="방끗 로고" />
         </CS.LogoBox>
         <CS.Box>
-          <CS.Label>비밀번호 찾기</CS.Label>
           <FormField onKeyDown={handleKeyDown}>
             <FormField.Label label="검증 코드" htmlFor="code" />
-            <FlexBox.Vertical justify="flex-start" align="center">
+
+            <div style={{ position: 'relative', width: '100%' }}>
               <FormField.Input
                 maxLength={254}
                 value={code}
                 id="code"
                 name="code"
                 onChange={onChangeCode}
-                style={{ width: '25rem' }}
+                style={{ width: '100%' }}
               />
-              <div>
-                <CS.SendButton onClick={handleClickSubmit} disabled={canMove}>
-                  확인
-                </CS.SendButton>
-              </div>
-            </FlexBox.Vertical>
+              <CS.SendButton onClick={handleClickSubmit} disabled={canMove}>
+                확인
+              </CS.SendButton>
+            </div>
             {getCodeErrors() && <FormField.ErrorMessage value={getCodeErrors()} />}
           </FormField>
           {postErrorMessage && <FormField.ErrorMessage value={postErrorMessage} />}

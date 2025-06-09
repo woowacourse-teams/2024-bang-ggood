@@ -9,8 +9,9 @@ import Header from '@/components/_common/Header/Header';
 import { ROUTE_PATH } from '@/constants/routePath';
 import usePostSignInQuery from '@/hooks/query/usePostSignInQuery';
 import useValidateInput from '@/hooks/useValidateInput';
-import { flexCenter, title3, title4 } from '@/styles/common';
+import { flexCenter, flexRow } from '@/styles/common';
 import { validateEmail } from '@/utils/authValidation';
+import { fontStyle } from '@/utils/fontStyle';
 
 const SignInPage = () => {
   const [postErrorMessage, setPostErrorMessage] = useState('');
@@ -59,14 +60,13 @@ const SignInPage = () => {
 
   return (
     <>
-      <Header left={<Header.Backward onClick={handleClickBackward} />} />
+      <Header left={<Header.Backward onClick={handleClickBackward} />} center="로그인" />
       <S.Wrapper>
         <S.LogoBox>
           <BangBangIcon />
           <BangGgoodTextIcon aria-label="방끗 로고" />
         </S.LogoBox>
         <S.Box>
-          <S.Label>로그인</S.Label>
           <FormField onKeyDown={handleKeyDown}>
             <FormField.Label label="이메일" />
             <FormField.Input maxLength={254} value={email} name="email" onChange={onChangeEmail} />
@@ -83,15 +83,15 @@ const SignInPage = () => {
             />
           </FormField>
           {postErrorMessage && <FormField.ErrorMessage value={postErrorMessage} />}
-          <Button
-            label="로그인 하기"
-            size="full"
-            isSquare={true}
-            color={'dark'}
-            onClick={handleSubmit}
-            disabled={disabled}
-          />
         </S.Box>
+        <Button
+          label="로그인 하기"
+          size="full"
+          color={'dark'}
+          onClick={handleSubmit}
+          disabled={disabled}
+          style={{ marginTop: '3rem', marginBottom: '5.6rem' }}
+        />
         <S.NavigateButton onClick={handleMoveToSignUp}>아직 방끗 회원이 아니신가요?</S.NavigateButton>
         <S.NavigateButton onClick={handleMoveToResetPassword}>비밀번호를 잊으셨나요?</S.NavigateButton>
       </S.Wrapper>
@@ -104,47 +104,39 @@ export default SignInPage;
 const S = {
   Wrapper: styled.div`
     ${flexCenter}
-    height:calc(100dvh - 56px);
+    width: calc(100% - 3rem);
+    height: calc(100dvh - 56px);
+    margin: 0 auto;
     flex-direction: column;
     gap: 1rem;
   `,
   LogoBox: styled.div`
-    ${flexCenter}
-    margin-bottom:50px;
+    display: flex;
+    width: 100%;
+    margin-top: 22rem;
+    margin-bottom: 8.5rem;
+    align-items: center;
     gap: 2rem;
-  `,
-  Label: styled.div`
-    position: absolute;
-    top: -4.2rem;
-    padding: 1rem 1.4rem;
-    border-radius: 1rem 1rem 0 0;
-    ${title3}
-
-    background-color: ${({ theme }) => theme.palette.green500};
-
-    color: ${({ theme }) => theme.palette.white};
   `,
   Box: styled.div`
     display: flex;
     position: relative;
-    width: 30rem;
-    margin-bottom: 0.5rem;
-    padding: 1.6rem;
-
-    background-color: ${({ theme }) => theme.palette.background};
+    width: 100%;
     flex-direction: column;
     border-radius: 1rem;
-    gap: 2rem;
+    gap: 1.2rem;
   `,
   NavigateButton: styled.div`
-    margin-top: 0.5rem;
+    ${flexRow}
+    ${flexCenter}
+    height: 4.8rem;
+    ${({ theme }) => fontStyle(theme.font.body[1].B)}
 
-    ${title4};
-    color: ${({ theme }) => theme.palette.grey400};
+    color: ${({ theme }) => theme.color.gray[400]};
     cursor: pointer;
 
     :hover {
-      color: ${({ theme }) => theme.palette.green600};
+      color: ${({ theme }) => theme.color.secondary[600]};
     }
   `,
 };

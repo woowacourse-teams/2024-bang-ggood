@@ -7,7 +7,7 @@ import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
 import { fontStyle } from '@/utils/fontStyle';
 
-type ButtonVariant = 'contain' | 'outlined';
+type ButtonVariant = 'none' | 'contain' | 'outlined' | 'outlined-gray';
 type ButtonSize = 'xSmall' | 'small' | 'medium' | 'full';
 type ColorOption = 'light' | 'dark' | 'primary' | 'disabled';
 type ButtonType = 'button' | 'submit' | 'reset';
@@ -17,7 +17,7 @@ interface Props extends ComponentProps<'button'> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   color?: ColorOption;
-  label: string;
+  label: React.ReactNode;
   isSquare?: boolean; // TODO: rounded 로 props 변경 후 삭제
   rounded?: boolean;
   onClick?: () => void;
@@ -35,7 +35,7 @@ const Button = ({
   onClick = () => {},
   disabled,
   type = 'button',
-  variant = 'contain',
+  variant = 'none',
   id,
   Icon,
   ...rest
@@ -57,8 +57,7 @@ const Button = ({
       onKeyDown={handleKeyDown}
       {...rest}
       disabled={disabled ?? false}
-      aria-label={label}
-      tabIndex={1}
+      aria-label={typeof label === 'string' ? label : undefined}
       type={type}
       variant={variant}
     >
@@ -185,9 +184,9 @@ const getColorStyles = ({
 };
 
 const sizeStyles = {
-  // 현재 디자인에 없는 컴포넌트 하지만 쓰이는 곳이 있어서 추후 삭제 필요
   xSmall: css`
-    min-width: 14rem;
+    min-width: 10rem;
+    height: 4rem;
   `,
   small: css`
     min-width: 14rem;

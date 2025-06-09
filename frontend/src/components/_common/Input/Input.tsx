@@ -1,3 +1,4 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useCallback } from 'react';
 
@@ -6,7 +7,6 @@ import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
 import { InputChangeEvent } from '@/types/event';
 import { fontStyle } from '@/utils/fontStyle';
-import { css } from '@emotion/react';
 
 const widthSize = {
   small: '10rem',
@@ -31,7 +31,7 @@ const Input = ({ width = 'full', value, onChange, variant = 'default', disabled,
   );
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div style={{ position: 'relative', width: widthSize[width] }}>
       <S.Input
         value={value}
         {...rest}

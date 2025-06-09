@@ -1,3 +1,4 @@
+
 const color = {
   /* Primary */
   primary: {
@@ -52,6 +53,7 @@ const color = {
 
   /* Gray */
   gray: {
+    50: '#F7F7F7',
     100: '#F1F1F1',
     200: '#E5E5E5',
     300: '#C7C7C7',

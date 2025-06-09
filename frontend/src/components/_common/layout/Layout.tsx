@@ -12,6 +12,7 @@ interface Props {
   withHeader?: boolean;
   withFooter?: boolean;
   withTab?: boolean;
+  fitContent?: boolean;
 }
 
 const Layout = ({
@@ -20,10 +21,18 @@ const Layout = ({
   withHeader = false,
   withFooter = false,
   withTab = false,
+  fitContent = false,
   style,
 }: Props) => {
   return (
-    <S.Wrapper bgColor={bgColor} style={style} withHeader={withHeader} withFooter={withFooter} withTab={withTab}>
+    <S.Wrapper
+      bgColor={bgColor}
+      style={style}
+      withHeader={withHeader}
+      withFooter={withFooter}
+      withTab={withTab}
+      fitContent={fitContent}
+    >
       {children}
     </S.Wrapper>
   );
@@ -32,17 +41,28 @@ const Layout = ({
 export default Layout;
 
 const S = {
-  Wrapper: styled.main<{ bgColor: string; withHeader: boolean; withFooter: boolean; withTab: boolean }>`
+  Wrapper: styled.main<{
+    bgColor: string;
+    withHeader: boolean;
+    withFooter: boolean;
+    withTab: boolean;
+    fitContent: boolean;
+  }>`
     box-sizing: border-box;
     overflow: hidden auto;
-    ${({ withHeader, withFooter, withTab }) => getHeightStyle(withHeader, withFooter, withTab)}
+    ${({ withHeader, withFooter, withTab, fitContent }) => getHeightStyle(withHeader, withFooter, withTab, fitContent)}
     padding: 1rem 1.6rem;
 
     background-color: ${({ bgColor }) => bgColor};
   `,
 };
 
-const getHeightStyle = (withHeader: boolean, withFooter: boolean, withTab: boolean) => {
+const getHeightStyle = (withHeader: boolean, withFooter: boolean, withTab: boolean, fitContent: boolean) => {
+  if (fitContent) {
+    return css`
+      height: fit-content;
+    `;
+  }
   if (withHeader && withFooter) {
     return css`
       height: calc(100dvh - ${HEADER_SIZE}rem - ${FOOTER_SIZE}rem);

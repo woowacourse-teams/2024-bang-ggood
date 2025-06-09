@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
 
 import FaceIcon from '@/components/_common/FaceIcon/FaceIcon';
-import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import { MIN_GOOD_SCORE, MIN_SOSO_SCORE } from '@/constants/system';
-import { boxShadow, flexCenter } from '@/styles/common';
+import { boxShadow, flexColumn } from '@/styles/common';
+import theme from '@/styles/theme';
+import { fontStyle } from '@/utils/fontStyle';
 
 interface Props {
   roomId: number;
@@ -21,32 +22,45 @@ const CategoryScore = ({ roomId, categoryId, score, openCategoryModal }: Props) 
   };
 
   return (
-    <FlexBox.Vertical>
+    <S.VerticalBox>
       <S.CategoryItemBox>
         <FaceIcon emotion={calcFaceIcon(score)} />
       </S.CategoryItemBox>
-      <S.CategoryItemBox>
+      <S.CategoryItemBox2>
         <S.Score onClick={() => openCategoryModal(roomId, categoryId)}>{score === null ? '-' : `${score}%`}</S.Score>
-      </S.CategoryItemBox>
-    </FlexBox.Vertical>
+      </S.CategoryItemBox2>
+    </S.VerticalBox>
   );
 };
 
 export default CategoryScore;
 
 const S = {
-  CategoryItemBox: styled.div`
-    width: 7rem;
-
-    ${flexCenter}
-    text-align: center;
+  VerticalBox: styled.div`
+    ${flexColumn}
+    gap: 0.8rem;
+    height: 100%;
   `,
-  Score: styled.button`
-    width: 6.5rem;
-    padding: 6px 8px;
-    border: 1px solid ${({ theme }) => theme.palette.grey300};
 
-    font-size: ${({ theme }) => theme.text.size.small};
+  CategoryItemBox: styled.div`
+    width: 14rem;
+    display: flex;
+    align-items: flex-start;
+  `,
+
+  CategoryItemBox2: styled.div`
+    height: 4rem;
+    display: flex;
+    align-items: flex-start;
+  `,
+
+  Score: styled.button`
+    height: 100%;
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid ${({ theme }) => theme.color.primary[500]};
+    ${fontStyle(theme.font.body[1].B)};
+    color: ${({ theme }) => theme.color.primary[500]};
     border-radius: 8px;
     ${boxShadow}
   `,

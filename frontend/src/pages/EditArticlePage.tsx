@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
 import DesktopLayout from '@/components/_common/layout/DesktopLayout';
-import useGetArticleQuery from '@/hooks/query/useGetArticleQuery';
+import { useGetArticleSuspenseQuery } from '@/hooks/query/useGetArticleSuspenseQuery';
 import usePutArticleQuery from '@/hooks/query/usePutArticleQuery';
 import useArticleForm from '@/hooks/useArticleForm';
 import { flexColumn, flexRow, flexSpaceBetween, title2 } from '@/styles/common';
@@ -18,21 +18,19 @@ type RouteParams = {
 
 const EditArticlePage = () => {
   const { articleId } = useParams() as RouteParams;
-  const { data: article, isSuccess } = useGetArticleQuery(articleId);
+  const { article } = useGetArticleSuspenseQuery(articleId);
 
   const { form, onChange: onFormChange, setForm } = useArticleForm();
   const { mutate: editArticle } = usePutArticleQuery();
 
   useEffect(() => {
-    if (isSuccess) {
-      Object.keys(article).forEach(key => {
-        const value = article[key as keyof ArticlePostForm];
-        if (value !== null) {
-          setForm(key as keyof ArticlePostForm, value as string);
-        }
-      });
-    }
-  }, [article, isSuccess]);
+    Object.keys(article).forEach(key => {
+      const value = article[key as keyof ArticlePostForm];
+      if (value !== null) {
+        setForm(key as keyof ArticlePostForm, value as string);
+      }
+    });
+  }, [article]);
 
   const handleSubmit = () => {
     editArticle({
@@ -46,7 +44,7 @@ const EditArticlePage = () => {
       <S.Header>
         <S.HeaderContents>
           <S.Title>방끗 Article Editor - 수정하기</S.Title>
-          <Button type="submit" label="저장" isSquare color="dark" onClick={handleSubmit} size="small" />
+          <Button type="submit" label="저장" color="dark" onClick={handleSubmit} size="small" />
         </S.HeaderContents>
       </S.Header>
       <DesktopLayout>
@@ -123,7 +121,7 @@ const S = {
     justify-content: center;
     width: 100vw;
     height: 50px;
-    border-bottom: 1px solid ${({ theme }) => theme.palette.grey200};
+    border-bottom: 1px solid ${({ theme }) => theme.color.gray[200]};
     box-sizing: border-box;
     margin-bottom: 20px;
   `,

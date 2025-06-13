@@ -10,7 +10,7 @@ import { fontStyle } from '@/utils/fontStyle';
 const GuestFeature = () => {
   const navigate = useNavigate();
   const handleMoveVoc = () => {
-    window.location.href = VOC_URL;
+    window.open(VOC_URL, "_blank");
   };
 
   return (

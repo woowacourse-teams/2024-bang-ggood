@@ -95,6 +95,7 @@ const S = {
     ${flexCenter}
     ${fontStyle(theme.font.body[1].B)};
     min-width: fit-content;
+    cursor: pointer;
   `,
 };
 

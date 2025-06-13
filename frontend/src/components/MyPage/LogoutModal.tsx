@@ -48,6 +48,7 @@ const S = {
     ${flexCenter};
     gap: .5rem;
     ${({ theme }) => fontStyle(theme.font.label[1].M)};
+    color: ${({theme}) => theme.color.gray['600']};
   `,
   Spacer: styled.div`
     height: 4.2rem;

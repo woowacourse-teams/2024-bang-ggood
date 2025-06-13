@@ -46,6 +46,7 @@ const S = {
     ${flexColumn}
     ${flexCenter}
     ${({ theme }) => fontStyle(theme.font.label[1].M)};
+    color: ${({theme}) => theme.color.gray[600]};
   `,
   ButtonContainer: styled.div`
     ${flexRow}

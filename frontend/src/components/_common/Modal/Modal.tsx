@@ -88,8 +88,8 @@ const S = {
     $size: ModalSize;
     isOpen: boolean;
   }>`
-    ${flexColumn}
-    align-items: center;
+    ${flexColumn};
+    align-items: flex-start;
 
     position: fixed;
     ${({ $position, $size }) => positionStyles[$position]($size)}

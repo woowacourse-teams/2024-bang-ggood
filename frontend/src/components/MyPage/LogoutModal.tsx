@@ -19,17 +19,17 @@ const LogoutModal = ({ isOpen, onClose }: Props) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <Modal.header>
-        로그아웃하기
-        <S.Contents>
-          <span>정말 로그아웃 하시겠습니까?</span>
-        </S.Contents>
-      </Modal.header>
-      <Modal.body>
-        <S.Spacer>
-        </S.Spacer>
-      </Modal.body>
+    <Modal isOpen={isOpen} onClose={onClose} style={{ }}>
+      <>
+        <Modal.header style={{ marginBottom: `0.8rem`, padding: 0, minHeight: 0 }}>
+          로그아웃하기
+        </Modal.header>
+        <Modal.body>
+          <S.Contents>
+            <span>정말 로그아웃 하시겠습니까?</span>
+          </S.Contents>
+        </Modal.body>
+      </>
       <Modal.footer>
         <S.ButtonContainer>
           <Button label="취소하기" size="full" onClick={onClose} isSquare />
@@ -44,7 +44,6 @@ export default LogoutModal;
 
 const S = {
   Contents: styled.div`
-    margin-top: 1rem;
     ${flexCenter};
     gap: .5rem;
     ${({ theme }) => fontStyle(theme.font.label[1].M)};

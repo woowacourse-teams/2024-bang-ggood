@@ -9,6 +9,7 @@ interface Props extends React.PropsWithChildren {
   title?: string;
   position?: Position;
   tabIndex?: number;
+  style?: React.CSSProperties;
 }
 
 const ModalHeader = ({ title, children, position = 'center', ...rest }: Props) => {

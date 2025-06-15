@@ -1,44 +1,61 @@
 import { useRef } from 'react';
 
-import { ArrowDownIcon, mainPageScreen } from '@/assets/assets';
+import { ChecklistImage, ScrollArrow } from '@/assets/assets';
 import CS from '@/components/Landing/style';
 import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';
+import { flexCenter, flexColumn } from '@/styles/common';
+import { fontStyle } from '@/utils/fontStyle';
+import { useTheme } from '@emotion/react';
+import styled from '@emotion/styled';
 
 const SecondSection = () => {
+  const theme = useTheme();
   const ref = useRef<HTMLDivElement>(null);
 
   const { isIntersecting } = useIntersection(INTERSECTION_CONFIG, ref);
 
   return (
-    <>
-      <CS.TextBox>
-        <CS.Text>
-          방끗은 방 구할 때 기록하는
+    <S.Container>
+      <div>
+        <S.Title>
+          좋은 방을 구하는
           <br />
-          <CS.Highlight>체크리스트 서비스</CS.Highlight>에요!
-        </CS.Text>
-
-        <CS.Text>
-          새집을 구하러 다니는 당신이 <br />한 방을 둘러보는 시간은 <CS.Bold>단 10분 ⏰ </CS.Bold>
-        </CS.Text>
-        <CS.Text>
-          <CS.Highlight>방끗</CS.Highlight>은 그 귀중한 시간을
+          기준을 알려드려요
+        </S.Title>
+        <S.Desc>
+          방 보러 다닐 때, 꼭 필요한 질문만 모았어요.
           <br />
-          <CS.Bold>효율적으로 쓰도록</CS.Bold>
-          <br /> 도와주기 위해 태어났어요.
-        </CS.Text>
-      </CS.TextBox>
-      <CS.EmptyBox height={'2rem'} />
+          <span style={{ color: theme.color.secondary[500] }}>O</span>
+          <span style={{ color: theme.color.red[400] }}>X</span>로 빠르게 체크하고, 원하는 집을 골라보세요!
+        </S.Desc>
+      </div>
       <CS.Observer ref={ref} />
       <CS.AnimationBox isIntersecting={isIntersecting}>
-        <CS.ScreenShot src={mainPageScreen} />
+        <ChecklistImage width={400} />
       </CS.AnimationBox>
+
       <CS.MoveUpDownAnimationBox>
-        <ArrowDownIcon aria-label="스크롤로 하단의 정보를 확인할 수 있어요" />
+        <ScrollArrow aria-label="스크롤로 하단의 정보를 확인할 수 있어요" />
       </CS.MoveUpDownAnimationBox>
-    </>
+    </S.Container>
   );
 };
 
 export default SecondSection;
+
+const S = {
+  Container: styled.section`
+    ${flexColumn}
+    ${flexCenter}
+    gap: 1rem;
+  `,
+  Title: styled.h3`
+    text-align: center;
+    ${({ theme }) => fontStyle(theme.font.title[3].B)}
+  `,
+  Desc: styled.div`
+    text-align: center;
+    ${({ theme }) => fontStyle(theme.font.body[1].B)}
+  `,
+};

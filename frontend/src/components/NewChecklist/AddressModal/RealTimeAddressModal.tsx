@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useStore } from 'zustand';
 
-import { LocationIcon, LocationLineIcon } from '@/assets/assets';
+import { LocationLineIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import RealTimeMap from '@/components/_common/Map/RealTimeMap';
@@ -47,41 +47,32 @@ const RealTimeAddressModal = () => {
 
   return (
     <>
-      <S.AddressButton
-        onClick={openModal}
-        label="현위치 찾기"
-        size="full"
-        isSquare={true}
-        color="light"
-        Icon={LocationIcon}
-      />
-      {isModalOpen && (
-        <Modal size="large" position="bottom" isOpen={isModalOpen} onClose={closeModal}>
-          <Modal.header>현위치 찾기</Modal.header>
-          <Modal.body>
-            <div>
-              지도를 클릭하면 현재 위치를 움직일 수 있어요. <br />
-            </div>
-            <FlexBox.Horizontal gap={'10px'}>
-              <span>
-                <LocationLineIcon height={20} width={20} />
-              </span>
-              <S.AddressText>
-                {currentAddress ? `${currentAddress} ${currentBuildingName}` : '주소가 여기에 표시됩니다.'}
-              </S.AddressText>
-            </FlexBox.Horizontal>
+      <Button label="현위치 찾기" onClick={openModal} size="full" variant="outlined" color="dark" />
+      <Modal size="large" position="bottom" isOpen={isModalOpen} onClose={closeModal}>
+        <Modal.header>현위치 찾기</Modal.header>
+        <Modal.body>
+          <div>
+            지도를 클릭하면 현재 위치를 움직일 수 있어요. <br />
+          </div>
+          <FlexBox.Horizontal gap={'10px'}>
+            <span>
+              <LocationLineIcon height={20} width={20} />
+            </span>
+            <S.AddressText>
+              {currentAddress ? `${currentAddress} ${currentBuildingName}` : '주소가 여기에 표시됩니다.'}
+            </S.AddressText>
+          </FlexBox.Horizontal>
 
-            {/* 지도 */}
-            <RealTimeMap
-              position={position}
-              setPosition={setPosition}
-              setCurrentAddress={setCurrentAddress}
-              setCurrentBuildingName={setCurrentBuildingName}
-              handleSubmitAddress={handleSubmitAddress}
-            />
-          </Modal.body>
-        </Modal>
-      )}
+          {/* 지도 */}
+          <RealTimeMap
+            position={position}
+            setPosition={setPosition}
+            setCurrentAddress={setCurrentAddress}
+            setCurrentBuildingName={setCurrentBuildingName}
+            handleSubmitAddress={handleSubmitAddress}
+          />
+        </Modal.body>
+      </Modal>
     </>
   );
 };
@@ -89,13 +80,6 @@ const RealTimeAddressModal = () => {
 export default RealTimeAddressModal;
 
 const S = {
-  AddressButton: styled(Button)`
-    width: 50%;
-    height: 4.5rem;
-    padding: 0.4rem;
-
-    font-size: ${({ theme }) => theme.text.size.small};
-  `,
   AddressText: styled.span`
     ${title4}
   `,

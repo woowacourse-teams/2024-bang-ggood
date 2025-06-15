@@ -12,7 +12,7 @@ const OccupancyMonth = () => {
 
   return (
     <FlexBox.Vertical gap="1.5rem">
-      <FormField.Label label="입주 가능일" htmlFor="occupancyMonth" />
+      <FormField.Label label="입주 가능일" htmlFor="occupancyMonth" bold />
       <FormStyled.FieldBox>
         <FormField.Input
           inputMode="decimal"
@@ -21,6 +21,7 @@ const OccupancyMonth = () => {
           name="occupancyMonth"
           value={occupancyMonth.rawValue}
           id="occupancyMonth"
+          isError={!!occupancyMonth.errorMessage}
         />
         <FormStyled.FlexLabel label="월  " />
         <Dropdown

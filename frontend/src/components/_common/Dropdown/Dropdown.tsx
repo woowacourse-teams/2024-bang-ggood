@@ -3,7 +3,6 @@ import { CSSProperties, useEffect, useState } from 'react';
 
 import { ArrowDropdownIcon } from '@/assets/assets';
 import { flexColumn, flexRow, flexSpaceBetween } from '@/styles/common';
-import theme from '@/styles/theme';
 import { fontStyle } from '@/utils/fontStyle';
 
 interface Option {
@@ -59,8 +58,10 @@ const S = {
     flex: 0 0 auto;
     position: relative;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    width: 16rem;
+    height: 4.8rem;
 
+    background-color: ${({ theme }) => theme.color.mono.white};
     ${({ theme }) => fontStyle(theme.font.body[1].R)}
   `,
   DropDownHeader: styled.div`
@@ -74,11 +75,11 @@ const S = {
     height: 100%;
     min-height: 2.4rem;
     padding: 1.6rem;
-    border: 0.1rem solid ${theme.palette.grey400};
     align-items: center;
     box-sizing: border-box;
     border-radius: 0.4rem;
     column-gap: 0.4rem;
+    border: ${({ theme }) => `1px solid ${theme.color.gray[400]}`};
     cursor: pointer;
   `,
   OptionList: styled.ul`
@@ -86,16 +87,16 @@ const S = {
     ${flexColumn}
     z-index: ${({ theme }) => theme.zIndex.DROPDOWN};
 
-    width: 12.5rem;
+    width: 16rem;
     max-height: 26rem;
 
     margin-top: 0.4rem;
     overflow-y: auto;
-    box-shadow: 0 0 1rem 0 ${theme.palette.grey400};
+    box-shadow: ${({ theme }) => ` 0 0 1rem 0 ${theme.color.gray[400]}`};
 
     border-radius: 0.8rem;
 
-    background-color: ${theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
   `,
   OptionItem: styled.li`
     ${flexRow}
@@ -110,7 +111,7 @@ const S = {
 
     &:hover,
     &:active {
-      background-color: ${theme.palette.grey200};
+      background-color: ${({ theme }) => theme.color.gray[200]};
     }
   `,
 };

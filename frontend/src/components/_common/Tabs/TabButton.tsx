@@ -31,7 +31,7 @@ const TabButton = forwardRef<HTMLDivElement, Props>(
         ref={ref}
         {...rest}
       >
-        <S.TextBox className={className ? `sprite-icon ${className}` : ''}>{name}</S.TextBox>
+        <S.TextBox className={className ? `${className}` : ''}>{name}</S.TextBox>
         {isCompleted === false && <S.UncompletedIndicator />}
       </S.Container>
     );
@@ -51,10 +51,8 @@ const S = {
     padding: 0.6rem 1.2rem;
 
     color: ${({ theme, active }) => (active ? theme.color.mono.black : theme.color.gray[400])};
-    border-bottom: ${({ theme, active }) => active && `.2rem solid ${theme.color.mono.black}`};
+    border-bottom: ${({ theme, active }) => active && `1px solid ${theme.color.mono.black}`};
     cursor: pointer;
-
-    font-weight: 600;
   `,
   TextBox: styled.div`
     display: flex;

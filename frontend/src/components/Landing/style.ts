@@ -2,8 +2,25 @@ import styled from '@emotion/styled';
 
 import { arrowMove, fadeIn } from '@/styles/animation';
 import { flexCenter, flexColumn } from '@/styles/common';
+import { fontStyle } from '@/utils/fontStyle';
 
 const CS = {
+  Container: styled.section`
+    ${flexColumn}
+    ${flexCenter}
+    gap: 1rem;
+    line-height: 1.5;
+  `,
+  Title: styled.h3`
+    text-align: center;
+    margin-bottom: 0.5rem;
+    ${({ theme }) => fontStyle(theme.font.title[3].B)};
+  `,
+  Desc: styled.div<{ color?: string }>`
+    color: ${({ color, theme }) => (color ? color : theme.color.gray[500])};
+    text-align: center;
+    ${({ theme }) => fontStyle(theme.font.body[1].B)};
+  `,
   MoveUpDownAnimationBox: styled.div`
     flex-direction: column;
     margin-top: 1.5rem;
@@ -31,20 +48,8 @@ const CS = {
   
     `}
   `,
-  EmptyBox: styled.div<{ height: string; mobileHeight?: string }>`
-    width: 100%;
-    margin-top: ${({ height }) => height};
-
-    @media (min-height < ${({ theme }) => theme.viewport.TABLET}px) {
-      margin-top: ${({ mobileHeight, height }) => mobileHeight || height};
-    }
-  `,
   Observer: styled.div`
     height: 10px;
-  `,
-  Container: styled.div`
-    ${flexColumn}
-    line-height: 1.5;
   `,
   TextBox: styled.div`
     ${flexColumn};
@@ -64,37 +69,22 @@ const CS = {
       font-size: ${({ theme }) => theme.text.size.medium};
     }
   `,
-  Highlight: styled.span`
+  Highlight: styled.span<{ color?: string }>`
     font-weight: ${({ theme }) => theme.text.weight.semiBold};
     width: fit-content;
     padding: 3px;
-    background-color: ${({ theme }) => theme.palette.yellow500};
-  `,
-  CenterBox: styled.div`
-    width: 100%;
-    ${flexCenter}
-  `,
-  PencilIconBox: styled.div`
-    position: absolute;
-    right: -2rem;
-    transform: scaleX(-1);
-  `,
-  LampIconBox: styled.div`
-    position: absolute;
-    margin-top: 20px;
-  `,
-  RelativeBox: styled.div`
-    position: relative;
-  `,
-  IconBox: styled.div`
-    position: absolute;
-    left: 80px;
-  `,
-  ScreenShot: styled.img`
-    width: 25rem;
-    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
-      width: 18rem;
-    }
+    background: ${({ theme, color }) =>
+      `linear-gradient(
+      to bottom,
+      transparent 60%,
+      ${color ? color : theme.color.primary[500]} 60%,
+      ${color ? color : theme.color.primary[500]} 75%,
+      transparent 75%,
+      transparent 85%,
+      ${color ? color : theme.color.primary[500]} 85%,
+      ${color ? color : theme.color.primary[500]} 95%,
+       transparent 100%
+    )`};
   `,
 };
 

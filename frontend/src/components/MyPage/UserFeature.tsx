@@ -45,20 +45,20 @@ const UserFeature = () => {
         {user?.userType !== 'ADMIN' && (
           <S.Section>
             <S.LabelContainer>방끗이 도움되었나요? 한마디 남겨주세요!</S.LabelContainer>
-            <Button label={"방끗이 기다려요, 의견 남기기!"} color={"light"} onClick={handleMoveVoc} variant={"outlined-gray"} tabIndex={1} Icon={ArrowRightIcon} iconPosition={"end"}/>
+            <Button label="방끗이 기다려요, 의견 남기기!" color="light" onClick={handleMoveVoc} variant="outlined-gray" tabIndex={1} Icon={ArrowRightIcon} iconPosition="end"/>
           </S.Section>
         )}
 
         {user?.userType === 'ADMIN' && (
           <S.Section>
-            <Button label={"어드민 페이지 바로가기"} color={"light"} onClick={() => navigate(ROUTE_PATH.admin)} variant={"outlined-gray"} tabIndex={1} Icon={ArrowRightIcon} iconPosition={"end"}/>
+            <Button label="어드민 페이지 바로가기" color="light" onClick={() => navigate(ROUTE_PATH.admin)} variant="outlined-gray" tabIndex={1} Icon={ArrowRightIcon} iconPosition="end"/>
           </S.Section>
         )}
 
         <S.Section>
           <S.LabelContainer>방끗 잠시 안녕!</S.LabelContainer>
-          <Button label={"로그아웃하기"} color={"dark"} onClick={openLogoutModal} tabIndex={1} Icon={ArrowRightIcon} iconPosition={"end"}/>
-          <Button label={"회원 탈퇴하기"} color={"light"} onClick={openDeleteModal} tabIndex={1} />
+          <Button label="로그아웃하기" color="dark" onClick={openLogoutModal} tabIndex={1} Icon={ArrowRightIcon} iconPosition="end"/>
+          <Button label="회원 탈퇴하기" color="light" onClick={openDeleteModal} tabIndex={1} />
         </S.Section>
       </S.Container>
 

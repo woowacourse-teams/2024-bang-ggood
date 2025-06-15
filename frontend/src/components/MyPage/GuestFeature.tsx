@@ -22,11 +22,11 @@ const GuestFeature = () => {
       <S.Container>
         <S.Section>
           <S.LabelContainer>방끗이 도움되었나요? 한마디 남겨주세요!</S.LabelContainer>
-          <Button label={"방끗이 기다려요, 의견 남기기!"} color={"light"} onClick={handleMoveVoc} variant={"outlined-gray"} tabIndex={1} Icon={ArrowRightIcon} iconPosition={"end"}/>
+          <Button label="방끗이 기다려요, 의견 남기기!" color="light" onClick={handleMoveVoc} variant="outlined-gray" tabIndex={1} Icon={ArrowRightIcon} iconPosition="end"/>
         </S.Section>
         <S.Section>
           <S.LabelContainer>방끗 시작하기!</S.LabelContainer>
-          <Button label={"로그인/회원가입 바로가기"} color={"dark"} onClick={() => navigate(ROUTE_PATH.root)} tabIndex={1} Icon={ArrowRightIcon} iconPosition={"end"}/>
+          <Button label="로그인/회원가입 바로가기" color="dark" onClick={() => navigate(ROUTE_PATH.root)} tabIndex={1} Icon={ArrowRightIcon} iconPosition="end"/>
         </S.Section>
       </S.Container>
     </>

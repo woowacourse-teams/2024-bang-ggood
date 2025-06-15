@@ -47,7 +47,7 @@ const NewChecklistPage = () => {
       <Header
         left={<Header.Backward onClick={openAlertModal} />}
         center={<Header.Text>새 체크리스트</Header.Text>}
-        right={<Button label="저장" size="xSmall" variant="text" onClick={handleSaveChecklistButton} />}
+        right={<Button label="저장" size="header" variant="text" onClick={handleSaveChecklistButton} />}
       />
 
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>

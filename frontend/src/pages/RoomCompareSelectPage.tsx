@@ -69,7 +69,14 @@ const RoomCompareSelectPage = () => {
         left={<Header.Backward onClick={() => navigate(ROUTE_PATH.checklistList)} />}
         center={<Header.Text>비교할 방 선택하기</Header.Text>}
         right={
-          <Button color="primary" label="선택" isSquare onClick={handleNavigateToCompare} id="checklistEditButton" />
+          <Button
+            color="primary"
+            label="선택"
+            isSquare
+            onClick={handleNavigateToCompare}
+            id="checklistEditButton"
+            size="small"
+          />
         }
       />
       <Layout bgColor={theme.palette.background} withHeader>

@@ -4,6 +4,7 @@ import ArrowDownIcon from '@/assets/icons/arrow/arrow-down-small.svg';
 import ArrowRightCircleIcon from '@/assets/icons/arrow/arrow-right-circle.svg';
 import ArrowUpIcon from '@/assets/icons/arrow/arrow-up-small.svg';
 import ArrowDropdownIcon from '@/assets/icons/arrow/arrow_dropdown.svg';
+import ArrowRightIcon from '@/assets/icons/arrow/arrow-right.svg';
 import ScrollArrow from '@/assets/icons/arrow/scrollArrow.svg';
 // common-icons
 import CheckIcon from '@/assets/icons/common/check.svg';
@@ -66,6 +67,7 @@ export {
   ArrowDropdownIcon,
   ArrowRightCircleIcon,
   ArrowUpIcon,
+  ArrowRightIcon,
   articleScreen,
   BangBangCryIcon,
   BangBangIcon,

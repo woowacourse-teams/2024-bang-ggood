@@ -6,6 +6,7 @@ import Button from '@/components/_common/Button/Button';
 import CounterBox from '@/components/_common/CounterBox/CounterBox';
 import Header from '@/components/_common/Header/Header';
 import Layout from '@/components/_common/layout/Layout';
+import Text from '@/components/_common/Text/Text';
 import CompareSelectCardList from '@/components/RoomCompare/CompareSelectCardList';
 import { ROUTE_PATH } from '@/constants/routePath';
 import useGetChecklistList from '@/hooks/useGetChecklistList';
@@ -68,18 +69,9 @@ const RoomCompareSelectPage = () => {
       <Header
         left={<Header.Backward onClick={() => navigate(ROUTE_PATH.checklistList)} />}
         center={<Header.Text>비교할 방 선택하기</Header.Text>}
-        right={
-          <Button
-            color="primary"
-            label="선택"
-            isSquare
-            onClick={handleNavigateToCompare}
-            id="checklistEditButton"
-            size="small"
-          />
-        }
       />
-      <Layout bgColor={theme.palette.background} withHeader>
+      {/* 플로팅버튼 position:fixed 의 width를 상속받게하기위해 transform을 주는 트릭 사용하였음. */}
+      <Layout bgColor={theme.palette.background} withHeader style={{ transform: 'translateZ(0)' }}>
         <S.CounterContainer>
           <CounterBox currentCount={selectedRoomIds.size} totalCount={2} />
         </S.CounterContainer>
@@ -88,6 +80,11 @@ const RoomCompareSelectPage = () => {
           selectedRoomIds={selectedRoomIds}
           toggleSelectChecklist={handleToggleSelectChecklist}
           isLoading={isLoading}
+        />
+        <S.FloatingButton
+          label={<Text typography={font => font.body[1].B}>선택하기</Text>}
+          onClick={handleNavigateToCompare}
+          id="checklistEditButton"
         />
       </Layout>
     </>
@@ -101,6 +98,16 @@ const S = {
     height: 3rem;
     margin-top: 1rem;
     justify-content: flex-end;
+  `,
+  FloatingButton: styled(Button)`
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: inherit;
+    margin: 0 1.6rem 1.6rem;
+
+    background-color: ${({ theme }) => theme.color.primary[500]};
   `,
 };
 

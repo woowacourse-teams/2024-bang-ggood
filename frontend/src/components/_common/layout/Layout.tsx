@@ -48,6 +48,7 @@ const S = {
     withTab: boolean;
     fitContent: boolean;
   }>`
+    position: relative;
     box-sizing: border-box;
     overflow: hidden auto;
     ${({ withHeader, withFooter, withTab, fitContent }) => getHeightStyle(withHeader, withFooter, withTab, fitContent)}

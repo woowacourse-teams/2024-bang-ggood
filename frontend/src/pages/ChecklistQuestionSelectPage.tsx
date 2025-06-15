@@ -63,9 +63,8 @@ const ChecklistQuestionSelectPage = () => {
         right={
           <Button
             label="저장"
-            size="small"
-            color="dark"
-            isSquare
+            size="header"
+            variant="text"
             onClick={handleSubmitChecklist}
             id="checklistSubmitButton"
           />

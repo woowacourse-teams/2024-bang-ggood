@@ -43,12 +43,12 @@ const S = {
   TipText: styled.div`
     ${flexRow}
     word-break: keep-all;
-    ${({ theme }) => fontStyle(theme.font.caption[1].R)}
+    ${({ theme }) => fontStyle(theme.font.label[1].R)}
     gap: 1rem;
   `,
   Bold: styled.div`
     ${flexRow}
-    ${({ theme }) => fontStyle(theme.font.caption[1].B)}
+    ${({ theme }) => fontStyle(theme.font.label[1].B)}
   `,
 };
 

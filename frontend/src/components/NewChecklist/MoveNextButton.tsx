@@ -23,13 +23,7 @@ const MoveNextButton = ({ marginTop = '0', marginBottom = '0' }: Props) => {
 
   return (
     <S.ContentBox marginTop={marginTop} marginBottom={marginBottom}>
-      <Button
-        label="이전으로 이동"
-        onClick={handleClickPrev}
-        disabled={currentTabId === -1}
-        variant="outlined"
-        color="primary"
-      />
+      <Button label="이전으로 이동" onClick={handleClickPrev} disabled={currentTabId === -1} color="light" />
       <Button
         label="다음으로 이동"
         onClick={handleClickNext}

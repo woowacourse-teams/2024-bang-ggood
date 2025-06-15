@@ -113,6 +113,17 @@ const getColorStyles = ({
     `;
   }
 
+  if (variant === 'text') {
+    return css`
+      color: ${theme.color.mono.black};
+
+      &:hover,
+      &:active {
+        background-color: ${theme.color.gray[100]};
+      }
+    `;
+  }
+
   if (color === 'light' && variant === 'contain') {
     return css`
       background-color: ${theme.color.mono.white};

@@ -4,6 +4,7 @@ import ArrowDownIcon from '@/assets/icons/arrow/arrow-down-small.svg';
 import ArrowRightCircleIcon from '@/assets/icons/arrow/arrow-right-circle.svg';
 import ArrowUpIcon from '@/assets/icons/arrow/arrow-up-small.svg';
 import ArrowDropdownIcon from '@/assets/icons/arrow/arrow_dropdown.svg';
+import ScrollArrow from '@/assets/icons/arrow/scrollArrow.svg';
 // common-icons
 import CheckIcon from '@/assets/icons/common/check.svg';
 import CloseIcon from '@/assets/icons/common/close.svg';
@@ -52,9 +53,9 @@ import ToastConfirmIcon from '@/assets/icons/toast/toast-confirm.svg';
 import ToastErrorIcon from '@/assets/icons/toast/toast-error.svg';
 import ToastInfoIcon from '@/assets/icons/toast/toast-info.svg';
 // landing page
-import checkingPageScreen from '@/assets/images/checkingPageScreen.webp';
-import customPageScreen from '@/assets/images/customPageScreen.webp';
-import mainPageScreen from '@/assets/images/mainPageScreen.webp';
+import articleScreen from '@/assets/images/article.png';
+import ChecklistImage from '@/assets/images/checklist.svg';
+import editChecklistImage from '@/assets/images/editChecklist.png';
 import ImageWrapper from '@/assets/utils/ImageWrapper';
 
 const BangBangIcon3D = ImageWrapper(BangBangIcon3DUrl);
@@ -65,6 +66,7 @@ export {
   ArrowDropdownIcon,
   ArrowRightCircleIcon,
   ArrowUpIcon,
+  articleScreen,
   BangBangCryIcon,
   BangBangIcon,
   BangBangIcon3D,
@@ -72,9 +74,9 @@ export {
   Building,
   Calendar,
   CheckIcon,
-  checkingPageScreen,
+  ChecklistImage,
   CloseIcon,
-  customPageScreen,
+  editChecklistImage,
   EmptyHomeIcon,
   Error404,
   Error500,
@@ -87,7 +89,6 @@ export {
   LampIcon,
   LocationIcon,
   LocationLineIcon,
-  mainPageScreen,
   MemoIcon,
   Options,
   Pencil,
@@ -96,6 +97,7 @@ export {
   PlusWhiteIcon,
   RetryIcon,
   Room,
+  ScrollArrow,
   SearchIcon,
   SmallCheckIcon,
   Stairs,

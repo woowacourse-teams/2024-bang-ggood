@@ -17,19 +17,19 @@ interface Color {
 
 const SectionColors: Record<string, Color> = {
   first: {
-    background: theme.palette.white,
+    background: theme.color.mono.white,
   },
   second: {
-    background: theme.palette.yellow100,
+    background: theme.color.primary[500],
   },
   third: {
-    background: theme.palette.green100,
+    background: theme.color.gray[200],
   },
   fourth: {
-    background: theme.palette.background,
+    background: theme.color.gray[100],
   },
   fifth: {
-    background: theme.palette.yellow200,
+    background: theme.color.mono.white,
   },
 };
 
@@ -46,7 +46,7 @@ const LandingPage = () => {
       {Object.keys(SectionColors).map((key, index) => {
         return (
           <S.Section
-            height={index === LAST_SECTION_INDEX ? '30rem' : undefined}
+            height={index === LAST_SECTION_INDEX ? '20rem' : '65rem'}
             key={key}
             ref={el => (sectionRefs.current[index] = el)}
             color={SectionColors[key].background}

@@ -7,9 +7,9 @@ import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
 import { fontStyle } from '@/utils/fontStyle';
 
-type ButtonVariant = 'none' | 'outlined' | 'outlined-gray';
+type ButtonVariant = 'text' | 'contain' | 'outlined' | 'outlined-gray';
 type ButtonSize = 'xSmall' | 'small' | 'medium' | 'full';
-type ColorOption = 'light' | 'dark' | 'primary' | 'disabled';
+type ColorOption = 'light' | 'dark' | 'primary';
 type ButtonType = 'button' | 'submit' | 'reset';
 
 interface Props extends ComponentProps<'button'> {
@@ -17,7 +17,7 @@ interface Props extends ComponentProps<'button'> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   color?: ColorOption;
-  label: string;
+  label: React.ReactNode;
   isSquare?: boolean; // TODO: rounded 로 props 변경 후 삭제
   rounded?: boolean;
   onClick?: () => void;
@@ -28,18 +28,18 @@ interface Props extends ComponentProps<'button'> {
 }
 
 const Button = ({
+  type = 'button',
+  variant = 'contain',
   size = 'medium',
   color = 'light',
   label,
   isSquare = false,
   rounded = false,
   onClick = () => {},
-  disabled,
-  type = 'button',
-  variant = 'none',
-  id,
+  disabled = false,
   Icon,
   iconPosition = 'start',
+  id,
   ...rest
 }: Props) => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
@@ -55,11 +55,11 @@ const Button = ({
       color={color}
       isSquare={isSquare}
       rounded={rounded}
-      onClick={color !== 'disabled' ? onClick : () => {}}
+      onClick={disabled ? () => {} : onClick}
       onKeyDown={handleKeyDown}
       {...rest}
       disabled={disabled ?? false}
-      aria-label={label}
+      aria-label={typeof label === 'string' ? label : undefined}
       type={type}
       variant={variant}
     >
@@ -86,7 +86,7 @@ const S = {
     ${({ isSquare }) => (isSquare ? 'border-radius: 0.5rem' : 'border-radius: 2.5rem')};
     ${({ rounded }) => (rounded ? 'border-radius: 4rem' : 'border-radius: 0.8rem')};
     ${({ size }) => sizeStyles[size]};
-    ${({ color, disabled, variant }) => ColorStyles[disabled ? 'disabled' : variant !== 'none' ? variant : color]};
+    ${({ color, disabled, variant }) => getColorStyles({ color, disabled, variant })};
     cursor: pointer;
     box-sizing: border-box;
     ${flexCenter}
@@ -99,66 +99,103 @@ const S = {
   `,
 };
 
-const ColorStyles = {
-  light: css`
-    background-color: ${theme.color.mono.white};
+const getColorStyles = ({
+  color,
+  disabled,
+  variant,
+}: {
+  color: ColorOption;
+  disabled: boolean;
+  variant: ButtonVariant;
+}) => {
+  if (disabled) {
+    return css`
+      background-color: ${theme.color.gray[200]};
 
-    color: ${theme.color.mono.black};
-
-    &:hover,
-    &:active {
-      background-color: ${theme.color.gray[100]};
-    }
-  `,
-  dark: css`
-    background-color: ${theme.color.mono.black};
-
-    color: ${theme.color.mono.white};
-
-    &:hover,
-    &:active {
       color: ${theme.color.gray[500]};
-    }
-  `,
-  primary: css`
-    background-color: ${theme.color.primary[500]};
+      cursor: not-allowed;
+    `;
+  }
 
-    color: ${theme.color.mono.black};
+  if (variant === 'text') {
+    return css`
+      color: ${theme.color.mono.black};
 
-    &:hover,
-    &:active {
-      background-color: ${theme.color.primary[600]};
-    }
-  `,
-  outlined: css`
-    border: 1px solid ${theme.color.primary[500]};
+      &:hover,
+      &:active {
+        background-color: ${theme.color.gray[100]};
+      }
+    `;
+  }
 
-    background-color: ${theme.color.mono.white};
+  if (color === 'light' && variant === 'contain') {
+    return css`
+      background-color: ${theme.color.mono.white};
 
-    color: ${theme.color.primary[500]};
+      color: ${theme.color.mono.black};
 
-    &:hover,
-    &:active {
-      background-color: ${theme.color.primary[100]};
-    }
-  `,
-  'outlined-gray': css`
-    border: 1px solid ${theme.color.gray[200]};
+      &:hover,
+      &:active {
+        background-color: ${theme.color.gray[100]};
+      }
+    `;
+  }
 
-    background-color: ${theme.color.mono.white};
+  if (color === 'dark' && variant === 'contain') {
+    return css`
+      background-color: ${theme.color.mono.black};
 
-    color: ${theme.color.mono.black};
+      color: ${theme.color.mono.white};
 
-    &:hover,
-    &:active {
-      background-color: ${theme.color.gray[100]};
-    }
-  `,
-  disabled: css`
-    background-color: ${theme.color.gray[200]};
+      &:hover,
+      &:active {
+        color: ${theme.color.gray[500]};
+      }
+    `;
+  }
 
-    color: ${theme.color.gray[500]};
-  `,
+  if (color === 'primary' && variant === 'contain') {
+    return css`
+      background-color: ${theme.color.primary[500]};
+
+      color: ${theme.color.mono.black};
+
+      &:hover,
+      &:active {
+        background-color: ${theme.color.primary[600]};
+      }
+    `;
+  }
+
+  if (color === 'primary' && variant === 'outlined') {
+    return css`
+      border: 1px solid ${theme.color.primary[500]};
+
+      background-color: ${theme.color.mono.white};
+
+      color: ${theme.color.primary[500]};
+
+      &:hover,
+      &:active {
+        background-color: ${theme.color.primary[100]};
+      }
+    `;
+  }
+
+  if (variant === 'outlined') {
+    return css`
+      border: 1px solid ${theme.color.gray[200]};
+
+      background-color: ${theme.color.mono.white};
+
+      color: ${theme.color.mono.black};
+
+      &:hover,
+      &:active {
+        background-color: ${theme.color.gray[200]};
+      }
+    `;
+  }
 };
 
 const sizeStyles = {

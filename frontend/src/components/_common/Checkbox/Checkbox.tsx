@@ -4,7 +4,7 @@ import { CheckIcon, PlusWhiteIcon } from '@/assets/assets';
 import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
 
-interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface StyledProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
   isChecked: boolean;
   color?: string;
   onClick?: () => void;
@@ -18,12 +18,13 @@ const Checkbox = ({
   iconType = 'check',
   onClick,
   ariaLabel,
+  ...props
 }: StyledProps) => {
   const checkedColor = isChecked ? color : theme.color.gray[300];
   const hoverColor = isChecked ? theme.color.primary[600] : theme.color.gray[500];
 
   return (
-    <S.Checkbox $color={checkedColor} $hoverColor={hoverColor} onClick={onClick} aria-label={ariaLabel}>
+    <S.Checkbox $color={checkedColor} $hoverColor={hoverColor} onClick={onClick} aria-label={ariaLabel} {...props}>
       <S.FlexBox>
         {iconType === 'check' ? <CheckIcon aria-hidden="true" /> : <PlusWhiteIcon aria-hidden="true" />}
       </S.FlexBox>

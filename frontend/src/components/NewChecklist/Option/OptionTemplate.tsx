@@ -18,6 +18,7 @@ const OptionTemplate = () => {
           <OptionList />
         </S.OptionBox>
       </S.InnerBox>
+
       <MoveNextButton marginTop="2rem" marginBottom="4rem" />
     </Layout>
   );

@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 
 import BoxErrorFallback from '@/components/_common/errorBoundary/BoxErrorFallback';
 import ArticleCardContainer from '@/components/Main/ArticleCardContainer';
+import SkArticleSection from '@/components/skeleton/Main/SkArticleSection';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { flexRow, flexSpaceBetween } from '@/styles/common';
 import { fontStyle } from '@/utils/fontStyle';
+import { Suspense } from 'react';
 
 const ArticleSection = () => {
   const navigate = useNavigate();
@@ -22,7 +24,9 @@ const ArticleSection = () => {
         <S.ShowMore onClick={handleClickShowMore}>더보기</S.ShowMore>
       </S.Row>
       <ErrorBoundary FallbackComponent={BoxErrorFallback}>
-        <ArticleCardContainer />
+        <Suspense fallback={<SkArticleSection />}>
+          <ArticleCardContainer />
+        </Suspense>
       </ErrorBoundary>
     </>
   );

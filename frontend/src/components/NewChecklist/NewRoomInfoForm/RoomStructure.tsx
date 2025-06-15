@@ -16,7 +16,7 @@ const RoomStructure = () => {
 
   return (
     <FlexBox.Vertical>
-      <FormField.Label as="legend" label="방 구조" />
+      <FormField.Label as="legend" label="방 구조" htmlFor="roomStructure" bold />
       <FormStyled.OptionButtonContainer flexWrap="wrap">
         {roomStructures.map(structure => (
           <label key={structure}>

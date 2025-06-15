@@ -84,6 +84,7 @@ const ChecklistQuestionSelectPage = () => {
               <QuestionListTemplate />
             </Suspense>
           </ErrorBoundary>
+          {/* <CustomChecklistQuestionSection /> TODO: 다시 추가하기 */}
         </Layout>
       </TabProvider>
     </>

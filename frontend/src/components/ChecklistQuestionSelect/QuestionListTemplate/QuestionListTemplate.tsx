@@ -41,21 +41,18 @@ const QuestionListTemplate = () => {
 const S = {
   Container: styled.article`
     width: 100%;
-    margin-top: 1rem;
-    border-radius: 0.8rem;
-
-    background-color: white;
+    margin-top: 1.6rem;
   `,
   Span: styled.div`
-    color: ${({ theme }) => theme.palette.grey500};
+    color: ${({ theme }) => theme.color.gray[500]};
   `,
   CounterBox: styled.section`
     display: flex;
+    margin-bottom: 1.6rem;
     padding: 1.2rem;
     justify-content: right;
     gap: 1rem;
     align-items: center;
-    border-bottom: 0.1rem solid ${({ theme }) => theme.palette.grey200};
   `,
 };
 

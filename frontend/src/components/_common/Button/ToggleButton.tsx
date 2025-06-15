@@ -46,7 +46,7 @@ const S = {
     ${flexCenter};
     ${fontStyle(theme.font.body[1].B)};
     border-radius: 2.4rem;
-    border: 1px solid ${({ selected }) => (selected ? theme.color.mono.black : theme.color.gray[300])};
+    border: 1px solid ${({ selected }) => (selected ? theme.color.mono.black : theme.color.gray[100])};
 
     background-color: ${({ selected }) => (selected ? theme.color.mono.black : theme.color.mono.white)};
 

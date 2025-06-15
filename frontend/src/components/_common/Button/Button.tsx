@@ -8,7 +8,7 @@ import theme from '@/styles/theme';
 import { fontStyle } from '@/utils/fontStyle';
 
 type ButtonVariant = 'text' | 'contain' | 'outlined' | 'outlined-gray';
-type ButtonSize = 'xSmall' | 'small' | 'medium' | 'full';
+type ButtonSize = 'xSmall' | 'small' | 'medium' | 'full' | 'header';
 type ColorOption = 'light' | 'dark' | 'primary';
 type ButtonType = 'button' | 'submit' | 'reset';
 
@@ -214,5 +214,10 @@ const sizeStyles = {
   full: css`
     width: 100%;
     height: 4.8rem;
+  `,
+  header: css`
+    width: fit-content;
+    height: 4rem;
+    padding: 0.5rem;
   `,
 };

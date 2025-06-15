@@ -89,7 +89,7 @@ const S = {
     $size: ModalSize;
     isOpen: boolean;
   }>`
-    ${flexColumn}
+    ${flexColumn};
     align-items: flex-start;
 
     position: fixed;
@@ -100,7 +100,7 @@ const S = {
     position: relative;
     width: 100%;
     padding: 1.6rem;
-
+    width: 100%;
     background-color: ${({ backgroundColor }) => backgroundColor};
 
     color: ${({ theme }) => theme.palette.black};

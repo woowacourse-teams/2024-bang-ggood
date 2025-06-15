@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { ArrowDownIcon, BangBangIcon, BangGgoodTextIcon } from '@/assets/assets';
+import { BangBangIcon, BangGgoodTextIcon, ScrollArrow } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import EmailLoginButton from '@/components/_common/LoginButton/EmailLoginButton';
 import KakaoLoginButton from '@/components/_common/LoginButton/KakaoLoginButton';
@@ -11,7 +11,6 @@ import amplitudeInitializer from '@/service/amplitude/amplitudeInitializer';
 import { trackGuestLoginButton } from '@/service/amplitude/trackEvent';
 import { moveUpDown } from '@/styles/animation';
 import { flexCenter, flexColumn } from '@/styles/common';
-import theme from '@/styles/theme';
 import { fontStyle } from '@/utils/fontStyle';
 
 const FirstSection = () => {
@@ -54,7 +53,7 @@ const FirstSection = () => {
       <S.MoreBox>
         <S.SubText>방끗을 소개할게요. 아래를 클릭하세요!</S.SubText>
         <CS.MoveUpDownAnimationBox>
-          <ArrowDownIcon aria-label="스크롤로 하단의 정보를 확인할 수 있어요" fill={theme.color.gray[400]} />
+          <ScrollArrow aria-label="스크롤로 하단의 정보를 확인할 수 있어요" />
         </CS.MoveUpDownAnimationBox>
       </S.MoreBox>
     </S.CenterBox>

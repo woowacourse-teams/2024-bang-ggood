@@ -1,18 +1,27 @@
 import styled from '@emotion/styled';
 
 import { arrowMove, fadeIn } from '@/styles/animation';
-import { flexCenter, flexColumn } from '@/styles/common';
+import { flexCenter, flexColumn, flexSpaceBetween } from '@/styles/common';
 import { fontStyle } from '@/utils/fontStyle';
 
 const CS = {
   Container: styled.section`
+    width: 100%;
+    height: 100%;
     ${flexColumn}
-    ${flexCenter}
+    ${flexSpaceBetween}
+   align-items: center;
     gap: 1rem;
     line-height: 1.5;
+    position: relative;
+  `,
+  TextContainer: styled.div`
+    height: 200px;
+    background-color: 'red';
   `,
   Title: styled.h3`
     text-align: center;
+    margin-top: 3rem;
     margin-bottom: 0.5rem;
     ${({ theme }) => fontStyle(theme.font.title[3].B)};
   `,
@@ -21,13 +30,26 @@ const CS = {
     text-align: center;
     ${({ theme }) => fontStyle(theme.font.body[1].B)};
   `,
+  CenterBox: styled.div`
+    ${flexColumn}
+    ${flexCenter}
+    gap: 1rem;
+  `,
+  EmptyBox: styled.div<{ height: string; mobileHeight?: string }>`
+    width: 100%;
+    margin-top: ${({ height }) => height};
+
+    @media (min-height < ${({ theme }) => theme.viewport.TABLET}px) {
+      margin-top: ${({ mobileHeight, height }) => mobileHeight || height};
+    }
+  `,
   MoveUpDownAnimationBox: styled.div`
     flex-direction: column;
     margin-top: 1.5rem;
     ${flexCenter}
     position: absolute;
     bottom: 3rem;
-    animation: ${arrowMove} 1s infinite;
+    animation: ${arrowMove} 3s infinite;
     left: 50%;
   `,
   AnimationBox: styled.div<{ isIntersecting: boolean }>`

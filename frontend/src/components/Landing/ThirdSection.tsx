@@ -2,7 +2,7 @@ import '@/styles/category-sprite-image.css';
 
 import { useRef } from 'react';
 
-import { EditChecklistImage, ScrollArrow } from '@/assets/assets';
+import { editChecklistImage, ScrollArrow } from '@/assets/assets';
 import CS from '@/components/Landing/style';
 import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';
@@ -16,6 +16,7 @@ const ThirdSection = () => {
 
   return (
     <CS.Container>
+      <CS.EmptyBox height="10px" />
       <div>
         <CS.Title>
           필요한 질문은 <CS.Highlight>넣고</CS.Highlight>
@@ -27,10 +28,8 @@ const ThirdSection = () => {
           나만의 체크리스트를 만들어보세요.
         </CS.Desc>
       </div>
-      <CS.Observer ref={ref} />
-      <CS.AnimationBox isIntersecting={isIntersecting}>
-        <EditChecklistImage width={400} style={{ paddingLeft: '2rem' }} />
-      </CS.AnimationBox>
+
+      <img src={editChecklistImage} width={350} />
 
       <CS.MoveUpDownAnimationBox>
         <ScrollArrow aria-label="스크롤로 하단의 정보를 확인할 수 있어요" />

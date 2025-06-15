@@ -46,7 +46,7 @@ const LandingPage = () => {
       {Object.keys(SectionColors).map((key, index) => {
         return (
           <S.Section
-            height={index === LAST_SECTION_INDEX ? '30rem' : undefined}
+            height={index === LAST_SECTION_INDEX ? '20rem' : '65rem'}
             key={key}
             ref={el => (sectionRefs.current[index] = el)}
             color={SectionColors[key].background}

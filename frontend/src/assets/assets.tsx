@@ -53,12 +53,9 @@ import ToastConfirmIcon from '@/assets/icons/toast/toast-confirm.svg';
 import ToastErrorIcon from '@/assets/icons/toast/toast-error.svg';
 import ToastInfoIcon from '@/assets/icons/toast/toast-info.svg';
 // landing page
-import ArticleImage from '@/assets/images/article.svg';
-import checkingPageScreen from '@/assets/images/checkingPageScreen.webp';
+import articleScreen from '@/assets/images/article.png';
 import ChecklistImage from '@/assets/images/checklist.svg';
-import customPageScreen from '@/assets/images/customPageScreen.webp';
-import EditChecklistImage from '@/assets/images/editChecklist.svg';
-import mainPageScreen from '@/assets/images/mainPageScreen.webp';
+import editChecklistImage from '@/assets/images/editChecklist.png';
 import ImageWrapper from '@/assets/utils/ImageWrapper';
 
 const BangBangIcon3D = ImageWrapper(BangBangIcon3DUrl);
@@ -69,7 +66,7 @@ export {
   ArrowDropdownIcon,
   ArrowRightCircleIcon,
   ArrowUpIcon,
-  ArticleImage,
+  articleScreen,
   BangBangCryIcon,
   BangBangIcon,
   BangBangIcon3D,
@@ -77,11 +74,9 @@ export {
   Building,
   Calendar,
   CheckIcon,
-  checkingPageScreen,
   ChecklistImage,
   CloseIcon,
-  customPageScreen,
-  EditChecklistImage,
+  editChecklistImage,
   EmptyHomeIcon,
   Error404,
   Error500,
@@ -94,7 +89,6 @@ export {
   LampIcon,
   LocationIcon,
   LocationLineIcon,
-  mainPageScreen,
   MemoIcon,
   Options,
   Pencil,

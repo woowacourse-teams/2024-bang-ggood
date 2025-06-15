@@ -53,7 +53,7 @@ const Button = ({
       color={color}
       isSquare={isSquare}
       rounded={rounded}
-      onClick={!disabled ? onClick : () => {}}
+      onClick={disabled ? () => {} : onClick}
       onKeyDown={handleKeyDown}
       {...rest}
       disabled={disabled ?? false}

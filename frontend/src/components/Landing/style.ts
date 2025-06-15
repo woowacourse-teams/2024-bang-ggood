@@ -25,12 +25,18 @@ const CS = {
     margin-bottom: 0.5rem;
     ${({ theme }) => fontStyle(theme.font.title[3].B)};
   `,
+  BigTitle: styled.h1`
+    text-align: center;
+    ${({ theme }) => fontStyle(theme.font.title[1].B)};
+  `,
   Desc: styled.div<{ color?: string }>`
     color: ${({ color, theme }) => (color ? color : theme.color.gray[500])};
     text-align: center;
     ${({ theme }) => fontStyle(theme.font.body[1].B)};
   `,
   CenterBox: styled.div`
+    width: 100%;
+    height: 100%;
     ${flexColumn}
     ${flexCenter}
     gap: 1rem;
@@ -50,7 +56,6 @@ const CS = {
     position: absolute;
     bottom: 3rem;
     animation: ${arrowMove} 3s infinite;
-    left: 50%;
   `,
   AnimationBox: styled.div<{ isIntersecting: boolean }>`
     width: 100%;

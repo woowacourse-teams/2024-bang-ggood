@@ -4,6 +4,7 @@ import React, { useRef } from 'react';
 import FifthSection from '@/components/Landing/FifthSection';
 import FirstSection from '@/components/Landing/FirstSection';
 import FourthSection from '@/components/Landing/FourthSection';
+import IntroSection from '@/components/Landing/IntroSection';
 import SecondSection from '@/components/Landing/SecondSection';
 import ThirdSection from '@/components/Landing/ThirdSection';
 import useAutoLogin from '@/hooks/useAutoLogin';
@@ -16,24 +17,27 @@ interface Color {
 }
 
 const SectionColors: Record<string, Color> = {
-  first: {
+  0: {
     background: theme.color.mono.white,
   },
-  second: {
+  1: {
+    background: theme.color.mono.white,
+  },
+  2: {
     background: theme.color.primary[500],
   },
-  third: {
+  3: {
     background: theme.color.gray[200],
   },
-  fourth: {
+  4: {
     background: theme.color.gray[100],
   },
-  fifth: {
+  5: {
     background: theme.color.mono.white,
   },
 };
 
-const LAST_SECTION_INDEX = 4;
+const SMALL_SECTION_INDEX = [1, 5];
 
 const LandingPage = () => {
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
@@ -46,7 +50,7 @@ const LandingPage = () => {
       {Object.keys(SectionColors).map((key, index) => {
         return (
           <S.Section
-            height={index === LAST_SECTION_INDEX ? '20rem' : '65rem'}
+            height={SMALL_SECTION_INDEX.includes(index) ? '30rem' : '80rem'}
             key={key}
             ref={el => (sectionRefs.current[index] = el)}
             color={SectionColors[key].background}
@@ -62,6 +66,7 @@ const LandingPage = () => {
 
 const sections = [
   () => <FirstSection />,
+  () => <IntroSection />,
   () => <SecondSection />,
   () => <ThirdSection />,
   () => <FourthSection />,

@@ -2,7 +2,8 @@ import styled from '@emotion/styled';
 
 import { LocationLineIcon } from '@/assets/assets';
 import Checkbox from '@/components/_common/Checkbox/Checkbox';
-import { flexColumn, flexRow, flexSpaceBetween, omitText, title3 } from '@/styles/common';
+import Text from '@/components/_common/Text/Text';
+import { flexColumn, flexRow, flexSpaceBetween, omitText } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
 import { formattedUndefined } from '@/utils/formattedUndefined';
 
@@ -24,17 +25,21 @@ const CompareSelectCard = ({ isSelected, toggleSelectChecklist, room }: Props) =
         <S.FlexColumn>
           <S.LocationWrapper>
             <LocationLineIcon aria-hidden="true" />
-            {formattedUndefined(address, 'string')}
+            <Text typography={font => font.headline[2].R} color={color => color.gray[400]}>
+              {formattedUndefined(address, 'string')}
+            </Text>
           </S.LocationWrapper>
-          <S.Title>{roomName}</S.Title>
+          <Text typography={font => font.headline[2].R}>{roomName}</Text>
           <S.Deposit>
-            {formattedUndefined(deposit)} / {formattedUndefined(rent)}
+            <Text typography={font => font.headline[2].R}>
+              {formattedUndefined(deposit)} / {formattedUndefined(rent)}
+            </Text>
           </S.Deposit>
-          <S.SummaryWrapper>
-            <S.SummaryBox>{`"${formattedUndefined(room.summary, 'string')}"`}</S.SummaryBox>
-          </S.SummaryWrapper>
         </S.FlexColumn>
       </S.FlexRow>
+      <S.SummaryWrapper>
+        <S.SummaryBox>{`"${formattedUndefined(room.summary, 'string')}"`}</S.SummaryBox>
+      </S.SummaryWrapper>
     </S.Card>
   );
 };
@@ -47,7 +52,7 @@ const S = {
     border-radius: 10px;
 
     background-color: ${({ isSelected, theme }) => (isSelected ? theme.palette.green50 : theme.palette.white)};
-    row-gap: 5px;
+    row-gap: 24px;
     cursor: pointer;
   `,
   CheckboxContainer: styled.div`
@@ -75,9 +80,7 @@ const S = {
 
     font-size: ${({ theme }) => theme.text.size.small};
   `,
-  Title: styled.p`
-    ${title3}
-  `,
+
   Deposit: styled.p`
     font-size: ${({ theme }) => theme.text.size.medium};
   `,
@@ -99,7 +102,7 @@ const S = {
   FlexRow: styled.div<{ gap?: string; width?: string }>`
     ${flexRow}
     align-items: center;
-    column-gap: ${({ gap }) => (gap ? gap : '4%')};
+    gap: ${({ gap }) => (gap ? gap : '4%')};
     ${({ width }) => width && `width:${width}`};
     height: 100%;
   `,

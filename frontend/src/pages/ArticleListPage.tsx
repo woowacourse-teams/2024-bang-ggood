@@ -21,37 +21,38 @@ const ArticleListPage = () => {
   const [selectKeyword, setSelectedKeyword] = useState<ArticleType | '전체'>('전체');
 
   return (
-    <div>
+    <div style={{ backgroundColor: theme.color.gray[50], minHeight: '100dvh' }}>
       <Header center={<Header.Text>아티클</Header.Text>} />
-      <div style={{ padding: '1rem 1.6rem' }}>
+      <div style={{ padding: '1rem 1.6rem', backgroundColor: theme.color.mono.white }}>
         <ArticleThumbnailCardCarousel />
-        <div style={{ backgroundColor: theme.color.gray[50] }}>
-          <section>
-            <S.ScrollBox>
-              {(['전체', ...ARTICLE_TYPES] as const).map(type => (
-                <ToggleButton
-                  key={type}
-                  label={type}
-                  selected={selectKeyword === type}
-                  size="small"
-                  onClick={() => setSelectedKeyword(type)}
-                />
-              ))}
-            </S.ScrollBox>
-          </section>
+      </div>
 
-          <ErrorBoundary fallback={<TitleErrorFallback title="방 구하기 전 꼭 필요한 이야기" />}>
-            <Suspense fallback={<TitleErrorFallback title="방 구하기 전 꼭 필요한 이야기" />}>
-              <ArticleListTitle />
-            </Suspense>
-          </ErrorBoundary>
+      <section style={{ backgroundColor: theme.color.mono.white }}>
+        <S.ScrollBox>
+          {(['전체', ...ARTICLE_TYPES] as const).map(type => (
+            <ToggleButton
+              key={type}
+              label={type}
+              selected={selectKeyword === type}
+              size="small"
+              onClick={() => setSelectedKeyword(type)}
+            />
+          ))}
+        </S.ScrollBox>
+      </section>
 
-          <ErrorBoundary FallbackComponent={ListErrorFallback}>
-            <Suspense fallback={<SkArticleList />}>
-              <ArticleListContainer selectKeyword={selectKeyword} />
-            </Suspense>
-          </ErrorBoundary>
-        </div>
+      <div style={{ padding: '1rem 1.6rem', borderTop: `1px solid ${theme.color.gray[100]}` }}>
+        <ErrorBoundary fallback={<TitleErrorFallback title="방 구하기 전 꼭 필요한 이야기" />}>
+          <Suspense fallback={<TitleErrorFallback title="방 구하기 전 꼭 필요한 이야기" />}>
+            <ArticleListTitle />
+          </Suspense>
+        </ErrorBoundary>
+
+        <ErrorBoundary FallbackComponent={ListErrorFallback}>
+          <Suspense fallback={<SkArticleList />}>
+            <ArticleListContainer selectKeyword={selectKeyword} />
+          </Suspense>
+        </ErrorBoundary>
       </div>
     </div>
   );
@@ -66,5 +67,9 @@ const S = {
     gap: 0.5rem;
     ${flexRow}
     padding: 1rem 0;
+
+    &:first-of-type {
+      padding-left: 1.6rem;
+    }
   `,
 };

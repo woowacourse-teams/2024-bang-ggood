@@ -5,7 +5,7 @@ import ProfileSection from '@/components/MyPage/ProfileSection';
 const MyPage = () => {
   return (
     <>
-      <Header center={"마이페이지"} isTransparent transparentRatio={0} />
+      <Header center={<Header.Text>마이페이지</Header.Text>} isTransparent transparentRatio={0} />
       <ProfileSection />
       <FeatureSection />
     </>

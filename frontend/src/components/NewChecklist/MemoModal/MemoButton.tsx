@@ -27,6 +27,7 @@ const S = {
     z-index: ${({ theme }) => theme.zIndex.FLOATING_BUTTON};
 
     width: 100%;
+    max-width: 60rem;
     height: 8rem;
 
     justify-content: center;

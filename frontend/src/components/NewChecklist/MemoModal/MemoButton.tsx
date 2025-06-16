@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
-import { MemoIcon } from '@/assets/assets';
-import { boxShadow, title3 } from '@/styles/common';
+import Button from '@/components/_common/Button/Button';
+import { flexCenter } from '@/styles/common';
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   onClick?: () => void;
@@ -10,10 +10,9 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const MemoButton = ({ onClick }: Props) => {
   return (
     <S.Wrapper>
-      <S.Button onClick={onClick}>
-        <MemoIcon />
-        <span>메모</span>
-      </S.Button>
+      <S.ButtonWrapper>
+        <Button label="메모" onClick={onClick} rounded size="full" />
+      </S.ButtonWrapper>
     </S.Wrapper>
   );
 };
@@ -22,32 +21,20 @@ export default MemoButton;
 
 const S = {
   Wrapper: styled.div`
-    display: flex;
+    ${flexCenter}
     position: fixed;
     bottom: 0;
-    left: 50%;
     z-index: ${({ theme }) => theme.zIndex.FLOATING_BUTTON};
 
     width: 100%;
+    height: 8rem;
 
     justify-content: center;
-    max-width: 60rem;
-    transform: translateX(-50%);
+
+    background-color: ${({ theme }) => theme.color.gray[200]};
+    border-radius: 1.2rem 1.2rem 0 0;
   `,
-  Button: styled.button`
-    display: flex;
-    width: 12rem;
-    padding: 1.2rem;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    gap: 1rem;
-    border-radius: 1.5rem 1.5rem 0 0;
-    ${title3};
-    ${boxShadow};
-    outline: none;
-    cursor: pointer;
-
-    background-color: ${({ theme }) => theme.palette.grey200};
+  ButtonWrapper: styled.div`
+    width: 80%;
   `,
 };

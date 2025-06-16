@@ -54,7 +54,7 @@ const S = {
     justify-content: start;
     row-gap: 1.5rem;
     margin-top: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 5rem;
   `,
 };
 

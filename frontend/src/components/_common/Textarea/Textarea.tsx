@@ -6,6 +6,7 @@ import { flexCenter } from '@/styles/common';
 interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   $color?: 'string';
   $borderRadius: string;
+  $transparent: boolean;
 }
 const widthSize: Record<string, string> = {
   small: '4.5rem',
@@ -26,6 +27,7 @@ interface Props extends React.TextareaHTMLAttributes<HTMLInputElement | HTMLText
   height?: keyof typeof heightSize;
   borderRadius?: string;
   hasBorder?: boolean;
+  transparent?: boolean;
 }
 
 export type TextareaChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
@@ -36,6 +38,7 @@ const Textarea = ({
   onChange,
   borderRadius = '.5rem',
   hasBorder = false,
+  transparent = false,
   ...rest
 }: Props) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -66,6 +69,7 @@ const Textarea = ({
         {...rest}
         onChange={handleChange}
         $borderRadius={borderRadius}
+        $transparent={transparent}
       />
     </S.Box>
   );
@@ -81,7 +85,7 @@ const S = {
     ${({ height }) => height && `height: ${height};`};
     padding: 0.6rem 1.1rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme, $transparent }) => ($transparent ? 'transparent' : theme.palette.white)};
 
     color: ${({ $color, theme }) => ($color ? $color : theme.palette.grey600)};
     font-weight: ${({ theme }) => theme.text.weight.medium};

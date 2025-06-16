@@ -1,12 +1,13 @@
 import styled from '@emotion/styled';
 import { useRef } from 'react';
 
+import { CloseIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import Modal from '@/components/_common/Modal/Modal';
 import Textarea from '@/components/_common/Textarea/Textarea';
 import useInput from '@/hooks/useInput';
 import useRoomInfoValidated from '@/hooks/useRoomInfoValidated';
-import { flexCenter, title3 } from '@/styles/common';
+import { flexCenter, flexColumn, flexRow, title3 } from '@/styles/common';
 import theme from '@/styles/theme';
 
 interface Props {
@@ -52,23 +53,26 @@ const MemoModal = ({ isModalOpen, modalClose }: Props) => {
         onClose={modalClose}
         hasDim={false}
         position="bottom"
-        color={theme.palette.white}
+        backgroundColor={theme.color.gray[200]}
       >
-        <S.OpenBarBox onClick={modalClose}>
-          <S.OpenBar />
-        </S.OpenBarBox>
-        <S.TextareaBox>
-          <Textarea
-            placeholder="메모를 입력하세요."
-            height={'large'}
-            value={memoValue}
-            onChange={handleInputChange}
-            onBlur={handleBlur}
-          />
-          <S.ButtonBox>
-            <Button label="닫기" size="small" isSquare={true} color={'light'} onClick={() => handleSubmit(true)} />
-          </S.ButtonBox>
-        </S.TextareaBox>
+        <S.Container>
+          <S.ButtonWrapper>
+            <Button label="메모" onClick={() => handleSubmit(true)} rounded size="full" />
+            <S.IconButton onClick={() => handleSubmit(true)}>
+              <CloseIcon />
+            </S.IconButton>
+          </S.ButtonWrapper>
+          <S.TextareaBox>
+            <Textarea
+              placeholder="메모를 입력하세요."
+              height={'large'}
+              value={memoValue}
+              onChange={handleInputChange}
+              onBlur={handleBlur}
+              transparent={true}
+            />
+          </S.TextareaBox>
+        </S.Container>
       </Modal>
     </>
   );
@@ -81,29 +85,21 @@ const S = {
     ${title3}
     margin-top:1rem;
   `,
-  OpenBarBox: styled.div`
+  Container: styled.div`
+    ${flexColumn}
     ${flexCenter}
-    width:100%;
-    height: 2rem;
-    flex-direction: column;
   `,
-  OpenBar: styled.div`
+  ButtonWrapper: styled.div`
+    ${flexRow}
+    ${flexCenter}
     width: 100%;
-    height: 2rem;
-    border-radius: 0.5rem;
-
-    background-color: ${({ theme }) => theme.palette.yellow200};
+  `,
+  IconButton: styled.div`
+    padding: 1.6rem;
   `,
   TextareaBox: styled.div`
     position: relative;
     width: 100%;
-  `,
-
-  ButtonBox: styled.div`
-    position: absolute;
-    right: 1rem;
-    bottom: 1rem;
-    margin-top: 1rem;
   `,
   EmptyBox: styled.div`
     width: 100%;

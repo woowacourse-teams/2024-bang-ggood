@@ -1,12 +1,22 @@
 import ArticleBadge from '@/components/_common/ArticleBadge/ArticleBadge';
+import { ROUTE_PATH } from '@/constants/routePath';
+import { trackArticleDetail } from '@/service/amplitude/trackEvent';
 import { flexColumn } from '@/styles/common';
 import { Article } from '@/types/article';
 import { fontStyle } from '@/utils/fontStyle';
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 const ArticleThumbnailCard = ({ article }: { article: Article }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    trackArticleDetail(article.title);
+    navigate(ROUTE_PATH.articleOne(article.articleId));
+  };
+
   return (
-    <S.Card thumbnail={article.thumbnail}>
+    <S.Card thumbnail={article.thumbnail} onClick={handleClick}>
       <ArticleBadge label={article.keyword} />
       <S.Title>{article.title}</S.Title>
     </S.Card>
@@ -30,6 +40,7 @@ const S = {
 
     color: ${({ theme }) => theme.color.mono.white};
     gap: 1rem;
+    cursor: pointer;
 
     &::after {
       content: '';

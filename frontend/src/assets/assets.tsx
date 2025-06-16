@@ -2,9 +2,9 @@
 import ArrowBackIcon from '@/assets/icons/arrow/arrow-back.svg';
 import ArrowDownIcon from '@/assets/icons/arrow/arrow-down-small.svg';
 import ArrowRightCircleIcon from '@/assets/icons/arrow/arrow-right-circle.svg';
+import ArrowRightIcon from '@/assets/icons/arrow/arrow-right.svg';
 import ArrowUpIcon from '@/assets/icons/arrow/arrow-up-small.svg';
 import ArrowDropdownIcon from '@/assets/icons/arrow/arrow_dropdown.svg';
-import ArrowRightIcon from '@/assets/icons/arrow/arrow-right.svg';
 import ScrollArrow from '@/assets/icons/arrow/scrollArrow.svg';
 // common-icons
 import CheckIcon from '@/assets/icons/common/check.svg';
@@ -32,6 +32,7 @@ import LocationIcon from '@/assets/icons/map/location.svg';
 import SearchIcon from '@/assets/icons/map/search.svg';
 // mascot
 import BangBangIcon3DUrl from '@/assets/icons/mascot/3D-bang-bang-icon.png';
+import BangBangCryGrayIcon from '@/assets/icons/mascot/bang-bang-cry-gray-icon.svg';
 import BangBangCryIcon from '@/assets/icons/mascot/bang-bang-cry-icon.svg';
 import BangBangIcon from '@/assets/icons/mascot/bang-bang-icon.svg';
 import LampIcon from '@/assets/icons/mascot/lamp-icon.svg';
@@ -66,9 +67,10 @@ export {
   ArrowDownIcon,
   ArrowDropdownIcon,
   ArrowRightCircleIcon,
-  ArrowUpIcon,
   ArrowRightIcon,
+  ArrowUpIcon,
   articleScreen,
+  BangBangCryGrayIcon,
   BangBangCryIcon,
   BangBangIcon,
   BangBangIcon3D,

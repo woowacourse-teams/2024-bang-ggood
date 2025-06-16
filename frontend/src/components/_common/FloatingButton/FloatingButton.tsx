@@ -96,17 +96,13 @@ const S = {
     display: flex;
     position: fixed;
     bottom: calc(2% + ${FOOTER_SIZE}rem);
-    left: 55%;
+    left: 50%;
     z-index: ${theme.zIndex.FLOATING_BUTTON};
     width: 100%;
-    padding-right: 10%;
+    padding-right: 3%;
     justify-content: flex-end;
     transform: translateX(-50%);
     max-width: 60rem;
-
-    @media (min-width: ${theme.viewport.MOBILE}px) {
-      padding-right: 2rem;
-    }
   `,
   Button: styled.button<{ size: Size; color: Color }>`
     ${flexCenter}

@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -69,11 +68,7 @@ const ChecklistDetailPage = () => {
       </Layout>
 
       <AlertModal
-        title={
-          <div>
-            정말 <S.AccentText>체크리스트</S.AccentText>를 삭제하시겠습니까?
-          </div>
-        }
+        title="정말 체크리스트를 삭제하시겠습니까?"
         subtitle="삭제한 체크리스트는 다시 확인할 수 없습니다."
         isOpen={isAlertModalOpen}
         onClose={closeModal}
@@ -84,9 +79,3 @@ const ChecklistDetailPage = () => {
 };
 
 export default ChecklistDetailPage;
-
-const S = {
-  AccentText: styled.span`
-    color: ${({ theme }) => theme.palette.green600};
-  `,
-};

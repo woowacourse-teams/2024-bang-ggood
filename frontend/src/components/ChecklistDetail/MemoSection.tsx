@@ -17,7 +17,13 @@ const MemoSection = ({ memo }: Props) => {
   return (
     <Accordion totalCount={CATEGORY_COUNT}>
       <S.MemoWrapper>
-        <Accordion.header text={'메모'} id={1} isMarked={true} />
+        <Accordion.header
+          text={'메모'}
+          id={1}
+          style={{
+            marginBottom: '0.2rem',
+          }}
+        />
         <Accordion.body id={1}>
           <S.Memo>{formattedMemo || ''}</S.Memo>
         </Accordion.body>

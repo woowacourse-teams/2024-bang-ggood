@@ -6,7 +6,7 @@ import AddressMap from '@/components/_common/Map/AddressMap';
 import SubwayStations from '@/components/_common/Subway/SubwayStations';
 import Text from '@/components/_common/Text/Text';
 import { IncludedMaintenancesData } from '@/constants/roomInfo';
-import { flexColumn, flexRow, flexSpaceBetween, title2, title3 } from '@/styles/common';
+import { flexColumn } from '@/styles/common';
 import { Option } from '@/types/option';
 import { RoomInfo } from '@/types/room';
 import { SubwayStation } from '@/types/subway';
@@ -44,21 +44,17 @@ const RoomInfoSection = ({ nearSubways, room, options, checklistId, isLiked }: P
 
   return (
     <S.Container>
-      <S.GreenWrapper>
-        <S.Row>
-          <S.Title>{roomName}</S.Title>
+      <S.YellowWrapper>
+        <FlexBox.Horizontal justify="space-between">
+          <Text typography={font => font.heading[2].B}>{roomName}</Text>
           <LikeButton isLiked={isLiked} checklistId={checklistId} />
-        </S.Row>
+        </FlexBox.Horizontal>
 
-        <S.Row>
-          <S.MoneyText>
-            <div>
-              보증금 {formattedUndefined(deposit)} / 월세 {formattedUndefined(rent)} + 관리비{' '}
-              {formattedUndefined(maintenanceFee)}
-            </div>
-          </S.MoneyText>
-        </S.Row>
-      </S.GreenWrapper>
+        <Text typography={font => font.body[1].B} style={{ marginTop: '.8rem' }}>
+          보증금 {formattedUndefined(deposit)} / 월세 {formattedUndefined(rent)} + 관리비{' '}
+          {formattedUndefined(maintenanceFee)}
+        </Text>
+      </S.YellowWrapper>
 
       <>
         {[
@@ -147,57 +143,12 @@ const S = {
     background-color: ${({ theme }) => theme.palette.white};
     border-radius: 0.8rem;
   `,
-  GreenWrapper: styled.div`
-    width: 100%;
+  YellowWrapper: styled.div`
     padding: 1.6rem;
-
-    background-color: ${({ theme }) => theme.palette.green500};
-
-    color: ${({ theme }) => theme.palette.white};
-    font-size: ${({ theme }) => theme.text.size.small};
-    box-sizing: border-box;
     border-radius: 1.6rem;
-  `,
-  Label: styled.div`
-    width: 100%;
-    ${flexRow}
-    gap: 1rem;
 
-    font-weight: ${({ theme }) => theme.text.weight.bold};
-  `,
-  Text: styled.div`
-    ${flexRow}
-    width: 100%;
-  `,
-  Row: styled.div`
-    width: 100%;
-    ${flexRow}
-    gap: 1rem;
-  `,
-  Column: styled.div`
-    width: 100%;
-    ${flexColumn}
-    gap: 1rem;
-  `,
-  GapBox: styled.div`
-    display: flex;
-    gap: 30%;
+    background-color: ${({ theme }) => theme.color.primary[500]};
 
-    @media (width <= 44rem) {
-      gap: 6rem;
-    }
-  `,
-  Title: styled.div`
-    width: 100%;
-    ${title2}
-    min-height: 4rem;
-    word-break: keep-all;
-  `,
-  MoneyText: styled.div`
-    width: 100%;
-
-    ${title3}
-    ${flexRow}
-    ${flexSpaceBetween}
+    color: ${({ theme }) => theme.color.mono.white};
   `,
 };

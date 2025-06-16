@@ -90,8 +90,7 @@ const RoomInfoSection = ({ nearSubways, room, options, checklistId, isLiked }: P
             name: '계약 기간/입주 가능일',
             content: (
               <>
-                {formattedUndefined(contractTerm)}개월 계약 <br />
-                {formattedUndefined(occupancyMonth)}월 {occupancyPeriod}
+                {formattedUndefined(contractTerm)}개월 계약 / {formattedUndefined(occupancyMonth)}월 {occupancyPeriod}
               </>
             ),
           },

@@ -84,7 +84,7 @@ const S = {
 
     background-color: ${({ color }) => color};
 
-    color: ${({ theme }) => theme.palette.black};
+    color: ${({ theme }) => theme.color.mono.black};
     justify-content: center;
   `,
   Container: styled.main`

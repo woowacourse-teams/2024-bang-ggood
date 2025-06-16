@@ -59,7 +59,7 @@ const S = {
   QuestionText: styled.h2`
     margin-bottom: 2rem;
 
-    color: ${({ theme }) => theme.palette.black};
+    color: ${({ theme }) => theme.color.mono.black};
     ${title2}
   `,
   ButtonWrapper: styled.div`

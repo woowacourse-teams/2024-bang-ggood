@@ -89,6 +89,6 @@ const S = {
     justify-content: space-around;
   `,
   TextButton: styled.button`
-    color: ${({ theme }) => theme.palette.black};
+    color: ${({ theme }) => theme.color.mono.black};
   `,
 };

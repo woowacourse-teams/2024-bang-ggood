@@ -16,7 +16,7 @@ interface Props {
 }
 
 const Layout = ({
-  bgColor = theme.palette.white,
+  bgColor = theme.color.mono.white,
   children,
   withHeader = false,
   withFooter = false,

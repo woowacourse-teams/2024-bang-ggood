@@ -188,7 +188,7 @@ const S = {
     margin-bottom: 1rem;
     padding: 1.6rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
     border-radius: 0.8rem;
   `,
   GreenWrapper: styled.div`
@@ -197,7 +197,7 @@ const S = {
 
     background-color: ${({ theme }) => theme.palette.green500};
 
-    color: ${({ theme }) => theme.palette.white};
+    color: ${({ theme }) => theme.color.mono.white};
     font-size: ${({ theme }) => theme.text.size.small};
     box-sizing: border-box;
     border-radius: 1.6rem;

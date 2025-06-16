@@ -46,7 +46,7 @@ const S = {
     border: 2px solid ${({ isSelected, theme }) => (isSelected ? theme.palette.green300 : theme.palette.grey200)};
     border-radius: 10px;
 
-    background-color: ${({ isSelected, theme }) => (isSelected ? theme.palette.green50 : theme.palette.white)};
+    background-color: ${({ isSelected, theme }) => (isSelected ? theme.palette.green50 : theme.color.mono.white)};
     row-gap: 5px;
     cursor: pointer;
   `,

@@ -183,7 +183,7 @@ const S = {
     width: 100%;
     height: 20rem;
 
-    background-color: ${({ theme }) => theme.palette.background};
+    background-color: ${({ theme }) => theme.color.gray[50]};
   `,
   Map: styled.div`
     position: relative;
@@ -199,7 +199,7 @@ const S = {
 
     padding: 0.5rem;
 
-    color: ${({ theme }) => theme.palette.white};
+    color: ${({ theme }) => theme.color.mono.white};
     gap: 1rem;
     border-radius: 0.3rem;
   `,

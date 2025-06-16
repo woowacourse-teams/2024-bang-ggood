@@ -39,13 +39,13 @@ const S = {
   Message: styled.h2`
     margin-bottom: 0.8rem;
 
-    color: ${({ theme }) => theme.palette.red500};
+    color: ${({ theme }) => theme.color.red[400]};
     font-size: ${({ theme }) => theme.text.size.small};
   `,
   Error: styled.pre`
     margin-bottom: 1rem;
 
-    color: ${({ theme }) => theme.palette.grey600};
+    color: ${({ theme }) => theme.color.gray[600]};
     white-space: pre-wrap;
     word-break: break-word;
   `,
@@ -55,16 +55,16 @@ const S = {
     padding: 0.6rem 1.2rem;
     border: none;
 
-    background-color: ${({ theme }) => theme.palette.green500};
+    background-color: ${({ theme }) => theme.color.secondary[500]};
 
-    color: ${({ theme }) => theme.palette.white};
+    color: ${({ theme }) => theme.color.mono.white};
     font-size: ${({ theme }) => theme.text.size.small};
     border-radius: 4px;
     cursor: pointer;
 
     &:hover,
     &:active {
-      background-color: ${({ theme }) => theme.palette.green600};
+      background-color: ${({ theme }) => theme.color.secondary[600]};
     }
   `,
 };

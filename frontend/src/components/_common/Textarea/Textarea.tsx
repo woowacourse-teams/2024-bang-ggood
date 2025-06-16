@@ -85,7 +85,7 @@ const S = {
     ${({ height }) => height && `height: ${height};`};
     padding: 0.6rem 1.1rem;
 
-    background-color: ${({ theme, $transparent }) => ($transparent ? 'transparent' : theme.palette.white)};
+    background-color: ${({ theme, $transparent }) => ($transparent ? 'transparent' : theme.color.mono.white)};
 
     color: ${({ $color, theme }) => ($color ? $color : theme.palette.grey600)};
     font-weight: ${({ theme }) => theme.text.weight.medium};

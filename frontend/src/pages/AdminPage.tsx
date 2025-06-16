@@ -45,12 +45,12 @@ const S = {
     align-items: center;
     height: 100vh;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
   `,
   QuestionBox: styled.div`
     padding: 2rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
 
     text-align: center;
     border-radius: 10px;
@@ -73,7 +73,7 @@ const S = {
 
     background-color: ${({ theme, color }) => (color === 'red' ? theme.palette.red500 : theme.palette.green500)};
 
-    color: ${({ theme }) => theme.palette.white};
+    color: ${({ theme }) => theme.color.mono.white};
     ${title3}
     border-radius: 5px;
     cursor: pointer;

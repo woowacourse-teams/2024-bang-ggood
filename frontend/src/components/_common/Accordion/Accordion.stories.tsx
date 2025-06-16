@@ -17,7 +17,7 @@ const meta = {
       values: [
         {
           name: 'grey',
-          value: theme.palette.grey100,
+          value: theme.color.gray[100],
         },
       ],
     },
@@ -49,7 +49,7 @@ const S = {
     gap: 1rem;
 
     ${title4}
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
     flex-direction: row;
     align-items: center;
     box-sizing: border-box;

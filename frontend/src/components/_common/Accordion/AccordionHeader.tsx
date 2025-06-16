@@ -50,7 +50,7 @@ const S = {
     width: 100%;
     height: 4.8rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
     border-radius: 1.2rem;
     gap: 1rem;
 

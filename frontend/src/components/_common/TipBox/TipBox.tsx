@@ -35,7 +35,7 @@ const S = {
     ${flexSpaceBetween}
     padding: 1.6rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
 
     border-radius: 1rem;
     box-sizing: border-box;

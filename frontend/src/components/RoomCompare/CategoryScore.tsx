@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import FaceIcon from '@/components/_common/FaceIcon/FaceIcon';
 import { MIN_GOOD_SCORE, MIN_SOSO_SCORE } from '@/constants/system';
-import { boxShadow, flexColumn } from '@/styles/common';
+import { flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
 import { fontStyle } from '@/utils/fontStyle';
 
@@ -43,25 +43,25 @@ const S = {
   `,
 
   CategoryItemBox: styled.div`
-    width: 14rem;
     display: flex;
+    width: 14rem;
     align-items: flex-start;
   `,
 
   CategoryItemBox2: styled.div`
-    height: 4rem;
     display: flex;
+    height: 4rem;
     align-items: flex-start;
   `,
 
   Score: styled.button`
-    height: 100%;
     width: 100%;
+    height: 100%;
     padding: 6px 8px;
     border: 1px solid ${({ theme }) => theme.color.primary[500]};
+
     ${fontStyle(theme.font.body[1].B)};
     color: ${({ theme }) => theme.color.primary[500]};
     border-radius: 8px;
-    ${boxShadow}
   `,
 };

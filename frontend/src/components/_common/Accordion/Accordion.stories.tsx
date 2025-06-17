@@ -6,7 +6,7 @@ import { flexSpaceBetween, title4 } from '@/styles/common';
 import theme from '@/styles/theme';
 
 /**
- * Accordion 컴포넌트는 아이템을 확장하$여 보여줄 수 있는 컴포넌트입니다.
+ * Accordion 컴포넌트는 아이템을 확장하여 보여줄 수 있는 컴포넌트입니다.
  */
 const meta = {
   title: 'components/Accordion',

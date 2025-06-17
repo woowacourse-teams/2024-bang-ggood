@@ -18,7 +18,11 @@ const ChecklistAnswerSection = ({ categories }: Props) => {
 
         return (
           <div key={`accordion-${category.categoryId}`}>
-            <Accordion.header text={category.categoryName} id={category.categoryId} isMarked={true} />
+            <Accordion.header
+              text={category.categoryName}
+              id={category.categoryId}
+              style={{ marginBottom: '0.2rem' }}
+            />
             <Accordion.body id={category.categoryId}>
               {category.questions.map((question, index) => (
                 <Fragment key={question.questionId}>

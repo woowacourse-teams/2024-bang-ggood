@@ -74,7 +74,7 @@ const S = {
     height: ${FOOTER_SIZE}rem;
     padding: 1.6rem 0 0.8rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
     max-width: 60rem;
     align-items: flex-start;
     box-sizing: border-box;
@@ -89,6 +89,6 @@ const S = {
     justify-content: space-around;
   `,
   TextButton: styled.button`
-    color: ${({ theme }) => theme.palette.black};
+    color: ${({ theme }) => theme.color.mono.black};
   `,
 };

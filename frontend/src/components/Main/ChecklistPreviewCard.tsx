@@ -54,7 +54,7 @@ const S = {
 
     padding: 1.6rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
     cursor: pointer;
 
     &:hover {

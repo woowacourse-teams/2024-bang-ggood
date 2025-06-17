@@ -139,7 +139,7 @@ const S = {
     margin-bottom: 1rem;
     padding: 1.6rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
     border-radius: 0.8rem;
   `,
   YellowWrapper: styled.div`

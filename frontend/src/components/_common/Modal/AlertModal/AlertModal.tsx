@@ -75,7 +75,7 @@ const S = {
     ${title4}
   `,
   subtitle: styled.div`
-    color: ${({ theme }) => theme.palette.grey500};
+    color: ${({ theme }) => theme.color.secondary[500]};
   `,
   AlertModalButton: styled(Button)`
     width: calc(100% - 1rem);

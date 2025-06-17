@@ -49,7 +49,7 @@ const S = {
         : css`
             border: 0.2rem solid ${theme.palette.grey200};
 
-            background-color: ${theme.palette.white};
+            background-color: ${theme.color.mono.white};
           `}
   `,
 };

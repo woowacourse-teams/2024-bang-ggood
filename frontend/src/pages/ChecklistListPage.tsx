@@ -71,7 +71,7 @@ const S = {
     height: 3rem;
     padding: 1.2rem 1.6rem;
 
-    background-color: ${({ theme, $isChecked }) => ($isChecked ? theme.palette.red200 : theme.palette.white)};
+    background-color: ${({ theme, $isChecked }) => ($isChecked ? theme.palette.red200 : theme.color.mono.white)};
     ${boxShadow};
     cursor: pointer;
   `,

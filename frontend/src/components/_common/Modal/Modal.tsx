@@ -100,10 +100,10 @@ const S = {
     position: relative;
     width: 100%;
     padding: 1.6rem;
-    width: 100%;
+
     background-color: ${({ backgroundColor }) => backgroundColor};
 
-    color: ${({ theme }) => theme.palette.black};
+    color: ${({ theme }) => theme.color.mono.black};
 
     animation: ${({ isOpen }) => (isOpen ? fadeIn : fadeOut)} 0.3s forwards;
     border-radius: 1rem;

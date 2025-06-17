@@ -42,6 +42,8 @@ const CompareSelectCard = ({ isSelected, toggleSelectChecklist, room }: Props) =
   );
 };
 
+export default CompareSelectCard;
+
 const S = {
   Card: styled.div<{ isSelected: boolean }>`
     ${flexColumn}
@@ -67,7 +69,7 @@ const S = {
     align-items: center;
     padding: 0.8rem;
 
-    background-color: ${({ theme }) => theme.palette.grey50};
+    background-color: ${({ theme }) => theme.color.gray[50]};
     border-radius: 0.6rem;
     box-sizing: content-box;
   `,
@@ -95,5 +97,3 @@ const S = {
     height: 100%;
   `,
 };
-
-export default CompareSelectCard;

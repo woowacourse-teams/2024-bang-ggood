@@ -82,15 +82,16 @@ const RoomCompareContent = () => {
             <Marker isCircle={true} size={'medium'} color={theme.palette.yellow500} text={'A'} />
             <S.Title key={rooms[0].checklistId}>{rooms[0].roomName}</S.Title>
           </S.RoomTitle>
+
           <S.RoomTitle>
             <Marker isCircle={true} size={'medium'} color={theme.palette.green500} text={'B'} />
             <S.Title key={rooms[1].checklistId}>{rooms[1].roomName}</S.Title>
           </S.RoomTitle>
         </S.TitleFlex>
       </S.RoomGrid>
-      <S.MapGrid>
-        {positions && <RoomCompareMap positions={positions} />}
-      </S.MapGrid>
+
+      <S.MapGrid>{positions && <RoomCompareMap positions={positions} />}</S.MapGrid>
+
       <S.RoomCompareGrid>
         {rooms?.map((room, index) => (
           <CompareCard
@@ -102,6 +103,7 @@ const RoomCompareContent = () => {
           />
         ))}
       </S.RoomCompareGrid>
+
       {/*방 옵션 비교 모달*/}
       {isOptionModalOpen && (
         <OptionDetailModal
@@ -113,6 +115,7 @@ const RoomCompareContent = () => {
           closeModal={closeOptionModal}
         />
       )}
+
       {/*방 카테고리 디테일 모달*/}
       {isCategoryModalOpen && (
         <CategoryDetailModal isOpen={isCategoryModalOpen} closeModal={handleCloseCategoryDetailModal} />
@@ -136,7 +139,7 @@ const S = {
     width: 50%;
     margin-bottom: 0.5rem;
     ${flexCenter};
-    gap:0.8rem;
+    gap: 0.8rem;
   `,
   Title: styled.span`
     display: inline;
@@ -148,11 +151,11 @@ const S = {
     border-radius: 0.8rem;
   `,
   MapGrid: styled.div`
-      padding: 0 1.6rem;
+    padding: 0 1.6rem;
   `,
   RoomCompareGrid: styled.div`
     ${flexRow};
-    padding: 1.6rem 1.6rem;
+    padding: 1.6rem;
     background: ${({ theme }) => theme.palette.grey100};
     gap: 16px;
   `,

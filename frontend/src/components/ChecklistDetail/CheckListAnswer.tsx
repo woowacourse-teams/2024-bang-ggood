@@ -33,7 +33,7 @@ const S = {
     padding: 1.6rem;
     gap: 1rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
     flex-direction: row;
     align-items: center;
     box-sizing: border-box;

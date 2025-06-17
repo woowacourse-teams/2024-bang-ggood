@@ -2,14 +2,14 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { BangBangIcon, BangGgoodTextIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import FormField from '@/components/_common/FormField/FormField';
 import Header from '@/components/_common/Header/Header';
+import Text from '@/components/_common/Text/Text';
 import { ROUTE_PATH } from '@/constants/routePath';
 import usePostSignUpQuery from '@/hooks/query/usePostSignUpQuery';
 import useValidateInput from '@/hooks/useValidateInput';
-import { flexCenter, title3, title4 } from '@/styles/common';
+import { flexCenter, title3 } from '@/styles/common';
 import { validateEmail, validateLength, validatePassword, validatePasswordConfirm } from '@/utils/authValidation';
 
 const SignUpPage = () => {
@@ -89,12 +89,7 @@ const SignUpPage = () => {
     <>
       <Header left={<Header.Backward onClick={handleClickLanding} />} />
       <S.Wrapper>
-        <S.LogoBox>
-          <BangBangIcon />
-          <BangGgoodTextIcon aria-label="방끗 로고" />
-        </S.LogoBox>
         <S.Box>
-          <S.Label>회원가입</S.Label>
           <FormField onKeyDown={handleKeyDown}>
             <FormField.Label label="이메일" />
             <FormField.Input value={email} name="email" onChange={onChangeEmail} maxLength={254} />
@@ -103,7 +98,7 @@ const SignUpPage = () => {
           <FormField>
             <FormField.Label label="닉네임" />
             <FormField.Input value={name} name="name" onChange={onChangeName} maxLength={20} />
-            <FormField.ErrorMessage value={getNameError()} />
+            {/* <FormField.ErrorMessage value={getNameError()} /> */}
           </FormField>
           <FormField>
             <FormField.Label label="비밀번호" />
@@ -137,7 +132,13 @@ const SignUpPage = () => {
             disabled={disabled}
           />
         </S.Box>
-        <S.NavigateButton onClick={handleMoveSignIn}>방끗 로그인</S.NavigateButton>
+        <S.NavigateButton
+          typography={font => font.body[1].B}
+          color={color => color.gray[600]}
+          onClick={handleMoveSignIn}
+        >
+          방끗 로그인
+        </S.NavigateButton>
       </S.Wrapper>
     </>
   );
@@ -171,17 +172,19 @@ const S = {
   Box: styled.div`
     display: flex;
     position: relative;
-    width: 30rem;
+    width: 36.1rem;
+    margin-top: auto;
+    padding: 0 1.6rem;
     flex-direction: column;
-    padding: 1.6rem;
     border-radius: 1rem;
 
-    background-color: ${({ theme }) => theme.palette.background};
-    gap: 1.5rem;
+    row-gap: 0;
   `,
-  NavigateButton: styled.div`
-    ${title4};
-    color: ${({ theme }) => theme.palette.grey400};
+  NavigateButton: styled(Text)`
+    margin-top: 6rem;
+    margin-bottom: 5.8rem;
+
+    color: ${({ theme }) => theme.color.gray[400]};
     cursor: pointer;
 
     :hover {

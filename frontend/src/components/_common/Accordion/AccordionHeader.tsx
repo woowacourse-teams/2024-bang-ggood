@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { ButtonHTMLAttributes } from 'react';
 
 import { ArrowDownIcon, ArrowUpIcon } from '@/assets/assets';
 import { useAccordionContext } from '@/components/_common/Accordion/AccordionContext';
@@ -6,7 +7,7 @@ import { flexCenter, flexSpaceBetween } from '@/styles/common';
 import theme from '@/styles/theme';
 import { fontStyle } from '@/utils/fontStyle';
 
-interface Props {
+interface Props extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'id'> {
   id: number;
   openButton?: React.ReactNode;
   closeButton?: React.ReactNode;
@@ -23,11 +24,12 @@ const AccordionHeader = ({
   isMarked = false,
   markColor = theme.color.primary[600],
   isShowMarkerIfOpen = false,
+  ...rest
 }: Props) => {
   const { isAccordionOpen, handleAccordionOpenChange } = useAccordionContext();
 
   return (
-    <S.HeaderContainer onClick={() => handleAccordionOpenChange(id)}>
+    <S.HeaderContainer onClick={() => handleAccordionOpenChange(id)} {...rest}>
       <S.FlexBetween>
         {!isShowMarkerIfOpen && <S.HeaderMark isMarked={isMarked} markColor={markColor} />}
         {isAccordionOpen(id) && isShowMarkerIfOpen && <S.HeaderMark isMarked={isMarked} markColor={markColor} />}

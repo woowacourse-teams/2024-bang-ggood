@@ -61,6 +61,7 @@ const SignInPage = () => {
   return (
     <>
       <Header left={<Header.Backward onClick={handleClickBackward} />} center="로그인" />
+
       <S.Wrapper>
         <S.LogoBox>
           <BangBangIcon />
@@ -90,7 +91,7 @@ const SignInPage = () => {
           color={'dark'}
           onClick={handleSubmit}
           disabled={disabled}
-          style={{ marginTop: '3rem', marginBottom: '5.6rem' }}
+          style={{ marginTop: '3rem', marginBottom: '4.6rem' }}
         />
         <S.NavigateButton onClick={handleMoveToSignUp}>아직 방끗 회원이 아니신가요?</S.NavigateButton>
         <S.NavigateButton onClick={handleMoveToResetPassword}>비밀번호를 잊으셨나요?</S.NavigateButton>
@@ -113,8 +114,8 @@ const S = {
   LogoBox: styled.div`
     display: flex;
     width: 100%;
-    margin-top: 22rem;
-    margin-bottom: 8.5rem;
+    margin-top: auto;
+    margin-bottom: 8rem;
     align-items: center;
     gap: 2rem;
   `,

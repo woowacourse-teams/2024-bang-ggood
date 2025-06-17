@@ -2,7 +2,8 @@ import styled from '@emotion/styled';
 
 import { LocationLineIcon } from '@/assets/assets';
 import Checkbox from '@/components/_common/Checkbox/Checkbox';
-import { flexColumn, flexRow, flexSpaceBetween, omitText, title3 } from '@/styles/common';
+import Text from '@/components/_common/Text/Text';
+import { flexColumn, flexRow, flexSpaceBetween } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
 import { formattedUndefined } from '@/utils/formattedUndefined';
 
@@ -24,30 +25,34 @@ const CompareSelectCard = ({ isSelected, toggleSelectChecklist, room }: Props) =
         <S.FlexColumn>
           <S.LocationWrapper>
             <LocationLineIcon aria-hidden="true" />
-            {formattedUndefined(address, 'string')}
+            <Text typography={font => font.headline[2].R} color={color => color.gray[400]}>
+              {formattedUndefined(address, 'string')}
+            </Text>
           </S.LocationWrapper>
-          <S.Title>{roomName}</S.Title>
-          <S.Deposit>
+          <Text typography={font => font.headline[2].R}>{roomName}</Text>
+          <Text typography={font => font.headline[2].R}>
             {formattedUndefined(deposit)} / {formattedUndefined(rent)}
-          </S.Deposit>
-          <S.SummaryWrapper>
-            <S.SummaryBox>{`"${formattedUndefined(room.summary, 'string')}"`}</S.SummaryBox>
-          </S.SummaryWrapper>
+          </Text>
         </S.FlexColumn>
       </S.FlexRow>
+      <S.SummaryWrapper>
+        <Text typography={font => font.headline[2].R}>{`"${formattedUndefined(room.summary, 'string')}"`}</Text>
+      </S.SummaryWrapper>
     </S.Card>
   );
 };
 
+export default CompareSelectCard;
+
 const S = {
   Card: styled.div<{ isSelected: boolean }>`
     ${flexColumn}
-    padding: 14px 18px;
-    border: 2px solid ${({ isSelected, theme }) => (isSelected ? theme.palette.green300 : theme.palette.grey200)};
-    border-radius: 10px;
+    padding: 1.4rem 1.8rem;
+    border: 2px solid ${({ isSelected, theme }) => (isSelected ? theme.color.primary[500] : theme.color.mono.white)};
+    border-radius: 0.8rem;
 
-    background-color: ${({ isSelected, theme }) => (isSelected ? theme.palette.green50 : theme.color.mono.white)};
-    row-gap: 5px;
+    background-color: ${({ theme }) => theme.color.mono.white};
+    row-gap: 2.4rem;
     cursor: pointer;
   `,
   CheckboxContainer: styled.div`
@@ -64,42 +69,24 @@ const S = {
     align-items: center;
     padding: 0.8rem;
 
-    background-color: ${({ theme }) => theme.palette.grey50};
+    background-color: ${({ theme }) => theme.color.gray[50]};
     border-radius: 0.6rem;
     box-sizing: content-box;
   `,
-  SummaryBox: styled.div`
-    box-sizing: content-box;
-    ${omitText};
-    border-radius: 0.4rem;
 
-    font-size: ${({ theme }) => theme.text.size.small};
-  `,
-  Title: styled.p`
-    ${title3}
-  `,
-  Deposit: styled.p`
-    font-size: ${({ theme }) => theme.text.size.medium};
-  `,
   LocationWrapper: styled.p`
     display: flex;
     align-items: center;
     gap: 0.5rem;
-
-    font-size: ${({ theme }) => theme.text.size.xSmall};
   `,
   HeaderContainer: styled.div`
     ${flexRow}
     ${flexSpaceBetween}
   `,
-  RentPrice: styled.p`
-    font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: ${({ theme }) => theme.text.size.medium};
-  `,
   FlexRow: styled.div<{ gap?: string; width?: string }>`
     ${flexRow}
     align-items: center;
-    column-gap: ${({ gap }) => (gap ? gap : '4%')};
+    gap: ${({ gap }) => (gap ? gap : '4%')};
     ${({ width }) => width && `width:${width}`};
     height: 100%;
   `,
@@ -110,5 +97,3 @@ const S = {
     height: 100%;
   `,
 };
-
-export default CompareSelectCard;

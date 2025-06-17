@@ -4,8 +4,7 @@ import SubwayStations from '@/components/_common/Subway/SubwayStations';
 import CategoryScore from '@/components/RoomCompare/CategoryScore';
 import CompareCardItem from '@/components/RoomCompare/CompareCardItem';
 import { EMPTY_INDICATOR } from '@/constants/system';
-import { boxShadow, flexColumn, title1, title4 } from '@/styles/common';
-import theme from '@/styles/theme';
+import { flexColumn, title4 } from '@/styles/common';
 import { RoomCompare } from '@/types/RoomCompare';
 import { fontStyle } from '@/utils/fontStyle';
 
@@ -83,18 +82,11 @@ const S = {
     border-radius: 8px;
     background: ${({ theme }) => theme.color.mono.white};
   `,
-  RankWrapper: styled.div`
-    ${flexColumn};
-    gap: 5px;
-  `,
-  Rank: styled.div`
-    ${title1}
-  `,
   Item: styled.div`
     display: flex;
     width: 100%;
 
-    ${fontStyle(theme.font.headline[2].B)}
+    ${({ theme }) => fontStyle(theme.font.headline[2].B)};
     text-align: left;
     justify-content: center;
     word-break: keep-all;
@@ -104,8 +96,9 @@ const S = {
     width: 14rem;
     height: 4rem;
     padding: 8px 16px;
-    border: 1px solid ${({ theme }) => theme.palette.yellow500};
+    border: 1px solid ${({ theme }) => theme.color.primary[500]};
     border-radius: 8px;
+
     color: ${({ theme }) => theme.color.primary[500]};
   `,
 };

@@ -184,7 +184,7 @@ const S = {
     margin-top: 6rem;
     margin-bottom: 5.8rem;
 
-    color: ${({ theme }) => theme.palette.grey400};
+    color: ${({ theme }) => theme.color.gray[400]};
     cursor: pointer;
 
     :hover {

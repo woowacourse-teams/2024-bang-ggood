@@ -10,9 +10,9 @@
 }
 
 @font-face {
-  font-family: 'SUITE Variable';
+  font-family: 'WantedSansStdVariable';
   font-weight: 300 900;
-  src: url('./assets/fonts/SUITE-Variable.woff2') format('woff2-variations');
+  src: url('@/assets/fonts/WantedSansStdVariable.ttf') format('truetype');
 }
 /*접근성*/
 .visually-hidden {

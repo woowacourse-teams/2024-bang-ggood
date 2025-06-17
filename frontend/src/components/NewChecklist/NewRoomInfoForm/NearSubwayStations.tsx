@@ -11,7 +11,7 @@ const NearSubwayStations = () => {
 
   return (
     <FlexBox.Vertical gap="1.5rem">
-      <FormField.Label label="가까운 지하철" />
+      <FormField.Label label="가까운 지하철" bold />
       <FlexBox.Vertical gap="1rem">
         {!position.latitude ? (
           <span>{'보신 방과 가까운 지하철역을 찾아드릴게요.'}</span>

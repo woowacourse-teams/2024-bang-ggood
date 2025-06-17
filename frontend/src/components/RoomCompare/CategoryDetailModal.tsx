@@ -21,7 +21,7 @@ interface CategorySectionType {
   color: string;
 }
 
-const CateogorySection: CategorySectionType[] = [
+const CategorySection: CategorySectionType[] = [
   { id: 'good', text: '긍정적', color: theme.palette.green400 },
   { id: 'bad', text: '부정적', color: theme.palette.red500 },
   { id: 'none', text: '무응답', color: theme.palette.grey300 },
@@ -38,7 +38,7 @@ const CategoryDetailModal = ({ isOpen, closeModal }: Props) => {
 
   if (isLoading)
     return (
-      <Modal isOpen={isOpen} onClose={closeModal} backgroundColor={theme.palette.background}>
+      <Modal isOpen={isOpen} onClose={closeModal} backgroundColor={theme.color.gray[50]}>
         <Modal.header>카테고리 질문 상세보기</Modal.header>
         <Modal.body>
           <div>loading</div>
@@ -47,11 +47,11 @@ const CategoryDetailModal = ({ isOpen, closeModal }: Props) => {
     );
 
   return (
-    <Modal isOpen={isOpen} onClose={closeModal} backgroundColor={theme.palette.background}>
+    <Modal isOpen={isOpen} onClose={closeModal} backgroundColor={theme.color.gray[50]}>
       <Modal.header>카테고리 질문 상세보기</Modal.header>
       <Modal.body>
         <Accordion totalCount={3}>
-          {CateogorySection.map((section, index) => {
+          {CategorySection.map((section, index) => {
             return (
               <S.FlexBox key={section.id}>
                 <Accordion.header
@@ -84,13 +84,15 @@ const CategoryDetailModal = ({ isOpen, closeModal }: Props) => {
   );
 };
 
+export default CategoryDetailModal;
+
 const S = {
   QuestionBox: styled.div`
     ${flexSpaceBetween}
     width: 100%;
     padding: 1rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
     flex-direction: row;
     align-items: center;
     box-sizing: border-box;
@@ -106,5 +108,3 @@ const S = {
     gap: 0.4rem;
   `,
 };
-
-export default CategoryDetailModal;

@@ -12,7 +12,7 @@ const Address = () => {
 
   return (
     <FormField>
-      <FormField.Label label="주소" htmlFor="address" />
+      <FormField.Label label="주소" htmlFor="address" bold />
       {address?.rawValue ? (
         <FormField.TextBox text={`${address.rawValue} ${buildingName.rawValue}`} id="address" />
       ) : (

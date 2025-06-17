@@ -4,8 +4,11 @@ import { useNavigate } from 'react-router-dom';
 
 import BoxErrorFallback from '@/components/_common/errorBoundary/BoxErrorFallback';
 import ArticleCardContainer from '@/components/Main/ArticleCardContainer';
+import SkArticleSection from '@/components/skeleton/Main/SkArticleSection';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { flexRow, flexSpaceBetween, title4 } from '@/styles/common';
+import { flexRow, flexSpaceBetween } from '@/styles/common';
+import { fontStyle } from '@/utils/fontStyle';
+import { Suspense } from 'react';
 
 const ArticleSection = () => {
   const navigate = useNavigate();
@@ -21,7 +24,9 @@ const ArticleSection = () => {
         <S.ShowMore onClick={handleClickShowMore}>더보기</S.ShowMore>
       </S.Row>
       <ErrorBoundary FallbackComponent={BoxErrorFallback}>
-        <ArticleCardContainer />
+        <Suspense fallback={<SkArticleSection />}>
+          <ArticleCardContainer />
+        </Suspense>
       </ErrorBoundary>
     </>
   );
@@ -36,14 +41,15 @@ const S = {
 
     padding: 1rem 1.6rem 0;
     ${flexRow};
+    align-items: center;
     ${flexSpaceBetween};
   `,
   Title: styled.div`
-    ${title4}
+    ${({ theme }) => fontStyle(theme.font.heading[2].B)}
   `,
   ShowMore: styled.button`
-    color: ${({ theme }) => theme.palette.grey400};
-    font-size: ${({ theme }) => theme.text.size.small};
+    color: ${({ theme }) => theme.color.gray[600]};
+    ${({ theme }) => fontStyle(theme.font.body[1].B)}
     cursor: pointer;
   `,
 };

@@ -1,5 +1,3 @@
-import styled from '@emotion/styled';
-
 import Button from '@/components/_common/Button/Button';
 
 const TopButton = ({ text }: { text: string }) => {
@@ -10,20 +8,7 @@ const TopButton = ({ text }: { text: string }) => {
     });
   };
 
-  return <S.ButtonBox onClick={scrollToTop} label={text} />;
+  return <Button onClick={scrollToTop} label={text} rounded color="primary" size="full" />;
 };
 
 export default TopButton;
-
-const S = {
-  ButtonBox: styled(Button)`
-    width: 14rem;
-    padding: 1rem;
-
-    background-color: ${({ theme }) => theme.palette.yellow600};
-
-    &:hover {
-      background-color: ${({ theme }) => theme.palette.yellow400};
-    }
-  `,
-};

@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import HomeCircle from '@/assets/icons/common/HomeCircle';
+import { EmptyHomeIcon } from '@/assets/assets';
 import { ROUTE_PATH } from '@/constants/routePath';
-import { flexColumn, flexRow, flexSpaceBetween, title3 } from '@/styles/common';
+import { flexColumn, flexRow } from '@/styles/common';
 import { ChecklistPreview } from '@/types/checklist';
-import formattedUndefined from '@/utils/formattedUndefined';
-import getSeqColor from '@/utils/getSeqColor';
+import { fontStyle } from '@/utils/fontStyle';
+import { formattedUndefined } from '@/utils/formattedUndefined';
 
 interface Props {
   index: number;
@@ -14,12 +14,9 @@ interface Props {
 }
 
 const ChecklistPreviewCard = ({ index, checklist }: Props) => {
+  const { checklistId, thumbnail, station, roomName, deposit, rent, address } = checklist;
+
   const navigate = useNavigate();
-  const colorList = ['green', 'blue', 'yellow'];
-  const { color200, color500 } = getSeqColor(index, colorList);
-
-  const { checklistId, station, roomName, deposit, rent, address } = checklist;
-
   const handleClick = () => {
     navigate(ROUTE_PATH.checklistOne(checklistId));
   };
@@ -30,15 +27,15 @@ const ChecklistPreviewCard = ({ index, checklist }: Props) => {
 
   return (
     <S.Container onClick={handleClick} tabIndex={1}>
-      <HomeCircle color={color500} bgColor={color200} aria-hidden="true" />
+      <div>{thumbnail ? <S.ThumbnailImg src={thumbnail} /> : <EmptyHomeIcon aria-hidden="true" />}</div>
       <S.Column>
-        <S.Label>{stationLabel}</S.Label>
-        <S.Row>
+        <div>
+          <S.Label>{stationLabel}</S.Label>
           <S.Title>{roomName}</S.Title>
-          <div>
-            {formattedUndefined(deposit)} / {formattedUndefined(rent)}
-          </div>
-        </S.Row>
+        </div>
+        <S.Deposit>
+          {formattedUndefined(deposit)} / {formattedUndefined(rent)}
+        </S.Deposit>
       </S.Column>
     </S.Container>
   );
@@ -49,13 +46,15 @@ export default ChecklistPreviewCard;
 const S = {
   Container: styled.div`
     width: 100%;
+    height: 10rem;
+    border-radius: 0.8rem;
     ${flexRow};
     align-items: center;
-    gap: 1rem;
+    gap: 1.6rem;
 
-    padding: 0.4rem 0;
+    padding: 1.6rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
     cursor: pointer;
 
     &:hover {
@@ -63,22 +62,27 @@ const S = {
       border-radius: 8px;
     }
   `,
+  ThumbnailImg: styled.img`
+    width: 6.8rem;
+    height: 6.8rem;
+    border-radius: 50%;
+    object-fit: cover;
+  `,
   Column: styled.div`
-    width: 100%;
+    flex-grow: 1;
+
     ${flexColumn}
-    gap: 1rem;
+    gap: .2rem;
   `,
   Label: styled.div`
-    color: ${({ theme }) => theme.palette.grey500};
-    font-size: ${({ theme }) => theme.text.size.small};
+    color: ${({ theme }) => theme.color.gray[400]};
+    ${({ theme }) => fontStyle(theme.font.caption[1].R)}
   `,
   Title: styled.div`
-    ${title3}
+    color: ${({ theme }) => theme.color.gray[600]};
+    ${({ theme }) => fontStyle(theme.font.body[1].R)}
   `,
-  Row: styled.div`
-    width: 100%;
-
-    ${flexSpaceBetween}
-    font-size: ${({ theme }) => theme.text.size.medium};
+  Deposit: styled.div`
+    ${({ theme }) => fontStyle(theme.font.heading[2].B)}
   `,
 };

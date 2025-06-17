@@ -35,7 +35,7 @@ const S = {
     border-radius: 1.6rem;
     gap: 1.2rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
     ${boxShadow};
     ${flexColumn};
     ${flexCenter};

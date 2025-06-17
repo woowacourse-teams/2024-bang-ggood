@@ -22,7 +22,7 @@ const S = {
     display: grid;
     width: 100%;
     grid-template-columns: repeat(3, minmax(25px, 85px));
-    gap: 15px;
+    gap: 1rem 3.5rem;
 
     @media (width >= 26rem) {
       grid-template-columns: repeat(4, 1fr);

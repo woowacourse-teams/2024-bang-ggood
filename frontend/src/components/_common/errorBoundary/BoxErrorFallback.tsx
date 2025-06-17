@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useQueryClient } from '@tanstack/react-query';
 import { FallbackProps } from 'react-error-boundary';
 
-import { Retry } from '@/assets/assets';
+import { RetryIcon } from '@/assets/assets';
 import { flexCenter, flexColumn } from '@/styles/common';
 
 const BoxErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
@@ -19,7 +19,7 @@ const BoxErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
       <S.Error>{error.message}</S.Error>
       <S.RefreshButton onClick={handleRefresh} tabIndex={1}>
         다시 시도하기
-        <Retry width={15} />
+        <RetryIcon width={15} />
       </S.RefreshButton>
     </S.Container>
   );
@@ -39,13 +39,13 @@ const S = {
   Message: styled.h2`
     margin-bottom: 0.8rem;
 
-    color: ${({ theme }) => theme.palette.red500};
+    color: ${({ theme }) => theme.color.red[400]};
     font-size: ${({ theme }) => theme.text.size.small};
   `,
   Error: styled.pre`
     margin-bottom: 1rem;
 
-    color: ${({ theme }) => theme.palette.grey600};
+    color: ${({ theme }) => theme.color.gray[600]};
     white-space: pre-wrap;
     word-break: break-word;
   `,
@@ -55,16 +55,16 @@ const S = {
     padding: 0.6rem 1.2rem;
     border: none;
 
-    background-color: ${({ theme }) => theme.palette.green500};
+    background-color: ${({ theme }) => theme.color.secondary[500]};
 
-    color: ${({ theme }) => theme.palette.white};
+    color: ${({ theme }) => theme.color.mono.white};
     font-size: ${({ theme }) => theme.text.size.small};
     border-radius: 4px;
     cursor: pointer;
 
     &:hover,
     &:active {
-      background-color: ${({ theme }) => theme.palette.green600};
+      background-color: ${({ theme }) => theme.color.secondary[600]};
     }
   `,
 };

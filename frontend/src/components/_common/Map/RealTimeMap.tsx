@@ -3,9 +3,9 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { BangBangCryIcon } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
-import { LoadingSpinner } from '@/components/_common/LoadingSpinner/LoadingSpinner';
+import { LoadingIndicator } from '@/components/_common/LoadingIndicator/LoadingIndicator';
 import { DEFAULT_POSITION } from '@/constants/map';
-import { flexCenter } from '@/styles/common';
+import { flexCenter, flexColumn } from '@/styles/common';
 import { Position } from '@/types/address';
 import createKakaoMapElements from '@/utils/createKakaoMapElements';
 import loadExternalScriptWithCallback from '@/utils/loadScript';
@@ -154,7 +154,7 @@ const RealTimeMap = ({
         {realTimeLocationState === 'loading' && (
           <S.MapEmptyBox>
             <S.InfoTextBox>
-              <LoadingSpinner />
+              <LoadingIndicator />
               <S.LoadingMessage tabIndex={0}>
                 <div>현재 위치를 찾고 있어요.</div>
                 <div>위치 권한을 허용해 주세요.</div>
@@ -171,7 +171,7 @@ const RealTimeMap = ({
               <div>현재 위치를 찾을 수 없어요.</div>
               <div>위치를 허용하셨는지 확인 후,</div>
               <div>다시 시도해 주세요.</div>
-              <S.RetryButtonBox size={'xSmall'} color={'dark'} onClick={onClickKakaoMap} label="다시 시도" />
+              <Button label="다시 시도" size="small" color="dark" onClick={onClickKakaoMap} />
             </S.InfoTextBox>
           </S.MapEmptyBox>
         )}
@@ -214,6 +214,9 @@ const S = {
     margin-top: 2rem;
   `,
   InfoTextBox: styled.div`
+    ${flexColumn}
+    ${flexCenter}
+    gap: .5rem;
     position: absolute;
     top: 50%;
     left: 50%;

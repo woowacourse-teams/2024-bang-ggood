@@ -65,7 +65,7 @@ const S = {
 
     background-color: ${({ theme }) => theme.palette.green500};
 
-    color: ${({ theme }) => theme.palette.white};
+    color: ${({ theme }) => theme.color.mono.white};
     ${title4}
     border-radius: 4px;
     cursor: pointer;

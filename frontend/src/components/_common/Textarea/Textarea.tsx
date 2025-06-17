@@ -2,10 +2,12 @@ import styled from '@emotion/styled';
 import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
 
 import { flexCenter } from '@/styles/common';
+import { fontStyle } from '@/utils/fontStyle';
 
 interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   $color?: 'string';
   $borderRadius: string;
+  $transparent: boolean;
 }
 const widthSize: Record<string, string> = {
   small: '4.5rem',
@@ -26,6 +28,7 @@ interface Props extends React.TextareaHTMLAttributes<HTMLInputElement | HTMLText
   height?: keyof typeof heightSize;
   borderRadius?: string;
   hasBorder?: boolean;
+  transparent?: boolean;
 }
 
 export type TextareaChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
@@ -36,6 +39,7 @@ const Textarea = ({
   onChange,
   borderRadius = '.5rem',
   hasBorder = false,
+  transparent = false,
   ...rest
 }: Props) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -66,6 +70,7 @@ const Textarea = ({
         {...rest}
         onChange={handleChange}
         $borderRadius={borderRadius}
+        $transparent={transparent}
       />
     </S.Box>
   );
@@ -73,7 +78,7 @@ const Textarea = ({
 
 const S = {
   Box: styled.div<{ hasBorder: boolean }>`
-    border: ${({ hasBorder, theme }) => hasBorder && `.2rem solid ${theme.palette.grey200}`};
+    border: ${({ hasBorder, theme }) => hasBorder && `.2rem solid ${theme.color.gray[200]}`};
     border-radius: 0.5rem;
   `,
   Textarea: styled.textarea<StyledProps>`
@@ -81,13 +86,11 @@ const S = {
     ${({ height }) => height && `height: ${height};`};
     padding: 0.6rem 1.1rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme, $transparent }) => ($transparent ? 'transparent' : theme.color.mono.white)};
 
-    color: ${({ $color, theme }) => ($color ? $color : theme.palette.grey600)};
-    font-weight: ${({ theme }) => theme.text.weight.medium};
-    font-size: ${({ theme }) => theme.text.size.medium};
-    outline-color: ${({ theme }) => theme.palette.grey300};
-
+    color: ${({ $color, theme }) => ($color ? $color : theme.color.secondary[600])};
+    outline-color: ${({ theme }) => theme.color.gray[300]};
+    ${({ theme }) => fontStyle(theme.font.body[1].R)}
     ${flexCenter}
     box-sizing: border-box;
     border-radius: ${({ $borderRadius }) => $borderRadius && $borderRadius};

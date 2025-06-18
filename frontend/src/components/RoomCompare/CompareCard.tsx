@@ -4,8 +4,9 @@ import SubwayStations from '@/components/_common/Subway/SubwayStations';
 import CategoryScore from '@/components/RoomCompare/CategoryScore';
 import CompareCardItem from '@/components/RoomCompare/CompareCardItem';
 import { EMPTY_INDICATOR } from '@/constants/system';
-import { boxShadow, flexColumn, title1, title4 } from '@/styles/common';
+import { flexColumn, title4 } from '@/styles/common';
 import { RoomCompare } from '@/types/RoomCompare';
+import { fontStyle } from '@/utils/fontStyle';
 
 interface Props {
   room: RoomCompare;
@@ -41,9 +42,10 @@ const CompareCard = ({ room, openOptionModal, openCategoryModal }: Props) => {
       <CompareCardItem
         height={10}
         label={'가까운 지하철'}
-        item={<SubwayStations size={'small'} stations={room.stations.stations} textType="omit" />}
+        item={<SubwayStations size={'medium'} stations={room.stations.stations} textType="omit" />}
       />
       <CompareCardItem
+        height={7.2}
         label={'옵션'}
         item={<S.OptionButton onClick={openOptionModal}>{room.options.length}개</S.OptionButton>}
       />
@@ -52,6 +54,7 @@ const CompareCard = ({ room, openOptionModal, openCategoryModal }: Props) => {
         <CompareCardItem
           key={category.categoryId}
           label={category.categoryName}
+          height={12}
           item={
             <CategoryScore
               roomId={room.checklistId}
@@ -75,31 +78,27 @@ const S = {
     box-sizing: border-box;
     ${flexColumn};
     align-items: center;
-    gap: 30px;
-  `,
-  RankWrapper: styled.div`
-    ${flexColumn}
-    gap: 5px;
-  `,
-  Rank: styled.div`
-    ${title1}
+    gap: 32px;
+    border-radius: 8px;
+    background: ${({ theme }) => theme.color.mono.white};
   `,
   Item: styled.div`
     display: flex;
     width: 100%;
 
-    font-size: ${({ theme }) => theme.text.size.small};
-    line-height: 1.5;
-    letter-spacing: 0.05rem;
-    text-align: center;
+    ${({ theme }) => fontStyle(theme.font.headline[2].B)};
+    text-align: left;
     justify-content: center;
     word-break: keep-all;
   `,
   OptionButton: styled.button`
-    ${title4}
-    padding: 12px 16px;
-    border: 1px solid ${({ theme }) => theme.palette.grey300};
+    ${title4};
+    width: 14rem;
+    height: 4rem;
+    padding: 8px 16px;
+    border: 1px solid ${({ theme }) => theme.color.primary[500]};
     border-radius: 8px;
-    ${boxShadow}
+
+    color: ${({ theme }) => theme.color.primary[500]};
   `,
 };

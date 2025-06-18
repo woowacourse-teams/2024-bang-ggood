@@ -1,6 +1,5 @@
 package com.bang_ggood.question.service;
 
-import com.bang_ggood.global.config.cache.CacheName;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.question.domain.Category;
@@ -17,7 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Set;
 
-import static com.bang_ggood.global.config.cache.CacheName.*;
+import static com.bang_ggood.global.config.cache.CacheName.CATEGORY;
+import static com.bang_ggood.global.config.cache.CacheName.HIGHLIGHT;
+import static com.bang_ggood.global.config.cache.CacheName.QUESTION;
 
 @RequiredArgsConstructor
 @Service
@@ -27,14 +28,19 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final HighlightRepository highlightRepository;
 
+    @Transactional
+    public Question createQuestion(Question question) {
+        return questionRepository.save(question);
+    }
+
     @Cacheable(cacheNames = CATEGORY, key = "'allCategories'")
     @Transactional(readOnly = true)
-    public List<Category> findAllCategories() {
+    public List<Category> readAllCategories() {
         return categoryRepository.findAll();
     }
 
     @Transactional(readOnly = true)
-    public List<Category> findAllCustomQuestionCategories(User user) {
+    public List<Category> readAllCustomQuestionCategories(User user) {
         return categoryRepository.findAllCustomQuestionCategoriesByUserId(user.getId());
     }
 
@@ -92,7 +98,12 @@ public class QuestionService {
 
     @Cacheable(cacheNames = QUESTION, key = "#category")
     @Transactional(readOnly = true)
-    public List<Question> readQuestionsByCategory(Category category) {
-        return questionRepository.findAllByCategoryId(category.getId());
+    public List<Question> readQuestionsByCategoryAndUserAndAdmin(Category category, User user, User admin) {
+        return questionRepository.findAllByCategoryIdAndUserIdAndAdminId(category.getId(), user.getId(), admin.getId());
+    }
+
+    @Transactional
+    public void deleteByQuestion(Question question) {
+        questionRepository.deleteById(question.getId());
     }
 }

@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 import Divider from '@/components/_common/Divider/Divider';
 import QuestionSelectCard from '@/components/ChecklistQuestionSelect/QuestionSelectCard/QuestionSelectCard';
+import { flexColumn } from '@/styles/common';
 import { ChecklistQuestionWithIsSelected } from '@/types/checklist';
 
 interface Props {
@@ -12,9 +13,8 @@ const QuestionCardList = ({ questions, currentTabId }: Props) => {
   return (
     <S.QuestionList>
       {questions?.map((question, index) => {
-        const { questionId } = question;
         return (
-          <S.Box key={`${currentTabId}-${questionId}-custom`}>
+          <S.Box key={`${currentTabId}-${question.questionId}-custom`}>
             <QuestionSelectCard question={question} />
             {index !== questions.length - 1 && <Divider isBold={true} />}
           </S.Box>
@@ -28,11 +28,12 @@ export default QuestionCardList;
 
 const S = {
   QuestionList: styled.section`
+    ${flexColumn}
+    gap: 1rem;
     width: 100%;
     height: fit-content;
-    border-radius: 0.8rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    border-radius: 0.8rem;
   `,
   Box: styled.div`
     width: 100%;

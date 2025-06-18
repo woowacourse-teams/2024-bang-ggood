@@ -2,52 +2,52 @@ import styled from '@emotion/styled';
 import MarkdownPreview from '@uiw/react-markdown-preview/nohighlight';
 import { useParams } from 'react-router-dom';
 
-import SKArticleDetail from '@/components/skeleton/Article/SKArticleDetail';
-import useGetArticleQuery from '@/hooks/query/useGetArticleQuery';
-import { flexSpaceBetween, title1 } from '@/styles/common';
+import { useGetArticleSuspenseQuery } from '@/hooks/query/useGetArticleSuspenseQuery';
+import { flexSpaceBetween } from '@/styles/common';
+import { fontStyle } from '@/utils/fontStyle';
 import formattedDate from '@/utils/formattedDate';
-import getSeqColor from '@/utils/getSeqColor';
+import { useTheme } from '@emotion/react';
 
 type RouteParams = {
   articleId: string;
 };
 
 const ArticleContent = () => {
+  const theme = useTheme();
   const { articleId } = useParams() as RouteParams;
-  const { data: article, isLoading } = useGetArticleQuery(articleId);
-
-  const { color500 } = getSeqColor(article?.articleId ?? 0);
-
-  if (isLoading) return <SKArticleDetail />;
+  const { article } = useGetArticleSuspenseQuery(articleId);
 
   return (
     <>
-      <S.Thumbnail src={article?.thumbnail || ''} />
-      <S.Wrapper>
-        <S.Row>
-          <S.Keyword bgColor={color500}>{article?.keyword}</S.Keyword>
-          <S.Date>{formattedDate(article?.createdAt ?? '')}</S.Date>
-        </S.Row>
-        <S.Title>{article?.title}</S.Title>
-        <MarkdownPreview
-          source={article?.content}
-          style={{ padding: 10 }}
-          wrapperElement={{
-            'data-color-mode': 'light',
-          }}
-          rehypeRewrite={(node, index, parent) => {
-            if (
-              node.type === 'element' &&
-              node.tagName === 'a' &&
-              parent &&
-              parent.type === 'element' &&
-              /^h(1|2|3|4|5|6)/.test(parent.tagName)
-            ) {
-              parent.children = parent.children.slice(1);
-            }
-          }}
-        />
-      </S.Wrapper>
+      <S.Thumbnail src={article.thumbnail || ''} />
+      <div style={{ backgroundColor: theme.color.gray[100], padding: '1.6rem' }}>
+        <S.Wrapper>
+          <S.Row>
+            <S.Keyword>{article.keyword}</S.Keyword>
+            <S.Date>{formattedDate(article.createdAt ?? '')}</S.Date>
+          </S.Row>
+
+          <S.Title>{article.title}</S.Title>
+          <MarkdownPreview
+            source={article.content}
+            style={{ padding: 10 }}
+            wrapperElement={{
+              'data-color-mode': 'light',
+            }}
+            rehypeRewrite={(node, index, parent) => {
+              if (
+                node.type === 'element' &&
+                node.tagName === 'a' &&
+                parent &&
+                parent.type === 'element' &&
+                /^h(1|2|3|4|5|6)/.test(parent.tagName)
+              ) {
+                parent.children = parent.children.slice(1);
+              }
+            }}
+          />
+        </S.Wrapper>
+      </div>
     </>
   );
 };
@@ -62,29 +62,33 @@ const S = {
   `,
   Wrapper: styled.div`
     padding: 1.6rem 1.6rem 0;
+
+    background-color: ${({ theme }) => theme.color.mono.white};
+    border-radius: 1.6rem;
   `,
   Row: styled.div`
     ${flexSpaceBetween}
   `,
-  Keyword: styled.span<{ bgColor: string }>`
-    padding: 0.4rem 1rem;
+  Keyword: styled.span`
+    padding: 0.6rem 0.8rem;
 
-    background-color: ${({ bgColor }) => bgColor};
+    background-color: ${({ theme }) => theme.color.gray[100]};
 
-    color: ${({ theme }) => theme.palette.white};
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    color: ${({ theme }) => theme.color.gray[500]};
+    ${({ theme }) => fontStyle(theme.font.caption[1].B)}
     align-self: flex-start;
 
     box-sizing: content-box;
-    border-radius: 0.6rem;
+    border-radius: 0.8rem;
   `,
   Date: styled.div`
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    color: ${({ theme }) => theme.color.gray[400]};
+    ${({ theme }) => fontStyle(theme.font.label[1].R)}
   `,
   Title: styled.h1`
-    margin: 3.6rem;
+    margin: 1rem;
 
-    ${title1}
+    ${({ theme }) => fontStyle(theme.font.heading[2].B)}
     text-align: center;
   `,
   EmptyBox: styled.div`

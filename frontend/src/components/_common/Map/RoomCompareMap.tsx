@@ -156,7 +156,7 @@ const RoomCompareMap = ({ positions }: { positions: Position[] }) => {
               <Marker
                 disabled={!hasAddressRoom1}
                 isCircle={false}
-                backgroundColor={theme.palette.yellow500}
+                color={theme.palette.yellow500}
                 text={'A방'}
                 size={'medium'}
                 onClick={() => handleRoomMarkerClick(0)}
@@ -164,7 +164,7 @@ const RoomCompareMap = ({ positions }: { positions: Position[] }) => {
               <Marker
                 disabled={!hasAddressRoom2}
                 isCircle={false}
-                backgroundColor={theme.palette.green500}
+                color={theme.palette.green500}
                 text={'B방'}
                 size={'medium'}
                 onClick={() => handleRoomMarkerClick(1)}
@@ -183,7 +183,7 @@ const S = {
     width: 100%;
     height: 20rem;
 
-    background-color: ${({ theme }) => theme.palette.background};
+    background-color: ${({ theme }) => theme.color.gray[50]};
   `,
   Map: styled.div`
     position: relative;
@@ -199,7 +199,7 @@ const S = {
 
     padding: 0.5rem;
 
-    color: ${({ theme }) => theme.palette.white};
+    color: ${({ theme }) => theme.color.mono.white};
     gap: 1rem;
     border-radius: 0.3rem;
   `,

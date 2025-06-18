@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import RoomCompareMap from '@/components/_common/Map/RoomCompareMap';
@@ -9,10 +10,12 @@ import OptionDetailModal from '@/components/RoomCompare/OptionDetailModal';
 import SkRoomCompare from '@/components/skeleton/RoomCompare/SkRoomCompare';
 import { OPTIONS } from '@/constants/options';
 import useGetCompareRoomsQuery from '@/hooks/query/useGetCompareRoomsQuery';
+import { prefetchGetRoomCategoryDetailQuery } from '@/hooks/query/useGetRoomCategoryDetail';
 import useModal from '@/hooks/useModal';
 import { OptionDetail } from '@/pages/RoomComparePage';
 import { flexCenter, flexRow } from '@/styles/common';
 import theme from '@/styles/theme';
+import { fontStyle } from '@/utils/fontStyle';
 
 const RoomCompareContent = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -23,7 +26,15 @@ const RoomCompareContent = () => {
   const roomId2 = Number(searchParams.get('roomId2'));
 
   const { data: rooms, isLoading } = useGetCompareRoomsQuery(roomId1, roomId2);
-
+  /* 비교 모달데이터를 prefetch 한다 */
+  const categoryIdPairs = rooms?.flatMap(a =>
+    a.categories.categories.flatMap(c => ({ roomId: a.checklistId, categoryId: c.categoryId })),
+  );
+  useEffect(() => {
+    categoryIdPairs?.forEach(categoryIdPair => {
+      prefetchGetRoomCategoryDetailQuery(categoryIdPair);
+    });
+  }, [categoryIdPairs]);
   if (isLoading) return <SkRoomCompare />;
 
   if (!rooms) throw new Error('데이터를 불러오는데 실패했습니다.');
@@ -56,7 +67,7 @@ const RoomCompareContent = () => {
     setSearchParams(searchParams);
   };
 
-  const handleCloseategoryDetailModal = () => {
+  const handleCloseCategoryDetailModal = () => {
     closeCategoryModal();
     searchParams.delete('targetRoomId');
     searchParams.delete('categoryId');
@@ -68,17 +79,20 @@ const RoomCompareContent = () => {
       <S.RoomGrid>
         <S.TitleFlex>
           <S.RoomTitle>
+            <Marker isCircle={true} size={'medium'} color={theme.palette.yellow500} text={'A'} />
             <S.Title key={rooms[0].checklistId}>{rooms[0].roomName}</S.Title>
-            <Marker isCircle={true} size={'medium'} backgroundColor={theme.palette.yellow500} text={'A'} />
           </S.RoomTitle>
+
           <S.RoomTitle>
+            <Marker isCircle={true} size={'medium'} color={theme.palette.green500} text={'B'} />
             <S.Title key={rooms[1].checklistId}>{rooms[1].roomName}</S.Title>
-            <Marker isCircle={true} size={'medium'} backgroundColor={theme.palette.green500} text={'B'} />
           </S.RoomTitle>
         </S.TitleFlex>
       </S.RoomGrid>
-      {positions && <RoomCompareMap positions={positions} />}
-      <S.RoomGrid>
+
+      <S.MapGrid>{positions && <RoomCompareMap positions={positions} />}</S.MapGrid>
+
+      <S.RoomCompareGrid>
         {rooms?.map((room, index) => (
           <CompareCard
             key={room.checklistId}
@@ -88,7 +102,8 @@ const RoomCompareContent = () => {
             openCategoryModal={handleOpenCategoryDetailModal}
           />
         ))}
-      </S.RoomGrid>
+      </S.RoomCompareGrid>
+
       {/*방 옵션 비교 모달*/}
       {isOptionModalOpen && (
         <OptionDetailModal
@@ -100,9 +115,10 @@ const RoomCompareContent = () => {
           closeModal={closeOptionModal}
         />
       )}
+
       {/*방 카테고리 디테일 모달*/}
       {isCategoryModalOpen && (
-        <CategoryDetailModal isOpen={isCategoryModalOpen} closeModal={handleCloseategoryDetailModal} />
+        <CategoryDetailModal isOpen={isCategoryModalOpen} closeModal={handleCloseCategoryDetailModal} />
       )}
     </>
   );
@@ -112,7 +128,8 @@ export default RoomCompareContent;
 
 const S = {
   RoomGrid: styled.div`
-    ${flexRow}
+    ${flexRow};
+    padding: 0 1.6rem;
   `,
   TitleFlex: styled.div`
     display: flex;
@@ -121,17 +138,25 @@ const S = {
   RoomTitle: styled.div`
     width: 50%;
     margin-bottom: 0.5rem;
-    ${flexCenter}
-    gap:0.8rem;
+    ${flexCenter};
+    gap: 0.8rem;
   `,
   Title: styled.span`
     display: inline;
     width: calc(100% - 3rem);
-    padding: 0.8rem 0;
+    padding: 0.6rem 0 0.4rem 0.7rem;
 
-    font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: 1.8rem;
-    text-align: center;
+    ${fontStyle(theme.font.headline[2].B)}
+    text-align: left;
     border-radius: 0.8rem;
+  `,
+  MapGrid: styled.div`
+    padding: 0 1.6rem;
+  `,
+  RoomCompareGrid: styled.div`
+    ${flexRow};
+    padding: 1.6rem;
+    background: ${({ theme }) => theme.palette.grey100};
+    gap: 16px;
   `,
 };

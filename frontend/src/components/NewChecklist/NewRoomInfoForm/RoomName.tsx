@@ -18,6 +18,7 @@ const RoomName = () => {
         name="roomName"
         id="roomName"
         value={roomName.rawValue}
+        isError={!!roomName.errorMessage}
       />
       <FormField.ErrorMessage value={roomName.errorMessage} />
     </FormField>

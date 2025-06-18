@@ -3,12 +3,12 @@ import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { ROUTE_PATH } from '@/constants/routePath';
-import useUserQuery from '@/hooks/query/useUserQuery';
+import useGetUserQuery from '@/hooks/query/useGetUserQuery';
 import useToast from '@/hooks/useToast';
 import { boxShadowSpread, flexRow, title2, title3 } from '@/styles/common';
 
 const AdminPage = () => {
-  const { data: user, isFetched } = useUserQuery();
+  const { data: user, isFetched } = useGetUserQuery();
   const { showToast } = useToast();
   const navigate = useNavigate();
 
@@ -45,12 +45,12 @@ const S = {
     align-items: center;
     height: 100vh;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
   `,
   QuestionBox: styled.div`
     padding: 2rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
 
     text-align: center;
     border-radius: 10px;
@@ -59,7 +59,7 @@ const S = {
   QuestionText: styled.h2`
     margin-bottom: 2rem;
 
-    color: ${({ theme }) => theme.palette.black};
+    color: ${({ theme }) => theme.color.mono.black};
     ${title2}
   `,
   ButtonWrapper: styled.div`
@@ -73,7 +73,7 @@ const S = {
 
     background-color: ${({ theme, color }) => (color === 'red' ? theme.palette.red500 : theme.palette.green500)};
 
-    color: ${({ theme }) => theme.palette.white};
+    color: ${({ theme }) => theme.color.mono.white};
     ${title3}
     border-radius: 5px;
     cursor: pointer;

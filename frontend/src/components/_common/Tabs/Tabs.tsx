@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef } from 'react';
 
 import TabButton from '@/components/_common/Tabs/TabButton';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
+import { TAB_SIZE } from '@/constants/style';
 import { Tab, TabWithCompletion } from '@/types/tab';
 
 interface Props {
@@ -76,9 +77,10 @@ export default Tabs;
 const S = {
   VisibleContainer: styled.nav`
     max-width: 60rem;
+    height: fit-content;
   `,
   EmptyBox: styled.div`
-    height: 5.6rem;
+    height: ${TAB_SIZE}rem;
   `,
   Container: styled.div`
     position: fixed;
@@ -86,8 +88,6 @@ const S = {
 
     z-index: ${({ theme }) => theme.zIndex.TABS};
     width: 100%;
-
-    background-color: ${({ theme }) => theme.palette.white};
 
     white-space: nowrap;
     overflow-x: auto;
@@ -100,7 +100,11 @@ const S = {
   `,
   FlexContainer: styled.div`
     display: inline-flex;
+    height: ${TAB_SIZE}rem;
+    padding: 0.8rem 1.6rem 0;
     gap: 1rem;
-    margin: 0.8rem 1.6rem;
+
+    background-color: ${({ theme }) => theme.color.mono.white};
+    border-bottom: ${({ theme }) => `1px solid ${theme.color.gray[200]}`};
   `,
 };

@@ -1,11 +1,13 @@
 import styled from '@emotion/styled';
+import { ButtonHTMLAttributes } from 'react';
 
-import { ArrowDownSmall, ArrowUpSmall } from '@/assets/assets';
+import { ArrowDownIcon, ArrowUpIcon } from '@/assets/assets';
 import { useAccordionContext } from '@/components/_common/Accordion/AccordionContext';
-import { flexCenter, flexSpaceBetween, title3 } from '@/styles/common';
+import { flexCenter, flexSpaceBetween } from '@/styles/common';
 import theme from '@/styles/theme';
+import { fontStyle } from '@/utils/fontStyle';
 
-interface Props {
+interface Props extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'id'> {
   id: number;
   openButton?: React.ReactNode;
   closeButton?: React.ReactNode;
@@ -16,17 +18,18 @@ interface Props {
 }
 const AccordionHeader = ({
   id,
-  openButton = <ArrowUpSmall />,
-  closeButton = <ArrowDownSmall />,
+  openButton = <ArrowUpIcon />,
+  closeButton = <ArrowDownIcon />,
   text,
-  isMarked = true,
-  markColor = theme.palette.yellow500,
-  isShowMarkerIfOpen = true,
+  isMarked = false,
+  markColor = theme.color.primary[600],
+  isShowMarkerIfOpen = false,
+  ...rest
 }: Props) => {
   const { isAccordionOpen, handleAccordionOpenChange } = useAccordionContext();
 
   return (
-    <S.HeaderContainer onClick={() => handleAccordionOpenChange(id)}>
+    <S.HeaderContainer onClick={() => handleAccordionOpenChange(id)} {...rest}>
       <S.FlexBetween>
         {!isShowMarkerIfOpen && <S.HeaderMark isMarked={isMarked} markColor={markColor} />}
         {isAccordionOpen(id) && isShowMarkerIfOpen && <S.HeaderMark isMarked={isMarked} markColor={markColor} />}
@@ -47,9 +50,9 @@ const S = {
     display: flex;
     position: relative;
     width: 100%;
-    height: 4.5rem;
+    height: 4.8rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
     border-radius: 1.2rem;
     gap: 1rem;
 
@@ -64,14 +67,13 @@ const S = {
     height: 100%;
   `,
   HeaderTitle: styled.div`
-    ${title3};
+    ${({ theme }) => fontStyle(theme.font.headline[2].B)};
     display: flex;
-    padding-left: 1.5rem;
     align-items: center;
   `,
   HeaderMark: styled.div<{ isMarked: boolean; markColor?: string }>`
     opacity: ${({ isMarked }) => (isMarked ? 1 : 0)};
-    width: 1.2rem;
+    width: 1.6rem;
 
     background-color: ${({ markColor }) => markColor};
     border-radius: 0.8rem 0 0 0.8rem;

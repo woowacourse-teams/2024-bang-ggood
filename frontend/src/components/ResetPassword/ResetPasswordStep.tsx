@@ -51,14 +51,13 @@ const SendVerificationEmailStep = ({ args: { email, code }, onNext }: Props) => 
 
   return (
     <>
-      <Header left={<Header.Backward onClick={handleClickBackward} />} />
+      <Header left={<Header.Backward onClick={handleClickBackward} />} center="비밀번호 찾기" />
       <CS.Wrapper>
         <CS.LogoBox>
           <BangBangIcon />
           <BangGgoodTextIcon aria-label="방끗 로고" />
         </CS.LogoBox>
         <CS.Box>
-          <CS.Label>비밀번호 찾기</CS.Label>
           <FormField onKeyDown={handleKeyDown}>
             <FormField.Label label="새 비밀번호" htmlFor="password" />
             <FlexBox.Horizontal justify="flex-start" align="center">

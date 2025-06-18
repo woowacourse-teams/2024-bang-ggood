@@ -1,24 +1,25 @@
 import styled from '@emotion/styled';
 
 import { flexCenter } from '@/styles/common';
+import { fontStyle } from '@/utils/fontStyle';
 
 type Size = 'medium' | 'small';
 
 interface Props {
   text: string;
-  backgroundColor: string;
+  color: string;
   size?: Size;
   isCircle: boolean;
   onClick?: () => void;
   disabled?: boolean;
 }
 
-const Marker = ({ disabled = false, isCircle, text, backgroundColor, size = 'medium', onClick }: Props) => {
+const Marker = ({ disabled = false, isCircle, text, color, size = 'medium', onClick }: Props) => {
   const sharedProps = {
     disabled,
     isCircle,
     size,
-    backgroundColor,
+    color,
   };
 
   return (
@@ -28,30 +29,18 @@ const Marker = ({ disabled = false, isCircle, text, backgroundColor, size = 'med
   );
 };
 
-const sizeMap = { small: '1.4rem', medium: '2rem' };
+const sizeMap = { small: '2rem', medium: '2.4rem' };
 
 const S = {
-  Box: styled.span<{ isCircle: boolean; size: Size; backgroundColor: string }>`
+  Button: styled.button<{ isCircle: boolean; size: Size; color: string; disabled: boolean }>`
     ${flexCenter}
     display: inline-block;
     width: ${({ isCircle, size }) => isCircle && sizeMap[size]};
     height: ${({ isCircle, size }) => isCircle && sizeMap[size]};
-    padding: ${({ isCircle }) => (isCircle ? '0.3rem' : '0.3rem 0.6rem')};
-    border-radius: 2rem;
+    padding: ${({ isCircle }) => (isCircle ? '0.6rem' : '0.3rem 0.6rem')};
+    border-radius: 2.5rem;
 
-    background-color: ${({ backgroundColor }) => backgroundColor};
-
-    text-align: center;
-  `,
-  Button: styled.button<{ isCircle: boolean; size: Size; backgroundColor: string; disabled: boolean }>`
-    ${flexCenter}
-    display: inline-block;
-    width: ${({ isCircle, size }) => isCircle && sizeMap[size]};
-    height: ${({ isCircle, size }) => isCircle && sizeMap[size]};
-    padding: ${({ isCircle }) => (isCircle ? '0.3rem' : '0.3rem 0.6rem')};
-    border-radius: 2rem;
-
-    background-color: ${({ theme, backgroundColor, disabled }) => (disabled ? theme.palette.grey300 : backgroundColor)};
+    background-color: ${({ theme, color, disabled }) => (disabled ? theme.color.primary[500] : color)};
 
     text-align: center;
   `,
@@ -60,9 +49,9 @@ const S = {
     height: 100%;
 
     ${flexCenter};
-    color: ${({ theme }) => theme.palette.white};
-    font-weight: ${({ theme }) => theme.text.weight.semiBold};
-    font-size: ${({ theme, size }) => (size === 'small' ? theme.text.size.xSmall : theme.text.size.small)};
+
+    ${({ theme, size }) => (size === 'small' ? fontStyle(theme.font.caption[1].B) : fontStyle(theme.font.label[1].B))}
+    color: ${({ theme }) => theme.color.mono.white};
   `,
 };
 

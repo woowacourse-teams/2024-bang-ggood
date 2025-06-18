@@ -8,7 +8,7 @@ import theme from '@/styles/theme';
 const SkRoomCompare = () => {
   return (
     <div>
-      <Layout withHeader bgColor={theme.palette.white}>
+      <Layout withHeader bgColor={theme.color.mono.white}>
         <FlexBox.Vertical gap={'1rem'}>
           <FlexBox.Horizontal>
             <S.RowBox />

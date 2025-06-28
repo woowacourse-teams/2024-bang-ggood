@@ -43,4 +43,11 @@ public interface ChecklistImageRepository extends JpaRepository<ChecklistImage, 
             + "WHERE ci.checklist.id = :checklistId "
             + "AND ci.deleted = false")
     int countByChecklistId(@Param("checklistId") Long checklistId);
+
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Transactional
+    @Query("UPDATE ChecklistImage ci "
+            + "SET ci.deleted = true "
+            + "WHERE ci.checklist.id = :checklistId")
+    void deleteAllByChecklistId(@Param("checklistId") Long checklistId);
 }

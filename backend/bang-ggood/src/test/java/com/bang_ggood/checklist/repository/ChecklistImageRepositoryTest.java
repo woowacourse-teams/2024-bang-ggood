@@ -117,4 +117,18 @@ class ChecklistImageRepositoryTest extends IntegrationTestSupport {
         assertThat(ChecklistImageCount).isEqualTo(checklistImages.size());
     }
 
+    @DisplayName("체크리스트 ID로 이미지 전체 논리적 삭제 성공")
+    @Test
+    void deleteAllByChecklistId() {
+        // given
+        List<ChecklistImage> checklistImages = ChecklistImageFixture.CHECKLIST_IMAGES(checklist);
+        checklistImageRepository.saveAll(checklistImages);
+
+        // when
+        checklistImageRepository.deleteAllByChecklistId(checklist.getId());
+
+        // then
+        List<ChecklistImage> foundImages = checklistImageRepository.findByChecklistId(checklist.getId());
+        assertThat(foundImages).isEmpty();
+    }
 }

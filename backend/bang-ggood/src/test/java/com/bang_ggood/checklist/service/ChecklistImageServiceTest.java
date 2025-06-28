@@ -9,6 +9,9 @@ import com.bang_ggood.checklist.repository.ChecklistImageRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
+import com.bang_ggood.global.storage.AwsS3Client;
+import com.bang_ggood.global.storage.AwsS3Folder;
+import com.bang_ggood.global.storage.FileType;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
@@ -19,6 +22,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +32,7 @@ import java.util.stream.IntStream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 class ChecklistImageServiceTest extends IntegrationTestSupport {
@@ -135,6 +140,11 @@ class ChecklistImageServiceTest extends IntegrationTestSupport {
 
         // then
         Optional<ChecklistImage> deletedImage = checklistImageRepository.findById(savedImage.getId());
-        assertThat(deletedImage.isEmpty());
+        String fileName = checklist.getId() + "_" + savedImage.getOrderIndex() + FileType.JPG.getName();
+        assertAll(
+                () -> assertThat(deletedImage).isEmpty(),
+                () -> verify(awsS3Client, times(1))
+                        .delete(AwsS3Folder.CHECKLIST.getPath(), fileName)
+        );
     }
 }

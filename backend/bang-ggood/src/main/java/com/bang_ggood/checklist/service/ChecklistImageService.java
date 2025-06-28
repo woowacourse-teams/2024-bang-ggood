@@ -7,6 +7,7 @@ import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.global.storage.AwsS3Client;
 import com.bang_ggood.global.storage.AwsS3Folder;
+import com.bang_ggood.global.storage.FileType;
 import com.bang_ggood.global.util.ImageOptimizationUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -56,7 +57,7 @@ public class ChecklistImageService {
     }
 
     private static String makeFileName(long checklistId, int orderIdx) {
-        return checklistId + FILE_NAME_DELIMITER + orderIdx;
+        return checklistId + FILE_NAME_DELIMITER + orderIdx + FileType.JPG.getName();
     }
 
     private void validateImageCount(int count) {

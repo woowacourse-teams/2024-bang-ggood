@@ -44,7 +44,7 @@ public abstract class IntegrationTestSupport {
     private CacheManager cacheManager;
 
     @MockBean
-    private AwsS3Client awsS3Client;
+    protected AwsS3Client awsS3Client;
 
     private MockedStatic<ImageOptimizationUtil> imageOptimizationUtilMock;
 

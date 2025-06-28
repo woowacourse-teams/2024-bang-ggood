@@ -48,6 +48,13 @@ public class ChecklistImageService {
         checklistImageRepository.deleteById(imageId);
     }
 
+    @Transactional
+    public void deleteAllByChecklistId(Long checklistId) {
+        checklistImageRepository.findByChecklistId(checklistId)
+                .forEach(image -> awsS3Client.delete(AwsS3Folder.CHECKLIST.getPath(), image.getFileName()));
+        checklistImageRepository.deleteAllByChecklistId(checklistId);
+    }
+
     private void saveAllImages(Checklist checklist, List<MultipartFile> images) {
         for (int i = 0; i < images.size(); i++) {
             MultipartFile image = ImageOptimizationUtil.compress(images.get(i), IMAGE_QUALITY);

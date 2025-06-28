@@ -146,4 +146,25 @@ class ChecklistImageServiceTest extends IntegrationTestSupport {
                         .delete(AwsS3Folder.CHECKLIST.getPath(), savedImage.getFileName())
         );
     }
+
+    @DisplayName("체크리스트 ID로 이미지 전체 삭제 성공")
+    @Test
+    void deleteAllByChecklistId_success() {
+        // given
+        checklistImageService.createChecklistImages(checklist, ChecklistImageFixture.IMAGES());
+        List<ChecklistImage> savedImages = checklistImageRepository.findByChecklistId(checklist.getId());
+
+        // when
+        checklistImageService.deleteAllByChecklistId(checklist.getId());
+
+        // then
+        List<ChecklistImage> checklistImages = checklistImageRepository.findByChecklistId(checklist.getId());
+        assertAll(
+                () -> savedImages.forEach(image ->
+                        verify(awsS3Client, times(1))
+                                .delete(AwsS3Folder.CHECKLIST.getPath(), image.getFileName())
+                ),
+                () -> assertThat(checklistImages).isEmpty()
+        );
+    }
 }

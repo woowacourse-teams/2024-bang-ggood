@@ -4,12 +4,14 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.ChecklistImageFixture;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.ChecklistImage;
 import com.bang_ggood.checklist.domain.ChecklistShare;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.repository.ChecklistImageRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.repository.ChecklistShareRepository;
 import com.bang_ggood.global.exception.BangggoodException;
@@ -26,6 +28,7 @@ import com.bang_ggood.user.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,6 +51,8 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
     private ChecklistLikeRepository checklistLikeRepository;
     @Autowired
     private ChecklistShareRepository checklistShareRepository;
+    @Autowired
+    private ChecklistImageRepository checklistImageRepository;
 
     @DisplayName("체크리스트 작성 성공")
     @Test
@@ -347,4 +352,23 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
                 () -> assertThat(checklist.getMemo()).isEqualTo(updateChecklistRequest.room().memo())
         );
     }
+
+    @DisplayName("체크리스트 이미지 삭제 성공")
+    @Test
+    void deleteChecklistImageById() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        ChecklistRequest request = ChecklistFixture.CHECKLIST_CREATE_REQUEST();
+        Long checklistId = checklistManageService.createChecklistV2(user, request, ChecklistImageFixture.IMAGES());
+
+        // when
+        List<ChecklistImage> checklistImages = checklistImageRepository.findByChecklistId(checklistId);
+        Long deletedImageId = checklistImages.get(0).getId();
+        checklistManageService.deleteChecklistImageById(user, checklistId, deletedImageId);
+
+        // then
+        assertThat(checklistImageRepository.findById(deletedImageId))
+                .isEmpty();
+    }
+
 }

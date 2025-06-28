@@ -253,6 +253,7 @@ public class ChecklistManageService {
         checklistStationService.deleteChecklistStation(checklist.getId());
         checklistLikeService.deleteLike(user, checklist);
         checklistShareService.deleteChecklistShare(checklist);
+        checklistImageService.deleteAllByChecklistId(checklist.getId());
     }
 
     @Transactional(readOnly = true)

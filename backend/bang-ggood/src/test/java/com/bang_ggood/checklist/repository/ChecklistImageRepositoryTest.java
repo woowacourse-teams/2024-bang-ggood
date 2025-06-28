@@ -42,7 +42,7 @@ class ChecklistImageRepositoryTest extends IntegrationTestSupport {
         checklist = checklistService.createChecklist(ChecklistFixture.CHECKLIST1_USER1(room, UserFixture.USER1));
     }
 
-    @DisplayName("삭제되지 않은 ID로 ChecklistImage 조회 성공")
+    @DisplayName("체크리스트 이미지 찾기 성공 : 삭제되지 않은 이미지일 경우")
     @Test
     void findById_notDeleted() {
         // given
@@ -80,6 +80,27 @@ class ChecklistImageRepositoryTest extends IntegrationTestSupport {
         assertThatThrownBy(() -> checklistImageRepository.getById(Long.MAX_VALUE))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessageContaining(ExceptionCode.CHECKLIST_IMAGE_NOT_FOUND.getMessage());
+    }
+
+    @DisplayName("체크리스트 ID로 이미지 리스트 조회 성공")
+    @Test
+    void findByChecklistId_notDeletedImages() {
+        // given
+        List<ChecklistImage> checklistImages = ChecklistImageFixture.CHECKLIST_IMAGES(checklist);
+        checklistImageRepository.saveAll(checklistImages);
+
+        // when
+        List<ChecklistImage> foundImages = checklistImageRepository.findByChecklistId(checklist.getId());
+
+        // then
+        assertAll(
+                () -> assertThat(foundImages).hasSize(checklistImages.size()),
+                () -> assertThat(foundImages)
+                        .extracting(ChecklistImage::getChecklist)
+                        .containsOnly(checklist),
+                () -> assertThat(foundImages)
+                        .allMatch(image -> !image.isDeleted())
+        );
     }
 
     @DisplayName("체크리스트 ID로 이미지 수 세기 성공")

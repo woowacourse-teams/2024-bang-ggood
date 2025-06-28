@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 public interface ChecklistImageRepository extends JpaRepository<ChecklistImage, Long> {
@@ -19,10 +20,16 @@ public interface ChecklistImageRepository extends JpaRepository<ChecklistImage, 
             + "AND ci.id = :id")
     Optional<ChecklistImage> findById(@Param("id") Long id);
 
-
     default ChecklistImage getById(@Param("id") Long id) {
         return findById(id).orElseThrow(() -> new BangggoodException(ExceptionCode.CHECKLIST_IMAGE_NOT_FOUND));
     }
+
+    @Query("SELECT ci FROM ChecklistImage ci " +
+            "JOIN FETCH ci.checklist c " +
+            "WHERE ci.deleted = false " +
+            "AND c.id = :checklistId")
+    List<ChecklistImage> findByChecklistId(@Param("checklistId") Long checklistId);
+
 
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)

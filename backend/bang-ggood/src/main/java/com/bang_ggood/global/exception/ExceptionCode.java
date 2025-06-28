@@ -62,7 +62,7 @@ public enum ExceptionCode {
 
     // ChecklistImage
     CHECKLIST_IMAGE_INVALID_COUNT(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR, "체크리스트 이미지는 최대 5개 가능합니다."),
-
+    CHECKLIST_IMAGE_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR, "해당하는 체크리스트 이미지가 존재하지 않습니다."),
     // FloorLevel
     FLOOR_LEVEL_INVALID(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR, "층 종류가 유효하지 않습니다."),
 

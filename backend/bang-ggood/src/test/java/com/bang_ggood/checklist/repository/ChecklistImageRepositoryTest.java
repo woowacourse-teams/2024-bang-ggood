@@ -6,6 +6,8 @@ import com.bang_ggood.checklist.ChecklistImageFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistImage;
 import com.bang_ggood.checklist.service.ChecklistService;
+import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.service.RoomService;
@@ -15,8 +17,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ChecklistImageRepositoryTest extends IntegrationTestSupport {
 
@@ -35,6 +40,46 @@ class ChecklistImageRepositoryTest extends IntegrationTestSupport {
     void setUp() {
         Room room = roomService.createRoom(RoomFixture.ROOM_1());
         checklist = checklistService.createChecklist(ChecklistFixture.CHECKLIST1_USER1(room, UserFixture.USER1));
+    }
+
+    @DisplayName("삭제되지 않은 ID로 ChecklistImage 조회 성공")
+    @Test
+    void findById_notDeleted() {
+        // given
+        ChecklistImage checklistImage = ChecklistImageFixture.CHECKLIST_IMAGE_1(checklist);
+        checklistImageRepository.save(checklistImage);
+
+        // when
+        Optional<ChecklistImage> foundImage = checklistImageRepository.findById(checklistImage.getId());
+
+        // then
+        assertAll(
+                () -> assertThat(foundImage).isPresent(),
+                () -> assertThat(foundImage.get().getId()).isEqualTo(checklistImage.getId())
+        );
+    }
+
+    @DisplayName("체크리스트 이미지 찾기 성공 : 삭제된 이미지일 경우")
+    @Test
+    void findById_deleted() {
+        // given
+        ChecklistImage checklistImage = ChecklistImageFixture.CHECKLIST_IMAGE_1(checklist);
+        checklistImageRepository.save(checklistImage);
+        checklistImageRepository.deleteById(checklistImage.getId());
+
+        // when
+        Optional<ChecklistImage> foundImage = checklistImageRepository.findById(checklistImage.getId());
+
+        // then
+        assertThat(foundImage).isEmpty();
+    }
+
+    @DisplayName("체크리트스 이미지 갖고 오기 실패 : 존재하지 않을 경우")
+    @Test
+    void getById_notFound_exception() {
+        assertThatThrownBy(() -> checklistImageRepository.getById(Long.MAX_VALUE))
+                .isInstanceOf(BangggoodException.class)
+                .hasMessageContaining(ExceptionCode.CHECKLIST_IMAGE_NOT_FOUND.getMessage());
     }
 
     @DisplayName("체크리스트 ID로 이미지 수 세기 성공")

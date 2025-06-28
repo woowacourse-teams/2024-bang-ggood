@@ -4,6 +4,7 @@ import com.bang_ggood.AcceptanceTest;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.ChecklistImageFixture;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.repository.ChecklistImageRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.room.RoomFixture;
@@ -37,6 +38,8 @@ class ChecklistE2ETest extends AcceptanceTest {
     private ChecklistRepository checklistRepository;
     @Autowired
     private RoomRepository roomRepository;
+    @Autowired
+    private ChecklistImageRepository checklistImageRepository;
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -275,7 +278,7 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .statusCode(204);
     }
 
-    @DisplayName("체크리스트 수정 실패: 방 이름을 넣지 않은 경우")
+    @DisplayName("체크리스트 수정 실패 V2: 방 이름을 넣지 않은 경우")
     @Test
     void updateChecklistV2_noRoomName_exception() throws IOException {
         long checklistId = checklistManageService.createChecklist(this.getAuthenticatedUser(),
@@ -295,7 +298,7 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .body("message", containsString("방 이름이 존재하지 않습니다."));
     }
 
-    @DisplayName("체크리스트 수정 실패: 질문 ID를 넣지 않은 경우")
+    @DisplayName("체크리스트 수정 실패 V2: 질문 ID를 넣지 않은 경우")
     @Test
     void updateChecklistV2_noQuestionId_exception() throws IOException {
         long checklistId = checklistManageService.createChecklist(this.getAuthenticatedUser(),
@@ -326,6 +329,21 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .contentType(ContentType.JSON)
                 .headers(this.headers)
                 .when().delete("/checklists/" + saved.getId())
+                .then().log().all()
+                .statusCode(204);
+    }
+
+    @DisplayName("체크리스트 이미지 삭제 성공")
+    @Test
+    void deleteChecklistImageById() {
+        long checklistId = checklistManageService.createChecklistV2(this.getAuthenticatedUser(),
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST(), ChecklistImageFixture.IMAGES());
+        long imageId = checklistImageRepository.findByChecklistId(checklistId).get(0).getId();
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .headers(this.headers)
+                .when().delete("/checklists/{checklist_id}/images/{image_id}", checklistId, imageId)
                 .then().log().all()
                 .statusCode(204);
     }

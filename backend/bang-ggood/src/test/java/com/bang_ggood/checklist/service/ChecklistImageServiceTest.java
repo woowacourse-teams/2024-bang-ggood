@@ -21,12 +21,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.Mockito.verify;
 
 class ChecklistImageServiceTest extends IntegrationTestSupport {
 
@@ -118,5 +120,21 @@ class ChecklistImageServiceTest extends IntegrationTestSupport {
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.CHECKLIST_IMAGE_INVALID_COUNT.getMessage());
 
+    }
+
+    @DisplayName("체크리스트 이미지 삭제 성공")
+    @Test
+    void deleteById() {
+        // given
+        List<MultipartFile> firstChecklistImages = ChecklistImageFixture.IMAGES();
+        checklistImageService.createChecklistImages(checklist, firstChecklistImages);
+        ChecklistImage savedImage = checklistImageRepository.findAll().get(0);
+
+        // when
+        checklistImageService.deleteById(checklist.getId(), savedImage.getId());
+
+        // then
+        Optional<ChecklistImage> deletedImage = checklistImageRepository.findById(savedImage.getId());
+        assertThat(deletedImage.isEmpty());
     }
 }

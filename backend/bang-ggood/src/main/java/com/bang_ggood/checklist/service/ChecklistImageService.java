@@ -20,6 +20,7 @@ public class ChecklistImageService {
 
     private static final int MAX_CHECKLIST_IMAGE_COUNT = 5;
     private static final float IMAGE_QUALITY = 0.8F;
+    private static final String FILE_NAME_DELIMITER = "_";
 
     private final ChecklistImageRepository checklistImageRepository;
     private final AwsS3Client awsS3Client;
@@ -37,12 +38,25 @@ public class ChecklistImageService {
         saveAllImages(checklist, images);
     }
 
+    @Transactional
+    public void deleteById(long checklistId, long imageId) {
+        ChecklistImage checklistImage = checklistImageRepository.getById(imageId);
+        String fileName = makeFileName(checklistId, checklistImage.getOrderIndex());
+        awsS3Client.delete(AwsS3Folder.CHECKLIST.getPath(), fileName);
+        checklistImageRepository.deleteById(imageId);
+    }
+
     private void saveAllImages(Checklist checklist, List<MultipartFile> images) {
         for (int i = 0; i < images.size(); i++) {
             MultipartFile image = ImageOptimizationUtil.compress(images.get(i), IMAGE_QUALITY);
-            String imageUrl = awsS3Client.upload(image, AwsS3Folder.CHECKLIST.getPath(), checklist.getId() + "_" + i);
+            String imageUrl = awsS3Client.upload(image, AwsS3Folder.CHECKLIST.getPath(),
+                    makeFileName(checklist.getId(), i));
             checklistImageRepository.save(new ChecklistImage(checklist, imageUrl, i));
         }
+    }
+
+    private static String makeFileName(long checklistId, int orderIdx) {
+        return checklistId + FILE_NAME_DELIMITER + orderIdx;
     }
 
     private void validateImageCount(int count) {

@@ -212,6 +212,7 @@ CREATE TABLE checklist_image
 (
     id           BIGINT PRIMARY KEY AUTO_INCREMENT,
     checklist_id BIGINT        NOT NULL,
+    file_name    VARCHAR(1024) NOT NULL,
     image_url    VARCHAR(1024) NOT NULL,
     order_index  INT           NOT NULL,
     created_at   TIMESTAMP(6),
@@ -222,3 +223,4 @@ CREATE TABLE checklist_image
         REFERENCES checklist (id)
         ON DELETE CASCADE
 );
+

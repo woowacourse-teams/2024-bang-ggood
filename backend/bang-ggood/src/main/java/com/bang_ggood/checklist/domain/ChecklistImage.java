@@ -26,12 +26,16 @@ public class ChecklistImage extends BaseEntity {
     private Checklist checklist;
 
     @Column(length = 1024)
+    private String fileName;
+
+    @Column(length = 1024)
     private String imageUrl;
 
     private int orderIndex;
 
-    public ChecklistImage(Checklist checklist, String imageUrl, int orderIndex) {
+    public ChecklistImage(Checklist checklist, String fileName, String imageUrl, int orderIndex) {
         this.checklist = checklist;
+        this.fileName = fileName;
         this.imageUrl = imageUrl;
         this.orderIndex = orderIndex;
     }

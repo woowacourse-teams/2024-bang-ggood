@@ -28,7 +28,6 @@ import com.bang_ggood.user.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -104,7 +103,8 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         ChecklistRequest checklistRequest = ChecklistFixture.CHECKLIST_CREATE_REQUEST_EMPTY_LOCATION();
 
         // when
-        long checklistId = checklistManageService.createChecklistV2(user, checklistRequest, ChecklistImageFixture.IMAGES());
+        long checklistId = checklistManageService.createChecklistV2(user, checklistRequest,
+                ChecklistImageFixture.IMAGES());
 
         //then
         assertThat(checklistId).isGreaterThan(0);
@@ -343,7 +343,8 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         ChecklistRequest updateChecklistRequest = ChecklistFixture.CHECKLIST_UPDATE_REQUEST();
 
         //when
-        checklistManageService.updateChecklistByIdV2(user, checklistId, updateChecklistRequest, ChecklistImageFixture.IMAGES());
+        checklistManageService.updateChecklistByIdV2(user, checklistId, updateChecklistRequest,
+                ChecklistImageFixture.IMAGES());
 
         //then
         Checklist checklist = checklistRepository.getById(checklistId);

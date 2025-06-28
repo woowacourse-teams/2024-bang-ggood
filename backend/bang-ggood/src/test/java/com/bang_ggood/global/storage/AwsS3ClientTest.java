@@ -15,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,19 +31,16 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class AwsS3ClientTest {
 
-    @InjectMocks
-    private AwsS3Client awsS3Client;
-
-    @Mock
-    private S3Template s3Template;
-
-    @Mock
-    private MultipartFile multipartFile;
-
     private final String bucketName = "test-bucket";
     private final String folder = "folder/";
     private final String fileName = "image.png";
     private final String fullPath = folder + fileName;
+    @InjectMocks
+    private AwsS3Client awsS3Client;
+    @Mock
+    private S3Template s3Template;
+    @Mock
+    private MultipartFile multipartFile;
 
     @BeforeEach
     void setup() {

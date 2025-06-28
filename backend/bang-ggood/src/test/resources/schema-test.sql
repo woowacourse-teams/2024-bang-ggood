@@ -43,7 +43,7 @@ CREATE TABLE question
 (
     id          INTEGER AUTO_INCREMENT PRIMARY KEY,
     category_id INTEGER,
-    user_id BIGINT,
+    user_id     BIGINT,
     title       VARCHAR(255),
     subtitle    VARCHAR(255),
     is_default  BOOLEAN,

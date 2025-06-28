@@ -296,7 +296,8 @@ public class ChecklistManageService {
     }
 
     @Transactional
-    public void updateChecklistByIdV2(User user, long checklistId, ChecklistRequest checklistRequest, List<MultipartFile> updateImages) {
+    public void updateChecklistByIdV2(User user, long checklistId, ChecklistRequest checklistRequest,
+                                      List<MultipartFile> updateImages) {
         Checklist checklist = checklistService.readChecklist(user, checklistId);
 
         roomService.updateRoom(checklist.getRoom(), checklistRequest.toRoomEntity());

@@ -31,21 +31,16 @@ import static org.mockito.Mockito.when;
 @Sql(scripts = {"/schema-test.sql", "/data-test.sql"})
 public abstract class IntegrationTestSupport {
 
-    @Autowired
-    CategoryRepository categoryRepository;
-
-    @Autowired
-    QuestionRepository questionRepository;
-
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    private CacheManager cacheManager;
-
     @MockBean
     protected AwsS3Client awsS3Client;
-
+    @Autowired
+    CategoryRepository categoryRepository;
+    @Autowired
+    QuestionRepository questionRepository;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    private CacheManager cacheManager;
     private MockedStatic<ImageOptimizationUtil> imageOptimizationUtilMock;
 
     @BeforeEach

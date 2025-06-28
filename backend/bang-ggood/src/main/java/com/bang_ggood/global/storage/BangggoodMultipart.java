@@ -20,6 +20,15 @@ public class BangggoodMultipart implements MultipartFile {
     private final String contentType;
     private final byte[] content;
 
+    public static BangggoodMultipart from(MultipartFile file, String contentType, byte[] bytes) {
+        return new BangggoodMultipart(
+                file.getName(),
+                file.getOriginalFilename(),
+                contentType,
+                bytes
+        );
+    }
+
     @Override
     public boolean isEmpty() {
         return content == null || content.length == 0;
@@ -45,14 +54,5 @@ public class BangggoodMultipart implements MultipartFile {
         try (FileOutputStream fos = new FileOutputStream(dest)) {
             fos.write(content);
         }
-    }
-
-    public static BangggoodMultipart from(MultipartFile file, String contentType, byte[] bytes) {
-        return new BangggoodMultipart(
-                file.getName(),
-                file.getOriginalFilename(),
-                contentType,
-                bytes
-        );
     }
 }

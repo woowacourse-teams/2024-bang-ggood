@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -40,9 +41,9 @@ public class ChecklistImageService {
     }
 
     @Transactional
-    public void deleteById(long checklistId, long imageId) {
+    public void deleteById(long imageId) {
         ChecklistImage checklistImage = checklistImageRepository.getById(imageId);
-        String fileName = makeFileName(checklistId, checklistImage.getOrderIndex());
+        String fileName = checklistImage.getFileName();
         awsS3Client.delete(AwsS3Folder.CHECKLIST.getPath(), fileName);
         checklistImageRepository.deleteById(imageId);
     }
@@ -50,14 +51,14 @@ public class ChecklistImageService {
     private void saveAllImages(Checklist checklist, List<MultipartFile> images) {
         for (int i = 0; i < images.size(); i++) {
             MultipartFile image = ImageOptimizationUtil.compress(images.get(i), IMAGE_QUALITY);
-            String imageUrl = awsS3Client.upload(image, AwsS3Folder.CHECKLIST.getPath(),
-                    makeFileName(checklist.getId(), i));
-            checklistImageRepository.save(new ChecklistImage(checklist, imageUrl, i));
+            String fileName = makeFileName();
+            String imageUrl = awsS3Client.upload(image, AwsS3Folder.CHECKLIST.getPath(), fileName);
+            checklistImageRepository.save(new ChecklistImage(checklist, fileName, imageUrl, i));
         }
     }
 
-    private static String makeFileName(long checklistId, int orderIdx) {
-        return checklistId + FILE_NAME_DELIMITER + orderIdx + FileType.JPG.getName();
+    private String makeFileName() {
+        return UUID.randomUUID() + FileType.JPG.getName();
     }
 
     private void validateImageCount(int count) {

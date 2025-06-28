@@ -349,6 +349,6 @@ public class ChecklistManageService {
     @Transactional
     public void deleteChecklistImageById(User user, long checklistId, long imageId) {
         checklistService.readChecklist(user, checklistId);
-        checklistImageService.deleteById(checklistId, imageId);
+        checklistImageService.deleteById(imageId);
     }
 }

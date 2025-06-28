@@ -15,11 +15,11 @@ public class ChecklistImageFixture {
     }
 
     public static ChecklistImage CHECKLIST_IMAGE_1(Checklist checklist) {
-        return new ChecklistImage(checklist, "image-url", 1);
+        return new ChecklistImage(checklist, "file_name", "image-url", 1);
     }
 
     public static ChecklistImage CHECKLIST_IMAGE_2(Checklist checklist) {
-        return new ChecklistImage(checklist, "image-url", 1);
+        return new ChecklistImage(checklist, "file_name", "image-url", 1);
     }
 
     public static MultipartFile IMAGE() {

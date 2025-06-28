@@ -136,15 +136,14 @@ class ChecklistImageServiceTest extends IntegrationTestSupport {
         ChecklistImage savedImage = checklistImageRepository.findAll().get(0);
 
         // when
-        checklistImageService.deleteById(checklist.getId(), savedImage.getId());
+        checklistImageService.deleteById(savedImage.getId());
 
         // then
         Optional<ChecklistImage> deletedImage = checklistImageRepository.findById(savedImage.getId());
-        String fileName = checklist.getId() + "_" + savedImage.getOrderIndex() + FileType.JPG.getName();
         assertAll(
                 () -> assertThat(deletedImage).isEmpty(),
                 () -> verify(awsS3Client, times(1))
-                        .delete(AwsS3Folder.CHECKLIST.getPath(), fileName)
+                        .delete(AwsS3Folder.CHECKLIST.getPath(), savedImage.getFileName())
         );
     }
 }

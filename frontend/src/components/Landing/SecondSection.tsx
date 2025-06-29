@@ -1,10 +1,10 @@
+import { useTheme } from '@emotion/react';
 import { useRef } from 'react';
 
 import { ChecklistImage, ScrollArrow } from '@/assets/assets';
 import CS from '@/components/Landing/style';
 import { INTERSECTION_CONFIG } from '@/constants/system';
 import useIntersection from '@/hooks/useIntersection';
-import { useTheme } from '@emotion/react';
 
 const SecondSection = () => {
   const theme = useTheme();

@@ -88,7 +88,7 @@ const SendVerificationEmailStep = ({ args: { email, code }, onNext }: Props) => 
             label="확인"
             size="full"
             isSquare={true}
-            color={'dark'}
+            color="dark"
             onClick={handleClickNext}
             disabled={!canMove}
           />

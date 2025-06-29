@@ -54,7 +54,7 @@ const RealTimeAddressModal = () => {
           <div>
             지도를 클릭하면 현재 위치를 움직일 수 있어요. <br />
           </div>
-          <FlexBox.Horizontal gap={'10px'}>
+          <FlexBox.Horizontal gap="10px">
             <span>
               <LocationLineIcon height={20} width={20} />
             </span>

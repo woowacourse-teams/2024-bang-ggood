@@ -7,6 +7,7 @@ import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
 import com.bang_ggood.checklist.dto.response.ChecklistShareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.dto.response.SelectedChecklistResponseV2;
 import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.user.domain.User;
 import jakarta.validation.Valid;
@@ -56,10 +57,16 @@ public class ChecklistController {
         return ResponseEntity.created(URI.create("/v1/checklists/share/" + response.token())).body(response);
     }
 
-    @GetMapping("v1/checklists/{id}")
+    @GetMapping("/v1/checklists/{id}")
     public ResponseEntity<SelectedChecklistResponse> readChecklistByIdV1(@UserPrincipal User user,
                                                                          @PathVariable("id") Long checklistId) {
         return ResponseEntity.ok(checklistManageService.readChecklist(user, checklistId));
+    }
+
+    @GetMapping("/v2/checklists/{id}")
+    public ResponseEntity<SelectedChecklistResponseV2> readChecklistByIdV2(@UserPrincipal User user,
+                                                                           @PathVariable("id") Long checklistId) {
+        return ResponseEntity.ok(checklistManageService.readChecklistV2(user, checklistId));
     }
 
     @GetMapping("/v1/checklists")

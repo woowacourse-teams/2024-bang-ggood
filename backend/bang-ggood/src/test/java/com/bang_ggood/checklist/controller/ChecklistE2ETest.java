@@ -142,28 +142,6 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .statusCode(200);
     }
 
-    @DisplayName("작성된 체크리스트 조회 성공")
-    @Test
-    void readChecklistById() {
-        long checklistId = checklistManageService.createChecklist(this.getAuthenticatedUser(),
-                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
-
-        RestAssured.given().log().all()
-                .contentType(ContentType.JSON)
-                .headers(this.headers)
-                .when().get("/v1/checklists/" + checklistId)
-                .then().log().all()
-                .statusCode(200);
-                /*.extract()
-                .as(SelectedChecklistResponse.class);
-
-        Assertions.assertAll(
-                () -> assertThat(selectedChecklistResponse.room().roomName()).isEqualTo(ChecklistFixture.CHECKLIST_CREATE_REQUEST().room().roomName()),
-                () -> assertThat(selectedChecklistResponse.room().address()).isEqualTo(ChecklistFixture.CHECKLIST_CREATE_REQUEST().room().address())
-        );*/
-        //TODO 수정
-    }
-
     @DisplayName("작성된 체크리스트 조회 v1 성공")
     @Test
     void readChecklistV1() {
@@ -174,6 +152,20 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .contentType(ContentType.JSON)
                 .headers(this.headers)
                 .when().get("v1/checklists/" + checklistId)
+                .then().log().all()
+                .statusCode(200);
+    }
+
+    @DisplayName("작성된 체크리스트 조회 v2 성공")
+    @Test
+    void readChecklistV2() {
+        long checklistId = checklistManageService.createChecklist(this.getAuthenticatedUser(),
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .headers(this.headers)
+                .when().get("v2/checklists/" + checklistId)
                 .then().log().all()
                 .statusCode(200);
     }

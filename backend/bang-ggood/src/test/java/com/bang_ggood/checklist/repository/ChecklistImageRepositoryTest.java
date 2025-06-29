@@ -110,6 +110,30 @@ class ChecklistImageRepositoryTest extends IntegrationTestSupport {
         );
     }
 
+    @DisplayName("체크리스트 ID로 첫 번째 이미지 조회 성공 ")
+    @Test
+    void findFirstByChecklistId() {
+        // given
+        List<ChecklistImage> checklistImages = ChecklistImageFixture.CHECKLIST_IMAGES(checklist);
+        checklistImageRepository.saveAll(checklistImages);
+
+        // when
+        ChecklistImage firstImage = checklistImageRepository.findFirstByChecklistId(checklist.getId());
+
+        // then
+        Integer minOrderIndex = checklistImages.stream()
+                .map(ChecklistImage::getOrderIndex)
+                .min(Integer::compareTo)
+                .orElseThrow();
+
+        assertAll(
+                () -> assertThat(firstImage).isNotNull(),
+                () -> assertThat(firstImage.getChecklist().getId()).isEqualTo(checklist.getId()),
+                () -> assertThat(firstImage.getOrderIndex()).isEqualTo(minOrderIndex)
+        );
+    }
+
+
 
     @DisplayName("체크리스트 ID로 이미지 수 세기 성공")
     @Test

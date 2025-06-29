@@ -30,13 +30,12 @@ public interface ChecklistImageRepository extends JpaRepository<ChecklistImage, 
             "ORDER BY ci.orderIndex")
     List<ChecklistImage> findByChecklistId(@Param("checklistId") Long checklistId);
 
-    @Query("SELECT ci FROM ChecklistImage ci " +
-            "JOIN FETCH ci.checklist c " +
+    @Query(value = "SELECT ci.* FROM checklist_image ci " +
+            "JOIN checklist c ON ci.checklist_id = c.id " +
             "WHERE ci.deleted = false " +
             "AND c.id = :checklistId " +
-            "ORDER BY ci.orderIndex " +
-            "LIMIT 1")
-    ChecklistImage findFirstByChecklistId(@Param("checklistId") Long checklistId);
+            "ORDER BY ci.order_index LIMIT 1", nativeQuery = true)
+    Optional<ChecklistImage> findFirstByChecklistId(@Param("checklistId") Long checklistId);
 
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)

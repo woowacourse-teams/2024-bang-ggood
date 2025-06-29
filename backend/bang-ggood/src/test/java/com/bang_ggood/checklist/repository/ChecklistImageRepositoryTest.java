@@ -118,7 +118,7 @@ class ChecklistImageRepositoryTest extends IntegrationTestSupport {
         checklistImageRepository.saveAll(checklistImages);
 
         // when
-        ChecklistImage firstImage = checklistImageRepository.findFirstByChecklistId(checklist.getId());
+        ChecklistImage firstImage = checklistImageRepository.findFirstByChecklistId(checklist.getId()).get();
 
         // then
         Integer minOrderIndex = checklistImages.stream()
@@ -132,8 +132,6 @@ class ChecklistImageRepositoryTest extends IntegrationTestSupport {
                 () -> assertThat(firstImage.getOrderIndex()).isEqualTo(minOrderIndex)
         );
     }
-
-
 
     @DisplayName("체크리스트 ID로 이미지 수 세기 성공")
     @Test

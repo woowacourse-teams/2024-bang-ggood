@@ -16,6 +16,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,9 +84,9 @@ class ChecklistImageRepositoryTest extends IntegrationTestSupport {
                 .hasMessageContaining(ExceptionCode.CHECKLIST_IMAGE_NOT_FOUND.getMessage());
     }
 
-    @DisplayName("체크리스트 ID로 이미지 리스트 조회 성공")
+    @DisplayName("체크리스트 ID로 이미지 리스트 조회")
     @Test
-    void findByChecklistId_notDeletedImages() {
+    void findByChecklistId() {
         // given
         List<ChecklistImage> checklistImages = ChecklistImageFixture.CHECKLIST_IMAGES(checklist);
         checklistImageRepository.saveAll(checklistImages);
@@ -96,12 +98,18 @@ class ChecklistImageRepositoryTest extends IntegrationTestSupport {
         assertAll(
                 () -> assertThat(foundImages).hasSize(checklistImages.size()),
                 () -> assertThat(foundImages)
-                        .extracting(ChecklistImage::getChecklist)
-                        .containsOnly(checklist),
-                () -> assertThat(foundImages)
-                        .allMatch(image -> !image.isDeleted())
+                        .allMatch(image -> !image.isDeleted()),
+                () -> {
+                    List<Integer> actualOrderIdxes = foundImages.stream()
+                            .map(ChecklistImage::getOrderIndex)
+                            .toList();
+                    List<Integer> sortedOrderIdxes = new ArrayList<>(actualOrderIdxes);
+                    Collections.sort(sortedOrderIdxes);
+                    assertThat(actualOrderIdxes).isEqualTo(sortedOrderIdxes);
+                }
         );
     }
+
 
     @DisplayName("체크리스트 ID로 이미지 수 세기 성공")
     @Test

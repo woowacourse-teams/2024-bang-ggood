@@ -26,9 +26,9 @@ public interface ChecklistImageRepository extends JpaRepository<ChecklistImage, 
     @Query("SELECT ci FROM ChecklistImage ci " +
             "JOIN FETCH ci.checklist c " +
             "WHERE ci.deleted = false " +
-            "AND c.id = :checklistId")
+            "AND c.id = :checklistId " +
+            "ORDER BY ci.orderIndex")
     List<ChecklistImage> findByChecklistId(@Param("checklistId") Long checklistId);
-
 
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)

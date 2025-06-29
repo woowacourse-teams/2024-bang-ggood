@@ -1,11 +1,12 @@
+import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
+
 import ArticleBadge from '@/components/_common/ArticleBadge/ArticleBadge';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { trackArticleDetail } from '@/service/amplitude/trackEvent';
 import { flexColumn } from '@/styles/common';
 import { Article } from '@/types/article';
 import { fontStyle } from '@/utils/fontStyle';
-import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
 
 const ArticleThumbnailCard = ({ article }: { article: Article }) => {
   const navigate = useNavigate();

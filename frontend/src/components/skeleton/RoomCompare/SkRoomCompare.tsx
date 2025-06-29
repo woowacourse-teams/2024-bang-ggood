@@ -9,7 +9,7 @@ const SkRoomCompare = () => {
   return (
     <div>
       <Layout withHeader bgColor={theme.color.mono.white}>
-        <FlexBox.Vertical gap={'1rem'}>
+        <FlexBox.Vertical gap="1rem">
           <FlexBox.Horizontal>
             <S.RowBox />
             <S.RowBox />

@@ -1,8 +1,9 @@
+import { useTheme } from '@emotion/react';
+import styled from '@emotion/styled';
+
 import ToggleButton from '@/components/_common/Button/ToggleButton';
 import { flexRow } from '@/styles/common';
 import { ARTICLE_TYPES, ArticleType } from '@/types/article';
-import { useTheme } from '@emotion/react';
-import styled from '@emotion/styled';
 
 const ArticleKeywordSelectionSection = ({
   selectKeyword,

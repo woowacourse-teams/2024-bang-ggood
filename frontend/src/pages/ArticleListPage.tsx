@@ -1,3 +1,4 @@
+import { Suspense, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallback';
@@ -11,7 +12,6 @@ import SkArticleList from '@/components/skeleton/Article/SkArticleList';
 import { useTrackPageView } from '@/service/amplitude/useTrackPageView';
 import theme from '@/styles/theme';
 import { ArticleType } from '@/types/article';
-import { Suspense, useState } from 'react';
 
 const ArticleListPage = () => {
   useTrackPageView({ eventName: '[View] 아티클 리스트 페이지' });

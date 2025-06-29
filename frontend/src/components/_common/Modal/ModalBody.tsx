@@ -1,5 +1,6 @@
-import { fontStyle } from '@/utils/fontStyle';
 import styled from '@emotion/styled';
+
+import { fontStyle } from '@/utils/fontStyle';
 
 type ModalContentPosition = 'center' | 'left';
 

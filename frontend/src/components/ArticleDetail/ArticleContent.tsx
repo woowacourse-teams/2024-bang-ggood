@@ -1,3 +1,4 @@
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import MarkdownPreview from '@uiw/react-markdown-preview/nohighlight';
 import { useParams } from 'react-router-dom';
@@ -6,7 +7,6 @@ import { useGetArticleSuspenseQuery } from '@/hooks/query/useGetArticleSuspenseQ
 import { flexSpaceBetween } from '@/styles/common';
 import { fontStyle } from '@/utils/fontStyle';
 import formattedDate from '@/utils/formattedDate';
-import { useTheme } from '@emotion/react';
 
 type RouteParams = {
   articleId: string;

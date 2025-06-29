@@ -74,6 +74,20 @@ export default [
         'import/no-duplicates': 'error',
       },
     },
+    // JSX 문자열 prop 규칙: {""} 대신 """ 사용
+    {
+      plugins: { react: reactPlugin },
+      rules: {
+        'react/jsx-curly-brace-presence': [
+          'error',
+          {
+            props: 'never', // 문자열 리터럴: prop="text"만 허용
+            children: 'ignore', // <Comp>{'text'}</Comp> 는 신경 쓰지 않음
+            propElementValues: 'ignore', // <Icon icon={<Svg />} /> 같은 건 그대로
+          },
+        ],
+      },
+    },
   ),
 
   {

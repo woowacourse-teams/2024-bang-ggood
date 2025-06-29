@@ -157,16 +157,16 @@ const RoomCompareMap = ({ positions }: { positions: Position[] }) => {
                 disabled={!hasAddressRoom1}
                 isCircle={false}
                 color={theme.palette.yellow500}
-                text={'A방'}
-                size={'medium'}
+                text="A방"
+                size="medium"
                 onClick={() => handleRoomMarkerClick(0)}
               />
               <Marker
                 disabled={!hasAddressRoom2}
                 isCircle={false}
                 color={theme.palette.green500}
-                text={'B방'}
-                size={'medium'}
+                text="B방"
+                size="medium"
                 onClick={() => handleRoomMarkerClick(1)}
               />
             </S.RoomMarkBox>

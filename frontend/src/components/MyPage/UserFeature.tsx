@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { ArrowRightIcon } from '@/assets/assets';
+import Button from '@/components/_common/Button/Button';
 import DeleteAccountModal from '@/components/MyPage/DeleteAccountModal';
 import LogoutModal from '@/components/MyPage/LogoutModal';
 import { QUERY_KEYS } from '@/constants/queryKeys';
@@ -12,7 +13,6 @@ import useGetUserQuery from '@/hooks/query/useGetUserQuery';
 import useModal from '@/hooks/useModal';
 import { flexColumn, flexSpaceBetween } from '@/styles/common';
 import { fontStyle } from '@/utils/fontStyle';
-import Button from '@/components/_common/Button/Button';
 
 const UserFeature = () => {
   const { data: user } = useGetUserQuery();

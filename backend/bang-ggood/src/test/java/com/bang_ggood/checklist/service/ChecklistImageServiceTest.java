@@ -179,4 +179,28 @@ class ChecklistImageServiceTest extends IntegrationTestSupport {
         // then
         assertThat(foundImages).hasSize(checklistImages.size());
     }
+
+    @DisplayName("체크리스트 썸네일 이미지 조회 성공")
+    @Test
+    void readChecklistThumbnailImage() {
+        // given
+        List<ChecklistImage> checklistImages = ChecklistImageFixture.CHECKLIST_IMAGES(checklist);
+        checklistImageRepository.saveAll(checklistImages);
+
+        // when
+        ChecklistImage thumbnail = checklistImageService.readChecklistThumbnailImage(checklist);
+
+        // then
+        Integer minOrderIndex = checklistImages.stream()
+                .map(ChecklistImage::getOrderIndex)
+                .min(Integer::compareTo)
+                .orElseThrow();
+
+        assertAll(
+                () -> assertThat(thumbnail).isNotNull(),
+                () -> assertThat(thumbnail.getChecklist().getId()).isEqualTo(checklist.getId()),
+                () -> assertThat(thumbnail.getOrderIndex()).isEqualTo(minOrderIndex)
+        );
+    }
+
 }

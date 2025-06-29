@@ -78,4 +78,9 @@ public class ChecklistImageService {
     public List<ChecklistImage> readChecklistImages(Checklist checklist) {
         return checklistImageRepository.findByChecklistId(checklist.getId());
     }
+
+    @Transactional
+    public ChecklistImage readChecklistThumbnailImage(Checklist checklist) {
+        return checklistImageRepository.findFirstByChecklistId(checklist.getId());
+    }
 }

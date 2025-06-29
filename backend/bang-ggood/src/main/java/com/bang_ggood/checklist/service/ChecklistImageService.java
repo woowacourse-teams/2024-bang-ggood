@@ -73,4 +73,9 @@ public class ChecklistImageService {
             throw new BangggoodException(ExceptionCode.CHECKLIST_IMAGE_INVALID_COUNT);
         }
     }
+
+    @Transactional
+    public List<ChecklistImage> readChecklistImages(Checklist checklist) {
+        return checklistImageRepository.findByChecklistId(checklist.getId());
+    }
 }

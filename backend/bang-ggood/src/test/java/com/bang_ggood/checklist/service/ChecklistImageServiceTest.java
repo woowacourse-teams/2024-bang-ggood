@@ -21,6 +21,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -146,7 +147,7 @@ class ChecklistImageServiceTest extends IntegrationTestSupport {
 
     @DisplayName("체크리스트 ID로 이미지 전체 삭제 성공")
     @Test
-    void deleteAllByChecklistId_success() {
+    void deleteAllByChecklistId() {
         // given
         checklistImageService.createChecklistImages(checklist, ChecklistImageFixture.IMAGES());
         List<ChecklistImage> savedImages = checklistImageRepository.findByChecklistId(checklist.getId());
@@ -163,5 +164,19 @@ class ChecklistImageServiceTest extends IntegrationTestSupport {
                 ),
                 () -> assertThat(checklistImages).isEmpty()
         );
+    }
+
+    @DisplayName("체크리스트 ID로 이미지 리스트 조회 성공")
+    @Test
+    void readChecklistImages() {
+        // given
+        List<ChecklistImage> checklistImages = ChecklistImageFixture.CHECKLIST_IMAGES(checklist);
+        checklistImageRepository.saveAll(checklistImages);
+
+        // when
+        List<ChecklistImage> foundImages = checklistImageService.readChecklistImages(checklist);
+
+        // then
+        assertThat(foundImages).hasSize(checklistImages.size());
     }
 }

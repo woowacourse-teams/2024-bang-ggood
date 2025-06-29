@@ -11,6 +11,7 @@ import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.dto.response.SelectedChecklistResponseV2;
 import com.bang_ggood.checklist.repository.ChecklistImageRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.repository.ChecklistShareRepository;
@@ -119,6 +120,23 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
         SelectedChecklistResponse selectedChecklistResponse = checklistManageService
                 .readChecklist(user, checklist.getId());
+
+        // then
+        assertAll(
+                () -> assertThat(selectedChecklistResponse.room().roomName()).isEqualTo(room.getName()),
+                () -> assertThat(selectedChecklistResponse.room().address()).isEqualTo(room.getAddress())
+        );
+    }
+
+    @DisplayName("작성된 체크리스트 조회 V2 성공")
+    @Test
+    void readChecklistV2() {
+        // given & when
+        User user = userRepository.save(UserFixture.USER1());
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        SelectedChecklistResponseV2 selectedChecklistResponse = checklistManageService
+                .readChecklistV2(user, checklist.getId());
 
         // then
         assertAll(

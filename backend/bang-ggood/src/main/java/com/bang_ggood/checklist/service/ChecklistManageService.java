@@ -5,10 +5,12 @@ import com.bang_ggood.checklist.domain.ChecklistShare;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
+import com.bang_ggood.checklist.dto.response.ChecklistImageResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistShareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.dto.response.SelectedChecklistResponseV2;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.like.service.ChecklistLikeService;
@@ -134,6 +136,13 @@ public class ChecklistManageService {
     }
 
     @Transactional(readOnly = true)
+    public SelectedChecklistResponseV2 readChecklistV2(User user, Long checklistId) {
+        Checklist checklist = checklistService.readChecklist(user, checklistId);
+
+        return assembleChecklistResponseV2(checklist);
+    }
+
+    @Transactional(readOnly = true)
     public SelectedChecklistResponse readSharedChecklist(String token) {
         ChecklistShare checklistShare = checklistShareService.readChecklistShare(token);
         Checklist checklist = checklistShare.getChecklist();
@@ -151,6 +160,25 @@ public class ChecklistManageService {
         SubwayStationResponses stations = readChecklistStations(checklist);
 
         return SelectedChecklistResponse.of(room, options, questions, isLiked, stations);
+    }
+
+    private SelectedChecklistResponseV2 assembleChecklistResponseV2(Checklist checklist) {
+        List<ChecklistImageResponse> images = readChecklistImages(checklist);
+        List<Integer> maintenances = readChecklistMaintenances(checklist);
+        List<SelectedOptionResponse> options = readChecklistOptions(checklist);
+        List<SelectedCategoryQuestionsResponse> questions = readChecklistQuestions(checklist);
+        SelectedRoomResponse room = SelectedRoomResponse.of(checklist, maintenances);
+        boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
+        SubwayStationResponses stations = readChecklistStations(checklist);
+
+        return SelectedChecklistResponseV2.of(images, room, options, questions, isLiked, stations);
+    }
+
+    private List<ChecklistImageResponse> readChecklistImages(Checklist checklist) {
+        return checklistImageService.readChecklistImages(checklist)
+                .stream()
+                .map(ChecklistImageResponse::from)
+                .toList();
     }
 
     private List<Integer> readChecklistMaintenances(Checklist checklist) {

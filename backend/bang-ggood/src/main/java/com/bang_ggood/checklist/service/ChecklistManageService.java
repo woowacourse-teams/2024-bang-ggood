@@ -1,14 +1,17 @@
 package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.ChecklistImage;
 import com.bang_ggood.checklist.domain.ChecklistShare;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
 import com.bang_ggood.checklist.dto.response.ChecklistImageResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponseV2;
 import com.bang_ggood.checklist.dto.response.ChecklistShareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponseV2;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponseV2;
 import com.bang_ggood.global.exception.BangggoodException;
@@ -45,6 +48,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -294,10 +298,32 @@ public class ChecklistManageService {
         return ChecklistsPreviewResponse.from(responses);
     }
 
+    @Transactional(readOnly = true)
+    public ChecklistsPreviewResponseV2 readAllChecklistsPreviewV2(User user) {
+        List<Checklist> checklists = checklistService.readAllChecklistsOrderByLatest(user);
+        List<ChecklistPreviewResponseV2> responses = checklists.stream()
+                .map(this::mapToChecklistPreviewV2)
+                .toList();
+
+        return ChecklistsPreviewResponseV2.from(responses);
+    }
+
     private ChecklistPreviewResponse mapToChecklistPreview(Checklist checklist) {
         boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
         SubwayStationResponse stationResponse = readNearestStation(checklist);
         return ChecklistPreviewResponse.of(checklist, stationResponse, isLiked);
+    }
+
+    private ChecklistPreviewResponseV2 mapToChecklistPreviewV2(Checklist checklist) {
+        String thumbnailImageUrl = getThumbnailImageUrl(checklist);
+        boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
+        SubwayStationResponse stationResponse = readNearestStation(checklist);
+        return ChecklistPreviewResponseV2.of(checklist, thumbnailImageUrl, stationResponse, isLiked);
+    }
+
+    private String getThumbnailImageUrl(Checklist checklist) {
+        Optional<ChecklistImage> checklistImage = checklistImageService.readChecklistThumbnailImage(checklist);
+        return checklistImage.map(ChecklistImage::getImageUrl).orElse(null);
     }
 
     private SubwayStationResponse readNearestStation(Checklist checklist) {

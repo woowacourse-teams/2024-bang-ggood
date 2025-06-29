@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -80,7 +81,7 @@ public class ChecklistImageService {
     }
 
     @Transactional
-    public ChecklistImage readChecklistThumbnailImage(Checklist checklist) {
+    public Optional<ChecklistImage> readChecklistThumbnailImage(Checklist checklist) {
         return checklistImageRepository.findFirstByChecklistId(checklist.getId());
     }
 }

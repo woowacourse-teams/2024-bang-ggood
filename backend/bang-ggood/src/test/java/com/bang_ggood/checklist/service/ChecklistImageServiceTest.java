@@ -182,25 +182,24 @@ class ChecklistImageServiceTest extends IntegrationTestSupport {
 
     @DisplayName("체크리스트 썸네일 이미지 조회 성공")
     @Test
-    void readChecklistThumbnailImage() {
+    void readChecklistThumbnailImage_success() {
         // given
         List<ChecklistImage> checklistImages = ChecklistImageFixture.CHECKLIST_IMAGES(checklist);
         checklistImageRepository.saveAll(checklistImages);
 
         // when
-        ChecklistImage thumbnail = checklistImageService.readChecklistThumbnailImage(checklist);
+        Optional<ChecklistImage> thumbnailOpt = checklistImageRepository.findFirstByChecklistId(checklist.getId());
 
         // then
-        Integer minOrderIndex = checklistImages.stream()
+        Integer expectedMinOrderIndex = checklistImages.stream()
                 .map(ChecklistImage::getOrderIndex)
                 .min(Integer::compareTo)
                 .orElseThrow();
 
         assertAll(
-                () -> assertThat(thumbnail).isNotNull(),
-                () -> assertThat(thumbnail.getChecklist().getId()).isEqualTo(checklist.getId()),
-                () -> assertThat(thumbnail.getOrderIndex()).isEqualTo(minOrderIndex)
+                () -> assertThat(thumbnailOpt).isPresent(),
+                () -> assertThat(thumbnailOpt.get().getChecklist().getId()).isEqualTo(checklist.getId()),
+                () -> assertThat(thumbnailOpt.get().getOrderIndex()).isEqualTo(expectedMinOrderIndex)
         );
     }
-
 }

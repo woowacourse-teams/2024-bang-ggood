@@ -151,6 +151,7 @@ const S = {
     border-radius: 0.8rem;
   `,
   MapGrid: styled.div`
+    margin-bottom: 1.6rem;
     padding: 0 1.6rem;
   `,
   RoomCompareGrid: styled.div`

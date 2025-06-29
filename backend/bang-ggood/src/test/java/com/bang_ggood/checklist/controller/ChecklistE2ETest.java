@@ -170,6 +170,20 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .statusCode(200);
     }
 
+    @DisplayName("체크리스트 전체 조회 v2 성공")
+    @Test
+    void readChecklistPreviewV2() {
+        long checklistId = checklistManageService.createChecklist(this.getAuthenticatedUser(),
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .headers(this.headers)
+                .when().get("v2/checklists")
+                .then().log().all()
+                .statusCode(200);
+    }
+
     @DisplayName("좋아요된 체크리스트 리스트 조회 성공")
     @Test
     void readLikedUserChecklistsPreview() {

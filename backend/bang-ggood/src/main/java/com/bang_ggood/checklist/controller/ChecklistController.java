@@ -4,8 +4,10 @@ import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.auth.config.UserPrincipal;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
+import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponseV2;
 import com.bang_ggood.checklist.dto.response.ChecklistShareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponseV2;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponseV2;
 import com.bang_ggood.checklist.service.ChecklistManageService;
@@ -72,6 +74,11 @@ public class ChecklistController {
     @GetMapping("/v1/checklists")
     public ResponseEntity<ChecklistsPreviewResponse> readChecklistsPreviewV1(@UserPrincipal User user) {
         return ResponseEntity.ok(checklistManageService.readAllChecklistsPreview(user));
+    }
+
+    @GetMapping("/v2/checklists")
+    public ResponseEntity<ChecklistsPreviewResponseV2> readChecklistsPreviewV2(@UserPrincipal User user) {
+        return ResponseEntity.ok(checklistManageService.readAllChecklistsPreviewV2(user));
     }
 
     @GetMapping("/v1/checklists/like")

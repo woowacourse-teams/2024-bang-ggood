@@ -140,6 +140,20 @@ const getColorStyles = ({
       }
     `;
   }
+  if (color === 'light' && variant === 'outlined-gray') {
+    return css`
+      border: 1px solid ${theme.color.gray[200]};
+
+      background-color: ${theme.color.mono.white};
+
+      color: ${theme.color.mono.black};
+
+      &:hover,
+      &:active {
+        background-color: ${theme.color.gray[100]};
+      }
+    `;
+  }
 
   if (color === 'dark' && variant === 'contain') {
     return css`

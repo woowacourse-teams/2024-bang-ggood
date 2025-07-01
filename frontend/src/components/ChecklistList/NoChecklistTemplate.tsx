@@ -14,14 +14,16 @@ const NoChecklistTemplate = () => {
 
   return (
     <S.Container>
-      <S.TextBox>
-        <div>체크리스트가 아직 없어요!</div>
-        <div>첫 체크리스트를 작성하러 가볼까요?</div>
-      </S.TextBox>
+      <Text typography={font => font.body[2].M} color={color => color.gray[500]}>
+        <S.TextBox>
+          <div>체크리스트가 아직 없어요!</div>
+          <div>첫 체크리스트를 작성하러 가볼까요?</div>
+        </S.TextBox>
+      </Text>
       <Button
         color="dark"
         label={
-          <S.Text typography={font => font.body[2].B} color={color => color.gray[300]}>
+          <S.Text typography={font => font.body[2].B} color={color => color.mono.white}>
             새 체크리스트 만들기
           </S.Text>
         }

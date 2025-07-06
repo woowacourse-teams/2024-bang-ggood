@@ -3,6 +3,7 @@ package com.bang_ggood.checklist;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistShare;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
+import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
 import com.bang_ggood.contract.domain.OccupancyMonth;
 import com.bang_ggood.contract.domain.OccupancyPeriod;
 import com.bang_ggood.like.domain.ChecklistLike;
@@ -119,6 +120,16 @@ public class ChecklistFixture {
 
     public static ChecklistRequest CHECKLIST_CREATE_REQUEST_EMPTY_LOCATION() {
         return new ChecklistRequest(
+                RoomFixture.ROOM_CREATE_REQUEST_EMPTY_LOCATION(),
+                List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(),
+                        Option.SHOE_RACK.getId()),
+                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
+                        QUESTION_3_CREATE_REQUEST(), QUESTION_5_CREATE_REQUEST())
+        );
+    }
+
+    public static ChecklistRequestV1 CHECKLIST_CREATE_REQUEST_V1_EMPTY_LOCATION() {
+        return new ChecklistRequestV1(
                 RoomFixture.ROOM_CREATE_REQUEST_EMPTY_LOCATION(),
                 List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(),
                         Option.SHOE_RACK.getId()),

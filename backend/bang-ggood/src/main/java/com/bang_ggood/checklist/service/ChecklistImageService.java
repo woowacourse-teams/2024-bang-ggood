@@ -23,7 +23,6 @@ public class ChecklistImageService {
 
     private static final int MAX_CHECKLIST_IMAGE_COUNT = 5;
     private static final float IMAGE_QUALITY = 0.8F;
-    private static final String FILE_NAME_DELIMITER = "_";
 
     private final ChecklistImageRepository checklistImageRepository;
     private final AwsS3Client awsS3Client;

@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -56,12 +57,14 @@ public class ChecklistImageService {
     }
 
     private void saveAllImages(Checklist checklist, List<MultipartFile> images) {
+        List<ChecklistImage> checklistImages = new ArrayList<>();
         for (int i = 0; i < images.size(); i++) {
             MultipartFile image = ImageOptimizationUtil.compress(images.get(i), IMAGE_QUALITY);
             String fileName = makeFileName();
             String imageUrl = awsS3Client.upload(image, AwsS3Folder.CHECKLIST.getPath(), fileName);
-            checklistImageRepository.save(new ChecklistImage(checklist, fileName, imageUrl, i));
+            checklistImages.add(new ChecklistImage(checklist, fileName, imageUrl, i));
         }
+        checklistImageRepository.saveAll(checklistImages);
     }
 
     private String makeFileName() {

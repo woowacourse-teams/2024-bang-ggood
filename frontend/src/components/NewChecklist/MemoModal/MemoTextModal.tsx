@@ -15,7 +15,7 @@ interface Props {
   modalClose: () => void;
 }
 
-const MemoModal = ({ isModalOpen, modalClose }: Props) => {
+const MemoTextModal = ({ isModalOpen, modalClose }: Props) => {
   const intervalRef = useRef<number | undefined>(undefined);
   const memo = useRoomInfoValidated('memo');
   const { value: memoValue, onChange } = useInput<string>(memo.rawValue || '');
@@ -79,7 +79,7 @@ const MemoModal = ({ isModalOpen, modalClose }: Props) => {
   );
 };
 
-export default MemoModal;
+export default MemoTextModal;
 
 const S = {
   Title: styled.div`

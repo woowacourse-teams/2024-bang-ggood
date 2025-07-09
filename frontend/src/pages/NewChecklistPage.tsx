@@ -9,8 +9,7 @@ import LoginModal from '@/components/_common/Modal/LoginModal/LoginModal';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import ChecklistContent from '@/components/NewChecklist/ChecklistContent';
 import NewChecklistTab from '@/components/NewChecklist/ChecklistTab/NewChecklistTab';
-import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
-import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
+import MemoSection from '@/components/NewChecklist/MemoModal/MemoSection';
 import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
@@ -22,8 +21,6 @@ const NewChecklistPage = () => {
   const navigate = useNavigate();
   const { resetChecklist } = useResetChecklist();
 
-  // 메모 모달
-  const { isModalOpen: isMemoModalOpen, openModal: openMemoModal, closeModal: closeMemoModal } = useModal();
   // 한줄평 모달
   const { isModalOpen: isSubmitModalOpen, openModal: openSummaryModal, closeModal: closeSummaryModal } = useModal();
   // 뒤로가기 시 휘발 경고 모달
@@ -58,11 +55,8 @@ const NewChecklistPage = () => {
         <ChecklistContent />
       </TabProvider>
 
-      {isMemoModalOpen ? (
-        <MemoModal isModalOpen={isMemoModalOpen} modalClose={closeMemoModal} />
-      ) : (
-        <MemoButton onClick={openMemoModal} />
-      )}
+      {/* 메모(텍스트, 사진) 모달 섹션 */}
+      <MemoSection />
 
       <SubmitModalWithSummary
         isModalOpen={isSubmitModalOpen}

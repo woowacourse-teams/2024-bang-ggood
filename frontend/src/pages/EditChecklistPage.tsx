@@ -9,8 +9,7 @@ import Header from '@/components/_common/Header/Header';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import EditChecklistContent from '@/components/EditChecklist/ChecklistContent/EditChecklistContent';
 import EditChecklistTab from '@/components/EditChecklist/ChecklistTab/EditChecklistTab';
-import MemoButton from '@/components/NewChecklist/MemoModal/MemoButton';
-import MemoModal from '@/components/NewChecklist/MemoModal/MemoModal';
+import MemoSection from '@/components/NewChecklist/MemoModal/MemoSection';
 import SubmitModalWithSummary from '@/components/NewChecklist/SubmitModalWithSummary/SubmitModalWithSummary';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { DEFAULT_CHECKLIST_TAB_PAGE } from '@/constants/system';
@@ -41,8 +40,6 @@ const EditChecklistPage = () => {
 
   // 한줄평 모달
   const { isModalOpen: isSubmitModalOpen, openModal: summaryModalOpen, closeModal: summaryModalClose } = useModal();
-  // 메모 모달
-  const { isModalOpen: isMemoModalOpen, openModal: memoModalOpen, closeModal: memoModalClose } = useModal();
 
   const resetAndGoDetailPage = () => {
     resetChecklist();
@@ -80,12 +77,8 @@ const EditChecklistPage = () => {
         {checklist && <EditChecklistContent />}
       </TabProvider>
 
-      {/* 메모 모달 */}
-      {isMemoModalOpen ? (
-        <MemoModal isModalOpen={isMemoModalOpen} modalClose={memoModalClose} />
-      ) : (
-        <MemoButton onClick={memoModalOpen} />
-      )}
+      {/* 메모(텍스트, 사진) 모달 섹션 */}
+      <MemoSection />
 
       {/* 한줄평 모달*/}
       <SubmitModalWithSummary

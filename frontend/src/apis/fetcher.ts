@@ -65,13 +65,21 @@ const handleUnauthorizedError = async (response: Response, requestProps: Request
 };
 
 const fetchRequest = async ({ url, method, body, headers = {} }: RequestProps & { signal?: AbortSignal }) => {
+  let finalBody = undefined;
+  let finalHeaders = { ...headers };
+
+  if (body instanceof FormData) {
+    finalBody = body;
+  } else if (body) {
+    finalBody = JSON.stringify(body);
+    finalHeaders['Content-Type'] = 'application/json';
+  }
+
   return await fetch(url, {
     method,
     credentials: 'include',
-    body: body ? JSON.stringify(body) : undefined,
-    headers: {
-      ...headers,
-    },
+    body: finalBody,
+    headers: finalHeaders,
   });
 };
 
@@ -85,7 +93,7 @@ const fetcher = {
       url,
       method: 'POST',
       body,
-      headers: { ...headers, 'Content-Type': 'application/json' },
+      headers,
       ...rest,
     });
   },
@@ -99,7 +107,7 @@ const fetcher = {
       url,
       method: 'PATCH',
       body,
-      headers: { ...headers, 'Content-Type': 'application/json' },
+      headers,
     });
   },
 
@@ -108,7 +116,27 @@ const fetcher = {
       url,
       method: 'PUT',
       body,
-      headers: { ...headers, 'Content-Type': 'application/json' },
+      headers,
+    });
+  },
+
+  postMultipart({ url, body, headers, ...rest }: FetchProps) {
+    return request({
+      url,
+      method: 'POST',
+      body,
+      headers,
+      ...rest,
+    });
+  },
+
+  putMultipart({ url, body, headers, ...rest }: FetchProps) {
+    return request({
+      url,
+      method: 'PUT',
+      body,
+      headers,
+      ...rest,
     });
   },
 };

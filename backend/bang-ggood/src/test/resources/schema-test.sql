@@ -15,6 +15,7 @@ DROP TABLE IF EXISTS highlight CASCADE;
 DROP TABLE IF EXISTS question CASCADE;
 DROP TABLE IF EXISTS category CASCADE;
 DROP TABLE IF EXISTS password_reset_code CASCADE;
+DROP TABLE IF EXISTS checklist_image CASCADE;
 
 -- Create tables
 
@@ -42,7 +43,7 @@ CREATE TABLE question
 (
     id          INTEGER AUTO_INCREMENT PRIMARY KEY,
     category_id INTEGER,
-    user_id BIGINT,
+    user_id     BIGINT,
     title       VARCHAR(255),
     subtitle    VARCHAR(255),
     is_default  BOOLEAN,
@@ -216,4 +217,20 @@ CREATE TABLE checklist_share
 
     CONSTRAINT fk_checklist_share_checklist
         FOREIGN KEY (checklist_id) REFERENCES checklist (id)
+);
+
+CREATE TABLE checklist_image
+(
+    id           BIGINT PRIMARY KEY AUTO_INCREMENT,
+    checklist_id BIGINT        NOT NULL,
+    file_name    VARCHAR(1024) NOT NULL,
+    image_url    VARCHAR(1024) NOT NULL,
+    order_index  INT           NOT NULL,
+    created_at   TIMESTAMP(6),
+    modified_at  TIMESTAMP(6),
+    deleted      BOOLEAN,
+
+    CONSTRAINT fk_checklist_image_checklist FOREIGN KEY (checklist_id)
+        REFERENCES checklist (id)
+        ON DELETE CASCADE
 );

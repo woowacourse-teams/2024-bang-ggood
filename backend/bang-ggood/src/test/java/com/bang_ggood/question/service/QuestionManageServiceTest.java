@@ -168,9 +168,11 @@ class QuestionManageServiceTest extends IntegrationTestSupport {
 
         assertAll(
                 () -> Assertions.assertThat(good).hasSize(1),
-                () -> Assertions.assertThat(good.get(0).getQuestionId()).isEqualTo(checklist1Question2Good.getQuestionId()),
+                () -> Assertions.assertThat(good.get(0).getQuestionId())
+                        .isEqualTo(checklist1Question2Good.getQuestionId()),
                 () -> Assertions.assertThat(bad).hasSize(1),
-                () -> Assertions.assertThat(bad.get(0).getQuestionId()).isEqualTo(checklist1Question1Bad.getQuestionId()),
+                () -> Assertions.assertThat(bad.get(0).getQuestionId())
+                        .isEqualTo(checklist1Question1Bad.getQuestionId()),
                 () -> Assertions.assertThat(none).isEmpty()
         );
     }

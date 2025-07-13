@@ -21,7 +21,7 @@ function Text({ typography, color, children, css, ...rest }: Props) {
 }
 
 const S = {
-  Text: styled.div<{ fontSet: FontSet; color: string; css?: SerializedStyles }>`
+  Text: styled.span<{ fontSet: FontSet; color: string; css?: SerializedStyles }>`
     ${({ fontSet }) => fontStyle(fontSet)}
     color: ${({ color }) => color};
     ${({ css }) => css}

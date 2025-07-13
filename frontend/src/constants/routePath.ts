@@ -19,6 +19,10 @@ export const ROUTE_PATH = {
   articleList: '/article',
   articleId: '/article/:articleId',
   articleOne: (id: number) => `/article/${id}`,
+
+  /* building-list */
+  buildingList: '/building-list',
+
   /* etc */
   location: '/location',
   myPage: '/my-page',

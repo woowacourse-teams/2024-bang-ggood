@@ -4,8 +4,7 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistShare;
-import com.bang_ggood.global.exception.BangggoodException;
-import com.bang_ggood.global.exception.ExceptionCode;
+import com.bang_ggood.checklist.repository.ChecklistShareRepository;
 import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.room.repository.RoomRepository;
@@ -15,23 +14,23 @@ import com.bang_ggood.user.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ChecklistShareServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private ChecklistShareService checklistShareService;
-
     @Autowired
     private ChecklistService checklistService;
 
     @Autowired
+    private ChecklistShareRepository checklistShareRepository;
+    @Autowired
     private RoomRepository roomRepository;
-
     @Autowired
     private UserRepository userRepository;
 
@@ -85,9 +84,8 @@ class ChecklistShareServiceTest extends IntegrationTestSupport {
         checklistShareService.deleteChecklistShare(savedChecklist);
 
         // then
-        assertThatThrownBy(() -> checklistShareService.readChecklistShare(checklistShare.getToken()))
-                .isInstanceOf(BangggoodException.class)
-                .hasMessage(ExceptionCode.CHECKLIST_SHARE_NOT_FOUND.getMessage());
+        Optional<ChecklistShare> result = checklistShareRepository.findByChecklistId(checklistShare.getChecklistId());
+        assertThat(result).isEmpty();
     }
 
     @DisplayName("체크리스트 공유가 존재하지 않으면 삭제하지 않음")

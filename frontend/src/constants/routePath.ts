@@ -22,6 +22,7 @@ export const ROUTE_PATH = {
 
   /* building-list */
   buildingList: '/building-list',
+  buildingMap: '/building-map',
 
   /* etc */
   location: '/location',

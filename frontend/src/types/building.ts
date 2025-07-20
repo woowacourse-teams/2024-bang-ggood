@@ -1,7 +1,7 @@
 // 지하철역 정보
 export interface Station {
   name: string; // 역 이름
-  distance: number; // 도보 소요 시간(분)
+  walkingTime: number; // 도보 소요 시간(분)
   lines: string[]; // 환승 가능한 호선 목록
 }
 

@@ -14,8 +14,14 @@ function Building({ fill, stroke, ...rest }: Props) {
         stroke={stroke ?? '#A6A6A6'}
         strokeWidth="1.5"
       />
-      <path d="M7 7H12" stroke="#A6A6A6" strokeWidth="1.5" strokeLinecap="round" fill={fill ?? '#F1F1F1'} />
-      <path d="M7 11H12" stroke="#A6A6A6" strokeWidth="1.5" strokeLinecap="round" fill={fill ?? '#F1F1F1'} />
+      <path d="M7 7H12" stroke={stroke ?? '#A6A6A6'} strokeWidth="1.5" strokeLinecap="round" fill={fill ?? '#F1F1F1'} />
+      <path
+        d="M7 11H12"
+        stroke={stroke ?? '#A6A6A6'}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        fill={fill ?? '#F1F1F1'}
+      />
     </svg>
   );
 }

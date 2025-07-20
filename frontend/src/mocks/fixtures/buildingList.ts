@@ -1,5 +1,7 @@
 import { Building, BuildingsResponse } from '@/types/building';
 
+const mockThumbnail =
+  'data:image/jpeg;base64,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';
 export const buildings: Building[] = [
   {
     buildingId: 1,
@@ -7,11 +9,11 @@ export const buildings: Building[] = [
     checklistCount: 42,
     station: {
       name: '잠실역 10번 출구',
-      distance: 10,
+      walkingTime: 10,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 2,
@@ -19,11 +21,11 @@ export const buildings: Building[] = [
     checklistCount: 61,
     station: {
       name: '잠실역 10번 출구',
-      distance: 7,
+      walkingTime: 7,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 3,
@@ -31,11 +33,11 @@ export const buildings: Building[] = [
     checklistCount: 53,
     station: {
       name: '잠실역 10번 출구',
-      distance: 29,
+      walkingTime: 29,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 4,
@@ -43,11 +45,11 @@ export const buildings: Building[] = [
     checklistCount: 97,
     station: {
       name: '잠실역 10번 출구',
-      distance: 29,
+      walkingTime: 29,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 5,
@@ -55,11 +57,11 @@ export const buildings: Building[] = [
     checklistCount: 76,
     station: {
       name: '잠실역 10번 출구',
-      distance: 59,
+      walkingTime: 59,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 6,
@@ -67,11 +69,11 @@ export const buildings: Building[] = [
     checklistCount: 88,
     station: {
       name: '잠실역 10번 출구',
-      distance: 48,
+      walkingTime: 48,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 7,
@@ -79,11 +81,11 @@ export const buildings: Building[] = [
     checklistCount: 17,
     station: {
       name: '잠실역 10번 출구',
-      distance: 47,
+      walkingTime: 47,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 8,
@@ -91,11 +93,11 @@ export const buildings: Building[] = [
     checklistCount: 100,
     station: {
       name: '잠실역 10번 출구',
-      distance: 10,
+      walkingTime: 10,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 9,
@@ -103,11 +105,11 @@ export const buildings: Building[] = [
     checklistCount: 69,
     station: {
       name: '잠실역 10번 출구',
-      distance: 19,
+      walkingTime: 19,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 10,
@@ -115,11 +117,11 @@ export const buildings: Building[] = [
     checklistCount: 35,
     station: {
       name: '잠실역 10번 출구',
-      distance: 46,
+      walkingTime: 46,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 11,
@@ -127,11 +129,11 @@ export const buildings: Building[] = [
     checklistCount: 94,
     station: {
       name: '잠실역 10번 출구',
-      distance: 9,
+      walkingTime: 9,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 12,
@@ -139,11 +141,11 @@ export const buildings: Building[] = [
     checklistCount: 21,
     station: {
       name: '잠실역 10번 출구',
-      distance: 20,
+      walkingTime: 20,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 13,
@@ -151,11 +153,11 @@ export const buildings: Building[] = [
     checklistCount: 16,
     station: {
       name: '잠실역 10번 출구',
-      distance: 12,
+      walkingTime: 12,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 14,
@@ -163,11 +165,11 @@ export const buildings: Building[] = [
     checklistCount: 11,
     station: {
       name: '잠실역 10번 출구',
-      distance: 5,
+      walkingTime: 5,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 15,
@@ -175,11 +177,11 @@ export const buildings: Building[] = [
     checklistCount: 46,
     station: {
       name: '잠실역 10번 출구',
-      distance: 37,
+      walkingTime: 37,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 16,
@@ -187,11 +189,11 @@ export const buildings: Building[] = [
     checklistCount: 75,
     station: {
       name: '잠실역 10번 출구',
-      distance: 15,
+      walkingTime: 15,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 17,
@@ -199,11 +201,11 @@ export const buildings: Building[] = [
     checklistCount: 16,
     station: {
       name: '잠실역 10번 출구',
-      distance: 26,
+      walkingTime: 26,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 18,
@@ -211,11 +213,11 @@ export const buildings: Building[] = [
     checklistCount: 56,
     station: {
       name: '잠실역 10번 출구',
-      distance: 1,
+      walkingTime: 1,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 19,
@@ -223,11 +225,11 @@ export const buildings: Building[] = [
     checklistCount: 78,
     station: {
       name: '잠실역 10번 출구',
-      distance: 1,
+      walkingTime: 1,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 20,
@@ -235,11 +237,11 @@ export const buildings: Building[] = [
     checklistCount: 59,
     station: {
       name: '잠실역 10번 출구',
-      distance: 10,
+      walkingTime: 10,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 21,
@@ -247,11 +249,11 @@ export const buildings: Building[] = [
     checklistCount: 93,
     station: {
       name: '잠실역 10번 출구',
-      distance: 52,
+      walkingTime: 52,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 22,
@@ -259,11 +261,11 @@ export const buildings: Building[] = [
     checklistCount: 91,
     station: {
       name: '잠실역 10번 출구',
-      distance: 59,
+      walkingTime: 59,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 23,
@@ -271,11 +273,11 @@ export const buildings: Building[] = [
     checklistCount: 89,
     station: {
       name: '잠실역 10번 출구',
-      distance: 48,
+      walkingTime: 48,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 24,
@@ -283,11 +285,11 @@ export const buildings: Building[] = [
     checklistCount: 42,
     station: {
       name: '잠실역 10번 출구',
-      distance: 25,
+      walkingTime: 25,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 25,
@@ -295,11 +297,11 @@ export const buildings: Building[] = [
     checklistCount: 100,
     station: {
       name: '잠실역 10번 출구',
-      distance: 21,
+      walkingTime: 21,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 26,
@@ -307,11 +309,11 @@ export const buildings: Building[] = [
     checklistCount: 28,
     station: {
       name: '잠실역 10번 출구',
-      distance: 47,
+      walkingTime: 47,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 27,
@@ -319,11 +321,11 @@ export const buildings: Building[] = [
     checklistCount: 75,
     station: {
       name: '잠실역 10번 출구',
-      distance: 60,
+      walkingTime: 60,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 28,
@@ -331,11 +333,11 @@ export const buildings: Building[] = [
     checklistCount: 49,
     station: {
       name: '잠실역 10번 출구',
-      distance: 50,
+      walkingTime: 50,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 29,
@@ -343,11 +345,11 @@ export const buildings: Building[] = [
     checklistCount: 71,
     station: {
       name: '잠실역 10번 출구',
-      distance: 39,
+      walkingTime: 39,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 30,
@@ -355,11 +357,11 @@ export const buildings: Building[] = [
     checklistCount: 27,
     station: {
       name: '잠실역 10번 출구',
-      distance: 15,
+      walkingTime: 15,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 31,
@@ -367,11 +369,11 @@ export const buildings: Building[] = [
     checklistCount: 35,
     station: {
       name: '잠실역 10번 출구',
-      distance: 46,
+      walkingTime: 46,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 32,
@@ -379,11 +381,11 @@ export const buildings: Building[] = [
     checklistCount: 78,
     station: {
       name: '잠실역 10번 출구',
-      distance: 27,
+      walkingTime: 27,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 33,
@@ -391,11 +393,11 @@ export const buildings: Building[] = [
     checklistCount: 20,
     station: {
       name: '잠실역 10번 출구',
-      distance: 44,
+      walkingTime: 44,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 34,
@@ -403,11 +405,11 @@ export const buildings: Building[] = [
     checklistCount: 70,
     station: {
       name: '잠실역 10번 출구',
-      distance: 47,
+      walkingTime: 47,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 35,
@@ -415,11 +417,11 @@ export const buildings: Building[] = [
     checklistCount: 85,
     station: {
       name: '잠실역 10번 출구',
-      distance: 53,
+      walkingTime: 53,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 36,
@@ -427,11 +429,11 @@ export const buildings: Building[] = [
     checklistCount: 25,
     station: {
       name: '잠실역 10번 출구',
-      distance: 18,
+      walkingTime: 18,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 37,
@@ -439,11 +441,11 @@ export const buildings: Building[] = [
     checklistCount: 52,
     station: {
       name: '잠실역 10번 출구',
-      distance: 15,
+      walkingTime: 15,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 38,
@@ -451,11 +453,11 @@ export const buildings: Building[] = [
     checklistCount: 79,
     station: {
       name: '잠실역 10번 출구',
-      distance: 46,
+      walkingTime: 46,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 39,
@@ -463,11 +465,11 @@ export const buildings: Building[] = [
     checklistCount: 86,
     station: {
       name: '잠실역 10번 출구',
-      distance: 8,
+      walkingTime: 8,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
   {
     buildingId: 40,
@@ -475,11 +477,11 @@ export const buildings: Building[] = [
     checklistCount: 76,
     station: {
       name: '잠실역 10번 출구',
-      distance: 57,
+      walkingTime: 57,
       lines: ['2호선', '8호선'],
     },
     isLiked: false,
-    thumbnail: 'https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg',
+    thumbnail: mockThumbnail,
   },
 ];
 

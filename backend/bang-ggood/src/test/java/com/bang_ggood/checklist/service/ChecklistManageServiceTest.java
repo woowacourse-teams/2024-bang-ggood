@@ -2,15 +2,19 @@ package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.ChecklistImageFixture;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.ChecklistImage;
 import com.bang_ggood.checklist.domain.ChecklistShare;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
-import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
-import com.bang_ggood.checklist.dto.response.ChecklistShareResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponseV2;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponseV2;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.dto.response.SelectedChecklistResponseV2;
+import com.bang_ggood.checklist.repository.ChecklistImageRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.repository.ChecklistShareRepository;
 import com.bang_ggood.global.exception.BangggoodException;
@@ -49,6 +53,8 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
     private ChecklistLikeRepository checklistLikeRepository;
     @Autowired
     private ChecklistShareRepository checklistShareRepository;
+    @Autowired
+    private ChecklistImageRepository checklistImageRepository;
 
     @DisplayName("체크리스트 작성 성공")
     @Test
@@ -78,15 +84,44 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         assertThat(checklistId).isGreaterThan(0);
     }
 
+    @DisplayName("체크리스트 작성 V2 성공")
+    @Test
+    void createChecklistV2() {
+        //given
+        User user = userRepository.save(UserFixture.USER1());
+        ChecklistRequest checklist = ChecklistFixture.CHECKLIST_CREATE_REQUEST();
+
+        // when
+        long checklistId = checklistManageService.createChecklistV2(user, checklist, ChecklistImageFixture.IMAGES());
+
+        //then
+        assertThat(checklistId).isGreaterThan(0);
+    }
+
+    @DisplayName("체크리스트 작성 V2 성공 : 위도, 경도가 null 인 경우")
+    @Test
+    void createChecklistV2_emptyLocation() {
+        //given
+        User user = userRepository.save(UserFixture.USER1());
+        ChecklistRequest checklistRequest = ChecklistFixture.CHECKLIST_CREATE_REQUEST_EMPTY_LOCATION();
+
+        // when
+        long checklistId = checklistManageService.createChecklistV2(user, checklistRequest,
+                ChecklistImageFixture.IMAGES());
+
+        //then
+        assertThat(checklistId).isGreaterThan(0);
+    }
+
     @DisplayName("체크리스트 작성 v1 성공 : 위도, 경도가 null 인 경우")
     @Test
     void createChecklistV1_emptyLocation() {
         //given
         User user = userRepository.save(UserFixture.USER1());
-        ChecklistRequestV1 checklistRequestV1 = ChecklistFixture.CHECKLIST_CREATE_REQUEST_V1_EMPTY_LOCATION();
+        ChecklistRequest checklistRequest = ChecklistFixture.CHECKLIST_CREATE_REQUEST_V1_EMPTY_LOCATION();
 
         // when
-        long checklistId = checklistManageService.createChecklistV1(user, checklistRequestV1);
+        long checklistId = checklistManageService.createChecklist(user, checklistRequest);
 
         //then
         assertThat(checklistId).isGreaterThan(0);
@@ -101,6 +136,23 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
         SelectedChecklistResponse selectedChecklistResponse = checklistManageService
                 .readChecklist(user, checklist.getId());
+
+        // then
+        assertAll(
+                () -> assertThat(selectedChecklistResponse.room().roomName()).isEqualTo(room.getName()),
+                () -> assertThat(selectedChecklistResponse.room().address()).isEqualTo(room.getAddress())
+        );
+    }
+
+    @DisplayName("작성된 체크리스트 조회 V2 성공")
+    @Test
+    void readChecklistV2() {
+        // given & when
+        User user = userRepository.save(UserFixture.USER1());
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        SelectedChecklistResponseV2 selectedChecklistResponse = checklistManageService
+                .readChecklistV2(user, checklist.getId());
 
         // then
         assertAll(
@@ -266,6 +318,27 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         assertThat(previewResponse2.checklistId()).isEqualTo(checklistId1);
     }
 
+    @DisplayName("체크리스트 리스트 조회 성공 V2")
+    @Test
+    void readUserChecklistsPreviewV2() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        ChecklistRequest checklistRequest1 = ChecklistFixture.CHECKLIST_CREATE_REQUEST();
+        ChecklistRequest checklistRequest2 = ChecklistFixture.CHECKLIST_CREATE_REQUEST2();
+
+        Long checklistId1 = checklistManageService.createChecklist(user, checklistRequest1);
+        Long checklistId2 = checklistManageService.createChecklist(user, checklistRequest2);
+
+        // when
+        ChecklistsPreviewResponseV2 response = checklistManageService.readAllChecklistsPreviewV2(user);
+
+        // then
+        ChecklistPreviewResponseV2 previewResponse1 = response.checklists().get(0);
+        ChecklistPreviewResponseV2 previewResponse2 = response.checklists().get(1);
+
+        assertThat(previewResponse1.checklistId()).isEqualTo(checklistId2); // 최신순으로 조회
+        assertThat(previewResponse2.checklistId()).isEqualTo(checklistId1);
+    }
     @DisplayName("좋아요된 체크리스트 리스트 최신순으로 조회 성공")
     @Test
     void readLikedChecklistsPreview() {
@@ -315,4 +388,43 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
                 () -> assertThat(checklist.getMemo()).isEqualTo(updateChecklistRequest.room().memo())
         );
     }
+
+    @DisplayName("체크리스트 수정 성공 V2")
+    @Test
+    void updateChecklistByIdV2() {
+        //given
+        User user = userRepository.save(UserFixture.USER1());
+        long checklistId = checklistManageService.createChecklist(user, ChecklistFixture.CHECKLIST_CREATE_REQUEST());
+        ChecklistRequest updateChecklistRequest = ChecklistFixture.CHECKLIST_UPDATE_REQUEST();
+
+        //when
+        checklistManageService.updateChecklistByIdV2(user, checklistId, updateChecklistRequest,
+                ChecklistImageFixture.IMAGES());
+
+        //then
+        Checklist checklist = checklistRepository.getById(checklistId);
+        assertAll(
+                () -> assertThat(checklist.getRoom().getStructure()).isEqualTo(Structure.OPEN_ONE_ROOM),
+                () -> assertThat(checklist.getMemo()).isEqualTo(updateChecklistRequest.room().memo())
+        );
+    }
+
+    @DisplayName("체크리스트 이미지 삭제 성공")
+    @Test
+    void deleteChecklistImageById() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        ChecklistRequest request = ChecklistFixture.CHECKLIST_CREATE_REQUEST();
+        Long checklistId = checklistManageService.createChecklistV2(user, request, ChecklistImageFixture.IMAGES());
+
+        // when
+        List<ChecklistImage> checklistImages = checklistImageRepository.findByChecklistId(checklistId);
+        Long deletedImageId = checklistImages.get(0).getId();
+        checklistManageService.deleteChecklistImageById(user, checklistId, deletedImageId);
+
+        // then
+        assertThat(checklistImageRepository.findById(deletedImageId))
+                .isEmpty();
+    }
+
 }

@@ -26,6 +26,7 @@ class ChecklistOptionRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     private ChecklistOptionRepository checklistOptionRepository;
+
     @Autowired
     private UserRepository userRepository;
 

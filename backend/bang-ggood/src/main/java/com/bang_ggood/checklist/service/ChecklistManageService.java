@@ -1,15 +1,19 @@
 package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.ChecklistImage;
 import com.bang_ggood.checklist.domain.ChecklistShare;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
-import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
+import com.bang_ggood.checklist.dto.response.ChecklistImageResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponseV2;
 import com.bang_ggood.checklist.dto.response.ChecklistShareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponseV2;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.dto.response.SelectedChecklistResponseV2;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.like.service.ChecklistLikeService;
@@ -22,6 +26,7 @@ import com.bang_ggood.option.service.ChecklistOptionService;
 import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestion;
+import com.bang_ggood.question.dto.request.QuestionRequest;
 import com.bang_ggood.question.dto.response.CategoryScoreResponse;
 import com.bang_ggood.question.dto.response.CategoryScoreResponses;
 import com.bang_ggood.question.dto.response.SelectedCategoryQuestionsResponse;
@@ -40,8 +45,10 @@ import com.bang_ggood.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -58,40 +65,40 @@ public class ChecklistManageService {
     private final ChecklistStationService checklistStationService;
     private final QuestionService questionService;
     private final ChecklistShareService checklistShareService;
+    private final ChecklistImageService checklistImageService;
 
     @Transactional
     public Long createChecklist(User user, ChecklistRequest checklistRequest) {
         Room room = roomService.createRoom(checklistRequest.toRoomEntity());
         Checklist checklist = checklistService.createChecklist(checklistRequest.toChecklistEntity(room, user));
-        createChecklistOptions(checklistRequest, checklist);
-        createChecklistQuestions(checklistRequest, checklist);
-        createChecklistMaintenances(checklistRequest, checklist);
+        createChecklistOptions(checklistRequest.options(), checklist);
+        createChecklistQuestions(checklistRequest.questions(), checklist);
+        createChecklistMaintenances(checklistRequest.room(), checklist);
         createChecklistStation(checklistRequest.room(), checklist);
         return checklist.getId();
     }
 
     @Transactional
-    public Long createChecklistV1(User user, ChecklistRequestV1 checklistRequestV1) {
-        ChecklistRequest checklistRequest = checklistRequestV1.toChecklistRequest();
-
+    public Long createChecklistV2(User user, ChecklistRequest checklistRequest, List<MultipartFile> images) {
         Room room = roomService.createRoom(checklistRequest.toRoomEntity());
         Checklist checklist = checklistService.createChecklist(checklistRequest.toChecklistEntity(room, user));
-        createChecklistOptions(checklistRequest, checklist);
-        createChecklistQuestions(checklistRequest, checklist);
-        createChecklistMaintenances(checklistRequest, checklist);
-        createChecklistStation(checklistRequestV1.room(), checklist);
+        createChecklistOptions(checklistRequest.options(), checklist);
+        createChecklistQuestions(checklistRequest.questions(), checklist);
+        createChecklistMaintenances(checklistRequest.room(), checklist);
+        createChecklistStation(checklistRequest.room(), checklist);
+        createChecklistImage(images, checklist);
         return checklist.getId();
     }
 
-    private void createChecklistOptions(ChecklistRequest checklistRequest, Checklist checklist) {
-        List<ChecklistOption> checklistOptions = checklistRequest.options().stream()
+    private void createChecklistOptions(List<Integer> options, Checklist checklist) {
+        List<ChecklistOption> checklistOptions = options.stream()
                 .map(option -> new ChecklistOption(checklist, option))
                 .toList();
         checklistOptionService.createOptions(checklistOptions);
     }
 
-    private void createChecklistQuestions(ChecklistRequest checklistRequest, Checklist checklist) {
-        List<ChecklistQuestion> checklistQuestions = checklistRequest.questions().stream()
+    private void createChecklistQuestions(List<QuestionRequest> questions, Checklist checklist) {
+        List<ChecklistQuestion> checklistQuestions = questions.stream()
                 .map(question -> new ChecklistQuestion(
                         checklist,
                         questionService.readQuestion(question.questionId()),
@@ -100,9 +107,9 @@ public class ChecklistManageService {
         checklistQuestionService.createQuestions(checklistQuestions);
     }
 
-    private void createChecklistMaintenances(ChecklistRequest checklistRequest, Checklist checklist) {
+    private void createChecklistMaintenances(RoomRequest room, Checklist checklist) {
         List<ChecklistMaintenance> checklistMaintenances =
-                checklistRequest.room().includedMaintenances().stream()
+                room.includedMaintenances().stream()
                         .map(maintenanceId -> new ChecklistMaintenance(checklist,
                                 MaintenanceItem.fromId(maintenanceId)))
                         .toList();
@@ -111,6 +118,10 @@ public class ChecklistManageService {
 
     private void createChecklistStation(RoomRequest roomRequest, Checklist checklist) {
         checklistStationService.createChecklistStations(checklist, roomRequest.latitude(), roomRequest.longitude());
+    }
+
+    private void createChecklistImage(List<MultipartFile> images, Checklist checklist) {
+        checklistImageService.createChecklistImages(checklist, images);
     }
 
     @Transactional
@@ -126,6 +137,13 @@ public class ChecklistManageService {
         Checklist checklist = checklistService.readChecklist(user, checklistId);
 
         return assembleChecklistResponse(checklist);
+    }
+
+    @Transactional(readOnly = true)
+    public SelectedChecklistResponseV2 readChecklistV2(User user, Long checklistId) {
+        Checklist checklist = checklistService.readChecklist(user, checklistId);
+
+        return assembleChecklistResponseV2(checklist);
     }
 
     @Transactional(readOnly = true)
@@ -146,6 +164,25 @@ public class ChecklistManageService {
         SubwayStationResponses stations = readChecklistStations(checklist);
 
         return SelectedChecklistResponse.of(room, options, questions, isLiked, stations);
+    }
+
+    private SelectedChecklistResponseV2 assembleChecklistResponseV2(Checklist checklist) {
+        List<ChecklistImageResponse> images = readChecklistImages(checklist);
+        List<Integer> maintenances = readChecklistMaintenances(checklist);
+        List<SelectedOptionResponse> options = readChecklistOptions(checklist);
+        List<SelectedCategoryQuestionsResponse> questions = readChecklistQuestions(checklist);
+        SelectedRoomResponse room = SelectedRoomResponse.of(checklist, maintenances);
+        boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
+        SubwayStationResponses stations = readChecklistStations(checklist);
+
+        return SelectedChecklistResponseV2.of(images, room, options, questions, isLiked, stations);
+    }
+
+    private List<ChecklistImageResponse> readChecklistImages(Checklist checklist) {
+        return checklistImageService.readChecklistImages(checklist)
+                .stream()
+                .map(ChecklistImageResponse::from)
+                .toList();
     }
 
     private List<Integer> readChecklistMaintenances(Checklist checklist) {
@@ -248,6 +285,7 @@ public class ChecklistManageService {
         checklistStationService.deleteChecklistStation(checklist.getId());
         checklistLikeService.deleteLike(user, checklist);
         checklistShareService.deleteChecklistShare(checklist);
+        checklistImageService.deleteAllByChecklistId(checklist.getId());
     }
 
     @Transactional(readOnly = true)
@@ -260,10 +298,32 @@ public class ChecklistManageService {
         return ChecklistsPreviewResponse.from(responses);
     }
 
+    @Transactional(readOnly = true)
+    public ChecklistsPreviewResponseV2 readAllChecklistsPreviewV2(User user) {
+        List<Checklist> checklists = checklistService.readAllChecklistsOrderByLatest(user);
+        List<ChecklistPreviewResponseV2> responses = checklists.stream()
+                .map(this::mapToChecklistPreviewV2)
+                .toList();
+
+        return ChecklistsPreviewResponseV2.from(responses);
+    }
+
     private ChecklistPreviewResponse mapToChecklistPreview(Checklist checklist) {
         boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
         SubwayStationResponse stationResponse = readNearestStation(checklist);
         return ChecklistPreviewResponse.of(checklist, stationResponse, isLiked);
+    }
+
+    private ChecklistPreviewResponseV2 mapToChecklistPreviewV2(Checklist checklist) {
+        String thumbnailImageUrl = getThumbnailImageUrl(checklist);
+        boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
+        SubwayStationResponse stationResponse = readNearestStation(checklist);
+        return ChecklistPreviewResponseV2.of(checklist, thumbnailImageUrl, stationResponse, isLiked);
+    }
+
+    private String getThumbnailImageUrl(Checklist checklist) {
+        Optional<ChecklistImage> checklistImage = checklistImageService.readChecklistThumbnailImage(checklist);
+        return checklistImage.map(ChecklistImage::getImageUrl).orElse(null);
     }
 
     private SubwayStationResponse readNearestStation(Checklist checklist) {
@@ -287,6 +347,21 @@ public class ChecklistManageService {
         updateChecklistQuestions(checklistRequest, checklist);
         updateChecklistMaintenances(checklistRequest, checklist);
         updateChecklistStations(checklistRequest.room(), checklist);
+    }
+
+    @Transactional
+    public void updateChecklistByIdV2(User user, long checklistId, ChecklistRequest checklistRequest,
+                                      List<MultipartFile> updateImages) {
+        Checklist checklist = checklistService.readChecklist(user, checklistId);
+
+        roomService.updateRoom(checklist.getRoom(), checklistRequest.toRoomEntity());
+        checklistService.updateChecklist(checklist, checklistRequest.toChecklistEntity(checklist.getRoom(), user));
+
+        updateChecklistOptions(checklistRequest, checklist);
+        updateChecklistQuestions(checklistRequest, checklist);
+        updateChecklistMaintenances(checklistRequest, checklist);
+        updateChecklistStations(checklistRequest.room(), checklist);
+        updateChecklistImage(updateImages, checklist);
     }
 
     private void updateChecklistOptions(ChecklistRequest checklistRequest, Checklist checklist) {
@@ -321,5 +396,15 @@ public class ChecklistManageService {
         Double latitude = roomRequest.latitude();
         Double longitude = roomRequest.longitude();
         checklistStationService.updateChecklistStation(checklist, latitude, longitude);
+    }
+
+    private void updateChecklistImage(List<MultipartFile> images, Checklist checklist) {
+        checklistImageService.updateChecklistImage(checklist, images);
+    }
+
+    @Transactional
+    public void deleteChecklistImageById(User user, long checklistId, long imageId) {
+        checklistService.readChecklist(user, checklistId);
+        checklistImageService.deleteById(imageId);
     }
 }

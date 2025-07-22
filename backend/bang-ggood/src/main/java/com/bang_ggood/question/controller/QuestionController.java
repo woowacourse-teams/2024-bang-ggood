@@ -52,7 +52,8 @@ public class QuestionController {
     public ResponseEntity<ComparisonCategorizedQuestionsResponse> readComparisonChecklistQuestionsByCategory(
             @AuthRequiredPrincipal User user,
             @PathVariable("checklistId") long checklistId, @PathVariable("categoryId") int categoryId) {
-        return ResponseEntity.ok(questionManageService.readComparisonChecklistQuestionsByCategory(user, checklistId, categoryId));
+        return ResponseEntity.ok(
+                questionManageService.readComparisonChecklistQuestionsByCategory(user, checklistId, categoryId));
     }
 
     @PutMapping("/custom-checklist")

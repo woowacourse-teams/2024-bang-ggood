@@ -17,8 +17,10 @@ public enum ExceptionCode {
 
     // Question
     CATEGORY_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.QUESTION_ERROR, "카테고리 ID가 존재하지 않습니다"),
-    QUESTION_ID_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.QUESTION_ERROR, "중복된 질문 ID가 존재해 질문을 생성할 수 없습니다."),
-    QUESTION_HIGHLIGHT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.CHECKLIST_SERVER_ERROR, "잘못된 하이라이트 키워드가 존재해 질문을 생성할 수 없습니다."),
+    QUESTION_ID_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.QUESTION_ERROR,
+            "중복된 질문 ID가 존재해 질문을 생성할 수 없습니다."),
+    QUESTION_HIGHLIGHT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.CHECKLIST_SERVER_ERROR,
+            "잘못된 하이라이트 키워드가 존재해 질문을 생성할 수 없습니다."),
     QUESTION_INVALID(HttpStatus.BAD_REQUEST, ClientExceptionCode.QUESTION_ERROR, "잘못된 질문 ID입니다."),
     QUESTION_DUPLICATED(HttpStatus.BAD_REQUEST, ClientExceptionCode.QUESTION_ERROR, "중복된 질문이 존재합니다."),
     QUESTION_DIFFERENT(HttpStatus.BAD_REQUEST, ClientExceptionCode.QUESTION_ERROR, "수정할 질문 목록이 기존의 질문 목록과 동일하지 않습니다."),
@@ -58,8 +60,14 @@ public enum ExceptionCode {
     CUSTOM_CHECKLIST_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.CUSTOM_ERROR, "커스텀 질문이 존재하지 않습니다."),
 
     // ChecklistShare
-    CHECKLIST_SHARE_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_SHARE_NOT_FOUND, "체크리스트 공유 정보가 존재하지 않습니다."),
+    CHECKLIST_SHARE_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_SHARE_NOT_FOUND,
+            "체크리스트 공유 정보가 존재하지 않습니다."),
 
+    // ChecklistImage
+    CHECKLIST_IMAGE_INVALID_COUNT(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR,
+            "체크리스트 이미지는 최대 5개 가능합니다."),
+    CHECKLIST_IMAGE_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR,
+            "해당하는 체크리스트 이미지가 존재하지 않습니다."),
     // FloorLevel
     FLOOR_LEVEL_INVALID(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR, "층 종류가 유효하지 않습니다."),
 
@@ -113,7 +121,17 @@ public enum ExceptionCode {
             "지하철 역을 찾을 수 없습니다."),
 
     //Mail
-    MAIL_SEND_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.MAIL_SEND_ERROR, "메일 전송 중 오류가 발생했습니다.");
+    MAIL_SEND_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.MAIL_SEND_ERROR, "메일 전송 중 오류가 발생했습니다."),
+
+    // File
+    FILE_EMPTY(HttpStatus.BAD_REQUEST, ClientExceptionCode.FILE_ERROR, "파일이 비어있습니다."),
+    FILE_UPLOAD_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.FILE_ERROR, "파일 업로드 중 오류가 발생하였습니다."),
+    FILE_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.FILE_ERROR, "해당 파일이 존재하지 않습니다."),
+
+    // Image
+    IMAGE_OPTIMIZE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.IMAGE_ERROR, "이미지 최적화 중 오류가 발생하였습니다."),
+
+    ;
 
     private final HttpStatus httpStatus;
     private final ClientExceptionCode clientExceptionCode;

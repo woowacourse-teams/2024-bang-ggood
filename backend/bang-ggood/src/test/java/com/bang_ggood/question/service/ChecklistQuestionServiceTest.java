@@ -275,7 +275,8 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
         // given
         Question question = QuestionFixture.QUESTION1_CATEGORY1;
         CustomChecklistQuestion customChecklistQuestion = new CustomChecklistQuestion(UserFixture.USER1, question);
-        CustomChecklistQuestion savedCustomChecklistQuestion = customChecklistQuestionRepository.save(customChecklistQuestion);
+        CustomChecklistQuestion savedCustomChecklistQuestion = customChecklistQuestionRepository.save(
+                customChecklistQuestion);
 
         // when
         customChecklistQuestionRepository.deleteById(customChecklistQuestion.getId());

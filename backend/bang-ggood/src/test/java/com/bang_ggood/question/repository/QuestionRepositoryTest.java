@@ -34,7 +34,8 @@ class QuestionRepositoryTest extends IntegrationTestSupport {
         Question question3 = questionRepository.save(new Question(category2, user, "title", "subtitle", false));
 
         // when
-        List<Question> questions = questionRepository.findAllByCategoryIdAndUserIdAndAdminId(category1.getId(), user.getId(), admin.getId());
+        List<Question> questions = questionRepository.findAllByCategoryIdAndUserIdAndAdminId(category1.getId(),
+                user.getId(), admin.getId());
 
         // then
         Assertions.assertThat(questions).containsOnly(question1, question2);
@@ -44,8 +45,10 @@ class QuestionRepositoryTest extends IntegrationTestSupport {
     @Test
     void findByIsDefaultTrue() {
         // given
-        Question defaultQuestion = questionRepository.save(new Question(QuestionFixture.CATEGORY1, null, "test", "test", true));
-        Question notDefaultQuestion = questionRepository.save(new Question(QuestionFixture.CATEGORY2, null, "test", "test", false));
+        Question defaultQuestion = questionRepository.save(
+                new Question(QuestionFixture.CATEGORY1, null, "test", "test", true));
+        Question notDefaultQuestion = questionRepository.save(
+                new Question(QuestionFixture.CATEGORY2, null, "test", "test", false));
 
         // when
         List<Question> questions = questionRepository.findAllByIsDefaultTrue();

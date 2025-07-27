@@ -17,7 +17,7 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
             nativeQuery = true)
     List<Category> findAllCustomQuestionCategoriesByUserId(@Param("userId") Long userId);
 
-    default Category getById(Integer categoryId){
+    default Category getById(Integer categoryId) {
         return findById(categoryId).orElseThrow(() -> new BangggoodException(ExceptionCode.CATEGORY_NOT_FOUND));
     }
 }

@@ -9,7 +9,7 @@ public class ChecklistQuestions {
     public ChecklistQuestions(List<ChecklistQuestion> questions) {
         this.questions = questions;
     }
-    
+
     public List<ChecklistQuestion> filterByAnswer(Answer answer) {
         return questions.stream()
                 .filter(question -> question.matchAnswer(answer))

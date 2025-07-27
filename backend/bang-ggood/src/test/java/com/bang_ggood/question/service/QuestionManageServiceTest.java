@@ -15,6 +15,7 @@ import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.dto.request.CustomChecklistUpdateRequest;
 import com.bang_ggood.question.dto.request.QuestionCreateRequest;
+import com.bang_ggood.question.dto.response.CategoryCustomChecklistQuestionsResponse;
 import com.bang_ggood.question.dto.response.CategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.ComparisonCategorizedQuestionsResponse;
 import com.bang_ggood.question.dto.response.CustomChecklistQuestionsResponse;
@@ -188,5 +189,21 @@ class QuestionManageServiceTest extends IntegrationTestSupport {
         assertThatThrownBy(() -> questionManageService.updateCustomChecklist(UserFixture.USER1, request))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessage(ExceptionCode.QUESTION_INVALID.getMessage());
+    }
+
+    @DisplayName("커스텀 체크리스트 질문 조회 성공 : 유저가 생성한 질문 별도 분리")
+    @Test
+    void readAllCustomChecklistQuestions() {
+        // given
+        User user = UserFixture.USER1;
+
+        // when
+        CategoryCustomChecklistQuestionsResponse response = questionManageService.readAllCustomChecklistQuestions(user);
+
+        // then
+        assertThat(response.defaultCategories().stream().flatMap(it -> it.questions().stream()))
+                .hasSize(32);
+        assertThat(response.userCategories().stream().flatMap(it -> it.questions().stream()))
+                .hasSize(5);
     }
 }

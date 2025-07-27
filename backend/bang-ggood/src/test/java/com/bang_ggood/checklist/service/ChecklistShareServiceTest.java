@@ -90,7 +90,7 @@ class ChecklistShareServiceTest extends IntegrationTestSupport {
 
     @DisplayName("체크리스트 공유가 존재하지 않으면 삭제하지 않음")
     @Test
-    void deleteChecklistShare_IfExist_notExist() {
+    void deleteChecklistShare_notExist() {
         Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
         Checklist checklist = ChecklistFixture.CHECKLIST1_USER1(room, user);

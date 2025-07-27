@@ -1,10 +1,10 @@
 // Arrow
-import ArrowDropdownIcon from '@/assets/icons/arrow/arrow_dropdown.svg';
 import ArrowBackIcon from '@/assets/icons/arrow/arrow-back.svg';
 import ArrowDownIcon from '@/assets/icons/arrow/arrow-down-small.svg';
-import ArrowRightIcon from '@/assets/icons/arrow/arrow-right.svg';
 import ArrowRightCircleIcon from '@/assets/icons/arrow/arrow-right-circle.svg';
+import ArrowRightIcon from '@/assets/icons/arrow/arrow-right.svg';
 import ArrowUpIcon from '@/assets/icons/arrow/arrow-up-small.svg';
+import ArrowDropdownIcon from '@/assets/icons/arrow/arrow_dropdown.svg';
 import ScrollArrow from '@/assets/icons/arrow/scrollArrow.svg';
 // common-icons
 import CheckIcon from '@/assets/icons/common/check.svg';
@@ -29,6 +29,7 @@ import FaceBadIcon from '@/assets/icons/faceIcon/face-icon-bad.svg';
 import KakaoLogoIcon from '@/assets/icons/kakao/kakao-logo.svg';
 // map
 import LocationIcon from '@/assets/icons/map/location.svg';
+import MapLogoIcon from '@/assets/icons/map/map-logo.svg';
 import SearchIcon from '@/assets/icons/map/search.svg';
 // mascot
 import BangBangIcon3DUrl from '@/assets/icons/mascot/3D-bang-bang-icon.png';
@@ -93,6 +94,7 @@ export {
   LampIcon,
   LocationIcon,
   LocationLineIcon,
+  MapLogoIcon,
   MemoIcon,
   Options,
   Pencil,

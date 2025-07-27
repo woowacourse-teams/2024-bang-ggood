@@ -101,11 +101,11 @@ public class QuestionManageService {
         User admin = userRepository.findUserByUserType(UserType.ADMIN).get(0);
 
         return CategoryCustomChecklistQuestionsResponse.of(
-                readCustomQuestions(customChecklistQuestions, admin),
-                readCustomQuestions(customChecklistQuestions, user));
+                categorizeCustomQuestions(customChecklistQuestions, admin),
+                categorizeCustomQuestions(customChecklistQuestions, user));
     }
 
-    private List<CategoryCustomChecklistQuestionResponse> readCustomQuestions(List<CustomChecklistQuestion> customChecklistQuestions, User user) {
+    private List<CategoryCustomChecklistQuestionResponse> categorizeCustomQuestions(List<CustomChecklistQuestion> customChecklistQuestions, User user) {
         List<CategoryCustomChecklistQuestionResponse> response = new ArrayList<>();
         for (Category category : questionService.readAllCategories()) {
             List<Question> categoryQuestions = questionService.readQuestionsByCategoryAndUser(category, user);

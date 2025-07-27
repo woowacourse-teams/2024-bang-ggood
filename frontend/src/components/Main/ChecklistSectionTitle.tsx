@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import useGetChecklistListQuery from '@/hooks/query/useGetChecklistListQuery';
-import { title3 } from '@/styles/common';
+import { fontStyle } from '@/utils/fontStyle';
 
 const ChecklistSectionTitle = () => {
   const { data: checklistList } = useGetChecklistListQuery();
@@ -16,10 +16,9 @@ export default ChecklistSectionTitle;
 
 const S = {
   ContainerTitle: styled.div`
-    ${title3}
-    background-color: ${({ theme }) => theme.palette.white};
+    ${({ theme }) => fontStyle(theme.font.headline[1].B)}
   `,
   Count: styled.span`
-    color: ${({ theme }) => theme.palette.green500};
+    color: ${({ theme }) => theme.color.primary[600]};
   `,
 };

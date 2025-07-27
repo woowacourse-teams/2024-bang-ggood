@@ -12,6 +12,8 @@ import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
@@ -24,7 +26,7 @@ public class CustomChecklistQuestion extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private User user; // todo 리팩토링
 
     @JoinColumn(name = "question_id")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,5 +43,31 @@ public class CustomChecklistQuestion extends BaseEntity {
 
     public boolean isSameCategory(Category category) {
         return this.question.getCategory().equals(category);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        CustomChecklistQuestion that = (CustomChecklistQuestion) object;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
+    @Override
+    public String toString() {
+        return "CustomChecklistQuestion{" +
+                "id=" + id +
+                ", user=" + user +
+                ", question=" + question +
+                '}';
     }
 }

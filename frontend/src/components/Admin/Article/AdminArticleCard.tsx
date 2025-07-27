@@ -47,7 +47,7 @@ const S = {
 
     border-radius: 1.6rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
     ${boxShadow};
     cursor: pointer;
 
@@ -60,7 +60,7 @@ const S = {
 
     background-color: ${({ bgColor }) => bgColor};
 
-    color: ${({ theme }) => theme.palette.white};
+    color: ${({ theme }) => theme.color.mono.white};
     font-size: ${({ theme }) => theme.text.size.xSmall};
     align-self: flex-start;
 

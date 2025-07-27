@@ -3,11 +3,11 @@ import { Outlet } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 
 import { ROUTE_PATH } from '@/constants/routePath';
-import useUserQuery from '@/hooks/query/useUserQuery';
+import useGetUserQuery from '@/hooks/query/useGetUserQuery';
 
 const AuthGuard = () => {
   const navigate = useNavigate();
-  const { isError } = useUserQuery();
+  const { isError } = useGetUserQuery();
 
   useEffect(() => {
     if (isError) {

@@ -57,6 +57,30 @@ export const boxSpread = css`
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 `;
 
+/* box shadow */
+export const boxEffect = {
+  1: css`
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.8);
+  `,
+  2: css`
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.8);
+  `,
+  3: css`
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+  `,
+  4: css`
+    box-shadow: 0 16px 20px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+  `,
+};
+
 /* skeleton */
 export const Skeleton = `
   background: linear-gradient(-90deg, #E2E2E2, #f0f0f0,  #E2E2E2, #f0f0f0);

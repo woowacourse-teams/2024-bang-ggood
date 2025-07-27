@@ -13,7 +13,7 @@ function BuildingCard({ buildingId, buildingName, checklistCount, station, isLik
     <Link to={`${ROUTE_PATH.buildingList}/${buildingId}`}>
       <FlexBox.Horizontal padding="0.8rem 0" gap="1.6rem" onClick={() => {}}>
         <S.Image alt="건물 이미지" src={thumbnail} />
-        {/* <FlexBox.Vertical> */}
+
         <div>
           <Text typography={text => text.body[1].B}>{buildingName}</Text>
           <Text typography={text => text.body[1].R} color={color => color.gray[400]} style={{ marginTop: '.8rem' }}>

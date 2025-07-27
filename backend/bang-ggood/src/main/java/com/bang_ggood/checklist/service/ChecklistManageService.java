@@ -243,11 +243,12 @@ public class ChecklistManageService {
         checklistQuestionService.deleteAllByChecklistId(checklist.getId());
         checklistOptionService.deleteAllByChecklistId(checklist.getId());
         checklistMaintenanceService.deleteAllByChecklistId(checklist.getId());
-        checklistService.deleteById(id);
         roomService.deleteById(checklist.getRoomId());
         checklistStationService.deleteChecklistStation(checklist.getId());
         checklistLikeService.deleteLike(user, checklist);
         checklistShareService.deleteChecklistShare(checklist);
+
+        checklistService.deleteById(id);
     }
 
     @Transactional(readOnly = true)

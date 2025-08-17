@@ -6,6 +6,7 @@ import ModalBody from '@/components/_common/Modal/ModalBody';
 import ModalFooter from '@/components/_common/Modal/ModalFooter';
 import ModalHeader from '@/components/_common/Modal/ModalHeader';
 import Text from '@/components/_common/Text/Text';
+import SelectedStations from '@/components/Building/BuildingFilterModal/SelectedStations';
 import SubwayFilterTable from '@/components/Building/BuildingFilterModal/SubwayFilterTable';
 import BuildingListSearchBar from '@/components/Building/BuildingListSearchBar';
 
@@ -17,7 +18,14 @@ interface BuildingFilterModalProps {
 }
 function BuildingFilterModal({ isOpen, onFilter, buildingCount }: BuildingFilterModalProps) {
   const [selectedStations, setSelectedStations] = useState<string[]>([]);
-  console.log(selectedStations);
+
+  const removeStation = (station: string) => setSelectedStations(prev => prev.filter(s => s !== station));
+  const toggleStation = (station: string) => {
+    setSelectedStations(prev =>
+      prev.includes(station) ? prev.filter(s => s !== station) : prev.length < 5 ? [...prev, station] : prev,
+    );
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={() => {}}>
       <ModalHeader>
@@ -25,7 +33,8 @@ function BuildingFilterModal({ isOpen, onFilter, buildingCount }: BuildingFilter
       </ModalHeader>
       <ModalBody>
         <BuildingListSearchBar onSearch={searchTerm => onFilter({ search: searchTerm })} />
-        <SubwayFilterTable onSelectSubwayStation={setSelectedStations} />
+        <SubwayFilterTable onSelectSubwayStation={toggleStation} selectedStations={selectedStations} />
+        <SelectedStations selectedStations={selectedStations} removeStation={removeStation} />
       </ModalBody>
       <ModalFooter>
         <Button label="초기화" />

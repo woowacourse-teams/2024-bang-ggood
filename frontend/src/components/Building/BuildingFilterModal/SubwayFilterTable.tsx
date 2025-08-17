@@ -4,13 +4,13 @@ import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import Text from '@/components/_common/Text/Text';
 
 interface SubwayTableProps {
-  onSelectSubwayStation: (stationNames: string[]) => void;
+  selectedStations: string[];
+  onSelectSubwayStation: (stationNames: string) => void;
 }
 
-function SubwayFilterTable({ onSelectSubwayStation }: SubwayTableProps) {
+function SubwayFilterTable({ onSelectSubwayStation, selectedStations }: SubwayTableProps) {
   const [selectedRegion, setSelectedRegion] = useState<keyof typeof subwayMap | null>(null);
   const [selectedLine, setSelectedLine] = useState<string | null>(null);
-  const [selectedStations, setSelectedStation] = useState<string[]>([]);
 
   return (
     <div>
@@ -52,11 +52,11 @@ function SubwayFilterTable({ onSelectSubwayStation }: SubwayTableProps) {
               <button
                 key={station}
                 onClick={() => {
-                  const newStations = selectedStations?.includes(station)
-                    ? selectedStations.filter(s => s !== station)
-                    : [...selectedStations, station];
-                  setSelectedStation(newStations);
-                  onSelectSubwayStation(newStations);
+                  // const newStations = selectedStations?.includes(station)
+                  //   ? selectedStations.filter(s => s !== station)
+                  //   : [...selectedStations, station];
+                  // setSelectedStation(newStations);
+                  onSelectSubwayStation(station);
                 }}
               >
                 <Text

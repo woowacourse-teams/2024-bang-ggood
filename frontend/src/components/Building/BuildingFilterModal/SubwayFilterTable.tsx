@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import styled from '@emotion/styled';
+import { CSSProperties, useState } from 'react';
 
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import Text from '@/components/_common/Text/Text';
+import color from '@/styles/color';
 
 interface SubwayTableProps {
   selectedStations: string[];
@@ -14,58 +16,75 @@ function SubwayFilterTable({ onSelectSubwayStation, selectedStations }: SubwayTa
 
   return (
     <div>
-      <FlexBox.Horizontal>
-        <div>지역</div>
-        <div>호선</div>
-        <div>역명</div>
+      <FlexBox.Horizontal gap="0">
+        <S.Cell bgColor={color.gray[200]} width="33.3%">
+          지역
+        </S.Cell>
+        <S.Cell bgColor={color.gray[200]} width="33.3%">
+          호선
+        </S.Cell>
+        <S.Cell bgColor={color.gray[200]} width="33.3%">
+          역명
+        </S.Cell>
       </FlexBox.Horizontal>
-      <FlexBox.Horizontal>
-        <div style={{ flexDirection: 'column', display: 'flex' }}>
-          {Object.keys(subwayMap).map(region => (
-            <button key={region} onClick={() => setSelectedRegion(region as keyof typeof subwayMap)}>
-              <Text
-                typography={font => font.body[2].B}
-                color={color => (selectedRegion === region ? color.primary[600] : color.mono.black)}
-              >
-                {region}
-              </Text>
-            </button>
-          ))}
+      <FlexBox.Horizontal gap="0">
+        <div style={{ flexDirection: 'column', display: 'flex', width: '33.3%' }}>
+          {Object.keys(subwayMap).map(region => {
+            const isSelected = selectedRegion === region;
+            return (
+              <S.Cell key={region} bgColor={isSelected ? undefined : color.gray[200]}>
+                <button
+                  key={region}
+                  onClick={() => {
+                    setSelectedRegion(region as keyof typeof subwayMap);
+                    setSelectedLine(null);
+                  }}
+                >
+                  <Text
+                    typography={font => font.body[2].B}
+                    color={color => (isSelected ? color.primary[600] : color.mono.black)}
+                  >
+                    {region}
+                  </Text>
+                </button>
+              </S.Cell>
+            );
+          })}
         </div>
         {selectedRegion && (
-          <FlexBox.Vertical>
-            {Object.entries(subwayMap[selectedRegion])?.map(([line, stations]) => (
-              <div key={line} onClick={() => setSelectedLine(line)}>
-                <Text
-                  typography={font => font.body[2].B}
-                  color={color => (selectedLine === line ? color.primary[600] : color.mono.black)}
-                >
-                  {line}
-                </Text>
-              </div>
-            ))}
+          <FlexBox.Vertical gap="0" width="33.3%">
+            {Object.keys(subwayMap[selectedRegion])?.map(line => {
+              const isSelected = selectedLine === line;
+              return (
+                <S.Cell key={line} onClick={() => setSelectedLine(line)}>
+                  <Text
+                    typography={font => font.body[2].B}
+                    color={color => (isSelected ? color.primary[600] : color.mono.black)}
+                  >
+                    {line}
+                  </Text>
+                </S.Cell>
+              );
+            })}
           </FlexBox.Vertical>
         )}
         {selectedRegion && selectedLine && (
-          <FlexBox.Vertical>
+          <FlexBox.Vertical gap="0" width="33.3%">
             {subwayMap[selectedRegion][selectedLine].map(station => (
-              <button
-                key={station}
-                onClick={() => {
-                  // const newStations = selectedStations?.includes(station)
-                  //   ? selectedStations.filter(s => s !== station)
-                  //   : [...selectedStations, station];
-                  // setSelectedStation(newStations);
-                  onSelectSubwayStation(station);
-                }}
-              >
-                <Text
-                  typography={font => font.body[2].B}
-                  color={color => (selectedStations.includes(station) ? color.primary[600] : color.mono.black)}
+              <S.Cell key={station}>
+                <button
+                  onClick={() => {
+                    onSelectSubwayStation(station);
+                  }}
                 >
-                  {station}
-                </Text>
-              </button>
+                  <Text
+                    typography={font => font.body[2].B}
+                    color={color => (selectedStations.includes(station) ? color.primary[600] : color.mono.black)}
+                  >
+                    {station}
+                  </Text>
+                </button>
+              </S.Cell>
             ))}
           </FlexBox.Vertical>
         )}
@@ -92,5 +111,17 @@ const subwayMap: Record<string, Record<string, string[]>> = {
     '1호선': ['동인천', '주안', '부평', '인천'],
     '7호선': ['석남', '산곡', '부평구청'],
   },
+};
+
+const S = {
+  Cell: styled.div<{ bgColor?: CSSProperties['backgroundColor']; width?: CSSProperties['width'] }>`
+    width: ${({ width }) => width};
+    padding: 10px 12px;
+
+    background-color: ${({ bgColor }) => bgColor};
+
+    text-align: center;
+    vertical-align: middle;
+  `,
 };
 export default SubwayFilterTable;

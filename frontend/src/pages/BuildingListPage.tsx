@@ -31,8 +31,8 @@ function BuildingListPage() {
     <>
       <BuildingFilterModal
         isOpen={true}
-        onFilter={a => {
-          setSearchTerm(a.search);
+        onFilter={filter => {
+          setSearchTerm(filter.search);
         }}
         buildingCount={buildingCount ?? 0}
       />

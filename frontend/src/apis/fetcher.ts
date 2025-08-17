@@ -13,6 +13,7 @@ interface RequestProps {
   body?: object[] | object;
   headers?: Record<string, string>;
   credentials?: string;
+  params?: object;
 }
 
 type FetchProps = Omit<RequestProps, 'method'>;
@@ -64,8 +65,15 @@ const handleUnauthorizedError = async (response: Response, requestProps: Request
   }
 };
 
-const fetchRequest = async ({ url, method, body, headers = {} }: RequestProps & { signal?: AbortSignal }) => {
-  return await fetch(url, {
+const fetchRequest = async ({ url, method, body, headers = {}, params }: RequestProps & { signal?: AbortSignal }) => {
+  const newUrl = new URL(url);
+  if (params) {
+    Object.keys(params).forEach(k => {
+      const key = k as keyof typeof params;
+      newUrl.searchParams.append(key, JSON.stringify(params[key]));
+    });
+  }
+  return await fetch(newUrl, {
     method,
     credentials: 'include',
     body: body ? JSON.stringify(body) : undefined,
@@ -76,8 +84,8 @@ const fetchRequest = async ({ url, method, body, headers = {} }: RequestProps & 
 };
 
 const fetcher = {
-  get({ url, headers }: FetchProps) {
-    return request({ url, method: 'GET', headers });
+  get({ url, headers, params }: FetchProps) {
+    return request({ url, method: 'GET', headers, params });
   },
 
   post({ url, body, headers, ...rest }: FetchProps) {
@@ -90,25 +98,27 @@ const fetcher = {
     });
   },
 
-  delete({ url, headers }: FetchProps) {
-    return request({ url, method: 'DELETE', headers });
+  delete({ url, headers, ...rest }: FetchProps) {
+    return request({ url, method: 'DELETE', headers, ...rest });
   },
 
-  patch({ url, body, headers }: FetchProps) {
+  patch({ url, body, headers, ...rest }: FetchProps) {
     return request({
       url,
       method: 'PATCH',
       body,
       headers: { ...headers, 'Content-Type': 'application/json' },
+      ...rest,
     });
   },
 
-  put({ url, body, headers }: FetchProps) {
+  put({ url, body, headers, ...rest }: FetchProps) {
     return request({
       url,
       method: 'PUT',
       body,
       headers: { ...headers, 'Content-Type': 'application/json' },
+      ...rest,
     });
   },
 };

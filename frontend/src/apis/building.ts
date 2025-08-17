@@ -1,9 +1,10 @@
 import fetcher from '@/apis/fetcher';
 import { BASE_URL, ENDPOINT } from '@/apis/url';
+import { PaginationParams } from '@/types/api';
 import { BuildingsResponse } from '@/types/building';
 
-export const getBuildingList = async () => {
-  const response = await fetcher.get({ url: BASE_URL + ENDPOINT.BUILDING_LIST });
+export const getBuildingList = async (params: PaginationParams) => {
+  const response = await fetcher.get({ url: BASE_URL + ENDPOINT.BUILDING_LIST, params });
   const data = await response.json();
   return data as BuildingsResponse;
 };

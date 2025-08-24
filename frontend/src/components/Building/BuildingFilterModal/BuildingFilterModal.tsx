@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import Button from '@/components/_common/Button/Button';
+import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import Modal from '@/components/_common/Modal/Modal';
 import ModalBody from '@/components/_common/Modal/ModalBody';
 import ModalFooter from '@/components/_common/Modal/ModalFooter';
@@ -27,11 +28,16 @@ interface SelectedStation {
 function BuildingFilterModal({ isOpen, onFilter, buildingCount, onClose, onConfirm }: BuildingFilterModalProps) {
   const [selectedStations, setSelectedStations] = useState<SelectedStation[]>([]);
 
+  const updateSelectedStations = (stations: SelectedStation[]) => {
+    // 동일한 상태(선택 역)를 로컬(UI)과 부모(API 호출용)에 각각 가지고있음
+    setSelectedStations(stations); // 로컬 상태
+    onConfirm(stations); // 부모 상태
+  };
+
   const removeStation = (station: SelectedStation) => {
     const prev = selectedStations;
     const newSelectedStations = prev.filter(s => !isEqual(s, station));
-    setSelectedStations(newSelectedStations);
-    onConfirm(newSelectedStations);
+    updateSelectedStations(newSelectedStations);
   };
 
   const toggleStation = (data: SelectedStation) => {
@@ -41,8 +47,7 @@ function BuildingFilterModal({ isOpen, onFilter, buildingCount, onClose, onConfi
       : prev.length < 5
         ? [...prev, data]
         : prev;
-    setSelectedStations(newSelectedStations);
-    onConfirm(newSelectedStations);
+    updateSelectedStations(newSelectedStations);
   };
 
   return (
@@ -51,13 +56,15 @@ function BuildingFilterModal({ isOpen, onFilter, buildingCount, onClose, onConfi
         <Text typography={font => font.headline[2].B}>지하철</Text>
       </ModalHeader>
       <ModalBody>
-        <BuildingListSearchBar onSearch={searchTerm => onFilter({ search: searchTerm })} />
-        <SubwayFilterTable selectedStations={selectedStations} onSelectSubwayStation={toggleStation} />
-        <SelectedStations selectedStations={selectedStations} removeStation={removeStation} />
+        <FlexBox.Vertical gap="2rem">
+          <BuildingListSearchBar onSearch={searchTerm => onFilter({ search: searchTerm })} />
+          <SubwayFilterTable selectedStations={selectedStations} onSelectSubwayStation={toggleStation} />
+          <SelectedStations selectedStations={selectedStations} removeStation={removeStation} />
+        </FlexBox.Vertical>
       </ModalBody>
       <ModalFooter>
-        <Button label="초기화" />
-        <Button label={`${buildingCount}건 매물보기`} />
+        <Button label="초기화" onClick={() => updateSelectedStations([])} />
+        <Button label={`${buildingCount}건 매물보기`} onClick={onClose} />
       </ModalFooter>
     </Modal>
   );

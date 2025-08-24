@@ -8,12 +8,11 @@ export const buildingHandlers = [
     const url = new URL(request.url);
     const page = parseInt(url.searchParams.get('page') || '1', 10);
     const size = parseInt(url.searchParams.get('size') || '10', 10);
-    const subways = url.searchParams.get('subways')?.split(',') || [];
+    const subways = url.searchParams.getAll('subways');
 
     const filteredBuildings = buildings.filter(
       building => subways.length === 0 || subways.some(subway => building.station.name.includes(subway)),
     );
-    console.log('filteredBuildings', filteredBuildings);
 
     const paginatedBuildings = filteredBuildings.slice((page - 1) * size, page * size);
 

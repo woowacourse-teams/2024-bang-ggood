@@ -14,7 +14,7 @@ function SelectedStations({ selectedStations, removeStation }: SelectedStationsP
         선택한 역 <Text color={color => color.primary[600]}>{selectedStations.length}</Text>
         <Text color={color => color.gray[500]}> 최대 5개</Text>
       </div>
-      <FlexBox.Horizontal>
+      <FlexBox.Horizontal margin="1rem 0 0">
         {selectedStations.map(station => (
           <div key={station.station} onClick={() => removeStation(station)}>
             {/* 끄는 기능만 있는 버튼이라, 항상 선택된 상태로 표시 */}

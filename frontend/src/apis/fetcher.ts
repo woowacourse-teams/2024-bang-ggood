@@ -13,7 +13,7 @@ interface RequestProps {
   body?: object[] | object;
   headers?: Record<string, string>;
   credentials?: string;
-  params?: object;
+  params?: Record<string, string | string[]>;
 }
 
 type FetchProps = Omit<RequestProps, 'method'>;
@@ -59,7 +59,7 @@ const handleUnauthorizedError = async (response: Response, requestProps: Request
       reissueAccessToken = false;
       return await fetchRequest(requestProps);
     }
-  } catch (err) {
+  } catch {
     await deleteToken();
     window.location.href = ROUTE_PATH.root;
   }
@@ -70,7 +70,12 @@ const fetchRequest = async ({ url, method, body, headers = {}, params }: Request
   if (params) {
     Object.keys(params).forEach(k => {
       const key = k as keyof typeof params;
-      newUrl.searchParams.append(key, params[key]);
+      const value = params[key];
+      if (Array.isArray(value)) {
+        value.forEach(v => newUrl.searchParams.append(key, v));
+      } else {
+        newUrl.searchParams.append(key, value);
+      }
     });
   }
   return await fetch(newUrl, {

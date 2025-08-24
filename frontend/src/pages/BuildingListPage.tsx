@@ -26,7 +26,7 @@ function BuildingListPage() {
     isError,
   } = useGetBuildingListQuery({
     search: searchTerm,
-    stations: stationsFilter,
+    subways: stationsFilter,
   });
 
   const { isModalOpen, openModal, closeModal } = useModal();

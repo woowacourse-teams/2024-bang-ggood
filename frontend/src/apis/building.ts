@@ -4,7 +4,7 @@ import { PaginationParams } from '@/types/api';
 import { BuildingsResponse } from '@/types/building';
 
 export const getBuildingList = async (
-  searchParams: { search?: string; stations?: string },
+  searchParams: { search?: string; subways?: string },
   params: PaginationParams,
 ) => {
   const response = await fetcher.get({

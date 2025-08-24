@@ -8,9 +8,9 @@ export const useGetBuildingListQuery = (
   searchParams: { search?: string; subways?: string[] } = {},
   pageParams: PaginationParams = { page: 1, size: 20 },
 ) => {
-  const stations = searchParams.subways?.join(',');
+  const subways = searchParams.subways?.join(',');
   return useQuery({
     queryKey: [QUERY_KEYS.BUILDING_LIST, searchParams, pageParams],
-    queryFn: () => getBuildingList({ ...searchParams, stations }, pageParams),
+    queryFn: () => getBuildingList({ ...searchParams, subways }, pageParams),
   });
 };

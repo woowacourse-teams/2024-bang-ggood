@@ -13,7 +13,7 @@ interface RequestProps {
   body?: object[] | object;
   headers?: Record<string, string>;
   credentials?: string;
-  params?: Record<string, string | string[]>;
+  params?: Record<string, string | string[] | number>;
 }
 
 type FetchProps = Omit<RequestProps, 'method'>;
@@ -74,7 +74,7 @@ const fetchRequest = async ({ url, method, body, headers = {}, params }: Request
       if (Array.isArray(value)) {
         value.forEach(v => newUrl.searchParams.append(key, v));
       } else {
-        newUrl.searchParams.append(key, value);
+        newUrl.searchParams.append(key, value.toString());
       }
     });
   }

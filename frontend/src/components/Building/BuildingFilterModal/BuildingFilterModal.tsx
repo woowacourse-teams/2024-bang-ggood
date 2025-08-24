@@ -16,13 +16,24 @@ interface BuildingFilterModalProps {
   onFilter: (filters: { search: string }) => void;
   buildingCount: number;
 }
-function BuildingFilterModal({ isOpen, onFilter, buildingCount }: BuildingFilterModalProps) {
-  const [selectedStations, setSelectedStations] = useState<string[]>([]);
 
-  const removeStation = (station: string) => setSelectedStations(prev => prev.filter(s => s !== station));
-  const toggleStation = (station: string) => {
-    setSelectedStations(prev =>
-      prev.includes(station) ? prev.filter(s => s !== station) : prev.length < 5 ? [...prev, station] : prev,
+interface SelectedStation {
+  region: string;
+  line: string;
+  station: string;
+}
+function BuildingFilterModal({ isOpen, onFilter, buildingCount }: BuildingFilterModalProps) {
+  const [selectedStations, setSelectedStations] = useState<SelectedStation[]>([]);
+
+  const removeStation = (station: SelectedStation) =>
+    setSelectedStations(prev => prev.filter(s => !isEqual(s, station)));
+  const toggleStation = (data: SelectedStation) => {
+    setSelectedStations(prevs =>
+      prevs.some(p => isEqual(p, data)) // 이미 선택된 지하철역인지 확인
+        ? prevs.filter(s => !isEqual(s, data)) // 이미 선택된 지하철역이면 제거
+        : prevs.length < 5
+          ? [...prevs, data] // 선택된 지하철역이 5개 미만이면 추가
+          : prevs,
     );
   };
 
@@ -42,6 +53,16 @@ function BuildingFilterModal({ isOpen, onFilter, buildingCount }: BuildingFilter
       </ModalFooter>
     </Modal>
   );
+}
+
+// 두 object의 키-밸류가 모두 동일한지 확인하는 함수
+function isEqual(obj1: object, obj2: object) {
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  if (keys1.length !== keys2.length) return false;
+
+  return keys1.every(key => obj1[key] === obj2[key]);
 }
 
 export default BuildingFilterModal;

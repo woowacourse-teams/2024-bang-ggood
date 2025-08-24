@@ -6,8 +6,8 @@ import Text from '@/components/_common/Text/Text';
 import color from '@/styles/color';
 
 interface SubwayTableProps {
-  selectedStations: string[];
-  onSelectSubwayStation: (stationNames: string) => void;
+  selectedStations: { region: string; line: string; station: string }[];
+  onSelectSubwayStation: (stationNames: { region: string; line: string; station: string }) => void;
 }
 
 function SubwayFilterTable({ onSelectSubwayStation, selectedStations }: SubwayTableProps) {
@@ -74,12 +74,18 @@ function SubwayFilterTable({ onSelectSubwayStation, selectedStations }: SubwayTa
               <S.Cell key={station}>
                 <button
                   onClick={() => {
-                    onSelectSubwayStation(station);
+                    onSelectSubwayStation({ region: selectedRegion, line: selectedLine, station });
                   }}
                 >
                   <Text
                     typography={font => font.body[2].B}
-                    color={color => (selectedStations.includes(station) ? color.primary[600] : color.mono.black)}
+                    color={color =>
+                      selectedStations.some(
+                        s => s.station === station && s.region === selectedRegion && s.line === selectedLine,
+                      )
+                        ? color.primary[600]
+                        : color.mono.black
+                    }
                   >
                     {station}
                   </Text>

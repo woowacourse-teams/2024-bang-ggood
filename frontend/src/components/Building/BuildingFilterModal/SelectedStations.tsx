@@ -1,3 +1,5 @@
+import { CloseIcon } from '@/assets/assets';
+import Badge from '@/components/_common/Badge/Badge';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import Text from '@/components/_common/Text/Text';
 
@@ -15,7 +17,17 @@ function SelectedStations({ selectedStations, removeStation }: SelectedStationsP
       <FlexBox.Horizontal>
         {selectedStations.map(station => (
           <div key={station.station} onClick={() => removeStation(station)}>
-            {station.station}
+            {/* 끄는 기능만 있는 버튼이라, 항상 선택된 상태로 표시 */}
+
+            <Badge
+              label={
+                <FlexBox.Horizontal gap="0.4rem" align="center" justify="center">
+                  <Text style={{ lineHeight: 1 }}>{station.station}</Text>
+                  <CloseIcon width={16} height={16} style={{ verticalAlign: 'baseline' }} />
+                </FlexBox.Horizontal>
+              }
+              isSelected={true}
+            />
           </div>
         ))}
       </FlexBox.Horizontal>

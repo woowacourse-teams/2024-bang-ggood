@@ -52,7 +52,7 @@ function BuildingFilterModal({ isOpen, onFilter, buildingCount, onClose, onConfi
       </ModalHeader>
       <ModalBody>
         <BuildingListSearchBar onSearch={searchTerm => onFilter({ search: searchTerm })} />
-        <SubwayFilterTable onSelectSubwayStation={toggleStation} selectedStations={selectedStations} />
+        <SubwayFilterTable selectedStations={selectedStations} onSelectSubwayStation={toggleStation} />
         <SelectedStations selectedStations={selectedStations} removeStation={removeStation} />
       </ModalBody>
       <ModalFooter>
@@ -70,7 +70,7 @@ function isEqual(obj1: object, obj2: object) {
 
   if (keys1.length !== keys2.length) return false;
 
-  return keys1.every(key => obj1[key] === obj2[key]);
+  return keys1.every(key => obj1[key as keyof typeof obj1] === obj2[key as keyof typeof obj2]);
 }
 
 export default BuildingFilterModal;

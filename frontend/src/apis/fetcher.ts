@@ -70,7 +70,7 @@ const fetchRequest = async ({ url, method, body, headers = {}, params }: Request
   if (params) {
     Object.keys(params).forEach(k => {
       const key = k as keyof typeof params;
-      newUrl.searchParams.append(key, JSON.stringify(params[key]));
+      newUrl.searchParams.append(key, params[key]);
     });
   }
   return await fetch(newUrl, {

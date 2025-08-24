@@ -15,6 +15,8 @@ interface BuildingFilterModalProps {
   isOpen: boolean;
   onFilter: (filters: { search: string }) => void;
   buildingCount: number;
+  onClose: () => void;
+  onConfirm: (selectedStations: SelectedStation[]) => void;
 }
 
 interface SelectedStation {
@@ -22,23 +24,29 @@ interface SelectedStation {
   line: string;
   station: string;
 }
-function BuildingFilterModal({ isOpen, onFilter, buildingCount }: BuildingFilterModalProps) {
+function BuildingFilterModal({ isOpen, onFilter, buildingCount, onClose, onConfirm }: BuildingFilterModalProps) {
   const [selectedStations, setSelectedStations] = useState<SelectedStation[]>([]);
 
-  const removeStation = (station: SelectedStation) =>
-    setSelectedStations(prev => prev.filter(s => !isEqual(s, station)));
+  const removeStation = (station: SelectedStation) => {
+    const prev = selectedStations;
+    const newSelectedStations = prev.filter(s => !isEqual(s, station));
+    setSelectedStations(newSelectedStations);
+    onConfirm(newSelectedStations);
+  };
+
   const toggleStation = (data: SelectedStation) => {
-    setSelectedStations(prevs =>
-      prevs.some(p => isEqual(p, data)) // 이미 선택된 지하철역인지 확인
-        ? prevs.filter(s => !isEqual(s, data)) // 이미 선택된 지하철역이면 제거
-        : prevs.length < 5
-          ? [...prevs, data] // 선택된 지하철역이 5개 미만이면 추가
-          : prevs,
-    );
+    const prev = selectedStations;
+    const newSelectedStations = prev.some(p => isEqual(p, data))
+      ? prev.filter(s => !isEqual(s, data))
+      : prev.length < 5
+        ? [...prev, data]
+        : prev;
+    setSelectedStations(newSelectedStations);
+    onConfirm(newSelectedStations);
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={() => {}}>
+    <Modal isOpen={isOpen} onClose={onClose} position="bottom">
       <ModalHeader>
         <Text typography={font => font.headline[2].B}>지하철</Text>
       </ModalHeader>

@@ -9,7 +9,8 @@ function SelectedStations({ selectedStations, removeStation }: SelectedStationsP
   return (
     <div>
       <div>
-        선택한 역 <Text color={color => color.primary[600]}>{selectedStations.length}</Text> 최대 5개
+        선택한 역 <Text color={color => color.primary[600]}>{selectedStations.length}</Text>
+        <Text color={color => color.gray[500]}> 최대 5개</Text>
       </div>
       <FlexBox.Horizontal>
         {selectedStations.map(station => (

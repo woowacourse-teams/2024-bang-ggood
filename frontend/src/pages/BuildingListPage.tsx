@@ -14,23 +14,32 @@ import BuildingFilterModal from '@/components/Building/BuildingFilterModal/Build
 import BuildingListSearchBar from '@/components/Building/BuildingListSearchBar';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { useGetBuildingListQuery } from '@/hooks/query/useGetBuildingListQuery';
+import useModal from '@/hooks/useModal';
 import theme from '@/styles/theme';
 
 function BuildingListPage() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [stationsFilter, setStationsFilter] = useState<string[]>([]);
   const {
     data: buildings,
     isPending,
     isError,
   } = useGetBuildingListQuery({
     search: searchTerm,
+    stations: stationsFilter,
   });
+
+  const { isModalOpen, openModal, closeModal } = useModal();
   const buildingCount = buildings?.totalElements;
 
   return (
     <>
       <BuildingFilterModal
-        isOpen={true}
+        onConfirm={selectedStations => {
+          setStationsFilter(selectedStations.map(station => station.station));
+        }}
+        isOpen={isModalOpen}
+        onClose={closeModal}
         onFilter={filter => {
           setSearchTerm(filter.search);
         }}
@@ -43,7 +52,7 @@ function BuildingListPage() {
       <S.Splitter />
       <S.Row>
         <Text color={color => color.gray[600]} typography={theme => theme.body[1].B}>
-          <Button label="지하철 필터" />
+          <Button label="지하철 필터" onClick={openModal} />
         </Text>
         {!isError && !isPending && (
           <FlexBox.Horizontal gap="0" margin="1rem 0 0">

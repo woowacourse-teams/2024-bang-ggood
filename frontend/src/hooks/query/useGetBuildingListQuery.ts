@@ -5,11 +5,12 @@ import { QUERY_KEYS } from '@/constants/queryKeys';
 import { PaginationParams } from '@/types/api';
 
 export const useGetBuildingListQuery = (
-  searchParams: { search?: string } = {},
+  searchParams: { search?: string; stations?: string[] } = {},
   pageParams: PaginationParams = { page: 1, size: 20 },
 ) => {
+  const stations = searchParams.stations?.join(',');
   return useQuery({
     queryKey: [QUERY_KEYS.BUILDING_LIST, searchParams, pageParams],
-    queryFn: () => getBuildingList(searchParams, pageParams),
+    queryFn: () => getBuildingList({ ...searchParams, stations }, pageParams),
   });
 };

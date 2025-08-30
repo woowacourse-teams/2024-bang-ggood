@@ -6,7 +6,6 @@ import com.bang_ggood.contract.domain.OccupancyPeriod;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.room.RoomFixture;
-import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.user.UserFixture;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

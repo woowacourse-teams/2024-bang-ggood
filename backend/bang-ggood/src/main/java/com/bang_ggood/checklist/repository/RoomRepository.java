@@ -1,6 +1,5 @@
-package com.bang_ggood.room.repository;
+package com.bang_ggood.checklist.repository;
 
-import com.bang_ggood.room.domain.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

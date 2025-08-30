@@ -1,5 +1,6 @@
 package com.bang_ggood.room.domain;
 
+import com.bang_ggood.checklist.domain.Structure;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import org.junit.jupiter.api.DisplayName;

@@ -1,8 +1,8 @@
 package com.bang_ggood.room.repository;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.checklist.repository.RoomRepository;
 import com.bang_ggood.room.RoomFixture;
-import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;

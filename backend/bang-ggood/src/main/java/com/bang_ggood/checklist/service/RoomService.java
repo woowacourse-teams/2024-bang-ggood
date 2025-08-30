@@ -1,7 +1,6 @@
-package com.bang_ggood.room.service;
+package com.bang_ggood.checklist.service;
 
-import com.bang_ggood.room.domain.Room;
-import com.bang_ggood.room.repository.RoomRepository;
+import com.bang_ggood.checklist.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

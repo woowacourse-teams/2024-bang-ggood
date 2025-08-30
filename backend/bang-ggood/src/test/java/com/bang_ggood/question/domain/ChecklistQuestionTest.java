@@ -5,7 +5,6 @@ import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.question.ChecklistQuestionFixture;
 import com.bang_ggood.question.QuestionFixture;
 import com.bang_ggood.room.RoomFixture;
-import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import org.junit.jupiter.api.DisplayName;

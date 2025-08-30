@@ -7,8 +7,6 @@ import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.room.RoomFixture;
-import com.bang_ggood.room.domain.Room;
-import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;

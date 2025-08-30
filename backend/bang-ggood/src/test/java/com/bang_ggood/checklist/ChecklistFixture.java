@@ -12,7 +12,6 @@ import com.bang_ggood.option.domain.Option;
 import com.bang_ggood.question.QuestionFixture;
 import com.bang_ggood.question.dto.request.QuestionRequest;
 import com.bang_ggood.room.RoomFixture;
-import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import java.util.List;

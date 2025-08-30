@@ -1,8 +1,7 @@
-package com.bang_ggood.room.dto.request;
+package com.bang_ggood.checklist.dto.request;
 
-import com.bang_ggood.room.domain.FloorLevel;
-import com.bang_ggood.room.domain.Room;
-import com.bang_ggood.room.domain.Structure;
+import com.bang_ggood.checklist.domain.FloorLevel;
+import com.bang_ggood.checklist.domain.Structure;
 import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 

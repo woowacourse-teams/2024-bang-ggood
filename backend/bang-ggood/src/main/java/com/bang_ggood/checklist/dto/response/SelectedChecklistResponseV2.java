@@ -13,7 +13,8 @@ public record SelectedChecklistResponseV2(List<ChecklistImageResponse> images,
                                           boolean isLiked,
                                           List<SubwayStationResponse> stations) {
 
-    public static SelectedChecklistResponseV2 of(List<ChecklistImageResponse> images, SelectedRoomResponse room, List<SelectedOptionResponse> options,
+    public static SelectedChecklistResponseV2 of(List<ChecklistImageResponse> images, SelectedRoomResponse room,
+                                                 List<SelectedOptionResponse> options,
                                                  List<SelectedCategoryQuestionsResponse> categories, boolean isLiked,
                                                  SubwayStationResponses stations) {
         return new SelectedChecklistResponseV2(images, SelectedRoomResponseV1.from(room), options,

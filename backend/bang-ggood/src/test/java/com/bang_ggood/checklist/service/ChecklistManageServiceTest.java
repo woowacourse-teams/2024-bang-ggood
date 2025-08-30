@@ -6,6 +6,7 @@ import com.bang_ggood.checklist.ChecklistImageFixture;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistImage;
 import com.bang_ggood.checklist.domain.ChecklistShare;
+import com.bang_ggood.checklist.domain.Structure;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
@@ -17,13 +18,12 @@ import com.bang_ggood.checklist.dto.response.SelectedChecklistResponseV2;
 import com.bang_ggood.checklist.repository.ChecklistImageRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.repository.ChecklistShareRepository;
+import com.bang_ggood.checklist.repository.RoomRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.like.service.ChecklistLikeManageService;
 import com.bang_ggood.room.RoomFixture;
-import com.bang_ggood.checklist.domain.Structure;
-import com.bang_ggood.checklist.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -338,6 +338,7 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         assertThat(previewResponse1.checklistId()).isEqualTo(checklistId2); // 최신순으로 조회
         assertThat(previewResponse2.checklistId()).isEqualTo(checklistId1);
     }
+
     @DisplayName("좋아요된 체크리스트 리스트 최신순으로 조회 성공")
     @Test
     void readLikedChecklistsPreview() {

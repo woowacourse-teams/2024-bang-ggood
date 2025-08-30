@@ -10,7 +10,8 @@ public record ChecklistPreviewResponseV2(
         Integer deposit, Integer rent, LocalDateTime createdAt,
         String summary, boolean isLiked) {
 
-    public static ChecklistPreviewResponseV2 of(Checklist checklist, String thumbnailImageUrl, SubwayStationResponse station, boolean isLiked) {
+    public static ChecklistPreviewResponseV2 of(Checklist checklist, String thumbnailImageUrl,
+                                                SubwayStationResponse station, boolean isLiked) {
         return new ChecklistPreviewResponseV2(
                 checklist.getId(),
                 thumbnailImageUrl,

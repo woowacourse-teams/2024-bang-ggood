@@ -22,7 +22,7 @@ public class Building extends BaseEntity {
 
     private String address;
 
-    private String buildingName;
+    private String name;
 
     private String station;
 
@@ -32,10 +32,10 @@ public class Building extends BaseEntity {
 
     private Double longitude;
 
-    public Building(String address, String buildingName, String station, Integer walkingTime, Double latitude,
+    public Building(String address, String name, String station, Integer walkingTime, Double latitude,
                     Double longitude) {
         this.address = address;
-        this.buildingName = buildingName;
+        this.name = name;
         this.station = station;
         this.walkingTime = walkingTime;
         this.latitude = latitude;
@@ -52,7 +52,7 @@ public class Building extends BaseEntity {
         }
         Building building = (Building) o;
         return Objects.equals(id, building.id) && Objects.equals(address, building.address)
-                && Objects.equals(buildingName, building.buildingName) && Objects.equals(station,
+                && Objects.equals(name, building.name) && Objects.equals(station,
                 building.station) && Objects.equals(walkingTime, building.walkingTime)
                 && Objects.equals(latitude, building.latitude) && Objects.equals(longitude,
                 building.longitude);
@@ -60,7 +60,7 @@ public class Building extends BaseEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, address, buildingName, station, walkingTime, latitude, longitude);
+        return Objects.hash(id, address, name, station, walkingTime, latitude, longitude);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class Building extends BaseEntity {
         return "Building{" +
                 "id=" + id +
                 ", address='" + address + '\'' +
-                ", buildingName='" + buildingName + '\'' +
+                ", name='" + name + '\'' +
                 ", station='" + station + '\'' +
                 ", walkingTime=" + walkingTime +
                 ", latitude=" + latitude +

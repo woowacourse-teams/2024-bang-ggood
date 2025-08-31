@@ -1,5 +1,6 @@
 package com.bang_ggood.checklist.service;
 
+import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistImage;
 import com.bang_ggood.checklist.domain.ChecklistShare;
@@ -54,7 +55,7 @@ public class ChecklistManageService {
 
     private static final int CHECKLIST_COMPARE_COUNT = 2;
 
-    private final RoomService roomService;
+    private final BuildingService buildingService;
     private final ChecklistService checklistService;
     private final ChecklistOptionService checklistOptionService;
     private final ChecklistQuestionService checklistQuestionService;
@@ -67,8 +68,8 @@ public class ChecklistManageService {
 
     @Transactional
     public Long createChecklist(User user, ChecklistRequest checklistRequest) {
-        Room room = roomService.createRoom(checklistRequest.toRoomEntity());
-        Checklist checklist = checklistService.createChecklist(checklistRequest.toChecklistEntity(room, user));
+        Building building = buildingService.createOrFindBuilding(checklistRequest.toBuildingEntity());
+        Checklist checklist = checklistService.createChecklist(checklistRequest.toChecklistEntity(user, building));
         createChecklistOptions(checklistRequest.options(), checklist);
         createChecklistQuestions(checklistRequest.questions(), checklist);
         createChecklistMaintenances(checklistRequest.room(), checklist);
@@ -78,8 +79,8 @@ public class ChecklistManageService {
 
     @Transactional
     public Long createChecklistV2(User user, ChecklistRequest checklistRequest, List<MultipartFile> images) {
-        Room room = roomService.createRoom(checklistRequest.toRoomEntity());
-        Checklist checklist = checklistService.createChecklist(checklistRequest.toChecklistEntity(room, user));
+        Building building = buildingService.createOrFindBuilding(checklistRequest.toBuildingEntity());
+        Checklist checklist = checklistService.createChecklist(checklistRequest.toChecklistEntity(user, building));
         createChecklistOptions(checklistRequest.options(), checklist);
         createChecklistQuestions(checklistRequest.questions(), checklist);
         createChecklistMaintenances(checklistRequest.room(), checklist);
@@ -279,7 +280,6 @@ public class ChecklistManageService {
         checklistOptionService.deleteAllByChecklistId(checklist.getId());
         checklistMaintenanceService.deleteAllByChecklistId(checklist.getId());
         checklistService.deleteById(id);
-        roomService.deleteById(checklist.getRoomId());
         checklistStationService.deleteChecklistStation(checklist.getId());
         checklistLikeService.deleteLike(user, checklist);
         checklistShareService.deleteChecklistShare(checklist);
@@ -337,9 +337,8 @@ public class ChecklistManageService {
     @Transactional
     public void updateChecklistById(User user, Long checklistId, ChecklistRequest checklistRequest) {
         Checklist checklist = checklistService.readChecklist(user, checklistId);
-
-        roomService.updateRoom(checklist.getRoom(), checklistRequest.toRoomEntity());
-        checklistService.updateChecklist(checklist, checklistRequest.toChecklistEntity(checklist.getRoom(), user));
+        Building building = buildingService.createOrFindBuilding(checklistRequest.toBuildingEntity());
+        checklistService.updateChecklist(checklist, checklistRequest.toChecklistEntity(user, building));
 
         updateChecklistOptions(checklistRequest, checklist);
         updateChecklistQuestions(checklistRequest, checklist);
@@ -351,9 +350,8 @@ public class ChecklistManageService {
     public void updateChecklistByIdV2(User user, long checklistId, ChecklistRequest checklistRequest,
                                       List<MultipartFile> updateImages) {
         Checklist checklist = checklistService.readChecklist(user, checklistId);
-
-        roomService.updateRoom(checklist.getRoom(), checklistRequest.toRoomEntity());
-        checklistService.updateChecklist(checklist, checklistRequest.toChecklistEntity(checklist.getRoom(), user));
+        Building building = buildingService.createOrFindBuilding(checklistRequest.toBuildingEntity());
+        checklistService.updateChecklist(checklist, checklistRequest.toChecklistEntity(user, building));
 
         updateChecklistOptions(checklistRequest, checklist);
         updateChecklistQuestions(checklistRequest, checklist);
@@ -370,7 +368,7 @@ public class ChecklistManageService {
     }
 
     private void updateChecklistQuestions(ChecklistRequest checklistRequest, Checklist checklist) {
-        List<ChecklistQuestion> questions = checklist.getQuestions();
+        List<ChecklistQuestion> questions = checklistQuestionService.readChecklistQuestions(checklist);
         List<ChecklistQuestion> updateQuestions = checklistRequest.questions().stream()
                 .map(question -> new ChecklistQuestion(
                         checklist,

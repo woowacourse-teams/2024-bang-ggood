@@ -80,7 +80,7 @@ const SendVerificationEmailStep = ({ onNext }: Props) => {
             label="다음"
             size="full"
             isSquare={true}
-            color={'dark'}
+            color="dark"
             onClick={handleClickNext}
             disabled={!canMove}
             style={{ marginTop: '3rem' }}

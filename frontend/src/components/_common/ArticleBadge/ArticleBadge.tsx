@@ -1,6 +1,7 @@
+import styled from '@emotion/styled';
+
 import { ArticleType } from '@/types/article';
 import { fontStyle } from '@/utils/fontStyle';
-import styled from '@emotion/styled';
 
 type ArticleColor = { text: string; bgColor: string };
 const ARTICLE_TYPE_COLOR: Record<ArticleType, ArticleColor> = {

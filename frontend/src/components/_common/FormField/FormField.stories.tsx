@@ -20,7 +20,7 @@ export const Primary: Story = {
       setValue(event.target.value);
     };
     return (
-      <FormField key={''}>
+      <FormField key="">
         <FormField.Label label="입력 내용" required={true} />
         <FormField.Input value={value} width="full" placeholder="" onChange={handleChange} />
       </FormField>

@@ -21,7 +21,7 @@ const FourthSection = () => {
         보기 쉽게 정리했어요
       </CS.Title>
 
-      <img src={articleScreen} width={'100%'} />
+      <img src={articleScreen} width="100%" />
 
       <CS.MoveUpDownAnimationBox>
         <ScrollArrow aria-label="스크롤로 하단의 정보를 확인할 수 있어요" />

@@ -4,11 +4,14 @@ import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
 import { flexCenter } from '@/styles/common';
 import { fontStyle } from '@/utils/fontStyle';
 
-interface StyledProps extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
-  $color?: 'string';
+interface StyledProps {
+  $width: string;
+  $height: string;
+  $color?: string;
   $borderRadius: string;
   $transparent: boolean;
 }
+
 const widthSize: Record<string, string> = {
   small: '4.5rem',
   medium: '11rem',
@@ -23,15 +26,16 @@ const heightSize: Record<string, string> = {
   full: '100%',
 };
 
-interface Props extends React.TextareaHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
+interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   width?: keyof typeof widthSize;
   height?: keyof typeof heightSize;
   borderRadius?: string;
   hasBorder?: boolean;
   transparent?: boolean;
+  name?: string;
 }
 
-export type TextareaChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
+export type TextareaChangeEvent = ChangeEvent<HTMLTextAreaElement>;
 
 const Textarea = ({
   width = 'full',
@@ -40,6 +44,7 @@ const Textarea = ({
   borderRadius = '.5rem',
   hasBorder = false,
   transparent = false,
+  name = 'text',
   ...rest
 }: Props) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -64,17 +69,21 @@ const Textarea = ({
   return (
     <S.Box hasBorder={hasBorder}>
       <S.Textarea
+        name={name}
         ref={textareaRef}
-        width={widthSize[width]}
-        height={heightSize[height]}
+        $width={widthSize[width]}
+        $height={heightSize[height]}
         {...rest}
         onChange={handleChange}
         $borderRadius={borderRadius}
         $transparent={transparent}
+        spellCheck={false}
       />
     </S.Box>
   );
 };
+
+export default Textarea;
 
 const S = {
   Box: styled.div<{ hasBorder: boolean }>`
@@ -82,13 +91,13 @@ const S = {
     border-radius: 0.5rem;
   `,
   Textarea: styled.textarea<StyledProps>`
-    ${({ width }) => width && `width: ${width};`};
-    ${({ height }) => height && `height: ${height};`};
+    ${({ $width }) => $width && `width: ${$width};`};
+    ${({ $height }) => $height && `height: ${$height};`};
     padding: 0.6rem 1.1rem;
 
     background-color: ${({ theme, $transparent }) => ($transparent ? 'transparent' : theme.color.mono.white)};
 
-    color: ${({ $color, theme }) => ($color ? $color : theme.color.secondary[600])};
+    color: ${({ $color, theme }) => ($color ? $color : theme.color.mono.black)};
     outline-color: ${({ theme }) => theme.color.gray[300]};
     ${({ theme }) => fontStyle(theme.font.body[1].R)}
     ${flexCenter}
@@ -96,4 +105,3 @@ const S = {
     border-radius: ${({ $borderRadius }) => $borderRadius && $borderRadius};
   `,
 };
-export default Textarea;

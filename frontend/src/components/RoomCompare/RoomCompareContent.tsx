@@ -79,12 +79,12 @@ const RoomCompareContent = () => {
       <S.RoomGrid>
         <S.TitleFlex>
           <S.RoomTitle>
-            <Marker isCircle={true} size={'medium'} color={theme.palette.yellow500} text={'A'} />
+            <Marker isCircle={true} size="medium" color={theme.palette.yellow500} text="A" />
             <S.Title key={rooms[0].checklistId}>{rooms[0].roomName}</S.Title>
           </S.RoomTitle>
 
           <S.RoomTitle>
-            <Marker isCircle={true} size={'medium'} color={theme.palette.green500} text={'B'} />
+            <Marker isCircle={true} size="medium" color={theme.palette.green500} text="B" />
             <S.Title key={rooms[1].checklistId}>{rooms[1].roomName}</S.Title>
           </S.RoomTitle>
         </S.TitleFlex>
@@ -151,6 +151,7 @@ const S = {
     border-radius: 0.8rem;
   `,
   MapGrid: styled.div`
+    margin-bottom: 1.6rem;
     padding: 0 1.6rem;
   `,
   RoomCompareGrid: styled.div`

@@ -25,7 +25,7 @@ const AdminPage = () => {
         <S.QuestionText>아티클을 작성하러 오셨나요?</S.QuestionText>
         <S.ButtonWrapper>
           <Link to={ROUTE_PATH.articleListAdmin}>
-            <S.Button color={'red'}>수정하려고 왔습니다</S.Button>
+            <S.Button color="red">수정하려고 왔습니다</S.Button>
           </Link>
           <Link to={ROUTE_PATH.articleNew}>
             <S.Button>추가하려고 왔습니다</S.Button>

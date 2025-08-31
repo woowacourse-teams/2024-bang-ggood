@@ -6,7 +6,7 @@ import { default as fontObj, FontSet } from '@/styles/font';
 import { fontStyle } from '@/utils/fontStyle';
 
 interface Props extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'color'> {
-  typography: (fontObject: typeof fontObj) => FontSet;
+  typography?: (fontObject: typeof fontObj) => FontSet;
   color?: (colorObj: typeof color) => string;
   css?: SerializedStyles;
   children: React.ReactNode;
@@ -14,15 +14,15 @@ interface Props extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'color'> {
 
 function Text({ typography, color, children, css, ...rest }: Props) {
   return (
-    <S.Text fontSet={typography(fontObj)} color={color?.(colorObj) ?? colorObj.mono.black} css={css} {...rest}>
+    <S.Text fontSet={typography?.(fontObj)} color={color?.(colorObj) ?? colorObj.mono.black} css={css} {...rest}>
       {children}
     </S.Text>
   );
 }
 
 const S = {
-  Text: styled.div<{ fontSet: FontSet; color: string; css?: SerializedStyles }>`
-    ${({ fontSet }) => fontStyle(fontSet)}
+  Text: styled.span<{ fontSet?: FontSet; color: string; css?: SerializedStyles }>`
+    ${({ fontSet }) => fontSet && fontStyle(fontSet)}
     color: ${({ color }) => color};
     ${({ css }) => css}
   `,

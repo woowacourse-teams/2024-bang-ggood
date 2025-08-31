@@ -5,6 +5,7 @@ const FooterDefault = () => {
     <Footer>
       <Footer.Home />
       <Footer.Checklist />
+      <Footer.BuildingList />
       <Footer.Article />
       <Footer.Profile />
     </Footer>

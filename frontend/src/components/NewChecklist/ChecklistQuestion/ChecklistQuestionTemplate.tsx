@@ -35,7 +35,7 @@ const ChecklistQuestionTemplate = () => {
                 <ChecklistQuestionItem
                   key={`${currentTabId}-${question.questionId}`}
                   question={question}
-                  width={'80%'}
+                  width="80%"
                 />
                 <ChecklistQuestionAnswers title={question.title} answer={answer} questionId={question.questionId} />
               </S.QuestionBox>

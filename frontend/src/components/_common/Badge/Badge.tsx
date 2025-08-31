@@ -8,7 +8,7 @@ type BadgeSize = 'short' | 'long' | 'button';
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: BadgeSize;
-  label: string;
+  label: React.ReactNode;
   isSelected?: boolean;
   name?: string;
 }

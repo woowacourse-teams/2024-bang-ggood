@@ -29,6 +29,7 @@ import FaceBadIcon from '@/assets/icons/faceIcon/face-icon-bad.svg';
 import KakaoLogoIcon from '@/assets/icons/kakao/kakao-logo.svg';
 // map
 import LocationIcon from '@/assets/icons/map/location.svg';
+import MapLogoIcon from '@/assets/icons/map/map-logo.svg';
 import SearchIcon from '@/assets/icons/map/search.svg';
 // mascot
 import BangBangIcon3DUrl from '@/assets/icons/mascot/3D-bang-bang-icon.png';
@@ -93,6 +94,7 @@ export {
   LampIcon,
   LocationIcon,
   LocationLineIcon,
+  MapLogoIcon,
   MemoIcon,
   Options,
   Pencil,

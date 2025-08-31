@@ -127,7 +127,7 @@ const SignUpPage = () => {
             label="회원가입 하기"
             size="full"
             isSquare={true}
-            color={'dark'}
+            color="dark"
             onClick={handleSubmit}
             disabled={disabled}
           />

@@ -5,15 +5,16 @@ import useGetAllChecklistQuestionQuery from '@/hooks/query/useGetAllChecklistQue
 import useTabs from '@/hooks/useTabs';
 
 export const ChecklistQuestionSelectTabs = () => {
-  const { data: checklistQuestions, isSuccess } = useGetAllChecklistQuestionQuery();
+  const { data, isSuccess } = useGetAllChecklistQuestionQuery();
+  const defaultCategories = data?.defaultCategories;
   const { getTabs } = useTabs();
 
   const selectTabs = useMemo(() => {
-    if (isSuccess && checklistQuestions) {
-      return getTabs(checklistQuestions);
+    if (isSuccess && defaultCategories) {
+      return getTabs(defaultCategories);
     }
     return [];
-  }, [isSuccess, checklistQuestions, getTabs]);
+  }, [isSuccess, defaultCategories, getTabs]);
 
   return (
     <Suspense>

@@ -20,7 +20,7 @@ const MemoModal = ({ isModalOpen, modalClose }: Props) => {
   const memo = useRoomInfoValidated('memo');
   const { value: memoValue, onChange } = useInput<string>(memo.rawValue || '');
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     onChange(e);
     if (intervalRef.current !== undefined) {
       clearTimeout(intervalRef.current);
@@ -62,14 +62,15 @@ const MemoModal = ({ isModalOpen, modalClose }: Props) => {
               <CloseIcon />
             </S.IconButton>
           </S.ButtonWrapper>
+
           <S.TextareaBox>
             <Textarea
               placeholder="메모를 입력하세요."
-              height={'large'}
+              height="large"
               value={memoValue}
               onChange={handleInputChange}
               onBlur={handleBlur}
-              transparent={true}
+              transparent
             />
           </S.TextareaBox>
         </S.Container>
@@ -96,6 +97,7 @@ const S = {
   `,
   IconButton: styled.div`
     padding: 1.6rem;
+    cursor: pointer;
   `,
   TextareaBox: styled.div`
     position: relative;

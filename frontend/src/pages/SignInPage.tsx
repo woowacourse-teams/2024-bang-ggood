@@ -88,7 +88,7 @@ const SignInPage = () => {
         <Button
           label="로그인 하기"
           size="full"
-          color={'dark'}
+          color="dark"
           onClick={handleSubmit}
           disabled={disabled}
           style={{ marginTop: '3rem', marginBottom: '4.6rem' }}

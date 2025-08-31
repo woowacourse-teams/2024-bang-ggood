@@ -4,7 +4,7 @@ import Bad from '@/assets/icons/answer/bad';
 import Good from '@/assets/icons/answer/good';
 import Modal from '@/components/_common/Modal/Modal';
 import { OptionDetail } from '@/pages/RoomComparePage';
-import { flexCenter, flexSpaceBetween, omitText } from '@/styles/common';
+import { flexCenter, flexSpaceBetween } from '@/styles/common';
 import theme from '@/styles/theme';
 import { fontStyle } from '@/utils/fontStyle';
 
@@ -33,16 +33,16 @@ const OptionDetailModal = ({ roomTitle1, roomTitle2, isOpen, closeModal, hasOpti
                 <S.ItemName>{optionName}</S.ItemName>
                 <S.Item>
                   {hasOption[0] ? (
-                    <Good width={'1.6rem'} color={theme.palette.green600} />
+                    <Good width="1.6rem" color={theme.palette.green600} />
                   ) : (
-                    <Bad width={'1.6rem'} color={theme.palette.red600} />
+                    <Bad width="1.6rem" color={theme.palette.red600} />
                   )}
                 </S.Item>
                 <S.Item>
                   {hasOption[1] ? (
-                    <Good width={'1.6rem'} color={theme.palette.green600} />
+                    <Good width="1.6rem" color={theme.palette.green600} />
                   ) : (
-                    <Bad width={'1.6rem'} color={theme.palette.red600} />
+                    <Bad width="1.6rem" color={theme.palette.red600} />
                   )}
                 </S.Item>
               </>

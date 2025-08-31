@@ -1,12 +1,13 @@
 package com.bang_ggood.maintenance.repository;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.repository.BuildingRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
-import com.bang_ggood.checklist.repository.RoomRepository;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
-import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -28,7 +29,7 @@ class ChecklistMaintenanceRepositoryTest extends IntegrationTestSupport {
     private UserRepository userRepository;
 
     @Autowired
-    private RoomRepository roomRepository;
+    private BuildingRepository buildingRepository;
 
     @Autowired
     private ChecklistMaintenanceRepository checklistMaintenanceRepository;
@@ -37,9 +38,10 @@ class ChecklistMaintenanceRepositoryTest extends IntegrationTestSupport {
     @Test
     void findAllByChecklist() {
         // given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
+
         ChecklistMaintenance saved1 = checklistMaintenanceRepository.save(
                 ChecklistFixture.CHECKLIST1_INCLUDED_MAINTENANCE_1(checklist));
         ChecklistMaintenance saved2 = checklistMaintenanceRepository.save(
@@ -57,16 +59,17 @@ class ChecklistMaintenanceRepositoryTest extends IntegrationTestSupport {
     @Test
     void findAllByChecklist_() {
         // given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
+
         checklistMaintenanceRepository.save(ChecklistFixture.CHECKLIST1_INCLUDED_MAINTENANCE_1(checklist));
         checklistMaintenanceRepository.save(ChecklistFixture.CHECKLIST1_INCLUDED_MAINTENANCE_2(checklist));
-        checklistMaintenanceRepository.deleteAllByChecklistId(ChecklistFixture.CHECKLIST1_USER1(room, user).getId());
+        checklistMaintenanceRepository.deleteAllByChecklistId(ChecklistFixture.CHECKLIST1_USER1(user, building).getId());
 
         // when
         List<ChecklistMaintenance> checklistMaintenances = checklistMaintenanceRepository
-                .findAllByChecklistId(ChecklistFixture.CHECKLIST1_USER1(room, user).getId());
+                .findAllByChecklistId(ChecklistFixture.CHECKLIST1_USER1(user, building).getId());
 
         // then
         Assertions.assertThat(checklistMaintenances).isEmpty();
@@ -76,9 +79,10 @@ class ChecklistMaintenanceRepositoryTest extends IntegrationTestSupport {
     @Test
     void deleteById() {
         //given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
+
         ChecklistMaintenance saved1 = checklistMaintenanceRepository.save(
                 ChecklistFixture.CHECKLIST1_INCLUDED_MAINTENANCE_1(checklist));
         ChecklistMaintenance saved2 = checklistMaintenanceRepository.save(

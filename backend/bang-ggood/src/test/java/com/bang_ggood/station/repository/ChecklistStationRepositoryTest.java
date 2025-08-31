@@ -1,11 +1,13 @@
 package com.bang_ggood.station.repository;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.repository.BuildingRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
-import com.bang_ggood.checklist.repository.RoomRepository;
-import com.bang_ggood.room.RoomFixture;
+import com.bang_ggood.checklist.RoomFixture;
 import com.bang_ggood.station.domain.ChecklistStation;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
@@ -21,26 +23,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ChecklistStationRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
-    RoomRepository roomRepository;
+    private BuildingRepository buildingRepository;
 
     @Autowired
-    ChecklistRepository checklistRepository;
+    private ChecklistRepository checklistRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    ChecklistStationRepository checklistStationRepository;
+    private ChecklistStationRepository checklistStationRepository;
 
-    Room room;
-    User user;
-    Checklist checklist;
+    private User user;
+    private Building building;
+    private Checklist checklist;
 
     @BeforeEach
     void setUp() {
-        room = roomRepository.save(RoomFixture.ROOM_1());
         user = userRepository.save(UserFixture.USER1());
-        checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
     }
 
     @DisplayName("체크리스트 아이디를 통한 조회 성공")

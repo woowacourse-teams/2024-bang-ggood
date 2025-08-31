@@ -1,17 +1,18 @@
 package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.ChecklistImageFixture;
+import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistImage;
+import com.bang_ggood.checklist.repository.BuildingRepository;
 import com.bang_ggood.checklist.repository.ChecklistImageRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
-import com.bang_ggood.checklist.repository.RoomRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.global.storage.AwsS3Folder;
-import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -42,7 +43,7 @@ class ChecklistImageServiceTest extends IntegrationTestSupport {
     private ChecklistRepository checklistRepository;
 
     @Autowired
-    private RoomRepository roomRepository;
+    private BuildingRepository buildingRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -55,8 +56,8 @@ class ChecklistImageServiceTest extends IntegrationTestSupport {
     @BeforeEach
     void beforeEach() {
         User user = userRepository.save(UserFixture.USER1());
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
-        checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
     }
 
     @DisplayName("체크리스트 이미지 저장 성공")

@@ -1,17 +1,18 @@
 package com.bang_ggood.question.repository;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.repository.BuildingRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
-import com.bang_ggood.checklist.repository.RoomRepository;
 import com.bang_ggood.question.ChecklistQuestionFixture;
 import com.bang_ggood.question.QuestionFixture;
 import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
-import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -34,20 +35,20 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
     private UserRepository userRepository;
 
     @Autowired
-    private RoomRepository roomRepository;
+    private BuildingRepository buildingRepository;
 
     @Autowired
     private ChecklistQuestionRepository checklistQuestionRepository;
 
-    private Room room;
     private User user;
+    private Building building;
     private Checklist checklist;
 
     @BeforeEach
     void beforeEach() {
-        room = roomRepository.save(RoomFixture.ROOM_1());
         user = userRepository.save(UserFixture.USER1());
-        checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
     }
 
     @DisplayName("질문 답변을 체크리스트 ID로 조회 성공")

@@ -1,13 +1,14 @@
 package com.bang_ggood.like.service;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.repository.BuildingRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
-import com.bang_ggood.checklist.repository.RoomRepository;
 import com.bang_ggood.like.domain.ChecklistLike;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
-import com.bang_ggood.room.RoomFixture;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -33,15 +34,15 @@ class ChecklistLikeManageServiceTest extends IntegrationTestSupport {
     private UserRepository userRepository;
 
     @Autowired
-    private RoomRepository roomRepository;
+    private BuildingRepository buildingRepository;
 
     @DisplayName("체크리스트 좋아요 추가 성공")
     @Test
     void createChecklistLike() {
         //given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
 
         // when
         checklistLikeManageService.createLike(user, checklist.getId());
@@ -54,9 +55,9 @@ class ChecklistLikeManageServiceTest extends IntegrationTestSupport {
     @Test
     void createChecklistLike_checklistAlreadyLiked() {
         //given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
 
         // when
         checklistLikeManageService.createLike(user, checklist.getId());
@@ -69,9 +70,9 @@ class ChecklistLikeManageServiceTest extends IntegrationTestSupport {
     @Test
     void deleteChecklistLikeByChecklistId() {
         // given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
         ChecklistLike checklistLike = checklistLikeRepository.save(ChecklistFixture.CHECKLIST1_LIKE(checklist));
 
         // when
@@ -84,10 +85,10 @@ class ChecklistLikeManageServiceTest extends IntegrationTestSupport {
     @DisplayName("체크리스트 좋아요 삭제 시도 : 체크리스트 좋아요가 없는 경우")
     @Test
     void deleteChecklistLikeByChecklistId_notFound() {
-        // given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        // given-
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
 
         // when & then
         assertThatCode(() -> checklistLikeManageService.deleteLike(user, checklist.getId()))

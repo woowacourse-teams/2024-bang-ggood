@@ -1,11 +1,12 @@
 package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistShare;
-import com.bang_ggood.checklist.repository.RoomRepository;
-import com.bang_ggood.room.RoomFixture;
+import com.bang_ggood.checklist.repository.BuildingRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -25,7 +26,7 @@ class ChecklistShareServiceTest extends IntegrationTestSupport {
     private ChecklistService checklistService;
 
     @Autowired
-    private RoomRepository roomRepository;
+    private BuildingRepository buildingRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -34,9 +35,9 @@ class ChecklistShareServiceTest extends IntegrationTestSupport {
     @Test
     void createChecklistShare() {
         //given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = ChecklistFixture.CHECKLIST1_USER1(room, user);
+        Checklist checklist = ChecklistFixture.CHECKLIST1_USER1(user, building);
         Checklist savedChecklist = checklistService.createChecklist(checklist);
 
         //when
@@ -53,9 +54,9 @@ class ChecklistShareServiceTest extends IntegrationTestSupport {
     @Test
     void createChecklistShare_alreadyExist() {
         //given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = ChecklistFixture.CHECKLIST1_USER1(room, user);
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = ChecklistFixture.CHECKLIST1_USER1(user, building);
         Checklist savedChecklist = checklistService.createChecklist(checklist);
 
         //when

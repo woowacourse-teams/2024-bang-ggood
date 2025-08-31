@@ -84,7 +84,7 @@ export const checklistAllQuestions: { defaultCategories: ChecklistCategoryWithIs
       categoryName: '창문',
       questions: [
         {
-          questionId: 1,
+          questionId: 11,
           title: '지하철 역이 가깝나요?',
           subtitle: '주변 지도를 참고해 보세요.',
           highlights: [],

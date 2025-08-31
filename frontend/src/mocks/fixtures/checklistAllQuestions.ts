@@ -1,7 +1,7 @@
 import { ChecklistCategoryWithIsSelected } from '@/types/checklist';
 
-export const checklistAllQuestions: { categories: ChecklistCategoryWithIsSelected[] } = {
-  categories: [
+export const checklistAllQuestions: { defaultCategories: ChecklistCategoryWithIsSelected[] } = {
+  defaultCategories: [
     {
       categoryId: 1,
       categoryName: '보안',

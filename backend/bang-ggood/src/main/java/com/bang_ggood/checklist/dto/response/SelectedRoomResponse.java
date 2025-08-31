@@ -13,12 +13,12 @@ public record SelectedRoomResponse(String roomName, Integer deposit, Integer ren
                                    LocalDateTime createdAt) {
 
     public static SelectedRoomResponse of(Checklist checklist, List<Integer> includedMaintenances) {
-        return new SelectedRoomResponse(checklist.getRoomName(), checklist.getDeposit(), checklist.getRent(),
-                checklist.getContractTerm(), checklist.getRoomFloor(), checklist.getRoomAddress(),
-                checklist.getRoomBuildingName(),
-                checklist.getRoomStation(), checklist.getRoomWalkingTime(), checklist.getRealEstate(),
-                checklist.getRoomSize(), checklist.getRoomFloorLevel().getName(),
-                checklist.getRoomStructure().getName(), checklist.getOccupancyMonth(), checklist.getOccupancyPeriod(),
+        return new SelectedRoomResponse(checklist.getName(), checklist.getDeposit(), checklist.getRent(),
+                checklist.getContractTerm(), checklist.getFloor(), checklist.getBuildingAddress(),
+                checklist.getBuildingName(),
+                checklist.getBuildingStation(), checklist.getBuildingWalkingTime(), checklist.getRealEstate(),
+                checklist.getSize(), checklist.getFloorLevel().getName(),
+                checklist.getStructure().getName(), checklist.getOccupancyMonth(), checklist.getOccupancyPeriod(),
                 checklist.getMemo(), checklist.getSummary(), includedMaintenances, checklist.getMaintenanceFee(),
                 checklist.getCreatedAt());
     }

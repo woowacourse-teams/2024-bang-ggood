@@ -27,10 +27,10 @@ public record ChecklistCompareResponse(
                                               List<ChecklistMaintenance> maintenances,
                                               CategoryScoreResponses categories) {
         return new ChecklistCompareResponse(
-                checklist.getId(), checklist.getRoomName(), checklist.getRoomAddress(), checklist.getRoomBuildingName(),
-                checklist.getRoomLatitude(), checklist.getRoomLongitude(),
-                convertToOptionIds(options), checklist.getRoomStructure().getName(), checklist.getRoomSize(),
-                checklist.getRoomFloorLevel().getName(), checklist.getRoomFloor(),
+                checklist.getId(), checklist.getName(), checklist.getBuildingAddress(), checklist.getBuildingName(),
+                checklist.getBuildingLatitude(), checklist.getBuildingLongitude(),
+                convertToOptionIds(options), checklist.getStructure().getName(), checklist.getSize(),
+                checklist.getFloorLevel().getName(), checklist.getFloor(),
                 convertToSubwayStationResponses(stations),
                 checklist.getDeposit(), checklist.getRent(),
                 checklist.getMaintenanceFee(), convertToMaintenancesIds(maintenances),

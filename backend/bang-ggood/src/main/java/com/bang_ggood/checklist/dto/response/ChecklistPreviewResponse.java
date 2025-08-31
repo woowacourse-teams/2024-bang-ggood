@@ -1,5 +1,6 @@
 package com.bang_ggood.checklist.dto.response;
 
+import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.station.dto.response.SubwayStationResponse;
 import java.time.LocalDateTime;
@@ -13,11 +14,11 @@ public record ChecklistPreviewResponse(
     public static ChecklistPreviewResponse of(Checklist checklist, SubwayStationResponse station, boolean isLiked) {
         return new ChecklistPreviewResponse(
                 checklist.getId(),
-                checklist.getRoomName(),
-                checklist.getRoomAddress(),
-                checklist.getRoomBuildingName(),
+                checklist.getName(),
+                checklist.getBuildingAddress(),
+                checklist.getBuildingName(),
                 station,
-                checklist.getRoomWalkingTime(),
+                checklist.getBuildingWalkingTime(),
                 checklist.getDeposit(),
                 checklist.getRent(),
                 checklist.getCreatedAt(),

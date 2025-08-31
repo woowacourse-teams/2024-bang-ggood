@@ -1,7 +1,12 @@
 import fetcher from '@/apis/fetcher';
 import { BASE_URL, ENDPOINT } from '@/apis/url';
 import { roomInfoApiMapper } from '@/store/roomInfoStore';
-import { ChecklistInfo, ChecklistPostForm, ChecklistSelectedQuestions } from '@/types/checklist';
+import {
+  ChecklistCategoryWithIsSelected,
+  ChecklistInfo,
+  ChecklistPostForm,
+  ChecklistSelectedQuestions,
+} from '@/types/checklist';
 import { mapObjNullToUndefined } from '@/utils/typeFunctions';
 
 export const getChecklistQuestions = async () => {
@@ -13,8 +18,13 @@ export const getChecklistQuestions = async () => {
 export const getChecklistAllQuestions = async () => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_ALL_QUESTION });
   const data = await response.json();
-  return data.defaultCategories;
+  return data as CustomChecklistCategoriesRes;
 };
+
+export interface CustomChecklistCategoriesRes {
+  defaultCategories: ChecklistCategoryWithIsSelected[];
+  UserCategories: ChecklistCategoryWithIsSelected[];
+}
 
 export const getChecklistDetail = async (id: number) => {
   const response = await fetcher.get({ url: BASE_URL + ENDPOINT.CHECKLIST_ID_V1(id) });

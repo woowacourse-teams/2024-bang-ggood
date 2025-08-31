@@ -32,6 +32,11 @@ export interface ChecklistQuestionWithAnswer extends ChecklistQuestion {
 }
 
 // 체크리스트 커스텀
+export interface CustomChecklistCategoriesRes {
+  defaultCategories: ChecklistCategoryWithIsSelected[];
+  UserCategories: ChecklistCategoryWithIsSelected[];
+}
+
 export interface ChecklistCategoryWithIsSelected extends Category {
   questions: ChecklistQuestionWithIsSelected[];
 }

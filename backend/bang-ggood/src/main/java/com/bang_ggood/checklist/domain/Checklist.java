@@ -74,8 +74,8 @@ public class Checklist extends BaseEntity {
                      Integer deposit, Integer rent, Integer maintenanceFee,
                      Integer contractTerm, OccupancyMonth occupancyMonth, OccupancyPeriod occupancyPeriod,
                      String realEstate, String memo, String summary) {
-        this.building = building;
         this.user = user;
+        this.building = building;
         this.name = name;
         this.floorLevel = floorLevel;
         this.floor = floor;
@@ -99,6 +99,7 @@ public class Checklist extends BaseEntity {
     }
 
     public void change(Checklist updateChecklist) {
+        this.building = updateChecklist.building;
         this.name = updateChecklist.name;
         this.floorLevel = updateChecklist.floorLevel;
         this.floor = updateChecklist.floor;
@@ -124,8 +125,32 @@ public class Checklist extends BaseEntity {
 
     private void validateFloorAndLevel() {
         if (floorLevel != FloorLevel.GROUND && floor != null) {
-            throw new BangggoodException(ExceptionCode.ROOM_FLOOR_AND_LEVEL_INVALID);
+            throw new BangggoodException(ExceptionCode.CHECKLIST_FLOOR_AND_LEVEL_INVALID);
         }
+    }
+
+    public String getBuildingAddress() {
+        return building.getAddress();
+    }
+
+    public String getBuildingName() {
+        return building.getName();
+    }
+
+    public String getBuildingStation() {
+        return building.getStation();
+    }
+
+    public Integer getBuildingWalkingTime() {
+        return building.getWalkingTime();
+    }
+
+    public Double getBuildingLatitude() {
+        return building.getLatitude();
+    }
+
+    public Double getBuildingLongitude() {
+        return building.getLongitude();
     }
 
     public Integer getOccupancyMonth() {

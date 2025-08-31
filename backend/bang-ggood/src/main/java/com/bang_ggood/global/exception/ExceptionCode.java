@@ -54,6 +54,8 @@ public enum ExceptionCode {
     CHECKLIST_NOT_OWNED_BY_USER(HttpStatus.UNAUTHORIZED, ClientExceptionCode.UNAUTH_ERROR, "유저의 체크리스트가 아닙니다."),
     CHECKLIST_COMPARE_INVALID_COUNT(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_COMPARE_ERROR,
             "체크리스트 비교는 2개만 가능합니다."),
+    CHECKLIST_FLOOR_AND_LEVEL_INVALID(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR,
+            "방이 지상층일 경우에만 층수를 입력할 수 있습니다."),
 
     // CustomChecklist
     CUSTOM_CHECKLIST_QUESTION_EMPTY(HttpStatus.BAD_REQUEST, ClientExceptionCode.CUSTOM_ERROR, "커스텀 질문 개수가 유효하지 않습니다."),
@@ -73,10 +75,6 @@ public enum ExceptionCode {
 
     // Structure
     STRUCTURE_INVALID(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR, "방 구조가 유효하지 않습니다."),
-
-    // Room
-    ROOM_FLOOR_AND_LEVEL_INVALID(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR,
-            "방이 지상층일 경우에만 층수를 입력할 수 있습니다."),
 
 
     // OccupancyMonth

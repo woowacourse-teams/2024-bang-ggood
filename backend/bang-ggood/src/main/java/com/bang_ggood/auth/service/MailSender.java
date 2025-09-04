@@ -7,6 +7,7 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
@@ -17,23 +18,17 @@ public class MailSender {
 
     private final JavaMailSender javaMailSender;
 
-    public String sendPasswordResetEmail(String email) {
+    @Async
+    public void sendPasswordResetEmail(String email, String code) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
-            String code = generatePasswordResetCode();
             mimeMessageHelper.setTo(email);
             mimeMessageHelper.setSubject(FIND_PASSWORD_MAIL_SUBJECT);
             mimeMessageHelper.setText(code);
             javaMailSender.send(mimeMessage);
-            return code;
         } catch (MessagingException e) {
             throw new BangggoodException(ExceptionCode.MAIL_SEND_ERROR);
         }
-    }
-
-    private String generatePasswordResetCode() {
-        int code = (int) (Math.random() * 1000000);
-        return String.format("%06d", code);
     }
 }

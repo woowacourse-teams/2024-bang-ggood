@@ -47,7 +47,7 @@ class PasswordResetServiceTest extends IntegrationTestSupport {
         String code = "123456";
         ForgotPasswordRequest request = new ForgotPasswordRequest(email);
         MailSender mailSender = Mockito.mock(MailSender.class);
-        when(mailSender.sendPasswordResetEmail(email)).thenReturn(code);
+        mailSender.sendPasswordResetEmail(email, code);
 
         // when
         passwordResetService.sendPasswordResetEmail(request);

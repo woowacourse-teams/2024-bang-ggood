@@ -28,12 +28,18 @@ public class PasswordResetService {
     private final Clock clock;
     private final UserRepository userRepository;
 
+    @Transactional
     public void sendPasswordResetEmail(ForgotPasswordRequest request) {
-        String code = mailSender.sendPasswordResetEmail(request.email());
+        String code = generatePasswordResetCode();
+        mailSender.sendPasswordResetEmail(request.email(), code);
         passwordResetCodeRepository.deleteByEmail(new Email(request.email()));
         passwordResetCodeRepository.save(new PasswordResetCode(request.email(), code));
     }
 
+    private String generatePasswordResetCode() {
+        int code = (int) (Math.random() * 1000000);
+        return String.format("%06d", code);
+    }
 
     @Transactional
     public void confirmPasswordResetCode(ConfirmPasswordResetCodeRequest request) {

@@ -23,7 +23,7 @@ class MailSenderTest {
         when(javaMailSender.createMimeMessage()).thenReturn(mimeMessage);
 
         // when
-        mailSender.sendPasswordResetEmail(email);
+        mailSender.sendPasswordResetEmail(email, "test");
 
         // then
         verify(javaMailSender, times(1)).send(mimeMessage);

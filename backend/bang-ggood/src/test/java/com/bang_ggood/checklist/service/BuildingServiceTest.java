@@ -52,7 +52,7 @@ class BuildingServiceTest extends IntegrationTestSupport {
         // then
         assertAll(
                 () -> assertThat(result.getId()).isNotNull(),
-                () ->  assertThat(afterCount).isEqualTo(beforeCount + 1)
+                () -> assertThat(afterCount).isEqualTo(beforeCount + 1)
         );
     }
 

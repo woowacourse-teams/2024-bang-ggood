@@ -7,7 +7,7 @@ import java.util.List;
 public record SelectedRoomResponse(String roomName, Integer deposit, Integer rent, Integer contractTerm, Integer floor,
                                    String address, String buildingName, String realEstate,
                                    Double size, String floorLevel, String structure,
-                                   Integer occupancyMonth, String  occupancyPeriod, String memo, String summary,
+                                   Integer occupancyMonth, String occupancyPeriod, String memo, String summary,
                                    List<Integer> includedMaintenances, Integer maintenanceFee,
                                    LocalDateTime createdAt) {
 

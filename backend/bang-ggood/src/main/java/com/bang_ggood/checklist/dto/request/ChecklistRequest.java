@@ -15,7 +15,8 @@ public record ChecklistRequest(@Valid RoomRequest room, List<Integer> options,
                                @Valid List<QuestionRequest> questions) {
 
     public Checklist toChecklistEntity(User user, Building building) {
-        return new Checklist(user, building, room.buildingName(), FloorLevel.from(room.floorLevel()), room.floor(), Structure.from(room.structure()), room.size(),
+        return new Checklist(user, building, room.buildingName(), FloorLevel.from(room.floorLevel()), room.floor(),
+                Structure.from(room.structure()), room.size(),
                 room.deposit(), room.rent(), room.maintenanceFee(), room.contractTerm(),
                 OccupancyMonth.from(room.occupancyMonth()), OccupancyPeriod.from(room.occupancyPeriod()),
                 room.realEstate(), room.memo(), room.summary());

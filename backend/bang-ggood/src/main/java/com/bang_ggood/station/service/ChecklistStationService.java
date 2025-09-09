@@ -48,8 +48,9 @@ public class ChecklistStationService {
 
         for (SubwayStationResponse response : responses) {
             for (String stationLine : response.getStationLine()) {
-                buildingStations.add(new BuildingStation(checklist.getBuilding(), response.getStationName(), stationLine,
-                        response.getWalkingTime()));
+                buildingStations.add(
+                        new BuildingStation(checklist.getBuilding(), response.getStationName(), stationLine,
+                                response.getWalkingTime()));
             }
         }
 

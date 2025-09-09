@@ -65,7 +65,8 @@ class ChecklistMaintenanceRepositoryTest extends IntegrationTestSupport {
 
         checklistMaintenanceRepository.save(ChecklistFixture.CHECKLIST1_INCLUDED_MAINTENANCE_1(checklist));
         checklistMaintenanceRepository.save(ChecklistFixture.CHECKLIST1_INCLUDED_MAINTENANCE_2(checklist));
-        checklistMaintenanceRepository.deleteAllByChecklistId(ChecklistFixture.CHECKLIST1_USER1(user, building).getId());
+        checklistMaintenanceRepository.deleteAllByChecklistId(
+                ChecklistFixture.CHECKLIST1_USER1(user, building).getId());
 
         // when
         List<ChecklistMaintenance> checklistMaintenances = checklistMaintenanceRepository

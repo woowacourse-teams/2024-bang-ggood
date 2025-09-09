@@ -64,14 +64,14 @@ CREATE TABLE highlight
 
 CREATE TABLE building
 (
-    id            BIGINT AUTO_INCREMENT PRIMARY KEY,
-    address       VARCHAR(255),
-    name VARCHAR(255),
+    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
+    address     VARCHAR(255),
+    name        VARCHAR(255),
     latitude DOUBLE,
     longitude DOUBLE,
-    created_at    TIMESTAMP(6),
-    modified_at   TIMESTAMP(6),
-    deleted       BOOLEAN
+    created_at  TIMESTAMP(6),
+    modified_at TIMESTAMP(6),
+    deleted     BOOLEAN
 );
 
 CREATE TABLE checklist
@@ -79,10 +79,10 @@ CREATE TABLE checklist
     id               BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id          BIGINT NOT NULL,
     building_id      BIGINT NOT NULL,
-    name          VARCHAR(255),
-    floor_level   VARCHAR(255),
-    floor         INTEGER,
-    structure     VARCHAR(255),
+    name             VARCHAR(255),
+    floor_level      VARCHAR(255),
+    floor            INTEGER,
+    structure        VARCHAR(255),
     size DOUBLE,
     deposit          INTEGER,
     rent             INTEGER,
@@ -184,7 +184,7 @@ CREATE TABLE article
 CREATE TABLE building_station
 (
     id           BIGINT AUTO_INCREMENT PRIMARY KEY,
-    building_id BIGINT,
+    building_id  BIGINT,
     station_name VARCHAR(255),
     station_line VARCHAR(255),
     walking_time INTEGER,

@@ -16,7 +16,8 @@ public class BuildingService {
 
     @Transactional
     public Building createOrFindBuilding(Building targetBuilding) {
-        Optional<Building> foundBuilding = buildingRepository.findByCoordinate(targetBuilding.getLatitude(), targetBuilding.getLongitude());
+        Optional<Building> foundBuilding = buildingRepository.findByCoordinate(targetBuilding.getLatitude(),
+                targetBuilding.getLongitude());
         Building building = foundBuilding.orElseGet(() -> buildingRepository.save(targetBuilding));
         updateBuildingName(targetBuilding, building);
         return building;

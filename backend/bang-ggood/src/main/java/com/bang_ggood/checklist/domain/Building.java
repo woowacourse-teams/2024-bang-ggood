@@ -42,6 +42,10 @@ public class Building extends BaseEntity {
         validateNullBuilding();
     }
 
+    public void changeName(String name) {
+        this.name = name;
+    }
+
     private void validateNullBuilding() {
         boolean anyNull = address == null || walkingTime == null || latitude == null || longitude == null;
         boolean allNull = address == null && walkingTime == null && latitude == null && longitude == null;

@@ -10,6 +10,13 @@ public class BuildingFixture {
         );
     }
 
+    public static Building BUILDING_1_WITH_OTHER_NAME() {
+        return new Building(
+                "인천광역시 부평구", "빌딩 이름 추가",
+                10, 37.5153, 127.1030
+        );
+    }
+
     public static Building BUILDING_2() {
         return new Building(
                 "대구광역시 중구", "롯데타워",

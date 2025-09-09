@@ -55,4 +55,24 @@ class BuildingServiceTest extends IntegrationTestSupport {
                 () ->  assertThat(afterCount).isEqualTo(beforeCount + 1)
         );
     }
+
+    @DisplayName("빌딩 이름 업데이트 성공: 동일 좌표의 빌딩이 존재하지만 이름이 다른 경우")
+    @Test
+    void createOrFindBuilding_buildingExistsWithDifferentName_updatesName() {
+        // given
+        Building existing = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Building target = BuildingFixture.BUILDING_1_WITH_OTHER_NAME();
+
+        // when
+        Building result = buildingService.createOrFindBuilding(target);
+
+        // then
+        assertAll(
+                () -> assertThat(result.getId()).isEqualTo(existing.getId()),
+                () -> assertThat(result.getName()).isEqualTo(target.getName()),
+                () -> assertThat(buildingRepository.findById(existing.getId())
+                        .orElseThrow()
+                        .getName()).isEqualTo(target.getName())
+        );
+    }
 }

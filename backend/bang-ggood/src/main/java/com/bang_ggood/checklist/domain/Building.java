@@ -1,6 +1,8 @@
 package com.bang_ggood.checklist.domain;
 
 import com.bang_ggood.BaseEntity;
+import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,7 +39,18 @@ public class Building extends BaseEntity {
         this.walkingTime = walkingTime;
         this.latitude = latitude;
         this.longitude = longitude;
+        validateNullBuilding();
     }
+
+    private void validateNullBuilding() {
+        boolean anyNull = address == null || walkingTime == null || latitude == null || longitude == null;
+        boolean allNull = address == null && walkingTime == null && latitude == null && longitude == null;
+
+        if (anyNull && !allNull) {
+            throw new BangggoodException(ExceptionCode.BUILDING_ALL_NULL_OR_NOT_NULL);
+        }
+    }
+
 
     @Override
     public boolean equals(Object o) {

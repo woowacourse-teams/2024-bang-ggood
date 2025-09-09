@@ -1,9 +1,9 @@
 package com.bang_ggood.station.service;
 
 import com.bang_ggood.checklist.domain.Checklist;
-import com.bang_ggood.station.domain.ChecklistStation;
+import com.bang_ggood.station.domain.BuildingStation;
 import com.bang_ggood.station.dto.response.SubwayStationResponse;
-import com.bang_ggood.station.repository.ChecklistStationRepository;
+import com.bang_ggood.station.repository.BuildingStationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class ChecklistStationService {
 
-    private final ChecklistStationRepository checklistStationRepository;
+    private final BuildingStationRepository buildingStationRepository;
     private final SubwayStationService subwayStationService;
 
     @Transactional
@@ -23,19 +23,19 @@ public class ChecklistStationService {
     }
 
     @Transactional(readOnly = true)
-    public List<ChecklistStation> readChecklistStationsByChecklist(Checklist checklist) {
-        return checklistStationRepository.findByChecklist(checklist);
+    public List<BuildingStation> readChecklistStationsByChecklist(Checklist checklist) {
+        return buildingStationRepository.findByBuilding(checklist.getBuilding());
     }
 
     @Transactional
     public void updateChecklistStation(Checklist checklist, Double latitude, Double longitude) {
-        checklistStationRepository.deleteAllByChecklistId(checklist.getId());
+        buildingStationRepository.deleteAllByBuildingId(checklist.getId());
         saveChecklistStations(checklist, latitude, longitude);
     }
 
     @Transactional
     public void deleteChecklistStation(Long checklistId) {
-        checklistStationRepository.deleteAllByChecklistId(checklistId);
+        buildingStationRepository.deleteAllByBuildingId(checklistId);
     }
 
     private void saveChecklistStations(Checklist checklist, Double latitude, Double longitude) {
@@ -44,15 +44,15 @@ public class ChecklistStationService {
         }
         List<SubwayStationResponse> responses = subwayStationService.readNearestStation(latitude, longitude)
                 .getStations();
-        List<ChecklistStation> checklistStations = new ArrayList<>();
+        List<BuildingStation> buildingStations = new ArrayList<>();
 
         for (SubwayStationResponse response : responses) {
             for (String stationLine : response.getStationLine()) {
-                checklistStations.add(new ChecklistStation(checklist, response.getStationName(), stationLine,
+                buildingStations.add(new BuildingStation(checklist.getBuilding(), response.getStationName(), stationLine,
                         response.getWalkingTime()));
             }
         }
 
-        checklistStationRepository.saveAll(checklistStations);
+        buildingStationRepository.saveAll(buildingStations);
     }
 }

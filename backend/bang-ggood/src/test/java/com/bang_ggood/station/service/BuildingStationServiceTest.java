@@ -7,9 +7,8 @@ import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.repository.BuildingRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
-import com.bang_ggood.checklist.RoomFixture;
-import com.bang_ggood.station.domain.ChecklistStation;
-import com.bang_ggood.station.repository.ChecklistStationRepository;
+import com.bang_ggood.station.domain.BuildingStation;
+import com.bang_ggood.station.repository.BuildingStationRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -21,7 +20,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ChecklistStationServiceTest extends IntegrationTestSupport {
+public class BuildingStationServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private BuildingRepository buildingRepository;
@@ -36,7 +35,7 @@ public class ChecklistStationServiceTest extends IntegrationTestSupport {
     private ChecklistStationService checklistStationService;
 
     @Autowired
-    private ChecklistStationRepository checklistStationRepository;
+    private BuildingStationRepository buildingStationRepository;
 
     private User user;
     private Building building;
@@ -49,26 +48,26 @@ public class ChecklistStationServiceTest extends IntegrationTestSupport {
         checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
     }
 
-    @DisplayName("ChecklistStation 객체 생성 성공")
+    @DisplayName("BuildingStation 객체 생성 성공")
     @Test
     void createChecklistStations() {
         // given & when
         checklistStationService.createChecklistStations(checklist, 37.517406150696104, 127.10333134512422);
 
         // then
-        assertThat(checklistStationRepository.findByChecklist(checklist)).isNotEmpty();
+        assertThat(buildingStationRepository.findByBuilding(building)).isNotEmpty();
     }
 
-    @DisplayName("ChecklistStation 조회 성공")
+    @DisplayName("BuildingStation 조회 성공")
     @Test
     void readChecklistStations() {
         // given
-        ChecklistStation checklistStation1 = new ChecklistStation(checklist, "잠실", "2호선", 5);
-        ChecklistStation checklistStation2 = new ChecklistStation(checklist, "잠실", "8호선", 6);
-        checklistStationRepository.saveAll(List.of(checklistStation1, checklistStation2));
+        BuildingStation buildingStation1 = new BuildingStation(building, "잠실", "2호선", 5);
+        BuildingStation buildingStation2 = new BuildingStation(building, "잠실", "8호선", 6);
+        buildingStationRepository.saveAll(List.of(buildingStation1, buildingStation2));
 
         // when & then
         assertThat(checklistStationService.readChecklistStationsByChecklist(checklist))
-                .containsExactlyInAnyOrder(checklistStation1, checklistStation2);
+                .containsExactlyInAnyOrder(buildingStation1, buildingStation2);
     }
 }

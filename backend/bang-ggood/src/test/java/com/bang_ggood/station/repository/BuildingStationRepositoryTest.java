@@ -7,8 +7,7 @@ import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.repository.BuildingRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
-import com.bang_ggood.checklist.RoomFixture;
-import com.bang_ggood.station.domain.ChecklistStation;
+import com.bang_ggood.station.domain.BuildingStation;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -20,7 +19,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ChecklistStationRepositoryTest extends IntegrationTestSupport {
+public class BuildingStationRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     private BuildingRepository buildingRepository;
@@ -32,7 +31,7 @@ public class ChecklistStationRepositoryTest extends IntegrationTestSupport {
     private UserRepository userRepository;
 
     @Autowired
-    private ChecklistStationRepository checklistStationRepository;
+    private BuildingStationRepository buildingStationRepository;
 
     private User user;
     private Building building;
@@ -47,37 +46,37 @@ public class ChecklistStationRepositoryTest extends IntegrationTestSupport {
 
     @DisplayName("체크리스트 아이디를 통한 조회 성공")
     @Test
-    void findByChecklistId() {
+    void findByBuildingId() {
         // given
-        ChecklistStation checklistStation1 = new ChecklistStation(checklist, "잠실", "2호선", 5);
-        ChecklistStation checklistStation2 = new ChecklistStation(checklist, "잠실", "8호선", 6);
-        checklistStationRepository.saveAll(List.of(checklistStation1, checklistStation2));
+        BuildingStation buildingStation1 = new BuildingStation(building, "잠실", "2호선", 5);
+        BuildingStation buildingStation2 = new BuildingStation(building, "잠실", "8호선", 6);
+        buildingStationRepository.saveAll(List.of(buildingStation1, buildingStation2));
 
         // when & then
-        assertThat(checklistStationRepository.findByChecklist(checklist))
-                .containsExactlyInAnyOrder(checklistStation1, checklistStation2);
+        assertThat(buildingStationRepository.findByBuilding(building))
+                .containsExactlyInAnyOrder(buildingStation1, buildingStation2);
     }
 
     @DisplayName("체크리스트 아이디를 통한 조회 실패: 저장된 값이 없는 경우")
     @Test
-    void findByChecklistId_noData_exception() {
+    void findByBuildingId_noData_exception() {
         // given & when & then
-        assertThat(checklistStationRepository.findByChecklist(checklist))
+        assertThat(buildingStationRepository.findByBuilding(building))
                 .isEmpty();
     }
 
     @DisplayName("체크리스트 아이디를 통한 삭제 성공")
     @Test
-    void deleteAllByChecklistId_noData_exception() {
+    void deleteAllByBuildingId_noData_exception() {
         // given
-        ChecklistStation checklistStation1 = new ChecklistStation(checklist, "잠실", "2호선", 5);
-        ChecklistStation checklistStation2 = new ChecklistStation(checklist, "잠실", "8호선", 6);
-        checklistStationRepository.saveAll(List.of(checklistStation1, checklistStation2));
+        BuildingStation buildingStation1 = new BuildingStation(building, "잠실", "2호선", 5);
+        BuildingStation buildingStation2 = new BuildingStation(building, "잠실", "8호선", 6);
+        buildingStationRepository.saveAll(List.of(buildingStation1, buildingStation2));
 
         // when
-        checklistStationRepository.deleteAllByChecklistId(checklist.getId());
+        buildingStationRepository.deleteAllByBuildingId(checklist.getId());
 
         // then
-        assertThat(checklistStationRepository.findByChecklist(checklist)).isEmpty();
+        assertThat(buildingStationRepository.findByBuilding(building)).isEmpty();
     }
 }

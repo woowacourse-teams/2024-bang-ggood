@@ -4,7 +4,7 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.option.domain.ChecklistOption;
 import com.bang_ggood.question.dto.response.CategoryScoreResponses;
-import com.bang_ggood.station.domain.ChecklistStation;
+import com.bang_ggood.station.domain.BuildingStation;
 import com.bang_ggood.station.dto.response.SubwayStationResponse;
 import com.bang_ggood.station.dto.response.SubwayStationResponses;
 import java.time.LocalDateTime;
@@ -23,7 +23,7 @@ public record ChecklistCompareResponse(
         CategoryScoreResponses categories
 ) {
     public static ChecklistCompareResponse of(Checklist checklist, List<ChecklistOption> options,
-                                              List<ChecklistStation> stations,
+                                              List<BuildingStation> stations,
                                               List<ChecklistMaintenance> maintenances,
                                               CategoryScoreResponses categories) {
         return new ChecklistCompareResponse(
@@ -45,7 +45,7 @@ public record ChecklistCompareResponse(
                 .toList();
     }
 
-    private static SubwayStationResponses convertToSubwayStationResponses(List<ChecklistStation> stations) {
+    private static SubwayStationResponses convertToSubwayStationResponses(List<BuildingStation> stations) {
         List<SubwayStationResponse> subwayStationResponses = stations.stream()
                 .map(SubwayStationResponse::from)
                 .toList();

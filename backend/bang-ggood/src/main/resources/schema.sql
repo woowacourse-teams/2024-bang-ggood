@@ -1,5 +1,5 @@
 -- Drop tables if they exist
-DROP TABLE IF EXISTS checklist_station CASCADE;
+DROP TABLE IF EXISTS building_station CASCADE;
 DROP TABLE IF EXISTS checklist_like CASCADE;
 DROP TABLE IF EXISTS custom_checklist_question CASCADE;
 DROP TABLE IF EXISTS checklist_option CASCADE;
@@ -171,17 +171,17 @@ CREATE TABLE article
     deleted     BOOLEAN
 );
 
-CREATE TABLE checklist_station
+CREATE TABLE building_station
 (
     id           BIGINT AUTO_INCREMENT PRIMARY KEY,
-    checklist_id BIGINT,
+    building_id BIGINT,
     station_name VARCHAR(255),
     station_line VARCHAR(255),
     walking_time INTEGER,
     created_at   TIMESTAMP(6),
     modified_at  TIMESTAMP(6),
     deleted      BOOLEAN,
-    FOREIGN KEY (checklist_id) REFERENCES checklist (id)
+    FOREIGN KEY (building_id) REFERENCES building (id)
 );
 
 CREATE TABLE password_reset_code

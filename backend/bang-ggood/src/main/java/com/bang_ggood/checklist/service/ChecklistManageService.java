@@ -36,7 +36,7 @@ import com.bang_ggood.question.dto.response.SelectedCategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.SelectedQuestionResponse;
 import com.bang_ggood.question.service.ChecklistQuestionService;
 import com.bang_ggood.question.service.QuestionService;
-import com.bang_ggood.station.domain.ChecklistStation;
+import com.bang_ggood.station.domain.BuildingStation;
 import com.bang_ggood.station.dto.response.SubwayStationResponse;
 import com.bang_ggood.station.dto.response.SubwayStationResponses;
 import com.bang_ggood.station.service.ChecklistStationService;
@@ -220,8 +220,8 @@ public class ChecklistManageService {
     }
 
     private SubwayStationResponses readChecklistStations(Checklist checklist) {
-        List<ChecklistStation> checklistStations = checklistStationService.readChecklistStationsByChecklist(checklist);
-        List<SubwayStationResponse> stations = checklistStations.stream()
+        List<BuildingStation> buildingStations = checklistStationService.readChecklistStationsByChecklist(checklist);
+        List<SubwayStationResponse> stations = buildingStations.stream()
                 .map(SubwayStationResponse::from)
                 .toList();
 
@@ -255,10 +255,10 @@ public class ChecklistManageService {
     private ChecklistCompareResponse compareChecklist(User user, Long checklistId) {
         Checklist checklist = checklistService.readChecklist(user, checklistId);
         List<ChecklistOption> options = checklistOptionService.readChecklistOptions(checklist);
-        List<ChecklistStation> checklistStations = checklistStationService.readChecklistStationsByChecklist(checklist);
+        List<BuildingStation> buildingStations = checklistStationService.readChecklistStationsByChecklist(checklist);
         List<ChecklistMaintenance> maintenances = checklistMaintenanceService.readChecklistMaintenances(checklist);
         CategoryScoreResponses categoryScoreResponses = compareCategories(user, checklistId);
-        return ChecklistCompareResponse.of(checklist, options, checklistStations, maintenances,
+        return ChecklistCompareResponse.of(checklist, options, buildingStations, maintenances,
                 categoryScoreResponses);
     }
 
@@ -325,8 +325,8 @@ public class ChecklistManageService {
     }
 
     private SubwayStationResponse readNearestStation(Checklist checklist) {
-        List<ChecklistStation> checklistStations = checklistStationService.readChecklistStationsByChecklist(checklist);
-        List<SubwayStationResponse> stationResponses = checklistStations.stream()
+        List<BuildingStation> buildingStations = checklistStationService.readChecklistStationsByChecklist(checklist);
+        List<SubwayStationResponse> stationResponses = buildingStations.stream()
                 .map(SubwayStationResponse::from)
                 .toList();
         SubwayStationResponses subwayStationResponses = SubwayStationResponses.from(stationResponses);

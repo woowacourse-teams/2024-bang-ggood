@@ -23,8 +23,8 @@ public class RoomFixture {
 
     public static RoomRequest ROOM_CREATE_REQUEST_EMPTY_LOCATION() {
         return new RoomRequest(
-                "방이름", "부산광역시 북구", "루터회관", "잠실",
-                10, 1000, 50, 5,
+                "방이름", null, null, "잠실",
+                null, 1000, 50, 5,
                 List.of(1, 3), FloorLevel.GROUND.getName(), 10,
                 Structure.TWO_ROOM.getName(), 3.3, null, null,
                 12, OccupancyMonth.APRIL.getMonth(),

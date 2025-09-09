@@ -23,9 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class ChecklistServiceTest extends IntegrationTestSupport {
 
     @Autowired
-    private ChecklistManageService checklistManageService;
-
-    @Autowired
     private ChecklistService checklistService;
 
     @Autowired
@@ -145,5 +142,21 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 () -> assertThat(checklists.get(0).getId()).isEqualTo(checklist2.getId()),
                 () -> assertThat(checklists.get(1).getId()).isEqualTo(checklist1.getId())
         );
+    }
+
+    @DisplayName("체크리스트 리스트 조회 성공: 경도와 위도가 없을 경우")
+    @Test
+    void readAllChecklists_building_null() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_NULL());
+        Checklist checklist = ChecklistFixture.CHECKLIST1_USER1(user, building);
+        checklistService.createChecklist(checklist);
+
+        // when
+        List<Checklist> checklists = checklistService.readAllChecklistsOrderByLatest(user);
+
+        // then
+        assertThat(checklists).containsExactly(checklist);
     }
 }

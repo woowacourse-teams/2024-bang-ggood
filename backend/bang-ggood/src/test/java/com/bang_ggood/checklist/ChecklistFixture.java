@@ -130,6 +130,16 @@ public class ChecklistFixture {
         );
     }
 
+    public static ChecklistRequest CHECKLIST_CREATE_BUILDING_NULL() {
+        return new ChecklistRequest(
+                RoomFixture.ROOM_CREATE_REQUEST(),
+                List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(),
+                        Option.SHOE_RACK.getId()),
+                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
+                        QUESTION_3_CREATE_REQUEST(), QUESTION_5_CREATE_REQUEST())
+        );
+    }
+
     public static ChecklistRequest CHECKLIST_CREATE_REQUEST_EMPTY_LOCATION() {
         return new ChecklistRequest(
                 RoomFixture.ROOM_CREATE_REQUEST_EMPTY_LOCATION(),

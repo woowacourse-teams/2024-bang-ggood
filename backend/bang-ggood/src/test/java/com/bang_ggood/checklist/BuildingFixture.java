@@ -23,4 +23,11 @@ public class BuildingFixture {
                 5, 37.5153, 127.1030
         );
     }
+
+    public static Building BUILDING_NULL() {
+        return new Building(
+                null, null,
+                null, null, null
+        );
+    }
 }

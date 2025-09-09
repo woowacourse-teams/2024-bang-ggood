@@ -340,6 +340,25 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         assertThat(previewResponse2.checklistId()).isEqualTo(checklistId1);
     }
 
+    @DisplayName("체크리스트 리스트 조회 성공 : 위도, 경도가 없을 경우")
+    @Test
+    void readUserChecklistsPreviewV2_building_null() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        ChecklistRequest checklistRequest = ChecklistFixture.CHECKLIST_CREATE_REQUEST_EMPTY_LOCATION();
+
+        Long checklistId = checklistManageService.createChecklist(user, checklistRequest);
+
+        // when
+        ChecklistsPreviewResponseV2 response = checklistManageService.readAllChecklistsPreviewV2(user);
+
+        // then
+        ChecklistPreviewResponseV2 previewResponse = response.checklists().get(0);
+
+        assertThat(previewResponse.checklistId()).isEqualTo(checklistId);
+    }
+
+
     @DisplayName("좋아요된 체크리스트 리스트 최신순으로 조회 성공")
     @Test
     void readLikedChecklistsPreview() {

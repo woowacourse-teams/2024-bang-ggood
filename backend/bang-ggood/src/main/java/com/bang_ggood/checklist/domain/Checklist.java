@@ -137,10 +137,6 @@ public class Checklist extends BaseEntity {
         return building.getName();
     }
 
-    public Integer getBuildingWalkingTime() {
-        return building.getWalkingTime();
-    }
-
     public Double getBuildingLatitude() {
         return building.getLatitude();
     }

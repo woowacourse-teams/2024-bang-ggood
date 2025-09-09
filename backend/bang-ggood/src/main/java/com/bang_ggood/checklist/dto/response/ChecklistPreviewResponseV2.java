@@ -6,8 +6,7 @@ import java.time.LocalDateTime;
 
 public record ChecklistPreviewResponseV2(
         Long checklistId, String thumbnailImageUrl, String roomName, String address, String buildingName,
-        SubwayStationResponse station, Integer walkingTime,
-        Integer deposit, Integer rent, LocalDateTime createdAt,
+        SubwayStationResponse station, Integer deposit, Integer rent, LocalDateTime createdAt,
         String summary, boolean isLiked) {
 
     public static ChecklistPreviewResponseV2 of(Checklist checklist, String thumbnailImageUrl,
@@ -19,7 +18,6 @@ public record ChecklistPreviewResponseV2(
                 checklist.getBuildingAddress(),
                 checklist.getBuildingName(),
                 station,
-                checklist.getBuildingWalkingTime(),
                 checklist.getDeposit(),
                 checklist.getRent(),
                 checklist.getCreatedAt(),

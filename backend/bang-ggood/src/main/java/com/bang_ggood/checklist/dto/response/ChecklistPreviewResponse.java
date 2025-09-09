@@ -7,8 +7,7 @@ import java.time.LocalDateTime;
 
 public record ChecklistPreviewResponse(
         Long checklistId, String roomName, String address, String buildingName,
-        SubwayStationResponse station, Integer walkingTime,
-        Integer deposit, Integer rent, LocalDateTime createdAt,
+        SubwayStationResponse station,Integer deposit, Integer rent, LocalDateTime createdAt,
         String summary, boolean isLiked) {
 
     public static ChecklistPreviewResponse of(Checklist checklist, SubwayStationResponse station, boolean isLiked) {
@@ -18,7 +17,6 @@ public record ChecklistPreviewResponse(
                 checklist.getBuildingAddress(),
                 checklist.getBuildingName(),
                 station,
-                checklist.getBuildingWalkingTime(),
                 checklist.getDeposit(),
                 checklist.getRent(),
                 checklist.getCreatedAt(),

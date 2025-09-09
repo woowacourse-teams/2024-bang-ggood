@@ -215,7 +215,7 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
         Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
         ChecklistShare checklistShare = checklistShareRepository.save(ChecklistFixture.CHECKLIST_SHARE(checklist));
-        SelectedChecklistResponse selectedChecklistResponse = checklistManageService.readSharedChecklist(
+        SelectedChecklistResponseV2 selectedChecklistResponse = checklistManageService.readSharedChecklist(
                 checklistShare.getToken());
 
         // then

@@ -26,17 +26,14 @@ public class Building extends BaseEntity {
 
     private String name;
 
-    private Integer walkingTime;
-
     private Double latitude;
 
     private Double longitude;
 
-    public Building(String address, String name, Integer walkingTime, Double latitude,
+    public Building(String address, String name, Double latitude,
                     Double longitude) {
         this.address = address;
         this.name = name;
-        this.walkingTime = walkingTime;
         this.latitude = latitude;
         this.longitude = longitude;
         validateNullBuilding();
@@ -47,8 +44,8 @@ public class Building extends BaseEntity {
     }
 
     private void validateNullBuilding() {
-        boolean anyNull = address == null || walkingTime == null || latitude == null || longitude == null;
-        boolean allNull = address == null && walkingTime == null && latitude == null && longitude == null;
+        boolean anyNull = address == null || latitude == null || longitude == null;
+        boolean allNull = address == null && latitude == null && longitude == null;
 
         if (anyNull && !allNull) {
             throw new BangggoodException(ExceptionCode.BUILDING_ALL_NULL_OR_NOT_NULL);
@@ -67,14 +64,13 @@ public class Building extends BaseEntity {
         Building building = (Building) o;
         return Objects.equals(id, building.id) && Objects.equals(address, building.address)
                 && Objects.equals(name, building.name)
-                && Objects.equals(walkingTime, building.walkingTime)
                 && Objects.equals(latitude, building.latitude) && Objects.equals(longitude,
                 building.longitude);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, address, name, walkingTime, latitude, longitude);
+        return Objects.hash(id, address, name, latitude, longitude);
     }
 
     @Override
@@ -83,7 +79,6 @@ public class Building extends BaseEntity {
                 "id=" + id +
                 ", address='" + address + '\'' +
                 ", name='" + name + '\'' +
-                ", walkingTime=" + walkingTime + '\'' +
                 ", latitude=" + latitude + '\'' +
                 ", longitude=" + longitude +
                 '}';

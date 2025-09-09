@@ -22,7 +22,6 @@ public record ChecklistRequest(@Valid RoomRequest room, List<Integer> options,
     }
 
     public Building toBuildingEntity() {
-        return new Building(room.address(), room.buildingName(),
-                room.walkingTime(), room().latitude(), room().longitude());
+        return new Building(room.address(), room.buildingName(), room().latitude(), room().longitude());
     }
 }

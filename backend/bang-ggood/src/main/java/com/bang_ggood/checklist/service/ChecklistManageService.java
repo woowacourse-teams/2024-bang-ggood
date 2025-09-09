@@ -146,11 +146,11 @@ public class ChecklistManageService {
     }
 
     @Transactional(readOnly = true)
-    public SelectedChecklistResponse readSharedChecklist(String token) {
+    public SelectedChecklistResponseV2 readSharedChecklist(String token) {
         ChecklistShare checklistShare = checklistShareService.readChecklistShare(token);
         Checklist checklist = checklistShare.getChecklist();
 
-        return assembleChecklistResponse(checklist);
+        return assembleChecklistResponseV2(checklist);
 
     }
 

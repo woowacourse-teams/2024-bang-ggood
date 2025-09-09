@@ -24,19 +24,16 @@ public class Building extends BaseEntity {
 
     private String name;
 
-    private String station;
-
     private Integer walkingTime;
 
     private Double latitude;
 
     private Double longitude;
 
-    public Building(String address, String name, String station, Integer walkingTime, Double latitude,
+    public Building(String address, String name, Integer walkingTime, Double latitude,
                     Double longitude) {
         this.address = address;
         this.name = name;
-        this.station = station;
         this.walkingTime = walkingTime;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -52,15 +49,15 @@ public class Building extends BaseEntity {
         }
         Building building = (Building) o;
         return Objects.equals(id, building.id) && Objects.equals(address, building.address)
-                && Objects.equals(name, building.name) && Objects.equals(station,
-                building.station) && Objects.equals(walkingTime, building.walkingTime)
+                && Objects.equals(name, building.name)
+                && Objects.equals(walkingTime, building.walkingTime)
                 && Objects.equals(latitude, building.latitude) && Objects.equals(longitude,
                 building.longitude);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, address, name, station, walkingTime, latitude, longitude);
+        return Objects.hash(id, address, name, walkingTime, latitude, longitude);
     }
 
     @Override
@@ -69,9 +66,8 @@ public class Building extends BaseEntity {
                 "id=" + id +
                 ", address='" + address + '\'' +
                 ", name='" + name + '\'' +
-                ", station='" + station + '\'' +
-                ", walkingTime=" + walkingTime +
-                ", latitude=" + latitude +
+                ", walkingTime=" + walkingTime + '\'' +
+                ", latitude=" + latitude + '\'' +
                 ", longitude=" + longitude +
                 '}';
     }

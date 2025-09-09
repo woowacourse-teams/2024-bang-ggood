@@ -66,7 +66,6 @@ CREATE TABLE building
     id            BIGINT AUTO_INCREMENT PRIMARY KEY,
     address       VARCHAR(255),
     name VARCHAR(255),
-    station       VARCHAR(255),
     walking_time  INTEGER,
     latitude DOUBLE,
     longitude DOUBLE,

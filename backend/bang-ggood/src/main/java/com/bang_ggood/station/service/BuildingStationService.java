@@ -12,33 +12,33 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class ChecklistStationService {
+public class BuildingStationService {
 
     private final BuildingStationRepository buildingStationRepository;
     private final SubwayStationService subwayStationService;
 
     @Transactional
-    public void createChecklistStations(Checklist checklist, Double latitude, Double longitude) {
-        saveChecklistStations(checklist, latitude, longitude);
+    public void createBuildingStations(Checklist checklist, Double latitude, Double longitude) {
+        saveBuildingStations(checklist, latitude, longitude);
     }
 
     @Transactional(readOnly = true)
-    public List<BuildingStation> readChecklistStationsByChecklist(Checklist checklist) {
+    public List<BuildingStation> readBuildingStationsByChecklist(Checklist checklist) {
         return buildingStationRepository.findByBuilding(checklist.getBuilding());
     }
 
     @Transactional
-    public void updateChecklistStation(Checklist checklist, Double latitude, Double longitude) {
+    public void updateBuildingStation(Checklist checklist, Double latitude, Double longitude) {
         buildingStationRepository.deleteAllByBuildingId(checklist.getId());
-        saveChecklistStations(checklist, latitude, longitude);
+        saveBuildingStations(checklist, latitude, longitude);
     }
 
     @Transactional
-    public void deleteChecklistStation(Long checklistId) {
+    public void deleteBuildingStation(Long checklistId) {
         buildingStationRepository.deleteAllByBuildingId(checklistId);
     }
 
-    private void saveChecklistStations(Checklist checklist, Double latitude, Double longitude) {
+    private void saveBuildingStations(Checklist checklist, Double latitude, Double longitude) {
         if (latitude == null || longitude == null) {
             return;
         }

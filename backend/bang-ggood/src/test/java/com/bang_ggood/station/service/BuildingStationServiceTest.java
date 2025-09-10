@@ -32,7 +32,7 @@ public class BuildingStationServiceTest extends IntegrationTestSupport {
     private UserRepository userRepository;
 
     @Autowired
-    private ChecklistStationService checklistStationService;
+    private BuildingStationService buildingStationService;
 
     @Autowired
     private BuildingStationRepository buildingStationRepository;
@@ -50,9 +50,9 @@ public class BuildingStationServiceTest extends IntegrationTestSupport {
 
     @DisplayName("BuildingStation 객체 생성 성공")
     @Test
-    void createChecklistStations() {
+    void createBuildingStations() {
         // given & when
-        checklistStationService.createChecklistStations(checklist, 37.517406150696104, 127.10333134512422);
+        buildingStationService.createBuildingStations(checklist, 37.517406150696104, 127.10333134512422);
 
         // then
         assertThat(buildingStationRepository.findByBuilding(building)).isNotEmpty();
@@ -60,14 +60,14 @@ public class BuildingStationServiceTest extends IntegrationTestSupport {
 
     @DisplayName("BuildingStation 조회 성공")
     @Test
-    void readChecklistStations() {
+    void readBuildingStations() {
         // given
         BuildingStation buildingStation1 = new BuildingStation(building, "잠실", "2호선", 5);
         BuildingStation buildingStation2 = new BuildingStation(building, "잠실", "8호선", 6);
         buildingStationRepository.saveAll(List.of(buildingStation1, buildingStation2));
 
         // when & then
-        assertThat(checklistStationService.readChecklistStationsByChecklist(checklist))
+        assertThat(buildingStationService.readBuildingStationsByChecklist(checklist))
                 .containsExactlyInAnyOrder(buildingStation1, buildingStation2);
     }
 }

@@ -24,9 +24,10 @@ public class BuildingService {
     }
 
     private void updateBuildingName(Building targetBuilding, Building building) {
-        if (!Objects.equals(building.getName(), targetBuilding.getName())) {
-            building.changeName(targetBuilding.getName());
+        if (Objects.equals(building.getName(), targetBuilding.getName())) {
+            return;
         }
+        building.changeName(targetBuilding.getName());
         buildingRepository.save(building);
     }
 }

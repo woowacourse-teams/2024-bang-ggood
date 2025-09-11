@@ -2,8 +2,6 @@ package com.bang_ggood.checklist.dto.response;
 
 import com.bang_ggood.option.dto.response.SelectedOptionResponse;
 import com.bang_ggood.question.dto.response.SelectedCategoryQuestionsResponse;
-import com.bang_ggood.room.dto.response.SelectedRoomResponse;
-import com.bang_ggood.room.dto.response.SelectedRoomResponseV1;
 import com.bang_ggood.station.dto.response.SubwayStationResponse;
 import com.bang_ggood.station.dto.response.SubwayStationResponses;
 import java.util.List;

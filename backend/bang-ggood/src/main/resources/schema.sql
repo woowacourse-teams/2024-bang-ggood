@@ -1,5 +1,5 @@
 -- Drop tables if they exist
-DROP TABLE IF EXISTS checklist_station CASCADE;
+DROP TABLE IF EXISTS building_station CASCADE;
 DROP TABLE IF EXISTS checklist_like CASCADE;
 DROP TABLE IF EXISTS custom_checklist_question CASCADE;
 DROP TABLE IF EXISTS checklist_option CASCADE;
@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS checklist_share CASCADE;
 DROP TABLE IF EXISTS checklist_image CASCADE;
 DROP TABLE IF EXISTS checklist CASCADE;
 DROP TABLE IF EXISTS article CASCADE;
-DROP TABLE IF EXISTS room CASCADE;
+DROP TABLE IF EXISTS building CASCADE;
 DROP TABLE IF EXISTS highlight CASCADE;
 DROP TABLE IF EXISTS question CASCADE;
 DROP TABLE IF EXISTS category CASCADE;
@@ -61,30 +61,28 @@ CREATE TABLE highlight
     FOREIGN KEY (question_id) REFERENCES question (id)
 );
 
-CREATE TABLE room
+CREATE TABLE building
 (
-    id            BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name          VARCHAR(255),
-    address       VARCHAR(255),
-    building_name VARCHAR(255),
-    station       VARCHAR(255),
-    walking_time  INTEGER,
-    floor_level   VARCHAR(255),
-    floor         INTEGER,
-    structure     VARCHAR(255),
-    size DOUBLE,
+    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
+    address     VARCHAR(255),
+    name        VARCHAR(255),
     latitude DOUBLE,
     longitude DOUBLE,
-    created_at    TIMESTAMP(6),
-    modified_at   TIMESTAMP(6),
-    deleted       BOOLEAN
+    created_at  TIMESTAMP(6),
+    modified_at TIMESTAMP(6),
+    deleted     BOOLEAN
 );
 
 CREATE TABLE checklist
 (
     id               BIGINT AUTO_INCREMENT PRIMARY KEY,
-    room_id          BIGINT NOT NULL UNIQUE,
     user_id          BIGINT NOT NULL,
+    building_id      BIGINT NOT NULL,
+    name             VARCHAR(255),
+    floor_level      VARCHAR(255),
+    floor            INTEGER,
+    structure        VARCHAR(255),
+    size DOUBLE,
     deposit          INTEGER,
     rent             INTEGER,
     maintenance_fee  INTEGER,
@@ -97,8 +95,8 @@ CREATE TABLE checklist
     created_at       TIMESTAMP(6),
     modified_at      TIMESTAMP(6),
     deleted          BOOLEAN,
-    FOREIGN KEY (room_id) REFERENCES room (id),
-    FOREIGN KEY (user_id) REFERENCES users (id)
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (building_id) REFERENCES building (id)
 );
 
 CREATE TABLE checklist_maintenance
@@ -172,17 +170,17 @@ CREATE TABLE article
     deleted     BOOLEAN
 );
 
-CREATE TABLE checklist_station
+CREATE TABLE building_station
 (
     id           BIGINT AUTO_INCREMENT PRIMARY KEY,
-    checklist_id BIGINT,
+    building_id  BIGINT,
     station_name VARCHAR(255),
     station_line VARCHAR(255),
     walking_time INTEGER,
     created_at   TIMESTAMP(6),
     modified_at  TIMESTAMP(6),
     deleted      BOOLEAN,
-    FOREIGN KEY (checklist_id) REFERENCES checklist (id)
+    FOREIGN KEY (building_id) REFERENCES building (id)
 );
 
 CREATE TABLE password_reset_code

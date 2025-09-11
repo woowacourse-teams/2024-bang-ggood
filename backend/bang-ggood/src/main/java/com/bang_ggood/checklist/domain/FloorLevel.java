@@ -1,32 +1,30 @@
-package com.bang_ggood.room.domain;
+package com.bang_ggood.checklist.domain;
 
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import java.util.Arrays;
 
-public enum Structure {
+public enum FloorLevel {
 
-    OPEN_ONE_ROOM("오픈형 원룸"),
-    DIVIDED_ONE_ROOM("분리형 원룸"),
-    TWO_ROOM("투룸"),
-    THREE_ROOM_OR_MORE("쓰리룸 이상"),
-    DUPLEX("복층"),
+    GROUND("지상"),
+    BASEMENT("반지하/지하"),
+    ROOFTOP("옥탑"),
     NONE(null);
 
     private final String name;
 
-    Structure(String name) {
+    FloorLevel(String name) {
         this.name = name;
     }
 
-    public static Structure from(String name) {
+    public static FloorLevel from(String name) {
         if (name == null) {
             return NONE;
         }
-        return Arrays.stream(Structure.values())
+        return Arrays.stream(FloorLevel.values())
                 .filter(value -> value.name != null && value.name.equals(name))
                 .findFirst()
-                .orElseThrow(() -> new BangggoodException(ExceptionCode.STRUCTURE_INVALID));
+                .orElseThrow(() -> new BangggoodException(ExceptionCode.FLOOR_LEVEL_INVALID));
     }
 
     public String getName() {

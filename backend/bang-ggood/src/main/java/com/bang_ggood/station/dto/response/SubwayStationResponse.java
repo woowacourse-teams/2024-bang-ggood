@@ -2,7 +2,7 @@ package com.bang_ggood.station.dto.response;
 
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
-import com.bang_ggood.station.domain.ChecklistStation;
+import com.bang_ggood.station.domain.BuildingStation;
 import com.bang_ggood.station.domain.SubwayStation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,11 +24,11 @@ public class SubwayStationResponse {
                 station.calculateWalkingTime(latitude, longitude));
     }
 
-    public static SubwayStationResponse from(ChecklistStation checklistStation) {
+    public static SubwayStationResponse from(BuildingStation buildingStation) {
         List<String> stationLine = new ArrayList<>();
-        stationLine.add(checklistStation.getStationLine());
-        return new SubwayStationResponse(checklistStation.getStationName(), stationLine,
-                checklistStation.getWalkingTime());
+        stationLine.add(buildingStation.getStationLine());
+        return new SubwayStationResponse(buildingStation.getStationName(), stationLine,
+                buildingStation.getWalkingTime());
     }
 
     public SubwayStationResponse merge(SubwayStationResponse response) {

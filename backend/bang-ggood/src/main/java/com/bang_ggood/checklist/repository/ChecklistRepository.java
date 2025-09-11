@@ -15,7 +15,8 @@ import java.util.Optional;
 public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
 
     @Query("SELECT c FROM Checklist c "
-            + "JOIN FETCH c.building b "
+            + "JOIN FETCH c.room r "
+            + "LEFT JOIN FETCH c.questions q "
             + "WHERE c.id = :id "
             + "AND c.deleted = false")
     Optional<Checklist> findById(@Param("id") Long id);
@@ -40,7 +41,7 @@ public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
 
     @Query("SELECT c FROM Checklist c "
             + "JOIN FETCH c.user u "
-            + "JOIN FETCH c.building b "
+            + "JOIN FETCH c.room r "
             + "WHERE u = :user "
             + "AND c.id IN :checklistIds "
             + "AND c.deleted = false")

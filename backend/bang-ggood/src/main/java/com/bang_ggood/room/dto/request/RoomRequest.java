@@ -1,5 +1,8 @@
-package com.bang_ggood.checklist.dto.request;
+package com.bang_ggood.room.dto.request;
 
+import com.bang_ggood.room.domain.FloorLevel;
+import com.bang_ggood.room.domain.Room;
+import com.bang_ggood.room.domain.Structure;
 import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 
@@ -12,4 +15,9 @@ public record RoomRequest(@NotBlank(message = "방 이름이 존재하지 않습
                           String occupancyPeriod,
                           String realEstate, String memo, String summary
 ) {
+
+    public Room toRoomEntity() {
+        return new Room(roomName, address, buildingName, station, walkingTime,
+                FloorLevel.from(floorLevel), floor, Structure.from(structure), size, latitude, longitude);
+    }
 }

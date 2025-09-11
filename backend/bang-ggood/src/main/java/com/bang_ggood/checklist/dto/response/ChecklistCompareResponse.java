@@ -4,7 +4,7 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.option.domain.ChecklistOption;
 import com.bang_ggood.question.dto.response.CategoryScoreResponses;
-import com.bang_ggood.station.domain.BuildingStation;
+import com.bang_ggood.station.domain.ChecklistStation;
 import com.bang_ggood.station.dto.response.SubwayStationResponse;
 import com.bang_ggood.station.dto.response.SubwayStationResponses;
 import java.time.LocalDateTime;
@@ -23,14 +23,14 @@ public record ChecklistCompareResponse(
         CategoryScoreResponses categories
 ) {
     public static ChecklistCompareResponse of(Checklist checklist, List<ChecklistOption> options,
-                                              List<BuildingStation> stations,
+                                              List<ChecklistStation> stations,
                                               List<ChecklistMaintenance> maintenances,
                                               CategoryScoreResponses categories) {
         return new ChecklistCompareResponse(
-                checklist.getId(), checklist.getName(), checklist.getBuildingAddress(), checklist.getBuildingName(),
-                checklist.getBuildingLatitude(), checklist.getBuildingLongitude(),
-                convertToOptionIds(options), checklist.getStructure().getName(), checklist.getSize(),
-                checklist.getFloorLevel().getName(), checklist.getFloor(),
+                checklist.getId(), checklist.getRoomName(), checklist.getRoomAddress(), checklist.getRoomBuildingName(),
+                checklist.getRoomLatitude(), checklist.getRoomLongitude(),
+                convertToOptionIds(options), checklist.getRoomStructure().getName(), checklist.getRoomSize(),
+                checklist.getRoomFloorLevel().getName(), checklist.getRoomFloor(),
                 convertToSubwayStationResponses(stations),
                 checklist.getDeposit(), checklist.getRent(),
                 checklist.getMaintenanceFee(), convertToMaintenancesIds(maintenances),
@@ -45,7 +45,7 @@ public record ChecklistCompareResponse(
                 .toList();
     }
 
-    private static SubwayStationResponses convertToSubwayStationResponses(List<BuildingStation> stations) {
+    private static SubwayStationResponses convertToSubwayStationResponses(List<ChecklistStation> stations) {
         List<SubwayStationResponse> subwayStationResponses = stations.stream()
                 .map(SubwayStationResponse::from)
                 .toList();

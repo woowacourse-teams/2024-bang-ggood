@@ -1,13 +1,14 @@
 package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.IntegrationTestSupport;
-import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
-import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
-import com.bang_ggood.checklist.repository.BuildingRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
+import com.bang_ggood.option.repository.ChecklistOptionRepository;
+import com.bang_ggood.room.RoomFixture;
+import com.bang_ggood.room.domain.Room;
+import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -23,13 +24,19 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class ChecklistServiceTest extends IntegrationTestSupport {
 
     @Autowired
+    private ChecklistManageService checklistManageService;
+
+    @Autowired
     private ChecklistService checklistService;
 
     @Autowired
     private ChecklistRepository checklistRepository;
 
     @Autowired
-    private BuildingRepository buildingRepository;
+    private RoomRepository roomRepository;
+
+    @Autowired
+    private ChecklistOptionRepository checklistOptionRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -41,9 +48,9 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void createChecklist() {
         //given
-        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = ChecklistFixture.CHECKLIST1_USER1(user, building);
+        Checklist checklist = ChecklistFixture.CHECKLIST1_USER1(room, user);
 
         //when
         Checklist savedChecklist = checklistService.createChecklist(checklist);
@@ -60,12 +67,12 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void updateChecklist() {
         //given
-        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist savedChecklist = checklistService.createChecklist(ChecklistFixture.CHECKLIST1_USER1(user, building));
+        Checklist savedChecklist = checklistService.createChecklist(ChecklistFixture.CHECKLIST1_USER1(room, user));
 
         //when
-        Checklist updateChecklist = ChecklistFixture.CHECKLIST1_USER1_UPDATE(user, building);
+        Checklist updateChecklist = ChecklistFixture.CHECKLIST1_USER1_UPDATE(room, user);
         checklistService.updateChecklist(savedChecklist, updateChecklist);
 
         //then
@@ -80,9 +87,9 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     @Test
     void deleteById() {
         //given
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
-        Checklist checklist = ChecklistFixture.CHECKLIST1_USER1(user, building);
+        Checklist checklist = ChecklistFixture.CHECKLIST1_USER1(room, user);
         Checklist savedChecklist = checklistService.createChecklist(checklist);
 
         //when
@@ -97,11 +104,11 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     void readAllChecklistsOrderByLatest() {
         // given
         User user = userRepository.save(UserFixture.USER1());
-        Building building1 = buildingRepository.save(BuildingFixture.BUILDING_1());
-        Building building2 = buildingRepository.save(BuildingFixture.BUILDING_2());
+        Room room1 = roomRepository.save(RoomFixture.ROOM_1());
+        Room room2 = roomRepository.save(RoomFixture.ROOM_2());
 
-        Checklist checklist1 = ChecklistFixture.CHECKLIST1_USER1(user, building1);
-        Checklist checklist2 = ChecklistFixture.CHECKLIST3_USER2(user, building2);
+        Checklist checklist1 = ChecklistFixture.CHECKLIST1_USER1(room1, user);
+        Checklist checklist2 = ChecklistFixture.CHECKLIST3_USER2(room2, user);
 
         checklistService.createChecklist(checklist1);
         checklistService.createChecklist(checklist2);
@@ -118,13 +125,12 @@ class ChecklistServiceTest extends IntegrationTestSupport {
     void readLikedChecklistsPreview() {
         //given
         User user = userRepository.save(UserFixture.USER1());
-        Building building1 = buildingRepository.save(BuildingFixture.BUILDING_1());
-        Building building2 = buildingRepository.save(BuildingFixture.BUILDING_2());
-        Building building3 = buildingRepository.save(BuildingFixture.BUILDING_3());
-        Checklist checklist1 = ChecklistFixture.CHECKLIST1_USER1(user, building1);
-        Checklist checklist2 = ChecklistFixture.CHECKLIST3_USER2(user, building2);
-        Checklist checklist3 = ChecklistFixture.CHECKLIST3_USER2(user, building3);
-
+        Room room1 = roomRepository.save(RoomFixture.ROOM_1());
+        Room room2 = roomRepository.save(RoomFixture.ROOM_2());
+        Room room3 = roomRepository.save(RoomFixture.ROOM_3());
+        Checklist checklist1 = ChecklistFixture.CHECKLIST1_USER1(room1, user);
+        Checklist checklist2 = ChecklistFixture.CHECKLIST2_USER1(room2, user);
+        Checklist checklist3 = ChecklistFixture.CHECKLIST3_USER1(room3, user);
         checklistRepository.saveAll(
                 List.of(checklist1, checklist2, checklist3)
         );
@@ -142,21 +148,5 @@ class ChecklistServiceTest extends IntegrationTestSupport {
                 () -> assertThat(checklists.get(0).getId()).isEqualTo(checklist2.getId()),
                 () -> assertThat(checklists.get(1).getId()).isEqualTo(checklist1.getId())
         );
-    }
-
-    @DisplayName("체크리스트 리스트 조회 성공: 경도와 위도가 없을 경우")
-    @Test
-    void readAllChecklists_building_null() {
-        // given
-        User user = userRepository.save(UserFixture.USER1());
-        Building building = buildingRepository.save(BuildingFixture.BUILDING_NULL());
-        Checklist checklist = ChecklistFixture.CHECKLIST1_USER1(user, building);
-        checklistService.createChecklist(checklist);
-
-        // when
-        List<Checklist> checklists = checklistService.readAllChecklistsOrderByLatest(user);
-
-        // then
-        assertThat(checklists).containsExactly(checklist);
     }
 }

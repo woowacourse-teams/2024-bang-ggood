@@ -1,4 +1,4 @@
-package com.bang_ggood.checklist.dto.response;
+package com.bang_ggood.room.dto.response;
 
 import java.time.LocalDateTime;
 import java.util.List;

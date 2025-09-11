@@ -1,15 +1,15 @@
 package com.bang_ggood.checklist.controller;
 
 import com.bang_ggood.AcceptanceTest;
-import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.ChecklistImageFixture;
-import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
-import com.bang_ggood.checklist.repository.BuildingRepository;
 import com.bang_ggood.checklist.repository.ChecklistImageRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.service.ChecklistManageService;
+import com.bang_ggood.room.RoomFixture;
+import com.bang_ggood.room.domain.Room;
+import com.bang_ggood.room.repository.RoomRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
@@ -33,7 +33,7 @@ class ChecklistE2ETest extends AcceptanceTest {
     @Autowired
     private ChecklistRepository checklistRepository;
     @Autowired
-    private BuildingRepository buildingRepository;
+    private RoomRepository roomRepository;
     @Autowired
     private ChecklistImageRepository checklistImageRepository;
 
@@ -198,12 +198,12 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 비교 성공")
     @Test
     void compareChecklists() {
-        Building building1 = buildingRepository.save(BuildingFixture.BUILDING_1());
-        Building building2 = buildingRepository.save(BuildingFixture.BUILDING_2());
+        Room room1 = roomRepository.save(RoomFixture.ROOM_1());
+        Room room2 = roomRepository.save(RoomFixture.ROOM_2());
         Checklist checklist1 = checklistRepository.save(
-                ChecklistFixture.CHECKLIST1_USER1(this.getAuthenticatedUser(), building1));
+                ChecklistFixture.CHECKLIST1_USER1(room1, this.getAuthenticatedUser()));
         Checklist checklist2 = checklistRepository.save(
-                ChecklistFixture.CHECKLIST2_USER1(this.getAuthenticatedUser(), building2));
+                ChecklistFixture.CHECKLIST2_USER1(room2, this.getAuthenticatedUser()));
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
@@ -323,9 +323,9 @@ class ChecklistE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 삭제 성공")
     @Test
     void deleteChecklistById() {
-        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
         Checklist saved = checklistRepository.save(
-                ChecklistFixture.CHECKLIST1_USER1(this.getAuthenticatedUser(), building));
+                ChecklistFixture.CHECKLIST1_USER1(room, this.getAuthenticatedUser()));
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)

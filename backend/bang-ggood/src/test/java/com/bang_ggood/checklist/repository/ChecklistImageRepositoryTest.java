@@ -1,16 +1,16 @@
 package com.bang_ggood.checklist.repository;
 
 import com.bang_ggood.IntegrationTestSupport;
-import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.ChecklistImageFixture;
-import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistImage;
-import com.bang_ggood.checklist.service.BuildingService;
 import com.bang_ggood.checklist.service.ChecklistService;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
+import com.bang_ggood.room.RoomFixture;
+import com.bang_ggood.room.domain.Room;
+import com.bang_ggood.room.service.RoomService;
 import com.bang_ggood.user.UserFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +31,7 @@ class ChecklistImageRepositoryTest extends IntegrationTestSupport {
     private ChecklistService checklistService;
 
     @Autowired
-    private BuildingService buildingService;
+    private RoomService roomService;
 
     @Autowired
     private ChecklistImageRepository checklistImageRepository;
@@ -40,8 +40,8 @@ class ChecklistImageRepositoryTest extends IntegrationTestSupport {
 
     @BeforeEach
     void setUp() {
-        Building building = buildingService.createOrFindBuilding(BuildingFixture.BUILDING_1());
-        checklist = checklistService.createChecklist(ChecklistFixture.CHECKLIST1_USER1(UserFixture.USER1, building));
+        Room room = roomService.createRoom(RoomFixture.ROOM_1());
+        checklist = checklistService.createChecklist(ChecklistFixture.CHECKLIST1_USER1(room, UserFixture.USER1));
     }
 
     @DisplayName("체크리스트 이미지 찾기 성공 : 삭제되지 않은 이미지일 경우")

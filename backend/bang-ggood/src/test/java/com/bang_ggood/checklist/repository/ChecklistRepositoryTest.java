@@ -1,13 +1,14 @@
 package com.bang_ggood.checklist.repository;
 
 import com.bang_ggood.IntegrationTestSupport;
-import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
-import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
+import com.bang_ggood.room.RoomFixture;
+import com.bang_ggood.room.domain.Room;
+import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -28,7 +29,7 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     private ChecklistRepository checklistRepository;
 
     @Autowired
-    private BuildingRepository buildingRepository;
+    private RoomRepository roomRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -40,9 +41,9 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     @Test
     void findById() {
         //given
-        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist savedChecklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
+        Checklist savedChecklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
 
         //when
         Checklist foundChecklist = checklistRepository.getById(savedChecklist.getId());
@@ -63,9 +64,9 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     @Test
     void findByUserAndIdIn() {
         //given
-        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist savedChecklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
+        Checklist savedChecklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
 
         assertThat(checklistRepository.findByUserAndIdIn(user, List.of(savedChecklist.getId())))
                 .isEqualTo(List.of(savedChecklist));
@@ -76,11 +77,11 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     @Test
     void findAllByUser() {
         // given
-        Building building1 = buildingRepository.save(BuildingFixture.BUILDING_1());
-        Building building2 = buildingRepository.save(BuildingFixture.BUILDING_2());
+        Room room1 = roomRepository.save(RoomFixture.ROOM_1());
+        Room room2 = roomRepository.save(RoomFixture.ROOM_2());
         User user = UserFixture.USER1;
-        Checklist checklist1 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building1));
-        Checklist checklist2 = checklistRepository.save(ChecklistFixture.CHECKLIST2_USER1(user, building2));
+        Checklist checklist1 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room1, user));
+        Checklist checklist2 = checklistRepository.save(ChecklistFixture.CHECKLIST2_USER1(room2, user));
         checklistRepository.saveAll(List.of(checklist1, checklist2));
 
         checklistRepository.deleteById(checklist1.getId());
@@ -96,13 +97,13 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     @Test
     void findAllByUser_OrderByLatest() {
         // given
-        Building building1 = buildingRepository.save(BuildingFixture.BUILDING_1());
-        Building building2 = buildingRepository.save(BuildingFixture.BUILDING_2());
-        User user = UserFixture.USER1;
-        Checklist checklist1 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building1));
-        Checklist checklist2 = checklistRepository.save(ChecklistFixture.CHECKLIST2_USER1(user, building2));
-
+        Room room1 = roomRepository.save(RoomFixture.ROOM_1());
+        Room room2 = roomRepository.save(RoomFixture.ROOM_2());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist1 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room1, user));
         checklistRepository.save(checklist1);
+
+        Checklist checklist2 = checklistRepository.save(ChecklistFixture.CHECKLIST2_USER1(room2, user));
         checklistRepository.save(checklist2);
 
         // when
@@ -117,15 +118,15 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     @Test
     void findAllByUser_OnlyUserChecklists() {
         // given
-        Building building1 = buildingRepository.save(BuildingFixture.BUILDING_1());
-        Building building2 = buildingRepository.save(BuildingFixture.BUILDING_2());
-        User user1 = UserFixture.USER1;
-        Checklist checklist1 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user1, building1));
-        Checklist checklist2 = checklistRepository.save(ChecklistFixture.CHECKLIST2_USER1(user1, building2));
+        Room room1 = roomRepository.save(RoomFixture.ROOM_1());
+        Room room2 = roomRepository.save(RoomFixture.ROOM_2());
+        User user1 = userRepository.save(UserFixture.USER1());
+        Checklist checklist1 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room1, user1));
+        Checklist checklist2 = checklistRepository.save(ChecklistFixture.CHECKLIST2_USER1(room2, user1));
 
         User user2 = userRepository.save(UserFixture.USER2());
-        Building building3 = buildingRepository.save(BuildingFixture.BUILDING_3());
-        Checklist checklist3 = ChecklistFixture.CHECKLIST3_USER2(user2, building3);
+        Room room3 = roomRepository.save(RoomFixture.ROOM_3());
+        Checklist checklist3 = ChecklistFixture.CHECKLIST3_USER2(room3, user2);
 
         checklistRepository.saveAll(List.of(checklist1, checklist2, checklist3));
 
@@ -141,13 +142,13 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     @Test
     void findAllByUserAndIsLiked() {
         // given
-        Building building1 = buildingRepository.save(BuildingFixture.BUILDING_1());
-        Building building2 = buildingRepository.save(BuildingFixture.BUILDING_2());
-        Building building3 = buildingRepository.save(BuildingFixture.BUILDING_3());
+        Room room1 = roomRepository.save(RoomFixture.ROOM_1());
+        Room room2 = roomRepository.save(RoomFixture.ROOM_2());
+        Room room3 = roomRepository.save(RoomFixture.ROOM_3());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist1 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building1));
-        Checklist checklist2 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building2));
-        Checklist checklist3 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building3));
+        Checklist checklist1 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room1, user));
+        Checklist checklist2 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room2, user));
+        Checklist checklist3 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room3, user));
         checklistLikeRepository.save(ChecklistFixture.CHECKLIST1_LIKE(checklist1));
         checklistLikeRepository.save(ChecklistFixture.CHECKLIST2_LIKE(checklist2));
 
@@ -163,9 +164,9 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     @Test
     void existsById_true() {
         //given & when
-        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist savedChecklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
+        Checklist savedChecklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
 
         //then
         assertThat(checklistRepository.existsById(savedChecklist.getId().longValue())).isTrue();
@@ -182,9 +183,9 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
     @Test
     void deleteById() {
         //given
-        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist savedChecklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
+        Checklist savedChecklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
 
         //when
         checklistRepository.deleteById(savedChecklist.getId());

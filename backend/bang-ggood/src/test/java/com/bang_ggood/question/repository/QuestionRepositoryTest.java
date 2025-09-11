@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class QuestionRepositoryTest extends IntegrationTestSupport {
@@ -37,8 +37,7 @@ class QuestionRepositoryTest extends IntegrationTestSupport {
 
         // when
         List<Question> userQuestions = questionRepository.findAllByCategoryIdAndUserId(category1.getId(), user.getId());
-        List<Question> adminQuestions = questionRepository.findAllByCategoryIdAndUserId(category1.getId(),
-                admin.getId());
+        List<Question> adminQuestions = questionRepository.findAllByCategoryIdAndUserId(category1.getId(), admin.getId());
 
         // then
         assertAll(() -> {

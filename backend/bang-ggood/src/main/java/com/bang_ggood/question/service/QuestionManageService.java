@@ -105,8 +105,7 @@ public class QuestionManageService {
                 categorizeCustomQuestions(customChecklistQuestions, user));
     }
 
-    private List<CategoryCustomChecklistQuestionResponse> categorizeCustomQuestions(
-            List<CustomChecklistQuestion> customChecklistQuestions, User user) {
+    private List<CategoryCustomChecklistQuestionResponse> categorizeCustomQuestions(List<CustomChecklistQuestion> customChecklistQuestions, User user) {
         List<CategoryCustomChecklistQuestionResponse> response = new ArrayList<>();
         for (Category category : questionService.readAllCategories()) {
             List<Question> categoryQuestions = questionService.readQuestionsByCategoryAndUser(category, user);

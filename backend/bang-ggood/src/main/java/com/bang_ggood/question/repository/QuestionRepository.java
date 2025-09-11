@@ -26,7 +26,7 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
             WHERE q.category.id = :categoryId
             AND q.user.id = :userId""")
     List<Question> findAllByCategoryIdAndUserId(@Param("categoryId") Integer categoryId,
-                                                @Param("userId") Long userId);
+                                                          @Param("userId") Long userId);
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Transactional

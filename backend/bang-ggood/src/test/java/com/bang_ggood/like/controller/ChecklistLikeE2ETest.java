@@ -1,15 +1,15 @@
 package com.bang_ggood.like.controller;
 
 import com.bang_ggood.AcceptanceTest;
-import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
-import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
-import com.bang_ggood.checklist.repository.BuildingRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.like.service.ChecklistLikeManageService;
+import com.bang_ggood.room.RoomFixture;
+import com.bang_ggood.room.domain.Room;
+import com.bang_ggood.room.repository.RoomRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +25,7 @@ class ChecklistLikeE2ETest extends AcceptanceTest {
     @Autowired
     private ChecklistRepository checklistRepository;
     @Autowired
-    private BuildingRepository buildingRepository;
+    private RoomRepository roomRepository;
     @Autowired
     private ChecklistLikeRepository checklistLikeRepository;
 
@@ -61,9 +61,9 @@ class ChecklistLikeE2ETest extends AcceptanceTest {
     @DisplayName("체크리스트 좋아요 삭제 성공")
     @Test
     void deleteChecklistLikeByChecklistId() {
-        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Room room = roomRepository.save(RoomFixture.ROOM_1());
         Checklist checklist = checklistRepository.save(
-                ChecklistFixture.CHECKLIST1_USER1(this.getAuthenticatedUser(), building));
+                ChecklistFixture.CHECKLIST1_USER1(room, this.getAuthenticatedUser()));
         checklistLikeRepository.save(ChecklistFixture.CHECKLIST1_LIKE(checklist));
 
         RestAssured.given().log().all()

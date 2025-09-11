@@ -1,8 +1,11 @@
 package com.bang_ggood.question.service;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.repository.BuildingRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
@@ -23,9 +26,6 @@ import com.bang_ggood.question.dto.response.QuestionResponse;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
 import com.bang_ggood.question.repository.QuestionRepository;
-import com.bang_ggood.room.RoomFixture;
-import com.bang_ggood.room.domain.Room;
-import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -53,7 +53,7 @@ class QuestionManageServiceTest extends IntegrationTestSupport {
     private UserRepository userRepository;
 
     @Autowired
-    private RoomRepository roomRepository;
+    private BuildingRepository buildingRepository;
 
     @Autowired
     private ChecklistRepository checklistRepository;
@@ -146,8 +146,8 @@ class QuestionManageServiceTest extends IntegrationTestSupport {
     void readComparisonChecklistQuestionsByCategory() {
         // given
         User user = UserFixture.USER1;
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
 
         Question question1Category1 = QuestionFixture.QUESTION1_CATEGORY1;
         Question question2Category2 = QuestionFixture.QUESTION2_CATEGORY1;

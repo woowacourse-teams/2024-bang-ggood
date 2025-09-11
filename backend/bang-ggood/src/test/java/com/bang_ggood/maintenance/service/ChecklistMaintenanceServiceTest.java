@@ -1,17 +1,17 @@
 package com.bang_ggood.maintenance.service;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.repository.BuildingRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.maintenance.ChecklistMaintenanceFixture;
 import com.bang_ggood.maintenance.domain.ChecklistMaintenance;
 import com.bang_ggood.maintenance.repository.ChecklistMaintenanceRepository;
-import com.bang_ggood.room.RoomFixture;
-import com.bang_ggood.room.domain.Room;
-import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -35,7 +35,7 @@ class ChecklistMaintenanceServiceTest extends IntegrationTestSupport {
     private ChecklistRepository checklistRepository;
 
     @Autowired
-    private RoomRepository roomRepository;
+    private BuildingRepository buildingRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -43,10 +43,10 @@ class ChecklistMaintenanceServiceTest extends IntegrationTestSupport {
     @DisplayName("관리비 포함 항목 작성 성공")
     @Test
     void createChecklistMaintenance() {
-        //given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
+        //given=
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
         List<ChecklistMaintenance> checklistMaintenances = ChecklistMaintenanceFixture.CHECKLIST1_MAINTENANCES(
                 checklist);
 
@@ -62,9 +62,9 @@ class ChecklistMaintenanceServiceTest extends IntegrationTestSupport {
     @Test
     void createChecklistMaintenance_duplicatedId_exception() {
         //given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
         List<ChecklistMaintenance> checklistMaintenances = ChecklistMaintenanceFixture.CHECKLIST1_MAINTENANCES_DUPLICATE(
                 checklist);
 
@@ -79,9 +79,9 @@ class ChecklistMaintenanceServiceTest extends IntegrationTestSupport {
     @Test
     void deleteAllByChecklistId() {
         //given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
         List<ChecklistMaintenance> checklistMaintenances = List.of(
                 ChecklistMaintenanceFixture.CHECKLIST1_MAINTENANCE_WATERWORKS(checklist),
                 ChecklistMaintenanceFixture.CHECKLIST1_MAINTENANCE_INTERNET(checklist)
@@ -99,9 +99,9 @@ class ChecklistMaintenanceServiceTest extends IntegrationTestSupport {
     @Test
     void updateChecklistMaintenance() {
         //given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
         List<ChecklistMaintenance> checklistMaintenances = ChecklistMaintenanceFixture.CHECKLIST1_MAINTENANCES(
                 checklist);
         checklistMaintenanceService.createMaintenances(checklistMaintenances);
@@ -120,9 +120,9 @@ class ChecklistMaintenanceServiceTest extends IntegrationTestSupport {
     @Test
     void updateChecklistMaintenance_duplicatedId_exception() {
         //given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
         List<ChecklistMaintenance> checklistMaintenances = ChecklistMaintenanceFixture.CHECKLIST1_MAINTENANCES(
                 checklist);
         checklistMaintenanceService.createMaintenances(checklistMaintenances);

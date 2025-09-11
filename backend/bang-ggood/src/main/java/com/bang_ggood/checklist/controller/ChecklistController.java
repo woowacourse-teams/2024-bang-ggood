@@ -4,7 +4,6 @@ import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.auth.config.UserPrincipal;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
-import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponseV2;
 import com.bang_ggood.checklist.dto.response.ChecklistShareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponseV2;
@@ -93,7 +92,7 @@ public class ChecklistController {
     }
 
     @GetMapping("/v1/checklists/share/{token}")
-    public ResponseEntity<SelectedChecklistResponse> readSharedChecklist(@PathVariable("token") String token) {
+    public ResponseEntity<SelectedChecklistResponseV2> readSharedChecklist(@PathVariable("token") String token) {
         return ResponseEntity.ok(checklistManageService.readSharedChecklist(token));
     }
 

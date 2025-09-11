@@ -1,9 +1,11 @@
 package com.bang_ggood.checklist.service;
 
+import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistImage;
 import com.bang_ggood.checklist.domain.ChecklistShare;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
+import com.bang_ggood.checklist.dto.request.RoomRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
 import com.bang_ggood.checklist.dto.response.ChecklistImageResponse;
@@ -14,6 +16,7 @@ import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponseV2;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponseV2;
+import com.bang_ggood.checklist.dto.response.SelectedRoomResponse;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.like.service.ChecklistLikeService;
@@ -33,14 +36,10 @@ import com.bang_ggood.question.dto.response.SelectedCategoryQuestionsResponse;
 import com.bang_ggood.question.dto.response.SelectedQuestionResponse;
 import com.bang_ggood.question.service.ChecklistQuestionService;
 import com.bang_ggood.question.service.QuestionService;
-import com.bang_ggood.room.domain.Room;
-import com.bang_ggood.room.dto.request.RoomRequest;
-import com.bang_ggood.room.dto.response.SelectedRoomResponse;
-import com.bang_ggood.room.service.RoomService;
-import com.bang_ggood.station.domain.ChecklistStation;
+import com.bang_ggood.station.domain.BuildingStation;
 import com.bang_ggood.station.dto.response.SubwayStationResponse;
 import com.bang_ggood.station.dto.response.SubwayStationResponses;
-import com.bang_ggood.station.service.ChecklistStationService;
+import com.bang_ggood.station.service.BuildingStationService;
 import com.bang_ggood.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -56,36 +55,36 @@ public class ChecklistManageService {
 
     private static final int CHECKLIST_COMPARE_COUNT = 2;
 
-    private final RoomService roomService;
+    private final BuildingService buildingService;
     private final ChecklistService checklistService;
     private final ChecklistOptionService checklistOptionService;
     private final ChecklistQuestionService checklistQuestionService;
     private final ChecklistMaintenanceService checklistMaintenanceService;
     private final ChecklistLikeService checklistLikeService;
-    private final ChecklistStationService checklistStationService;
+    private final BuildingStationService buildingStationService;
     private final QuestionService questionService;
     private final ChecklistShareService checklistShareService;
     private final ChecklistImageService checklistImageService;
 
     @Transactional
     public Long createChecklist(User user, ChecklistRequest checklistRequest) {
-        Room room = roomService.createRoom(checklistRequest.toRoomEntity());
-        Checklist checklist = checklistService.createChecklist(checklistRequest.toChecklistEntity(room, user));
+        Building building = buildingService.createOrFindBuilding(checklistRequest.toBuildingEntity());
+        Checklist checklist = checklistService.createChecklist(checklistRequest.toChecklistEntity(user, building));
         createChecklistOptions(checklistRequest.options(), checklist);
         createChecklistQuestions(checklistRequest.questions(), checklist);
         createChecklistMaintenances(checklistRequest.room(), checklist);
-        createChecklistStation(checklistRequest.room(), checklist);
+        createBuildingStation(checklistRequest.room(), checklist);
         return checklist.getId();
     }
 
     @Transactional
     public Long createChecklistV2(User user, ChecklistRequest checklistRequest, List<MultipartFile> images) {
-        Room room = roomService.createRoom(checklistRequest.toRoomEntity());
-        Checklist checklist = checklistService.createChecklist(checklistRequest.toChecklistEntity(room, user));
+        Building building = buildingService.createOrFindBuilding(checklistRequest.toBuildingEntity());
+        Checklist checklist = checklistService.createChecklist(checklistRequest.toChecklistEntity(user, building));
         createChecklistOptions(checklistRequest.options(), checklist);
         createChecklistQuestions(checklistRequest.questions(), checklist);
         createChecklistMaintenances(checklistRequest.room(), checklist);
-        createChecklistStation(checklistRequest.room(), checklist);
+        createBuildingStation(checklistRequest.room(), checklist);
         createChecklistImage(images, checklist);
         return checklist.getId();
     }
@@ -116,8 +115,8 @@ public class ChecklistManageService {
         checklistMaintenanceService.createMaintenances(checklistMaintenances);
     }
 
-    private void createChecklistStation(RoomRequest roomRequest, Checklist checklist) {
-        checklistStationService.createChecklistStations(checklist, roomRequest.latitude(), roomRequest.longitude());
+    private void createBuildingStation(RoomRequest roomRequest, Checklist checklist) {
+        buildingStationService.createBuildingStations(checklist, roomRequest.latitude(), roomRequest.longitude());
     }
 
     private void createChecklistImage(List<MultipartFile> images, Checklist checklist) {
@@ -147,11 +146,11 @@ public class ChecklistManageService {
     }
 
     @Transactional(readOnly = true)
-    public SelectedChecklistResponse readSharedChecklist(String token) {
+    public SelectedChecklistResponseV2 readSharedChecklist(String token) {
         ChecklistShare checklistShare = checklistShareService.readChecklistShare(token);
         Checklist checklist = checklistShare.getChecklist();
 
-        return assembleChecklistResponse(checklist);
+        return assembleChecklistResponseV2(checklist);
 
     }
 
@@ -161,7 +160,7 @@ public class ChecklistManageService {
         List<SelectedCategoryQuestionsResponse> questions = readChecklistQuestions(checklist);
         SelectedRoomResponse room = SelectedRoomResponse.of(checklist, maintenances);
         boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
-        SubwayStationResponses stations = readChecklistStations(checklist);
+        SubwayStationResponses stations = readBuildingStations(checklist);
 
         return SelectedChecklistResponse.of(room, options, questions, isLiked, stations);
     }
@@ -173,7 +172,7 @@ public class ChecklistManageService {
         List<SelectedCategoryQuestionsResponse> questions = readChecklistQuestions(checklist);
         SelectedRoomResponse room = SelectedRoomResponse.of(checklist, maintenances);
         boolean isLiked = checklistLikeService.isLikedChecklist(checklist);
-        SubwayStationResponses stations = readChecklistStations(checklist);
+        SubwayStationResponses stations = readBuildingStations(checklist);
 
         return SelectedChecklistResponseV2.of(images, room, options, questions, isLiked, stations);
     }
@@ -220,9 +219,9 @@ public class ChecklistManageService {
         return SelectedCategoryQuestionsResponse.of(category, selectedQuestionResponse);
     }
 
-    private SubwayStationResponses readChecklistStations(Checklist checklist) {
-        List<ChecklistStation> checklistStations = checklistStationService.readChecklistStationsByChecklist(checklist);
-        List<SubwayStationResponse> stations = checklistStations.stream()
+    private SubwayStationResponses readBuildingStations(Checklist checklist) {
+        List<BuildingStation> buildingStations = buildingStationService.readBuildingStationsByChecklist(checklist);
+        List<SubwayStationResponse> stations = buildingStations.stream()
                 .map(SubwayStationResponse::from)
                 .toList();
 
@@ -256,10 +255,10 @@ public class ChecklistManageService {
     private ChecklistCompareResponse compareChecklist(User user, Long checklistId) {
         Checklist checklist = checklistService.readChecklist(user, checklistId);
         List<ChecklistOption> options = checklistOptionService.readChecklistOptions(checklist);
-        List<ChecklistStation> checklistStations = checklistStationService.readChecklistStationsByChecklist(checklist);
+        List<BuildingStation> buildingStations = buildingStationService.readBuildingStationsByChecklist(checklist);
         List<ChecklistMaintenance> maintenances = checklistMaintenanceService.readChecklistMaintenances(checklist);
         CategoryScoreResponses categoryScoreResponses = compareCategories(user, checklistId);
-        return ChecklistCompareResponse.of(checklist, options, checklistStations, maintenances,
+        return ChecklistCompareResponse.of(checklist, options, buildingStations, maintenances,
                 categoryScoreResponses);
     }
 
@@ -281,8 +280,7 @@ public class ChecklistManageService {
         checklistOptionService.deleteAllByChecklistId(checklist.getId());
         checklistMaintenanceService.deleteAllByChecklistId(checklist.getId());
         checklistService.deleteById(id);
-        roomService.deleteById(checklist.getRoomId());
-        checklistStationService.deleteChecklistStation(checklist.getId());
+        buildingStationService.deleteBuildingStation(checklist.getId());
         checklistLikeService.deleteLike(user, checklist);
         checklistShareService.deleteChecklistShare(checklist);
         checklistImageService.deleteAllByChecklistId(checklist.getId());
@@ -327,8 +325,8 @@ public class ChecklistManageService {
     }
 
     private SubwayStationResponse readNearestStation(Checklist checklist) {
-        List<ChecklistStation> checklistStations = checklistStationService.readChecklistStationsByChecklist(checklist);
-        List<SubwayStationResponse> stationResponses = checklistStations.stream()
+        List<BuildingStation> buildingStations = buildingStationService.readBuildingStationsByChecklist(checklist);
+        List<SubwayStationResponse> stationResponses = buildingStations.stream()
                 .map(SubwayStationResponse::from)
                 .toList();
         SubwayStationResponses subwayStationResponses = SubwayStationResponses.from(stationResponses);
@@ -339,28 +337,26 @@ public class ChecklistManageService {
     @Transactional
     public void updateChecklistById(User user, Long checklistId, ChecklistRequest checklistRequest) {
         Checklist checklist = checklistService.readChecklist(user, checklistId);
-
-        roomService.updateRoom(checklist.getRoom(), checklistRequest.toRoomEntity());
-        checklistService.updateChecklist(checklist, checklistRequest.toChecklistEntity(checklist.getRoom(), user));
+        Building building = buildingService.createOrFindBuilding(checklistRequest.toBuildingEntity());
+        checklistService.updateChecklist(checklist, checklistRequest.toChecklistEntity(user, building));
 
         updateChecklistOptions(checklistRequest, checklist);
         updateChecklistQuestions(checklistRequest, checklist);
         updateChecklistMaintenances(checklistRequest, checklist);
-        updateChecklistStations(checklistRequest.room(), checklist);
+        updateBuildingStations(checklistRequest.room(), checklist);
     }
 
     @Transactional
     public void updateChecklistByIdV2(User user, long checklistId, ChecklistRequest checklistRequest,
                                       List<MultipartFile> updateImages) {
         Checklist checklist = checklistService.readChecklist(user, checklistId);
-
-        roomService.updateRoom(checklist.getRoom(), checklistRequest.toRoomEntity());
-        checklistService.updateChecklist(checklist, checklistRequest.toChecklistEntity(checklist.getRoom(), user));
+        Building building = buildingService.createOrFindBuilding(checklistRequest.toBuildingEntity());
+        checklistService.updateChecklist(checklist, checklistRequest.toChecklistEntity(user, building));
 
         updateChecklistOptions(checklistRequest, checklist);
         updateChecklistQuestions(checklistRequest, checklist);
         updateChecklistMaintenances(checklistRequest, checklist);
-        updateChecklistStations(checklistRequest.room(), checklist);
+        updateBuildingStations(checklistRequest.room(), checklist);
         updateChecklistImage(updateImages, checklist);
     }
 
@@ -372,7 +368,7 @@ public class ChecklistManageService {
     }
 
     private void updateChecklistQuestions(ChecklistRequest checklistRequest, Checklist checklist) {
-        List<ChecklistQuestion> questions = checklist.getQuestions();
+        List<ChecklistQuestion> questions = checklistQuestionService.readChecklistQuestions(checklist);
         List<ChecklistQuestion> updateQuestions = checklistRequest.questions().stream()
                 .map(question -> new ChecklistQuestion(
                         checklist,
@@ -392,10 +388,10 @@ public class ChecklistManageService {
         checklistMaintenanceService.updateMaintenances(checklist.getId(), checklistMaintenances);
     }
 
-    private void updateChecklistStations(RoomRequest roomRequest, Checklist checklist) {
+    private void updateBuildingStations(RoomRequest roomRequest, Checklist checklist) {
         Double latitude = roomRequest.latitude();
         Double longitude = roomRequest.longitude();
-        checklistStationService.updateChecklistStation(checklist, latitude, longitude);
+        buildingStationService.updateBuildingStation(checklist, latitude, longitude);
     }
 
     private void updateChecklistImage(List<MultipartFile> images, Checklist checklist) {

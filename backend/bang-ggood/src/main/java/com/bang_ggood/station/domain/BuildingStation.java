@@ -1,7 +1,7 @@
 package com.bang_ggood.station.domain;
 
 import com.bang_ggood.BaseEntity;
-import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.Building;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -17,14 +17,14 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @Entity
-public class ChecklistStation extends BaseEntity {
+public class BuildingStation extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Checklist checklist;
+    private Building building;
 
     private String stationName;
 
@@ -32,8 +32,8 @@ public class ChecklistStation extends BaseEntity {
 
     private int walkingTime;
 
-    public ChecklistStation(Checklist checklist, String stationName, String stationLine, int walkingTime) {
-        this.checklist = checklist;
+    public BuildingStation(Building building, String stationName, String stationLine, int walkingTime) {
+        this.building = building;
         this.stationName = stationName;
         this.stationLine = stationLine;
         this.walkingTime = walkingTime;
@@ -47,7 +47,7 @@ public class ChecklistStation extends BaseEntity {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ChecklistStation that = (ChecklistStation) o;
+        BuildingStation that = (BuildingStation) o;
         return Objects.equals(id, that.id);
     }
 

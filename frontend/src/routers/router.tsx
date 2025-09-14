@@ -52,6 +52,10 @@ const router = createBrowserRouter([
             element: <ChecklistListPage />,
             path: ROUTE_PATH.checklistList,
           },
+          // {
+          //   element: <BuildingListPage />,
+          //   path: ROUTE_PATH.buildingList,
+          // },
           {
             element: <BuildingListPage />,
             path: ROUTE_PATH.buildingList,

@@ -6,11 +6,14 @@ import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
 import com.bang_ggood.checklist.dto.response.ChecklistShareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponseV2;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
+import com.bang_ggood.checklist.dto.response.SelectedChecklistResponseV2;
 import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.user.domain.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +22,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import java.net.URI;
 import java.util.List;
 
@@ -36,6 +41,16 @@ public class ChecklistController {
         return ResponseEntity.created(URI.create("/checklist/" + checklistId)).build();
     }
 
+    @PostMapping(value = "/v2/checklists", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> createChecklistV2(
+            @AuthRequiredPrincipal User user,
+            @RequestPart @Valid ChecklistRequest checklistRequest,
+            @RequestPart List<MultipartFile> images
+    ) {
+        long checklistId = checklistManageService.createChecklistV2(user, checklistRequest, images);
+        return ResponseEntity.created(URI.create("/checklist/" + checklistId)).build();
+    }
+
     @PostMapping("/v1/checklists/{id}/share")
     public ResponseEntity<ChecklistShareResponse> createChecklistShareLink(@AuthRequiredPrincipal User user,
                                                                            @PathVariable("id") Long checklistId) {
@@ -43,15 +58,26 @@ public class ChecklistController {
         return ResponseEntity.created(URI.create("/v1/checklists/share/" + response.token())).body(response);
     }
 
-    @GetMapping("v1/checklists/{id}")
+    @GetMapping("/v1/checklists/{id}")
     public ResponseEntity<SelectedChecklistResponse> readChecklistByIdV1(@UserPrincipal User user,
                                                                          @PathVariable("id") Long checklistId) {
         return ResponseEntity.ok(checklistManageService.readChecklist(user, checklistId));
     }
 
+    @GetMapping("/v2/checklists/{id}")
+    public ResponseEntity<SelectedChecklistResponseV2> readChecklistByIdV2(@UserPrincipal User user,
+                                                                           @PathVariable("id") Long checklistId) {
+        return ResponseEntity.ok(checklistManageService.readChecklistV2(user, checklistId));
+    }
+
     @GetMapping("/v1/checklists")
     public ResponseEntity<ChecklistsPreviewResponse> readChecklistsPreviewV1(@UserPrincipal User user) {
         return ResponseEntity.ok(checklistManageService.readAllChecklistsPreview(user));
+    }
+
+    @GetMapping("/v2/checklists")
+    public ResponseEntity<ChecklistsPreviewResponseV2> readChecklistsPreviewV2(@UserPrincipal User user) {
+        return ResponseEntity.ok(checklistManageService.readAllChecklistsPreviewV2(user));
     }
 
     @GetMapping("/v1/checklists/like")
@@ -66,7 +92,7 @@ public class ChecklistController {
     }
 
     @GetMapping("/v1/checklists/share/{token}")
-    public ResponseEntity<SelectedChecklistResponse> readSharedChecklist(@PathVariable("token") String token) {
+    public ResponseEntity<SelectedChecklistResponseV2> readSharedChecklist(@PathVariable("token") String token) {
         return ResponseEntity.ok(checklistManageService.readSharedChecklist(token));
     }
 
@@ -79,9 +105,27 @@ public class ChecklistController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping(value = "/v2/checklists/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> updateChecklistByIdV2(
+            @AuthRequiredPrincipal User user,
+            @PathVariable("id") long id,
+            @RequestPart @Valid ChecklistRequest checklistRequest,
+            @RequestPart List<MultipartFile> updateImages) {
+        checklistManageService.updateChecklistByIdV2(user, id, checklistRequest, updateImages);
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("/checklists/{id}")
     public ResponseEntity<Void> deleteChecklistById(@AuthRequiredPrincipal User user, @PathVariable("id") long id) {
         checklistManageService.deleteChecklistById(user, id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/checklists/{checklist_id}/images/{image_id}")
+    public ResponseEntity<Void> deleteChecklistImageById(@AuthRequiredPrincipal User user,
+                                                         @PathVariable("checklist_id") long checklistId,
+                                                         @PathVariable("image_id") long imageId) {
+        checklistManageService.deleteChecklistImageById(user, checklistId, imageId);
         return ResponseEntity.noContent().build();
     }
 }

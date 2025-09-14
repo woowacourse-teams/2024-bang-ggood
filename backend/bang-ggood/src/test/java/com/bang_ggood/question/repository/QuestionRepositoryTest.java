@@ -7,11 +7,13 @@ import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class QuestionRepositoryTest extends IntegrationTestSupport {
 
@@ -34,25 +36,32 @@ class QuestionRepositoryTest extends IntegrationTestSupport {
         Question question3 = questionRepository.save(new Question(category2, user, "title", "subtitle", false));
 
         // when
-        List<Question> questions = questionRepository.findAllByCategoryIdAndUserIdAndAdminId(category1.getId(), user.getId(), admin.getId());
+        List<Question> userQuestions = questionRepository.findAllByCategoryIdAndUserId(category1.getId(), user.getId());
+        List<Question> adminQuestions = questionRepository.findAllByCategoryIdAndUserId(category1.getId(),
+                admin.getId());
 
         // then
-        Assertions.assertThat(questions).containsOnly(question1, question2);
+        assertAll(() -> {
+            assertThat(userQuestions).containsOnly(question1);
+            assertThat(adminQuestions).containsOnly(question2);
+        });
     }
 
     @DisplayName("디폴트 체크리스트 조회 성공")
     @Test
     void findByIsDefaultTrue() {
         // given
-        Question defaultQuestion = questionRepository.save(new Question(QuestionFixture.CATEGORY1, null, "test", "test", true));
-        Question notDefaultQuestion = questionRepository.save(new Question(QuestionFixture.CATEGORY2, null, "test", "test", false));
+        Question defaultQuestion = questionRepository.save(
+                new Question(QuestionFixture.CATEGORY1, null, "test", "test", true));
+        Question notDefaultQuestion = questionRepository.save(
+                new Question(QuestionFixture.CATEGORY2, null, "test", "test", false));
 
         // when
         List<Question> questions = questionRepository.findAllByIsDefaultTrue();
 
         // then
-        Assertions.assertThat(questions).contains(defaultQuestion);
-        Assertions.assertThat(questions).doesNotContain(notDefaultQuestion);
+        assertThat(questions).contains(defaultQuestion);
+        assertThat(questions).doesNotContain(notDefaultQuestion);
     }
 
     @DisplayName("체크리스트 id로 조회 성공")
@@ -66,7 +75,7 @@ class QuestionRepositoryTest extends IntegrationTestSupport {
         List<Question> questions = questionRepository.findAllByIdIn(List.of(question1.getId(), question2.getId()));
 
         // then
-        Assertions.assertThat(questions).containsExactly(question1, question2);
+        assertThat(questions).containsExactly(question1, question2);
     }
 
     @DisplayName("질문 삭제 성공")
@@ -80,6 +89,6 @@ class QuestionRepositoryTest extends IntegrationTestSupport {
         List<Question> result = questionRepository.findAllByIdIn(List.of(question1.getId()));
 
         // then
-        Assertions.assertThat(result).isEmpty();
+        assertThat(result).isEmpty();
     }
 }

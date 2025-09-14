@@ -16,8 +16,8 @@ const SubwayStationItem = ({ station, size, textType = 'full' }: Props) => {
   const { stationName, stationLine, walkingTime } = station;
 
   return (
-    <FlexBox.Horizontal gap={'0.6rem'} flexWrap="wrap">
-      <FlexBox.Horizontal gap={'0.4rem'}>
+    <FlexBox.Horizontal gap="0.6rem" flexWrap="wrap">
+      <FlexBox.Horizontal gap="0.4rem">
         {stationLine?.map(oneLine => {
           const lineColor = SUBWAY_LINE_PALLETE[oneLine];
           const isNumberTypeSubwayName = oneLine.slice(-2) === '호선' && oneLine.length === 3;

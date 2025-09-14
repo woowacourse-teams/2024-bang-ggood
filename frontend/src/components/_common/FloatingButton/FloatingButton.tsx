@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { CSSProperties } from 'react';
 
 import { FOOTER_SIZE } from '@/constants/style';
 import { flexCenter } from '@/styles/common';
@@ -16,6 +17,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: Size;
   color?: Color;
   'aria-label'?: string;
+  position?: 'left' | 'right' | 'center';
 }
 
 const FloatingButton = ({
@@ -24,15 +26,21 @@ const FloatingButton = ({
   size = 'medium',
   color = 'yellow',
   'aria-label': ariaLabel = 'add',
+  position = 'right',
   ...rest
 }: Props) => {
   return (
-    <S.Wrapper>
-      <S.Button size={size} color={color} aria-label={ariaLabel} onClick={onClick} {...rest} tabIndex={1}>
+    <S.Wrapper justify={positionMap[position]}>
+      <S.Button size={size} color={color} aria-label={ariaLabel} onClick={onClick} {...rest}>
         {children}
       </S.Button>
     </S.Wrapper>
   );
+};
+const positionMap: Record<string, CSSProperties['justifyContent']> = {
+  left: 'flex-start',
+  center: 'center',
+  right: 'flex-end',
 };
 
 export default FloatingButton;
@@ -92,7 +100,7 @@ const colorStyle = {
 };
 
 const S = {
-  Wrapper: styled.div`
+  Wrapper: styled.div<{ justify: CSSProperties['justifyContent'] }>`
     display: flex;
     position: fixed;
     bottom: calc(2% + ${FOOTER_SIZE}rem);
@@ -100,7 +108,7 @@ const S = {
     z-index: ${theme.zIndex.FLOATING_BUTTON};
     width: 100%;
     padding-right: 3%;
-    justify-content: flex-end;
+    justify-content: ${({ justify }) => justify};
     transform: translateX(-50%);
     max-width: 60rem;
   `,

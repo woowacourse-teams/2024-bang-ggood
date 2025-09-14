@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class          JpaAuditingTest extends IntegrationTestSupport {
+class JpaAuditingTest extends IntegrationTestSupport {
 
     @Autowired
     private TestRepository testRepository;

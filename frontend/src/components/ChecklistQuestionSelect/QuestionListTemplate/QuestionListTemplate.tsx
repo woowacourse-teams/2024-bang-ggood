@@ -10,6 +10,7 @@ import useChecklistQuestionSelectStore from '@/store/useChecklistQuestionSelectS
 
 const QuestionListTemplate = () => {
   const { data: checklistQuestions, isLoading } = useGetAllChecklistQuestionQuery();
+  const defaultCategories = checklistQuestions?.defaultCategories;
   const { checklistAllQuestionList, selectedQuestions, setChecklistAllQuestionList, getCategoryQuestions } =
     useChecklistQuestionSelectStore();
   const { currentTabId } = useTabContext();
@@ -18,8 +19,8 @@ const QuestionListTemplate = () => {
   const allQuestionCount = checklistAllQuestionList.flatMap(category => category.questions);
 
   useEffect(() => {
-    setChecklistAllQuestionList(checklistQuestions || []);
-  }, [checklistQuestions]);
+    setChecklistAllQuestionList(defaultCategories || []);
+  }, [defaultCategories]);
 
   if (isLoading) return <SKQuestionSelectList />;
 

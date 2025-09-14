@@ -21,17 +21,17 @@ const CustomBannerSection = () => {
       <CustomBanner
         onClick={handleClickMoveCustomPage}
         Icon={<PencilIcon width={30} height={30} aria-hidden="true" />}
-        title={'체크리스트 질문 템플릿'}
+        title="체크리스트 질문 템플릿"
         buttonText="편집하기"
-        buttonDetailText={'체크리스트 질문을 편집하려면 이 버튼을 누르세요.'}
+        buttonDetailText="체크리스트 질문을 편집하려면 이 버튼을 누르세요."
       />
       <CustomBanner
         onClick={handleClickMoveQuestionSelectPage}
         Icon={<LampIcon width={30} height={30} aria-hidden="true" />}
-        title={'체크리스트 비교'}
+        title="체크리스트 비교"
         backgroundColor={theme.color.gray[100]}
         buttonText="비교하기"
-        buttonDetailText={'체크리스트 질문을 편집하려면 이 버튼을 누르세요.'}
+        buttonDetailText="체크리스트 질문을 편집하려면 이 버튼을 누르세요."
       />
     </S.BannerSection>
   );

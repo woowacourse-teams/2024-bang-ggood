@@ -11,7 +11,7 @@ const FifthSection = () => {
         </CS.Title>
 
         <div style={{ width: '80%' }}>
-          <TopButton text={'시작하기!'} />
+          <TopButton text="시작하기!" />
         </div>
       </CS.CenterBox>
     </CS.Container>

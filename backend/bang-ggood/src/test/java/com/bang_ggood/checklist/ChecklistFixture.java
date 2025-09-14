@@ -1,9 +1,11 @@
 package com.bang_ggood.checklist;
 
+import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistShare;
+import com.bang_ggood.checklist.domain.FloorLevel;
+import com.bang_ggood.checklist.domain.Structure;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
-import com.bang_ggood.checklist.dto.request.ChecklistRequestV1;
 import com.bang_ggood.contract.domain.OccupancyMonth;
 import com.bang_ggood.contract.domain.OccupancyPeriod;
 import com.bang_ggood.like.domain.ChecklistLike;
@@ -12,68 +14,78 @@ import com.bang_ggood.maintenance.domain.MaintenanceItem;
 import com.bang_ggood.option.domain.Option;
 import com.bang_ggood.question.QuestionFixture;
 import com.bang_ggood.question.dto.request.QuestionRequest;
-import com.bang_ggood.room.RoomFixture;
-import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import java.util.List;
 
 public class ChecklistFixture {
 
-    public static Checklist CHECKLIST1_USER1(Room room, User user) {
+    public static Checklist CHECKLIST1_USER1(User user, Building building) {
         return new Checklist(
-                room,
                 user,
+                building,
+                "살기 좋은 방", FloorLevel.GROUND, 3,
+                Structure.TWO_ROOM, 3.5,
                 1000, 50, 5, 12,
                 OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY,
                 "방끗공인중개사", "메모", "한줄평"
         );
     }
 
-    public static Checklist CHECKLIST1_USER1_UPDATE(Room room, User user) {
+    public static Checklist CHECKLIST1_USER1_UPDATE(User user, Building building) {
         return new Checklist(
-                room,
                 user,
+                building,
+                "살기 좋은 방", FloorLevel.GROUND, 3,
+                Structure.TWO_ROOM, 3.5,
                 1000, 50, 5, 12,
                 OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY,
                 "방끗공인중개", "메모 추가", "한줄평 수정"
         );
     }
 
-    public static Checklist CHECKLIST2_USER1(Room room, User user) {
+    public static Checklist CHECKLIST2_USER1(User user, Building building) {
         return new Checklist(
-                room,
                 user,
+                building,
+                "살기 좋은 방", FloorLevel.GROUND, 3,
+                Structure.TWO_ROOM, 3.5,
                 1000, 50, 5, 12,
                 OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY,
                 "방끗공인중개사", "메모", "한줄평"
         );
     }
 
-    public static Checklist CHECKLIST3_USER1(Room room, User user) {
+    public static Checklist CHECKLIST3_USER1(User user, Building building) {
         return new Checklist(
-                room,
                 user,
+                building,
+                "살기 좋은 방", FloorLevel.GROUND, 3,
+                Structure.TWO_ROOM, 3.5,
                 1000, 50, 5, 12,
                 OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY,
                 "방끗공인중개사", "메모", "한줄평"
         );
     }
 
-    public static Checklist CHECKLIST3_USER2(Room room, User user) {
+    public static Checklist CHECKLIST3_USER2(User user, Building building) {
         return new Checklist(
-                room,
                 user,
+                building,
+                "살기 좋은 방", FloorLevel.GROUND, 3,
+                Structure.TWO_ROOM, 3.5,
                 1000, 50, 5, 12,
                 OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY,
                 "방끗공인중개사", "메모", "한줄평"
         );
     }
 
-    public static Checklist CHECKLIST1_WITH_USER1_ID(Room room) {
+    public static Checklist CHECKLIST1_WITH_USER1_ID(Building building) {
         return new Checklist(
-                room,
                 UserFixture.USER1_WITH_ID(),
+                building,
+                "살기 좋은 방", FloorLevel.GROUND, 3,
+                Structure.TWO_ROOM, 3.5,
                 1000, 50, 5, 12,
                 OccupancyMonth.OCTOBER, OccupancyPeriod.EARLY,
                 "방끗공인중개사", "메모", "한줄평"
@@ -118,6 +130,16 @@ public class ChecklistFixture {
         );
     }
 
+    public static ChecklistRequest CHECKLIST_CREATE_BUILDING_NULL() {
+        return new ChecklistRequest(
+                RoomFixture.ROOM_CREATE_REQUEST(),
+                List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(),
+                        Option.SHOE_RACK.getId()),
+                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
+                        QUESTION_3_CREATE_REQUEST(), QUESTION_5_CREATE_REQUEST())
+        );
+    }
+
     public static ChecklistRequest CHECKLIST_CREATE_REQUEST_EMPTY_LOCATION() {
         return new ChecklistRequest(
                 RoomFixture.ROOM_CREATE_REQUEST_EMPTY_LOCATION(),
@@ -128,8 +150,8 @@ public class ChecklistFixture {
         );
     }
 
-    public static ChecklistRequestV1 CHECKLIST_CREATE_REQUEST_V1_EMPTY_LOCATION() {
-        return new ChecklistRequestV1(
+    public static ChecklistRequest CHECKLIST_CREATE_REQUEST_V1_EMPTY_LOCATION() {
+        return new ChecklistRequest(
                 RoomFixture.ROOM_CREATE_REQUEST_EMPTY_LOCATION(),
                 List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(),
                         Option.SHOE_RACK.getId()),
@@ -158,6 +180,16 @@ public class ChecklistFixture {
         );
     }
 
+    public static ChecklistRequest CHECKLIST_CREATE_REQUEST_NO_QUESTION_ID() {
+        return new ChecklistRequest(
+                RoomFixture.ROOM_CREATE_REQUEST(),
+                List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(),
+                        Option.SHOE_RACK.getId()),
+                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
+                        QUESTION_3_CREATE_REQUEST(), QUESTION_CREATE_REQUEST_NO_ID())
+        );
+    }
+
     public static ChecklistRequest CHECKLIST_UPDATE_REQUEST() {
         return new ChecklistRequest(
                 RoomFixture.ROOM_UPDATE_REQUEST(), List.of(Option.REFRIGERATOR.getId(), Option.INDUCTION.getId(),
@@ -174,16 +206,6 @@ public class ChecklistFixture {
                         Option.SHOE_RACK.getId()),
                 List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
                         QUESTION_3_CREATE_REQUEST(), QUESTION_5_UPDATE_REQUEST())
-        );
-    }
-
-    public static ChecklistRequest CHECKLIST_CREATE_REQUEST_NO_QUESTION_ID() {
-        return new ChecklistRequest(
-                RoomFixture.ROOM_CREATE_REQUEST(),
-                List.of(Option.REFRIGERATOR.getId(), Option.SINK.getId(), Option.INDUCTION.getId(),
-                        Option.SHOE_RACK.getId()),
-                List.of(QUESTION_1_CREATE_REQUEST(), QUESTION_2_CREATE_REQUEST(),
-                        QUESTION_3_CREATE_REQUEST(), QUESTION_CREATE_REQUEST_NO_ID())
         );
     }
 

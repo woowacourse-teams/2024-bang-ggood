@@ -4,9 +4,7 @@ import com.bang_ggood.article.domain.Article;
 import com.bang_ggood.article.dto.response.ArticleResponse;
 import com.bang_ggood.article.repository.ArticleRepository;
 import com.bang_ggood.article.service.ArticleManageService;
-import com.bang_ggood.article.service.ArticleService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -21,13 +19,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CacheTest {
 
+    private final Long cacheableArticleId = 1L;
     @MockBean
     private ArticleRepository articleRepository;
-
     @Autowired
     private ArticleManageService articleManageService;
-
-    private final Long cacheableArticleId = 1L;
 
     @BeforeEach
     void setUp() {

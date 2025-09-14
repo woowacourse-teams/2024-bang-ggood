@@ -20,12 +20,12 @@ const CompareCard = ({ room, openOptionModal, openCategoryModal }: Props) => {
     <S.Container>
       <CompareCardItem
         height={7}
-        label={'주소'}
+        label="주소"
         item={<S.Item>{room.address?.length ? room.address : EMPTY_INDICATOR}</S.Item>}
       />
-      <CompareCardItem label={'층수'} item={<S.Item>{room.floor ? `${room.floor}층` : EMPTY_INDICATOR}</S.Item>} />
+      <CompareCardItem label="층수" item={<S.Item>{room.floor ? `${room.floor}층` : EMPTY_INDICATOR}</S.Item>} />
       <CompareCardItem
-        label={'보증금 / 월세'}
+        label="보증금 / 월세"
         item={
           <S.Item>
             {room.deposit ?? EMPTY_INDICATOR}/{room.rent ?? EMPTY_INDICATOR}
@@ -33,20 +33,20 @@ const CompareCard = ({ room, openOptionModal, openCategoryModal }: Props) => {
         }
       />
       <CompareCardItem
-        label={'방 구조 / 방 평수'}
+        label="방 구조 / 방 평수"
         item={
           <S.Item>{`${room.structure ?? EMPTY_INDICATOR}/${room.size ? `${room.size}평` : EMPTY_INDICATOR}`}</S.Item>
         }
       />
-      <CompareCardItem label={'계약기간'} item={<S.Item>{room.contractTerm}개월</S.Item>} />
+      <CompareCardItem label="계약기간" item={<S.Item>{room.contractTerm}개월</S.Item>} />
       <CompareCardItem
         height={10}
-        label={'가까운 지하철'}
-        item={<SubwayStations size={'medium'} stations={room.stations.stations} textType="omit" />}
+        label="가까운 지하철"
+        item={<SubwayStations size="medium" stations={room.stations.stations} textType="omit" />}
       />
       <CompareCardItem
         height={7.2}
-        label={'옵션'}
+        label="옵션"
         item={<S.OptionButton onClick={openOptionModal}>{room.options.length}개</S.OptionButton>}
       />
       {/*카테고리별 질문 평점 섹션*/}

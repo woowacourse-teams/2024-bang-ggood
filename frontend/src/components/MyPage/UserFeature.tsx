@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { ArrowRightIcon } from '@/assets/assets';
+import Button from '@/components/_common/Button/Button';
 import DeleteAccountModal from '@/components/MyPage/DeleteAccountModal';
 import LogoutModal from '@/components/MyPage/LogoutModal';
 import { QUERY_KEYS } from '@/constants/queryKeys';
@@ -12,7 +13,6 @@ import useGetUserQuery from '@/hooks/query/useGetUserQuery';
 import useModal from '@/hooks/useModal';
 import { flexColumn, flexSpaceBetween } from '@/styles/common';
 import { fontStyle } from '@/utils/fontStyle';
-import Button from '@/components/_common/Button/Button';
 
 const UserFeature = () => {
   const { data: user } = useGetUserQuery();
@@ -36,8 +36,8 @@ const UserFeature = () => {
           <span>🎉 훌륭해요! 이제 좋은 집을 만나는 일만 남았어요!</span>
           {checklist && Array.isArray(checklist) && (
             <span>
-                지금까지 <S.Count>{checklist.length}개</S.Count>의 체크리스트를 작성했어요!
-              </span>
+              지금까지 <S.Count>{checklist.length}개</S.Count>의 체크리스트를 작성했어요!
+            </span>
           )}
         </>
       </S.TopLabelContainer>
@@ -45,20 +45,40 @@ const UserFeature = () => {
         {user?.userType !== 'ADMIN' && (
           <S.Section>
             <S.LabelContainer>방끗이 도움되었나요? 한마디 남겨주세요!</S.LabelContainer>
-            <Button label="방끗이 기다려요, 의견 남기기!" color="light" onClick={handleMoveVoc} variant="outlined-gray" tabIndex={1} Icon={ArrowRightIcon} iconPosition="end"/>
+            <Button
+              label="방끗이 기다려요, 의견 남기기!"
+              color="light"
+              onClick={handleMoveVoc}
+              variant="outlined-gray"
+              Icon={ArrowRightIcon}
+              iconPosition="end"
+            />
           </S.Section>
         )}
 
         {user?.userType === 'ADMIN' && (
           <S.Section>
-            <Button label="어드민 페이지 바로가기" color="light" onClick={() => navigate(ROUTE_PATH.admin)} variant="outlined-gray" tabIndex={1} Icon={ArrowRightIcon} iconPosition="end"/>
+            <Button
+              label="어드민 페이지 바로가기"
+              color="light"
+              onClick={() => navigate(ROUTE_PATH.admin)}
+              variant="outlined-gray"
+              Icon={ArrowRightIcon}
+              iconPosition="end"
+            />
           </S.Section>
         )}
 
         <S.Section>
           <S.LabelContainer>방끗 잠시 안녕!</S.LabelContainer>
-          <Button label="로그아웃하기" color="dark" onClick={openLogoutModal} tabIndex={1} Icon={ArrowRightIcon} iconPosition="end"/>
-          <Button label="회원 탈퇴하기" color="light" onClick={openDeleteModal} tabIndex={1} />
+          <Button
+            label="로그아웃하기"
+            color="dark"
+            onClick={openLogoutModal}
+            Icon={ArrowRightIcon}
+            iconPosition="end"
+          />
+          <Button label="회원 탈퇴하기" color="light" onClick={openDeleteModal} />
         </S.Section>
       </S.Container>
 
@@ -75,7 +95,7 @@ const S = {
     ${flexColumn}
     ${flexSpaceBetween}
     gap: 2.5rem;
-    padding: 2.8rem 1.6rem 3.2rem 1.6rem;
+    padding: 2.8rem 1.6rem 3.2rem;
   `,
   Section: styled.section`
     ${flexColumn};
@@ -83,13 +103,14 @@ const S = {
   `,
   LabelContainer: styled.div`
     ${flexColumn};
-    gap: .5rem;
+    gap: 0.5rem;
     ${({ theme }) => fontStyle(theme.font.body[1].R)}
   `,
   TopLabelContainer: styled.div`
     ${flexColumn};
-    gap: .5rem;
+    gap: 0.5rem;
     padding: 1.2rem 1.6rem;
+
     ${({ theme }) => fontStyle(theme.font.body[1].B)}
     color: ${({ theme }) => theme.color.gray[400]};
   `,

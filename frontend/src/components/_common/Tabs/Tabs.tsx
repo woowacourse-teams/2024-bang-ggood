@@ -100,11 +100,12 @@ const S = {
   `,
   FlexContainer: styled.div`
     display: inline-flex;
+    width: 100%;
     height: ${TAB_SIZE}rem;
     padding: 0.8rem 1.6rem 0;
-    gap: 1rem;
 
     background-color: ${({ theme }) => theme.color.mono.white};
+    gap: 1rem;
     border-bottom: ${({ theme }) => `1px solid ${theme.color.gray[200]}`};
   `,
 };

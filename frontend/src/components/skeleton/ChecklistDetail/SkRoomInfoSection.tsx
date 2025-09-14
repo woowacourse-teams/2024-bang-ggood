@@ -11,8 +11,8 @@ const SkRoomInfoSection = () => {
         <S.Row />
       </S.GapBox>
       <S.Row />
-      <S.Row width={'30rem'} />
-      <S.Row width={'30rem'} />
+      <S.Row width="30rem" />
+      <S.Row width="30rem" />
       <S.Map />
     </S.Container>
   );

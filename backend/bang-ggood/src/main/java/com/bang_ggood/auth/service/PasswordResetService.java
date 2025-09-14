@@ -33,7 +33,7 @@ public class PasswordResetService {
         passwordResetCodeRepository.deleteByEmail(new Email(request.email()));
         passwordResetCodeRepository.save(new PasswordResetCode(request.email(), code));
     }
-    
+
 
     @Transactional
     public void confirmPasswordResetCode(ConfirmPasswordResetCodeRequest request) {

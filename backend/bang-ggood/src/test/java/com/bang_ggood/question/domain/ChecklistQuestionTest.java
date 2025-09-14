@@ -1,11 +1,11 @@
 package com.bang_ggood.question.domain;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.question.ChecklistQuestionFixture;
 import com.bang_ggood.question.QuestionFixture;
-import com.bang_ggood.room.RoomFixture;
-import com.bang_ggood.room.domain.Room;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
@@ -19,13 +19,13 @@ class ChecklistQuestionTest extends IntegrationTestSupport {
     @Test
     void isDifferentQuestionId_true() {
         //given
-        Room room = RoomFixture.ROOM_1();
         User user = UserFixture.USER1();
+        Building building = BuildingFixture.BUILDING_1();
 
         ChecklistQuestion checklistQuestion1 = ChecklistQuestionFixture.CHECKLIST1_QUESTION1_BAD(
-                ChecklistFixture.CHECKLIST1_USER1(room, user), QuestionFixture.QUESTION1_CATEGORY1);
+                ChecklistFixture.CHECKLIST1_USER1(user, building), QuestionFixture.QUESTION1_CATEGORY1);
         ChecklistQuestion checklistQuestion2 = ChecklistQuestionFixture.CHECKLIST1_QUESTION2_GOOD(
-                ChecklistFixture.CHECKLIST1_USER1(room, user), QuestionFixture.QUESTION2_CATEGORY1);
+                ChecklistFixture.CHECKLIST1_USER1(user, building), QuestionFixture.QUESTION2_CATEGORY1);
 
         //when & then
         assertThat(checklistQuestion1.isDifferentQuestionId(checklistQuestion2)).isTrue();
@@ -35,15 +35,14 @@ class ChecklistQuestionTest extends IntegrationTestSupport {
     @Test
     void isDifferentQuestionId_false() {
         //given
-        Room room = RoomFixture.ROOM_1();
         User user = UserFixture.USER1();
+        Building building = BuildingFixture.BUILDING_1();
         ChecklistQuestion checklistQuestion = ChecklistQuestionFixture.CHECKLIST1_QUESTION1_BAD(
-                ChecklistFixture.CHECKLIST1_USER1(room, user), QuestionFixture.QUESTION1_CATEGORY1);
+                ChecklistFixture.CHECKLIST1_USER1(user, building), QuestionFixture.QUESTION1_CATEGORY1);
         ChecklistQuestion compareChecklistQuestion = ChecklistQuestionFixture.CHECKLIST1_QUESTION1_BAD(
-                ChecklistFixture.CHECKLIST1_USER1(room, user), QuestionFixture.QUESTION1_CATEGORY1);
+                ChecklistFixture.CHECKLIST1_USER1(user, building), QuestionFixture.QUESTION1_CATEGORY1);
 
         //when & then
         assertThat(checklistQuestion.isDifferentQuestionId(compareChecklistQuestion)).isFalse();
     }
-
 }

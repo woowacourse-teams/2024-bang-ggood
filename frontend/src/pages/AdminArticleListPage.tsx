@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallback';
@@ -7,7 +8,6 @@ import AdminArticleListContainer from '@/components/Admin/Article/AdminArticleLi
 import SkArticleList from '@/components/skeleton/Article/SkArticleList';
 import { flexRow, flexSpaceBetween, title2 } from '@/styles/common';
 import theme from '@/styles/theme';
-import { Suspense } from 'react';
 
 const AdminArticleListPage = () => {
   return (

@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import { ArrowRightIcon } from '@/assets/assets';
+import Button from '@/components/_common/Button/Button';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { VOC_URL } from '@/constants/VoC';
 import { flexColumn, flexSpaceBetween } from '@/styles/common';
 import { fontStyle } from '@/utils/fontStyle';
-import Button from '@/components/_common/Button/Button';
 
 const GuestFeature = () => {
   const navigate = useNavigate();

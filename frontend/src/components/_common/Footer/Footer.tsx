@@ -58,11 +58,11 @@ const Footer = Object.assign(FooterWrapper, {
     <FooterButton logo="profile" isActive />,
     ROUTE_PATH.myPage,
   ),
-  // BuildingList: FooterLinkButton(
-  //   <FooterButton logo="building-list" />,
-  //   <FooterButton logo="building-list" isActive />,
-  //   ROUTE_PATH.buildingList,
-  // ),
+  BuildingList: FooterLinkButton(
+    <FooterButton logo="building-list" />,
+    <FooterButton logo="building-list" isActive />,
+    ROUTE_PATH.buildingList,
+  ),
 });
 
 export default Footer;

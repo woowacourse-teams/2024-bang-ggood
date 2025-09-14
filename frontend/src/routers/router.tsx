@@ -4,6 +4,7 @@ import { createBrowserRouter, Outlet } from 'react-router-dom';
 import FooterLayout from '@/components/_common/layout/FooterLayout';
 import MobileLayout from '@/components/_common/layout/MobileLayout';
 import { ROUTE_PATH } from '@/constants/routePath';
+import BuildingListPage from '@/pages/BuildingListPage';
 
 const MainPage = React.lazy(() => import('@/pages/MainPage'));
 const ChecklistListPage = React.lazy(() => import('@/pages/ChecklistListPage'));
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
           //   element: <BuildingListPage />,
           //   path: ROUTE_PATH.buildingList,
           // },
+          {
+            element: <BuildingListPage />,
+            path: ROUTE_PATH.buildingList,
+          },
           {
             element: <ArticleListPage />,
             path: ROUTE_PATH.articleList,

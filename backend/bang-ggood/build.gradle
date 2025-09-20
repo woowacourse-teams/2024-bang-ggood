@@ -26,9 +26,13 @@ dependencies {
     implementation 'org.projectlombok:lombok'
     implementation 'com.mysql:mysql-connector-j'
     implementation 'com.opencsv:opencsv:5.9'
+    implementation 'net.coobird:thumbnailator:0.4.20'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
+    implementation platform('io.awspring.cloud:spring-cloud-aws-dependencies:3.1.1')
+    implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3'
+
 
     implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
     implementation 'io.jsonwebtoken:jjwt-impl:0.11.2'

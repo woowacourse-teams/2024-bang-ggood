@@ -37,7 +37,7 @@ const FocusTrap = ({ children, onEscapeFocusTrap }: FocusTrapProps) => {
         focusableElements.current[0].focus();
       }
     }
-  }, [children]);
+  }, []);
 
   const focusNextElement = () => {
     currentFocusIndex.current = (currentFocusIndex.current + 1) % focusableElements.current.length;

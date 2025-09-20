@@ -67,7 +67,7 @@ const CategoryDetailModal = ({ isOpen, closeModal }: Props) => {
                       <>
                         <S.QuestionBox>
                           <S.Title>
-                            <ChecklistQuestionItem fontSize={'small'} question={question} key={question.questionId} />
+                            <ChecklistQuestionItem fontSize="small" question={question} key={question.questionId} />
                           </S.Title>
                         </S.QuestionBox>
                         {!isLastQuestion && <Divider />}

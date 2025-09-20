@@ -5,10 +5,6 @@ import com.bang_ggood.contract.domain.OccupancyMonth;
 import com.bang_ggood.contract.domain.OccupancyPeriod;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
-import com.bang_ggood.question.domain.ChecklistQuestion;
-import com.bang_ggood.room.domain.FloorLevel;
-import com.bang_ggood.room.domain.Room;
-import com.bang_ggood.room.domain.Structure;
 import com.bang_ggood.user.domain.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,11 +14,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import java.util.List;
 import java.util.Objects;
 
 import static lombok.AccessLevel.PROTECTED;
@@ -38,11 +31,23 @@ public class Checklist extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Room room;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Building building;
+
+    private String name;
+
+    @Enumerated(EnumType.STRING)
+    private FloorLevel floorLevel;
+
+    private Integer floor;
+
+    @Enumerated(EnumType.STRING)
+    private Structure structure;
+
+    private Double size;
 
     private Integer deposit;
 
@@ -64,14 +69,18 @@ public class Checklist extends BaseEntity {
 
     private String summary;
 
-    @OneToMany(mappedBy = "checklist")
-    private List<ChecklistQuestion> questions;
-
-    public Checklist(Room room, User user, Integer deposit, Integer rent, Integer maintenanceFee,
+    public Checklist(User user, Building building, String name, FloorLevel floorLevel, Integer floor,
+                     Structure structure, Double size,
+                     Integer deposit, Integer rent, Integer maintenanceFee,
                      Integer contractTerm, OccupancyMonth occupancyMonth, OccupancyPeriod occupancyPeriod,
                      String realEstate, String memo, String summary) {
-        this.room = room;
         this.user = user;
+        this.building = building;
+        this.name = name;
+        this.floorLevel = floorLevel;
+        this.floor = floor;
+        this.structure = structure;
+        this.size = size;
         this.deposit = deposit;
         this.rent = rent;
         this.maintenanceFee = maintenanceFee;
@@ -81,6 +90,7 @@ public class Checklist extends BaseEntity {
         this.realEstate = realEstate;
         this.memo = memo;
         this.summary = summary;
+        validateFloorAndLevel();
         validateMemoLength();
     }
 
@@ -89,7 +99,12 @@ public class Checklist extends BaseEntity {
     }
 
     public void change(Checklist updateChecklist) {
-        this.room = updateChecklist.room;
+        this.building = updateChecklist.building;
+        this.name = updateChecklist.name;
+        this.floorLevel = updateChecklist.floorLevel;
+        this.floor = updateChecklist.floor;
+        this.structure = updateChecklist.structure;
+        this.size = updateChecklist.size;
         this.deposit = updateChecklist.deposit;
         this.rent = updateChecklist.rent;
         this.maintenanceFee = updateChecklist.maintenanceFee;
@@ -108,52 +123,26 @@ public class Checklist extends BaseEntity {
         }
     }
 
-    public Long getRoomId() {
-        return room.getId();
+    private void validateFloorAndLevel() {
+        if (floorLevel != FloorLevel.GROUND && floor != null) {
+            throw new BangggoodException(ExceptionCode.CHECKLIST_FLOOR_AND_LEVEL_INVALID);
+        }
     }
 
-    public String getRoomName() {
-        return room.getName();
+    public String getBuildingAddress() {
+        return building.getAddress();
     }
 
-    public String getRoomAddress() {
-        return room.getAddress();
+    public String getBuildingName() {
+        return building.getName();
     }
 
-    public Double getRoomLatitude() {
-        return room.getLatitude();
+    public Double getBuildingLatitude() {
+        return building.getLatitude();
     }
 
-    public Double getRoomLongitude() {
-        return room.getLongitude();
-    }
-
-    public String getRoomBuildingName() {
-        return room.getBuildingName();
-    }
-
-    public Integer getRoomFloor() {
-        return room.getFloor();
-    }
-
-    public String getRoomStation() {
-        return room.getStation();
-    }
-
-    public Integer getRoomWalkingTime() {
-        return room.getWalkingTime();
-    }
-
-    public Double getRoomSize() {
-        return room.getSize();
-    }
-
-    public FloorLevel getRoomFloorLevel() {
-        return room.getFloorLevel();
-    }
-
-    public Structure getRoomStructure() {
-        return room.getStructure();
+    public Double getBuildingLongitude() {
+        return building.getLongitude();
     }
 
     public Integer getOccupancyMonth() {
@@ -185,8 +174,12 @@ public class Checklist extends BaseEntity {
     public String toString() {
         return "Checklist{" +
                 "id=" + id +
-                ", room=" + room +
                 ", user=" + user +
+                ", name='" + name + '\'' +
+                ", floorLevel=" + floorLevel +
+                ", floor=" + floor +
+                ", structure=" + structure +
+                ", size=" + size +
                 ", deposit=" + deposit +
                 ", rent=" + rent +
                 ", maintenanceFee=" + maintenanceFee +
@@ -196,7 +189,6 @@ public class Checklist extends BaseEntity {
                 ", realEstate='" + realEstate + '\'' +
                 ", memo='" + memo + '\'' +
                 ", summary='" + summary + '\'' +
-                ", questions=" + questions +
                 '}';
     }
 }

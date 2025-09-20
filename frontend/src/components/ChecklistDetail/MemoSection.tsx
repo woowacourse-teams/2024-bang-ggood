@@ -18,7 +18,7 @@ const MemoSection = ({ memo }: Props) => {
     <Accordion totalCount={CATEGORY_COUNT}>
       <S.MemoWrapper>
         <Accordion.header
-          text={'메모'}
+          text="메모"
           id={1}
           style={{
             marginBottom: '0.2rem',

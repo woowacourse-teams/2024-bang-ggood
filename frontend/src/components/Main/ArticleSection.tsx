@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,7 +9,6 @@ import SkArticleSection from '@/components/skeleton/Main/SkArticleSection';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { flexRow, flexSpaceBetween } from '@/styles/common';
 import { fontStyle } from '@/utils/fontStyle';
-import { Suspense } from 'react';
 
 const ArticleSection = () => {
   const navigate = useNavigate();

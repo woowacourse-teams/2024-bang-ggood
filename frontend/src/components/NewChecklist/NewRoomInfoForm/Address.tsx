@@ -16,7 +16,7 @@ const Address = () => {
       {address?.rawValue ? (
         <FormField.TextBox text={`${address.rawValue} ${buildingName.rawValue}`} id="address" />
       ) : (
-        <FormField.TextBox text={'주소를 추가해 주세요.'} id="address" />
+        <FormField.TextBox text="주소를 추가해 주세요." id="address" />
       )}
       <FlexBox.Horizontal style={{ marginTop: '2rem', alignContent: 'center', justifyContent: 'center' }}>
         {/*실시간 위치 모달*/}

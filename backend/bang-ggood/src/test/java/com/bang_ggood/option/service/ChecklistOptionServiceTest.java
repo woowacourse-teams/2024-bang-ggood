@@ -1,17 +1,17 @@
 package com.bang_ggood.option.service;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.repository.BuildingRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.option.ChecklistOptionFixture;
 import com.bang_ggood.option.domain.ChecklistOption;
 import com.bang_ggood.option.repository.ChecklistOptionRepository;
-import com.bang_ggood.room.RoomFixture;
-import com.bang_ggood.room.domain.Room;
-import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -36,7 +36,7 @@ class ChecklistOptionServiceTest extends IntegrationTestSupport {
     private ChecklistRepository checklistRepository;
 
     @Autowired
-    private RoomRepository roomRepository;
+    private BuildingRepository buildingRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -45,9 +45,9 @@ class ChecklistOptionServiceTest extends IntegrationTestSupport {
     @Test
     void createOptions() {
         //given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
         List<ChecklistOption> checklistOptions = ChecklistOptionFixture.CHECkLIST1_OPTIONS(checklist);
 
         //when
@@ -61,9 +61,9 @@ class ChecklistOptionServiceTest extends IntegrationTestSupport {
     @Test
     void createOption_duplicateId_exception() {
         //given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
         List<ChecklistOption> checklistOptions = ChecklistOptionFixture.CHECkLIST1_OPTIONS_DUPLICATE(checklist);
 
         // when & then
@@ -77,9 +77,9 @@ class ChecklistOptionServiceTest extends IntegrationTestSupport {
     @Test
     void deleteAllByChecklistId() {
         //given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
         List<ChecklistOption> checklistOptions = List.of(
                 ChecklistOptionFixture.CHECKLIST1_OPTION_CLOSET(checklist),
                 ChecklistOptionFixture.CHECKLIST1_OPTION_BED(checklist)
@@ -97,9 +97,9 @@ class ChecklistOptionServiceTest extends IntegrationTestSupport {
     @Test
     void updateOptions() {
         //given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
         List<ChecklistOption> checklistOptions = ChecklistOptionFixture.CHECkLIST1_OPTIONS(checklist);
         checklistOptionService.createOptions(checklistOptions);
 
@@ -118,9 +118,9 @@ class ChecklistOptionServiceTest extends IntegrationTestSupport {
     @Test
     void updateOptions_duplicateId_exception() {
         //given
-        Room room = roomRepository.save(RoomFixture.ROOM_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
         List<ChecklistOption> checklistOptions = ChecklistOptionFixture.CHECkLIST1_OPTIONS(checklist);
         checklistOptionService.createOptions(checklistOptions);
 

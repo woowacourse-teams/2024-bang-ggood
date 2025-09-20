@@ -2,7 +2,6 @@ package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistShare;
-import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.repository.ChecklistShareRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,6 @@ import java.util.UUID;
 public class ChecklistShareService {
 
     private final ChecklistShareRepository checklistShareRepository;
-    private final ChecklistRepository checklistRepository;
 
     @Transactional
     public ChecklistShare createChecklistShare(Checklist checklist) {
@@ -34,6 +32,6 @@ public class ChecklistShareService {
 
     @Transactional
     public void deleteChecklistShare(Checklist checklist) {
-        checklistShareRepository.deleteByChecklistId(checklist.getId());
+        checklistShareRepository.deleteById(checklist.getId());
     }
 }

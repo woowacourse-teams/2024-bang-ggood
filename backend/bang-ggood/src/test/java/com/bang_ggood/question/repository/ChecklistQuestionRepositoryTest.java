@@ -1,8 +1,11 @@
 package com.bang_ggood.question.repository;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.repository.BuildingRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.question.ChecklistQuestionFixture;
 import com.bang_ggood.question.QuestionFixture;
@@ -10,14 +13,11 @@ import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.question.domain.Category;
 import com.bang_ggood.question.domain.ChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
-import com.bang_ggood.room.RoomFixture;
-import com.bang_ggood.room.domain.Room;
-import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,28 +35,30 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
     private UserRepository userRepository;
 
     @Autowired
-    private RoomRepository roomRepository;
+    private BuildingRepository buildingRepository;
 
     @Autowired
     private ChecklistQuestionRepository checklistQuestionRepository;
 
-    private Room room;
     private User user;
+    private Building building;
     private Checklist checklist;
 
     @BeforeEach
     void beforeEach() {
-        room = roomRepository.save(RoomFixture.ROOM_1());
         user = userRepository.save(UserFixture.USER1());
-        checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
     }
 
     @DisplayName("질문 답변을 체크리스트 ID로 조회 성공")
     @Test
     void findAllByChecklistId() {
         //given
-        checklistQuestionRepository.save(ChecklistQuestionFixture.CHECKLIST1_QUESTION1_BAD(checklist, QuestionFixture.QUESTION1_CATEGORY1));
-        checklistQuestionRepository.save(ChecklistQuestionFixture.CHECKLIST1_QUESTION2_GOOD(checklist, QuestionFixture.QUESTION2_CATEGORY1));
+        checklistQuestionRepository.save(
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1_BAD(checklist, QuestionFixture.QUESTION1_CATEGORY1));
+        checklistQuestionRepository.save(
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION2_GOOD(checklist, QuestionFixture.QUESTION2_CATEGORY1));
 
         // when
         List<ChecklistQuestion> checklistQuestions = checklistQuestionRepository.findAllByChecklistId(
@@ -137,7 +139,7 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
         // given
         Question questionCategory1 = QuestionFixture.QUESTION1_CATEGORY1;
         Question questionCategory2 = QuestionFixture.QUESTION3_CATEGORY2;
-        
+
         ChecklistQuestion checklistQuestion1 = checklistQuestionRepository.save(
                 ChecklistQuestionFixture.CHECKLIST1_QUESTION1_BAD(checklist, questionCategory1));
         ChecklistQuestion checklistQuestion2 = checklistQuestionRepository.save(
@@ -151,7 +153,7 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
         // then
         Assertions.assertThat(checklistQuestions).containsOnly(checklistQuestion1);
     }
-  
+
     @DisplayName("질문 답변을 체크리스트 ID로 논리적 삭제 성공")
     @Test
     void deleteAllByChecklistId() {
@@ -163,7 +165,8 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
 
         //when
         checklistQuestionRepository.deleteAllByChecklistId(
-                ChecklistQuestionFixture.CHECKLIST1_QUESTION1_BAD(checklist, QuestionFixture.QUESTION1_CATEGORY1).getChecklistId());
+                ChecklistQuestionFixture.CHECKLIST1_QUESTION1_BAD(checklist, QuestionFixture.QUESTION1_CATEGORY1)
+                        .getChecklistId());
 
         //then
         assertAll(

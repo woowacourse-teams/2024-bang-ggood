@@ -43,7 +43,8 @@ public class QuestionManageService {
         Question question = questionCreateRequest.toQuestionEntity(category, user);
         Question savedQuestion = questionService.createQuestion(question);
 
-        CustomChecklistQuestion customChecklistQuestion = questionCreateRequest.toCustomChecklistEntity(user, savedQuestion);
+        CustomChecklistQuestion customChecklistQuestion = questionCreateRequest.toCustomChecklistEntity(user,
+                savedQuestion);
         CustomChecklistQuestion savedCustomChecklistQuestion = customChecklistQuestionService.createCustomChecklistQuestion(
                 customChecklistQuestion);
         return savedCustomChecklistQuestion.getQuestionId();
@@ -98,10 +99,17 @@ public class QuestionManageService {
     private CategoryCustomChecklistQuestionsResponse categorizeAllQuestionsWithSelected(
             List<CustomChecklistQuestion> customChecklistQuestions, User user) {
         User admin = userRepository.findUserByUserType(UserType.ADMIN).get(0);
-        List<CategoryCustomChecklistQuestionResponse> response = new ArrayList<>();
 
+        return CategoryCustomChecklistQuestionsResponse.of(
+                categorizeCustomQuestions(customChecklistQuestions, admin),
+                categorizeCustomQuestions(customChecklistQuestions, user));
+    }
+
+    private List<CategoryCustomChecklistQuestionResponse> categorizeCustomQuestions(
+            List<CustomChecklistQuestion> customChecklistQuestions, User user) {
+        List<CategoryCustomChecklistQuestionResponse> response = new ArrayList<>();
         for (Category category : questionService.readAllCategories()) {
-            List<Question> categoryQuestions = questionService.readQuestionsByCategoryAndUserAndAdmin(category, user, admin);
+            List<Question> categoryQuestions = questionService.readQuestionsByCategoryAndUser(category, user);
             List<CustomChecklistQuestionResponse> questions = categoryQuestions.stream()
                     .map(question -> new CustomChecklistQuestionResponse(
                             question,
@@ -110,15 +118,17 @@ public class QuestionManageService {
                     .toList();
             response.add(CategoryCustomChecklistQuestionResponse.of(category, questions));
         }
-
-        return CategoryCustomChecklistQuestionsResponse.from(response);
+        return response;
     }
 
     @Transactional(readOnly = true)
-    public ComparisonCategorizedQuestionsResponse readComparisonChecklistQuestionsByCategory(User user, Long checklistId, Integer categoryId) {
+    public ComparisonCategorizedQuestionsResponse readComparisonChecklistQuestionsByCategory(User user,
+                                                                                             Long checklistId,
+                                                                                             Integer categoryId) {
         Checklist checklist = checklistService.readChecklist(user, checklistId);
         Category category = questionService.readCategory(categoryId);
-        ChecklistQuestions checklistQuestions = new ChecklistQuestions(checklistQuestionService.readChecklistQuestionsByCategory(checklist, category));
+        ChecklistQuestions checklistQuestions = new ChecklistQuestions(
+                checklistQuestionService.readChecklistQuestionsByCategory(checklist, category));
 
         List<QuestionResponse> good = categorizeQuestionsByAnswer(checklistQuestions, Answer.GOOD);
         List<QuestionResponse> bad = categorizeQuestionsByAnswer(checklistQuestions, Answer.BAD);
@@ -130,7 +140,8 @@ public class QuestionManageService {
     private List<QuestionResponse> categorizeQuestionsByAnswer(ChecklistQuestions checklistQuestions, Answer answer) {
         return checklistQuestions.filterByAnswer(answer)
                 .stream()
-                .map(checklistQuestion -> new QuestionResponse(checklistQuestion.getQuestion(), questionService.readHighlights(checklistQuestion.getQuestionId())))
+                .map(checklistQuestion -> new QuestionResponse(checklistQuestion.getQuestion(),
+                        questionService.readHighlights(checklistQuestion.getQuestionId())))
                 .toList();
     }
 

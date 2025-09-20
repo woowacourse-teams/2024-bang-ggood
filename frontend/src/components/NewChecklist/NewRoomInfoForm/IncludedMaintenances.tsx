@@ -27,7 +27,7 @@ const IncludedMaintenances = () => {
   );
 
   return (
-    <FlexBox.Vertical gap={'.5rem'}>
+    <FlexBox.Vertical gap=".5rem">
       <FormField.Label label="관리비 포함 항목" htmlFor="includedMaintenances" bold />
       <FormStyled.OptionButtonContainer flexWrap="wrap">
         {IncludedMaintenancesData.map(({ id, displayName }) => (

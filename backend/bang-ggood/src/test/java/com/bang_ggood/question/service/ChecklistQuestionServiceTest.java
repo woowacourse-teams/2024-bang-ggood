@@ -1,8 +1,11 @@
 package com.bang_ggood.question.service;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.repository.BuildingRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
@@ -15,9 +18,6 @@ import com.bang_ggood.question.domain.CustomChecklistQuestion;
 import com.bang_ggood.question.domain.Question;
 import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.question.repository.CustomChecklistQuestionRepository;
-import com.bang_ggood.room.RoomFixture;
-import com.bang_ggood.room.domain.Room;
-import com.bang_ggood.room.repository.RoomRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -48,20 +48,20 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
     private ChecklistRepository checklistRepository;
 
     @Autowired
-    private RoomRepository roomRepository;
+    private BuildingRepository buildingRepository;
 
     @Autowired
     private UserRepository userRepository;
 
     private User user;
-    private Room room;
+    private Building building;
     private Checklist checklist;
 
     @BeforeEach
     void beforeEach() {
         user = userRepository.save(UserFixture.USER1());
-        room = roomRepository.save(RoomFixture.ROOM_1());
-        checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(room, user));
+        building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
     }
 
     @DisplayName("질문 작성 성공")
@@ -275,7 +275,8 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
         // given
         Question question = QuestionFixture.QUESTION1_CATEGORY1;
         CustomChecklistQuestion customChecklistQuestion = new CustomChecklistQuestion(UserFixture.USER1, question);
-        CustomChecklistQuestion savedCustomChecklistQuestion = customChecklistQuestionRepository.save(customChecklistQuestion);
+        CustomChecklistQuestion savedCustomChecklistQuestion = customChecklistQuestionRepository.save(
+                customChecklistQuestion);
 
         // when
         customChecklistQuestionRepository.deleteById(customChecklistQuestion.getId());

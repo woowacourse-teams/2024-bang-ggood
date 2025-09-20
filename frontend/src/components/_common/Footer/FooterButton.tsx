@@ -1,13 +1,14 @@
 import styled from '@emotion/styled';
 
 import Article from '@/assets/icons/footer/Article';
+import Building from '@/assets/icons/footer/Building';
 import Checklist from '@/assets/icons/footer/Checklist';
 import Home from '@/assets/icons/footer/Home';
 import Profile from '@/assets/icons/footer/Profile';
 import { flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
 
-type LogoType = 'home' | 'checklist' | 'article' | 'profile';
+type LogoType = 'home' | 'checklist' | 'article' | 'profile' | 'building-list';
 
 interface Props {
   logo: LogoType;
@@ -42,6 +43,12 @@ const FooterButton = ({ logo, isActive = false }: Props) => {
         <>
           <Profile width={24} height={24} stroke={stroke} fill={fill} aria-label="마이페이지 바로가기" />
           <S.Text isActive={isActive}>마이페이지</S.Text>
+        </>
+      )}
+      {logo === 'building-list' && (
+        <>
+          <Building width={24} height={24} stroke={stroke} fill={fill} aria-label="마이페이지 바로가기" />
+          <S.Text isActive={isActive}>건물리스트</S.Text>
         </>
       )}
     </S.Wrapper>

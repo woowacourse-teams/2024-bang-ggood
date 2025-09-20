@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+
 import Checkbox from './Checkbox';
 
 /** hover 및 체크 시 UI가 변하는 간단한 체크박스입니다. */

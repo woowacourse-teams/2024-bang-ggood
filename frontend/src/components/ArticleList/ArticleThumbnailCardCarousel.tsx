@@ -1,7 +1,8 @@
-import ArticleThumbnailCard from '@/components/ArticleList/ArticleThumbnailCard';
-import { useGetArticleListSuspenseQuery } from '@/hooks/query/useGetArticleListSuspenseQuery';
 import styled from '@emotion/styled';
 import { useRef, useState } from 'react';
+
+import ArticleThumbnailCard from '@/components/ArticleList/ArticleThumbnailCard';
+import { useGetArticleListSuspenseQuery } from '@/hooks/query/useGetArticleListSuspenseQuery';
 
 export const ArticleThumbnailCardCarousel = () => {
   const { articles } = useGetArticleListSuspenseQuery();

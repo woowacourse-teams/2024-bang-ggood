@@ -11,7 +11,7 @@ import theme from '@/styles/theme';
 const OptionTemplate = () => {
   return (
     <Layout bgColor={theme.palette.background} withHeader withTab>
-      <TipBox tipType={'OPTION'} />
+      <TipBox tipType="OPTION" />
       <S.InnerBox>
         <OptionAllSelectBox />
         <S.OptionBox>

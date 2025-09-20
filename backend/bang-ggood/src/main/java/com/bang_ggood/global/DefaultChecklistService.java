@@ -1,12 +1,12 @@
 package com.bang_ggood.global;
 
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
+import com.bang_ggood.checklist.dto.request.RoomRequest;
 import com.bang_ggood.checklist.service.ChecklistManageService;
 import com.bang_ggood.option.domain.Option;
 import com.bang_ggood.question.domain.Answer;
 import com.bang_ggood.question.dto.request.QuestionRequest;
 import com.bang_ggood.question.service.QuestionManageService;
-import com.bang_ggood.room.dto.request.RoomRequest;
 import com.bang_ggood.user.domain.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -78,7 +78,7 @@ CREATE TABLE checklist
     id               BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id          BIGINT NOT NULL,
     building_id      BIGINT NOT NULL,
-    name             VARCHAR(255),
+    name             VARCHAR(255) NOT NULL,
     floor_level      VARCHAR(255),
     floor            INTEGER,
     structure        VARCHAR(255),

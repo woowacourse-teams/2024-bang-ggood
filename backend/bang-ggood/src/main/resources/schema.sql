@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS checklist_share CASCADE;
 DROP TABLE IF EXISTS checklist_image CASCADE;
 DROP TABLE IF EXISTS checklist CASCADE;
 DROP TABLE IF EXISTS article CASCADE;
+DROP TABLE IF EXISTS building_like CASCADE;
 DROP TABLE IF EXISTS building CASCADE;
 DROP TABLE IF EXISTS highlight CASCADE;
 DROP TABLE IF EXISTS question CASCADE;
@@ -220,5 +221,17 @@ CREATE TABLE checklist_image
     CONSTRAINT fk_checklist_image_checklist FOREIGN KEY (checklist_id)
         REFERENCES checklist (id)
         ON DELETE CASCADE
+);
+
+CREATE TABLE building_like
+(
+    id           BIGINT PRIMARY KEY AUTO_INCREMENT,
+    building_id  BIGINT        NOT NULL,
+    user_id      BIGINT        NOT NULL,
+    created_at   TIMESTAMP(6),
+    modified_at  TIMESTAMP(6),
+    deleted      BOOLEAN,
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (building_id) REFERENCES building (id)
 );
 

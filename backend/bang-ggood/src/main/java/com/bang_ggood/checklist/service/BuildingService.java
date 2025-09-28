@@ -2,6 +2,8 @@ package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.repository.BuildingRepository;
+import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,5 +31,11 @@ public class BuildingService {
         }
         building.changeName(targetBuilding.getName());
         buildingRepository.save(building);
+    }
+
+    @Transactional
+    public Building findBuilding(Long buildingId) {
+        return buildingRepository.findById(buildingId)
+                        .orElseThrow(() -> new BangggoodException(ExceptionCode.BUILDING_NOT_FOUND));
     }
 }

@@ -159,6 +159,25 @@ class ChecklistRepositoryTest extends IntegrationTestSupport {
                 .containsOnly(checklist1, checklist2);
     }
 
+    @DisplayName("건물별 체크리스트 조회 성공 : 최신순으로 조회하는 경우")
+    @Test
+    void findAllByBuilding_OrderByLatest() {
+        // given
+        Building building1 = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Building building2 = buildingRepository.save(BuildingFixture.BUILDING_2());
+        User user1 = userRepository.save(UserFixture.USER1());
+        User user2 = userRepository.save(UserFixture.USER2());
+        Checklist checklist1 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user1, building1));
+        Checklist checklist2 = checklistRepository.save(ChecklistFixture.CHECKLIST2_USER1(user2, building1));
+        Checklist checklist3 = checklistRepository.save(ChecklistFixture.CHECKLIST3_USER1(user2, building2));
+
+        // when
+        List<Checklist> checklists = checklistRepository.findAllByBuildingOrderByLatest(building1.getId());
+
+        // then
+        Assertions.assertThat(checklists).containsExactly(checklist2, checklist1);
+    }
+
     @DisplayName("아이디를 통해 체크리스트 존재 확인 성공 : 존재하는 경우")
     @Test
     void existsById_true() {

@@ -6,6 +6,8 @@ import com.bang_ggood.checklist.domain.ChecklistImage;
 import com.bang_ggood.checklist.domain.ChecklistShare;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
 import com.bang_ggood.checklist.dto.request.RoomRequest;
+import com.bang_ggood.checklist.dto.response.ChecklistBuildingResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistBuildingResponses;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
 import com.bang_ggood.checklist.dto.response.ChecklistImageResponse;
@@ -17,6 +19,7 @@ import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponseV2;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponseV2;
 import com.bang_ggood.checklist.dto.response.SelectedRoomResponse;
+import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.like.service.ChecklistLikeService;
@@ -65,6 +68,7 @@ public class ChecklistManageService {
     private final QuestionService questionService;
     private final ChecklistShareService checklistShareService;
     private final ChecklistImageService checklistImageService;
+    private final ChecklistRepository checklistRepository;
 
     @Transactional
     public Long createChecklist(User user, ChecklistRequest checklistRequest) {
@@ -257,14 +261,14 @@ public class ChecklistManageService {
         List<ChecklistOption> options = checklistOptionService.readChecklistOptions(checklist);
         List<BuildingStation> buildingStations = buildingStationService.readBuildingStationsByChecklist(checklist);
         List<ChecklistMaintenance> maintenances = checklistMaintenanceService.readChecklistMaintenances(checklist);
-        CategoryScoreResponses categoryScoreResponses = compareCategories(user, checklistId);
+        CategoryScoreResponses categoryScoreResponses = calculateCategoryScores(checklistId);
         return ChecklistCompareResponse.of(checklist, options, buildingStations, maintenances,
                 categoryScoreResponses);
     }
 
-    private CategoryScoreResponses compareCategories(User user, Long checklistId) {
+    private CategoryScoreResponses calculateCategoryScores(Long checklistId) {
         List<CategoryScoreResponse> categoryScoreResponses = new ArrayList<>();
-        List<Category> categories = checklistQuestionService.findCategories(user, checklistId);
+        List<Category> categories = checklistQuestionService.findCategories(checklistId);
         for (Category category : categories) {
             Integer score = checklistQuestionService.calculateCategoryScore(checklistId, category.getId());
             categoryScoreResponses.add(new CategoryScoreResponse(category.getId(), category.getName(), score));
@@ -272,6 +276,20 @@ public class ChecklistManageService {
         return new CategoryScoreResponses(categoryScoreResponses);
     }
 
+    @Transactional(readOnly = true)
+    public ChecklistBuildingResponses readBuildingChecklists(Long buildingId) {
+        List<Checklist> buildingChecklists = checklistRepository.findAllByBuildingOrderByLatest(buildingId);
+        List<ChecklistBuildingResponse> checklistBuildingResponses = buildingChecklists.stream()
+                .map(this::assembleChecklistBuilding)
+                .toList();
+        return new ChecklistBuildingResponses(checklistBuildingResponses);
+    }
+
+    private ChecklistBuildingResponse assembleChecklistBuilding(Checklist checklist) {
+        Integer optionCount = checklistOptionService.countChecklistOptions(checklist.getId());
+        CategoryScoreResponses categoryScoreResponses = calculateCategoryScores(checklist.getId());
+        return ChecklistBuildingResponse.of(checklist, checklist.getUserName(), optionCount, categoryScoreResponses);
+    }
 
     @Transactional
     public void deleteChecklistById(User user, Long id) {

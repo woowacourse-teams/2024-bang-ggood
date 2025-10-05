@@ -10,6 +10,8 @@ import com.bang_ggood.checklist.domain.ChecklistImage;
 import com.bang_ggood.checklist.domain.ChecklistShare;
 import com.bang_ggood.checklist.domain.Structure;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
+import com.bang_ggood.checklist.dto.response.ChecklistBuildingResponse;
+import com.bang_ggood.checklist.dto.response.ChecklistBuildingResponses;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponseV2;
@@ -25,6 +27,12 @@ import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
 import com.bang_ggood.like.service.ChecklistLikeManageService;
+import com.bang_ggood.question.ChecklistQuestionFixture;
+import com.bang_ggood.question.QuestionFixture;
+import com.bang_ggood.question.domain.ChecklistQuestion;
+import com.bang_ggood.question.domain.Question;
+import com.bang_ggood.question.dto.response.CategoryScoreResponse;
+import com.bang_ggood.question.repository.ChecklistQuestionRepository;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -55,6 +63,8 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
     private ChecklistShareRepository checklistShareRepository;
     @Autowired
     private ChecklistImageRepository checklistImageRepository;
+    @Autowired
+    private ChecklistQuestionRepository checklistQuestionRepository;
 
     @DisplayName("체크리스트 작성 성공")
     @Test
@@ -222,6 +232,31 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
         assertAll(
                 () -> assertThat(selectedChecklistResponse.room().roomName()).isEqualTo(checklist.getName()),
                 () -> assertThat(selectedChecklistResponse.room().address()).isEqualTo(building.getAddress())
+        );
+    }
+
+    @DisplayName("건물별 체크리스트 조회 성공")
+    @Test
+    void readChecklistBuilding() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
+        Question question1Category1 = QuestionFixture.QUESTION1_CATEGORY1;
+        ChecklistQuestion checklistQuestion = checklistQuestionRepository.save(ChecklistQuestionFixture.CHECKLIST1_QUESTION1_BAD(checklist,
+                question1Category1));
+
+        // when
+        ChecklistBuildingResponses checklistBuildingResponses = checklistManageService.readBuildingChecklists(
+                building.getId());
+
+        // then
+        ChecklistBuildingResponse checklistBuildingResponse = checklistBuildingResponses.checklists().get(0);
+        CategoryScoreResponse categoryScoreResponse = checklistBuildingResponse.categories().categoryScoreResponses().get(0);
+
+        assertAll(
+                () -> assertThat(checklistBuildingResponse.checklistId()).isEqualTo(checklist.getId()),
+                () -> assertThat(categoryScoreResponse.categoryId()).isEqualTo(question1Category1.getCategory().getId())
         );
     }
 

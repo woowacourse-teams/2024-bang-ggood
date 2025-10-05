@@ -20,10 +20,8 @@ public interface ChecklistQuestionRepository extends JpaRepository<ChecklistQues
     @Query("SELECT DISTINCT cq.question.category FROM ChecklistQuestion cq "
             + "JOIN cq.checklist cl "
             + "WHERE cl.id = :checklistId "
-            + "AND cl.user.id = :userId "
             + "AND cq.deleted = false")
-    List<Category> findAllQuestionCategoriesByUserIdAndChecklistId(@Param("userId") Long userId,
-                                                                   @Param("checklistId") Long checklistId);
+    List<Category> findAllQuestionCategoriesByChecklistId(@Param("checklistId") Long checklistId);
 
     @Query("SELECT cq FROM ChecklistQuestion cq "
             + "WHERE cq.checklist.id = :checklistId "

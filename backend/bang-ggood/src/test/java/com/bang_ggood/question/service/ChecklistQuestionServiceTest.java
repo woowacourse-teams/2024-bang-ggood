@@ -206,7 +206,7 @@ class ChecklistQuestionServiceTest extends IntegrationTestSupport {
         checklistQuestionService.createQuestions(checklistQuestions);
 
         // when
-        List<Category> categories = checklistQuestionService.findCategories(user, checklist.getId());
+        List<Category> categories = checklistQuestionService.findCategories(checklist.getId());
 
         // then
         assertThat(categories).hasSize(1);

@@ -58,6 +58,11 @@ public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
             + "AND c.deleted = false")
     boolean existsById(@Param("id") Long id);
 
+    @Query("SELECT COUNT(c) FROM Checklist c " +
+            "WHERE c.building.id = :buildingId " +
+            "AND c.deleted = false")
+    Integer countChecklistsByBuilding(@Param("buildingId") Long buildingId);
+
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("UPDATE Checklist c "

@@ -47,7 +47,7 @@ public class ChecklistService {
     }
 
     @Transactional(readOnly = true)
-    public Integer countChecklistBuilding(Building building) {
+    public Integer countBuildingChecklist(Building building) {
         return checklistRepository.countChecklistsByBuilding(building.getId());
     }
 

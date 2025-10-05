@@ -50,6 +50,7 @@ public enum ExceptionCode {
     // Building
     BUILDING_ALL_NULL_OR_NOT_NULL(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR,
             "address, walkingTime, latitude, longitude는 전부 null이거나 전부 값이 있어야 합니다."),
+    BUILDING_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.BUILDING_ERROR, "빌딩이 존재하지 않습니다."),
 
     // Checklist
     CHECKLIST_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_NOT_FOUND, "체크리스트가 존재하지 않습니다."),

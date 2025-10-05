@@ -67,7 +67,7 @@ public class BuildingStationServiceTest extends IntegrationTestSupport {
         buildingStationRepository.saveAll(List.of(buildingStation1, buildingStation2));
 
         // when & then
-        assertThat(buildingStationService.readBuildingStationsByChecklist(checklist))
+        assertThat(buildingStationService.readBuildingStations(checklist.getBuilding()))
                 .containsExactlyInAnyOrder(buildingStation1, buildingStation2);
     }
 }

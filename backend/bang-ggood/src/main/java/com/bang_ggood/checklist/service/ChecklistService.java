@@ -1,5 +1,6 @@
 package com.bang_ggood.checklist.service;
 
+import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
@@ -45,6 +46,11 @@ public class ChecklistService {
         return checklistRepository.findAllByUserAndIsLiked(user);
     }
 
+    @Transactional(readOnly = true)
+    public Integer countChecklistBuilding(Building building) {
+        return checklistRepository.countChecklistsByBuilding(building.getId());
+    }
+
     @Transactional
     public void updateChecklist(Checklist checklist, Checklist updateChecklist) {
         checklist.change(updateChecklist);
@@ -54,4 +60,5 @@ public class ChecklistService {
     public void deleteById(Long id) {
         checklistRepository.deleteById(id);
     }
+
 }

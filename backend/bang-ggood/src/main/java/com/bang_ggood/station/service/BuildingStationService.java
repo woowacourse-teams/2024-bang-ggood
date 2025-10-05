@@ -1,5 +1,6 @@
 package com.bang_ggood.station.service;
 
+import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.station.domain.BuildingStation;
 import com.bang_ggood.station.dto.response.SubwayStationResponse;
@@ -23,8 +24,8 @@ public class BuildingStationService {
     }
 
     @Transactional(readOnly = true)
-    public List<BuildingStation> readBuildingStationsByChecklist(Checklist checklist) {
-        return buildingStationRepository.findByBuilding(checklist.getBuilding());
+    public List<BuildingStation> readBuildingStations(Building building) {
+        return buildingStationRepository.findByBuilding(building);
     }
 
     @Transactional

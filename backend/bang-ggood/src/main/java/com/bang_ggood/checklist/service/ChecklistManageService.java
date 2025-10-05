@@ -224,7 +224,7 @@ public class ChecklistManageService {
     }
 
     private SubwayStationResponses readBuildingStations(Checklist checklist) {
-        List<BuildingStation> buildingStations = buildingStationService.readBuildingStationsByChecklist(checklist);
+        List<BuildingStation> buildingStations = buildingStationService.readBuildingStations(checklist.getBuilding());
         List<SubwayStationResponse> stations = buildingStations.stream()
                 .map(SubwayStationResponse::from)
                 .toList();
@@ -259,7 +259,7 @@ public class ChecklistManageService {
     private ChecklistCompareResponse compareChecklist(User user, Long checklistId) {
         Checklist checklist = checklistService.readChecklist(user, checklistId);
         List<ChecklistOption> options = checklistOptionService.readChecklistOptions(checklist);
-        List<BuildingStation> buildingStations = buildingStationService.readBuildingStationsByChecklist(checklist);
+        List<BuildingStation> buildingStations = buildingStationService.readBuildingStations(checklist.getBuilding());
         List<ChecklistMaintenance> maintenances = checklistMaintenanceService.readChecklistMaintenances(checklist);
         CategoryScoreResponses categoryScoreResponses = calculateCategoryScores(checklistId);
         return ChecklistCompareResponse.of(checklist, options, buildingStations, maintenances,
@@ -343,7 +343,7 @@ public class ChecklistManageService {
     }
 
     private SubwayStationResponse readNearestStation(Checklist checklist) {
-        List<BuildingStation> buildingStations = buildingStationService.readBuildingStationsByChecklist(checklist);
+        List<BuildingStation> buildingStations = buildingStationService.readBuildingStations(checklist.getBuilding());
         List<SubwayStationResponse> stationResponses = buildingStations.stream()
                 .map(SubwayStationResponse::from)
                 .toList();

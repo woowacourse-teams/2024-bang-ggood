@@ -108,7 +108,7 @@ export const roomInfoStore = createStore<RoomInfoState & { actions: RoomInfoActi
   ),
 );
 
-export const roomInfoApiMapper = (values: Partial<RoomInfoStoreState>) => {
+export const roomInfoApiPostMapper = (values: Partial<RoomInfoStoreState>) => {
   const result = {
     ...values,
     structure: values.structure === '' ? undefined : values.structure,

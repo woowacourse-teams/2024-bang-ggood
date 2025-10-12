@@ -46,19 +46,12 @@ export interface ChecklistQuestionWithIsSelected extends ChecklistQuestion {
 }
 
 // 체크리스트 카드
-export interface ChecklistPreview {
+export type ChecklistPreview = Pick<RoomInfo, 'address' | 'deposit' | 'rent' | 'createdAt' | 'summary' | 'roomName'> & {
   checklistId: number;
-  roomName: string;
-  address: string;
-  deposit: number;
-  rent: number;
-  station?: SubwayStation;
-  createdAt: string;
-  summary: string;
   isLiked: boolean;
-  // TODO: 새로운 기능으로 추가된 썸네일 사진 작업 - 백엔드와 이름 논의 필요
-  thumbnail?: string;
-}
+  station?: SubwayStation;
+  thumbnail?: string; // TODO: 새로운 기능으로 추가된 썸네일 사진 작업 - 백엔드와 이름 논의 필요
+};
 
 // 체크리스트 디테일
 export interface ChecklistInfo {

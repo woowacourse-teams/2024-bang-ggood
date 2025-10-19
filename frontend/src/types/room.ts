@@ -29,4 +29,6 @@ export type RoomInfo = Partial<
   } & Position
 >;
 
+export type RoomInfoApiRes = Omit<RoomInfo, 'roomName'> & { checklistName: string };
+
 export type RoomInfoName = keyof RoomInfo;

@@ -2,29 +2,19 @@ import styled from '@emotion/styled';
 
 import Checkbox from '@/components/_common/Checkbox/Checkbox';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
-import { useTabContext } from '@/components/_common/Tabs/TabContext';
-import useChecklistQuestionSelect from '@/hooks/useChecklistQuestionSelect';
 import { ChecklistQuestionWithIsSelected } from '@/types/checklist';
 import { fontStyle } from '@/utils/fontStyle';
 
-const QuestionSelectCard = ({
+const QuestionSelectCardCustom = ({
   question,
   onSelect,
 }: {
   question: ChecklistQuestionWithIsSelected;
-  onSelect?: () => void;
+  onSelect: () => void;
 }) => {
   const { title, subtitle, isSelected, questionId } = question;
-  const { toggleQuestionSelect, statusMessage } = useChecklistQuestionSelect();
-  const { currentTabId: categoryId } = useTabContext();
 
-  const handleCheckQuestion = () => {
-    if (onSelect) {
-      onSelect();
-      return;
-    }
-    toggleQuestionSelect({ questionId, isSelected: !isSelected, categoryId });
-  };
+  const handleCheckQuestion = onSelect;
 
   return (
     <>
@@ -47,16 +37,11 @@ const QuestionSelectCard = ({
           tabIndex={-1}
         />
       </S.Container>
-      {statusMessage && (
-        <div className="visually-hidden" role="alert">
-          {title + statusMessage}
-        </div>
-      )}
     </>
   );
 };
 
-export default QuestionSelectCard;
+export default QuestionSelectCardCustom;
 
 const S = {
   Container: styled.div<{ isChecked: boolean }>`

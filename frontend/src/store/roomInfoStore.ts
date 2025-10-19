@@ -108,7 +108,7 @@ export const roomInfoStore = createStore<RoomInfoState & { actions: RoomInfoActi
   ),
 );
 
-export const roomInfoApiMapper = (values: Partial<RoomInfoStoreState>) => {
+export const roomInfoApiPostMapper = (values: Partial<RoomInfoStoreState>) => {
   const result = {
     ...values,
     structure: values.structure === '' ? undefined : values.structure,
@@ -121,9 +121,13 @@ export const roomInfoApiMapper = (values: Partial<RoomInfoStoreState>) => {
     size: values.size === 0 ? undefined : values.size,
     contractTerm: values.contractTerm === 0 ? undefined : values.contractTerm,
     occupancyMonth: values.occupancyMonth === 0 ? undefined : values.occupancyMonth,
+
+    station: undefined,
+    walkingTime: undefined,
+    address: values.address === '' ? undefined : values.address,
   };
 
-  const { station: _, ...resultToSubmit } = result;
+  const { ...resultToSubmit } = result;
 
   return mapObjUndefinedToNull(resultToSubmit) as Nullable<Partial<RoomInfoStoreState>>;
 };

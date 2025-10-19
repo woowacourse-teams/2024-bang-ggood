@@ -4,10 +4,9 @@ import { getRoomCategoryDetail } from '@/apis/room';
 import { queryClient } from '@/App';
 import { QUERY_KEYS } from '@/constants/queryKeys';
 import { STALE_TIME } from '@/constants/system';
-import { RoomCategoryDetail } from '@/types/RoomCompare';
 
 const useGetRoomCategoryDetailQuery = ({ roomId, categoryId }: { roomId: number; categoryId: number }) => {
-  return useQuery<RoomCategoryDetail>({
+  return useQuery({
     queryKey: [QUERY_KEYS.ROOM_CATEGORY_DETAIL, roomId, categoryId],
     queryFn: async () => await getRoomCategoryDetail({ roomId, categoryId }),
     staleTime: STALE_TIME,

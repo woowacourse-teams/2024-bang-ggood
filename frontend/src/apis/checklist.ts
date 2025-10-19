@@ -24,7 +24,7 @@ export const getChecklistAllQuestions = async () => {
 
 export interface CustomChecklistCategoriesRes {
   defaultCategories: ChecklistCategoryWithIsSelected[];
-  UserCategories: ChecklistCategoryWithIsSelected[];
+  userCategories: ChecklistCategoryWithIsSelected[];
 }
 
 export const getChecklistDetail = async (id: number) => {

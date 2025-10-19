@@ -9,6 +9,7 @@ import Layout from '@/components/_common/layout/Layout';
 import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import TipBox from '@/components/_common/TipBox/TipBox';
 import { ChecklistQuestionSelectTabs } from '@/components/ChecklistQuestionSelect/ChecklistQuestionSelectTabs';
+import QuestionCustomListTemplate from '@/components/ChecklistQuestionSelect/CustomQuestions/QuestionCustomListTemplate';
 import QuestionListTemplate from '@/components/ChecklistQuestionSelect/QuestionListTemplate/QuestionListTemplate';
 import { TOAST_MESSAGE } from '@/constants/messages/message';
 import { ROUTE_PATH } from '@/constants/routePath';
@@ -35,7 +36,7 @@ const ChecklistQuestionSelectPage = () => {
       return;
     }
 
-    putCustomChecklist(selectedQuestions, {
+    putCustomChecklist([...selectedQuestions], {
       onSuccess: () => {
         showToast({ message: TOAST_MESSAGE.CUSTOM });
         navigate(ROUTE_PATH.checklistList);
@@ -81,9 +82,9 @@ const ChecklistQuestionSelectPage = () => {
           <ErrorBoundary FallbackComponent={ListErrorFallback}>
             <Suspense>
               <QuestionListTemplate />
+              <QuestionCustomListTemplate />
             </Suspense>
           </ErrorBoundary>
-          {/* <CustomChecklistQuestionSection /> TODO: 다시 추가하기 */}
         </Layout>
       </TabProvider>
     </>

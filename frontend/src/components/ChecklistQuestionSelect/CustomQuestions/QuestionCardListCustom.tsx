@@ -8,18 +8,18 @@ import { ChecklistQuestionWithIsSelected } from '@/types/checklist';
 interface Props {
   currentTabId: number;
   questions: ChecklistQuestionWithIsSelected[];
-  onSelect?: (id: number) => void;
+  onSelect: (id: number) => void;
+  selectedIds: number[];
 }
-const QuestionCardList = ({ questions, currentTabId, onSelect }: Props) => {
+const QuestionCardListCustom = ({ questions, currentTabId, onSelect, selectedIds }: Props) => {
   return (
     <S.QuestionList>
       {questions?.map((question, index) => {
+        const isSelected = selectedIds.includes(question.questionId);
         return (
           <S.Box key={`${currentTabId}-${question.questionId}-custom`}>
-            <QuestionSelectCard
-              question={question}
-              onSelect={onSelect ? () => onSelect(question.questionId) : undefined}
-            />
+            {isSelected}
+            <QuestionSelectCard question={{ ...question, isSelected }} onSelect={() => onSelect(question.questionId)} />
             {index !== questions.length - 1 && <Divider isBold={true} />}
           </S.Box>
         );
@@ -28,7 +28,7 @@ const QuestionCardList = ({ questions, currentTabId, onSelect }: Props) => {
   );
 };
 
-export default QuestionCardList;
+export default QuestionCardListCustom;
 
 const S = {
   QuestionList: styled.section`

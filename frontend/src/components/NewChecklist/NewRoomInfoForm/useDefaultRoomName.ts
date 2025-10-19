@@ -12,9 +12,10 @@ const useDefaultRoomName = () => {
   useEffect(() => {
     if (!checklistList) return;
     if (roomName.rawValue !== initialRoomInfo.roomName.rawValue) return;
+
     const count = checklistList.filter(
       checklist =>
-        new Date(checklist.createdAt).getUTCDay() === new Date().getUTCDay() &&
+        new Date(checklist.createdAt!).getUTCDay() === new Date().getUTCDay() &&
         checklist.roomName !== '예시용 체크리스트',
     ).length;
 

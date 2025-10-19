@@ -1,11 +1,13 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import Text from '@/components/_common/Text/Text';
 import AddCustomQuestionModal from '@/components/ChecklistQuestionSelect/CustomQuestions/AddCustomQuestionModal';
 import QuestionCardListCustom from '@/components/ChecklistQuestionSelect/CustomQuestions/QuestionCardListCustom';
+import { selectedIdsStore } from '@/components/ChecklistQuestionSelect/CustomQuestions/selectedQuestionIdsStore';
 import SKQuestionSelectList from '@/components/skeleton/QuestionSelect/SKQuestionSelectList';
 import useGetAllChecklistQuestionQuery from '@/hooks/query/useGetAllChecklistQuestionsQuery';
 import usePostCustomQuestionMutation, {
@@ -17,15 +19,8 @@ const QuestionCustomListTemplate = () => {
   const { mutate: addCustomQuestion } = usePostCustomQuestionMutation();
   const customCategories = checklistQuestions?.userCategories;
 
-  const [selectedIds, setSelectedIds] = useState<number[]>(
-    customCategories
-      ?.flatMap(cat => cat.questions)
-      .filter(q => q.isSelected)
-      .map(q => q.questionId) ?? [],
-  );
-  const handleSelect = (id: number) => {
-    setSelectedIds(ids => (ids.includes(id) ? ids.filter(id0 => id0 !== id) : [...ids, id]));
-  };
+  const { selectedIds, toggleSelectedId } = useStore(selectedIdsStore);
+  const handleSelect = (id: number) => toggleSelectedId(id);
 
   const [isAddCustomQuestionModalOpen, setIsAddCustomQuestionModalOpen] = useState(false);
   const { currentTabId } = useTabContext();
@@ -50,8 +45,6 @@ const QuestionCustomListTemplate = () => {
         onSelect={handleSelect}
         selectedIds={selectedIds}
       />
-      {JSON.stringify(selectedIds)}
-      {/* 결과 */}
       <Button
         variant="outlined-gray"
         size="full"

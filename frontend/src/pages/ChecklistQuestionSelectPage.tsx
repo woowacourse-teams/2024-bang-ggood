@@ -1,6 +1,7 @@
 import { Suspense, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
+import { useStore } from 'zustand';
 
 import Button from '@/components/_common/Button/Button';
 import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallback';
@@ -10,6 +11,7 @@ import { TabProvider } from '@/components/_common/Tabs/TabContext';
 import TipBox from '@/components/_common/TipBox/TipBox';
 import { ChecklistQuestionSelectTabs } from '@/components/ChecklistQuestionSelect/ChecklistQuestionSelectTabs';
 import QuestionCustomListTemplate from '@/components/ChecklistQuestionSelect/CustomQuestions/QuestionCustomListTemplate';
+import { selectedIdsStore } from '@/components/ChecklistQuestionSelect/CustomQuestions/selectedQuestionIdsStore';
 import QuestionListTemplate from '@/components/ChecklistQuestionSelect/QuestionListTemplate/QuestionListTemplate';
 import { TOAST_MESSAGE } from '@/constants/messages/message';
 import { ROUTE_PATH } from '@/constants/routePath';
@@ -29,6 +31,7 @@ const ChecklistQuestionSelectPage = () => {
   const { mutate: putCustomChecklist } = usePutCustomChecklist();
   const { selectedQuestions, setValidCategory } = useChecklistQuestionSelectStore();
   const { resetShowTip } = useHandleTip('CUSTOM_QUESTION');
+  const { selectedIds: customSelectedIds } = useStore(selectedIdsStore);
 
   const handleSubmitChecklist = () => {
     if (!selectedQuestions.length) {
@@ -36,7 +39,7 @@ const ChecklistQuestionSelectPage = () => {
       return;
     }
 
-    putCustomChecklist([...selectedQuestions], {
+    putCustomChecklist([...selectedQuestions, ...customSelectedIds], {
       onSuccess: () => {
         showToast({ message: TOAST_MESSAGE.CUSTOM });
         navigate(ROUTE_PATH.checklistList);

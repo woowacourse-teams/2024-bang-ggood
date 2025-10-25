@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import java.util.List;
+import java.util.Optional;
 
 import static com.bang_ggood.building.service.image.GoogleBuildingImageEndpoint.PLACE_DETAILS;
 import static com.bang_ggood.building.service.image.GoogleBuildingImageEndpoint.PLACE_PHOTO;
@@ -22,25 +23,32 @@ public class BuildingImageClient {
         this.API_KEY = API_KEY;
     }
 
-    public List<PhotoURI> requestBuildingImages(BuildingImageRequest request) {
-        PlaceName placeName = requestPlaceName(request.address(), request.buildingName());
-        PhotoNames photoNames = requestPhotoName(placeName);
-        return requestPhotoURIs(photoNames);
+    public Optional<List<PhotoURI>> requestBuildingImages(BuildingImageRequest request) {
+        try {
+            return requestPlaceName(request.address(), request.buildingName())
+                    .flatMap(this::requestPhotoName)
+                    .map(this::requestPhotoURIs);
+        } catch (Exception exception) {
+            return Optional.empty();
+        }
     }
 
-    private PlaceName requestPlaceName(String address, String buildingName) {
+    private Optional<PlaceName> requestPlaceName(String address, String buildingName) {
         PlaceNames placeNames = PLACE_SEARCH
                 .prepareRequest(restClient, API_KEY, buildingName + " " + address)
                 .retrieve()
                 .body(PlaceNames.class);
+
         return placeNames.getFirst();
     }
 
-    private PhotoNames requestPhotoName(PlaceName placeName) {
-        return PLACE_DETAILS
+    private Optional<PhotoNames> requestPhotoName(PlaceName placeName) {
+        PhotoNames photoNames = PLACE_DETAILS
                 .prepareRequest(restClient, API_KEY, placeName.name())
                 .retrieve()
                 .body(PhotoNames.class);
+
+        return Optional.ofNullable(photoNames);
     }
 
     private List<PhotoURI> requestPhotoURIs(PhotoNames photoNames) {

@@ -1,5 +1,6 @@
 package com.bang_ggood.checklist.service;
 
+import com.bang_ggood.building.service.BuildingService;
 import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistImage;

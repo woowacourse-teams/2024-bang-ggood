@@ -1,6 +1,7 @@
 -- Drop tables if they exist
 DROP TABLE IF EXISTS building_station CASCADE;
 DROP TABLE IF EXISTS checklist_like CASCADE;
+DROP TABLE IF EXISTS building_image CASCADE;
 DROP TABLE IF EXISTS custom_checklist_question CASCADE;
 DROP TABLE IF EXISTS checklist_option CASCADE;
 DROP TABLE IF EXISTS checklist_question CASCADE;
@@ -222,3 +223,14 @@ CREATE TABLE checklist_image
         ON DELETE CASCADE
 );
 
+CREATE TABLE building_image (
+                                id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                building_id BIGINT NOT NULL,
+                                image_url TEXT NOT NULL,
+                                created_at  TIMESTAMP(6),
+                                modified_at  TIMESTAMP(6),
+                                deleted BOOLEAN,
+                                CONSTRAINT fk_building FOREIGN KEY (building_id)
+                                    REFERENCES building(id)
+                                    ON DELETE CASCADE
+);

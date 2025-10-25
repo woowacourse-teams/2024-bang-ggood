@@ -11,4 +11,9 @@ public class ExternalAPIException extends RuntimeException {
     public ExternalAPIException(ExternalAPIExceptionResponse response) {
         this.response = response;
     }
+
+    @Override
+    public String getMessage() {
+        return response.toString();
+    }
 }

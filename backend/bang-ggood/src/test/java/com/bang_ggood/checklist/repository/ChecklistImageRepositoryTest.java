@@ -7,7 +7,7 @@ import com.bang_ggood.checklist.ChecklistImageFixture;
 import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistImage;
-import com.bang_ggood.checklist.service.BuildingService;
+import com.bang_ggood.building.service.BuildingService;
 import com.bang_ggood.checklist.service.ChecklistService;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;

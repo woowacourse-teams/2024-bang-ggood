@@ -6,7 +6,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record PhotoNames(List<PlaceName> photos) {
 
-    public static int LIMIT = 3;
+    private static int LIMIT = 3;
 
     public List<PlaceName> limitPlacePhotoNames() {
         return photos.stream().limit(LIMIT).toList();

@@ -43,6 +43,10 @@ public class Building extends BaseEntity {
         this.name = name;
     }
 
+    public boolean isNameEmpty() {
+        return name == null || name.isBlank();
+    }
+
     private void validateNullBuilding() {
         boolean anyNull = address == null || latitude == null || longitude == null;
         boolean allNull = address == null && latitude == null && longitude == null;
@@ -51,7 +55,6 @@ public class Building extends BaseEntity {
             throw new BangggoodException(ExceptionCode.BUILDING_ALL_NULL_OR_NOT_NULL);
         }
     }
-
 
     @Override
     public boolean equals(Object o) {

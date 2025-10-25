@@ -49,5 +49,18 @@ class BuildingTest {
                 .isInstanceOf(BangggoodException.class)
                 .hasMessageContaining(ExceptionCode.BUILDING_ALL_NULL_OR_NOT_NULL.getMessage());
     }
+
+    @DisplayName("빌딩 이름 empty 확인")
+    @Test
+    void isNameEmpty() {
+        // given
+        Building building = new Building("서초대로", null, 37.4979, 127.0276);
+
+        // when
+        boolean result = building.isNameEmpty();
+
+        // then
+        assertThat(result).isTrue();
+    }
 }
 

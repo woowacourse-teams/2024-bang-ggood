@@ -41,6 +41,8 @@ public class BuildingService {
     }
 
     private void saveBuildingImages(Building building) {
+        if (building.isNameEmpty()) return;
+
         BuildingImageRequest buildingImageRequest = new BuildingImageRequest(building.getName(), building.getAddress());
         Optional<List<PhotoURI>> photoURIS = buildingImageClient.requestBuildingImages(buildingImageRequest);
 

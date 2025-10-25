@@ -1,5 +1,6 @@
 package com.bang_ggood.building.service.image;
 
+import com.bang_ggood.global.handler.BuildingImageExceptionHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
@@ -16,11 +17,12 @@ public class BuildingImageClient {
     private final String API_KEY;
 
     public BuildingImageClient(RestClient.Builder builder, @Value("${google.api_key}") String API_KEY) {
-        this.restClient = builder.build();
+        this.restClient = builder
+                .defaultStatusHandler(new BuildingImageExceptionHandler()).build();
         this.API_KEY = API_KEY;
     }
 
-    public List<PhotoURI> requestBuildingImages (BuildingImageRequest request) {
+    public List<PhotoURI> requestBuildingImages(BuildingImageRequest request) {
         PlaceName placeName = requestPlaceName(request.address(), request.buildingName());
         PhotoNames photoNames = requestPhotoName(placeName);
         return requestPhotoURIs(photoNames);

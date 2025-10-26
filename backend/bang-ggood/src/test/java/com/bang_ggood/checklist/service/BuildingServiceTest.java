@@ -93,7 +93,7 @@ class BuildingServiceTest extends IntegrationTestSupport {
     @Test
     void buildingImageSaveSuccess() {
         // given
-        Building building = BuildingFixture.BUILDING_1();
+        Building building = BuildingFixture.BUILDING_2();
         Optional<List<PhotoURI>> photoURIS = Optional.of(List.of(new PhotoURI("name", "exampleURI")));
 
         when(buildingImageClient.requestBuildingImages(any())).thenReturn(photoURIS);

@@ -29,7 +29,7 @@ public enum GoogleBuildingImageEndpoint implements BuildingImageEndpoint {
         @Override
         public RequestHeadersSpec<?> prepareRequest(RestClient restClient, String apiKey, Object value) {
             String url = "https://places.googleapis.com/v1/" + value.toString();
-            String fieldMask = "places.name";
+            String fieldMask = "photos";
 
             return restClient.get()
                     .uri(url)
@@ -40,7 +40,7 @@ public enum GoogleBuildingImageEndpoint implements BuildingImageEndpoint {
     PLACE_PHOTO {
         @Override
         public RequestHeadersSpec<?> prepareRequest(RestClient restClient, String apiKey, Object value) {
-            String url = "https://places.googleapis.com/v1/" + value.toString() + "/media?maxHeightPx=400";
+            String url = "https://places.googleapis.com/v1/" + value.toString() + "/media?maxHeightPx=400&skipHttpRedirect=true";
 
             return restClient.get()
                     .uri(url)

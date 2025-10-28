@@ -13,7 +13,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.client.MockRestServiceServer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
@@ -54,9 +58,35 @@ class BuildingImageClientTest {
                 .andRespond(withSuccess(photoURIJson, MediaType.APPLICATION_JSON));
 
         // when
-        buildingImageClient.requestBuildingImages(new BuildingImageRequest("test", "test"));
+        CompletableFuture<Optional<List<PhotoURI>>> future = buildingImageClient.requestBuildingImages(
+                new BuildingImageRequest("test", "test"));
 
         // then
-        mockServer.verify();
+        future.thenAccept(result -> {
+            mockServer.verify();
+        }).join();
+    }
+
+    @DisplayName("빌딩 이미지 URI 요청 실패 : 잘못된 경로일 때")
+    @Test
+    void requestBuildingImages_fail() throws JsonProcessingException {
+        // given
+        PlaceName placeName = new PlaceName("testName");
+        PlaceNames placeNames = new PlaceNames(new ArrayList<>(List.of(placeName)));
+
+        String placeNamesJson = objectMapper.writeValueAsString(placeNames);
+
+        mockServer.expect(requestTo(containsString("wrongPath")))
+                .andExpect(method(HttpMethod.POST))
+                .andRespond(withSuccess(placeNamesJson, MediaType.APPLICATION_JSON));
+
+        // when
+        CompletableFuture<Optional<List<PhotoURI>>> future = buildingImageClient.requestBuildingImages(
+                new BuildingImageRequest("test", "test"));
+
+        // then
+        assertThatThrownBy(() ->
+                future.thenAccept(result -> mockServer.verify()).join()
+        ).isInstanceOf(CompletionException.class);
     }
 }

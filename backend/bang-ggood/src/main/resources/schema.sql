@@ -224,13 +224,13 @@ CREATE TABLE checklist_image
 );
 
 CREATE TABLE building_image (
-                                id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                                building_id BIGINT NOT NULL,
-                                image_url TEXT NOT NULL,
-                                created_at  TIMESTAMP(6),
-                                modified_at  TIMESTAMP(6),
-                                deleted BOOLEAN,
-                                CONSTRAINT fk_building FOREIGN KEY (building_id)
-                                    REFERENCES building(id)
-                                    ON DELETE CASCADE
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    building_id BIGINT NOT NULL,
+    image_url TEXT NOT NULL,
+    created_at  TIMESTAMP(6),
+    modified_at  TIMESTAMP(6),
+    deleted BOOLEAN,
+    CONSTRAINT fk_building FOREIGN KEY (building_id)
+    REFERENCES building(id)
+    ON DELETE CASCADE
 );

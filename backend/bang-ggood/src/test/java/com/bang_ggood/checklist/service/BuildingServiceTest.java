@@ -12,9 +12,10 @@ import com.bang_ggood.checklist.repository.BuildingRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -25,7 +26,7 @@ class BuildingServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private BuildingService buildingService;
-    @MockBean
+    @SpyBean
     private BuildingImageClient buildingImageClient;
     @Autowired
     private BuildingImageRepository buildingImageRepository;
@@ -94,7 +95,8 @@ class BuildingServiceTest extends IntegrationTestSupport {
     void buildingImageSaveSuccess() {
         // given
         Building building = BuildingFixture.BUILDING_2();
-        Optional<List<PhotoURI>> photoURIS = Optional.of(List.of(new PhotoURI("name", "exampleURI")));
+        CompletableFuture<Optional<List<PhotoURI>>> photoURIS = CompletableFuture.completedFuture(
+                Optional.of(List.of(new PhotoURI("name", "exampleURI"))));
 
         when(buildingImageClient.requestBuildingImages(any())).thenReturn(photoURIS);
 
@@ -111,7 +113,8 @@ class BuildingServiceTest extends IntegrationTestSupport {
     void buildingImageNotSave() {
         // given
         Building building = BuildingFixture.BUILDING_2();
-        Optional<List<PhotoURI>> photoURIS = Optional.empty();
+        CompletableFuture<Optional<List<PhotoURI>>> photoURIS = CompletableFuture.completedFuture(
+                Optional.empty());
 
         when(buildingImageClient.requestBuildingImages(any())).thenReturn(photoURIS);
 

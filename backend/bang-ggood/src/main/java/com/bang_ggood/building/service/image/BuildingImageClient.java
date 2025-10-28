@@ -2,10 +2,12 @@ package com.bang_ggood.building.service.image;
 
 import com.bang_ggood.global.handler.BuildingImageExceptionHandler;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 import static com.bang_ggood.building.service.image.GoogleBuildingImageEndpoint.PLACE_DETAILS;
 import static com.bang_ggood.building.service.image.GoogleBuildingImageEndpoint.PLACE_PHOTO;
@@ -23,13 +25,14 @@ public class BuildingImageClient {
         this.API_KEY = API_KEY;
     }
 
-    public Optional<List<PhotoURI>> requestBuildingImages(BuildingImageRequest request) {
+    @Async
+    public CompletableFuture<Optional<List<PhotoURI>>> requestBuildingImages(BuildingImageRequest request) {
         try {
-            return requestPlaceName(request.address(), request.buildingName())
+            return CompletableFuture.completedFuture(requestPlaceName(request.address(), request.buildingName())
                     .flatMap(this::requestPhotoName)
-                    .map(this::requestPhotoURIs);
+                    .map(this::requestPhotoURIs));
         } catch (Exception exception) {
-            return Optional.empty();
+            return CompletableFuture.completedFuture(Optional.empty());
         }
     }
 

@@ -5,6 +5,7 @@ import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.Status;
 import com.bang_ggood.checklist.repository.BuildingRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;
@@ -158,5 +159,24 @@ class ChecklistServiceTest extends IntegrationTestSupport {
 
         // then
         assertThat(checklists).containsExactly(checklist);
+    }
+
+    @DisplayName("체크리스트 상태 변경 성공")
+    @Test
+    void updateChecklistStatus_success() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = checklistService.createChecklist(ChecklistFixture.CHECKLIST1_USER1(user, building));
+
+        // when
+        checklistService.updateChecklistStatus(checklist, Status.CLOSE);
+
+        // then
+        Checklist updatedChecklist = checklistRepository.getById(checklist.getId());
+        assertAll(
+                () -> assertThat(updatedChecklist.getStatus()).isEqualTo(Status.CLOSE),
+                () -> assertThat(updatedChecklist.getStatus()).isNotEqualTo(Status.OPEN)
+        );
     }
 }

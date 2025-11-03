@@ -60,6 +60,8 @@ public enum ExceptionCode {
             "체크리스트 비교는 2개만 가능합니다."),
     CHECKLIST_FLOOR_AND_LEVEL_INVALID(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR,
             "방이 지상층일 경우에만 층수를 입력할 수 있습니다."),
+    CHECKLIST_STATUS_INVALID(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR,
+            "체크리스트 상태값은 CLOSE, OPEN만 가능합니다."),
 
     // CustomChecklist
     CUSTOM_CHECKLIST_QUESTION_EMPTY(HttpStatus.BAD_REQUEST, ClientExceptionCode.CUSTOM_ERROR, "커스텀 질문 개수가 유효하지 않습니다."),

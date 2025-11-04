@@ -1,8 +1,8 @@
 package com.bang_ggood.building.service;
 
 import com.bang_ggood.building.service.image.BuildingImageService;
-import com.bang_ggood.checklist.domain.Building;
-import com.bang_ggood.checklist.repository.BuildingRepository;
+import com.bang_ggood.building.domain.Building;
+import com.bang_ggood.building.repository.BuildingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

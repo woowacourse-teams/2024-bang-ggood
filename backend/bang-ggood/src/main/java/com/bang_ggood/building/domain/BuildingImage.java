@@ -1,7 +1,6 @@
 package com.bang_ggood.building.domain;
 
 import com.bang_ggood.BaseEntity;
-import com.bang_ggood.checklist.domain.Building;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

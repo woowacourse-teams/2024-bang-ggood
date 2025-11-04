@@ -1,6 +1,6 @@
 package com.bang_ggood.checklist;
 
-import com.bang_ggood.checklist.domain.Building;
+import com.bang_ggood.building.domain.Building;
 
 public class BuildingFixture {
     public static Building BUILDING_1() {

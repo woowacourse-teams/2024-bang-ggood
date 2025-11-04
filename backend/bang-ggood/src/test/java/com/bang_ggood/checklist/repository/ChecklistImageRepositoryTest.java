@@ -4,7 +4,7 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.ChecklistImageFixture;
-import com.bang_ggood.checklist.domain.Building;
+import com.bang_ggood.building.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistImage;
 import com.bang_ggood.building.service.BuildingService;

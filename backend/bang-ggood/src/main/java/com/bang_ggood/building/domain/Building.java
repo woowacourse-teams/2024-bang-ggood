@@ -1,4 +1,4 @@
-package com.bang_ggood.checklist.domain;
+package com.bang_ggood.building.domain;
 
 import com.bang_ggood.BaseEntity;
 import com.bang_ggood.global.exception.BangggoodException;

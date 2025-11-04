@@ -14,7 +14,7 @@ public enum GoogleBuildingImageEndpoint implements BuildingImageEndpoint {
     PLACE_SEARCH {
         @Override
         public RequestHeadersSpec<?> prepareRequest(RestClient restClient, String apiKey, Object value) {
-            String url = "https://places.googleapis.com/v1/places:searchText";
+            String url = GOOGLE_URL_PREFIX + "places:searchText";
             String fieldMask = "places.name";
             Map<String, String> body = Map.of("textQuery", value.toString());
 
@@ -28,7 +28,7 @@ public enum GoogleBuildingImageEndpoint implements BuildingImageEndpoint {
     PLACE_DETAILS {
         @Override
         public RequestHeadersSpec<?> prepareRequest(RestClient restClient, String apiKey, Object value) {
-            String url = "https://places.googleapis.com/v1/" + value.toString();
+            String url = GOOGLE_URL_PREFIX + value.toString();
             String fieldMask = "photos";
 
             return restClient.get()
@@ -40,13 +40,15 @@ public enum GoogleBuildingImageEndpoint implements BuildingImageEndpoint {
     PLACE_PHOTO {
         @Override
         public RequestHeadersSpec<?> prepareRequest(RestClient restClient, String apiKey, Object value) {
-            String url = "https://places.googleapis.com/v1/" + value.toString() + "/media?maxHeightPx=400&skipHttpRedirect=true";
+            String url = GOOGLE_URL_PREFIX + value.toString() + "/media?maxHeightPx=400&skipHttpRedirect=true";
 
             return restClient.get()
                     .uri(url)
                     .headers(headers(apiKey, null));
         }
     };
+
+    private static final String GOOGLE_URL_PREFIX = "https://places.googleapis.com/v1/";
 
     protected Consumer<HttpHeaders> headers(String apiKey, String fieldMask) {
         return httpHeaders -> {

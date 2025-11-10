@@ -3,7 +3,7 @@ package com.bang_ggood.question.domain;
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
-import com.bang_ggood.checklist.domain.Building;
+import com.bang_ggood.building.domain.Building;
 import com.bang_ggood.question.ChecklistQuestionFixture;
 import com.bang_ggood.question.QuestionFixture;
 import com.bang_ggood.user.UserFixture;

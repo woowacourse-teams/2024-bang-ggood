@@ -1,5 +1,6 @@
 package com.bang_ggood.checklist.domain;
 
+import com.bang_ggood.building.domain.Building;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
 import org.junit.jupiter.api.DisplayName;
@@ -48,6 +49,19 @@ class BuildingTest {
         assertThatThrownBy(() -> new Building(null, "강남빌딩", 37.4979, 127.0276))
                 .isInstanceOf(BangggoodException.class)
                 .hasMessageContaining(ExceptionCode.BUILDING_ALL_NULL_OR_NOT_NULL.getMessage());
+    }
+
+    @DisplayName("빌딩 이름 empty 확인")
+    @Test
+    void isNameEmpty() {
+        // given
+        Building building = new Building("서초대로", null, 37.4979, 127.0276);
+
+        // when
+        boolean result = building.isNameEmpty();
+
+        // then
+        assertThat(result).isTrue();
     }
 }
 

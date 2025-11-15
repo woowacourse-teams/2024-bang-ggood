@@ -6,7 +6,6 @@ import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.building.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.Status;
-import com.bang_ggood.checklist.repository.BuildingRepository;
 import com.bang_ggood.building.repository.BuildingRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.like.repository.ChecklistLikeRepository;

@@ -8,7 +8,6 @@ import com.bang_ggood.building.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.Status;
 import com.bang_ggood.checklist.dto.request.ChecklistStatusRequest;
-import com.bang_ggood.checklist.repository.BuildingRepository;
 import com.bang_ggood.building.repository.BuildingRepository;
 import com.bang_ggood.checklist.repository.ChecklistImageRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;

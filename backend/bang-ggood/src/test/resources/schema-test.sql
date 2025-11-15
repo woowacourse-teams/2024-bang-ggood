@@ -94,6 +94,7 @@ CREATE TABLE checklist
     real_estate      VARCHAR(255),
     memo             VARCHAR(1000),
     summary          VARCHAR(255),
+    status           VARCHAR(255),
     created_at       TIMESTAMP(6),
     modified_at      TIMESTAMP(6),
     deleted          BOOLEAN,

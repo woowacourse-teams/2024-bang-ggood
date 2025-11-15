@@ -6,6 +6,7 @@ import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistImage;
 import com.bang_ggood.checklist.domain.ChecklistShare;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
+import com.bang_ggood.checklist.dto.request.ChecklistStatusRequest;
 import com.bang_ggood.checklist.dto.request.RoomRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
@@ -403,5 +404,11 @@ public class ChecklistManageService {
     public void deleteChecklistImageById(User user, long checklistId, long imageId) {
         checklistService.readChecklist(user, checklistId);
         checklistImageService.deleteById(imageId);
+    }
+
+    @Transactional
+    public void updateChecklistStatusById(User user, long checklistId, ChecklistStatusRequest checklistStatusRequest) {
+        Checklist checklist = checklistService.readChecklist(user, checklistId);
+        checklistService.updateChecklistStatus(checklist, checklistStatusRequest.getChecklistStatus());
     }
 }

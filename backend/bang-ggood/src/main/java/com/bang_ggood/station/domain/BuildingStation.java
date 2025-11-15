@@ -1,7 +1,7 @@
 package com.bang_ggood.station.domain;
 
 import com.bang_ggood.BaseEntity;
-import com.bang_ggood.checklist.domain.Building;
+import com.bang_ggood.building.domain.Building;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;

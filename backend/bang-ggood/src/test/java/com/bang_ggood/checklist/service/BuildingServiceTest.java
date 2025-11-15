@@ -1,9 +1,10 @@
 package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.building.service.BuildingService;
 import com.bang_ggood.checklist.BuildingFixture;
-import com.bang_ggood.checklist.domain.Building;
-import com.bang_ggood.checklist.repository.BuildingRepository;
+import com.bang_ggood.building.domain.Building;
+import com.bang_ggood.building.repository.BuildingRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ class BuildingServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private BuildingService buildingService;
-
     @Autowired
     private BuildingRepository buildingRepository;
 

@@ -10,6 +10,7 @@ public enum ExceptionCode {
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.INTERNAL_SERVER_ERROR,
             "예상치 못한 서버에러가 발생했습니다"),
     INVALID_PARAMETER(HttpStatus.BAD_REQUEST, ClientExceptionCode.INVALID_PARAMETER, "잘못된 인자입니다."),
+    EXTERNAL_API_EXCEPTION_CONVERT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.INTERNAL_SERVER_ERROR, "외부 API 응답값을 파싱하는 과정에서 에러가 발생했습니다."),
 
     // Option
     OPTION_INVALID(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR, "잘못된 옵션 ID입니다."),
@@ -50,6 +51,8 @@ public enum ExceptionCode {
     // Building
     BUILDING_ALL_NULL_OR_NOT_NULL(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_ERROR,
             "address, walkingTime, latitude, longitude는 전부 null이거나 전부 값이 있어야 합니다."),
+    BUILDING_IMAGE_INTERNAL_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.CHECKLIST_ERROR,
+            "빌딩 이미지 API 요청하는 과정 중 예상치 못한 예외가 발생했습니다."),
 
     // Checklist
     CHECKLIST_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_NOT_FOUND, "체크리스트가 존재하지 않습니다."),

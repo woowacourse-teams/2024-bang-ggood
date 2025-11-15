@@ -1,5 +1,6 @@
 package com.bang_ggood;
 
+import com.bang_ggood.global.DBInitializer;
 import com.bang_ggood.global.storage.AwsS3Client;
 import com.bang_ggood.global.util.ImageOptimizationUtil;
 import com.bang_ggood.question.CustomChecklistFixture;
@@ -33,6 +34,8 @@ public abstract class IntegrationTestSupport {
 
     @MockBean
     protected AwsS3Client awsS3Client;
+    @MockBean
+    DBInitializer dbInitializer;
     @Autowired
     CategoryRepository categoryRepository;
     @Autowired

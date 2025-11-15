@@ -1,6 +1,7 @@
 package com.bang_ggood.checklist.domain;
 
 import com.bang_ggood.BaseEntity;
+import com.bang_ggood.building.domain.Building;
 import com.bang_ggood.contract.domain.OccupancyMonth;
 import com.bang_ggood.contract.domain.OccupancyPeriod;
 import com.bang_ggood.global.exception.BangggoodException;

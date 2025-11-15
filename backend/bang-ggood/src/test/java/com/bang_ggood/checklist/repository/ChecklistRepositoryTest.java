@@ -1,9 +1,10 @@
 package com.bang_ggood.checklist.repository;
 
 import com.bang_ggood.IntegrationTestSupport;
+import com.bang_ggood.building.repository.BuildingRepository;
 import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
-import com.bang_ggood.checklist.domain.Building;
+import com.bang_ggood.building.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;

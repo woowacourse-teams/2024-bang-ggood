@@ -70,7 +70,7 @@ public class Checklist extends BaseEntity {
 
     private String summary;
 
-    private Status status;
+    private Status status = Status.CLOSE;
 
     public Checklist(User user, Building building, String name, FloorLevel floorLevel, Integer floor,
                      Structure structure, Double size,
@@ -93,7 +93,6 @@ public class Checklist extends BaseEntity {
         this.realEstate = realEstate;
         this.memo = memo;
         this.summary = summary;
-        this.status = Status.CLOSE;
         validateFloorAndLevel();
         validateMemoLength();
     }

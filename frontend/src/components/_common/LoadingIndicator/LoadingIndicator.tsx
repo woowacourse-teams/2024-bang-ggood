@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const LoadingSpinner = () => {
+export const LoadingIndicator = () => {
   return <S.Container />;
 };
 

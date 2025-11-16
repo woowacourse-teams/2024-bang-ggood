@@ -6,7 +6,7 @@ interface Props extends React.SVGProps<SVGSVGElement> {
 const Profile = ({ fill, stroke, ...rest }: Props) => {
   return (
     <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" {...rest}>
-      <g opacity="0.12">
+      <g opacity="1">
         <path
           d="M23.3548 24.298C21.1408 26.2887 18.2119 27.5 15.0001 27.5C11.7884 27.5 8.85952 26.2887 6.64551 24.298C7.40591 22.5065 9.18129 21.25 11.2501 21.25H18.7501C20.819 21.25 22.5944 22.5065 23.3548 24.298Z"
           fill={fill}
@@ -19,6 +19,7 @@ const Profile = ({ fill, stroke, ...rest }: Props) => {
       <path
         d="M6.64537 24.298C7.40578 22.5065 9.18115 21.25 11.25 21.25H18.75C20.8188 21.25 22.5942 22.5065 23.3546 24.298M20 11.875C20 14.6364 17.7614 16.875 15 16.875C12.2386 16.875 10 14.6364 10 11.875C10 9.11358 12.2386 6.875 15 6.875C17.7614 6.875 20 9.11358 20 11.875ZM27.5 15C27.5 21.9036 21.9036 27.5 15 27.5C8.09644 27.5 2.5 21.9036 2.5 15C2.5 8.09644 8.09644 2.5 15 2.5C21.9036 2.5 27.5 8.09644 27.5 15Z"
         stroke={stroke}
+        fill={fill}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"

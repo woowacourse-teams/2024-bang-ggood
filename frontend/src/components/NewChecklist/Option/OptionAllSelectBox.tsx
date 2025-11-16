@@ -5,7 +5,6 @@ import CounterBox from '@/components/_common/CounterBox/CounterBox';
 import { OPTION_COUNT } from '@/constants/options';
 import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 import { flexCenter, flexSpaceBetween, title4 } from '@/styles/common';
-import theme from '@/styles/theme';
 
 const OptionAllSelectBox = () => {
   const selectedOptions = useSelectedOptionStore(state => state.selectedOptions);
@@ -22,8 +21,6 @@ const OptionAllSelectBox = () => {
           ariaLabel={`전체 옵션을 선택 ${isAllSelected ? '해제' : ''}하려면 두번 누르세요.`}
           isChecked={isAllSelected}
           onClick={handleToggleAllSelect}
-          color={theme.palette.yellow500}
-          hoverColor={theme.palette.yellow600}
         />
         <span>전체선택</span>
       </S.TotalSelectBox>

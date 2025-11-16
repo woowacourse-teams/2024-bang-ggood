@@ -25,10 +25,10 @@ const LINE_STYLE = {
     border-width: 0.1rem;
   `,
   vertical: css`
-    border-left: solid ${theme.palette.grey100};
+    border-left: solid ${theme.color.gray[100]};
   `,
   horizontal: css`
-    border-bottom: solid ${theme.palette.grey100};
+    border-bottom: solid ${theme.color.gray[100]};
   `,
 };
 

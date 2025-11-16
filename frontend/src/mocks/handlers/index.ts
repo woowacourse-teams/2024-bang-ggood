@@ -1,4 +1,5 @@
 import { ArticleHandlers } from '@/mocks/handlers/article';
+import { buildingHandlers } from '@/mocks/handlers/building';
 import { checklistHandlers } from '@/mocks/handlers/checklist';
 import { likeHandlers } from '@/mocks/handlers/like';
 import { roomCompareHandlers } from '@/mocks/handlers/roomCompare';
@@ -12,4 +13,5 @@ export const handlers = [
   ...userHandlers,
   ...SubwayHandlers,
   ...likeHandlers,
+  ...buildingHandlers,
 ];

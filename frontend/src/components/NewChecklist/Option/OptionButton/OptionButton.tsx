@@ -6,6 +6,7 @@ import useSelectedOptionStore from '@/store/useSelectedOptionStore';
 import { flexCenter, flexColumn } from '@/styles/common';
 import theme from '@/styles/theme';
 import { OptionWithIcon } from '@/types/option';
+import { fontStyle } from '@/utils/fontStyle';
 
 const OptionButton = ({ option, isSelected }: { option: OptionWithIcon; isSelected: boolean }) => {
   const { FilledIcon, UnFilledIcon, displayName, id } = option;
@@ -31,14 +32,14 @@ const OptionButton = ({ option, isSelected }: { option: OptionWithIcon; isSelect
 
   const BUTTON_COLOR = {
     unSelected: {
-      border: theme.palette.grey300,
-      text: theme.palette.grey500,
-      fill: theme.palette.white,
+      border: theme.color.gray[300],
+      text: theme.color.gray[600],
+      fill: theme.color.gray[300],
     },
     selected: {
-      border: theme.palette.yellow600,
-      fill: theme.palette.yellow100,
-      text: theme.palette.yellow700,
+      border: theme.color.primary[500],
+      fill: theme.color.primary[500],
+      text: theme.color.gray[600],
     },
   };
 
@@ -100,11 +101,10 @@ const S = {
     bottom: 15%;
 
     width: 100%;
-    ${flexCenter}
+    ${flexCenter};
 
     color: ${({ color }) => color};
-    font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: ${({ theme }) => theme.text.size.small};
+    ${fontStyle(theme.font.label[1].B)};
 
     @media (width <= 35rem) {
       font-size: ${({ theme }) => theme.text.size.xxSmall};

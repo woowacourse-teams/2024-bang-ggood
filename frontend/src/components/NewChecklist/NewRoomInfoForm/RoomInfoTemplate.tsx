@@ -41,6 +41,7 @@ const RoomInfoTemplate = () => {
         <RoomContractTerm />
         <OccupancyMonth />
         <RealEstate />
+
         <MoveNextButton marginBottom="1rem" />
       </S.Container>
     </Layout>
@@ -52,7 +53,8 @@ const S = {
     ${flexColumn}
     justify-content: start;
     row-gap: 1.5rem;
-    margin-bottom: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 5rem;
   `,
 };
 

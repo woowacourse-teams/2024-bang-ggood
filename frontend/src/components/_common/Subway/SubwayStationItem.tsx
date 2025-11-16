@@ -16,22 +16,14 @@ const SubwayStationItem = ({ station, size, textType = 'full' }: Props) => {
   const { stationName, stationLine, walkingTime } = station;
 
   return (
-    <FlexBox.Horizontal gap={'0.6rem'} flexWrap="wrap">
-      <FlexBox.Horizontal gap={'0.4rem'}>
+    <FlexBox.Horizontal gap="0.6rem" flexWrap="wrap">
+      <FlexBox.Horizontal gap="0.4rem">
         {stationLine?.map(oneLine => {
           const lineColor = SUBWAY_LINE_PALLETE[oneLine];
           const isNumberTypeSubwayName = oneLine.slice(-2) === '호선' && oneLine.length === 3;
           const name = isNumberTypeSubwayName ? oneLine.slice(0, oneLine.length - 2) : oneLine;
 
-          return (
-            <Marker
-              size={size}
-              text={name}
-              key={oneLine}
-              backgroundColor={lineColor}
-              isCircle={isNumberTypeSubwayName}
-            />
-          );
+          return <Marker size={size} text={name} key={oneLine} color={lineColor} isCircle={isNumberTypeSubwayName} />;
         })}
       </FlexBox.Horizontal>
       <S.TextBox>

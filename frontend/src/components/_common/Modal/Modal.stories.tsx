@@ -45,15 +45,13 @@ const Template: StoryFn<ModalProps> = (args: ModalProps) => {
       <Modal {...args} isOpen={isModalOpen} onClose={handleClose}>
         <Modal.header title="모달 제목" />
         <Modal.body>
-          <div style={{ fontSize: '1.4rem' }}>
-            저희 조는 우주, 제이드, 제제, 시소, 헤일리, 리안, 카피로 이루어져 있습니다. 모두 방끗이라는 이름에 걸맞게
-            귀여운 친구들이죠. 저희들과 친구를 하고 싶으신가요?
-          </div>
+          저희 조는 우주, 제이드, 제제, 시소, 헤일리, 리안, 카피로 이루어져 있습니다. 모두 방끗이라는 이름에 걸맞게
+          귀여운 친구들이죠. 저희들과 친구를 하고 싶으신가요?
         </Modal.body>
         {args.hasCloseButton && (
           <Modal.footer>
-            <Button label="너무, 좋죠!" onClick={handleClose} size="small" />
-            <Button label="앗, 그건  좀...!" onClick={handleClose} color="dark" size="small" />
+            <Button label="너무, 좋죠!" onClick={handleClose} size="full" color="primary" />
+            <Button label="앗, 그건  좀...!" onClick={handleClose} color="dark" size="full" />
           </Modal.footer>
         )}
       </Modal>

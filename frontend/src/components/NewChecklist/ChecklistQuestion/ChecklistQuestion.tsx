@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import HighlightText from '@/components/_common/Highlight/HighlightText';
 import { ChecklistQuestion } from '@/types/checklist';
+import { fontStyle } from '@/utils/fontStyle';
 
 type FontSize = 'medium' | 'small';
 interface Props {
@@ -12,11 +12,9 @@ interface Props {
 }
 
 const ChecklistQuestionItem = ({ question, width = '100%', fontSize = 'medium' }: Props) => {
-  const { title, highlights } = question;
-
   return (
-    <S.Question className="question" width={width}>
-      <HighlightText fontSize={fontSize} title={title} highlights={highlights} />
+    <S.Question className="question" width={width} fontSize={fontSize}>
+      {question.title}
     </S.Question>
   );
 };
@@ -24,9 +22,11 @@ const ChecklistQuestionItem = ({ question, width = '100%', fontSize = 'medium' }
 export default React.memo(ChecklistQuestionItem);
 
 const S = {
-  Question: styled.div<{ width: string }>`
+  Question: styled.div<{ width: string; fontSize: FontSize }>`
     display: flex;
     width: ${({ width }) => width};
     flex-flow: column wrap;
+    ${({ theme, fontSize }) =>
+      fontSize === 'medium' ? fontStyle(theme.font.headline[2].B) : fontStyle(theme.font.headline[2].R)}
   `,
 };

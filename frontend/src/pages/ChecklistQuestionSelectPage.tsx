@@ -63,9 +63,8 @@ const ChecklistQuestionSelectPage = () => {
         right={
           <Button
             label="저장"
-            size="small"
-            color="dark"
-            isSquare
+            size="header"
+            variant="text"
             onClick={handleSubmitChecklist}
             id="checklistSubmitButton"
           />
@@ -78,12 +77,13 @@ const ChecklistQuestionSelectPage = () => {
         </ErrorBoundary>
         {/* 질문 콘텐츠 섹션*/}
         <Layout bgColor={theme.palette.background} withHeader withTab>
-          <TipBox tipType={'CUSTOM_QUESTION'} />
+          <TipBox tipType="CUSTOM_QUESTION" />
           <ErrorBoundary FallbackComponent={ListErrorFallback}>
             <Suspense>
               <QuestionListTemplate />
             </Suspense>
           </ErrorBoundary>
+          {/* <CustomChecklistQuestionSection /> TODO: 다시 추가하기 */}
         </Layout>
       </TabProvider>
     </>

@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/_common/Button/Button';
@@ -9,10 +8,10 @@ const EmailLoginButton = () => {
   const navigate = useNavigate();
 
   return (
-    <S.EmailLoginButton
+    <Button
       label="이메일로 로그인하기"
       size="full"
-      isSquare
+      color="dark"
       onClick={() => {
         navigate(ROUTE_PATH.signIn);
         trackEmailLoginButton();
@@ -22,16 +21,3 @@ const EmailLoginButton = () => {
 };
 
 export default EmailLoginButton;
-
-const S = {
-  EmailLoginButton: styled(Button)`
-    background-color: ${({ theme }) => theme.palette.green500};
-    border-radius: 0.8rem;
-
-    color: ${({ theme }) => theme.palette.white};
-
-    &:hover {
-      background-color: ${({ theme }) => theme.palette.green600};
-    }
-  `,
-};

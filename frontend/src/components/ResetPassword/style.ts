@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
-import { flexCenter, title3 } from '@/styles/common';
+import { flexCenter, flexColumn } from '@/styles/common';
+import { fontStyle } from '@/utils/fontStyle';
 
 const CS = {
   Wrapper: styled.div`
@@ -8,49 +9,42 @@ const CS = {
     height:calc(100dvh - 56px);
     flex-direction: column;
     gap: 1rem;
+    padding: 0 1.6rem;
   `,
   LogoBox: styled.div`
-    ${flexCenter}
-    margin-bottom:50px;
-    gap: 2rem;
-  `,
-  Label: styled.div`
-    position: absolute;
-    top: -4.2rem;
-    padding: 1rem 1.4rem;
-    border-radius: 1rem 1rem 0 0;
-    ${title3}
-
-    background-color: ${({ theme }) => theme.palette.green500};
-
-    color: ${({ theme }) => theme.palette.white};
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+    gap: 1rem;
+    width: 100%;
   `,
   SendButton: styled.button<{ disabled?: boolean }>`
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
     padding: 0 1.2rem;
     cursor: pointer;
 
     ${flexCenter}
-    background-color: ${({ theme, disabled }) => (disabled ? theme.palette.green300 : theme.palette.green500)};
+    color: ${({ theme, disabled }) => (disabled ? theme.color.gray[300] : theme.color.secondary[500])};
 
-    color: ${({ theme }) => theme.palette.white};
-    font-weight: ${({ theme }) => theme.text.weight.medium};
-    font-size: ${({ theme }) => theme.text.size.small};
+    ${({ theme }) => fontStyle(theme.font.body[1].B)}
     line-height: 2;
     white-space: nowrap;
     border-radius: 1rem;
   `,
   Box: styled.div`
-    display: flex;
+    ${flexColumn}
+    min-height: 26rem;
+    flex-grow: 0;
+
     position: relative;
 
-    width: 30rem;
+    width: 100%;
     margin-bottom: 0.5rem;
-    padding: 1.6rem;
 
-    background-color: ${({ theme }) => theme.palette.background};
-    flex-direction: column;
     border-radius: 1rem;
-    gap: 2rem;
+    gap: 1.2rem;
   `,
 };
 

@@ -8,7 +8,7 @@ type BadgeSize = 'short' | 'long' | 'button';
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: BadgeSize;
-  label: string;
+  label: React.ReactNode;
   isSelected?: boolean;
   name?: string;
 }
@@ -49,7 +49,7 @@ const S = {
         : css`
             border: 0.2rem solid ${theme.palette.grey200};
 
-            background-color: ${theme.palette.white};
+            background-color: ${theme.color.mono.white};
           `}
   `,
 };

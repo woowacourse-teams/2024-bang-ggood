@@ -32,6 +32,11 @@ export interface ChecklistQuestionWithAnswer extends ChecklistQuestion {
 }
 
 // 체크리스트 커스텀
+export interface CustomChecklistCategoriesRes {
+  defaultCategories: ChecklistCategoryWithIsSelected[];
+  UserCategories: ChecklistCategoryWithIsSelected[];
+}
+
 export interface ChecklistCategoryWithIsSelected extends Category {
   questions: ChecklistQuestionWithIsSelected[];
 }
@@ -51,6 +56,8 @@ export interface ChecklistPreview {
   createdAt: string;
   summary: string;
   isLiked: boolean;
+  // TODO: 새로운 기능으로 추가된 썸네일 사진 작업 - 백엔드와 이름 논의 필요
+  thumbnail?: string;
 }
 
 // 체크리스트 디테일

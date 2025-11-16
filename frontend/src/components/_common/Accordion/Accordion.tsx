@@ -11,10 +11,12 @@ interface Props {
   totalCount: number;
 }
 
-const Accordion = ({ width = '100%', children, totalCount }: Props) => {
+const Accordion = ({ width = '100%', children, totalCount, ...rest }: Props) => {
   return (
     <AccordionProvider count={totalCount}>
-      <S.Container width={width}>{children}</S.Container>
+      <S.Container width={width} {...rest}>
+        {children}
+      </S.Container>
     </AccordionProvider>
   );
 };

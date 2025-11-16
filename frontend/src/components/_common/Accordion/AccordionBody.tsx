@@ -34,12 +34,13 @@ const AccordionBody = ({ children, id }: Props) => {
 const S = {
   Container: styled.div<{ isOpen: boolean; maxHeight: number }>`
     overflow: hidden;
-    margin: 0.8rem 0;
+
+    margin: 0 0 0.8rem;
     max-height: ${({ maxHeight }) => maxHeight}px;
     transition: max-height 0.4s cubic-bezier(0.15, 0.1, 0.25, 1);
     border-radius: 0.8rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
   `,
 };
 

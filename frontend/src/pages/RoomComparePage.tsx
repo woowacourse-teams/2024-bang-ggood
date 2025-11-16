@@ -33,7 +33,7 @@ const RoomComparePage = () => {
         left={<Header.Backward onClick={handleClickBackward} />}
         center={<Header.Text>방 비교하기</Header.Text>}
       />
-      <Layout bgColor={theme.palette.white} withHeader>
+      <Layout bgColor={theme.color.mono.white} withHeader style={{ padding: 0 }}>
         <ErrorBoundary FallbackComponent={ListErrorFallback}>
           <Suspense>
             <RoomCompareContent />

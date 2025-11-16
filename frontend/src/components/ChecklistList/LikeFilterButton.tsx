@@ -3,8 +3,9 @@ import styled from '@emotion/styled';
 import Like from '@/assets/icons/like/Like';
 import useGetIsUserValidQuery from '@/hooks/query/useGetIsUserValid';
 import useGetChecklistList from '@/hooks/useGetChecklistList';
-import { boxShadow, flexRow } from '@/styles/common';
+import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
+import { fontStyle } from '@/utils/fontStyle';
 
 const LikeFilterButton = () => {
   const { isLikeFiltered: isEnabled, toggleFilter } = useGetChecklistList();
@@ -24,18 +25,21 @@ const LikeFilterButton = () => {
 export default LikeFilterButton;
 
 const S = {
-  LikeFilterBox: styled.section<{ $isChecked: boolean }>`
-    ${flexRow}
+  LikeFilterBox: styled.button<{ $isChecked: boolean }>`
+    ${flexCenter}
     flex: 0 0 auto;
-    align-items: center;
-    gap: 1rem;
-    box-sizing: border-box;
-    border-radius: 1.5rem;
-    height: 3rem;
-    padding: 1.2rem 1.6rem;
+    gap: 0.5rem;
 
-    background-color: ${({ theme, $isChecked }) => ($isChecked ? theme.palette.red200 : theme.palette.white)};
-    ${boxShadow};
+    box-sizing: border-box;
+    border-radius: 0.8rem;
+
+    width: 11rem;
+    height: 4rem;
+    border: ${({ theme }) => `1px solid ${theme.color.gray[200]}`};
+
+    ${({ theme }) => fontStyle(theme.font.body[1].B)}
+
+    background-color: ${({ theme, $isChecked }) => ($isChecked ? theme.color.gray[200] : theme.color.mono.white)};
     cursor: pointer;
   `,
 };

@@ -1,16 +1,13 @@
 import styled from '@emotion/styled';
 
 import ArticlePreviewCard from '@/components/Main/ArticlePreviewCard';
-import SkArticleSection from '@/components/skeleton/Main/SkArticleSection';
 import { MAX_ARTICLES_DISPLAY_COUNT } from '@/constants/system';
-import useGetArticleListQuery from '@/hooks/query/useGetArticleListQuery';
+import { useGetArticleListSuspenseQuery } from '@/hooks/query/useGetArticleListSuspenseQuery';
 import { flexRow } from '@/styles/common';
 import { Article } from '@/types/article';
 
 const ArticleCardContainer = () => {
-  const { data: articles, isLoading } = useGetArticleListQuery();
-
-  if (isLoading) return <SkArticleSection />;
+  const { articles } = useGetArticleListSuspenseQuery();
 
   return (
     <S.CardList>
@@ -33,8 +30,9 @@ const S = {
     ${flexRow}
     overflow-x: scroll;
     scroll-snap-type: x mandatory;
+
     padding: 1.6rem;
-    gap: 1.6rem;
+    gap: 1rem;
     scrollbar-width: none;
 
     &::-webkit-scrollbar {
@@ -43,7 +41,6 @@ const S = {
   `,
   CardWrapper: styled.div`
     display: inline-block;
-    width: 19rem;
     scroll-snap-align: start;
     flex: 0 0 auto;
 

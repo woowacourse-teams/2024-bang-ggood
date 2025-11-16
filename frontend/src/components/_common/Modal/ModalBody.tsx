@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 
+import { fontStyle } from '@/utils/fontStyle';
+
 type ModalContentPosition = 'center' | 'left';
 
 interface Props {
@@ -21,11 +23,11 @@ const S = {
   Container: styled.div<{ contentPosition: ModalContentPosition }>`
     display: flex;
     width: 100%;
-    gap: 1rem;
     margin-bottom: 1rem;
-    padding: 0 1.6rem;
 
+    ${({ theme }) => fontStyle(theme.font.body[1].B)}
     text-align: left;
+    gap: 1rem;
     flex-direction: column;
     box-sizing: border-box;
     justify-content: ${({ contentPosition }) => (contentPosition === 'center' ? 'center' : 'flex-start')};

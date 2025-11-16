@@ -5,6 +5,7 @@ import { Link, LinkProps, useLocation } from 'react-router-dom';
 import FooterButton from '@/components/_common/Footer/FooterButton';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { FOOTER_SIZE } from '@/constants/style';
+import { fontStyle } from '@/utils/fontStyle';
 
 interface Props {
   children: React.ReactNode;
@@ -57,6 +58,11 @@ const Footer = Object.assign(FooterWrapper, {
     <FooterButton logo="profile" isActive />,
     ROUTE_PATH.myPage,
   ),
+  BuildingList: FooterLinkButton(
+    <FooterButton logo="building-list" />,
+    <FooterButton logo="building-list" isActive />,
+    ROUTE_PATH.buildingList,
+  ),
 });
 
 export default Footer;
@@ -71,14 +77,15 @@ const S = {
     bottom: 0%;
     width: 100%;
     height: ${FOOTER_SIZE}rem;
-    padding: 0.8rem 1.6rem 1.6rem;
+    padding: 1.6rem 0 0.8rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
     max-width: 60rem;
     align-items: flex-start;
     box-sizing: border-box;
 
     box-shadow: 0 -0.4rem 1rem 0 rgb(0 0 0 / 3%);
+    ${({ theme }) => fontStyle(theme.font.label[2].B)};
   `,
   FlexBox: styled.div`
     display: flex;
@@ -87,8 +94,6 @@ const S = {
     justify-content: space-around;
   `,
   TextButton: styled.button`
-    color: ${({ theme }) => theme.palette.black};
-    font-weight: ${({ theme }) => theme.text.weight.bold};
-    font-size: ${({ theme }) => theme.text.size.medium};
+    color: ${({ theme }) => theme.color.mono.black};
   `,
 };

@@ -35,7 +35,6 @@ public class BuildingService {
 
     @Transactional
     public Building findBuilding(Long buildingId) {
-        return buildingRepository.findById(buildingId)
-                        .orElseThrow(() -> new BangggoodException(ExceptionCode.BUILDING_NOT_FOUND));
+        return buildingRepository.getById(buildingId);
     }
 }

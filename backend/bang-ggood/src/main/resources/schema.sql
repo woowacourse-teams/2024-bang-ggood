@@ -1,6 +1,7 @@
 -- Drop tables if they exist
 DROP TABLE IF EXISTS building_station CASCADE;
 DROP TABLE IF EXISTS checklist_like CASCADE;
+DROP TABLE IF EXISTS building_image CASCADE;
 DROP TABLE IF EXISTS custom_checklist_question CASCADE;
 DROP TABLE IF EXISTS checklist_option CASCADE;
 DROP TABLE IF EXISTS checklist_question CASCADE;
@@ -79,7 +80,7 @@ CREATE TABLE checklist
     id               BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id          BIGINT NOT NULL,
     building_id      BIGINT NOT NULL,
-    name             VARCHAR(255) NOT NULL,
+    name             VARCHAR(255),
     floor_level      VARCHAR(255),
     floor            INTEGER,
     structure        VARCHAR(255),
@@ -93,6 +94,7 @@ CREATE TABLE checklist
     real_estate      VARCHAR(255),
     memo             VARCHAR(1000),
     summary          VARCHAR(255),
+    status           VARCHAR(255),
     created_at       TIMESTAMP(6),
     modified_at      TIMESTAMP(6),
     deleted          BOOLEAN,
@@ -235,3 +237,14 @@ CREATE TABLE building_like
     FOREIGN KEY (building_id) REFERENCES building (id)
 );
 
+CREATE TABLE building_image (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    building_id BIGINT NOT NULL,
+    image_url TEXT NOT NULL,
+    created_at  TIMESTAMP(6),
+    modified_at  TIMESTAMP(6),
+    deleted BOOLEAN,
+    CONSTRAINT fk_building FOREIGN KEY (building_id)
+    REFERENCES building(id)
+    ON DELETE CASCADE
+);

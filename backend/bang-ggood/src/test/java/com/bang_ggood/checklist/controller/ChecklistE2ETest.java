@@ -4,9 +4,11 @@ import com.bang_ggood.AcceptanceTest;
 import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.ChecklistImageFixture;
-import com.bang_ggood.checklist.domain.Building;
+import com.bang_ggood.building.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
-import com.bang_ggood.checklist.repository.BuildingRepository;
+import com.bang_ggood.checklist.domain.Status;
+import com.bang_ggood.checklist.dto.request.ChecklistStatusRequest;
+import com.bang_ggood.building.repository.BuildingRepository;
 import com.bang_ggood.checklist.repository.ChecklistImageRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.service.ChecklistManageService;
@@ -346,6 +348,24 @@ class ChecklistE2ETest extends AcceptanceTest {
                 .contentType(ContentType.JSON)
                 .headers(this.headers)
                 .when().delete("/checklists/{checklist_id}/images/{image_id}", checklistId, imageId)
+                .then().log().all()
+                .statusCode(204);
+    }
+
+    @DisplayName("체크리스트 상태 변경 성공")
+    @Test
+    void updateChecklistStatusById() {
+        // given
+        long checklistId = checklistManageService.createChecklistV2(this.getAuthenticatedUser(),
+                ChecklistFixture.CHECKLIST_CREATE_REQUEST(), ChecklistImageFixture.IMAGES());
+        ChecklistStatusRequest request = new ChecklistStatusRequest("OPEN");
+
+        // when & then
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .headers(this.headers)
+                .body(request)
+                .when().patch("/checklists/" + checklistId + "/status")
                 .then().log().all()
                 .statusCode(204);
     }

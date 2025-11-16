@@ -1,6 +1,7 @@
 -- Drop tables if they exist
 DROP TABLE IF EXISTS test_entity CASCADE;
 DROP TABLE IF EXISTS building_station CASCADE;
+DROP TABLE IF EXISTS building_image CASCADE;
 DROP TABLE IF EXISTS checklist_like CASCADE;
 DROP TABLE IF EXISTS custom_checklist_question CASCADE;
 DROP TABLE IF EXISTS checklist_option CASCADE;
@@ -94,6 +95,7 @@ CREATE TABLE checklist
     real_estate      VARCHAR(255),
     memo             VARCHAR(1000),
     summary          VARCHAR(255),
+    status           VARCHAR(255),
     created_at       TIMESTAMP(6),
     modified_at      TIMESTAMP(6),
     deleted          BOOLEAN,
@@ -244,4 +246,16 @@ CREATE TABLE building_like
     deleted      BOOLEAN,
     FOREIGN KEY (user_id) REFERENCES users (id),
     FOREIGN KEY (building_id) REFERENCES building (id)
+);
+
+CREATE TABLE building_image (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    building_id BIGINT NOT NULL,
+    image_url TEXT NOT NULL,
+    created_at  TIMESTAMP(6),
+    modified_at  TIMESTAMP(6),
+    deleted BOOLEAN,
+    CONSTRAINT fk_building FOREIGN KEY (building_id)
+        REFERENCES building(id)
+        ON DELETE CASCADE
 );

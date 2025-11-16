@@ -1,6 +1,6 @@
 package com.bang_ggood.checklist.dto.request;
 
-import com.bang_ggood.checklist.domain.Building;
+import com.bang_ggood.building.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.FloorLevel;
 import com.bang_ggood.checklist.domain.Structure;

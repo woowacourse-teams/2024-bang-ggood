@@ -1,5 +1,6 @@
 package com.bang_ggood.checklist.domain;
 
+import com.bang_ggood.building.domain.Building;
 import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.contract.domain.OccupancyMonth;

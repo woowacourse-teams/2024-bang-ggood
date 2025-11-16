@@ -3,6 +3,7 @@ package com.bang_ggood.checklist.controller;
 import com.bang_ggood.auth.config.AuthRequiredPrincipal;
 import com.bang_ggood.auth.config.UserPrincipal;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
+import com.bang_ggood.checklist.dto.request.ChecklistStatusRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
 import com.bang_ggood.checklist.dto.response.ChecklistShareResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
@@ -17,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -126,6 +128,14 @@ public class ChecklistController {
                                                          @PathVariable("checklist_id") long checklistId,
                                                          @PathVariable("image_id") long imageId) {
         checklistManageService.deleteChecklistImageById(user, checklistId, imageId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/checklists/{id}/status")
+    public ResponseEntity<Void> updateChecklistStatusById(@AuthRequiredPrincipal User user,
+                                                          @PathVariable("id") long id,
+                                                          @RequestBody @Valid ChecklistStatusRequest checklistStatusRequest) {
+        checklistManageService.updateChecklistStatusById(user, id, checklistStatusRequest);
         return ResponseEntity.noContent().build();
     }
 }

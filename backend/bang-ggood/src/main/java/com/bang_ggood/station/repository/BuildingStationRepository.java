@@ -1,6 +1,6 @@
 package com.bang_ggood.station.repository;
 
-import com.bang_ggood.checklist.domain.Building;
+import com.bang_ggood.building.domain.Building;
 import com.bang_ggood.station.domain.BuildingStation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

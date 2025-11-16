@@ -2,9 +2,9 @@ package com.bang_ggood.global.handler;
 
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
-import com.bang_ggood.global.exception.OauthException;
+import com.bang_ggood.global.exception.ExternalAPIException;
 import com.bang_ggood.global.exception.dto.ExceptionResponse;
-import com.bang_ggood.global.exception.dto.OauthExceptionResponse;
+import com.bang_ggood.global.exception.dto.ExternalAPIExceptionResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,8 +60,8 @@ public class GlobalExceptionHandler {
                 .body(response);
     }
 
-    @ExceptionHandler(OauthException.class)
-    public ResponseEntity<OauthExceptionResponse> handleOauthException(OauthException exception) {
+    @ExceptionHandler(ExternalAPIException.class)
+    public ResponseEntity<ExternalAPIExceptionResponse> handleExternalAPIException(ExternalAPIException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(exception.getResponse());
     }

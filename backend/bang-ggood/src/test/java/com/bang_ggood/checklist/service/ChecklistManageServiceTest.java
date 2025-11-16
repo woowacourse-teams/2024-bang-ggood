@@ -4,12 +4,14 @@ import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.ChecklistImageFixture;
-import com.bang_ggood.checklist.domain.Building;
+import com.bang_ggood.building.domain.Building;
 import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.checklist.domain.ChecklistImage;
 import com.bang_ggood.checklist.domain.ChecklistShare;
+import com.bang_ggood.checklist.domain.Status;
 import com.bang_ggood.checklist.domain.Structure;
 import com.bang_ggood.checklist.dto.request.ChecklistRequest;
+import com.bang_ggood.checklist.dto.request.ChecklistStatusRequest;
 import com.bang_ggood.checklist.dto.response.ChecklistCompareResponses;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistPreviewResponseV2;
@@ -17,7 +19,7 @@ import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponse;
 import com.bang_ggood.checklist.dto.response.ChecklistsPreviewResponseV2;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponse;
 import com.bang_ggood.checklist.dto.response.SelectedChecklistResponseV2;
-import com.bang_ggood.checklist.repository.BuildingRepository;
+import com.bang_ggood.building.repository.BuildingRepository;
 import com.bang_ggood.checklist.repository.ChecklistImageRepository;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.checklist.repository.ChecklistShareRepository;
@@ -447,4 +449,23 @@ class ChecklistManageServiceTest extends IntegrationTestSupport {
                 .isEmpty();
     }
 
+    @DisplayName("체크리스트 상태 변경 성공")
+    @Test
+    void updateChecklistStatusById() {
+        // given
+        User user = userRepository.save(UserFixture.USER1());
+        Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
+        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
+        ChecklistStatusRequest request = new ChecklistStatusRequest("CLOSE");
+
+        // when
+        checklistManageService.updateChecklistStatusById(user, checklist.getId(), request);
+
+        // then
+        Checklist updatedChecklist = checklistRepository.getById(checklist.getId());
+        assertAll(
+                () -> assertThat(updatedChecklist.getStatus()).isEqualTo(Status.CLOSE),
+                () -> assertThat(updatedChecklist.getStatus()).isNotEqualTo(Status.OPEN)
+        );
+    }
 }

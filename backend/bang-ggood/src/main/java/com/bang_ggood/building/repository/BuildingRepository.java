@@ -1,8 +1,8 @@
-package com.bang_ggood.checklist.repository;
+package com.bang_ggood.building.repository;
 
-import com.bang_ggood.checklist.domain.Building;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
+import com.bang_ggood.building.domain.Building;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

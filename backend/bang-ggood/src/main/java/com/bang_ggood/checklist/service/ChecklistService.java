@@ -1,6 +1,7 @@
 package com.bang_ggood.checklist.service;
 
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.Status;
 import com.bang_ggood.checklist.repository.ChecklistRepository;
 import com.bang_ggood.global.exception.BangggoodException;
 import com.bang_ggood.global.exception.ExceptionCode;
@@ -53,5 +54,10 @@ public class ChecklistService {
     @Transactional
     public void deleteById(Long id) {
         checklistRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void updateChecklistStatus(Checklist checklist, Status checklistStatus) {
+        checklist.changeStatus(checklistStatus);
     }
 }

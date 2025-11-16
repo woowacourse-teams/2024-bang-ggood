@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 
-import useGetArticleListQuery from '@/hooks/query/useGetArticleListQuery';
-import { title3 } from '@/styles/common';
+import { useGetArticleListSuspenseQuery } from '@/hooks/query/useGetArticleListSuspenseQuery';
+import { fontStyle } from '@/utils/fontStyle';
 
 const ArticleListTitle = () => {
-  const { data: articles } = useGetArticleListQuery();
+  const { articles } = useGetArticleListSuspenseQuery();
 
   return (
     <S.Title>
@@ -17,9 +17,9 @@ export default ArticleListTitle;
 
 const S = {
   Title: styled.h1`
-    ${title3}
+    ${({ theme }) => fontStyle(theme.font.heading[2].B)}
   `,
   Count: styled.span`
-    color: ${({ theme }) => theme.palette.green500};
+    color: ${({ theme }) => theme.color.secondary[500]};
   `,
 };

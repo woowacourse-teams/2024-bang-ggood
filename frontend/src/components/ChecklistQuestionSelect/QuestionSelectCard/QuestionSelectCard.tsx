@@ -4,8 +4,8 @@ import Checkbox from '@/components/_common/Checkbox/Checkbox';
 import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import { useTabContext } from '@/components/_common/Tabs/TabContext';
 import useChecklistQuestionSelect from '@/hooks/useChecklistQuestionSelect';
-import { flexCenter } from '@/styles/common';
 import { ChecklistQuestionWithIsSelected } from '@/types/checklist';
+import { fontStyle } from '@/utils/fontStyle';
 
 const QuestionSelectCard = ({ question }: { question: ChecklistQuestionWithIsSelected }) => {
   const { title, subtitle, isSelected, questionId } = question;
@@ -25,15 +25,17 @@ const QuestionSelectCard = ({ question }: { question: ChecklistQuestionWithIsSel
         tabIndex={0}
         className="question"
       >
-        <S.FlexColumn aria-hidden="true" tabIndex={-1}>
-          <FlexBox.Vertical>
-            <S.Title>{title}</S.Title>
-            {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
-          </FlexBox.Vertical>
-        </S.FlexColumn>
-        <S.CheckBoxContainer aria-hidden="true" tabIndex={-1}>
-          <Checkbox iconType="plus" isChecked={isSelected} onClick={handleCheckQuestion} />
-        </S.CheckBoxContainer>
+        <FlexBox.Vertical>
+          <S.Title>{title}</S.Title>
+          {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
+        </FlexBox.Vertical>
+        <Checkbox
+          iconType="plus"
+          isChecked={isSelected}
+          onClick={handleCheckQuestion}
+          aria-hidden="true"
+          tabIndex={-1}
+        />
       </S.Container>
       {statusMessage && (
         <div className="visually-hidden" role="alert">
@@ -53,33 +55,23 @@ const S = {
     min-height: 5rem;
     justify-content: space-between;
     align-items: center;
+    padding: 1.6rem;
+    border-radius: 0.8rem;
+    box-sizing: border-box;
+    cursor: pointer;
 
-    background-color: ${({ isChecked, theme }) => isChecked && theme.palette.green50};
-  `,
-  FlexColumn: styled.div`
-    display: flex;
-    width: 90%;
-    padding: 1rem;
-    padding-left: 2rem;
-    flex-direction: column;
-  `,
-  FlexRow: styled.div`
-    ${flexCenter}
-    gap: .8rem;
-    justify-content: left;
+    border: 0.15rem solid ${({ isChecked, theme }) => (isChecked ? theme.color.primary[500] : theme.color.mono.white)};
+
+    background-color: ${({ theme }) => theme.color.mono.white};
   `,
   Title: styled.div`
     display: flex;
 
-    font-size: ${({ theme }) => theme.text.size.medium};
     gap: 1rem;
+    ${({ theme }) => fontStyle(theme.font.heading[2].B)}
   `,
   Subtitle: styled.div`
-    color: ${({ theme }) => theme.palette.grey500};
-    font-size: ${({ theme }) => theme.text.size.small};
     word-break: keep-all;
-  `,
-  CheckBoxContainer: styled.div`
-    padding-right: 2rem;
+    ${({ theme }) => fontStyle(theme.font.body[1].R)}
   `,
 };

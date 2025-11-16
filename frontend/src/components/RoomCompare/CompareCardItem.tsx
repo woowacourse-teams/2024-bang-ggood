@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 import { flexCenter, flexColumn } from '@/styles/common';
+import { fontStyle } from '@/utils/fontStyle';
 
 interface Props {
   label?: string;
@@ -26,24 +27,20 @@ const S = {
     width: 100%;
     height: ${({ height }) => height && height}rem;
     ${flexColumn};
-    gap: 1rem;
-    align-items: center;
+    gap: 0.8rem;
+    align-items: flex-start;
+    box-sizing: border-box;
+    padding: 0 1.6rem;
   `,
   ItemText: styled.div`
     height: 100%;
-
     ${flexCenter};
-    font-size: ${({ theme }) => theme.text.size.small};
-    line-height: 1.5rem;
-  `,
-  Score: styled.div`
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    ${({ theme }) => fontStyle(theme.font.headline[2].B)};
   `,
   Label: styled.div<{ isLabeled: boolean }>`
-    height: 1.5rem;
-    margin-bottom: 0.5rem;
+    height: 2.4rem;
 
-    color: ${({ theme }) => theme.palette.grey500};
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    color: ${({ theme }) => theme.color.gray[500]};
+    ${({ theme }) => fontStyle(theme.font.headline[2].R)};
   `,
 };

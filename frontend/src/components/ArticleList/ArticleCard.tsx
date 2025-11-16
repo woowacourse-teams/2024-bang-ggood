@@ -1,12 +1,13 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
+import ArticleBadge from '@/components/_common/ArticleBadge/ArticleBadge';
 import { ROUTE_PATH } from '@/constants/routePath';
 import { trackArticleDetail } from '@/service/amplitude/trackEvent';
-import { boxShadow, flexColumn, title3 } from '@/styles/common';
+import { flexColumn } from '@/styles/common';
 import { Article } from '@/types/article';
+import { fontStyle } from '@/utils/fontStyle';
 import formattedDate from '@/utils/formattedDate';
-import getSeqColor from '@/utils/getSeqColor';
 
 interface Props {
   article: Article;
@@ -16,19 +17,6 @@ const ArticleCard = ({ article }: Props) => {
   const navigate = useNavigate();
   const { articleId, keyword, title, summary, createdAt } = article;
 
-  const ARTICLE_KEYWORDS = [
-    '방끗 활용법',
-    '동네 추천',
-    '우테코 생활',
-    '자취 꿀팁',
-    '생활 꿀팁',
-    '자취 일기',
-    '계약 꿀팁',
-  ];
-  const currentColorIndex = ARTICLE_KEYWORDS.findIndex(keyword => keyword === article.keyword);
-  const { color500 } = getSeqColor(currentColorIndex);
-  const { color500: defaultColor500 } = getSeqColor(articleId);
-
   const handleClick = () => {
     trackArticleDetail(article.title);
     navigate(ROUTE_PATH.articleOne(articleId));
@@ -36,10 +24,10 @@ const ArticleCard = ({ article }: Props) => {
 
   return (
     <S.Container onClick={handleClick} tabIndex={1}>
-      <S.Keyword bgColor={color500 ?? defaultColor500}> {keyword}</S.Keyword>
+      <ArticleBadge label={keyword} />
       <S.Title>{title}</S.Title>
       <S.Label>{summary}</S.Label>
-      <S.Label>{formattedDate(createdAt)}</S.Label>
+      <S.Date>{formattedDate(createdAt)}</S.Date>
     </S.Container>
   );
 };
@@ -56,38 +44,28 @@ const S = {
     padding: 1.6rem;
 
     border-radius: 1.6rem;
+    border: 1px solid ${({ theme }) => theme.color.gray[100]};
 
-    background-color: ${({ theme }) => theme.palette.white};
-    ${boxShadow};
+    background-color: ${({ theme }) => theme.color.mono.white};
     cursor: pointer;
 
     :hover {
-      background-color: ${({ theme }) => theme.palette.grey200};
+      background-color: ${({ theme }) => theme.color.gray[100]};
     }
   `,
-  Keyword: styled.span<{ bgColor: string }>`
-    padding: 0.4rem 0.8rem;
-
-    background-color: ${({ bgColor }) => bgColor};
-
-    color: ${({ theme }) => theme.palette.white};
-    font-size: ${({ theme }) => theme.text.size.xSmall};
-    align-self: flex-start;
-
-    box-sizing: content-box;
-    border-radius: 0.6rem;
-  `,
   Title: styled.div`
-    ${title3}
+    ${({ theme }) => fontStyle(theme.font.headline[1].B)}
     margin-top: .8rem;
     word-break: keep-all;
   `,
   Label: styled.div`
     width: 90%;
-
-    color: ${({ theme }) => theme.palette.grey500};
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    ${({ theme }) => fontStyle(theme.font.label[1].R)}
 
     word-break: keep-all;
+  `,
+  Date: styled.p`
+    ${({ theme }) => fontStyle(theme.font.label[1].R)}
+    color: ${({ theme }) => theme.color.gray[400]};
   `,
 };

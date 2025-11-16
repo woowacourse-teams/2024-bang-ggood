@@ -8,10 +8,10 @@ export const baseStyle = css`
 
   html {
     font-size: 62.5%;
+    font-family: 'WantedSansStdVariable', sans-serif;
   }
 
   body {
-    font-family: 'SUITE Variable', sans-serif;
     line-height: normal;
     letter-spacing: 0.14rem;
 
@@ -23,7 +23,11 @@ export const baseStyle = css`
   }
 
   input {
-    font-family: 'SUITE Variable', sans-serif;
+    font-family: 'WantedSansStdVariable', sans-serif;
     letter-spacing: 0.14rem;
+  }
+
+  div {
+    box-sizing: border-box;
   }
 `;

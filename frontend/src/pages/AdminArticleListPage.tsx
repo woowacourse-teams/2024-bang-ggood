@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
+import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import ListErrorFallback from '@/components/_common/errorBoundary/ListErrorFallback';
 import Layout from '@/components/_common/layout/Layout';
 import AdminArticleListContainer from '@/components/Admin/Article/AdminArticleListContainer';
+import SkArticleList from '@/components/skeleton/Article/SkArticleList';
 import { flexRow, flexSpaceBetween, title2 } from '@/styles/common';
 import theme from '@/styles/theme';
 
@@ -15,9 +17,12 @@ const AdminArticleListPage = () => {
           <S.Title>아티클</S.Title>
         </S.HeaderContents>
       </S.Header>
-      <Layout bgColor={theme.palette.background} withHeader withFooter>
+
+      <Layout bgColor={theme.color.gray[50]} withHeader withFooter>
         <ErrorBoundary FallbackComponent={ListErrorFallback}>
-          <AdminArticleListContainer />
+          <Suspense fallback={<SkArticleList />}>
+            <AdminArticleListContainer />
+          </Suspense>
         </ErrorBoundary>
       </Layout>
     </>

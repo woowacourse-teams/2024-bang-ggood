@@ -15,6 +15,8 @@ export const checklistList: { checklists: ChecklistPreview[] } = {
       },
       createdAt: '2024-01-01T10:00:00Z',
       summary: '전체적으로 무난, 방 크기는 평범',
+      thumbnail:
+        'https://image.ohousecdn.com/i/bucketplace-v2-development/uploads/cards/snapshots/159878459127821860.jpeg?w=480&h=480&c=c&q=80&webp=1',
       isLiked: true,
     },
     {
@@ -30,6 +32,8 @@ export const checklistList: { checklists: ChecklistPreview[] } = {
       },
       createdAt: '2024-02-01T10:00:00Z',
       summary: '트리플 역세권이나 회사에서 조금 멀다.',
+      thumbnail:
+        'https://prs.ohousecdn.com/apne2/any/uploads/cards/snapshots/v1-315138004729920.jpg?w=480&h=480&c=c&q=80',
       isLiked: false,
     },
     {

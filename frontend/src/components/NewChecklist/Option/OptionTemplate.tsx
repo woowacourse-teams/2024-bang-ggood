@@ -11,13 +11,14 @@ import theme from '@/styles/theme';
 const OptionTemplate = () => {
   return (
     <Layout bgColor={theme.palette.background} withHeader withTab>
-      <TipBox tipType={'OPTION'} />
+      <TipBox tipType="OPTION" />
       <S.InnerBox>
         <OptionAllSelectBox />
         <S.OptionBox>
           <OptionList />
         </S.OptionBox>
       </S.InnerBox>
+
       <MoveNextButton marginTop="2rem" marginBottom="4rem" />
     </Layout>
   );
@@ -31,7 +32,7 @@ const S = {
     ${flexColumn}
     margin-top: 1rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
 
     border-radius: 1rem;
   `,
@@ -57,7 +58,7 @@ const S = {
     ${flexCenter}
     ${flexSpaceBetween}
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
 
     font-size: 1.4rem;
     border-radius: 1rem;

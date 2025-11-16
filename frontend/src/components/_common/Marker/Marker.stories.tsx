@@ -20,21 +20,41 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Line_Small: Story = {
   args: {
     isCircle: false,
     text: '수인분당선',
-    backgroundColor: theme.palette.yellow500,
+    color: theme.color.primary[500],
     size: 'small',
     onClick: () => alert('click'),
   },
 };
 
-export const medium: Story = {
+export const Line_Medium: Story = {
   args: {
     isCircle: false,
+    text: '수인분당선',
+    color: theme.color.primary[500],
+    size: 'medium',
+    onClick: () => alert('click'),
+  },
+};
+
+export const Number_Small: Story = {
+  args: {
+    isCircle: true,
     text: '2',
-    backgroundColor: theme.palette.green500,
+    color: theme.color.secondary[500],
+    size: 'small',
+    onClick: () => alert('click'),
+  },
+};
+
+export const Number_Medium: Story = {
+  args: {
+    isCircle: true,
+    text: '2',
+    color: theme.color.secondary[500],
     size: 'medium',
     onClick: () => alert('click'),
   },

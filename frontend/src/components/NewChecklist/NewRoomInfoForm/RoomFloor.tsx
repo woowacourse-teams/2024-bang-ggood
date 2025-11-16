@@ -18,7 +18,7 @@ const RoomFloor = () => {
 
   return (
     <FormField>
-      <FormField.Label label="층수" htmlFor="floor" />
+      <FormField.Label label="층수" htmlFor="floor" bold />
       <FormStyled.FieldBox>
         <Dropdown
           initialValue={floorLevel.rawValue}
@@ -34,6 +34,7 @@ const RoomFloor = () => {
           value={floor.rawValue}
           onChange={floor.onChange}
           id="floor"
+          isError={!!floor.errorMessage}
         />
         <FormStyled.FlexLabel label="층"></FormStyled.FlexLabel>
       </FormStyled.FieldBox>

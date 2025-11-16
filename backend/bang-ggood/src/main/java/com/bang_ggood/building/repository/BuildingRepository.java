@@ -1,5 +1,7 @@
 package com.bang_ggood.building.repository;
 
+import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.building.domain.Building;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +16,10 @@ public interface BuildingRepository extends JpaRepository<Building, Long> {
             + "AND b.longitude = :longitude")
     Optional<Building> findByCoordinate(@Param("latitude") Double latitude,
                                         @Param("longitude") Double longitude);
+
+    @Override
+    default Building getById(Long buildingId) {
+        return findById(buildingId)
+                .orElseThrow(() -> new BangggoodException(ExceptionCode.BUILDING_NOT_FOUND));
+    }
 }

@@ -16,7 +16,7 @@ const meta: Meta<typeof Footer> = {
     },
     reactRouter: reactRouterParameters({
       location: {
-        pathParams: { page: 'checklist-list' },
+        pathParams: { page: 'home' }, // 초기 경로 설정
       },
       routing: { path: '/:page' },
     }),

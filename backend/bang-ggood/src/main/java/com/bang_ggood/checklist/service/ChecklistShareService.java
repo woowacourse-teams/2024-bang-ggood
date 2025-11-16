@@ -32,6 +32,6 @@ public class ChecklistShareService {
 
     @Transactional
     public void deleteChecklistShare(Checklist checklist) {
-        checklistShareRepository.deleteByChecklistId(checklist.getId());
+        checklistShareRepository.deleteById(checklist.getId());
     }
 }

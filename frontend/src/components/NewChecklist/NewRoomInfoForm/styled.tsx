@@ -32,7 +32,7 @@ const FormStyled = {
       background-color: ${({ theme }) => theme.palette.yellow600};
     }
 
-    color: ${({ theme }) => theme.palette.black};
+    color: ${({ theme }) => theme.color.mono.black};
   `,
   FieldBox: styled.div`
     display: flex;

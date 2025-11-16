@@ -73,7 +73,7 @@ const SubmitModalWithSummary = ({
             name="summary"
             value={summary.rawValue}
             maxLength={BRIEF_COMMENT_MAX_LENGTH}
-            height={'small'}
+            height="small"
           />
           <S.CounterContainer>
             <CounterBox currentCount={summary.rawValue?.length || 0} totalCount={BRIEF_COMMENT_MAX_LENGTH} />

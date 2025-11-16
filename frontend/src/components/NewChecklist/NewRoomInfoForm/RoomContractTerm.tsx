@@ -10,7 +10,7 @@ const RoomContractTerm = () => {
 
   return (
     <FormField>
-      <FormField.Label label="계약 기간" htmlFor="contractTerm" />
+      <FormField.Label label="계약 기간" htmlFor="contractTerm" bold />
       <S.FieldBox>
         <Input
           inputMode="decimal"
@@ -20,6 +20,7 @@ const RoomContractTerm = () => {
           name="contractTerm"
           value={contractTerm.rawValue}
           id="contractTerm"
+          isError={!!contractTerm.errorMessage}
         />
         <FormStyled.FlexLabel label="개월"></FormStyled.FlexLabel>
       </S.FieldBox>

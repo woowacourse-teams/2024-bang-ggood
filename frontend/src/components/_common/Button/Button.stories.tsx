@@ -11,47 +11,79 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-/** Round Button */
-export const LightRound: Story = {
-  args: {
-    label: '버튼',
-  },
-};
-
-export const DarkRound: Story = {
-  args: {
-    label: '버튼',
-    color: 'dark',
-  },
-};
-
-export const DisabledRound: Story = {
-  args: {
-    label: '버튼',
-    color: 'disabled',
-  },
-};
-
 /** Square Button */
 export const LightSquare: Story = {
   args: {
-    label: '버튼',
-    isSquare: true,
+    label: 'Button',
   },
 };
 
 export const DarkSquare: Story = {
   args: {
-    label: '버튼',
+    label: 'Button',
     color: 'dark',
-    isSquare: true,
+  },
+};
+
+export const PrimarySquare: Story = {
+  args: {
+    label: 'Button',
+    color: 'primary',
+  },
+};
+
+export const OutlinedSquare: Story = {
+  args: {
+    label: 'Button',
+    color: 'primary',
+    variant: 'outlined',
   },
 };
 
 export const DisabledSquare: Story = {
   args: {
-    label: '버튼',
-    color: 'disabled',
-    isSquare: true,
+    label: 'Button',
+    disabled: true,
+  },
+};
+
+/** Round Button */
+export const LightRound: Story = {
+  args: {
+    label: 'Button',
+    rounded: true,
+  },
+};
+
+export const DarkRound: Story = {
+  args: {
+    label: 'Button',
+    color: 'dark',
+    rounded: true,
+  },
+};
+
+export const PrimaryRound: Story = {
+  args: {
+    label: 'Button',
+    color: 'primary',
+    rounded: true,
+  },
+};
+
+export const OutlinedRound: Story = {
+  args: {
+    label: 'Button',
+    color: 'primary',
+    variant: 'outlined',
+    rounded: true,
+  },
+};
+
+export const DisabledRound: Story = {
+  args: {
+    label: 'Button',
+    disabled: true,
+    rounded: true,
   },
 };

@@ -1,9 +1,12 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { CSSProperties } from 'react';
 
 import { FOOTER_SIZE } from '@/constants/style';
-import { boxShadow, title3 } from '@/styles/common';
+import { flexCenter } from '@/styles/common';
 import theme from '@/styles/theme';
+import { fontStyle } from '@/utils/fontStyle';
+import { getOpacityColor } from '@/utils/getOpacityColor';
 
 type Size = 'small' | 'medium' | 'extends';
 type Color = 'yellow' | 'green' | 'subGreen';
@@ -14,6 +17,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: Size;
   color?: Color;
   'aria-label'?: string;
+  position?: 'left' | 'right' | 'center';
 }
 
 const FloatingButton = ({
@@ -22,15 +26,21 @@ const FloatingButton = ({
   size = 'medium',
   color = 'yellow',
   'aria-label': ariaLabel = 'add',
+  position = 'right',
   ...rest
 }: Props) => {
   return (
-    <S.Wrapper>
-      <S.Button size={size} color={color} aria-label={ariaLabel} onClick={onClick} {...rest} tabIndex={1}>
+    <S.Wrapper justify={positionMap[position]}>
+      <S.Button size={size} color={color} aria-label={ariaLabel} onClick={onClick} {...rest}>
         {children}
       </S.Button>
     </S.Wrapper>
   );
+};
+const positionMap: Record<string, CSSProperties['justifyContent']> = {
+  left: 'flex-start',
+  center: 'center',
+  right: 'flex-end',
 };
 
 export default FloatingButton;
@@ -39,85 +49,77 @@ const sizeStyle = {
   small: css`
     width: 4rem;
     height: 4rem;
-
-    font-size: ${theme.text.size.xSmall};
   `,
   medium: css`
-    width: 5rem;
-    height: 5rem;
-
-    font-size: ${theme.text.size.small};
+    width: 5.6rem;
+    height: 5.6rem;
+  `,
+  large: css`
+    width: 9.6rem;
+    height: 9.6rem;
   `,
   extends: css`
     display: flex;
-    height: 5rem;
-    padding: 8px 12px;
-
-    font-size: ${theme.text.size.small};
-    gap: 1rem;
+    height: 5.6rem;
+    padding: 1.6rem;
+    gap: 0.8rem;
   `,
 };
 
 const colorStyle = {
   yellow: css`
-    background-color: ${theme.palette.yellow500};
+    background-color: ${theme.color.primary[500]};
 
-    color: ${theme.palette.black};
+    color: ${theme.color.mono.black};
 
     &:hover,
     &:active {
-      background-color: ${theme.palette.yellow600};
+      background-color: ${theme.color.primary[600]};
     }
   `,
   green: css`
-    background-color: ${theme.palette.green500};
+    background-color: ${theme.color.secondary[500]};
 
-    color: ${theme.palette.white};
+    color: ${theme.color.mono.black};
 
     &:hover,
     &:active {
-      background-color: ${theme.palette.green600};
+      background-color: ${theme.color.secondary[600]};
     }
   `,
   subGreen: css`
-    background-color: ${theme.palette.subGreen500};
+    background-color: ${theme.color.green[400]};
 
-    color: ${theme.palette.white};
+    color: ${theme.color.mono.black};
 
     &:hover,
     &:active {
-      background-color: ${theme.palette.subGreen600};
+      background-color: ${theme.color.green[400]};
     }
   `,
 };
 
 const S = {
-  Wrapper: styled.div`
+  Wrapper: styled.div<{ justify: CSSProperties['justifyContent'] }>`
     display: flex;
     position: fixed;
-    bottom: calc(5% + ${FOOTER_SIZE}rem);
+    bottom: calc(2% + ${FOOTER_SIZE}rem);
     left: 50%;
     z-index: ${theme.zIndex.FLOATING_BUTTON};
     width: 100%;
-    padding-right: 10%;
+    padding-right: 3%;
+    justify-content: ${({ justify }) => justify};
     transform: translateX(-50%);
     max-width: 60rem;
-    justify-content: flex-end;
-
-    @media (min-width: ${theme.viewport.MOBILE}px) {
-      padding-right: 2rem;
-    }
   `,
   Button: styled.button<{ size: Size; color: Color }>`
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    ${flexCenter}
     border: none;
-    border-radius: 5rem;
+    border-radius: 5.6rem;
     ${({ size }) => sizeStyle[size]};
     ${({ color }) => colorStyle[color]};
-    ${title3};
-    ${boxShadow};
+    ${({ theme }) => fontStyle(theme.font.headline[1].B)}
+    box-shadow: 0 0 12px ${getOpacityColor('#171719', 0.2)};
     outline: none;
     cursor: pointer;
   `,

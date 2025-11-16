@@ -93,7 +93,7 @@ const S = {
 
     padding: 0.5rem;
 
-    color: ${({ theme }) => theme.palette.white};
+    color: ${({ theme }) => theme.color.mono.white};
     gap: 1rem;
     border-radius: 0.3rem;
   `,

@@ -47,12 +47,14 @@ const NewChecklistPage = () => {
       <Header
         left={<Header.Backward onClick={openAlertModal} />}
         center={<Header.Text>새 체크리스트</Header.Text>}
-        right={<Button label="저장" size="small" color="primary" onClick={handleSaveChecklistButton} isSquare />}
+        right={<Button label="저장" size="header" variant="text" onClick={handleSaveChecklistButton} />}
       />
+
       <TabProvider defaultTab={DEFAULT_CHECKLIST_TAB_PAGE}>
         <ErrorBoundary fallback={<ChecklistTabFallback />}>
           <NewChecklistTab />
         </ErrorBoundary>
+
         <ChecklistContent />
       </TabProvider>
 
@@ -61,6 +63,7 @@ const NewChecklistPage = () => {
       ) : (
         <MemoButton onClick={openMemoModal} />
       )}
+
       <SubmitModalWithSummary
         isModalOpen={isSubmitModalOpen}
         modalClose={closeSummaryModal}
@@ -68,6 +71,7 @@ const NewChecklistPage = () => {
         onError={openLoginModal}
         mutateType="add"
       />
+
       <AlertModal
         title={
           <div>
@@ -81,6 +85,7 @@ const NewChecklistPage = () => {
         handleApprove={handleNotCompleteChecklist}
         approveButtonName="나가기"
       />
+
       <LoginModal isModalOpen={isLoginModalOpen} modalClose={closeLoginModal} />
     </>
   );

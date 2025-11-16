@@ -1,15 +1,16 @@
 import styled from '@emotion/styled';
 import { ElementType, HTMLAttributes, LabelHTMLAttributes } from 'react';
 
-import { InputRequiredDot } from '@/assets/assets';
+import { InputRequiredDotIcon } from '@/assets/assets';
 import Input from '@/components/_common/Input/Input';
 import { flexColumn } from '@/styles/common';
-import theme from '@/styles/theme';
+import { fontStyle } from '@/utils/fontStyle';
 
 type GetProps<T> = T extends React.FC<infer P> ? P : never;
 
 interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
   label: string;
+  bold?: boolean;
   required?: boolean;
   as?: ElementType;
 }
@@ -18,13 +19,13 @@ const FormFieldWrapper = styled.div<{ rowGap?: string }>`
   ${flexColumn}
 
   flex: auto;
-  row-gap: ${({ rowGap }) => (rowGap ? rowGap : '1rem')};
+  row-gap: ${({ rowGap }) => (rowGap ? rowGap : '0.8rem')};
 `;
 
 const FormField = Object.assign(FormFieldWrapper, {
-  Label: ({ label, required = false, ...rest }: LabelProps) => {
+  Label: ({ label, bold = false, required = false, ...rest }: LabelProps) => {
     return (
-      <S.LabelContainer {...rest} style={{ fontSize: theme.text.size.medium, fontWeight: theme.text.weight.bold }}>
+      <S.LabelContainer bold={bold} {...rest}>
         {label}
         {required && <S.MovedRequiredDot />}
       </S.LabelContainer>
@@ -43,20 +44,21 @@ const FormField = Object.assign(FormFieldWrapper, {
 });
 
 const S = {
-  MovedRequiredDot: styled(InputRequiredDot)`
+  MovedRequiredDot: styled(InputRequiredDotIcon)`
     position: relative;
     top: -1.5rem;
     left: 0.5rem;
   `,
-  LabelContainer: styled.label`
+  LabelContainer: styled.label<{ bold: boolean }>`
     position: relative;
     z-index: 0;
+    ${({ theme, bold }) => (bold ? fontStyle(theme.font.headline[2].B) : fontStyle(theme.font.label[1].R))}
   `,
   ErrorMessage: styled.p`
-    height: 1rem;
+    padding: 0 0 0 1.6rem;
 
-    color: ${({ theme }) => theme.palette.red500};
-    font-size: ${({ theme }) => theme.text.size.xSmall};
+    color: ${({ theme }) => theme.color.red[300]};
+    ${({ theme }) => fontStyle(theme.font.label[1].R)}
   `,
   EmptyBox: styled.div`
     height: 1rem;
@@ -64,7 +66,7 @@ const S = {
   TextBox: styled.div`
     width: 100%;
     height: 2rem;
-    padding: 0.6rem 1rem;
+    padding: 0.6rem 0;
 
     box-sizing: border-box;
   `,

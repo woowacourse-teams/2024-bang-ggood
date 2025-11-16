@@ -1,7 +1,7 @@
 import { ChecklistCategoryWithIsSelected } from '@/types/checklist';
 
-export const checklistAllQuestions: { categories: ChecklistCategoryWithIsSelected[] } = {
-  categories: [
+export const checklistAllQuestions: { defaultCategories: ChecklistCategoryWithIsSelected[] } = {
+  defaultCategories: [
     {
       categoryId: 1,
       categoryName: '보안',
@@ -84,7 +84,7 @@ export const checklistAllQuestions: { categories: ChecklistCategoryWithIsSelecte
       categoryName: '창문',
       questions: [
         {
-          questionId: 1,
+          questionId: 11,
           title: '지하철 역이 가깝나요?',
           subtitle: '주변 지도를 참고해 보세요.',
           highlights: [],

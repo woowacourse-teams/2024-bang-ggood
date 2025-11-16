@@ -15,6 +15,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.util.Objects;
@@ -38,6 +39,7 @@ public class Checklist extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Building building;
 
+    @NotBlank
     private String name;
 
     @Enumerated(EnumType.STRING)

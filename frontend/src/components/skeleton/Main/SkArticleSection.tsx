@@ -39,7 +39,7 @@ const S = {
     min-width: 100%;
     ${flexRow}
     padding: 1.6rem;
-    gap: 1.6rem;
+    gap: 1rem;
   `,
   CardWrapper: styled.div`
     ${Skeleton}
@@ -56,12 +56,12 @@ const S = {
   `,
   Card: styled.div`
     position: relative;
-    width: 19rem;
-    height: 18rem;
+    width: 18rem;
+    height: 20rem;
     padding: 1.6rem;
     ${Skeleton}
 
     box-sizing: border-box;
-    border-radius: 2.4rem;
+    border-radius: 1.6rem;
   `,
 };

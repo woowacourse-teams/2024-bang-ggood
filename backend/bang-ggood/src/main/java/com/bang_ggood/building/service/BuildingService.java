@@ -1,5 +1,7 @@
 package com.bang_ggood.building.service;
 
+import com.bang_ggood.global.exception.BangggoodException;
+import com.bang_ggood.global.exception.ExceptionCode;
 import com.bang_ggood.building.service.image.BuildingImageService;
 import com.bang_ggood.building.domain.Building;
 import com.bang_ggood.building.repository.BuildingRepository;
@@ -40,5 +42,10 @@ public class BuildingService {
         }
         building.changeName(targetBuilding.getName());
         buildingRepository.save(building);
+    }
+
+    @Transactional
+    public Building findBuilding(Long buildingId) {
+        return buildingRepository.getById(buildingId);
     }
 }

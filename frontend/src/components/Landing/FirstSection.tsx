@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { ArrowDownSmall, BangBangIcon, BangGgoodTextIcon, SmallCheck } from '@/assets/assets';
+import { BangBangIcon, BangGgoodTextIcon, ScrollArrow } from '@/assets/assets';
 import Button from '@/components/_common/Button/Button';
 import EmailLoginButton from '@/components/_common/LoginButton/EmailLoginButton';
 import KakaoLoginButton from '@/components/_common/LoginButton/KakaoLoginButton';
@@ -11,6 +11,7 @@ import amplitudeInitializer from '@/service/amplitude/amplitudeInitializer';
 import { trackGuestLoginButton } from '@/service/amplitude/trackEvent';
 import { moveUpDown } from '@/styles/animation';
 import { flexCenter, flexColumn } from '@/styles/common';
+import { fontStyle } from '@/utils/fontStyle';
 
 const FirstSection = () => {
   const { init } = amplitudeInitializer();
@@ -27,13 +28,7 @@ const FirstSection = () => {
             <S.SubtitleText>방 구하기</S.SubtitleText>
             <S.SubtitleText>
               이거 하나로
-              <S.CheckRelativeText>
-                {' '}
-                끝!
-                <S.CheckIconBox>
-                  <SmallCheck />
-                </S.CheckIconBox>
-              </S.CheckRelativeText>
+              <S.CheckRelativeText>{' 끝!'}</S.CheckRelativeText>
             </S.SubtitleText>
           </S.TextWrapper>
           <S.BangGgoodTextIcon />
@@ -43,10 +38,10 @@ const FirstSection = () => {
       <S.ButtonWrapper>
         <KakaoLoginButton />
         <EmailLoginButton />
-        <S.Button
+        <Button
           label="방끗 둘러보기"
-          size="full"
-          isSquare
+          variant="outlined-gray"
+          color="light"
           onClick={() => {
             init();
             navigate(ROUTE_PATH.home);
@@ -56,9 +51,9 @@ const FirstSection = () => {
       </S.ButtonWrapper>
       <CS.EmptyBox height="5rem" mobileHeight="10rem" />
       <S.MoreBox>
-        <S.SubText>방끗을 소개할게요. 아래를 클릭해보세요!</S.SubText>
+        <S.SubText>방끗을 소개할게요. 아래를 클릭하세요!</S.SubText>
         <CS.MoveUpDownAnimationBox>
-          <ArrowDownSmall aria-label="스크롤로 하단의 정보를 확인할 수 있어요" />
+          <ScrollArrow aria-label="스크롤로 하단의 정보를 확인할 수 있어요" />
         </CS.MoveUpDownAnimationBox>
       </S.MoreBox>
     </S.CenterBox>
@@ -89,11 +84,7 @@ const S = {
     }
   `,
   SubtitleText: styled.div`
-    font-size: ${({ theme }) => theme.text.size.large};
-
-    @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
-      font-size: ${({ theme }) => theme.text.size.medium};
-    }
+    ${({ theme }) => fontStyle(theme.font.heading[2].R)}
   `,
   Button: styled(Button)`
     border-radius: 0.8rem;
@@ -106,15 +97,7 @@ const S = {
     gap: 1.5rem;
     ${flexColumn}
   `,
-  CheckIconBox: styled.div`
-    position: absolute;
-    right: 1rem;
-    bottom: 3rem;
 
-    @media (width <= ${({ theme }) => theme.viewport.MOBILE}px) {
-      bottom: 2rem;
-    }
-  `,
   TextWrapper: styled.div`
     display: flex;
     width: 280px;
@@ -133,21 +116,12 @@ const S = {
 
     gap: 1rem;
   `,
-  GuestLoginButton: styled.button`
-    width: 100%;
-    height: 5rem;
-    border: 3px solid ${({ theme }) => theme.palette.yellow500};
-    box-sizing: border-box;
-
-    font-size: ${({ theme }) => theme.text.size.medium};
-    border-radius: 0.8rem;
-    cursor: pointer;
-  `,
   SubText: styled.div`
     position: absolute;
     bottom: 5rem;
 
-    font-size: ${({ theme }) => theme.text.size.small};
+    ${({ theme }) => fontStyle(theme.font.body[1].B)}
+    color:${({ theme }) => theme.color.gray[400]}
   `,
   MoreBox: styled.div`
     width: 100%;
@@ -163,12 +137,12 @@ const S = {
     animation: ${moveUpDown} 1s infinite;
   `,
   BangGgoodTextIcon: styled(BangGgoodTextIcon)`
-    width: 15rem;
-    height: 10rem;
+    width: 6.8rem;
+    height: 3.6rem;
 
     @media (height <= ${({ theme }) => theme.viewport.TABLET}px) {
-      width: 15rem;
-      height: 7rem;
+      width: 6.8rem;
+      height: 3rem;
     }
   `,
 };

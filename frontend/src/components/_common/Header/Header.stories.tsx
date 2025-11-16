@@ -20,25 +20,28 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const BangGgoodLogo: Story = {
-  render: () => <Header left={<Header.Logo />} />,
+export const TextStyleLogo: Story = {
+  render: () => <Header left={<Header.Title>Title</Header.Title>} />,
 };
 export const Backward: Story = {
   render: () => <Header left={<Header.Backward />} />,
 };
 
 export const BackwardAndConfirm: Story = {
-  render: () => <Header left={<Header.Backward />} right={<Header.TextButton>확인</Header.TextButton>} />,
+  render: () => <Header left={<Header.Backward />} right={<Header.TextButton>Button</Header.TextButton>} />,
 };
 
 export const Triple: Story = {
   render: () => (
     <Header
       left={<Header.Backward />}
-      center={<div style={{ display: 'flex', alignItems: 'center' }}> 체크리스트 </div>}
-      right={<Header.TextButton>확인</Header.TextButton>}
+      center={<div style={{ display: 'flex', alignItems: 'center' }}>Title</div>}
+      right={<Header.TextButton>Button</Header.TextButton>}
     />
   ),
+};
+export const WithoutConfirm: Story = {
+  render: () => <Header left={<Header.Backward />} center={<Header.Text>Title</Header.Text>} />,
 };
 
 export const Opacity: Story = {
@@ -47,4 +50,7 @@ export const Opacity: Story = {
       <Header left={<Header.Backward />} isTransparent />
     </div>
   ),
+};
+export const BangGgoodLogo: Story = {
+  render: () => <Header left={<Header.Logo />} />,
 };

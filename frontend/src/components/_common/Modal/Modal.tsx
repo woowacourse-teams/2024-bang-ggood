@@ -4,12 +4,13 @@ import { ComponentPropsWithRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import { CloseIcon } from '@/assets/assets';
-import FocusTrap from '@/components/_common/Modal/FocusTrap/FocusTrap';
-import ModalBody from '@/components/_common/Modal/ModalBody';
-import ModalFooter from '@/components/_common/Modal/ModalFooter';
-import ModalHeader from '@/components/_common/Modal/ModalHeader';
 import { fadeIn, fadeOut } from '@/styles/animation';
 import { flexColumn } from '@/styles/common';
+
+import FocusTrap from './FocusTrap/FocusTrap';
+import ModalBody from './ModalBody';
+import ModalFooter from './ModalFooter';
+import ModalHeader from './ModalHeader';
 
 type ModalPosition = 'center' | 'bottom';
 type ModalSize = 'small' | 'large';
@@ -88,7 +89,7 @@ const S = {
     $size: ModalSize;
     isOpen: boolean;
   }>`
-    ${flexColumn}
+    ${flexColumn};
     align-items: flex-start;
 
     position: fixed;
@@ -96,11 +97,13 @@ const S = {
   `,
   ModalInner: styled.div<{ isOpen: boolean; backgroundColor: string }>`
     overflow: scroll;
+    position: relative;
     width: 100%;
+    padding: 1.6rem;
 
     background-color: ${({ backgroundColor }) => backgroundColor};
 
-    color: ${({ theme }) => theme.palette.black};
+    color: ${({ theme }) => theme.color.mono.black};
 
     animation: ${({ isOpen }) => (isOpen ? fadeIn : fadeOut)} 0.3s forwards;
     border-radius: 1rem;

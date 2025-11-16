@@ -6,15 +6,16 @@ const RealEstate = () => {
 
   return (
     <FormField>
-      <FormField.Label label={'부동산 이름'} required={false} htmlFor="realEstate" />
+      <FormField.Label label="부동산 이름" required={false} htmlFor="realEstate" bold />
       <FormField.Input
         placeholder=""
         width="full"
-        type={'string'}
+        type="string"
         onChange={realEstate.onChange}
-        name={'realEstate'}
+        name="realEstate"
         value={realEstate.rawValue}
         id="realEstate"
+        isError={!!realEstate.errorMessage}
       />
       <FormField.ErrorMessage value={realEstate.errorMessage} />
     </FormField>

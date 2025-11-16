@@ -11,8 +11,8 @@ const SkRoomInfoSection = () => {
         <S.Row />
       </S.GapBox>
       <S.Row />
-      <S.Row width={'30rem'} />
-      <S.Row width={'30rem'} />
+      <S.Row width="30rem" />
+      <S.Row width="30rem" />
       <S.Map />
     </S.Container>
   );
@@ -29,7 +29,7 @@ const S = {
     margin-bottom: 1rem;
     padding: 1.6rem;
 
-    background-color: ${({ theme }) => theme.palette.white};
+    background-color: ${({ theme }) => theme.color.mono.white};
     border-radius: 0.8rem;
   `,
   GreenWrapper: styled.div`

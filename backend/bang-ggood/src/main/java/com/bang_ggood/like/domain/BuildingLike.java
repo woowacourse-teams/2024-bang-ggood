@@ -1,7 +1,7 @@
 package com.bang_ggood.like.domain;
 
 import com.bang_ggood.BaseEntity;
-import com.bang_ggood.checklist.domain.Building;
+import com.bang_ggood.building.domain.Building;
 import com.bang_ggood.user.domain.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,7 +13,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import java.util.Objects;
 
 import static lombok.AccessLevel.PROTECTED;
 

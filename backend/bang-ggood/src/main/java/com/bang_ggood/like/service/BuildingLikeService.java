@@ -1,6 +1,6 @@
 package com.bang_ggood.like.service;
 
-import com.bang_ggood.checklist.domain.Building;
+import com.bang_ggood.building.domain.Building;
 import com.bang_ggood.like.domain.BuildingLike;
 import com.bang_ggood.like.repository.BuildingLikeRepository;
 import com.bang_ggood.user.domain.User;

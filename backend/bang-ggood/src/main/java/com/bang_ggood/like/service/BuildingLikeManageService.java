@@ -1,7 +1,7 @@
 package com.bang_ggood.like.service;
 
-import com.bang_ggood.checklist.domain.Building;
-import com.bang_ggood.checklist.service.BuildingService;
+import com.bang_ggood.building.domain.Building;
+import com.bang_ggood.building.service.BuildingService;
 import com.bang_ggood.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

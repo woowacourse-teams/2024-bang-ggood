@@ -2,8 +2,8 @@ package com.bang_ggood.like.controller;
 
 import com.bang_ggood.AcceptanceTest;
 import com.bang_ggood.checklist.BuildingFixture;
-import com.bang_ggood.checklist.domain.Building;
-import com.bang_ggood.checklist.repository.BuildingRepository;
+import com.bang_ggood.building.domain.Building;
+import com.bang_ggood.building.repository.BuildingRepository;
 import com.bang_ggood.like.domain.BuildingLike;
 import com.bang_ggood.like.repository.BuildingLikeRepository;
 import io.restassured.RestAssured;

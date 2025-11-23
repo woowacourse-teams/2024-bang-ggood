@@ -28,6 +28,7 @@ export const ENDPOINT = {
   ARTICLE_ID: (id: number) => `/articles/${id}`,
   // building
   BUILDING_LIST: '/buildings',
+  BUILDING_DETAIL: (buildingId: number) => `/buildings/${buildingId}/checklists`,
   // kakao login
   OAUTH_LOGIN: '/oauth/login',
   // basic login

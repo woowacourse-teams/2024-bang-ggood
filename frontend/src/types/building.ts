@@ -1,3 +1,4 @@
+
 // 지하철역 정보
 export interface Station {
   name: string; // 역 이름
@@ -23,3 +24,41 @@ export interface BuildingsResponse {
   totalPages: number; // 전체 페이지 수
   totalElements: number; // 전체 건물 개수
 }
+
+
+export type BuildingDetail = {
+  buildingId: number; // 건물 ID
+  buildingName: string; // 건물 이름
+  checklistCount: number; // 체크리스트 개수
+  stations: {
+    stationName: string;
+    stationLine: string;
+    walkingTime: number;
+  }[]; // 인근 지하철역 정보
+  isLiked: boolean; // 좋아요 여부
+
+  address: string; // 주소
+  latitude: number; // 위도
+  longitude: number; // 경도
+  photos: string[]; // 사진 리스트
+  checklists: {
+    checklistId: number;
+    userName: string;
+    roomName: string;
+    deposit: number;
+    rent: number;
+    optionCount: number;
+    categories: {
+      categoryId: number;
+      categoryName: string;
+      score: number;
+    }[];
+    createdAt: string;
+  }[]; // 체크리스트 리스트
+};
+
+export type BuildingDetailResponse = BuildingDetail & {
+  lastCursor: string; // 마지막 커서
+}
+
+

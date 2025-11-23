@@ -4,6 +4,8 @@ import { createBrowserRouter, Outlet } from 'react-router-dom';
 import FooterLayout from '@/components/_common/layout/FooterLayout';
 import MobileLayout from '@/components/_common/layout/MobileLayout';
 import { ROUTE_PATH } from '@/constants/routePath';
+import BuildingDetailPage from '@/pages/BuildingDetailPage';
+import BuildingMapPage from '@/pages/BuildingMapPage';
 
 const MainPage = React.lazy(() => import('@/pages/MainPage'));
 const ChecklistListPage = React.lazy(() => import('@/pages/ChecklistListPage'));
@@ -28,6 +30,9 @@ const NewArticlePage = React.lazy(() => import('@/pages/NewArticlePage'));
 const EditArticlePage = React.lazy(() => import('@/pages/EditArticlePage'));
 const AdminArticleListPage = React.lazy(() => import('@/pages/AdminArticleListPage'));
 
+// 빌딩
+const BuildingListPage = React.lazy(() => import('@/pages/BuildingListPage'));
+
 const router = createBrowserRouter([
   // 모바일 페이지 레이아웃
   {
@@ -51,10 +56,18 @@ const router = createBrowserRouter([
             element: <ChecklistListPage />,
             path: ROUTE_PATH.checklistList,
           },
-          // {
-          //   element: <BuildingListPage />,
-          //   path: ROUTE_PATH.buildingList,
-          // },
+          {
+            element: <BuildingListPage />,
+            path: ROUTE_PATH.buildingList,
+          },
+          {
+            element: <BuildingDetailPage />,
+            path: ROUTE_PATH.buildingDetail,
+          },
+          {
+            element: <BuildingMapPage />,
+            path: ROUTE_PATH.buildingMap,
+          },
           {
             element: <ArticleListPage />,
             path: ROUTE_PATH.articleList,

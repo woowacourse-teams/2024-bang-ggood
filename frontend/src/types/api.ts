@@ -12,3 +12,7 @@ export interface PaginationParams {
   search?: string;
   sort?: string;
 }
+
+export interface InfinitePaginationParams {
+  lastCursor: string;
+}

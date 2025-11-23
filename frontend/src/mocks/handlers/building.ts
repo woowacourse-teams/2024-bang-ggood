@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw';
 
 import { BASE_URL, ENDPOINT } from '@/apis/url';
+import { buildingDetailResponse } from '@/mocks/fixtures/building';
 import { buildings } from '@/mocks/fixtures/buildingList';
 
 export const buildingHandlers = [
@@ -23,5 +24,8 @@ export const buildingHandlers = [
       totalPages: Math.ceil(filteredBuildings.length / size),
       totalElements: filteredBuildings.length,
     });
+  }),
+  http.get(BASE_URL + ENDPOINT.BUILDING_DETAIL(1), () => {
+    return HttpResponse.json(buildingDetailResponse, { status: 200 });
   }),
 ];

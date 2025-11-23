@@ -21,8 +21,8 @@ export const buildingDetailResponse: BuildingDetailResponse = {
     ],
     "isLiked": false,
     "photos": [
-      "https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg",
-      "https://my-bucket.s3.ap-northeast-2.amazonaws.com/thumbs/example.jpg"
+      "http://placehold.co/393x313",
+      "http://placehold.co/393x313"
     ],
     "checklists": [
       {

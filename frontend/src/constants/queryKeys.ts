@@ -11,4 +11,5 @@ export const QUERY_KEYS = {
   ROOM_COMPARE: 'room/compare',
   ROOM_CATEGORY_DETAIL: '/room/category/detail',
   BUILDING_LIST: 'building-list',
+  BUILDING_DETAIL: 'building-detail',
 };

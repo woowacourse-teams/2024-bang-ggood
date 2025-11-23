@@ -2,7 +2,9 @@ import styled from '@emotion/styled';
 
 import SearchIcon from '@/assets/icons/map/SearchIcon';
 import { Carousel } from '@/components/_common/Carousel';
+import FlexBox from '@/components/_common/FlexBox/FlexBox';
 import Header from '@/components/_common/Header/Header';
+import Text from '@/components/_common/Text/Text';
 import { useGetBuildingDetailQuery } from '@/hooks/query/useGetBuildingDetailQuery ';
 import useModal from '@/hooks/useModal';
 import theme from '@/styles/theme';
@@ -16,25 +18,16 @@ function BuildingDetailPage() {
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const buildings2 = buildings?.photos ?? [];
-  
   return (
     <>
-    {/*
-      <BuildingFilterModal
-        onConfirm={selectedStations => {
-          setStationsFilter(selectedStations.map(station => station.station));
-        }}
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        onFilter={filter => {
-          setSearchTerm(filter.search);
-        }}
-        buildingCount={buildingCount ?? 0}
-      />
- */}
       <Header center="건물리스트" />
-      <Carousel images={buildings2 ?? []} />
+      <Carousel images={buildings?.photos ?? []} />
+      <FlexBox.Horizontal justify="space-between" padding="1.6rem" margin="1.6rem" style={{borderRadius: '1.6rem'}}>
+          <Text typography={font => font.heading[2].B}>{buildings?.buildingName??'건물 이름'}</Text>
+
+    </FlexBox.Horizontal>
+
+
     </>
   );
 }

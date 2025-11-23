@@ -23,7 +23,7 @@ export const ROUTE_PATH = {
   /* building-list */
   buildingList: '/building-list',
   buildingMap: '/building-map',
-  buildingDetail: '/building-detail/:buildingId',
+  buildingDetail: (id:string|number)=>`/building-detail/${id}`,
   /* etc */
   location: '/location',
   myPage: '/my-page',

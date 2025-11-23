@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { ArrowRightIcon, EmptyHomeIcon } from '@/assets/assets';
 import SearchIcon from '@/assets/icons/map/SearchIcon';
@@ -19,12 +19,13 @@ import formattedDate from '@/utils/formattedDate';
 import { useState } from 'react';
 
 function BuildingDetailPage() {
+  const {id} = useParams()
   const navigate = useNavigate();
   const {
     data: buildings,
     isPending,
     isError,
-  } = useGetBuildingDetailQuery(1,{lastCursor: '2025-05-01'});
+  } = useGetBuildingDetailQuery(Number(id),{lastCursor: '2025-05-01'});
 
   const { isModalOpen, openModal, closeModal } = useModal();
 

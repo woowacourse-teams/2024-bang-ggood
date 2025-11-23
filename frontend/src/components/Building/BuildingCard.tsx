@@ -10,7 +10,7 @@ import { Building } from '@/types/building';
 
 function BuildingCard({ buildingId, buildingName, checklistCount, station, isLiked, thumbnail }: Building) {
   return (
-    <Link to={`${ROUTE_PATH.buildingList}/${buildingId}`}>
+    <Link to={`${ROUTE_PATH.buildingDetail(buildingId)}`}>
       <FlexBox.Horizontal padding="0.8rem 0" gap="1.6rem" onClick={() => {}}>
         <S.Image alt="건물 이미지" src={thumbnail} />
 

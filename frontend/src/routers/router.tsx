@@ -62,7 +62,7 @@ const router = createBrowserRouter([
           },
           {
             element: <BuildingDetailPage />,
-            path: ROUTE_PATH.buildingDetail,
+            path: ROUTE_PATH.buildingDetail(':id'),
           },
           {
             element: <BuildingMapPage />,

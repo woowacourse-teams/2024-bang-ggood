@@ -2,17 +2,17 @@ import styled from '@emotion/styled';
 
 import SearchIcon from '@/assets/icons/map/SearchIcon';
 import Header from '@/components/_common/Header/Header';
-import { useGetBuildingDetailQuery } from '@/hooks/query/useGetBuildingDetailQuery ';
 import useModal from '@/hooks/useModal';
+import useMouseDrag from '@/hooks/useMouseDrag';
 import theme from '@/styles/theme';
 import { useRef, useState } from 'react';
 
 function BuildingDetailPage() {
-  const {
-    data: buildings,
-    isPending,
-    isError,
-  } = useGetBuildingDetailQuery(1,{lastCursor: '2025-05-01'});
+  // const {
+  //   data: buildings,
+  //   isPending,
+  //   isError,
+  // } = useGetBuildingDetailQuery(1,{lastCursor: '2025-05-01'});
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
@@ -42,20 +42,24 @@ function BuildingDetailPage() {
 export const Carousel = ({images}:{images:string[]}) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const maxIndex = images.length ;
 
-  const handleScroll = () => {
-    const container = scrollRef.current;
-    if (!container) return;
-    const index = Math.round(container.scrollLeft / container.clientWidth);
-    setCurrentIndex(index);
-  };
+  const mod = (n:number, m:number) => (n % m + m) % m;
+  useMouseDrag(scrollRef, (start, end) => {
+    if (end.x - start.x > 100) {
+      setCurrentIndex(mod(currentIndex - 1,maxIndex));
+    } else if (start.x - end.x > 100) {
+      setCurrentIndex(mod(currentIndex + 1,maxIndex));
+    }
+  });
+
 
   return (
-    <SC.Wrapper>
-      <SC.ScrollBox ref={scrollRef} onScroll={handleScroll}>
+    <SC.Wrapper ref={scrollRef} >
+      <SC.ScrollBox >
         {[...images].map(image => (
           <SC.Slide key={image}>
-            <img src={image} alt="image" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <img src={image} draggable={false}   alt="image" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
 
           </SC.Slide>
         ))}
@@ -69,6 +73,7 @@ export const Carousel = ({images}:{images:string[]}) => {
     </SC.Wrapper>
   );
 };
+
 
 const SC = {
   Wrapper: styled.section`
@@ -84,6 +89,8 @@ const SC = {
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    width: 100%;
+    scroll-behavior: smooth;
 
     &::-webkit-scrollbar {
       display: none;
@@ -93,7 +100,8 @@ const SC = {
     flex-shrink: 0;
     scroll-snap-align: start;
     width: 100%;
-    max-width: 100%;
+    min-width: 100%;
+    height: 250px;
   `,
   DotContainer: styled.div`
     display: flex;

@@ -53,6 +53,7 @@ public enum ExceptionCode {
             "address, walkingTime, latitude, longitude는 전부 null이거나 전부 값이 있어야 합니다."),
     BUILDING_IMAGE_INTERNAL_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.CHECKLIST_ERROR,
             "빌딩 이미지 API 요청하는 과정 중 예상치 못한 예외가 발생했습니다."),
+    BUILDING_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.BUILDING_ERROR, "빌딩이 존재하지 않습니다."),
 
     // Checklist
     CHECKLIST_NOT_FOUND(HttpStatus.BAD_REQUEST, ClientExceptionCode.CHECKLIST_NOT_FOUND, "체크리스트가 존재하지 않습니다."),

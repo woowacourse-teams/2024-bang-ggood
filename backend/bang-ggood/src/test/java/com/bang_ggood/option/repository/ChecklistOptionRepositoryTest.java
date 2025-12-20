@@ -55,7 +55,7 @@ class ChecklistOptionRepositoryTest extends IntegrationTestSupport {
     @Test
     void countByChecklist() {
         // given & when
-        int optionCount = checklistOptionRepository.countByChecklist(checklistRepository.getById(checklistId));
+        int optionCount = checklistOptionRepository.countByChecklist(checklistId);
 
         // then
         assertThat(optionCount).isEqualTo(ChecklistFixture.CHECKLIST_CREATE_REQUEST().options().size());

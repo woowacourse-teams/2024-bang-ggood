@@ -259,14 +259,14 @@ public class ChecklistManageService {
         List<ChecklistOption> options = checklistOptionService.readChecklistOptions(checklist);
         List<BuildingStation> buildingStations = buildingStationService.readBuildingStationsByChecklist(checklist);
         List<ChecklistMaintenance> maintenances = checklistMaintenanceService.readChecklistMaintenances(checklist);
-        CategoryScoreResponses categoryScoreResponses = compareCategories(user, checklistId);
+        CategoryScoreResponses categoryScoreResponses = compareCategories(checklistId);
         return ChecklistCompareResponse.of(checklist, options, buildingStations, maintenances,
                 categoryScoreResponses);
     }
 
-    private CategoryScoreResponses compareCategories(User user, Long checklistId) {
+    private CategoryScoreResponses compareCategories(Long checklistId) {
         List<CategoryScoreResponse> categoryScoreResponses = new ArrayList<>();
-        List<Category> categories = checklistQuestionService.findCategories(user, checklistId);
+        List<Category> categories = checklistQuestionService.findCategories(checklistId);
         for (Category category : categories) {
             Integer score = checklistQuestionService.calculateCategoryScore(checklistId, category.getId());
             categoryScoreResponses.add(new CategoryScoreResponse(category.getId(), category.getName(), score));

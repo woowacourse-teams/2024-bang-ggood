@@ -80,8 +80,7 @@ class ChecklistQuestionRepositoryTest extends IntegrationTestSupport {
                 ChecklistQuestionFixture.CHECKLIST1_QUESTION2_GOOD(checklist, QuestionFixture.QUESTION3_CATEGORY2));
 
         // when
-        List<Category> categories = checklistQuestionRepository.findAllQuestionCategoriesByUserIdAndChecklistId(
-                user.getId(), checklist.getId());
+        List<Category> categories = checklistQuestionRepository.findAllQuestionCategoriesByUserIdAndChecklistId(checklist.getId());
 
         // then
         assertThat(categories).hasSize(2);

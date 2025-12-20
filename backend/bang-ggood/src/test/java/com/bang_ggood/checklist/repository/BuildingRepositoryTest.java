@@ -5,6 +5,7 @@ import com.bang_ggood.building.repository.BuildingRepository;
 import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.building.domain.Building;
 import com.bang_ggood.checklist.ChecklistFixture;
+import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -12,6 +13,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -73,5 +77,26 @@ class BuildingRepositoryTest extends IntegrationTestSupport {
 
         // then
         Assertions.assertThat(result).isEqualTo(2);
+    }
+
+    @DisplayName("건물에 속한 체크리스트 반환 성공")
+    @Test
+    void findChecklistsByCursor() {
+        // given
+        Building building1 = buildingRepository.save(BuildingFixture.BUILDING_1());
+        User user = userRepository.save(UserFixture.USER1());
+        Checklist checklist1 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building1));
+        Checklist checklist2 = checklistRepository.save(ChecklistFixture.CHECKLIST2_USER1(user, building1));
+        Pageable pageable = Pageable.ofSize(10);
+
+        // when
+        LocalDateTime createdAt = LocalDateTime.now();
+        List<Checklist> checklists = buildingRepository.findChecklistsByCursor(createdAt, building1.getId(), pageable);
+
+        // then
+        assertAll(
+                () -> assertThat(checklists.get(0)).isEqualTo(checklist2),
+                () -> assertThat(checklists.get(1)).isEqualTo(checklist1)
+        );
     }
 }

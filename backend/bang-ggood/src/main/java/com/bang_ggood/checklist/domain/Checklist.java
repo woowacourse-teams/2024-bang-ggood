@@ -160,6 +160,10 @@ public class Checklist extends BaseEntity {
         return occupancyPeriod.getPeriod();
     }
 
+    public String getUserName() {
+        return user.getName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

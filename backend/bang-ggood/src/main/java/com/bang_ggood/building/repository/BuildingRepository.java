@@ -14,4 +14,9 @@ public interface BuildingRepository extends JpaRepository<Building, Long> {
             + "AND b.longitude = :longitude")
     Optional<Building> findByCoordinate(@Param("latitude") Double latitude,
                                         @Param("longitude") Double longitude);
+
+    @Query("SELECT COUNT(c) FROM Checklist c " +
+            "WHERE c.building.id = :buildingId " +
+            "AND c.deleted = false")
+    Integer countChecklistsByBuilding(@Param("buildingId") Long buildingId);
 }

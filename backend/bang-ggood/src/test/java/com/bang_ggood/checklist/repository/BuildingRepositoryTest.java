@@ -6,6 +6,7 @@ import com.bang_ggood.checklist.BuildingFixture;
 import com.bang_ggood.building.domain.Building;
 import com.bang_ggood.checklist.ChecklistFixture;
 import com.bang_ggood.checklist.domain.Checklist;
+import com.bang_ggood.checklist.domain.Status;
 import com.bang_ggood.user.UserFixture;
 import com.bang_ggood.user.domain.User;
 import com.bang_ggood.user.repository.UserRepository;
@@ -85,12 +86,17 @@ class BuildingRepositoryTest extends IntegrationTestSupport {
         // given
         Building building1 = buildingRepository.save(BuildingFixture.BUILDING_1());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist1 = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building1));
-        Checklist checklist2 = checklistRepository.save(ChecklistFixture.CHECKLIST2_USER1(user, building1));
+        Checklist checklist1 = ChecklistFixture.CHECKLIST1_USER1(user, building1);
+        checklist1.changeStatus(Status.OPEN);
+        Checklist checklist2 = ChecklistFixture.CHECKLIST2_USER1(user, building1);
+        checklist2.changeStatus(Status.OPEN);
+        checklistRepository.save(checklist1);
+        checklistRepository.save(checklist2);
+
         Pageable pageable = Pageable.ofSize(10);
+        LocalDateTime createdAt = LocalDateTime.now();
 
         // when
-        LocalDateTime createdAt = LocalDateTime.now();
         List<Checklist> checklists = buildingRepository.findChecklistsByCursor(createdAt, building1.getId(), pageable);
 
         // then

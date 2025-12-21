@@ -2,6 +2,7 @@ package com.bang_ggood.building.service;
 
 import com.bang_ggood.IntegrationTestSupport;
 import com.bang_ggood.building.domain.Building;
+import com.bang_ggood.checklist.domain.Status;
 import com.bang_ggood.global.dto.request.CursorRequest;
 import com.bang_ggood.building.dto.response.BuildingResponse;
 import com.bang_ggood.building.repository.BuildingImageRepository;
@@ -44,7 +45,9 @@ class BuildingManageServiceTest extends IntegrationTestSupport {
         // given
         Building building = buildingRepository.save(BuildingFixture.BUILDING_2());
         User user = userRepository.save(UserFixture.USER1());
-        Checklist checklist = checklistRepository.save(ChecklistFixture.CHECKLIST1_USER1(user, building));
+        Checklist checklist = ChecklistFixture.CHECKLIST1_USER1(user, building);
+        checklist.changeStatus(Status.OPEN);
+        checklistRepository.save(checklist);
         buildingImageRepository.save(BuildingFixture.BUILDING_IMAGE1(building));
         buildingStationRepository.save(BuildingFixture.BUILDING_Station1(building));
         CursorRequest cursorRequest = new CursorRequest(LocalDateTime.now(), 10);

@@ -28,6 +28,7 @@ public interface BuildingRepository extends JpaRepository<Building, Long> {
             + "WHERE c.createdAt < :lastCursor "
             + "AND c.building.id = :buildingId "
             + "AND c.status = 'OPEN' "
+            + "AND c.deleted = false "
             + "ORDER BY c.createdAt DESC ")
     List<Checklist> findChecklistsByCursor(
             @Param("lastCursor") LocalDateTime lastCursor,

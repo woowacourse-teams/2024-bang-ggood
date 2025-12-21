@@ -31,7 +31,7 @@ class BuildingE2ETest extends AcceptanceTest {
                 .statusCode(200);
     }
 
-    @DisplayName("빌딩 조회 실패 : 커서 타입이 잘못된 경우 사이즈가 0 이하인 경우")
+    @DisplayName("빌딩 조회 실패 : 커서 타입이 잘못된 경우")
     @Test
     void readBuilding_cursor_exception() {
         Building building = buildingRepository.save(BuildingFixture.BUILDING_1());
@@ -46,7 +46,7 @@ class BuildingE2ETest extends AcceptanceTest {
                 .statusCode(400);
     }
 
-    @DisplayName("빌딩 조회 실패 : 커서 타입이 잘못된 경우 사이즈가 0 이하인 경우")
+    @DisplayName("빌딩 조회 실패 : 사이즈가 0 이하인 경우")
     @Test
     void readBuilding_size_exception() {
         Building building = buildingRepository.save(BuildingFixture.BUILDING_1());

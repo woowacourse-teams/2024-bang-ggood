@@ -14,8 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    env:
-      TZ: Asia/Seoul
 
     steps:
     - name: Checkout Repository
@@ -51,5 +49,5 @@ jobs:
         echo "${APPLICATION_READ_WRITE_TEST_YML}" > src/test/resources/application-read-write-test.yml
       
     - name: Build with Gradle
-      run: ./gradlew clean build --stacktrace
+      run: ./gradlew clean build -Duser.timezone=Asia/Seoul --stacktrace
 

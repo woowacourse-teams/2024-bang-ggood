@@ -57,14 +57,14 @@ class BuildingManageServiceTest extends IntegrationTestSupport {
         BuildingResponse buildingResponse = buildingManageService.readBuildingAndChecklists(building.getId(), cursorRequest);
 
         // then
+        Checklist savedChecklist = checklistRepository.findById(checklist.getId()).get();
         assertAll(
                 () -> assertThat(buildingResponse.buildingId()).isEqualTo(building.getId()),
                 () -> assertThat(buildingResponse.checklistCount()).isEqualTo(1),
                 () -> assertThat(buildingResponse.stations()).hasSize(1),
                 () -> assertThat(buildingResponse.photos()).hasSize(1),
                 () -> assertThat(buildingResponse.checklists()).hasSize(1),
-                () -> assertThat(buildingResponse.lastCursor().truncatedTo(ChronoUnit.MICROS))
-                        .isEqualTo(checklist.getCreatedAt().truncatedTo(ChronoUnit.MICROS))
+                () -> assertThat(buildingResponse.lastCursor()).isEqualTo(savedChecklist.getCreatedAt())
         );
     }
 }

@@ -51,3 +51,9 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew clean build -Duser.timezone=Asia/Seoul --stacktrace
 
+    - name: Upload test report
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-report
+        path: backend/bang-ggood/build/reports/tests/test

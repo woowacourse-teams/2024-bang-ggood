@@ -70,6 +70,7 @@ public class Checklist extends BaseEntity {
 
     private String summary;
 
+    @Enumerated(EnumType.STRING)
     private Status status = Status.CLOSE;
 
     public Checklist(User user, Building building, String name, FloorLevel floorLevel, Integer floor,
@@ -158,6 +159,10 @@ public class Checklist extends BaseEntity {
 
     public String getOccupancyPeriod() {
         return occupancyPeriod.getPeriod();
+    }
+
+    public String getUserName() {
+        return user.getName();
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.bang_ggood.checklist;
 
 import com.bang_ggood.building.domain.Building;
+import com.bang_ggood.building.domain.BuildingImage;
+import com.bang_ggood.station.domain.BuildingStation;
 
 public class BuildingFixture {
     public static Building BUILDING_1() {
@@ -30,6 +32,18 @@ public class BuildingFixture {
     public static Building BUILDING_NULL() {
         return new Building(
                 null, null, null, null
+        );
+    }
+
+    public static BuildingImage BUILDING_IMAGE1(Building building) {
+        return new BuildingImage(
+                building, "testUrl"
+        );
+    }
+
+    public static BuildingStation BUILDING_Station1(Building building) {
+        return new BuildingStation(
+                building, "testStation", "testLine", 10
         );
     }
 }

@@ -41,4 +41,9 @@ public class BuildingImageService {
             }
         });
     }
+
+    @Transactional(readOnly = true)
+    public List<BuildingImage> readBuildingImages(Building building) {
+        return buildingImageRepository.findAllByBuilding(building);
+    }
 }

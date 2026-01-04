@@ -50,4 +50,9 @@ public class ChecklistOptionService {
         checklistOptionRepository.deleteAllByChecklistId(checklistId);
         checklistOptionRepository.saveAll(checklistOptions);
     }
+
+    @Transactional(readOnly = true)
+    public Integer countChecklistOptions(Long checklistId) {
+        return checklistOptionRepository.countByChecklist(checklistId);
+    }
 }

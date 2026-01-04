@@ -94,8 +94,8 @@ public class ChecklistQuestionService {
     }
 
     @Transactional(readOnly = true)
-    public List<Category> findCategories(User user, Long checklistId) {
-        return checklistQuestionRepository.findAllQuestionCategoriesByUserIdAndChecklistId(user.getId(), checklistId);
+    public List<Category> findCategories(Long checklistId) {
+        return checklistQuestionRepository.findAllQuestionCategoriesByUserIdAndChecklistId(checklistId);
     }
 
     @Transactional(readOnly = true)

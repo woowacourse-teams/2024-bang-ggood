@@ -1,6 +1,5 @@
 package com.bang_ggood.option.repository;
 
-import com.bang_ggood.checklist.domain.Checklist;
 import com.bang_ggood.option.domain.ChecklistOption;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -17,9 +16,9 @@ public interface ChecklistOptionRepository extends JpaRepository<ChecklistOption
     List<ChecklistOption> findAllByChecklistId(@Param("checklistId") Long checklistId);
 
     @Query("SELECT COUNT(co) FROM ChecklistOption co " +
-            "WHERE co.checklist = :checklist " +
+            "WHERE co.checklist.id = :checklistId " +
             "AND co.deleted = false")
-    Integer countByChecklist(@Param("checklist") Checklist checklist);
+    Integer countByChecklist(@Param("checklistId") Long checklistId);
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Transactional

@@ -41,4 +41,8 @@ public class SubwayStationResponses {
         }
         return stations.get(0);
     }
+
+    public List<SubwayStationResponse> getStations() {
+        return stations;
+    }
 }
